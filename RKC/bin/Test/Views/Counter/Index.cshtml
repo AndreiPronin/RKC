@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "Main";
+}
+<div class="loader"></div>
+<div class="container">
+    @using (Html.BeginForm("UploadFile", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (User.IsInRole("Admin"))
+        {
+            <div style="margin-top:30px;" class="row">
+                <div class="col-md-4">
+                    @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <select id="Bank" name="Bank" class="form-control" aria-label="Default select">
+                        <option selected>Выберите банк</option>
+                        <option value="1">Какой то банк</option>
+                        <option value="2">Почта</option>
+                        <option value="3">ВТБ</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" class="btn btn-success" value="Загрузить" />
+                </div>
+            </div>
+        }
+    }
+    @using (Html.BeginForm("UploadFilePU", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (User.IsInRole("Admin"))
+        {
+            <div style="margin-top:30px;" class="row">
+                <div class="col-md-4">
+                    @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <input name="User" id="User" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" class="btn btn-success" value="Загрузить" />
+                </div>
+            </div>
+        }
+    }
+    @if (User.IsInRole("Admin"))
+    {
+        <div style="margin-top:30px;" class="row">
+            <div class="col-md-4">
+                <select id="FileType" name="FileType" class="form-control" aria-label="Default select">
+                    <option selected>Выберите отчет</option>
+                    <option value="1">ИПУ_отчет из counters</option>
+                    <option value="2">ИПУ_отчет из lic</option>
+                    <option value="3">ИПУ_отчет общий</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="submit" id="CreateExcelFile" class="btn btn-success" value="Скачать" />
+            </div>
+        </div>
+    }
+</div>
+<h1 class="page-header">Поиск ПУ</h1>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-2 text-center">
+            <label for="">номер лицевого счета</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="LIC" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <label for="">Улица</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="street" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class=" col-md-2 text-center">
+            <label for="">Дом</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="home" placeholder="">
+                <span id="clear" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <label for="">Квартира</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="flat" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <label for="">ФИО</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="FIO" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <input type="button" style="margin-top:25px;" class="btn btn-success btn-block" value="Найти" id="Search" placeholder="Password">
+        </div>
+    </div>
+</div>
+<h1 class="page-header">Результаты поиска</h1>
+<div id="ResultSearchIPU_LIC"></div>
+
+
+
+<script>
+    function SearchIPU() {
+        $(".loader").removeClass("hidden");
+        $.ajax({
+            url: '/Counter/SearchIPU',
+            type: 'POST',
+            data: JSON.stringify({
+                searchModel: {//missing brackets
+                    LIC: $("#LIC").val(),
+                    FIO: $("#FIO").val(),
+                    street: $("#street").val(),
+                    home: $("#home").val(),
+                    flat: $("#flat").val()
+                }
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#ResultSearchIPU_LIC").empty();
+                $("#ResultSearchIPU_LIC").append(data);
+                $(".loader").addClass("hidden");
+            },
+            error: function () {
+                $(".loader").addClass("hidden");
+                alert("Что то пошло не так. Обратитесь к администратору");
+            }
+        });
+    }
+    $(document).ready(function (e) {
+        $("#CreateExcelFile").click(function () {
+            location.href = '/Counter/Export?typeFile=' + $("#FileType").val();
+        })
+        $(".loader").addClass("hidden");
+        $("#LIC").keyup(function () {
+            if ($("#LIC").val().length > 4) {
+                SearchIPU();
+            }
+        })
+        $(".clear").click(function () {
+            $(this).parent().find('input').val('');
+        })
+        $("#street").keyup(function () {
+            if ($("#street").val().length > 4) {
+                SearchIPU();
+            }
+        })
+        $("#home").keyup(function () {
+            if ($("#street").val().length > 4) {
+                SearchIPU();
+            }
+        })
+        $("#flat").keyup(function () {
+            if ($("#street").val().length > 4) {
+                SearchIPU();
+            }
+        })
+        $("#Search").click(function () {
+            SearchIPU();
+        });
+        $(document).on('keypress', function (e) {
+            if (e.which == 13) {
+                SearchIPU();
+            }
+        });
+    });
+
+</script>

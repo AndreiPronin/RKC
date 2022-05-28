@@ -1,0 +1,187 @@
+﻿@model BE.Counter.ModelAddPU
+
+<div class="modal fade" id="AddPUModal" tabindex="-1" role="dialog" aria-labelledby="ArchiveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input id="FULL_LIC_" value="@ViewBag.FULL_LIC" hidden="hidden" />
+                <h5 class="modal-title" id="exampleModalLabel">Добавление ПУ по лицевому счету @ViewBag.FULL_LIC </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="margin-top:15px;" class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Номер ПУ:</label>
+                        <div class="col-sm-8">
+                            <input id="FACTORY_NUMBER_PU_" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+                    <label style="font-weight: inherit; " class="NullOrEmpty">Внимание этот параметр не должен повторятся на странице!</label>
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Тип ПУ:</label>
+                        <div class="col-sm-8">
+                            <select id="TYPE_PU_Select" class="form-control">
+                                <option value="0" selected>Выберите тип</option>
+                                <option value="1">ГВС 1</option>
+                                <option value="2">ГВС 2</option>
+                                <option value="3">ГВС 3</option>
+                                <option value="4">ГВС 4</option>
+                                <option value="5">ОТП 1</option>
+                                <option value="6">ОТП 2</option>
+                                <option value="7">ОТП 3</option>
+                                <option value="8">ОТП 4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Бренд ПУ:</label>
+                        <div class="col-sm-8">
+                            <input id="BRAND_PU_" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Модель ПУ:</label>
+                        <div class="col-sm-8">
+                            <input id="MODEL_PU_" class="form-control" />
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label">Примечание:</label>
+                        <div class="col-sm-8">
+                            <textarea id="DESCRIPTION_" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Дата установки ПУ:</label>
+                        <div class="col-sm-8">
+                            <input type="date" id="INSTALLATIONDATE_" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Дата поверки ПУ:</label>
+                        <div class="col-sm-8">
+                            <input type="date" id="DATE_CHECK_" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Дата следующей поверки ПУ:</label>
+                        <div class="col-sm-8">
+                            <input type="date" id="DATE_CHECK_NEXT_" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Номер пломбы:</label>
+                        <div class="col-sm-8">
+                            <input id="SEALNUMBER_" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Тип пломбы:</label>
+                        <div class="col-sm-8">
+                            <input id="TYPEOFSEAL_" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Начальные показания:</label>
+                        <div class="col-sm-8">
+                            <input type="number" id="InitialReadings" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Конечные показания:</label>
+                        <div class="col-sm-8">
+                            <input type="number" id="EndReadings" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="Save" class="btn btn-success">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function (e) {
+        $("#Save").click(function (e) {
+            if (Requared()) {
+                $.ajax({
+                    url: '/Counter/AddPU',
+                    type: 'POST',
+                    async: false,
+                    data: JSON.stringify({
+                        modelAddPU: {
+                            InitialReadings: $("#InitialReadings").val(),
+                            EndReadings: $("#EndReadings").val(),
+                            FULL_LIC: $("#FULL_LIC_").val(),
+                            FACTORY_NUMBER_PU: $('#FACTORY_NUMBER_PU_').val(),
+                            TYPE_PU: $("#TYPE_PU_Select").val(),
+                            BRAND_PU: $('#BRAND_PU_').val(),
+                            MODEL_PU: $('#MODEL_PU_').val(),
+                            DESCRIPTION: $('#DESCRIPTION_').val(),
+                            INSTALLATIONDATE: $('#INSTALLATIONDATE_').val(),
+                            DATE_CHECK: $('#DATE_CHECK_').val(),
+                            DATE_CHECK_NEXT: $('#DATE_CHECK_NEXT_').val(),
+                            SEALNUMBER: $('#SEALNUMBER_').val(),
+                            TYPEOFSEAL: $('#TYPEOFSEAL_').val(),
+
+                        }
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        window.location.reload();
+                    },
+                    error: function () {
+                        alert("Что то пошло не так. Обратитесь к администратору");
+                    }
+                });
+            }
+
+        })
+        function Requared() {
+            debugger
+            var Err = 0;
+            if ($("#InitialReadings").val() == 0) {
+                Err++;
+                $("#InitialReadings").addClass("Required");
+            } else { $("#InitialReadings").removeClass("Required"); }
+            if ($("#EndReadings").val() == 0) {
+                $("#EndReadings").addClass("Required");
+                Err++;
+            } else { $("#EndReadings").removeClass("Required"); }
+            if ($("#TYPE_PU_Select").val() == 0) {
+                $("#TYPE_PU_Select").addClass("Required");
+                Err++;
+            } else { $("#TYPE_PU_Select").removeClass("Required");}
+            if (Err > 0) { return false; } else { return true; }
+        }
+        });
+</script>
+

@@ -3,3 +3,19 @@
 ################################################################################
 
 /.vs/RKC
+/AppCache/bin
+/AppCache/obj
+/BE/bin
+/BE/obj
+/BL/bin
+/BL/obj
+/DB/bin
+/DB/obj
+/packages
+/RKC/BankFile/28.05.2022
+/RKC/bin/Prod/bin
+/RKC/bin/Test/bin
+/RKC/obj/Debug/Package/PackageTmp/bin
+/RKC/obj/Release/Package/PackageTmp/bin
+/RKC_TEST/bin/Debug/net472
+/RKC_TEST/obj
