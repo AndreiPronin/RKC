@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DB.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +14,8 @@ namespace DB.DataBase
     {
         public DbSet<Log> Log { get; set; }
         public DbSet<Flags> Flags { get; set; }
+        public DbSet<PersData> PersData { get; set; }
+        public DbSet<PersDataDocument> PersDataDocument { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

@@ -167,24 +167,13 @@ namespace RKC.Controllers
         }
         public ActionResult UploadFile(HttpPostedFileBase file, Banks Bank)
         {
-            var length = file.InputStream.Length; //Length: 103050706
-            byte[] fileData = null;
             using (var binaryReader = new BinaryReader(file.InputStream))
             {
-                fileData = binaryReader.ReadBytes(file.ContentLength);
+                byte[] fileData = binaryReader.ReadBytes(file.ContentLength);
                 var Result = readFileBank.Read(fileData, Bank);
+                return View(Result);
             }
-            //var workbook = new XLWorkbook(file.InputStream);
-            //new ExcelReader().LoadExcelPUBank(workbook, "dfgdfgdfg");
-            //foreach(var Items in words)
-            //{
-            //    var Test = Items.Split(';');
-            //    if(Test.Length < 13 || Test.Length > 14 && Test.Length != 16 && Test.Length != 18)
-            //    {
-
-            //    }
-            //}
-            return null;
+           
         }
         public ActionResult UploadFilePU(HttpPostedFileBase file, string User)
         {

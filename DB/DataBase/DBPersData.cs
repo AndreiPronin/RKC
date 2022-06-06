@@ -10,7 +10,7 @@ namespace DB.DataBase
 {
     public class DBPersData:DbContext
     {
-        public DbSet<Pers> Pers { get; set; }
+        public DbSet<PersDatas> PersData { get; set; }
         public DBPersData() : base("Tplus_SRV")
         {
         }

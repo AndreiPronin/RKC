@@ -211,21 +211,10 @@
     <Compile Include="Controllers\CounterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PersonalDataController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202204250635520_InitialCreate.cs" />
-    <Compile Include="Migrations\202204250635520_InitialCreate.Designer.cs">
-      <DependentUpon>202204250635520_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202205081116365_AddFIO.cs" />
-    <Compile Include="Migrations\202205081116365_AddFIO.Designer.cs">
-      <DependentUpon>202205081116365_AddFIO.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202205081146281_AddTableLog.cs" />
-    <Compile Include="Migrations\202205081146281_AddTableLog.Designer.cs">
-      <DependentUpon>202205081146281_AddTableLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -239,6 +228,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\main\fon2.jpg" />
+    <Content Include="Content\img\main\fon.jpg" />
+    <Content Include="Content\img\main\sky.jpg" />
+    <Content Include="Content\img\main\T_Plus_Group_Logo.png" />
+    <Content Include="Content\img\main\БРБ_лого.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -296,6 +290,8 @@
     <Content Include="Views\Counter\HistoryEdit.cshtml" />
     <Content Include="Views\Counter\FromAddPU.cshtml" />
     <Content Include="Views\Counter\DetailedInformIPUDelete.cshtml" />
+    <Content Include="Views\Counter\UploadFile.cshtml" />
+    <Content Include="Views\PersonalData\DetailedInformPersData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -330,17 +326,6 @@
       <Project>{cbb7243a-294b-4aac-ab39-32b3a27a7390}</Project>
       <Name>DB</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202204250635520_InitialCreate.resx">
-      <DependentUpon>202204250635520_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202205081116365_AddFIO.resx">
-      <DependentUpon>202205081116365_AddFIO.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202205081146281_AddTableLog.resx">
-      <DependentUpon>202205081146281_AddTableLog.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

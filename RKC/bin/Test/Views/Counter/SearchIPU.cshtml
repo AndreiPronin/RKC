@@ -29,13 +29,54 @@
                 </td>
                  <td>@Items.FIO</td>
                 <td>
-                    <a href="/counter/DetailedInformIPU?FULL_LIC=@Items.F4ENUMELS" target="_blank" class="btn btn-primary">
-                        Показать подробную информацию
-                    </a></td>
+                    <button name="@Items.F4ENUMELS" class="btn btn-primary ShowInfo"  >Показать подробную информацию</button>
             </tr>
             i++;
         }
     </tbody>
 </table>
+<script>
+    $(".ShowInfo").click(function (e) {
+        var Lic = $(this).attr("name");
+        $.confirm({
+            columnClass: 'col-md-7 col-md-offset-3',
+            title: 'Информация по лицевому счету ' + Lic,
+            type: 'blue',
+            content: ' ',
+            buttons: {
+                "Приборы учета": {
+                    text: 'Приборы учета',
+                    btnClass: 'btn-primary',
+                    action: function() {
+                        window.open("/counter/DetailedInformIPU?FULL_LIC=" + Lic, '_blank');
+                    }
+                },
+                "Персональные данные": {
+                    text: 'Персональные данные',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        window.open("/PersonalData/DetailedInformPersData?FULL_LIC=" + Lic, '_blank');
+                    }
+                },
+                "Судебные дела": {
+                    text: 'Судебные дела',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        window.open("/counter/DetailedInformIPU?FULL_LIC=" + Lic, '_blank');
+                    }
+                },
+                "Закрыть": {
+                    text: 'Закрыть',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        
+                    }
+                }
+                
+            }
+        });
+    })
+   
+</script>
 
 

@@ -10,6 +10,7 @@ namespace RKC.App_Start
     using BL.Counters;
     using BL.Helper;
     using BL.Service;
+    using BL.Services;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
@@ -71,6 +72,7 @@ namespace RKC.App_Start
             kernel.Bind<ICacheApp>().To<CacheApp>().InSingletonScope();
             kernel.Bind<IFlagsAction>().To<FlagsAction>().InSingletonScope();
             kernel.Bind<IReadFileBank>().To<ReadFileBank>();
+            kernel.Bind<IPersonalData>().To<PersonalData>();
         }
     }
 }
