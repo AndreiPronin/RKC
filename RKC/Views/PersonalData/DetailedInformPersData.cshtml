@@ -115,34 +115,62 @@
                             @if (Items.PersDataDocument.Count() > 0)
                             {
                                 <p class="text-center">
-                                    <a style="margin-top:15px;" class="btn btn-primary" data-toggle="collapse" href="#DocColapse"
+                                    <a style="margin-top:15px;" class="btn btn-primary" data-toggle="collapse" href="#DocColapse_@Items.idPersData"
                                        role="button" aria-expanded="false" aria-controls="DocColapse">Документы для скачивания</a>
                                 </p>
-                            }
-                            else
-                            { <div class="col-sm-12 text-center"><p class="NullOrEmpty">Нет документов для скачивания</p></div>}
-                            <div class="collapse mt-3" id="collapseExample">
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col">
-                                    <div class="collapse multi-collapse" id="DocColapse">
-                                        <div>
-                                            @foreach (var Item in Items.PersDataDocument)
-                                            {
-                                                <div class="col-sm-6 text-center">
-                                                    <a href="#">Скачать @Item.DocumentName</a><label style="margin-left:20px;cursor:pointer" class="NullOrEmpty">X</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="collapse multi-collapse" id="DocColapse_@Items.idPersData">
+                                            <div>
+                                                @foreach (var Item in Items.PersDataDocument)
+                                                {
+                                                    <div class="col-sm-6 text-center">
+                                                        <a href="/PersonalData/DownLoadFile?Id=@Item.id" target="_blank">Скачать @Item.DocumentName</a>
+                                                        <label style="margin-left:20px;cursor:pointer" class="NullOrEmpty">
+                                                            <input type="text" class="FileName" hidden="hidden" value="@Item.DocumentName" />
+                                                            <button name="@Item.id" class="DeleteFile">X</button>
+                                                        </label>
+                                                    </div>
+                                                }
+                                                <div class="col-sm-12 text-center">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-6">
+                                                            <input name="FileLoad" class="form-control hidden file" type="file" />
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" id="NameFile" placeholder="Название файла" class="form-control NameFileFile hidden" name="NameFile" value="" />
+                                                        </div>
+                                                        <input type="text" class=" LicFile" hidden="hidden" name="Lic" value="@Items.Lic" />
+                                                        <input type="number" class="idPersDataFile" hidden="hidden" name="idPersData" value="@Items.idPersData" />
+                                                        <input type="text" class=" FioFile" hidden="hidden" name="Fio" value="@Items.FirstName @Items.LastName @Items.MiddleName" />
+                                                        <input type="submit" class="btn btn-primary hidden  AddDoc" value="Добавить" />
+                                                    </div>
+                                                    @*<input type="button" value="Добавить" class="btn btn-primary hidden  AddDoc" />*@
                                                 </div>
-                                            }
-                                            <div class="col-sm-12 text-center">
-                                                <input type="button" value="Добавить" class="btn btn-primary hidden  AddDoc" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
+                            }
+                            else
+                            {
+                                <div class="col-sm-12 text-center"><p class="NullOrEmpty">Нет документов для скачивания</p></div>
+                                <div class="col-sm-12 text-center">
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <input name="FileLoad" class="form-control hidden file" type="file" />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="NameFile" placeholder="Название файла" class="form-control NameFileFile hidden" name="NameFile" value="" />
+                                        </div>
+                                        <input type="text" class=" LicFile" hidden="hidden" name="Lic" value="@Items.Lic" />
+                                        <input type="number" class="idPersDataFile" hidden="hidden" name="idPersData" value="@Items.idPersData" />
+                                        <input type="text" class=" FioFile" hidden="hidden" name="Fio" value="@Items.FirstName @Items.LastName @Items.MiddleName" />
+                                        <input type="submit" class="btn btn-primary hidden  AddDoc" value="Добавить" />
+                                    </div>
+                                    @*<input type="button" value="Добавить" class="btn btn-primary hidden  AddDoc" />*@
+                                </div>
+                            }
                         </div>
                     </div>
 
@@ -190,8 +218,58 @@ else
 <div id="HistoryEdit"></div>
 <div id="FormAddPU"></div>
 <script>
-
+   
     $(document).ready(function (e) {
+        $(".DeleteFile").click(function (e) {
+            var IdFile = $(this).attr('name');
+            var FileName = $(this).parent().find('.FileName').val()
+            $.confirm({
+                title: 'Предупрждение!',
+                content: 'Внимание вы пытаетесь удалить файл ' + FileName + ' !!!',
+                buttons: {
+                    "Да": function () {
+                        $.ajax({
+                            url: '/PersonalData/DeleteFile?Id=' + IdFile,
+                            type: 'Get',
+                            success: function (data) {
+                                // alert(data + " Страница сейчас перезагрузится!");
+                                window.location.reload();
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+                        $.alert('Отменено!');
+                    }
+                }
+            })
+        });
+        $(".AddDoc").click(function (e) {
+            var formData = new FormData();
+            formData.append('FileLoad', $(this).parent().find('.file')[0].files[0]);
+            formData.append('NameFile', $(this).parent().find('.NameFileFile').val());
+            formData.append('Lic', $(this).parent().find('.LicFile').val());
+            formData.append('idPersData', $(this).parent().find('.idPersDataFile').val());
+            formData.append('Fio', $(this).parent().find('.FioFile').val());
+            $.ajax({
+                url: "/PersonalData/SaveFile",
+                type: "POST",
+                data: formData,
+                async: true,
+                success: function (data) {
+                    alert(data.result)
+                },
+                error: function (data) {
+                    alert('Ошибка обратитесь к системному администратору!');
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+            return false;
+        });
         $(".loader").addClass("hidden");
         $(".Archive").click(function (e) {
             var id_pu = $(e.target).attr("name");
