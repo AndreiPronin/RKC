@@ -292,6 +292,9 @@
     <Content Include="Views\Counter\DetailedInformIPUDelete.cshtml" />
     <Content Include="Views\Counter\UploadFile.cshtml" />
     <Content Include="Views\PersonalData\DetailedInformPersData.cshtml" />
+    <Content Include="Views\PersonalData\HistoryEdit.cshtml" />
+    <Content Include="Views\PersonalData\FormAddPers.cshtml" />
+    <Content Include="Views\PersonalData\DetailedInformPersDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

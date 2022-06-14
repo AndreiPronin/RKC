@@ -1,4 +1,5 @@
 ﻿using BE.Counter;
+using BE.PersData;
 using DB.DataBase;
 using DB.Model;
 using System;
@@ -58,6 +59,39 @@ namespace BL.Helper
             if (model.TYPE_PU == TypePU.ITP4) IPU.FKUBSOT_4 = 1;
             return IPU;
         }
+        public static PersData PersDataModel_To_PersData(PersDataModel persDataModel)
+        {
+            return new PersData()
+            {
+                idPersData = persDataModel.idPersData,
+                DateAdd = persDataModel.DateAdd,
+                Comment = persDataModel.Comment,
+                Comment1 = persDataModel.Comment1,
+                Comment2 = persDataModel.Comment2,
+                DateOfBirth = persDataModel.DateOfBirth,
+                Email = persDataModel.Email,
+                FirstName = persDataModel.FirstName,
+                Inn = persDataModel.Inn,
+                IsDelete = persDataModel.IsDelete,
+                LastName = persDataModel.LastName,
+                Lic = persDataModel.Lic,
+                Main = persDataModel.Main == null ? false : persDataModel.Main,
+                MiddleName = persDataModel.MiddleName,
+                NumberOfPersons = persDataModel.NumberOfPersons,
+                PassportDate = persDataModel.PassportDate,
+                PassportIssued = persDataModel.PassportIssued,
+                PassportNumber = persDataModel.PassportNumber,
+                PassportSerial = persDataModel.PassportSerial,
+                PlaceOfBirth = persDataModel.PlaceOfBirth,
+                RoomType = persDataModel.RoomType,
+                SnilsNumber = persDataModel.SnilsNumber,
+                Square = persDataModel.Square,
+                StateLic = persDataModel.StateLic,
+                Tel1 = persDataModel.Tel1,
+                Tel2 = persDataModel.Tel2,
+                UserName = persDataModel.UserName
+            };
+        }
         
-    }
+    } 
 }

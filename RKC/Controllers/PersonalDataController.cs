@@ -3,6 +3,7 @@ using BL.Helper;
 using BL.Service;
 using BL.Services;
 using RKC.Extensions;
+using BE.PersData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -70,7 +71,8 @@ namespace RKC.Controllers
         [HttpPost]
         public ActionResult SaveFile(HttpPostedFileBase FileLoad, string NameFile,string Lic,int idPersData,string Fio)
         {
-            return Json(new { result = _personalData.saveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.')[1], NameFile), JsonRequestBehavior.AllowGet });
+            return Json(new { result = _personalData.saveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.')[1], NameFile, User.Identity.GetFIO()),
+                JsonRequestBehavior.AllowGet });
         }
         [HttpGet]
         public ActionResult DownLoadFile(int Id)
@@ -81,7 +83,7 @@ namespace RKC.Controllers
         [HttpGet]
         public ActionResult DeleteFile(int Id)
         {
-            _personalData.DeleteFile(Id);
+            _personalData.DeleteFile(Id,User.Identity.GetFIO());
             return null;
         }
         public static byte[] ConverToBytes(HttpPostedFileBase file)
@@ -92,6 +94,41 @@ namespace RKC.Controllers
                 fileData = binaryReader.ReadBytes(file.ContentLength);
             }
             return fileData;
+        }
+        public ActionResult SavePersonalData(PersDataModel persDataModel)
+        {
+            _personalData.SavePersonalData(persDataModel, User.Identity.GetFIO());
+            return null;
+        }
+        public ActionResult AddPersData(PersDataModel persDataModel)
+        {
+            _personalData.AddPersData(persDataModel, User.Identity.GetFIO());
+            return null;
+        }
+        public ActionResult HistoryEdit(int idPersData)
+        {
+            return PartialView(_personalData.GetHistory(idPersData));
+        }
+        [HttpGet]
+        public ActionResult EditMain(int idPersData)
+        {
+            _personalData.MakeToMain(idPersData);
+            return null;
+        }
+        public ActionResult FormAddPers(string FULL_LIC)
+        {
+            ViewBag.FULL_LIC = FULL_LIC;
+            return PartialView();
+        }
+        public ActionResult DeletePersonalData(int IdPersData)
+        {
+            _personalData.DeletePers(IdPersData,User.Identity.GetFIO());
+            return null;
+        }
+        public ActionResult DetailedInformPersDelete(string FULL_LIC)
+        {
+            ViewBag.FULL_LIC = FULL_LIC;
+            return View(_personalData.GetInfoPersDataDelete(FULL_LIC));
         }
     }
 }

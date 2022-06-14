@@ -21,8 +21,8 @@ namespace RKC_TEST
         [Test]
         public void Test1()
         {
-            BL.Services.PersonalData personalData = new BL.Services.PersonalData();
-            personalData.GetInfoPersData("724097769");
+           // BL.Services.PersonalData personalData = new BL.Services.PersonalData();
+            //personalData.GetInfoPersData("724097769");
 
         }
 

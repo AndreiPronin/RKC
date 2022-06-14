@@ -1,21 +1,17 @@
-﻿@model IEnumerable<DB.Model.PersData>
+﻿
+@model IEnumerable<DB.Model.PersData>
 @{
     ViewBag.Title = "Датальная информация";
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-@if (string.IsNullOrEmpty(ViewBag.FULL_LIC))
+@if (Model.Count() > 0)
 {
     <div class="container">
-        <h3 class="text-center">Детальная информация по лицевому счету  @Model.FirstOrDefault().Lic</h3>
+        <h3 class="text-center">Детальная информация по ранее проживающим по лицевому счету  @Model.FirstOrDefault().Lic</h3>
         <div class="col-md-12">
             <button id="CloseLock" name="@Model.FirstOrDefault().Lic" class="btn btn-success">Закрыть страницу</button>
-            @if (!ViewBag.isLock)
-            {
-                <input type="button" name="@Model.FirstOrDefault().Lic" class="btn btn-primary AddPersonalData" value="Добавить данные" data-toggle="modal" data-target="#AddPersData" />
-            }
-            <a href="/PersonalData/DetailedInformPersDelete?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank"><input type="button" class="btn btn-primary" value="История " /></a>
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -25,17 +21,7 @@
         {
 
             <div style="margin-top:10px;" class="card">
-                <div class="card-header text-center">
-                    @*<p>Лицевой счет:  <input type="text" disabled="disabled"name="@Items.idPersData" class="form-control" value="@Items.Lic" /> </p>*@
-                    @if(Items.Main == true)
-                    {
-                        <p class="NullOrEmpty" >Основной</p>
-                    }
-                    else
-                    {
-                        <input class="btn btn-primary EditMain" name="@Items.idPersData" id="" value="Сделать основным" />
-                    }
-                </div>
+                
                 <hr />
                 <div class="card-body field">
                     <div class="col-md-12">
@@ -108,28 +94,14 @@
                             <div class="col-sm-8">
                                 <input type="text" readonly="readonly" id="RoomType" class="form-control" value="@Items.RoomType" />
                             </div>
-                            @if (Items.Main == true)
-                             {
-                                <label class="col-sm-4 col-form-label">Количество человек:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="NumberOfPersons" class="form-control" value="@Items.NumberOfPersons" />
-                                </div>
-                                <label class="col-sm-4 col-form-label">Площадь:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="Square" class="form-control" value="@Items.Square" />
-                                </div>
-                             }
-                             else
-                             {
-                                <label class="col-sm-4 col-form-label">Количество человек:</label>
-                                <div class="col-sm-8">
-                                    <label class="col-sm-4 col-form-label">@Items.NumberOfPersons</label>
-                                </div>
-                                <label class="col-sm-4 col-form-label">Площадь:</label>
-                                <div class="col-sm-8">
-                                    <label class="col-sm-4 col-form-label">@Items.Square</label>
-                                </div>
-                            }
+                            <label class="col-sm-4 col-form-label">Количество человек:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" id="NumberOfPersons" class="form-control" value="@Items.NumberOfPersons" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">Площадь:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" id="Square" class="form-control" value="@Items.Square" />
+                            </div>
                             <label class="col-sm-4 col-form-label">Комментарий:</label>
                             <div class="col-sm-8">
                                 <textarea readonly="readonly" id="Comment" class="form-control">@Items.Comment</textarea>
@@ -153,7 +125,7 @@
                                                         <a href="/PersonalData/DownLoadFile?Id=@Item.id" target="_blank">Скачать @Item.DocumentName</a>
                                                         <label style="margin-left:20px;cursor:pointer" class="NullOrEmpty">
                                                             <input type="text" class="FileName" hidden="hidden" value="@Item.DocumentName" />
-                                                            <button name="@Item.id" class="DeleteFile">X</button>
+                                                            @*<button name="@Item.id" class="DeleteFile">X</button>*@
                                                         </label>
                                                     </div>
                                                 }
@@ -199,28 +171,7 @@
                         </div>
                     </div>
 
-                    @if (!ViewBag.isLock)
-                    {
-                        <input type="button" name="@Items.idPersData" value="Сохранить" class="btn btn-danger hidden  Save" />
-                        <input type="button" name="@Items.idPersData" value="Редактировать" class="btn btn-success Edit" />
-                        if (Items.Main != true)
-                        {
-                        <input style="float:right;" name="@Items.idPersData" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
-                        }
-                        <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
                         <input type="button" name="@Items.idPersData" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
-                    }
-                    else
-                    {
-                       
-                        <input type="button" name="@Items.Lic" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
-                        if (!string.IsNullOrEmpty(ViewBag.User))
-                        {
-                            <p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>
-                        }
-                        else
-                        {<p class="text-center">Админ заблокировал эту страницу</p>}
-                    }
                 </div>
             </div>
         }
@@ -228,24 +179,21 @@
 }
 else
 {
-    <div class="container">
-        <h3 class="text-center"></h3>
-        <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC не найдено ПУ</h1>
-        @if (ViewBag.isLock)
-        {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>}
-        <div class="col-md-12">
-            <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
-            <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
-        </div>
-        <div id="ResultSearchSave"></div>
+<div class="container">
+    <h3 class="text-center"></h3>
+    <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC не найдено ПУ</h1>
+    <div class="col-md-12">
+        <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
     </div>
+    <div id="ResultSearchSave"></div>
+</div>
 
 }
 <div id="ResultArchive"></div>
 <div id="HistoryEdit"></div>
-<div id="FormAddPers"></div>
+
 <script>
-   
+
     $(document).ready(function (e) {
         $(".DeleteFile").click(function (e) {
             var IdFile = $(this).attr('name');
@@ -323,7 +271,7 @@ else
             return false;
         });
         $(".loader").addClass("hidden");
-       
+
         $(".AddPersonalData").click(function (e) {
 
             var FULL_LIC = $(e.target).attr("name");
@@ -370,7 +318,7 @@ else
             $(this).addClass("hidden");
             $(this).parent().find('.OVERWRITE').prop('disabled', false);
         })
-       
+
         $(".Cancellation").click(function (e) {
             window.location.reload();
         })
@@ -456,19 +404,7 @@ else
             });
         })
         $("#CloseLock").click(function () {
-            var Page = "DetailedInformIPU" + $("#CloseLock").attr("name");
-            $.ajax({
-                url: '/PersonalData/clearCache?Page=' + Page,
-                type: 'Get',
-                async: false,
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    window.close();
-                },
-                error: function () {
-                    alert("Что то пошло не так. Обратитесь к администратору");
-                }
-            });
+            window.close();
         })
 
 
@@ -478,3 +414,4 @@ else
 
     });
 </script>
+

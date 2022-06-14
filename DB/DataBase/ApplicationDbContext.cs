@@ -12,6 +12,7 @@ namespace DB.DataBase
 {
     public class ApplicationDbContext : DbContext
     {
+        public DbSet<LogsPersData> LogsPersData { get; set; }
         public DbSet<Log> Log { get; set; }
         public DbSet<Flags> Flags { get; set; }
         public DbSet<PersData> PersData { get; set; }

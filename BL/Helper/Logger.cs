@@ -1,4 +1,5 @@
 ﻿using DB.DataBase;
+using DB.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace BL.Helper
     public interface Ilogger
     {
         void ActionUsers(int IdPU, string Description, string User);
+        void ActionUsersPersData(int idPersData, string Description, string User);
     }
     public class Logger:Ilogger
     {
@@ -20,6 +22,17 @@ namespace BL.Helper
                 using (var db = new ApplicationDbContext())
                 {
                     db.Log.Add(new Log { IdPU = IdPU, Description = Description, UserName = User, DateTime = DateTime.Now });
+                    db.SaveChanges();
+                }
+            }
+        }
+        public void ActionUsersPersData(int idPersData, string Description, string User)
+        {
+            if (!string.IsNullOrEmpty(Description))
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    db.LogsPersData.Add(new LogsPersData { idPersData = idPersData, Description = Description, UserName = User, DateTime = DateTime.Now });
                     db.SaveChanges();
                 }
             }

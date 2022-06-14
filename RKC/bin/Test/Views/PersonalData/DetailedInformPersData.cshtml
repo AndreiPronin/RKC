@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<DB.Model.PersData>
 @{
-    ViewBag.Title = "DetailedInform";
+    ViewBag.Title = "Датальная информация";
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
@@ -13,9 +13,9 @@
             <button id="CloseLock" name="@Model.FirstOrDefault().Lic" class="btn btn-success">Закрыть страницу</button>
             @if (!ViewBag.isLock)
             {
-                <input type="button" name="@Model.FirstOrDefault().Lic" class="btn btn-primary AddPU" value="Добавить данные" data-toggle="modal" data-target="#AddPUModal" />
+                <input type="button" name="@Model.FirstOrDefault().Lic" class="btn btn-primary AddPersonalData" value="Добавить данные" data-toggle="modal" data-target="#AddPersData" />
             }
-            <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История " /></a>
+            <a href="/PersonalData/DetailedInformPersDelete?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank"><input type="button" class="btn btn-primary" value="История " /></a>
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -29,7 +29,11 @@
                     @*<p>Лицевой счет:  <input type="text" disabled="disabled"name="@Items.idPersData" class="form-control" value="@Items.Lic" /> </p>*@
                     @if(Items.Main == true)
                     {
-                        <p class="NullOrEmpty" >Главный</p>
+                        <p class="NullOrEmpty" >Основной</p>
+                    }
+                    else
+                    {
+                        <input class="btn btn-primary EditMain" name="@Items.idPersData" id="" value="Сделать основным" />
                     }
                 </div>
                 <hr />
@@ -37,53 +41,53 @@
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Имя:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="FirstName" class="form-control" value="@Items.FirstName" />
-                                    @*<input type="date" readonly="readonly" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.MiddleName)" />*@
-                                </div>
                                 <label class="col-sm-4 col-form-label">Фамилия:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="LastName" class="form-control" value="@Items.LastName" />
+                                    <input type="text" readonly="readonly" id="LastName" class="form-control " value="@Items.LastName" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Имя:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" id="FirstName" class="form-control " value="@Items.FirstName" />
+                                    @*<input type="date" readonly="readonly" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.MiddleName)" />*@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Отчество:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="MiddleName" class="form-control" value="@Items.MiddleName" />
+                                    <input type="text" readonly="readonly" id="MiddleName" class="form-control " value="@Items.MiddleName" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">Дата рождения:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="DateOfBirth" class="form-control" value="@Items.DateOfBirth" />
+                                    <input type="date" readonly="readonly" id="DateOfBirth" class="form-control " value="@string.Format("{0:yyyy-MM-dd}", Items.DateOfBirth)" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">Место рождения:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="MiddleName" class="form-control" value="@Items.PlaceOfBirth" />
+                                    <input type="text" readonly="readonly" id="PlaceOfBirth" class="form-control " value="@Items.PlaceOfBirth" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">СНИЛС:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="MiddleName" class="form-control" value="@Items.SnilsNumber" />
+                                    <input type="text" readonly="readonly" id="SnilsNumber" class="form-control " value="@Items.SnilsNumber" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">ИНН:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="MiddleName" class="form-control" value="@Items.Inn" />
+                                    <input type="text" readonly="readonly" id="Inn" class="form-control " value="@Items.Inn" />
                                 </div>
                                 <div class="col-sm-12 text-center">
                                     <p>Паспортные данные</p>
                                 </div>
                                 <label class="col-sm-4 col-form-label">Cерия:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="MiddleName" class="form-control" value="@Items.PassportSerial" />
+                                    <input type="number" min="0" max="99999" readonly="readonly" id="PassportSerial" class="form-control PassportSerial" value="@Items.PassportSerial" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">Номер:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="MiddleName" class="form-control" value="@Items.PassportNumber" />
+                                    <input type="text" readonly="readonly" id="PassportNumber" class="form-control PassportNumber" value="@Items.PassportNumber" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">Выдан:</label>
                                 <div class="col-sm-8">
-                                    <textarea readonly="readonly" id="PassportIssued" class="form-control">"@Items.PassportIssued</textarea>
+                                    <textarea readonly="readonly" id="PassportIssued" class="form-control PassportIssued">@Items.PassportIssued</textarea>
                                 </div>
                                 <label class="col-sm-4 col-form-label">Дата выдачи:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="PassportDate" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.PassportDate)" />
+                                    <input type="date" readonly="readonly" id="PassportDate" class="form-control " value="@string.Format("{0:yyyy-MM-dd}", Items.PassportDate)" />
                                 </div>
                             </div>
                             <hr />
@@ -92,67 +96,119 @@
 
                             <label class="col-sm-4 col-form-label">Телефон1:</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly="readonly" id="NumberPU" class="form-control" value="@Items.Tel1" />
-                                <textarea readonly="readonly" id="PassportIssued" class="form-control">"@Items.Comment1</textarea>
+                                <input type="text" readonly="readonly" id="Tel1" class="form-control" value="@Items.Tel1" />
+                                <textarea readonly="readonly" id="Comment1" class="form-control">@Items.Comment1</textarea>
                             </div>
                             <label class="col-sm-4 col-form-label">Телефон2:</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly="readonly" id="NumberPU" class="form-control" value="@Items.Tel2" />
-                                <textarea readonly="readonly" id="PassportIssued" class="form-control">"@Items.Comment2</textarea>
+                                <input type="text" readonly="readonly" id="Tel2" class="form-control" value="@Items.Tel2" />
+                                <textarea readonly="readonly" id="Comment2" class="form-control">@Items.Comment2</textarea>
                             </div>
                             <label class="col-sm-4 col-form-label">Тип:</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly="readonly" id="NumberPU" class="form-control" value="@Items.RoomType" />
+                                <input type="text" readonly="readonly" id="RoomType" class="form-control" value="@Items.RoomType" />
                             </div>
-                            <label class="col-sm-4 col-form-label">Колличество человек:</label>
+                            @if (Items.Main == true)
+                             {
+                                <label class="col-sm-4 col-form-label">Количество человек:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" id="NumberOfPersons" class="form-control" value="@Items.NumberOfPersons" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Площадь:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" id="Square" class="form-control" value="@Items.Square" />
+                                </div>
+                             }
+                             else
+                             {
+                                <label class="col-sm-4 col-form-label">Количество человек:</label>
+                                <div class="col-sm-8">
+                                    <label class="col-sm-4 col-form-label">@Items.NumberOfPersons</label>
+                                </div>
+                                <label class="col-sm-4 col-form-label">Площадь:</label>
+                                <div class="col-sm-8">
+                                    <label class="col-sm-4 col-form-label">@Items.Square</label>
+                                </div>
+                            }
+                            <label class="col-sm-4 col-form-label">Комментарий:</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly="readonly" id="NumberPU" class="form-control" value="@Items.NumberOfPersons" />
+                                <textarea readonly="readonly" id="Comment" class="form-control">@Items.Comment</textarea>
                             </div>
-                            <label class="col-sm-4 col-form-label">Площадь:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" id="NumberPU" class="form-control" value="@Items.Square" />
-                            </div>
+                            <input type="text" hidden="hidden" id="FIO" name="@Items.FirstName @Items.MiddleName @Items.LastName" class="FIO" value="@Items" />
+                            <input type="checkbox" hidden="hidden" id="Main" name="" class="" checked="@Items.Main" />
+                            <input type="text" hidden="hidden" id="Lic" name="" class="" value="@Items.Lic" />
                             @if (Items.PersDataDocument.Count() > 0)
                             {
                                 <p class="text-center">
-                                    <a style="margin-top:15px;" class="btn btn-primary" data-toggle="collapse" href="#DocColapse"
+                                    <a style="margin-top:15px;" class="btn btn-primary" data-toggle="collapse" href="#DocColapse_@Items.idPersData"
                                        role="button" aria-expanded="false" aria-controls="DocColapse">Документы для скачивания</a>
                                 </p>
-                            }
-                            else
-                            { <div class="col-sm-12 text-center"><p class="NullOrEmpty">Нет документов для скачивания</p></div>}
-                            <div class="collapse mt-3" id="collapseExample">
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col">
-                                    <div class="collapse multi-collapse" id="DocColapse">
-                                        <div>
-                                            @foreach (var Item in Items.PersDataDocument)
-                                            {
-                                                <div class="col-sm-6 text-center">
-                                                    <a href="#">Скачать @Item.DocumentName</a><label style="margin-left:20px;cursor:pointer" class="NullOrEmpty">X</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="collapse multi-collapse" id="DocColapse_@Items.idPersData">
+                                            <div>
+                                                @foreach (var Item in Items.PersDataDocument)
+                                                {
+                                                    <div class="col-sm-6 text-center">
+                                                        <a href="/PersonalData/DownLoadFile?Id=@Item.id" target="_blank">Скачать @Item.DocumentName</a>
+                                                        <label style="margin-left:20px;cursor:pointer" class="NullOrEmpty">
+                                                            <input type="text" class="FileName" hidden="hidden" value="@Item.DocumentName" />
+                                                            <button name="@Item.id" class="DeleteFile">X</button>
+                                                        </label>
+                                                    </div>
+                                                }
+                                                <div class="col-sm-12 text-center">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-6">
+                                                            <input name="FileLoad" class="form-control hidden file" type="file" />
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" id="NameFile" placeholder="Название файла" class="form-control NameFileFile hidden" name="NameFile" value="" />
+                                                        </div>
+                                                        <input type="text" class=" LicFile" hidden="hidden" name="Lic" value="@Items.Lic" />
+                                                        <input type="number" class="idPersDataFile" hidden="hidden" name="idPersData" value="@Items.idPersData" />
+                                                        <input type="text" class=" FioFile" hidden="hidden" name="Fio" value="@Items.FirstName @Items.LastName @Items.MiddleName" />
+                                                        <input type="submit" class="btn btn-primary hidden  AddDoc" value="Добавить" />
+                                                    </div>
+                                                    @*<input type="button" value="Добавить" class="btn btn-primary hidden  AddDoc" />*@
                                                 </div>
-                                            }
-                                            <div class="col-sm-12 text-center">
-                                                <input type="button" value="Добавить" class="btn btn-primary hidden  AddDoc" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
+                            }
+                            else
+                            {
+                                <div class="col-sm-12 text-center"><p class="NullOrEmpty">Нет документов для скачивания</p></div>
+                                <div class="col-sm-12 text-center">
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <input name="FileLoad" class="form-control hidden file" type="file" />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="NameFile" placeholder="Название файла" class="form-control NameFileFile hidden" name="NameFile" value="" />
+                                        </div>
+                                        <input type="text" class=" LicFile" hidden="hidden" name="Lic" value="@Items.Lic" />
+                                        <input type="number" class="idPersDataFile" hidden="hidden" name="idPersData" value="@Items.idPersData" />
+                                        <input type="text" class=" FioFile" hidden="hidden" name="Fio" value="@Items.FirstName @Items.LastName @Items.MiddleName" />
+                                        <input type="submit" class="btn btn-primary hidden  AddDoc" value="Добавить" />
+                                    </div>
+                                    @*<input type="button" value="Добавить" class="btn btn-primary hidden  AddDoc" />*@
+                                </div>
+                            }
                         </div>
                     </div>
 
                     @if (!ViewBag.isLock)
                     {
-                        <input type="button" value="Сохранить" class="btn btn-danger hidden  Save" />
+                        <input type="button" name="@Items.idPersData" value="Сохранить" class="btn btn-danger hidden  Save" />
                         <input type="button" name="@Items.idPersData" value="Редактировать" class="btn btn-success Edit" />
+                        if (Items.Main != true)
+                        {
                         <input style="float:right;" name="@Items.idPersData" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
+                        }
                         <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
-                        <input type="button" name="@Items.Lic" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
+                        <input type="button" name="@Items.idPersData" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
                     }
                     else
                     {
@@ -179,7 +235,6 @@ else
         {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>}
         <div class="col-md-12">
             <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
-            <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPU" value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
             <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
         </div>
         <div id="ResultSearchSave"></div>
@@ -188,42 +243,98 @@ else
 }
 <div id="ResultArchive"></div>
 <div id="HistoryEdit"></div>
-<div id="FormAddPU"></div>
+<div id="FormAddPers"></div>
 <script>
-
+   
     $(document).ready(function (e) {
-        $(".loader").addClass("hidden");
-        $(".Archive").click(function (e) {
-            var id_pu = $(e.target).attr("name");
-            $(".loader").removeClass("hidden");
-            $.ajax({
-                url: '/Counter/ArchiveAllLics?id_pu=' + id_pu,
-                type: 'Get',
-                async: false,
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#ResultArchive").empty();
-                    $("#ResultArchive").append(data);
-                    $(".loader").addClass("hidden");
-                },
-                error: function () {
-                    $(".loader").addClass("hidden");
-                    alert("Что то пошло не так. Обратитесь к администратору");
+        $(".DeleteFile").click(function (e) {
+            var IdFile = $(this).attr('name');
+            var FileName = $(this).parent().find('.FileName').val()
+            $.confirm({
+                title: 'Предупрждение!',
+                content: 'Внимание вы пытаетесь удалить файл ' + FileName + ' !!!',
+                buttons: {
+                    "Да": function () {
+                        $.ajax({
+                            url: '/PersonalData/DeleteFile?Id=' + IdFile,
+                            type: 'Get',
+                            success: function (data) {
+                                // alert(data + " Страница сейчас перезагрузится!");
+                                window.location.reload();
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+                        $.alert('Отменено!');
+                    }
                 }
+            })
+        });
+        $(".EditMain").click(function (e) {
+            var IdPersData = $(this).attr('name');
+            $.confirm({
+                title: 'Предупрждение!',
+                content: 'Внимание вы пытаетесь поменять основго ',
+                buttons: {
+                    "Да": function () {
+                        $.ajax({
+                            url: '/PersonalData/EditMain?idPersData=' + IdPersData,
+                            type: 'Get',
+                            success: function (data) {
+                                // alert(data + " Страница сейчас перезагрузится!");
+                                window.location.reload();
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+                        $.alert('Отменено!');
+                    }
+                }
+            })
+        });
+        $(".AddDoc").click(function (e) {
+            var formData = new FormData();
+            formData.append('FileLoad', $(this).parent().find('.file')[0].files[0]);
+            formData.append('NameFile', $(this).parent().find('.NameFileFile').val());
+            formData.append('Lic', $(this).parent().find('.LicFile').val());
+            formData.append('idPersData', $(this).parent().find('.idPersDataFile').val());
+            formData.append('Fio', $(this).parent().find('.FioFile').val());
+            $.ajax({
+                url: "/PersonalData/SaveFile",
+                type: "POST",
+                data: formData,
+                async: true,
+                success: function (data) {
+                    alert(data.result)
+                },
+                error: function (data) {
+                    alert('Ошибка обратитесь к системному администратору!');
+                },
+                cache: false,
+                contentType: false,
+                processData: false
             });
-        })
+            return false;
+        });
+        $(".loader").addClass("hidden");
+       
         $(".AddPersonalData").click(function (e) {
 
             var FULL_LIC = $(e.target).attr("name");
             $(".loader").removeClass("hidden");
             $.ajax({
-                url: '/Counter/FromAddPU?FullLIC=' + FULL_LIC,
-                type: 'Get',
+                url: '/PersonalData/FormAddPers?FULL_LIC=' + FULL_LIC,
                 async: false,
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    $("#FormAddPU").empty();
-                    $("#FormAddPU").append(data);
+                    $("#FormAddPers").empty();
+                    $("#FormAddPers").append(data);
                     $(".loader").addClass("hidden");
                 },
                 error: function () {
@@ -233,10 +344,10 @@ else
             });
         })
         $(".HistoryEdit").click(function (e) {
-            var id_pu = $(e.target).attr("name");
+            var idPersData = $(e.target).attr("name");
             $(".loader").removeClass("hidden");
             $.ajax({
-                url: '/Counter/HistoryEdit?id_pu=' + id_pu,
+                url: '/PersonalData/HistoryEdit?idPersData=' + idPersData,
                 type: 'Get',
                 async: false,
                 contentType: 'application/json; charset=utf-8',
@@ -264,45 +375,43 @@ else
             window.location.reload();
         })
         $(".Save").click(function (e) {
-            var NumberPU = $(this).parent().find('#NumberPU').val();
-
-            if ($(this).parent().find('.OVERWRITE').prop("checked")) {
-                check = true;
+            if ($(this).parent().find('#Main').prop("checked")) {
+                Main = true;
             } else {
-                check = false;
+                Main = false;
             }
             $.ajax({
-                url: '/Counter/SaveIPU',
+                url: '/PersonalData/SavePersonalData',
                 type: 'POST',
                 data: JSON.stringify({
-                    saveModelIPU: {//missing brackets
-                        IdPU: $(this).parent().find('.IdPU').val(),
-                        FULL_LIC: $('#FULL_LIC').val(),
-                        NumberPU: $(this).parent().find('#NumberPU').val(),
-                        MODEL_PU: $(this).parent().find('#MODEL_PU').val(),
-                        DATE_CHECK: $(this).parent().find('#DATE_CHECK').val(),
-                        DATE_CHECK_NEXT: $(this).parent().find('#DATE_CHECK_NEXT').val(),
-                        INSTALLATIONDATE: $(this).parent().find('#INSTALLATIONDATE').val(),
-                        SEALNUMBER: $(this).parent().find('#SEALNUMBER').val(),
-                        TYPEOFSEAL: $(this).parent().find('#TYPEOFSEAL').val(),
-                        DESCRIPTION: $(this).parent().find('.DESCRIPTION').val(),
-                        OVERWRITE_SEAL: check,
-                        FKUB2XVS: $(this).parent().find('#FKUB2XVS').val(),
-                        FKUB2XV_2: $(this).parent().find('#FKUB2XV_2').val(),
-                        FKUB2XV_3: $(this).parent().find('#FKUB2XV_3').val(),
-                        FKUB2XV_4: $(this).parent().find('#FKUB2XV_4').val(),
-                        FKUB2OT_1: $(this).parent().find('#FKUB2OT_1').val(),
-                        FKUB2OT_2: $(this).parent().find('#FKUB2OT_2').val(),
-                        FKUB2OT_3: $(this).parent().find('#FKUB2OT_3').val(),
-                        FKUB2OT_4: $(this).parent().find('#FKUB2OT_4').val(),
-                        FKUB1XVS: $(this).parent().find('#FKUB1XVS').val(),
-                        FKUB1XV_2: $(this).parent().find('#FKUB1XV_2').val(),
-                        FKUB1XV_3: $(this).parent().find('#FKUB1XV_3').val(),
-                        FKUB1XV_4: $(this).parent().find('#FKUB1XV_4').val(),
-                        FKUB1OT_1: $(this).parent().find('#FKUB1OT_1').val(),
-                        FKUB1OT_2: $(this).parent().find('#FKUB1OT_2').val(),
-                        FKUB1OT_3: $(this).parent().find('#FKUB1OT_3').val(),
-                        FKUB1OT_4: $(this).parent().find('#FKUB1OT_4').val(),
+                    persDataModel: {//missing brackets
+                        idPersData: $(this).attr('name'),
+                        Lic: $('#Lic').val(),
+                        LastName: $(this).parent().find('#LastName').val(),
+                        FirstName: $(this).parent().find('#FirstName').val(),
+                        MiddleName: $(this).parent().find('#MiddleName').val(),
+                        DateOfBirth: $(this).parent().find('#DateOfBirth').val(),
+                        PlaceOfBirth: $(this).parent().find('#PlaceOfBirth').val(),
+                        PassportSerial: $(this).parent().find('#PassportSerial').val(),
+                        PassportNumber: $(this).parent().find('#PassportNumber').val(),
+                        PassportIssued: $(this).parent().find('#PassportIssued').val(),
+                        PassportDate: $(this).parent().find('#PassportDate').val(),
+                        Tel1: $(this).parent().find('#Tel1').val(),
+                        Comment1: $(this).parent().find('#Comment1').val(),
+                        Tel2: $(this).parent().find('#Tel2').val(),
+                        Comment2: $(this).parent().find('#Comment2').val(),
+                        Email: $(this).parent().find('#Email').val(),
+                        Comment: $(this).parent().find('#Comment').val(),
+                        UserName: $(this).parent().find('#UserName').val(),
+                        DateAdd: $(this).parent().find('#DateAdd').val(),
+                        RoomType: $(this).parent().find('#RoomType').val(),
+                        Main: Main ,
+                        IsDelete: $(this).parent().find('#IsDelete').val(),
+                        SnilsNumber: $(this).parent().find('#SnilsNumber').val(),
+                        Inn: $(this).parent().find('#Inn').val(),
+                        NumberOfPersons: $(this).parent().find('#NumberOfPersons').val(),
+                        Square: $(this).parent().find('#Square').val(),
+                        StateLic: $(this).parent().find('#StateLic').val(),
                     }
                 }),
                 contentType: 'application/json; charset=utf-8',
@@ -319,21 +428,20 @@ else
 
         })
         $(".Delete").click(function (e) {
-            var IdPU = $(this).parent().find('.IdPU').val();
+            var IdPersData = $(this).attr('name');
             $.confirm({
                 title: 'Предупрждение!',
-                content: 'Внимание вы пытаетесь удалить ПУ ' + $(this).attr('name') + ' !!!',
+                content: 'Внимание вы пытаетесь удалить ' + $(this).parent().find('#FIO').attr('name'),
                 buttons: {
                     "Да": function () {
                         $.ajax({
-                            url: '/Counter/DeletePU',
+                            url: '/PersonalData/DeletePersonalData',
                             type: 'POST',
                             data: JSON.stringify({
-                                IdPU: IdPU
+                                IdPersData: IdPersData
                             }),
                             contentType: 'application/json; charset=utf-8',
                             success: function (data) {
-                                // alert(data + " Страница сейчас перезагрузится!");
                                 window.location.reload();
                             },
                             error: function () {
