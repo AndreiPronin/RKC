@@ -196,8 +196,8 @@ namespace BL.Helper
                 if (IPU_COUNTERS.MODEL_PU != saveModelIPU.MODEL_PU && !string.IsNullOrEmpty(saveModelIPU.MODEL_PU)) Result.Append($"Изменили модель ПУ: было {IPU_COUNTERS.MODEL_PU} стало {saveModelIPU.MODEL_PU}  \r\n");
                 if (IPU_COUNTERS.SEALNUMBER != saveModelIPU.SEALNUMBER && !string.IsNullOrEmpty(saveModelIPU.SEALNUMBER)) Result.Append($"Изменили номер пломбы: было {IPU_COUNTERS.SEALNUMBER} стало {saveModelIPU.SEALNUMBER}  \r\n");
                 if (IPU_COUNTERS.INSTALLATIONDATE != saveModelIPU.INSTALLATIONDATE && saveModelIPU.INSTALLATIONDATE != null) Result.Append($"Изменили дату установки: было {IPU_COUNTERS.INSTALLATIONDATE} стало {saveModelIPU.INSTALLATIONDATE}  \r\n");
-                if (IPU_COUNTERS.TYPEOFSEAL != saveModelIPU.TYPEOFSEAL && !string.IsNullOrEmpty(saveModelIPU.NumberPU)) Result.Append($"Изменили тип пломбы: было {IPU_COUNTERS.TYPEOFSEAL} стало {saveModelIPU.TYPEOFSEAL}  \r\n");
-                if (IPU_COUNTERS.DESCRIPTION != saveModelIPU.DESCRIPTION && !string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL)) Result.Append($"{saveModelIPU.DESCRIPTION}\r\n");
+                if (IPU_COUNTERS.TYPEOFSEAL != saveModelIPU.TYPEOFSEAL && !string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL)) Result.Append($"Изменили тип пломбы: было {IPU_COUNTERS.TYPEOFSEAL} стало {saveModelIPU.TYPEOFSEAL}  \r\n");
+                if (IPU_COUNTERS.DESCRIPTION != saveModelIPU.DESCRIPTION && !string.IsNullOrEmpty(saveModelIPU.DESCRIPTION)) Result.Append($"{saveModelIPU.DESCRIPTION}\r\n");
             }
 
             return Result.ToString();
