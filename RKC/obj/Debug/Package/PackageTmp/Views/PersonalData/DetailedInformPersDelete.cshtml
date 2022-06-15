@@ -15,7 +15,11 @@
         </div>
         <div id="ResultSearchSave"></div>
     </div>
-    <div class="loader"></div>
+    <div class="loader">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+    </div>
     <div class="row">
         @foreach (var Items in Model)
         {
@@ -193,7 +197,7 @@ else
 <div id="HistoryEdit"></div>
 
 <script>
-
+   
     $(document).ready(function (e) {
         $(".DeleteFile").click(function (e) {
             var IdFile = $(this).attr('name');

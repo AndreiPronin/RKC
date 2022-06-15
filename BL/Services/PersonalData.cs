@@ -129,10 +129,10 @@ namespace BL.Services
                             var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == persDataModel.Lic).FirstOrDefault();
                             AllLIC.KL = persDataModel.NumberOfPersons;
                             AllLIC.SOBS = Convert.ToDecimal(persDataModel.Square);
-                            AllLIC.FAMIL = persDataModel.LastName;
-                            AllLIC.OTCH = persDataModel.MiddleName;
+                            AllLIC.FAMIL = persDataModel.MiddleName;
+                            AllLIC.OTCH = persDataModel.LastName;
                             AllLIC.IMYA = persDataModel.FirstName;
-                            AllLIC.FIO = $"{persDataModel.MiddleName} {persDataModel.FirstName} {persDataModel.LastName}";
+                            AllLIC.FIO = $"{persDataModel.LastName} {persDataModel.FirstName} {persDataModel.MiddleName}";
                             dbAllLic.SaveChanges();
                         }
                     }
@@ -215,6 +215,17 @@ namespace BL.Services
             {              
                 db.PersData.Add(ConvertToModel.PersDataModel_To_PersData(persDataModel));
                 db.SaveChanges();
+                var PersMain = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main == true && (x.IsDelete == false || x.IsDelete == null))?.FirstOrDefault();
+                if (PersMain != null)
+                {
+                    var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
+                    foreach (var Items in ListPers)
+                    {
+                        Items.Square = PersMain.Square;
+                        Items.NumberOfPersons = PersMain.NumberOfPersons;
+                    }
+                    db.SaveChanges();
+                }
             }
         }
 

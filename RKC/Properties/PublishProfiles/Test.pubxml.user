@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>F:\Programing\RKC\RKC\bin\Test</_PublishTargetUrl>
-    <History>True|2022-06-14T17:45:11.0826811Z;True|2022-06-09T21:05:44.0643378+03:00;True|2022-06-09T20:56:04.2142726+03:00;True|2022-06-09T20:54:59.8133491+03:00;True|2022-06-08T14:04:23.4130903+03:00;True|2022-06-08T13:27:48.9888128+03:00;True|2022-06-08T13:19:29.7921468+03:00;True|2022-06-07T21:37:59.8965765+03:00;True|2022-06-06T21:20:55.6455600+03:00;True|2022-06-02T21:07:07.0357451+03:00;True|2022-06-02T20:59:13.0056644+03:00;True|2022-06-02T13:25:58.1807229+03:00;True|2022-05-31T20:59:15.0357944+03:00;True|2022-05-28T11:14:37.6450167+03:00;True|2022-05-27T20:38:27.5834947+03:00;True|2022-05-27T11:42:03.6458369+03:00;True|2022-05-27T11:40:18.7369457+03:00;True|2022-05-27T09:00:56.4205193+03:00;True|2022-05-26T20:14:38.5415524+03:00;True|2022-05-26T19:22:45.5741248+03:00;True|2022-05-25T21:31:16.2146860+03:00;True|2022-05-25T20:29:37.9088143+03:00;True|2022-05-24T19:09:25.2800922+03:00;True|2022-05-22T14:47:14.0819035+03:00;True|2022-05-20T18:58:29.4044503+03:00;True|2022-05-20T18:34:40.2545742+03:00;True|2022-05-19T21:18:14.7783769+03:00;True|2022-05-19T13:38:41.3418853+03:00;True|2022-05-18T20:26:08.5168148+03:00;True|2022-05-18T15:03:14.7684196+03:00;True|2022-05-17T21:04:31.6530622+03:00;True|2022-05-16T20:52:18.5972826+03:00;</History>
+    <History>True|2022-06-15T17:50:08.8342409Z;True|2022-06-14T21:22:07.7702929+03:00;True|2022-06-14T20:45:11.0826811+03:00;True|2022-06-09T21:05:44.0643378+03:00;True|2022-06-09T20:56:04.2142726+03:00;True|2022-06-09T20:54:59.8133491+03:00;True|2022-06-08T14:04:23.4130903+03:00;True|2022-06-08T13:27:48.9888128+03:00;True|2022-06-08T13:19:29.7921468+03:00;True|2022-06-07T21:37:59.8965765+03:00;True|2022-06-06T21:20:55.6455600+03:00;True|2022-06-02T21:07:07.0357451+03:00;True|2022-06-02T20:59:13.0056644+03:00;True|2022-06-02T13:25:58.1807229+03:00;True|2022-05-31T20:59:15.0357944+03:00;True|2022-05-28T11:14:37.6450167+03:00;True|2022-05-27T20:38:27.5834947+03:00;True|2022-05-27T11:42:03.6458369+03:00;True|2022-05-27T11:40:18.7369457+03:00;True|2022-05-27T09:00:56.4205193+03:00;True|2022-05-26T20:14:38.5415524+03:00;True|2022-05-26T19:22:45.5741248+03:00;True|2022-05-25T21:31:16.2146860+03:00;True|2022-05-25T20:29:37.9088143+03:00;True|2022-05-24T19:09:25.2800922+03:00;True|2022-05-22T14:47:14.0819035+03:00;True|2022-05-20T18:58:29.4044503+03:00;True|2022-05-20T18:34:40.2545742+03:00;True|2022-05-19T21:18:14.7783769+03:00;True|2022-05-19T13:38:41.3418853+03:00;True|2022-05-18T20:26:08.5168148+03:00;True|2022-05-18T15:03:14.7684196+03:00;True|2022-05-17T21:04:31.6530622+03:00;True|2022-05-16T20:52:18.5972826+03:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -28,13 +28,13 @@
       <publishTime>06/09/2022 19:19:41</publishTime>
     </File>
     <File Include="bin/BL.dll">
-      <publishTime>06/14/2022 20:41:39</publishTime>
+      <publishTime>06/15/2022 19:52:12</publishTime>
     </File>
     <File Include="bin/BL.dll.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="bin/BL.pdb">
-      <publishTime>06/14/2022 20:41:39</publishTime>
+      <publishTime>06/15/2022 19:52:12</publishTime>
     </File>
     <File Include="bin/ClosedXML.dll">
       <publishTime>12/16/2020 12:59:08</publishTime>
@@ -127,10 +127,10 @@
       <publishTime>11/13/2012 16:19:34</publishTime>
     </File>
     <File Include="bin/RKC.dll">
-      <publishTime>06/14/2022 20:41:39</publishTime>
+      <publishTime>06/15/2022 19:52:12</publishTime>
     </File>
     <File Include="bin/RKC.pdb">
-      <publishTime>06/14/2022 20:41:39</publishTime>
+      <publishTime>06/15/2022 19:52:12</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/08/2018 08:38:48</publishTime>
@@ -406,7 +406,7 @@
       <publishTime>06/01/2022 19:59:52</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>06/06/2022 21:20:30</publishTime>
+      <publishTime>06/15/2022 20:40:11</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>05/29/2022 02:00:22</publishTime>
@@ -508,10 +508,10 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPU.cshtml">
-      <publishTime>05/30/2022 20:04:57</publishTime>
+      <publishTime>06/15/2022 20:06:00</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPUDelete.cshtml">
-      <publishTime>05/29/2022 02:00:21</publishTime>
+      <publishTime>06/15/2022 20:23:02</publishTime>
     </File>
     <File Include="Views/Counter/FromAddPU.cshtml">
       <publishTime>05/29/2022 02:00:21</publishTime>
@@ -520,10 +520,10 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Counter/Index.cshtml">
-      <publishTime>06/14/2022 20:32:55</publishTime>
+      <publishTime>06/15/2022 20:43:11</publishTime>
     </File>
     <File Include="Views/Counter/SearchIPU.cshtml">
-      <publishTime>05/31/2022 20:42:28</publishTime>
+      <publishTime>06/15/2022 19:53:20</publishTime>
     </File>
     <File Include="Views/Counter/UploadFile.cshtml">
       <publishTime>05/29/2022 18:51:44</publishTime>
@@ -553,13 +553,13 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersData.cshtml">
-      <publishTime>06/14/2022 20:23:51</publishTime>
+      <publishTime>06/15/2022 20:06:47</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersDelete.cshtml">
-      <publishTime>06/14/2022 20:23:02</publishTime>
+      <publishTime>06/15/2022 20:01:34</publishTime>
     </File>
     <File Include="Views/PersonalData/FormAddPers.cshtml">
-      <publishTime>06/14/2022 20:24:15</publishTime>
+      <publishTime>06/15/2022 19:47:24</publishTime>
     </File>
     <File Include="Views/PersonalData/HistoryEdit.cshtml">
       <publishTime>06/08/2022 21:40:53</publishTime>
@@ -571,7 +571,7 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/02/2022 21:06:46</publishTime>
+      <publishTime>06/15/2022 20:45:03</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>05/29/2022 02:00:21</publishTime>
