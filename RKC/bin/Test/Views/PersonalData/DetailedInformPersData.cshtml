@@ -14,7 +14,7 @@
             <button id="CloseLock" name="@Model.FirstOrDefault().Lic" class="btn btn-success">Закрыть страницу</button>
             @if (!ViewBag.isLock)
             {
-                <input type="button" name="@Model.FirstOrDefault().Lic" class="btn btn-primary AddPersonalData" value="Добавить данные" data-toggle="modal" data-target="#AddPersData" />
+                <input type="button" name="@Model.FirstOrDefault().Lic" class="btn btn-primary AddPersonalData" value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
             }
             <a href="/PersonalData/DetailedInformPersDelete?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank"><input type="button" class="btn btn-primary" value="История " /></a>
         </div>
@@ -65,7 +65,7 @@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Место рождения:</label>
                                 <div class="col-sm-8">
-                                    <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="PlaceOfBirth" class="form-control ">@Items.PlaceOfBirth </textarea>
+                                    <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="PlaceOfBirth" class="form-control ">@Items.PlaceOfBirth</textarea>
                                 </div>
                                 <label class="col-sm-4 col-form-label">СНИЛС:</label>
                                 <div class="col-sm-8">
@@ -152,7 +152,7 @@
                                 <p class="text-center">
                                     <a style="margin-top:15px;" class="btn btn-primary" data-toggle="collapse" href="#DocColapse_@Items.idPersData"
                                        role="button" aria-expanded="false" aria-controls="DocColapse">Документы для скачивания</a>
-                                    <p>Колличество документов @Items.PersDataDocument.Count()</p>
+                                    <p>Количество документов @Items.PersDataDocument.Count()</p>
                                 </p>
                                 <div class="row">
                                     <div class="col">
@@ -260,7 +260,7 @@ else
         $(".loader").addClass("hidden");
     }
     $(document).ready(function (e) {
-        $("#SnilsNumber").mask("999-999-999-999-99");
+        $("#SnilsNumber").mask("999-999-999-99");
         $("#PassportSerial").mask("9999");
         $("#PassportNumber").mask("999999");
         $(document).on('keypress', 'input,select', function (e) {
@@ -332,21 +332,26 @@ else
             formData.append('Lic', $(this).parent().find('.LicFile').val());
             formData.append('idPersData', $(this).parent().find('.idPersDataFile').val());
             formData.append('Fio', $(this).parent().find('.FioFile').val());
-            $.ajax({
-                url: "/PersonalData/SaveFile",
-                type: "POST",
-                data: formData,
-                async: true,
-                success: function (data) {
-                    alert(data.result)
-                },
-                error: function (data) {
-                    alert('Ошибка обратитесь к системному администратору!');
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
+            if ($(this).parent().find('.NameFileFile').val() == '') {
+                $(this).parent().find('.NameFileFile').addClass("Required");
+            } else {
+                $(this).parent().find('.NameFileFile').remove("Required");
+                $.ajax({
+                    url: "/PersonalData/SaveFile",
+                    type: "POST",
+                    data: formData,
+                    async: true,
+                    success: function (data) {
+                        alert(data.result)
+                    },
+                    error: function (data) {
+                        alert('Ошибка обратитесь к системному администратору!');
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
             return false;
         });
         setTimeout(Loader, 1000);

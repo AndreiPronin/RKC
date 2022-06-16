@@ -1,4 +1,5 @@
 ﻿body {
+    /*background-color: #ced5db;*/
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -8,7 +9,23 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-
+.img-wrap {
+    position: relative;
+}
+.mainText {
+    color:white;
+   
+    width: 100%;
+    top: 50%;
+    text-align: center;
+}
+    .img-wrap h1 {
+        color:red;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -89,7 +106,7 @@ textarea {
 
 
 
-
+/*
 .loader {
     margin: 100px auto;
     font-size: 25px;
@@ -175,4 +192,130 @@ textarea {
     87.5% {
         box-shadow: 0em -2.6em 0em 0em rgba(8,8,8, 0.2), 1.8em -1.8em 0 0em rgba(8,8,8, 0.2), 2.5em 0em 0 0em rgba(8,8,8, 0.2), 1.75em 1.75em 0 0em rgba(8,8,8, 0.2), 0em 2.5em 0 0em rgba(8,8,8, 0.2), -1.8em 1.8em 0 0em rgba(8,8,8, 0.5), -2.6em 0em 0 0em rgba(8,8,8, 0.7), -1.8em -1.8em 0 0em #080808;
     }
+}*/
+.loader {
+    position: absolute;
+    top: calc(50% - 32px);
+    left: calc(50% - 32px);
+    width: 114px;
+    height: 114px;
+    border-radius: 50%;
+    perspective: 800px;
+}
+
+.inner {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+    .inner.one {
+        left: 0%;
+        top: 0%;
+        animation: rotate-one 1s linear infinite;
+        border-bottom: 3px solid #043e6e;
+    }
+
+    .inner.two {
+        right: 0%;
+        top: 0%;
+        animation: rotate-two 1s linear infinite;
+        border-right: 3px solid #043e6e;
+    }
+
+    .inner.three {
+        right: 0%;
+        bottom: 0%;
+        animation: rotate-three 1s linear infinite;
+        border-top: 3px solid #043e6e;
+    }
+
+@keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+.TimeAndDate {
+    background-color: #043e6e !important;
+    padding-left:20px;
+    color:white;
+}
+
+
+#wrapper {
+    padding-left: 250px;
+    transition: all 0.4s ease 0s;
+}
+
+#sidebar-wrapper {
+    margin-left: -250px;
+    left: 250px;
+    width: 250px;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: all 0.4s ease 0s;
+}
+
+#page-content-wrapper {
+    width: 100%;
+}
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width:767px) {
+
+    #wrapper {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        left: 0;
+    }
+
+    #wrapper.active {
+        position: relative;
+        left: 250px;
+    }
+
+        #wrapper.active #sidebar-wrapper {
+            left: 250px;
+            width: 250px;
+            transition: all 0.4s ease 0s;
+        }
 }

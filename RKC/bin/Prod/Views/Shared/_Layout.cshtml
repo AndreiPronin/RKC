@@ -4,42 +4,87 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - приложение ASP.NET</title>
+    <title>@ViewBag.Title -РБР</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
     @RenderSection("scripts", required: false)
 
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("ООО Расчетно билинговые решения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("ПУ", "Index", "Counter")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <div class="TimeAndDate">
+                    <div id="Date"></div>
+                    <div style="display: inline-flex;">
+                        <div id="hours">:</div>
+                        <div id="point">:</div>
+                        <div id="min">:</div>
+                        <div id="point">:</div>
+                        <div id="sec">:</div>
+                    </div>
+                </div>
             </div>
         </div>
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <img style="float: left; width: auto; height: 20px; margin-top: 15px;" src="~/Content/img/main/БРБ_лого.png" />
+                    @Html.ActionLink("ООО Расчетно-биллинговые решения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Поиск", "Index", "Counter")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - ООО Расчетно билинговые решения</p>
-        </footer>
     </div>
-
-   
 </body>
+<script>
+    $(document).ready(function (e) {
+        // Создаем две переменные с названиями месяцев и названиями дней.
+        var monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+        var dayNames = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+
+        // Создаем объект newDate()
+        var newDate = new Date();
+        // "Достаем" текущую дату из объекта Date
+        newDate.setDate(newDate.getDate());
+        // Получаем день недели, день, месяц и год
+        $('#Date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
+
+        setInterval(function () {
+            // Создаем объект newDate() и показывает секунды
+            var seconds = new Date().getSeconds();
+            // Добавляем ноль в начало цифры, которые до 10
+            $("#sec").html((seconds < 10 ? "0" : "") + seconds);
+        }, 1000);
+
+        setInterval(function () {
+            // Создаем объект newDate() и показывает минуты
+            var minutes = new Date().getMinutes();
+            // Добавляем ноль в начало цифры, которые до 10
+            $("#min").html((minutes < 10 ? "0" : "") + minutes);
+        }, 1000);
+
+        setInterval(function () {
+            // Создаем объект newDate() и показывает часы
+            var hours = new Date().getHours();
+            // Добавляем ноль в начало цифры, которые до 10
+            $("#hours").html((hours < 10 ? "0" : "") + hours);
+        }, 1000);
+    });
+</script>
 </html>

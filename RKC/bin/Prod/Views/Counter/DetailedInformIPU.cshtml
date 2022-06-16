@@ -2,12 +2,13 @@
 @{
     ViewBag.Title = "DetailedInformIPU";
     string TypePU = "";
+    var Index = 1;
 
 
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-@if(string.IsNullOrEmpty(ViewBag.FULL_LIC))
+@if (string.IsNullOrEmpty(ViewBag.FULL_LIC))
 {
     <div class="container">
         <h3 class="text-center">Детальная информация по лицевому счету  @Model.FirstOrDefault().FULL_LIC</h3>
@@ -21,7 +22,11 @@
         </div>
         <div id="ResultSearchSave"></div>
     </div>
-    <div class="loader"></div>
+    <div class="loader">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+    </div>
     <div class="row">
         @foreach (var Items in Model)
         {
@@ -44,7 +49,7 @@
 
                                     <label class="col-sm-4 col-form-label">Дата установки:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
+                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
                                     </div>
 
                                 }
@@ -53,7 +58,7 @@
 
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Дата установки:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
+                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
                                     </div>
 
                                 }
@@ -64,14 +69,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label"> Номер ПУ:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="@Items.FULL_LIC" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
+                                        <input type="text" name="@Items.FULL_LIC"  tabIndex="@Index@{Index++;}" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Номер ПУ:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="@Items.FULL_LIC" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
+                                        <input type="text" name="@Items.FULL_LIC"  tabIndex="@Index@{Index++;}" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
                                     </div>
                                 }
                             </div>
@@ -82,14 +87,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label">Модель ПУ:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
+                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Модель ПУ:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
+                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
                                     </div>
                                 }
 
@@ -101,14 +106,14 @@
                                     <label class="col-sm-4 col-form-label">Дата поверки:</label>
                                     <div class="col-sm-8">
 
-                                        <input type="date" readonly="readonly" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
+                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Дата поверки:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
+                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
                                     </div>
                                 }
 
@@ -119,14 +124,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label">Дата следующей поверки:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly" id="DATE_CHECK_NEXT" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK_NEXT)" />
+                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="DATE_CHECK_NEXT" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK_NEXT)" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Дата следующей поверки:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly" id="DATE_CHECK_NEXT" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK_NEXT)" />
+                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="DATE_CHECK_NEXT" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK_NEXT)" />
                                     </div>
                                 }
 
@@ -139,14 +144,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label">Номер пломбы:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly" id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
+                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Номер пломбы:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly" id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
+                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
                                     </div>
                                 }
 
@@ -157,14 +162,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label">Тип пломбы:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly" id="TYPEOFSEAL" class="form-control" value="@Items.TYPEOFSEAL" />
+                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="TYPEOFSEAL" class="form-control" value="@Items.TYPEOFSEAL" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Тип пломбы:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly" id="TYPEOFSEAL" class="form-control" value="@Items.TYPEOFSEAL" />
+                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="TYPEOFSEAL" class="form-control" value="@Items.TYPEOFSEAL" />
                                     </div>
                                 }
 
@@ -179,11 +184,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1XVS" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1XVS" />
+                                        <input type="text" id="FKUB1XVS"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1XVS" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2XVS" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2XVS" />
+                                        <input type="text" id="FKUB2XVS"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2XVS" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -200,11 +205,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1XV_2" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1XV_2" />
+                                        <input type="text" id="FKUB1XV_2"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1XV_2" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2XV_2" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2XV_2" />
+                                        <input type="text" id="FKUB2XV_2"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2XV_2" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -221,11 +226,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1XV_3" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1XV_3" />
+                                        <input type="text" id="FKUB1XV_3"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1XV_3" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2XV_3" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2XV_3" />
+                                        <input type="text" id="FKUB2XV_3"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2XV_3" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -242,11 +247,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1XV_4" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1XV_4" />
+                                        <input type="text" id="FKUB1XV_4"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1XV_4" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2XV_4" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2XV_4" />
+                                        <input type="text" id="FKUB2XV_4"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2XV_4" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -264,11 +269,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1OT_1" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1OT_1" />
+                                        <input type="text" id="FKUB1OT_1"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1OT_1" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2OT_1" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2OT_1" />
+                                        <input type="text" id="FKUB2OT_1"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2OT_1" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -286,11 +291,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1OT_2" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1OT_2" />
+                                        <input type="text" id="FKUB1OT_2"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1OT_2" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2OT_2" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2OT_2" />
+                                        <input type="text" id="FKUB2OT_2"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2OT_2" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -308,11 +313,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1OT_3" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1OT_3" />
+                                        <input type="text" id="FKUB1OT_3"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1OT_3" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2OT_3" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2OT_3" />
+                                        <input type="text" id="FKUB2OT_3"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2OT_3" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -330,11 +335,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1OT_4" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1OT_4" />
+                                        <input type="text" id="FKUB1OT_4"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB1OT_4" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2OT_4" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2OT_4" />
+                                        <input type="text" id="FKUB2OT_4"  tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control Saled" value="@Items.ALL_LICS.FKUB2OT_4" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -351,7 +356,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                @if (!string.IsNullOrEmpty(Items.FACTORY_NUMBER_PU))
+                                @if (!string.IsNullOrEmpty(Items.DESCRIPTION))
                                 {
                                     <label class="col-sm-4 col-form-label">Примечание:</label>
                                     <div class="col-sm-8">
@@ -415,9 +420,22 @@ else
 <div id="HistoryEdit"></div>
 <div id="FormAddPU"></div>
 <script>
-
-    $(document).ready(function (e) {
+    function Loader() {
         $(".loader").addClass("hidden");
+    }
+    $(document).ready(function (e) {
+        $(document).on('keypress', 'input,select', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                var $next = $('[tabIndex=' + (+this.tabIndex + 1) + ']');
+                console.log($next.length);
+                if (!$next.length) {
+                    $next = $('[tabIndex=1]');
+                }
+                $next.focus().click();
+            }
+        });
+        setTimeout(Loader, 1000);
         $(".Archive").click(function (e) {
             var id_pu = $(e.target).attr("name");
             $(".loader").removeClass("hidden");
@@ -585,8 +603,6 @@ else
                     }
                 }
             });
-
-
         })
         $("#CloseLock").click(function () {
             var Page = "DetailedInformIPU" + $("#CloseLock").attr("name");

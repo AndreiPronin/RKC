@@ -40,9 +40,17 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-
-                var Res = db.PersData.Where(x => x.Lic == FullLic && (x.IsDelete == false || x.IsDelete == null)).Include("PersDataDocument").OrderByDescending(x => x.Main).ToList();
-                return Res;
+                try
+                {
+                    var Res = db.PersData.Where(x => x.Lic == FullLic && (x.IsDelete == false || x.IsDelete == null)).Include("PersDataDocument").OrderByDescending(x => x.Main).ToList();
+                    return Res;
+                }
+                catch(Exception ex)
+                {
+                    var res = ex.InnerException.Message;
+                    return null;
+                }
+                    
             }
         }
         public List<PersData> GetInfoPersDataDelete(string FullLic)
@@ -129,8 +137,8 @@ namespace BL.Services
                             var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == persDataModel.Lic).FirstOrDefault();
                             AllLIC.KL = persDataModel.NumberOfPersons;
                             AllLIC.SOBS = Convert.ToDecimal(persDataModel.Square);
-                            AllLIC.FAMIL = persDataModel.MiddleName;
-                            AllLIC.OTCH = persDataModel.LastName;
+                            AllLIC.FAMIL = persDataModel.LastName;
+                            AllLIC.OTCH = persDataModel.MiddleName;
                             AllLIC.IMYA = persDataModel.FirstName;
                             AllLIC.FIO = $"{persDataModel.LastName} {persDataModel.FirstName} {persDataModel.MiddleName}";
                             dbAllLic.SaveChanges();
@@ -193,14 +201,18 @@ namespace BL.Services
                         Items.Main = true;
                         using(var dbAllLic = new DbLIC())
                         {
-                            var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == Items.Lic).FirstOrDefault();
-                            AllLIC.KL = Items.NumberOfPersons;
-                            AllLIC.SOBS = Convert.ToDecimal(Items.Square);
-                            AllLIC.FAMIL = Items.MiddleName;
-                            AllLIC.OTCH = Items.LastName;
-                            AllLIC.IMYA = Items.FirstName;
-                            AllLIC.FIO = $"{Items.FirstName} {Items.LastName} {Items.MiddleName}";
-                            dbAllLic.SaveChanges();
+                            try
+                            {
+                                var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == Items.Lic).FirstOrDefault();
+                                AllLIC.KL = Items.NumberOfPersons;
+                                AllLIC.SOBS = Convert.ToDecimal(Items.Square);
+                                AllLIC.FAMIL = Items.LastName;
+                                AllLIC.OTCH = Items.MiddleName;
+                                AllLIC.IMYA = Items.FirstName;
+                                AllLIC.FIO = $"{Items.LastName} {Items.FirstName} {Items.MiddleName}";
+                                dbAllLic.SaveChanges();
+                            }
+                            catch { }
                         }
                     }
                 }
@@ -212,9 +224,11 @@ namespace BL.Services
         public void AddPersData(PersDataModel persDataModel, string User)
         {
             using (var db = new ApplicationDbContext())
-            {              
-                db.PersData.Add(ConvertToModel.PersDataModel_To_PersData(persDataModel));
+            {
+                PersData persData = ConvertToModel.PersDataModel_To_PersData(persDataModel);
+                db.PersData.Add(persData);
                 db.SaveChanges();
+                _ilogger.ActionUsersPersData(persData.idPersData, "Добавил", User);
                 var PersMain = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main == true && (x.IsDelete == false || x.IsDelete == null))?.FirstOrDefault();
                 if (PersMain != null)
                 {
@@ -231,6 +245,7 @@ namespace BL.Services
 
         public void DeletePers(int IdPersData, string User)
         {
+            _ilogger.ActionUsersPersData(IdPersData, "Удалил", User);
             using (var db = new ApplicationDbContext())
             {
                 var Pers = db.PersData.Find(IdPersData);

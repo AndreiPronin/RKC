@@ -2,7 +2,15 @@
 @{
     ViewBag.Title = "Main";
 }
-<div class="loader"></div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+
+<div class="loader">
+    <div class="inner one"></div>
+    <div class="inner two"></div>
+    <div class="inner three"></div>
+</div>
 <div class="container">
     @using (Html.BeginForm("UploadFile", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -60,7 +68,7 @@
         </div>
     }
 </div>
-<h1 class="page-header">Поиск ПУ</h1>
+<h1 class="page-header"></h1>
 <div class="container">
     <div class="row">
 
@@ -173,5 +181,4 @@
             }
         });
     });
-
 </script>

@@ -13,8 +13,8 @@ namespace BL.Helper
         public static bool PersDataModel_To_PersData(PersData persData, PersDataModel persDataModel)
         {
             if(persData.FirstName != persDataModel.FirstName
-                || persData.MiddleName != persData.MiddleName
-                || persData.LastName != persData.LastName
+                || persData.MiddleName != persDataModel.MiddleName
+                || persData.LastName != persDataModel.LastName
                 || persData.Square != persDataModel.Square
                 || persData.NumberOfPersons != persDataModel.NumberOfPersons)
             {

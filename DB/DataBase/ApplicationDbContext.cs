@@ -22,7 +22,7 @@ namespace DB.DataBase
         {
         }
     }
-    [Table(name: "Logs", Schema = "dbo")]
+    [Table(name: "LogsIpu", Schema = "dbo")]
     public class Log
     {
         [Key]
