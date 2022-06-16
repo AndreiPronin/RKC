@@ -52,7 +52,7 @@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Имя:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly"tabIndex="@Index@{Index++;}" id="FirstName" class="form-control " value="@Items.FirstName" />
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="FirstName" class="form-control " value="@Items.FirstName" />
                                     @*<input type="date" readonly="readonly" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.MiddleName)" />*@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Отчество:</label>
@@ -65,7 +65,7 @@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Место рождения:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="PlaceOfBirth" class="form-control " value="@Items.PlaceOfBirth" />
+                                    <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="PlaceOfBirth" class="form-control ">@Items.PlaceOfBirth </textarea>
                                 </div>
                                 <label class="col-sm-4 col-form-label">СНИЛС:</label>
                                 <div class="col-sm-8">
@@ -80,19 +80,19 @@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Cерия:</label>
                                 <div class="col-sm-8">
-                                    <input type="number" min="0" max="99999" tabIndex="@Index@{Index++;}" readonly="readonly" id="PassportSerial" class="form-control PassportSerial" value="@Items.PassportSerial" />
+                                    <input type="text" tabIndex="@Index@{Index++;}" readonly="readonly" id="PassportSerial" class="form-control PassportSerial" value="@Items.PassportSerial" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">Номер:</label>
                                 <div class="col-sm-8">
                                     <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="PassportNumber" class="form-control PassportNumber" value="@Items.PassportNumber" />
                                 </div>
-                                <label class="col-sm-4 col-form-label">Выдан:</label>
-                                <div class="col-sm-8">
-                                    <textarea readonly="readonly" id="PassportIssued" tabIndex="@Index@{Index++;}" class="form-control PassportIssued">@Items.PassportIssued</textarea>
-                                </div>
                                 <label class="col-sm-4 col-form-label">Дата выдачи:</label>
                                 <div class="col-sm-8">
                                     <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="PassportDate" class="form-control " value="@string.Format("{0:yyyy-MM-dd}", Items.PassportDate)" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Кем выдан:</label>
+                                <div class="col-sm-8">
+                                    <textarea readonly="readonly" id="PassportIssued" tabIndex="@Index@{Index++;}" class="form-control PassportIssued">@Items.PassportIssued</textarea>
                                 </div>
                             </div>
                             <hr />
@@ -101,20 +101,25 @@
 
                             <label class="col-sm-4 col-form-label">Телефон1:</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="Tel1" class="form-control" value="@Items.Tel1" />
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Tel1" class="form-control" value="@Items.Tel1" />
                                 <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="Comment1" class="form-control">@Items.Comment1</textarea>
                             </div>
                             <label class="col-sm-4 col-form-label">Телефон2:</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="Tel2" class="form-control" value="@Items.Tel2" />
-                                <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="Comment2" class="form-control">@Items.Comment2</textarea>
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Tel2" class="form-control" value="@Items.Tel2" />
+                                @*<textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="Comment2" class="form-control">@Items.Comment2</textarea>*@
                             </div>
-                            <label class="col-sm-4 col-form-label">Тип:</label>
+                            <label class="col-sm-4 col-form-label">Email:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Email" class="form-control" value="@Items.Email" />
+                                @*<textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="Comment2" class="form-control">@Items.Comment2</textarea>*@
+                            </div>
+                            <label class="col-sm-4 col-form-label">Вид собственности:</label>
                             <div class="col-sm-8">
                                 <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="RoomType" class="form-control" value="@Items.RoomType" />
                             </div>
                             @if (Items.Main == true)
-                             {
+                            {
                                 <label class="col-sm-4 col-form-label">Количество человек:</label>
                                 <div class="col-sm-8">
                                     <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="NumberOfPersons" class="form-control" value="@Items.NumberOfPersons" />
@@ -123,9 +128,9 @@
                                 <div class="col-sm-8">
                                     <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Square" class="form-control" value="@Items.Square" />
                                 </div>
-                             }
-                             else
-                             {
+                            }
+                            else
+                            {
                                 <label class="col-sm-4 col-form-label">Количество человек:</label>
                                 <div class="col-sm-8">
                                     <label class="col-sm-4 col-form-label">@Items.NumberOfPersons</label>
@@ -147,6 +152,7 @@
                                 <p class="text-center">
                                     <a style="margin-top:15px;" class="btn btn-primary" data-toggle="collapse" href="#DocColapse_@Items.idPersData"
                                        role="button" aria-expanded="false" aria-controls="DocColapse">Документы для скачивания</a>
+                                    <p>Колличество документов @Items.PersDataDocument.Count()</p>
                                 </p>
                                 <div class="row">
                                     <div class="col">
@@ -254,6 +260,9 @@ else
         $(".loader").addClass("hidden");
     }
     $(document).ready(function (e) {
+        $("#SnilsNumber").mask("999-999-999-999-99");
+        $("#PassportSerial").mask("9999");
+        $("#PassportNumber").mask("999999");
         $(document).on('keypress', 'input,select', function (e) {
             if (e.which == 13) {
                 e.preventDefault();

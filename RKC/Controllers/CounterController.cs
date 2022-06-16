@@ -61,7 +61,10 @@ namespace RKC.Controllers
                     ViewBag.IsLock = true;
                 }
                 else ViewBag.IsLock = false;
-                ViewBag.IsLock = flagsAction.GetAction(nameof(DetailedInformIPU));
+                if (ViewBag.IsLock == false)
+                {
+                    ViewBag.IsLock = flagsAction.GetAction(nameof(DetailedInformIPU));
+                }
                 var Result = counter.DetailInfroms(FULL_LIC);
                 
                 if (Result.Count() > 0)

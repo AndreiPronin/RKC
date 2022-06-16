@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace RKC.Controllers
 {
+    [Authorize]
     public class PersonalDataController : Controller
     {
         private readonly IPersonalData _personalData;
@@ -42,7 +43,10 @@ namespace RKC.Controllers
                     ViewBag.IsLock = true;
                 }
                 else ViewBag.IsLock = false;
-                ViewBag.IsLock = _flagsAction.GetAction(nameof(DetailedInformPersData));
+                if (ViewBag.IsLock == false)
+                {
+                    ViewBag.IsLock = _flagsAction.GetAction(nameof(DetailedInformPersData));
+                }
                 var Result = _personalData.GetInfoPersData(FULL_LIC);
                 if (Result.Count() > 0)
                 {

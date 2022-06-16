@@ -50,7 +50,7 @@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Место рождения:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" id="PlaceOfBirth" class="form-control " value="@Items.PlaceOfBirth" />
+                                    <textarea readonly="readonly" id="PlaceOfBirth" class="form-control ">@Items.PlaceOfBirth </textarea>
                                 </div>
                                 <label class="col-sm-4 col-form-label">СНИЛС:</label>
                                 <div class="col-sm-8">
@@ -65,19 +65,19 @@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Cерия:</label>
                                 <div class="col-sm-8">
-                                    <input type="number" min="0" max="99999" readonly="readonly" id="PassportSerial" class="form-control PassportSerial" value="@Items.PassportSerial" />
+                                    <input type="text" readonly="readonly" id="PassportSerial" class="form-control PassportSerial" value="@Items.PassportSerial" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">Номер:</label>
                                 <div class="col-sm-8">
                                     <input type="text" readonly="readonly" id="PassportNumber" class="form-control PassportNumber" value="@Items.PassportNumber" />
                                 </div>
-                                <label class="col-sm-4 col-form-label">Выдан:</label>
-                                <div class="col-sm-8">
-                                    <textarea readonly="readonly" id="PassportIssued" class="form-control PassportIssued">@Items.PassportIssued</textarea>
-                                </div>
                                 <label class="col-sm-4 col-form-label">Дата выдачи:</label>
                                 <div class="col-sm-8">
                                     <input type="date" readonly="readonly" id="PassportDate" class="form-control " value="@string.Format("{0:yyyy-MM-dd}", Items.PassportDate)" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Кем выдан:</label>
+                                <div class="col-sm-8">
+                                    <textarea readonly="readonly" id="PassportIssued" class="form-control PassportIssued">@Items.PassportIssued</textarea>
                                 </div>
                             </div>
                             <hr />
@@ -92,20 +92,39 @@
                             <label class="col-sm-4 col-form-label">Телефон2:</label>
                             <div class="col-sm-8">
                                 <input type="text" readonly="readonly" id="Tel2" class="form-control" value="@Items.Tel2" />
-                                <textarea readonly="readonly" id="Comment2" class="form-control">@Items.Comment2</textarea>
+                                @*<textarea readonly="readonly" id="Comment2" class="form-control">@Items.Comment2</textarea>*@
                             </div>
-                            <label class="col-sm-4 col-form-label">Тип:</label>
+                            <label class="col-sm-4 col-form-label">Email:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" id="Email" class="form-control" value="@Items.Email" />
+                                @*<textarea readonly="readonly" id="Comment2" class="form-control">@Items.Comment2</textarea>*@
+                            </div>
+                            <label class="col-sm-4 col-form-label">Вид собственности:</label>
                             <div class="col-sm-8">
                                 <input type="text" readonly="readonly" id="RoomType" class="form-control" value="@Items.RoomType" />
                             </div>
-                            <label class="col-sm-4 col-form-label">Количество человек:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" id="NumberOfPersons" class="form-control" value="@Items.NumberOfPersons" />
-                            </div>
-                            <label class="col-sm-4 col-form-label">Площадь:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" id="Square" class="form-control" value="@Items.Square" />
-                            </div>
+                            @if (Items.Main == true)
+                            {
+                                <label class="col-sm-4 col-form-label">Количество человек:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" id="NumberOfPersons" class="form-control" value="@Items.NumberOfPersons" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Площадь:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" id="Square" class="form-control" value="@Items.Square" />
+                                </div>
+                            }
+                            else
+                            {
+                                <label class="col-sm-4 col-form-label">Количество человек:</label>
+                                <div class="col-sm-8">
+                                    <label class="col-sm-4 col-form-label">@Items.NumberOfPersons</label>
+                                </div>
+                                <label class="col-sm-4 col-form-label">Площадь:</label>
+                                <div class="col-sm-8">
+                                    <label class="col-sm-4 col-form-label">@Items.Square</label>
+                                </div>
+                            }
                             <label class="col-sm-4 col-form-label">Комментарий:</label>
                             <div class="col-sm-8">
                                 <textarea readonly="readonly" id="Comment" class="form-control">@Items.Comment</textarea>
@@ -118,6 +137,7 @@
                                 <p class="text-center">
                                     <a style="margin-top:15px;" class="btn btn-primary" data-toggle="collapse" href="#DocColapse_@Items.idPersData"
                                        role="button" aria-expanded="false" aria-controls="DocColapse">Документы для скачивания</a>
+                                    <p>Колличество документов @Items.PersDataDocument.Count()</p>
                                 </p>
                                 <div class="row">
                                     <div class="col">
@@ -129,7 +149,7 @@
                                                         <a href="/PersonalData/DownLoadFile?Id=@Item.id" target="_blank">Скачать @Item.DocumentName</a>
                                                         <label style="margin-left:20px;cursor:pointer" class="NullOrEmpty">
                                                             <input type="text" class="FileName" hidden="hidden" value="@Item.DocumentName" />
-                                                            @*<button name="@Item.id" class="DeleteFile">X</button>*@
+                                                            <button name="@Item.id" class="DeleteFile">X</button>
                                                         </label>
                                                     </div>
                                                 }
@@ -185,7 +205,7 @@ else
 {
 <div class="container">
     <h3 class="text-center"></h3>
-    <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC не найдено ПУ</h1>
+    <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC ничего не найдено</h1>
     <div class="col-md-12">
         <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
     </div>

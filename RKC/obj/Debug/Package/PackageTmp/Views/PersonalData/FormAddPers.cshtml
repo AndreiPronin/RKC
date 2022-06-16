@@ -46,7 +46,7 @@
                         </div>
                         <label class="col-sm-4 col-form-label">Cерия:</label>
                         <div class="col-sm-8">
-                            <input type="number" min="0" max="99999"  id="PassportSerial_" class="form-control PassportSerial" value="" />
+                            <input id="PassportSerial_" class="form-control PassportSerial" value="" />
                         </div>
                         <label class="col-sm-4 col-form-label">Номер:</label>
                         <div class="col-sm-8">
@@ -73,20 +73,25 @@
                     <label class="col-sm-4 col-form-label">Телефон2:</label>
                     <div class="col-sm-8">
                         <input type="text" id="Tel2_" class="form-control" value="" />
-                        <textarea id="Comment2_" class="form-control"></textarea>
+                        @*<textarea id="Comment2_" class="form-control"></textarea>*@
                     </div>
-                    <label class="col-sm-4 col-form-label">Тип:</label>
+                    <label class="col-sm-4 col-form-label">Email:</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="Email_" class="form-control" value="" />
+                        @*<textarea id="Comment2_" class="form-control"></textarea>*@
+                    </div>
+                    <label class="col-sm-4 col-form-label">Вид собственности:</label>
                     <div class="col-sm-8">
                         <input type="text" id="RoomType_" class="form-control" value="" />
                     </div>
                     @*<label class="col-sm-4 col-form-label">Площадь:</label>
-                    <div class="col-sm-8">
-                        <input type="text" id="Square_" class="form-control" value="" />
-                    </div>
-                    <label class="col-sm-4 col-form-label">Количество человек:</label>
-                    <div class="col-sm-8">
-                        <input type="text" id="NumberOfPersons_" class="form-control" value="" />
-                    </div>*@
+        <div class="col-sm-8">
+            <input type="text" id="Square_" class="form-control" value="" />
+        </div>
+        <label class="col-sm-4 col-form-label">Количество человек:</label>
+        <div class="col-sm-8">
+            <input type="text" id="NumberOfPersons_" class="form-control" value="" />
+        </div>*@
                 </div>
             </div>
             <div class="modal-footer">
@@ -98,6 +103,9 @@
 </div>
 <script>
     $(document).ready(function (e) {
+        $("#SnilsNumber_").mask("999-999-999-999-99");
+        $("#PassportSerial_").mask("9999");
+        $("#PassportNumber_").mask("999999");
         $("#Save_").click(function (e) {
             $.ajax({
                 url: '/PersonalData/AddPersData',
