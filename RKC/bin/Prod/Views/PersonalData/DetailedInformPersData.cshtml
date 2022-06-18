@@ -246,10 +246,11 @@ else
         <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC не найдено ПУ</h1>
         @if (ViewBag.isLock)
         {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>}
-        <div class="col-md-12">
-            <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
-            <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
-        </div>
+    <div class="col-md-12">
+        <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
+        <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPersonalData" value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
+        <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
+    </div>
         <div id="ResultSearchSave"></div>
     </div>
 

@@ -30,7 +30,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB1XVS != saveModelIPU.FKUB1XVS)
+                        if (aLL_LICS.FKUB1XVS != saveModelIPU.FKUB1XVS || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили начальные показания ГВС1: было {aLL_LICS.FKUB1XVS} стало {saveModelIPU.FKUB1XVS}  \r\n");
 
                     }
@@ -40,7 +40,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB1XV_2 != saveModelIPU.FKUB1XV_2)
+                        if (aLL_LICS.FKUB1XV_2 != saveModelIPU.FKUB1XV_2 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили начальные показания ГВС2: было {aLL_LICS.FKUB1XV_2} стало {saveModelIPU.FKUB1XV_2}  \r\n");
 
                     }
@@ -51,7 +51,7 @@ namespace BL.Helper
                     {
 
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB1XV_3 != saveModelIPU.FKUB1XV_3)
+                        if (aLL_LICS.FKUB1XV_3 != saveModelIPU.FKUB1XV_3 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили начальные показания ГВС3: было {aLL_LICS.FKUB1XV_3} стало {saveModelIPU.FKUB1XV_3}  \r\n");
 
                     }
@@ -62,7 +62,7 @@ namespace BL.Helper
                     {
 
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB1XV_4 != saveModelIPU.FKUB1XV_4)
+                        if (aLL_LICS.FKUB1XV_4 != saveModelIPU.FKUB1XV_4 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили начальные показания ГВС4: было {aLL_LICS.FKUB1XV_4} стало {saveModelIPU.FKUB1XV_4}  \r\n");
 
                     }
@@ -72,7 +72,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB1OT_1 != saveModelIPU.FKUB1OT_1)
+                        if (aLL_LICS.FKUB1OT_1 != saveModelIPU.FKUB1OT_1 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили начальные показания ОТП1: было {aLL_LICS.FKUB1OT_1} стало {saveModelIPU.FKUB1OT_1}  \r\n");
 
                     }
@@ -82,7 +82,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB1OT_2 != saveModelIPU.FKUB1OT_2)
+                        if (aLL_LICS.FKUB1OT_2 != saveModelIPU.FKUB1OT_2 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили начальные показания ОТП2: было {aLL_LICS.FKUB1OT_2} стало {saveModelIPU.FKUB1OT_2}  \r\n");
 
                     }
@@ -92,7 +92,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB1OT_3 != saveModelIPU.FKUB1OT_3)
+                        if (aLL_LICS.FKUB1OT_3 != saveModelIPU.FKUB1OT_3 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили начальные показания ОТП3: было {aLL_LICS.FKUB1OT_3} стало {saveModelIPU.FKUB1OT_3}  \r\n");
 
                     }
@@ -102,7 +102,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB1OT_4 != saveModelIPU.FKUB1OT_4)
+                        if (aLL_LICS.FKUB1OT_4 != saveModelIPU.FKUB1OT_4 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили начальные показания ОТП4: было {aLL_LICS.FKUB1OT_4} стало {saveModelIPU.FKUB1OT_4}  \r\n");
 
                     }
@@ -112,7 +112,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB2XVS != saveModelIPU.FKUB2XVS)
+                        if (aLL_LICS.FKUB2XVS != saveModelIPU.FKUB2XVS || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили конечные показания ГВС1: было {aLL_LICS.FKUB2XVS} стало {saveModelIPU.FKUB2XVS}  \r\n");
 
                     }
@@ -122,7 +122,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB2XV_2 != saveModelIPU.FKUB2XV_2)
+                        if (aLL_LICS.FKUB2XV_2 != saveModelIPU.FKUB2XV_2 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили конечные показания ГВС2: было {aLL_LICS.FKUB2XV_2} стало {saveModelIPU.FKUB2XV_2}  \r\n");
 
                     }
@@ -133,7 +133,7 @@ namespace BL.Helper
                     {
 
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB2XV_3 != saveModelIPU.FKUB2XV_3)
+                        if (aLL_LICS.FKUB2XV_3 != saveModelIPU.FKUB2XV_3 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили конечные показания ГВС3: было {aLL_LICS.FKUB2XV_3} стало {saveModelIPU.FKUB2XV_3}  \r\n");
 
                     }
@@ -144,7 +144,7 @@ namespace BL.Helper
                     {
 
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB2XV_4 != saveModelIPU.FKUB2XV_4)
+                        if (aLL_LICS.FKUB2XV_4 != saveModelIPU.FKUB2XV_4 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили конечные показания ГВС4: было {aLL_LICS.FKUB2XV_4} стало {saveModelIPU.FKUB2XV_4}  \r\n");
 
                     }
@@ -154,7 +154,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB2OT_1 != saveModelIPU.FKUB2OT_1)
+                        if (aLL_LICS.FKUB2OT_1 != saveModelIPU.FKUB2OT_1 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили конечные показания ОТП1: было {aLL_LICS.FKUB2OT_1} стало {saveModelIPU.FKUB2OT_1}  \r\n");
 
                     }
@@ -164,7 +164,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB2OT_2 != saveModelIPU.FKUB2OT_2)
+                        if (aLL_LICS.FKUB2OT_2 != saveModelIPU.FKUB2OT_2 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили конечные показания ОТП2: было {aLL_LICS.FKUB2OT_2} стало {saveModelIPU.FKUB2OT_2}  \r\n");
 
                     }
@@ -174,7 +174,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB2OT_3 != saveModelIPU.FKUB2OT_3)
+                        if (aLL_LICS.FKUB2OT_3 != saveModelIPU.FKUB2OT_3 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили конечные показания ОТП3: было {aLL_LICS.FKUB2OT_3} стало {saveModelIPU.FKUB2OT_3}  \r\n");
 
                     }
@@ -184,7 +184,7 @@ namespace BL.Helper
                     using (var DbLIC = new DbLIC())
                     {
                         ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                        if (aLL_LICS.FKUB2OT_4 != saveModelIPU.FKUB2OT_4)
+                        if (aLL_LICS.FKUB2OT_4 != saveModelIPU.FKUB2OT_4 || saveModelIPU.OVERWRITE_SEAL == true)
                             Result.Append($"Изменили конечные показания ОТП4: было {aLL_LICS.FKUB2OT_4} стало {saveModelIPU.FKUB2OT_4}  \r\n");
 
                     }

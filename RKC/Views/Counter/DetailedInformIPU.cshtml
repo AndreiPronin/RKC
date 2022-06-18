@@ -162,14 +162,24 @@
                                 {
                                     <label class="col-sm-4 col-form-label">Тип пломбы:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="TYPEOFSEAL" class="form-control" value="@Items.TYPEOFSEAL" />
+                                        <select disabled id="TYPEOFSEAL" class="form-control">
+                                            <option>@Items.TYPEOFSEAL</option>
+                                            <option value="Магнитная">Магнитная</option>
+                                            <option value="дургая">дургая</option>
+                                        </select>
+                                        @*<input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="TYPEOFSEAL" class="form-control" value="@Items.TYPEOFSEAL" />*@
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Тип пломбы:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="TYPEOFSEAL" class="form-control" value="@Items.TYPEOFSEAL" />
+                                        <select disabled id="TYPEOFSEAL" class="form-control">
+                                            <option>@Items.TYPEOFSEAL</option>
+                                            <option value="Магнитная">Магнитная</option>
+                                            <option value="дургая">дургая</option>
+                                        </select>
+                                        @*<input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="TYPEOFSEAL" class="form-control" value="@Items.TYPEOFSEAL" />*@
                                     </div>
                                 }
 
@@ -497,6 +507,7 @@ else
         $(".Edit").click(function (e) {
             $(this).parent().find('input').prop('readonly', false);
             $('.Saled').prop('readonly', true);
+            $(this).parent().find('select').prop('disabled', false);
             $(this).parent().find('input').removeClass('hidden');
             $(this).addClass("hidden");
             $(this).parent().find('.OVERWRITE').prop('disabled', false);

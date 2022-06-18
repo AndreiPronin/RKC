@@ -146,9 +146,9 @@ namespace BL.Services
                     }
                 }
                 _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel), User);
-                if(persDataModel.Main == true && (persDataModel.Square != PersData.Square 
-                    || persDataModel.NumberOfPersons != PersData.NumberOfPersons))
-                {
+                //if(persDataModel.Main == true && (persDataModel.Square != PersData.Square 
+                //    || persDataModel.NumberOfPersons != PersData.NumberOfPersons))
+                //{
                     var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
                     foreach(var Items in ListPers)
                     {
@@ -156,7 +156,7 @@ namespace BL.Services
                         Items.NumberOfPersons = persDataModel.NumberOfPersons;
                     }
                     db.SaveChanges();
-                }
+                //}
                 PersData.DateAdd = persDataModel.DateAdd;
                 PersData.Comment = persDataModel.Comment;
                 PersData.Comment1 = persDataModel.Comment1;
