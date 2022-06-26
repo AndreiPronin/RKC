@@ -39,6 +39,7 @@ namespace DB.Model
         public int? NumberOfPersons { get; set; }
         public double? Square { get; set; }
         public string StateLic { get; set; } = "";
+        public string SendingElectronicReceipt { get; set; }
         public virtual ICollection<PersDataDocument> PersDataDocument { get; set; }
 
     }

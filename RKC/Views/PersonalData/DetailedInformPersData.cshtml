@@ -17,6 +17,8 @@
                 <input type="button" name="@Model.FirstOrDefault().Lic" class="btn btn-primary AddPersonalData" value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
             }
             <a href="/PersonalData/DetailedInformPersDelete?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank"><input type="button" class="btn btn-primary" value="История " /></a>
+            <a href="/Counter/DetailedInformIPU?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank"  data-tooltip="Закройте редактирование при переходе..." >
+            <input type="button"  class="btn btn-primary" value="ПУ" /></a>
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -34,11 +36,14 @@
                     @*<p>Лицевой счет:  <input type="text" disabled="disabled"name="@Items.idPersData" class="form-control" value="@Items.Lic" /> </p>*@
                     @if (Items.Main == true)
                     {
-                        <p class="NullOrEmpty" >Основной</p>
+                        <p class="NullOrEmpty">Основной</p>
                     }
                     else
                     {
-                        <input class="btn btn-primary EditMain" name="@Items.idPersData" id="" value="Сделать основным" />
+                        if (!ViewBag.isLock)
+                        {
+                            <input class="btn btn-primary EditMain" name="@Items.idPersData" id="" value="Сделать основным" />
+                        }
                     }
                 </div>
                 <hr />
@@ -69,11 +74,11 @@
                                 </div>
                                 <label class="col-sm-4 col-form-label">СНИЛС:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="SnilsNumber" class="form-control " value="@Items.SnilsNumber" />
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="SnilsNumber" class="form-control SnilsNumber" value="@Items.SnilsNumber" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">ИНН:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control " value="@Items.Inn" />
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.Inn" />
                                 </div>
                                 <div class="col-sm-12 text-center">
                                     <p>Паспортные данные</p>
@@ -114,12 +119,22 @@
                                 <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Email" class="form-control" value="@Items.Email" />
                                 @*<textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="Comment2" class="form-control">@Items.Comment2</textarea>*@
                             </div>
+                            <label class="col-sm-4 col-form-label">Отправка эл/квитанции:</label>
+                            <div class="col-sm-8">
+                                <select disabled id="SendingElectronicReceipt" class="form-control">
+                                    <option>@Items.SendingElectronicReceipt</option>
+                                    <option value="Да">Да</option>
+                                    <option value="Нет">Нет</option>
+                                </select>
+                                @*<input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="RoomType" class="form-control" value="@Items.RoomType" />*@
+                            </div>
                             <label class="col-sm-4 col-form-label">Вид собственности:</label>
                             <div class="col-sm-8">
                                 <select disabled id="RoomType" class="form-control">
-                                    <option >@Items.RoomType</option>
+                                    <option>@Items.RoomType</option>
                                     <option value="Собствен">Собствен.</option>
                                     <option value="Наниматель">Наниматель</option>
+                                    <option value="Зарег.">Зарег.</option>
                                 </select>
                                 @*<input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="RoomType" class="form-control" value="@Items.RoomType" />*@
                             </div>
@@ -136,12 +151,12 @@
                             }
                             else
                             {
-                                {Items.NumberOfPersons = Items.NumberOfPersons == null ? 0:Items.NumberOfPersons; }
+                                { Items.NumberOfPersons = Items.NumberOfPersons == null ? 0 : Items.NumberOfPersons; }
                                 <label class="col-sm-4 col-form-label">Количество человек:</label>
                                 <div class="col-sm-8">
                                     <label class="col-sm-4 col-form-label">@Items.NumberOfPersons</label>
                                 </div>
-                                {Items.Square = Items.Square == null ? 0:Items.Square; }
+                                { Items.Square = Items.Square == null ? 0 : Items.Square; }
                                 <label class="col-sm-4 col-form-label">Площадь:</label>
                                 <div class="col-sm-8">
                                     <label class="col-sm-4 col-form-label">@Items.Square</label>
@@ -171,7 +186,9 @@
                                                         <a href="/PersonalData/DownLoadFile?Id=@Item.id" target="_blank">Скачать @Item.DocumentName</a>
                                                         <label style="margin-left:20px;cursor:pointer" class="NullOrEmpty">
                                                             <input type="text" class="FileName" hidden="hidden" value="@Item.DocumentName" />
-                                                            <button name="@Item.id" class="DeleteFile">X</button>
+                                                            @if (!ViewBag.isLock)
+                                                            {
+                                                                <button name="@Item.id" class="DeleteFile">X</button>}
                                                         </label>
                                                     </div>
                                                 }
@@ -223,14 +240,14 @@
                         <input type="button" name="@Items.idPersData" value="Редактировать" class="btn btn-success Edit" />
                         if (Items.Main != true)
                         {
-                        <input style="float:right;" name="@Items.idPersData" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
+                            <input style="float:right;" name="@Items.idPersData" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
                         }
                         <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
                         <input type="button" name="@Items.idPersData" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
                     }
                     else
                     {
-                       
+
                         <input type="button" name="@Items.Lic" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
                         if (!string.IsNullOrEmpty(ViewBag.User))
                         {
@@ -253,8 +270,7 @@ else
         {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>}
     <div class="col-md-12">
         <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
-        <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPersonalData" value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
-        <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
+        <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPersonalData"  value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
     </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -268,9 +284,9 @@ else
         $(".loader").addClass("hidden");
     }
     $(document).ready(function (e) {
-        $("#SnilsNumber").mask("999-999-999-99");
-        $("#PassportSerial").mask("9999");
-        $("#PassportNumber").mask("999999");
+        $(".SnilsNumber").mask("999-999-999-99");
+        $(".PassportSerial").mask("9999");
+        $(".PassportNumber").mask("999999");
         $(document).on('keypress', 'input,select', function (e) {
             if (e.which == 13) {
                 e.preventDefault();
@@ -421,12 +437,12 @@ else
             } else {
                 Main = false;
             }
-            var FIO = $(this).parent().find('#LastName').val() + ' ' + $(this).parent().find('#MiddleName').val() + ' ' +
-                $(this).parent().find('#FirstName').val();
-            if (FIO.length >= 31) {
-                alert("Слишком большая длина ФИО должно быть 31 символ. Не я это придумал! Приносим извенения!");
-                return false;
-            }
+            //var FIO = $(this).parent().find('#LastName').val() + ' ' + $(this).parent().find('#MiddleName').val() + ' ' +
+            //    $(this).parent().find('#FirstName').val();
+            //if (FIO.length >= 31) {
+            //    alert("Слишком большая длина ФИО должно быть 31 символ. Не я это придумал! Приносим извенения!");
+            //    return false;
+            //}
 
             $.ajax({
                 url: '/PersonalData/SavePersonalData',
@@ -448,6 +464,7 @@ else
                         Comment1: $(this).parent().find('#Comment1').val(),
                         Tel2: $(this).parent().find('#Tel2').val(),
                         Comment2: $(this).parent().find('#Comment2').val(),
+                        SendingElectronicReceipt: $(this).parent().find('#SendingElectronicReceipt').val(),
                         Email: $(this).parent().find('#Email').val(),
                         Comment: $(this).parent().find('#Comment').val(),
                         UserName: $(this).parent().find('#UserName').val(),
@@ -504,7 +521,7 @@ else
             });
         })
         $("#CloseLock").click(function () {
-            var Page = "DetailedInformIPU" + $("#CloseLock").attr("name");
+            var Page = "DetailedInformPersData" + $("#CloseLock").attr("name");
             $.ajax({
                 url: '/PersonalData/clearCache?Page=' + Page,
                 type: 'Get',

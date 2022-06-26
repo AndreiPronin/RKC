@@ -21,16 +21,14 @@ namespace RKC.Controllers
         private readonly IGeneratorDescriptons _generatorDescriptons;
         private readonly ICacheApp _cacheApp;
         public readonly IFlagsAction _flagsAction;
-        public readonly IReadFileBank _readFileBank;
         public PersonalDataController(IPersonalData personalData, Ilogger logger, IGeneratorDescriptons generatorDescriptons,
-            ICacheApp cacheApp, IFlagsAction flagsAction, IReadFileBank readFileBank)
+            ICacheApp cacheApp, IFlagsAction flagsAction)
         {
             _personalData = personalData;
             _logger = logger;
             _generatorDescriptons = generatorDescriptons;
             _cacheApp = cacheApp;
             _flagsAction = flagsAction;
-            _readFileBank = readFileBank;
         }
         // GET: PersonalData
         public ActionResult DetailedInformPersData(string FULL_LIC)
@@ -75,7 +73,7 @@ namespace RKC.Controllers
         [HttpPost]
         public ActionResult SaveFile(HttpPostedFileBase FileLoad, string NameFile,string Lic,int idPersData,string Fio)
         {
-            return Json(new { result = _personalData.saveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.')[1], NameFile, User.Identity.GetFIO()),
+            return Json(new { result = _personalData.saveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.').LastOrDefault(), NameFile, User.Identity.GetFIO()),
                 JsonRequestBehavior.AllowGet });
         }
         [HttpGet]
@@ -121,6 +119,7 @@ namespace RKC.Controllers
         }
         public ActionResult FormAddPers(string FULL_LIC)
         {
+            ViewBag.RoomType = _personalData.GetRoomTypeMain(FULL_LIC);
             ViewBag.FULL_LIC = FULL_LIC;
             return PartialView();
         }

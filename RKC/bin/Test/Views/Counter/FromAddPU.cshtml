@@ -37,14 +37,14 @@
                             </select>
                         </div>
                     </div>
-                    <hr />
+                    @*<hr />
                     <div class="form-group row">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Бренд ПУ:</label>
                         <div class="col-sm-8">
                             <input id="BRAND_PU_" class="form-control" />
 
                         </div>
-                    </div>
+                    </div>*@
                     <hr />
                     <div class="form-group row">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Модель ПУ:</label>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group row">
-                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Дата установки ПУ:</label>
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Дата акта ввода ПУ:</label>
                         <div class="col-sm-8">
                             <input type="date" id="INSTALLATIONDATE_" class="form-control" />
 
@@ -87,7 +87,18 @@
                     </div>
                     <hr />
                     <div class="form-group row">
-                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Номер пломбы:</label>
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Тип пломбы1:</label>
+                        <div class="col-sm-8">
+                            <select id="TYPEOFSEAL_" class="form-control">
+                                <option value=""></option>
+                                <option value="Антимагнитная">Антимагнитная</option>
+                                <option value="Стандартная">Стандартная</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Номер пломбы1:</label>
                         <div class="col-sm-8">
                             <input id="SEALNUMBER_" class="form-control" />
 
@@ -95,17 +106,29 @@
                     </div>
                     <hr />
                     <div class="form-group row">
-                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Тип пломбы:</label>
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Тип пломбы2:</label>
                         <div class="col-sm-8">
-                            <input id="TYPEOFSEAL_" class="form-control" />
-
+                            <select id="TYPEOFSEAL_2" class="form-control">
+                                <option value=""></option>
+                                <option value="Антимагнитная">Антимагнитная</option>
+                                <option value="Стандартная">Стандартная</option>
+                            </select>
                         </div>
                     </div>
                     <hr />
                     <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Номер пломбы2:</label>
+                        <div class="col-sm-8">
+                            <input id="SEALNUMBER_2" class="form-control" />
+
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="form-group row">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Начальные показания:</label>
                         <div class="col-sm-8">
-                            <input type="number" id="InitialReadings" class="form-control" />
+                            <input type="text" id="InitialReadings" class="form-control" />
 
                         </div>
                     </div>
@@ -113,8 +136,7 @@
                     <div class="form-group row">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Конечные показания:</label>
                         <div class="col-sm-8">
-                            <input type="number" id="EndReadings" class="form-control" />
-
+                            <input type="text" id="EndReadings" class="form-control" />
                         </div>
                     </div>
                     <hr />
@@ -151,7 +173,8 @@
                             DATE_CHECK_NEXT: $('#DATE_CHECK_NEXT_').val(),
                             SEALNUMBER: $('#SEALNUMBER_').val(),
                             TYPEOFSEAL: $('#TYPEOFSEAL_').val(),
-
+                            SEALNUMBER2: $('#SEALNUMBER_2').val(),
+                            TYPEOFSEAL2: $('#TYPEOFSEAL_2').val(),
                         }
                     }),
                     contentType: 'application/json; charset=utf-8',

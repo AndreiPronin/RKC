@@ -28,7 +28,7 @@
     @if (User.IsInRole("Admin"))
     {
 <dl class="dl-horizontal">
-    <dt>Установить блокировку для:</dt>
+    <dt>Установить/Снять блокировку для:</dt>
     <dd>
         <a href="/Account/LockAction?Page=DetailedInformIPU">Страница детальной информации</a>
     </dd>
@@ -37,7 +37,20 @@
         {
 
             <p class="NullOrEmpty">Заблокирована</p>}
-        else { <p class="">Не заблокирована</p>}
+        else
+        { <p class="">Не заблокирована</p>}
+    </dd>
+    <dt>Установить/Снять блокировку для:</dt>
+    <dd>
+        <a href="/Account/LockAction?Page=DetailedInformPersData">Страница персональных данных</a>
+    </dd>
+    <dd>
+        Статус блокировки @if (ViewBag.DetailedInformPersData)
+        {
+
+            <p class="NullOrEmpty">Заблокирована</p>}
+        else
+        { <p class="">Не заблокирована</p>}
     </dd>
 </dl>
     }

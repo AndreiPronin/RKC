@@ -25,6 +25,7 @@ namespace BL.Services
         void MakeToMain(int idPersData);
         void AddPersData(PersDataModel persDataModel, string User);
         void DeletePers(int IdPersData, string User);
+        string GetRoomTypeMain(string Full_Lic);
 
     }
     public class PersonalData : IPersonalData
@@ -60,6 +61,21 @@ namespace BL.Services
 
                 var Res = db.PersData.Where(x => x.Lic == FullLic && x.IsDelete == true).Include("PersDataDocument").ToList();
                 return Res;
+            }
+        }
+        public string GetRoomTypeMain(string Full_Lic)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                try
+                {
+                    var Res = db.PersData.Where(x => x.Lic == Full_Lic && x.Main == true).First();
+                    return Res.RoomType;
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
         public string saveFile(byte[] file, int idPersData, string Fio, string Lic, string TypeFile, string NameFile, string User)
@@ -140,7 +156,8 @@ namespace BL.Services
                             AllLIC.FAMIL = persDataModel.LastName;
                             AllLIC.OTCH = persDataModel.MiddleName;
                             AllLIC.IMYA = persDataModel.FirstName;
-                            AllLIC.FIO = $"{persDataModel.LastName} {persDataModel.FirstName} {persDataModel.MiddleName}";
+                            AllLIC.FIO = $"{persDataModel.LastName} {persDataModel.FirstName.ToUpper()[0]}.{persDataModel.MiddleName.ToUpper()[0]}.";
+                            
                             dbAllLic.SaveChanges();
                         }
                     }
@@ -157,6 +174,7 @@ namespace BL.Services
                     }
                     db.SaveChanges();
                 //}
+                PersData.SendingElectronicReceipt = persDataModel.SendingElectronicReceipt;
                 PersData.DateAdd = persDataModel.DateAdd;
                 PersData.Comment = persDataModel.Comment;
                 PersData.Comment1 = persDataModel.Comment1;

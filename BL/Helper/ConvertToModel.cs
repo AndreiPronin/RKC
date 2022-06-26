@@ -28,8 +28,9 @@ namespace BL.Helper
                 TIMESTAMP = DateTime.Now,
                 SEALNUMBER = model.SEALNUMBER,
                 MODEL_PU = model.MODEL_PU,
-                SEAL_NUMBER = model.SEALNUMBER,
                 TYPEOFSEAL = model.TYPEOFSEAL,
+                SEALNUMBER2 = model.SEALNUMBER2,
+                TYPEOFSEAL2 = model.TYPEOFSEAL2,
                 FULL_LIC = model.FULL_LIC
                 
             };
@@ -85,6 +86,7 @@ namespace BL.Helper
                 PlaceOfBirth = persDataModel.PlaceOfBirth,
                 RoomType = persDataModel.RoomType,
                 SnilsNumber = persDataModel.SnilsNumber,
+                SendingElectronicReceipt = persDataModel.SendingElectronicReceipt,
                 Square = persDataModel.Square,
                 StateLic = persDataModel.StateLic,
                 Tel1 = persDataModel.Tel1,

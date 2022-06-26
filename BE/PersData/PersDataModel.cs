@@ -35,5 +35,6 @@ namespace BE.PersData
         public int? NumberOfPersons { get; set; }
         public double? Square { get; set; }
         public string StateLic { get; set; }
+        public string SendingElectronicReceipt { get; set; }
     }
 }

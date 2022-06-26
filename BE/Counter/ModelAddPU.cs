@@ -31,5 +31,7 @@ namespace BE.Counter
         public DateTime? INSTALLATIONDATE { get; set; }
         public string SEALNUMBER { get; set; }
         public string TYPEOFSEAL { get; set; }
+        public string SEALNUMBER2 { get; set; }
+        public string TYPEOFSEAL2 { get; set; }
     }
 }

@@ -45,7 +45,7 @@ namespace BL.Counters
                 if (!string.IsNullOrEmpty(searchModel.street))
                     query = query.Where(x => x.UL.Contains(searchModel.street));
                 if (!string.IsNullOrEmpty(searchModel.home))
-                    query = query.Where(x => x.DOM.Contains(searchModel.home));
+                    query = query.Where(x => x.DOM == searchModel.home);
                 if (!string.IsNullOrEmpty(searchModel.flat))
                     query = query.Where(x => x.KW.Contains(searchModel.flat));
                 return query.Take(30).ToList();
@@ -65,7 +65,7 @@ namespace BL.Counters
                 {
                     Items.ALL_LICS = aLL_LICS;
                 }
-                return iPU_COUNTERs.OrderBy(x=>x.ID_PU).ToList();
+                return iPU_COUNTERs.OrderBy(x=>x.TYPE_PU).ToList();
             }
         }
         public List<IPU_COUNTERS> DetailInfromsDelete(string IPU_LIC)
@@ -114,7 +114,9 @@ namespace BL.Counters
                     IPU_COUNTERS.INSTALLATIONDATE = saveModelIPU.INSTALLATIONDATE == null ? IPU_COUNTERS.INSTALLATIONDATE : saveModelIPU.INSTALLATIONDATE;
                     IPU_COUNTERS.SEALNUMBER = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER) ? IPU_COUNTERS.SEALNUMBER : saveModelIPU.SEALNUMBER;
                     IPU_COUNTERS.DESCRIPTION = string.IsNullOrEmpty(saveModelIPU.DESCRIPTION) ? IPU_COUNTERS.DESCRIPTION : saveModelIPU.DESCRIPTION;
-                    IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
+                IPU_COUNTERS.SEALNUMBER2 = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2) ? IPU_COUNTERS.SEALNUMBER2 : saveModelIPU.SEALNUMBER2;
+                IPU_COUNTERS.TYPEOFSEAL2 = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2) ? IPU_COUNTERS.TYPEOFSEAL2 : saveModelIPU.TYPEOFSEAL2;
+                IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                     DbTPlus.SaveChanges();
                   
                 }

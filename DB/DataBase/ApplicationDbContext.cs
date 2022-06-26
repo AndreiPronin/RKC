@@ -17,6 +17,7 @@ namespace DB.DataBase
         public DbSet<Flags> Flags { get; set; }
         public DbSet<PersData> PersData { get; set; }
         public DbSet<PersDataDocument> PersDataDocument { get; set; }
+        public DbSet<HelpСalculation> HelpСalculation { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

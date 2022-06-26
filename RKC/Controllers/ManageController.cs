@@ -66,6 +66,7 @@ namespace RKC.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Ваш номер телефона удален."
                 : "";
             ViewBag.StatusDetailedInformIPU = flagsAction.GetAction("DetailedInformIPU");
+            ViewBag.DetailedInformPersData = flagsAction.GetAction("DetailedInformPersData");
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {

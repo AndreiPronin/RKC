@@ -194,9 +194,11 @@ namespace BL.Helper
                 if (IPU_COUNTERS.DATE_CHECK != saveModelIPU.DATE_CHECK && saveModelIPU.DATE_CHECK != null) Result.Append($"Изменили дату поверки ПУ: было {IPU_COUNTERS.DATE_CHECK}  стало {saveModelIPU.DATE_CHECK}  \r\n");
                 if (IPU_COUNTERS.DATE_CHECK_NEXT != saveModelIPU.DATE_CHECK_NEXT && saveModelIPU.DATE_CHECK_NEXT != null) Result.Append($"Изменили дату следующей поверки ПУ: было {IPU_COUNTERS.DATE_CHECK_NEXT} стало {saveModelIPU.DATE_CHECK_NEXT}  \r\n");
                 if (IPU_COUNTERS.MODEL_PU != saveModelIPU.MODEL_PU && !string.IsNullOrEmpty(saveModelIPU.MODEL_PU)) Result.Append($"Изменили модель ПУ: было {IPU_COUNTERS.MODEL_PU} стало {saveModelIPU.MODEL_PU}  \r\n");
-                if (IPU_COUNTERS.SEALNUMBER != saveModelIPU.SEALNUMBER && !string.IsNullOrEmpty(saveModelIPU.SEALNUMBER)) Result.Append($"Изменили номер пломбы: было {IPU_COUNTERS.SEALNUMBER} стало {saveModelIPU.SEALNUMBER}  \r\n");
+                if (IPU_COUNTERS.SEALNUMBER != saveModelIPU.SEALNUMBER && !string.IsNullOrEmpty(saveModelIPU.SEALNUMBER)) Result.Append($"Изменили номер пломбы1: было {IPU_COUNTERS.SEALNUMBER} стало {saveModelIPU.SEALNUMBER}  \r\n");
                 if (IPU_COUNTERS.INSTALLATIONDATE != saveModelIPU.INSTALLATIONDATE && saveModelIPU.INSTALLATIONDATE != null) Result.Append($"Изменили дату установки: было {IPU_COUNTERS.INSTALLATIONDATE} стало {saveModelIPU.INSTALLATIONDATE}  \r\n");
-                if (IPU_COUNTERS.TYPEOFSEAL != saveModelIPU.TYPEOFSEAL && !string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL)) Result.Append($"Изменили тип пломбы: было {IPU_COUNTERS.TYPEOFSEAL} стало {saveModelIPU.TYPEOFSEAL}  \r\n");
+                if (IPU_COUNTERS.TYPEOFSEAL != saveModelIPU.TYPEOFSEAL && !string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL)) Result.Append($"Изменили тип пломбы1: было {IPU_COUNTERS.TYPEOFSEAL} стало {saveModelIPU.TYPEOFSEAL}  \r\n");
+                if (IPU_COUNTERS.TYPEOFSEAL2 != saveModelIPU.TYPEOFSEAL2 && !string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2)) Result.Append($"Изменили тип пломбы2: было {IPU_COUNTERS.TYPEOFSEAL2} стало {saveModelIPU.TYPEOFSEAL2}  \r\n");
+                if (IPU_COUNTERS.SEALNUMBER2 != saveModelIPU.SEALNUMBER2 && !string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2)) Result.Append($"Изменили номер пломбы2: было {IPU_COUNTERS.SEALNUMBER2} стало {saveModelIPU.SEALNUMBER2}  \r\n");
                 if (IPU_COUNTERS.DESCRIPTION != saveModelIPU.DESCRIPTION && !string.IsNullOrEmpty(saveModelIPU.DESCRIPTION)) Result.Append($"{saveModelIPU.DESCRIPTION}\r\n");
             }
 
@@ -230,6 +232,7 @@ namespace BL.Helper
                 if (PersData.Inn != PersDataModel.Inn && !string.IsNullOrEmpty(PersDataModel.Inn)) Result.Append($"Изменили инн: было {PersData.Inn} стало {PersDataModel.Inn} \r\n");
                 if (PersData.NumberOfPersons != PersDataModel.NumberOfPersons) Result.Append($"Изменили количество человек: было {PersData.NumberOfPersons} стало {PersDataModel.NumberOfPersons} \r\n");
                 if (PersData.Square != PersDataModel.Square ) Result.Append($"Изменили площадь: было {PersData.Square} стало {PersDataModel.Square} \r\n");
+                if (PersData.SendingElectronicReceipt != PersDataModel.SendingElectronicReceipt && !string.IsNullOrEmpty(PersDataModel.SendingElectronicReceipt)) Result.Append($"Изменили отправка эл/квитанции: было {PersData.SendingElectronicReceipt} стало {PersDataModel.SendingElectronicReceipt} \r\n");
             }
             return Result.ToString();
         }
