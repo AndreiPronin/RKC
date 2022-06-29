@@ -12,10 +12,11 @@ namespace BL.Helper
     {
         void ActionUsers(int IdPU, string Description, string User);
         void ActionUsersPersData(int idPersData, string Description, string User);
+        Task ActionUsersAsync(int IdPU, string Description, string User);
     }
     public class Logger:Ilogger
     {
-        public void ActionUsers(int IdPU,string Description, string User)
+        public void ActionUsers(int IdPU, string Description, string User)
         {
             if (!string.IsNullOrEmpty(Description))
             {
@@ -23,6 +24,17 @@ namespace BL.Helper
                 {
                     db.Log.Add(new Log { IdPU = IdPU, Description = Description, UserName = User, DateTime = DateTime.Now });
                     db.SaveChanges();
+                }
+            }
+        }
+        public async Task ActionUsersAsync(int IdPU, string Description, string User)
+        {
+            if (!string.IsNullOrEmpty(Description))
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    db.Log.Add(new Log { IdPU = IdPU, Description = Description, UserName = User, DateTime = DateTime.Now });
+                    await db.SaveChangesAsync();
                 }
             }
         }

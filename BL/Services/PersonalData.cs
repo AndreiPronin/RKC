@@ -1,5 +1,6 @@
 ﻿using BE.PersData;
 using BL.Helper;
+using ClosedXML.Excel;
 using DB.DataBase;
 using DB.Model;
 using System;
@@ -15,10 +16,12 @@ namespace BL.Services
 {
     public interface IPersonalData
     {
+        List<PersonalInformation> GetPersonalInformation(string FullLic);
         List<PersData> GetInfoPersData(string FullLic);
         List<PersData> GetInfoPersDataDelete(string FullLic);
         string saveFile(byte[] file, int idPersData, string Fio, string Lic, string TypeFile, string NameFile, string User);
         PersDataDocumentLoad DownLoadFile(int Id);
+        PersDataDocumentLoad DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
         string DeleteFile(int Id, string User);
         List<LogsPersData> GetHistory(int idPersData);
         void SavePersonalData(PersDataModel persDataModelView, string User);
@@ -36,6 +39,14 @@ namespace BL.Services
         {
             _ilogger = ilogger;
             _generatorDescriptons = generatorDescriptons;
+        }
+        public List<PersonalInformation> GetPersonalInformation(string FullLic)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var tttt = db.PersonalInformation.Where(x => x.full_lic == FullLic).ToList();
+                return db.PersonalInformation.Where(x => x.full_lic == FullLic).ToList();
+            }
         }
         public List<PersData> GetInfoPersData(string FullLic)
         {
@@ -116,6 +127,97 @@ namespace BL.Services
                 var Res = db.PersDataDocument.Where(x => x.id == Id).FirstOrDefault();
                 persDataDocument.FileBytes = File.ReadAllBytes($@"\\10.10.10.6\\doc_tplus\\{Res.DocumentPath}\\{Res.DocumentName}");
                 persDataDocument.FileName = Res.DocumentName;
+
+            }
+            return persDataDocument;
+        }
+        public PersDataDocumentLoad DownLoadHelpСalculation(string FullLic,DateTime DateFrom, DateTime DateTo)
+        {
+            PersDataDocumentLoad persDataDocument = new PersDataDocumentLoad();
+            persDataDocument.FileName = $@"Справка расчета {FullLic}.xlsx";
+            var dateFrom = Convert.ToDateTime(DateFrom.ToString("yyyy,MM"));
+            var dateTo = Convert.ToDateTime(DateTo.ToString("yyyy,MM")).AddMonths(1);
+            using (var db = new ApplicationDbContext())
+            {
+                var Result = db.HelpСalculation.Where(x => x.FULL_LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
+                using (var workbook = new XLWorkbook())
+                {
+                    int ComnNumber = 1;
+                    var worksheet = workbook.Worksheets.Add("Лист1");
+                    worksheet.Cell(1, ComnNumber++).Value = "Период";
+                    worksheet.Cell(1, ComnNumber++).Value = "Сальдо на начало периода -ЖКУ";
+                    worksheet.Cell(1, ComnNumber++).Value = "Сальдо на начало периода -ПЕНИ";
+                    worksheet.Cell(1, ComnNumber++).Value = "Начислено, в т.ч.перерасчет -ЖКУ";
+                    worksheet.Cell(1, ComnNumber++).Value = "Начислено, в т.ч.перерасчет -ПЕНИ";
+                    worksheet.Cell(1, ComnNumber++).Value = "Оплачено -ЖКУ";
+                    worksheet.Cell(1, ComnNumber++).Value = "Оплачено -ПЕНИ";
+                    worksheet.Cell(1, ComnNumber++).Value = "К оплате -ЖКУ";
+                    worksheet.Cell(1, ComnNumber++).Value = "К оплате -ПЕНИ";
+                    worksheet.Cell(1, ComnNumber++).Value = "К оплате";
+                    worksheet.Cell(1, ComnNumber++).Value = "Отопление -Начислено";
+                    worksheet.Cell(1, ComnNumber++).Value = "Отопление -Перерасчет";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС компонент ТЭ -Начислено";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС компонент ТЭ -Перерасчет";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС компонент ХВ -Начислено";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС компонент ХВ -Перерасчет";
+                    worksheet.Cell(1, ComnNumber++).Value = "Корректир.с.альдо -ЖКУ";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС1 -Нач.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС1 -Кон.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС2 -Нач.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС2 -Кон.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС3 -Нач.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС3 -Кон.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС4 -Нач.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "ГВС4 -Кон.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "Отопление1 -Нач.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "Отопление1 -Кон.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "Отопление2 -Нач.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "Отопление2 -Кон.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "Отопление3 -Нач.пок";
+                    worksheet.Cell(1, ComnNumber++).Value = "Отопление3 -Кон.пок";
+                    worksheet.RangeUsed().SetAutoFilter();
+                    worksheet.Columns().AdjustToContents();
+                    int RowNumber = 1;
+                    foreach (var Items in Result)
+                    {
+                        ComnNumber = 1;
+                        RowNumber++;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.Period;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.DK;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.PENY_DK;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.SumSn;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.SumPenySnSr;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.SP;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.PENY;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.TDK;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.PenyTdk;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.SumTdkPeny_tdk;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HeatingСalculation;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HeatingRecalculation;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.GvsHeatingСalculation;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.GvsHeatingRecalculation;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HvHeatingСalculation;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HvHeatingRecalculation;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.SN15;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB1XVS;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB2XVS;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB1XV_2;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB2XV_2;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB1XV_3;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB2XV_3;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB1XV_4;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB2XV_4;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB1OT_1;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB2OT_1;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB1OT_2;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB2OT_2;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB1OT_3;
+                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.FKUB2OT_3;
+                    }
+                    MemoryStream m = new MemoryStream();
+                    workbook.SaveAs(m);
+                    persDataDocument.FileBytes = m.ToArray();
+                }
 
             }
             return persDataDocument;

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BL.Helper;
+using System.Threading;
 
 namespace BL.Counters
 {
@@ -114,9 +115,9 @@ namespace BL.Counters
                     IPU_COUNTERS.INSTALLATIONDATE = saveModelIPU.INSTALLATIONDATE == null ? IPU_COUNTERS.INSTALLATIONDATE : saveModelIPU.INSTALLATIONDATE;
                     IPU_COUNTERS.SEALNUMBER = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER) ? IPU_COUNTERS.SEALNUMBER : saveModelIPU.SEALNUMBER;
                     IPU_COUNTERS.DESCRIPTION = string.IsNullOrEmpty(saveModelIPU.DESCRIPTION) ? IPU_COUNTERS.DESCRIPTION : saveModelIPU.DESCRIPTION;
-                IPU_COUNTERS.SEALNUMBER2 = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2) ? IPU_COUNTERS.SEALNUMBER2 : saveModelIPU.SEALNUMBER2;
-                IPU_COUNTERS.TYPEOFSEAL2 = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2) ? IPU_COUNTERS.TYPEOFSEAL2 : saveModelIPU.TYPEOFSEAL2;
-                IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
+                    IPU_COUNTERS.SEALNUMBER2 = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2) ? IPU_COUNTERS.SEALNUMBER2 : saveModelIPU.SEALNUMBER2;
+                    IPU_COUNTERS.TYPEOFSEAL2 = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2) ? IPU_COUNTERS.TYPEOFSEAL2 : saveModelIPU.TYPEOFSEAL2;
+                    IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                     DbTPlus.SaveChanges();
                   
                 }
@@ -365,60 +366,64 @@ namespace BL.Counters
             var DbTPlus = new DbTPlus();
             List<IPU_COUNTERS> iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == Full_LIC).ToList();
             if (iPU_COUNTERs.Count() > 0) { return; }
-            if(aLL_LICS.FKUB1XVS>0 || aLL_LICS.FKUB2XVS > 0 || aLL_LICS.FKUBSXVS !=0)
+            if(/*aLL_LICS.FKUB1XVS>0 || aLL_LICS.FKUB2XVS > 0 ||*/ aLL_LICS.FKUBSXVS !=0)
             {
                 DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС1", FULL_LIC = Full_LIC,DESCRIPTION = "Добавлен Автоматически системой"});
                 DbTPlus.SaveChanges();
             }
-            if (aLL_LICS.FKUB1XV_2 > 0 || aLL_LICS.FKUB2XV_2 > 0 || aLL_LICS.FKUBSXV_2 != 0)
+            if (/*aLL_LICS.FKUB1XV_2 > 0 || aLL_LICS.FKUB2XV_2 > 0 ||*/ aLL_LICS.FKUBSXV_2 != 0)
             {
                 DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС2", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой" });
                 DbTPlus.SaveChanges();
             }
-            if (aLL_LICS.FKUB1XV_3 > 0 || aLL_LICS.FKUB2XV_3 > 0 || aLL_LICS.FKUBSXV_3 != 0)
+            if (/*aLL_LICS.FKUB1XV_3 > 0 || aLL_LICS.FKUB2XV_3 > 0 ||*/ aLL_LICS.FKUBSXV_3 != 0)
             {
                 DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС3", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой" });
                 DbTPlus.SaveChanges();
             }
-            if (aLL_LICS.FKUB1XV_4 > 0 || aLL_LICS.FKUB2XV_4 > 0 || aLL_LICS.FKUBSXV_4 != 0)
+            if (/*aLL_LICS.FKUB1XV_4 > 0 || aLL_LICS.FKUB2XV_4 > 0 ||*/ aLL_LICS.FKUBSXV_4 != 0)
             {
                 DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС4", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой" });
                 DbTPlus.SaveChanges();
             }
-            if (aLL_LICS.FKUB1OT_1 > 0 || aLL_LICS.FKUB2OT_1 > 0 || aLL_LICS.FKUBSOT_1 != 0)
+            if (/*aLL_LICS.FKUB1OT_1 > 0 || aLL_LICS.FKUB2OT_1 > 0 ||*/ aLL_LICS.FKUBSOT_1 != 0)
             {
                 DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП1", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой" });
                 DbTPlus.SaveChanges();
             }
-            if (aLL_LICS.FKUB1OT_2 > 0 || aLL_LICS.FKUB2OT_2 > 0 || aLL_LICS.FKUBSOT_2 != 0)
+            if (/*aLL_LICS.FKUB1OT_2 > 0 || aLL_LICS.FKUB2OT_2 > 0 ||*/ aLL_LICS.FKUBSOT_2 != 0)
             {
                 DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП2", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой" });
                 DbTPlus.SaveChanges();
             }
-            if (aLL_LICS.FKUB1OT_3 > 0 || aLL_LICS.FKUB2OT_3 > 0 || aLL_LICS.FKUBSOT_3 != 0)
+            if (/*aLL_LICS.FKUB1OT_3 > 0 || aLL_LICS.FKUB2OT_3 > 0 ||*/ aLL_LICS.FKUBSOT_3 != 0)
             {
                 DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП3", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой" });
                 DbTPlus.SaveChanges();
             }
-            if (aLL_LICS.FKUB1OT_4 > 0 || aLL_LICS.FKUB2OT_4 > 0 || aLL_LICS.FKUBSOT_4 != 0)
+            if (/*aLL_LICS.FKUB1OT_4 > 0 || aLL_LICS.FKUB2OT_4 > 0 ||*/ aLL_LICS.FKUBSOT_4 != 0)
             {
                 DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП4", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой" });
                 DbTPlus.SaveChanges();
             }
-
-
         }
         public bool UpdatePU(SaveModelIPU saveModelIPU,string User)
         {
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ == null).FirstOrDefault();
+                if(IPU_COUNTERS == null)
+                {
+                    AutoAddPU(saveModelIPU.FULL_LIC);
+                    IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ == null).FirstOrDefault();
+                }
                 if (IPU_COUNTERS != null)
                 {
                     saveModelIPU.IdPU = IPU_COUNTERS.ID_PU;
                     saveModelIPU.OVERWRITE_SEAL = true;
-                    logger.ActionUsers(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
-                    UpdateReadings(saveModelIPU);
+                    logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
+                    Task.Run(() => UpdateReadings(saveModelIPU));
+                    //new Thread(x=> UpdateReadings(saveModelIPU)).Start();
                     return true;
                 }
                 else { return false; }

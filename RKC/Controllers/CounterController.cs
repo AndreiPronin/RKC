@@ -183,13 +183,18 @@ namespace RKC.Controllers
             using (XLWorkbook wb = new XLWorkbook())
             {
                 var workbook = new XLWorkbook(file.InputStream);
-                wb.Worksheets.Add(new ExcelReader().LoadExcelPU(workbook,User));
+                wb.Worksheets.Add(new ExcelReader().LoadExcelPU(workbook,User,cacheApp));
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
                 }
             }
+        }
+        public ActionResult GetProgress(string Name)
+        {
+            var rt = cacheApp.GetValueProgress(Name);
+            return Content(cacheApp.GetValueProgress(Name));
         }
         [HttpGet]
         public ActionResult Export(TypeFile typeFile)

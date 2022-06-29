@@ -30,7 +30,11 @@ namespace RKC.Controllers
             _cacheApp = cacheApp;
             _flagsAction = flagsAction;
         }
-        // GET: PersonalData
+        public ActionResult PersonalInformation(string FullLic)
+        {
+            ViewBag.FULL_LIC = FullLic;
+            return View(_personalData.GetPersonalInformation(FullLic));
+        }
         public ActionResult DetailedInformPersData(string FULL_LIC)
         {
             try
@@ -80,6 +84,12 @@ namespace RKC.Controllers
         public ActionResult DownLoadFile(int Id)
         {
             var Result = _personalData.DownLoadFile(Id);
+            return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
+        }
+        [HttpGet]
+        public ActionResult DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
+        {
+            var Result = _personalData.DownLoadHelpСalculation(FullLic,DateFrom,DateTo);
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
         [HttpGet]

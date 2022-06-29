@@ -297,6 +297,7 @@
     <Content Include="Views\PersonalData\HistoryEdit.cshtml" />
     <Content Include="Views\PersonalData\FormAddPers.cshtml" />
     <Content Include="Views\PersonalData\DetailedInformPersDelete.cshtml" />
+    <Content Include="Views\PersonalData\PersonalInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

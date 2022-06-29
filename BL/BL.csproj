@@ -82,6 +82,10 @@
     <Compile Include="Services\ReadFileBank.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppCache\AppCache.csproj">
+      <Project>{6b5112cb-22e1-4e3f-9a2f-13c92900c31e}</Project>
+      <Name>AppCache</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BE\BE.csproj">
       <Project>{0DFE155F-F779-4968-A622-52ACE6ED349F}</Project>
       <Name>BE</Name>

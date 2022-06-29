@@ -63,6 +63,7 @@
     <Compile Include="Model\IPU_COUNTERS.cs" />
     <Compile Include="Model\IPU_LIC.cs" />
     <Compile Include="Model\PersData.cs" />
+    <Compile Include="Model\PersonalInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

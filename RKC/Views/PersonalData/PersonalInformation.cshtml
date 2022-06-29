@@ -1,0 +1,225 @@
+﻿@model IEnumerable<DB.Model.PersonalInformation>
+@{
+    ViewBag.Title = "PersonalInformation";
+    var Index = 0;
+}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+    @if (Model.Count() > 0)
+    {
+<div class="container">
+    <h3 class="text-center">Детальная информация по лицевому счету  @Model.FirstOrDefault().full_lic</h3>
+    <div class="col-md-12">
+        <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
+    </div>
+    <div id="ResultSearchSave"></div>
+</div>
+    <div class="loader">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+    </div>
+    <div class="row">
+        @foreach (var Items in Model)
+        {
+
+            <div style="margin-top:10px;" class="card">
+                <div class="card-header text-center">
+                    <a href="/Counter/DetailedInformIPU?FULL_LIC=@Model.FirstOrDefault().full_lic.Trim()" target="_blank">
+                        <input type="button" class="btn btn-primary" value="Приборы учета" />
+                    </a>
+                    <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().full_lic.Trim()" target="_blank">
+                        <input type="button" class="btn btn-primary PersData" value="Персональный данные" />
+                    </a>
+                </div>
+                <hr />
+                <div class="card-body field">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Код адреса:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Items.cadr" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Лицевой счет:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="FirstName" class="form-control " value="@Items.full_lic" />
+                                    @*<input type="date" readonly="readonly" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.MiddleName)" />*@
+                                </div>
+                                <label class="col-sm-4 col-form-label">els:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="MiddleName" class="form-control " value="@Items.els" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">igku:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="DateOfBirth" class="form-control " value="@Items.igku" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Код ФИАС:</label>
+                                <div class="col-sm-8">
+                                    <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="PlaceOfBirth" class="form-control ">@Items.fias</textarea>
+                                </div>
+                                <label class="col-sm-4 col-form-label">Фамилия:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="SnilsNumber" class="form-control SnilsNumber" value="@Items.famil" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Имя:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.imya" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Отчество:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.otch" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">Адрес ГИС:</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control">@Items.adr_gis</textarea>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-4 col-form-label">Дом:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.dom" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">Квартира:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.kw" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">Кол-во человек:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.KL" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">Площадь:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.SOBS" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">Тариф 1:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.TARIF2" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">Тариф 2:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.TARIF3" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">Тариф 3:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.TARIF5" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">S_GIL:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_GIL" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">S_NEZ:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_NEZ" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">S_NOTP:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_NOTP" />
+                            </div>
+                            <label class="col-sm-4 col-form-label">S_OI:</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_OI" />
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <button class="btn btn-primary DownLoadHelpСalculation">Справка расчета</button>
+                </div>
+            </div>
+
+        }
+    </div>
+    }
+    else
+    {
+        <div class="container">
+            <h3 class="text-center"></h3>
+            <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC ничего не найдено</h1>
+            <div class="col-md-12">
+                <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
+            </div>
+            <div id="ResultSearchSave"></div>
+        </div>
+
+    }
+<input id="" value="@ViewBag.FULL_LIC" hidden />
+<script>
+    function Loader() {
+        $(".loader").addClass("hidden");
+    }
+    $(document).ready(function (e) {
+        $(".DownLoadHelpСalculation").click(function (e) {
+
+            $.confirm({
+                title: 'Скачать справку расчета',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="form-group">' +
+                    '<label>С какой даты</label>' +
+                    '<input type="month" placeholder="" id="DateFrom" class="form-control" />' +
+                    '<label>По какую даты</label>' +
+                    '<input type="month" placeholder="" id="DateTo" class="form-control" />' +
+                    '</div>' +
+                    '</form>',
+                buttons: {
+                    "Скачать": function () {
+                        $.ajax({
+                            success: function (data) {
+                                window.location = '/PersonalData/DownLoadHelpСalculation?FullLic=' + @ViewBag.FULL_LIC + '&DateFrom=' + $("#DateFrom").val() + '&DateTo=' + $("#DateTo").val();
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+        });
+        $(".AddDoc").click(function (e) {
+            var formData = new FormData();
+            formData.append('FileLoad', $(this).parent().find('.file')[0].files[0]);
+            formData.append('NameFile', $(this).parent().find('.NameFileFile').val());
+            formData.append('Lic', $(this).parent().find('.LicFile').val());
+            formData.append('idPersData', $(this).parent().find('.idPersDataFile').val());
+            formData.append('Fio', $(this).parent().find('.FioFile').val());
+            if ($(this).parent().find('.NameFileFile').val() == '') {
+                $(this).parent().find('.NameFileFile').addClass("Required");
+            } else {
+                $(this).parent().find('.NameFileFile').remove("Required");
+                $.ajax({
+                    url: "/PersonalData/SaveFile",
+                    type: "POST",
+                    data: formData,
+                    async: true,
+                    success: function (data) {
+                        alert(data.result)
+                    },
+                    error: function (data) {
+                        alert('Ошибка обратитесь к системному администратору!');
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+            return false;
+        });
+        setTimeout(Loader, 1000);
+        $("#CloseLock").click(function () {
+            window.close();
+        })
+
+
+
+
+
+
+    });
+</script>
+

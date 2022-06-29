@@ -9,14 +9,33 @@ namespace AppCache
 {
     public interface ICacheApp 
     {
+        bool AddProgress(string name, string value);
+        void UpdateProgress(string name, string value);
+        string GetValueProgress(string Name);
         string GetValue(string Url);
         bool Add(string name, string Url);
         bool Lock(string name, string Url);
         void Update(string name, string Url);
         void Delete( string name ,string Url);
+
     }
     public class CacheApp: ICacheApp
     {
+        public bool AddProgress(string name, string value)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            return memoryCache.Add(name, value, DateTime.Now.AddMinutes(200));
+        }
+        public string GetValueProgress(string Name)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            return memoryCache.Get(Name) as string;
+        }
+        public void UpdateProgress(string name, string value)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            memoryCache.Set(name, value, DateTime.Now.AddMinutes(10));
+        }
         public string GetValue(string Url)
         {
             MemoryCache memoryCache = MemoryCache.Default;
