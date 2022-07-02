@@ -64,6 +64,7 @@
     <Compile Include="Model\IPU_LIC.cs" />
     <Compile Include="Model\PersData.cs" />
     <Compile Include="Model\PersonalInformation.cs" />
+    <Compile Include="Model\StateCalculation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

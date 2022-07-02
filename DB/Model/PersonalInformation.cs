@@ -8,6 +8,34 @@ using System.Threading.Tasks;
 
 namespace DB.Model
 {
+    [Table(name: "PersonalInformations", Schema = "dbo")]
+    public class PersonalInformations
+    {
+        public string full_lic { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string Street { get; set; }
+        public string House { get; set; }
+        public string Flat { get; set; }
+        public string RoomType { get; set; }
+        public decimal? NumberPerson { get; set; }
+        public decimal? Square { get; set; }
+        [Key]
+        public string Fias { get; set; }
+        public string els { get; set; }
+        public string igku { get; set; }
+        public decimal? TARIF2 { get; set; }
+        public decimal? TARIF3 { get; set; }
+        public decimal? TARIF5 { get; set; }
+        public decimal? S_OI { get; set; }
+        public decimal? S_NEZ { get; set; }
+        public decimal? S_GIL { get; set; }
+        public decimal? S_NOTP { get; set; }
+    }
+    /// <summary>
+    /// Old 
+    /// </summary>
     [Table( name: "PersonalInformation", Schema = "dbo")]
     public class PersonalInformation
     {

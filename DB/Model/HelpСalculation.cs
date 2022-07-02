@@ -8,6 +8,38 @@ using System.Threading.Tasks;
 
 namespace DB.Model
 {
+
+    [Table(name: "HelpСalculations", Schema = "dbo")]
+    public class HelpСalculations
+    {
+        public string LIC { get; set; }
+        public string FIO { get; set; }
+        public string UL { get; set; }
+        public string DOM { get; set; }
+        public string KW { get; set; }
+        public decimal? NumberPerson { get; set; }
+        public decimal? Square { get; set; }
+        [Key]
+        public DateTime? Period { get; set; }
+        public decimal? DK { get; set; }
+        public decimal? Peny_dk { get; set; }
+        public decimal? SN { get; set; }
+        public decimal? PenySNpenySR { get; set; }
+        public decimal? Sp { get; set; }
+        public decimal? Peny { get; set; }
+        public decimal? Tdk { get; set; }
+        public decimal? Peny_tdk { get; set; }
+        public decimal? HeatingСalculation { get; set; }
+        public decimal? HeatingRecalculation { get; set; }
+        public decimal? GvsHeatingСalculation { get; set; }
+        public decimal? GvsHeatingRecalculation { get; set; }
+        public decimal? HvHeatingСalculation { get; set; }
+        public decimal? HvHeatingRecalculation { get; set; }
+        public decimal? SN15 { get; set; }
+    }
+    /// <summary>
+    /// Old Version
+    /// </summary>
     [Table(name: "HelpСalculation", Schema = "dbo")]
     public class HelpСalculation
     {

@@ -33,8 +33,10 @@ namespace RKC.Controllers
         public ActionResult PersonalInformation(string FullLic)
         {
             ViewBag.FULL_LIC = FullLic;
+            ViewBag.StateCalc = _personalData.GetStateCalculation(FullLic); 
             return View(_personalData.GetPersonalInformation(FullLic));
         }
+      
         public ActionResult DetailedInformPersData(string FULL_LIC)
         {
             try
@@ -85,6 +87,11 @@ namespace RKC.Controllers
         {
             var Result = _personalData.DownLoadFile(Id);
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
+        }
+        [HttpGet]
+        public ActionResult WatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
+        {
+            return View(_personalData.GetInfoHelpСalculation(FullLic, DateFrom, DateTo));
         }
         [HttpGet]
         public ActionResult DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)

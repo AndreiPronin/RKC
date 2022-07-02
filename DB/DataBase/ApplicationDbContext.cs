@@ -12,13 +12,14 @@ namespace DB.DataBase
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<PersonalInformation> PersonalInformation { get; set; }
+        public DbSet<PersonalInformations> PersonalInformation { get; set; }
+        public DbSet<StateCalculation> StateCalculation { get; set; }
         public DbSet<LogsPersData> LogsPersData { get; set; }
         public DbSet<Log> Log { get; set; }
         public DbSet<Flags> Flags { get; set; }
         public DbSet<PersData> PersData { get; set; }
         public DbSet<PersDataDocument> PersDataDocument { get; set; }
-        public DbSet<HelpСalculation> HelpСalculation { get; set; }
+        public DbSet<HelpСalculations> HelpСalculation { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

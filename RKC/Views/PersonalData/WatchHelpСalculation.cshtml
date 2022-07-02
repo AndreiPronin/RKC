@@ -1,0 +1,63 @@
+﻿@model IEnumerable<DB.Model.HelpСalculations>
+@{
+    ViewBag.Title = "WatchHelpСalculation";
+}
+
+<h2>Справка расчета</h2>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td class="text-center" scope="col" colspan="9">Состояние расчётов:</td>
+            <td class="text-center" scope="col" colspan="7">Детализация по услугам:</td>
+        </tr>
+        <tr>
+            <td scope="col" rowspan="2">период</td>
+            <td scope="col" colspan="2">Вх. сальдо </td>
+            <td scope="col" colspan="2">Оплачено</td>
+            <td scope="col" colspan="2">Начислено</td>
+            <td scope="col" colspan="2">Исх. сальдо:</td>
+            <td scope="col" colspan="2">Отопление</td>
+            <td scope="col" colspan="2">ГВС компонент ТЭ</td>
+            <td scope="col" colspan="2">ГВС компонент ХВ</td>
+            <td scope="col" rowspan="2">Корректир. сальдо ЖКУ</td>
+        </tr>
+        <tr>
+            <td>ЖКУ</td>
+            <td>пени</td>
+            <td>ЖКУ</td>
+            <td>пени</td>
+            <td>ЖКУ</td>
+            <td>пени</td>
+            <td>ЖКУ</td>
+            <td>пени</td>
+            <td>Начислено</td>
+            <td>перерасчет</td>
+            <td>Начислено</td>
+            <td>перерасчет</td>
+            <td>Начислено</td>
+            <td>перерасчет</td>
+            
+        </tr>
+        @foreach (var Items in Model)
+        {
+            <tr>
+                <td style=" white-space: pre;" >@Items.Period.Value.ToString("MM.yyyy")</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
