@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiT+\XmlForT+Flat.cs" />
     <Compile Include="Counter\Enum.cs" />
     <Compile Include="Counter\ModelAddPU.cs" />
     <Compile Include="Counter\modelUpdatePU.cs" />

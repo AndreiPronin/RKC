@@ -93,15 +93,24 @@
                         <div class="col-sm-8">
                             <select id="RoomType_" class="form-control">
                                 <option disabled>Выберите вид</option>
-                                @if (ViewBag.RoomType == "Собствен.")
+                                @if (ViewBag.RoomType != null)
                                 {
-                                    <option value="Собствен">Собствен.</option>
-                                    <option value="Зарег.">Зарег.</option>
+                                    if (ViewBag.RoomType == "Собствен.")
+                                    {
+                                        <option value="Собствен">Собствен.</option>
+                                        <option value="Зарег.">Зарег.</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Наниматель">Наниматель</option>
+                                        <option value="Зарег.">Зарег.</option>
+                                    }
                                 }
                                 else
                                 {
-                                    <option value="Наниматель">Наниматель</option>
+                                    <option value="Собствен">Собствен.</option>
                                     <option value="Зарег.">Зарег.</option>
+                                    <option value="Наниматель">Наниматель</option>
                                 }
                             </select>
                             @*<textarea id="Comment2_" class="form-control"></textarea>*@

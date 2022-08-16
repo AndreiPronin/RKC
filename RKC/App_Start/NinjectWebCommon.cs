@@ -7,6 +7,7 @@ namespace RKC.App_Start
     using System.Web;
     using AppCache;
     using BL;
+    using BL.ApiT_;
     using BL.Counters;
     using BL.Helper;
     using BL.Service;
@@ -73,6 +74,7 @@ namespace RKC.App_Start
             kernel.Bind<IFlagsAction>().To<FlagsAction>().InSingletonScope();
             kernel.Bind<IReadFileBank>().To<ReadFileBank>();
             kernel.Bind<IPersonalData>().To<PersonalData>();
+            kernel.Bind<IEBD>().To<EBD>();
         }
     }
 }

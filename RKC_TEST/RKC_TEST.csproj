@@ -35,6 +35,7 @@
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\DB\DB.csproj" />
     <ProjectReference Include="..\RKC\RKC.csproj" />
+    <ProjectReference Include="..\WordGenerator\WordGenerator.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -23,6 +23,7 @@ namespace DB.Model
         public DateTime? Period { get; set; }
         public decimal? DK { get; set; }
         public decimal? Peny_dk { get; set; }
+        public decimal? TdkPeny_tdk { get; set; }
         public decimal? SN { get; set; }
         public decimal? PenySNpenySR { get; set; }
         public decimal? Sp { get; set; }

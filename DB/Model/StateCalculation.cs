@@ -15,7 +15,7 @@ namespace DB.Model
         public DateTime? Period { get; set; }
         public decimal? Dk { get; set; }
         public string F4ENUMELS { get; set; }
-        public decimal? Peny_dk { get; set; }
+        public decimal? PENY_DK { get; set; }
         public decimal? DkPeny_dk { get; set; }
         public decimal? Sp { get; set; }
         public decimal? Peny { get; set; }
@@ -23,9 +23,9 @@ namespace DB.Model
         public decimal? Sn { get; set; }
         public decimal? Peny_SN { get; set; }
         public decimal? SnPeny_SN { get; set; }
-        public decimal? Sr { get; set; }
-        public decimal? Peny_SR { get; set; }
-        public decimal? SrPeny_SR { get; set; }
+        //public decimal? Sr { get; set; }
+        //public decimal? Peny_SR { get; set; }
+        //public decimal? SrPeny_SR { get; set; }
         public decimal? Tdk { get; set; }
         public decimal? Peny_tdk { get; set; }
         public decimal? TdkPeny_tdk { get; set; }

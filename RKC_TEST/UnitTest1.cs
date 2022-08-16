@@ -8,6 +8,7 @@ using RKC.App_Start;
 using RKC.Controllers;
 using AppCache;
 using System.Web;
+using WordGenerator;
 
 namespace RKC_TEST
 {
@@ -21,9 +22,7 @@ namespace RKC_TEST
         [Test]
         public void Test1()
         {
-           // BL.Services.PersonalData personalData = new BL.Services.PersonalData();
-            //personalData.GetInfoPersData("724097769");
-
+            //GenerateFileHelpCalculation.Generate();
         }
 
 

@@ -12,9 +12,11 @@
 .img-wrap {
     position: relative;
 }
+.font-weight-bold{
+    font-weight:bold;
+}
 .mainText {
-    color:white;
-   
+    color: white;
     width: 100%;
     top: 50%;
     text-align: center;

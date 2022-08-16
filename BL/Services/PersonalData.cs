@@ -53,7 +53,12 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                return db.StateCalculation.Where(x => x.F4ENUMELS == FullLic).OrderByDescending(x=>x.Period).First();
+                
+                try
+                {
+                    return db.StateCalculation.Where(x => x.F4ENUMELS == FullLic).OrderByDescending(x => x.Period).First();
+                }
+                catch { return new StateCalculation() { Period = DateTime.Now }; }
             }
         }
         public List<HelpСalculations> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
@@ -62,7 +67,11 @@ namespace BL.Services
             var dateTo = Convert.ToDateTime(DateTo.ToString("yyyy,MM")).AddMonths(1);
             using (var db = new ApplicationDbContext())
             {
-                return db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
+                try
+                {
+                    return db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
+                }
+                catch { return new List<HelpСalculations>(); }
             }
         }
         public List<PersData> GetInfoPersData(string FullLic)
@@ -148,6 +157,13 @@ namespace BL.Services
             }
             return persDataDocument;
         }
+        /// <summary>
+        /// Справка расчета
+        /// </summary>
+        /// <param name="FullLic"></param>
+        /// <param name="DateFrom"></param>
+        /// <param name="DateTo"></param>
+        /// <returns></returns>
         public PersDataDocumentLoad DownLoadHelpСalculation(string FullLic,DateTime DateFrom, DateTime DateTo)
         {
             PersDataDocumentLoad persDataDocument = new PersDataDocumentLoad();
@@ -156,30 +172,32 @@ namespace BL.Services
             var dateTo = Convert.ToDateTime(DateTo.ToString("yyyy,MM")).AddMonths(1);
             using (var db = new ApplicationDbContext())
             {
-                var Result = db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
-                using (var workbook = new XLWorkbook())
+                //var Result = db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
+                using (var workbook = new XLWorkbook(AppDomain.CurrentDomain.BaseDirectory + "Template\\HekpCalculation.xlsx"))
                 {
-                    int ComnNumber = 1;
-                    var worksheet = workbook.Worksheets.Add("Лист1");
-                    worksheet.Cell(1, ComnNumber++).Value = "Период";
-             
-                    worksheet.RangeUsed().SetAutoFilter();
+                    var worksheet = workbook.Worksheet(1);
+                    worksheet.Cell(5, 2).Value = "Тест";
+                   
+
+
+
+                    //worksheet.RangeUsed().SetAutoFilter();
                     worksheet.Columns().AdjustToContents();
                     int RowNumber = 1;
-                    foreach (var Items in Result)
-                    {
-                        ComnNumber = 1;
-                        RowNumber++;
-                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.Period;
-                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.DK;
-                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HeatingСalculation;
-                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HeatingRecalculation;
-                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.GvsHeatingСalculation;
-                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.GvsHeatingRecalculation;
-                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HvHeatingСalculation;
-                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HvHeatingRecalculation;
-                        worksheet.Cell(RowNumber, ComnNumber++).Value = Items.SN15;
-                    }
+                    //foreach (var Items in Result)
+                    //{
+                    //    ComnNumber = 1;
+                    //    RowNumber++;
+                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.Period;
+                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.DK;
+                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HeatingСalculation;
+                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HeatingRecalculation;
+                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.GvsHeatingСalculation;
+                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.GvsHeatingRecalculation;
+                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HvHeatingСalculation;
+                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HvHeatingRecalculation;
+                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.SN15;
+                    //}
                     MemoryStream m = new MemoryStream();
                     workbook.SaveAs(m);
                     persDataDocument.FileBytes = m.ToArray();
@@ -224,7 +242,7 @@ namespace BL.Services
                             AllLIC.FAMIL = persDataModel.LastName;
                             AllLIC.OTCH = persDataModel.MiddleName;
                             AllLIC.IMYA = persDataModel.FirstName;
-                            AllLIC.FIO = $"{persDataModel.LastName} {persDataModel.FirstName.ToUpper()[0]}.{persDataModel.MiddleName.ToUpper()[0]}.";
+                            AllLIC.FIO = $"{persDataModel.LastName} {persDataModel.FirstName?.ToUpper()[0]}.{persDataModel.MiddleName?.ToUpper()[0]}.";
                             
                             dbAllLic.SaveChanges();
                         }
@@ -306,7 +324,6 @@ namespace BL.Services
 
             }
         }
-
         public void AddPersData(PersDataModel persDataModel, string User)
         {
             using (var db = new ApplicationDbContext())
@@ -328,7 +345,6 @@ namespace BL.Services
                 }
             }
         }
-
         public void DeletePers(int IdPersData, string User)
         {
             _ilogger.ActionUsersPersData(IdPersData, "Удалил", User);

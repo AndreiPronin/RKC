@@ -198,7 +198,16 @@
                                                             <input name="FileLoad" class="form-control hidden file" type="file" />
                                                         </div>
                                                         <div class="col-sm-6">
-                                                            <input type="text" id="NameFile" placeholder="Название файла" class="form-control NameFileFile hidden" name="NameFile" value="" />
+                                                            <input type="text" id="NameFile" list="NameFileTemplate"  autocomplete="off" placeholder="Название файла" class="form-control NameFileFile hidden" name="NameFile" value="" />
+                                                            <datalist id="NameFileTemplate">
+                                                                <option>Выписка</option>
+                                                                <option>Договор</option>
+                                                                <option>Заявление</option>
+                                                                <option>Справка</option>
+                                                                <option>Документ удостоверяющий личность</option>
+                                                                <option>Документ на ИПУ</option>
+                                                                <option>Прочие</option>
+                                                            </datalist>
                                                         </div>
                                                         <input type="text" class=" LicFile" hidden="hidden" name="Lic" value="@Items.Lic" />
                                                         <input type="number" class="idPersDataFile" hidden="hidden" name="idPersData" value="@Items.idPersData" />
@@ -221,7 +230,16 @@
                                             <input name="FileLoad" class="form-control hidden file" type="file" />
                                         </div>
                                         <div class="col-sm-6">
-                                            <input type="text" id="NameFile" placeholder="Название файла" class="form-control NameFileFile hidden" name="NameFile" value="" />
+                                            <input type="text" id="NameFile" list="NameFileTemplate"  autocomplete="off"  placeholder="Название файла" class="form-control NameFileFile hidden" name="NameFile" value="" />
+                                            <datalist id="NameFileTemplate">
+                                                <option>Выписка</option>
+                                                <option>Договор</option>
+                                                <option>Заявление</option>
+                                                <option>Справка</option>
+                                                <option>Документ удостоверяющий личность</option>
+                                                <option>Документ на ИПУ</option>
+                                                <option>Прочие</option>
+                                            </datalist>
                                         </div>
                                         <input type="text" class=" LicFile" hidden="hidden" name="Lic" value="@Items.Lic" />
                                         <input type="number" class="idPersDataFile" hidden="hidden" name="idPersData" value="@Items.idPersData" />
@@ -265,7 +283,7 @@ else
 {
     <div class="container">
         <h3 class="text-center"></h3>
-        <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC не найдено ПУ</h1>
+        <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC ничего не найдено</h1>
         @if (ViewBag.isLock)
         {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>}
     <div class="col-md-12">

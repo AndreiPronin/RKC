@@ -11,6 +11,7 @@ namespace DB.Model
     [Table(name: "PersonalInformations", Schema = "dbo")]
     public class PersonalInformations
     {
+        [Key]
         public string full_lic { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -21,7 +22,6 @@ namespace DB.Model
         public string RoomType { get; set; }
         public decimal? NumberPerson { get; set; }
         public decimal? Square { get; set; }
-        [Key]
         public string Fias { get; set; }
         public string els { get; set; }
         public string igku { get; set; }
@@ -32,6 +32,7 @@ namespace DB.Model
         public decimal? S_NEZ { get; set; }
         public decimal? S_GIL { get; set; }
         public decimal? S_NOTP { get; set; }
+        public string ZAK { get; set; }
     }
     /// <summary>
     /// Old 

@@ -204,6 +204,4 @@ namespace DB.Model
         public decimal? FKUB2OT_4 { get; set; }
         public DateTime? update_datetime { get; set; }
     }
-
-
 }

@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>F:\Programing\RKC\RKC\bin\Prod</_PublishTargetUrl>
-    <History>True|2022-06-17T12:15:54.8067028Z;True|2022-06-17T09:22:45.7948773+03:00;True|2022-06-16T19:58:44.2522692+03:00;True|2022-05-28T12:00:03.9799422+03:00;True|2022-05-28T11:38:56.0140228+03:00;True|2022-05-27T11:54:14.5383614+03:00;True|2022-05-27T11:49:16.9033756+03:00;True|2022-05-26T21:07:24.9616605+03:00;True|2022-05-26T21:07:08.3459002+03:00;True|2022-05-26T21:04:11.2333176+03:00;True|2022-05-26T20:49:29.5447719+03:00;True|2022-05-26T15:06:46.2605578+03:00;True|2022-05-25T20:23:56.1042760+03:00;True|2022-05-23T20:08:33.3646640+03:00;False|2022-05-23T20:07:26.4148461+03:00;False|2022-05-23T20:07:18.3537878+03:00;True|2022-05-22T15:18:22.9792539+03:00;True|2022-05-22T14:48:23.0731103+03:00;True|2022-05-19T21:41:31.9724150+03:00;True|2022-05-19T21:27:05.4492808+03:00;True|2022-05-19T21:18:25.4679695+03:00;True|2022-05-16T20:51:18.5698574+03:00;</History>
+    <History>True|2022-08-16T18:08:03.3971145Z;True|2022-07-14T10:04:42.5309977+03:00;True|2022-06-17T15:15:54.8067028+03:00;True|2022-06-17T09:22:45.7948773+03:00;True|2022-06-16T19:58:44.2522692+03:00;True|2022-05-28T12:00:03.9799422+03:00;True|2022-05-28T11:38:56.0140228+03:00;True|2022-05-27T11:54:14.5383614+03:00;True|2022-05-27T11:49:16.9033756+03:00;True|2022-05-26T21:07:24.9616605+03:00;True|2022-05-26T21:07:08.3459002+03:00;True|2022-05-26T21:04:11.2333176+03:00;True|2022-05-26T20:49:29.5447719+03:00;True|2022-05-26T15:06:46.2605578+03:00;True|2022-05-25T20:23:56.1042760+03:00;True|2022-05-23T20:08:33.3646640+03:00;False|2022-05-23T20:07:26.4148461+03:00;False|2022-05-23T20:07:18.3537878+03:00;True|2022-05-22T15:18:22.9792539+03:00;True|2022-05-22T14:48:23.0731103+03:00;True|2022-05-19T21:41:31.9724150+03:00;True|2022-05-19T21:27:05.4492808+03:00;True|2022-05-19T21:18:25.4679695+03:00;True|2022-05-16T20:51:18.5698574+03:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -16,25 +16,31 @@
       <publishTime>09/10/2013 20:29:20</publishTime>
     </File>
     <File Include="bin/AppCache.dll">
-      <publishTime>06/16/2022 19:58:39</publishTime>
+      <publishTime>08/16/2022 21:07:54</publishTime>
     </File>
     <File Include="bin/AppCache.pdb">
-      <publishTime>06/16/2022 19:58:39</publishTime>
+      <publishTime>08/16/2022 21:07:54</publishTime>
+    </File>
+    <File Include="bin/Aspose.BarCode.dll">
+      <publishTime>07/25/2022 23:17:52</publishTime>
+    </File>
+    <File Include="bin/BarcodeStandard.dll">
+      <publishTime>05/09/2021 20:19:26</publishTime>
     </File>
     <File Include="bin/BE.dll">
-      <publishTime>06/23/2022 12:03:34</publishTime>
+      <publishTime>08/16/2022 21:07:54</publishTime>
     </File>
     <File Include="bin/BE.pdb">
-      <publishTime>06/23/2022 12:03:34</publishTime>
+      <publishTime>08/16/2022 21:07:54</publishTime>
     </File>
     <File Include="bin/BL.dll">
-      <publishTime>06/23/2022 12:03:34</publishTime>
+      <publishTime>08/16/2022 21:07:55</publishTime>
     </File>
     <File Include="bin/BL.dll.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="bin/BL.pdb">
-      <publishTime>06/23/2022 12:03:34</publishTime>
+      <publishTime>08/16/2022 21:07:55</publishTime>
     </File>
     <File Include="bin/ClosedXML.dll">
       <publishTime>12/16/2020 12:59:08</publishTime>
@@ -43,13 +49,13 @@
       <publishTime>12/16/2020 12:59:08</publishTime>
     </File>
     <File Include="bin/DB.dll">
-      <publishTime>06/23/2022 12:03:34</publishTime>
+      <publishTime>08/16/2022 21:07:54</publishTime>
     </File>
     <File Include="bin/DB.dll.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="bin/DB.pdb">
-      <publishTime>06/23/2022 12:03:34</publishTime>
+      <publishTime>08/16/2022 21:07:54</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>06/07/2017 01:59:22</publishTime>
@@ -71,6 +77,9 @@
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
       <publishTime>11/25/2019 13:57:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Bcl.AsyncInterfaces.dll">
+      <publishTime>10/19/2020 21:40:36</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>09/05/2018 19:10:50</publishTime>
@@ -127,10 +136,10 @@
       <publishTime>11/13/2012 16:19:34</publishTime>
     </File>
     <File Include="bin/RKC.dll">
-      <publishTime>06/23/2022 12:03:35</publishTime>
+      <publishTime>08/16/2022 21:07:56</publishTime>
     </File>
     <File Include="bin/RKC.pdb">
-      <publishTime>06/23/2022 12:03:35</publishTime>
+      <publishTime>08/16/2022 21:07:56</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/08/2018 08:38:48</publishTime>
@@ -336,8 +345,35 @@
     <File Include="bin/ru/System.Web.WebPages.resources.dll">
       <publishTime>11/28/2018 16:04:46</publishTime>
     </File>
+    <File Include="bin/System.Buffers.dll">
+      <publishTime>02/19/2020 13:05:18</publishTime>
+    </File>
+    <File Include="bin/System.Drawing.Common.dll">
+      <publishTime>01/19/2021 23:29:18</publishTime>
+    </File>
     <File Include="bin/System.IO.Packaging.dll">
       <publishTime>06/12/2016 02:13:48</publishTime>
+    </File>
+    <File Include="bin/System.Memory.dll">
+      <publishTime>02/19/2020 13:05:18</publishTime>
+    </File>
+    <File Include="bin/System.Numerics.Vectors.dll">
+      <publishTime>05/15/2018 16:29:44</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.CompilerServices.Unsafe.dll">
+      <publishTime>10/19/2020 21:46:30</publishTime>
+    </File>
+    <File Include="bin/System.Text.Encodings.Web.dll">
+      <publishTime>02/17/2021 00:53:20</publishTime>
+    </File>
+    <File Include="bin/System.Text.Json.dll">
+      <publishTime>03/17/2021 01:34:50</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Tasks.Extensions.dll">
+      <publishTime>02/19/2020 13:05:18</publishTime>
+    </File>
+    <File Include="bin/System.ValueTuple.dll">
+      <publishTime>05/15/2018 16:29:52</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>11/28/2018 16:04:24</publishTime>
@@ -365,6 +401,18 @@
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 17:57:34</publishTime>
+    </File>
+    <File Include="bin/WordGenerator.dll">
+      <publishTime>08/16/2022 21:07:55</publishTime>
+    </File>
+    <File Include="bin/WordGenerator.dll.config">
+      <publishTime>08/12/2022 21:16:35</publishTime>
+    </File>
+    <File Include="bin/WordGenerator.pdb">
+      <publishTime>08/16/2022 21:07:55</publishTime>
+    </File>
+    <File Include="bin/zxing.dll">
+      <publishTime>02/03/2022 23:45:34</publishTime>
     </File>
     <File Include="Content/bootstrap-theme.css">
       <publishTime>05/29/2022 02:00:21</publishTime>
@@ -406,7 +454,7 @@
       <publishTime>06/01/2022 19:59:52</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>06/21/2022 17:41:05</publishTime>
+      <publishTime>07/06/2022 21:33:19</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>05/29/2022 02:00:22</publishTime>
@@ -474,6 +522,12 @@
     <File Include="Scripts/modernizr-2.8.3.js">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
+    <File Include="Template/HekpCalculation.xlsx">
+      <publishTime>07/06/2022 20:41:07</publishTime>
+    </File>
+    <File Include="Template/Образец квитанции.docx">
+      <publishTime>08/16/2022 20:52:38</publishTime>
+    </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
@@ -514,22 +568,22 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPU.cshtml">
-      <publishTime>06/22/2022 08:48:22</publishTime>
+      <publishTime>07/03/2022 13:12:56</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPUDelete.cshtml">
       <publishTime>06/15/2022 20:23:02</publishTime>
     </File>
     <File Include="Views/Counter/FromAddPU.cshtml">
-      <publishTime>06/21/2022 20:48:30</publishTime>
+      <publishTime>06/23/2022 13:46:32</publishTime>
     </File>
     <File Include="Views/Counter/HistoryEdit.cshtml">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Counter/Index.cshtml">
-      <publishTime>06/15/2022 20:43:11</publishTime>
+      <publishTime>06/29/2022 21:35:50</publishTime>
     </File>
     <File Include="Views/Counter/SearchIPU.cshtml">
-      <publishTime>06/15/2022 19:53:20</publishTime>
+      <publishTime>07/11/2022 14:08:37</publishTime>
     </File>
     <File Include="Views/Counter/UploadFile.cshtml">
       <publishTime>05/29/2022 18:51:44</publishTime>
@@ -559,16 +613,25 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersData.cshtml">
-      <publishTime>06/22/2022 09:00:52</publishTime>
+      <publishTime>07/10/2022 17:47:59</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersDelete.cshtml">
       <publishTime>06/16/2022 20:39:15</publishTime>
     </File>
     <File Include="Views/PersonalData/FormAddPers.cshtml">
-      <publishTime>06/22/2022 09:00:50</publishTime>
+      <publishTime>06/24/2022 14:25:19</publishTime>
     </File>
     <File Include="Views/PersonalData/HistoryEdit.cshtml">
       <publishTime>06/08/2022 21:40:53</publishTime>
+    </File>
+    <File Include="Views/PersonalData/PersonalInformation.cshtml">
+      <publishTime>08/16/2022 21:07:16</publishTime>
+    </File>
+    <File Include="Views/PersonalData/ShowAllDocument.cshtml">
+      <publishTime>07/03/2022 13:51:43</publishTime>
+    </File>
+    <File Include="Views/PersonalData/WatchHelpСalculation.cshtml">
+      <publishTime>07/11/2022 08:55:35</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>05/29/2022 02:00:21</publishTime>
@@ -589,7 +652,7 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/23/2022 12:03:36</publishTime>
+      <publishTime>08/16/2022 21:07:57</publishTime>
     </File>
   </ItemGroup>
 </Project>

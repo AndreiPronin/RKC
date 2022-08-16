@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WordGenerator;
 
 namespace RKC.Controllers
 {
@@ -89,14 +90,26 @@ namespace RKC.Controllers
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
         [HttpGet]
+        public ActionResult ShowAllDocument(string FullLic)
+        {
+            var Result = _personalData.GetInfoPersData(FullLic);
+            return PartialView(Result);
+        }
+        [HttpGet]
         public ActionResult WatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
-            return View(_personalData.GetInfoHelpСalculation(FullLic, DateFrom, DateTo));
+            return View(_personalData.GetInfoHelpСalculation(FullLic, DateFrom, DateTo).OrderBy(x=>x.Period));
         }
         [HttpGet]
         public ActionResult DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
             var Result = _personalData.DownLoadHelpСalculation(FullLic,DateFrom,DateTo);
+            return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
+        }
+        [HttpGet]
+        public ActionResult DownLoadReceipt(string FullLic, DateTime Date)
+        {
+            var Result = GenerateFileHelpCalculation.Generate(FullLic, Date);
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
         [HttpGet]
