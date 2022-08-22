@@ -72,6 +72,8 @@
     <Compile Include="ApiT+\EBD.cs" />
     <Compile Include="Extention\StringWriterExtension.cs" />
     <Compile Include="Helper\СomparisonModel.cs" />
+    <Compile Include="Integrations.cs" />
+    <Compile Include="Security\SecurityProvider.cs" />
     <Compile Include="Services\Counter.cs" />
     <Compile Include="Excel\ExcelReader.cs" />
     <Compile Include="Helper\ConvertToModel.cs" />

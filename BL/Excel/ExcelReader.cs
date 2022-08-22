@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace BL.Excel
 {
-    public class ExcelReader
+    public class Excel
     {
         public DataTable CreateExcelCounters()
         {
@@ -35,9 +35,9 @@ namespace BL.Excel
             }
             return dt;
         }
-
-        public DataTable CreateExcelLic()
+        public DataTable CreateExcelLic(string User, ICacheApp cacheApp)
         {
+            cacheApp.AddProgress(User, "0");
             DataTable dt = new DataTable("Counter");
             dt.Columns.AddRange(new DataColumn[32] { new DataColumn("Улица         "),
                                         new DataColumn("Дом "),
@@ -52,34 +52,21 @@ namespace BL.Excel
                                         , new DataColumn("         ТИП расчет ОТП2         "), new DataColumn(" Начальные показания ОТП2"), new DataColumn(" Конечные показания ОТП2")
                                         , new DataColumn("         ТИП расчет ОТП3         "), new DataColumn(" Начальные показания ОТП3"), new DataColumn(" Конечные показания ОТП3")
                                         , new DataColumn("         ТИП расчет ОТП4         "), new DataColumn(" Начальные показания ОТП4"), new DataColumn(" Конечные показания ОТП4")}) ;
-
+            cacheApp.UpdateProgress(User, "Получаю данные из бд");
             var DbLIC = new DbLIC();
-            //var DBPersData = new DBPersData();
-            //var Result = DbLIC.ALL_LICS.Join(DBPersData.Pers,
-            //    a => a.F4ENUMELS,
-            //    p => p.lic,
-            //    (a, p) => new { p. }
-            //    ).ToList();
             List<ALL_LICS> cOUNTERs = DbLIC.ALL_LICS.ToList();
+            cacheApp.UpdateProgress(User, $@"Получил {cOUNTERs.Count()} записей");
             foreach (var Items in cOUNTERs)
             {
-                //var FKUBSXVS = Items.FKUBSXVS == 0 ? "нет ИПУ" : Items.FKUBSXVS == 1 ? "расчет по ИПУ" : Items.FKUBSXVS == 2 ? "расчет по среднему" : Items.FKUBSXVS == 3 ? "расчет по нормативу" : "";
-                //var FKUBSXV_2 = Items.FKUBSXV_2 == 0 ? "нет ИПУ" : Items.FKUBSXV_2 == 1 ? "расчет по ИПУ" : "";
-                //var FKUBSXV_3 = Items.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.FKUBSXV_3 == 2 ? "расчет по средему" : Items.FKUBSXV_3 == 3 ? "расчет по нормативу" : "";
-                //var FKUBSXV_4 = Items.FKUBSXV_4 == 0 ? "нет ИПУ" : Items.FKUBSXV_4 == 1 ? "расчет по ИПУ" : "";
-                //var FKUBSOT_1 = Items.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.FKUBSOT_1 == 2 ? "расчет по средему" : Items.FKUBSOT_1 == 3 ? "расчет по нормативу" : "";
-                //var FKUBSOT_2 = Items.FKUBSOT_2 == 0 ? "нет ИПУ" : Items.FKUBSOT_2 == 1 ? "расчет по ИПУ" : "";
-                //var FKUBSOT_3 = Items.FKUBSOT_3 == 0 ? "нет ИПУ" : Items.FKUBSOT_3 == 1 ? "расчет по ИПУ" : "";
-                //var FKUBSOT_4 = Items.FKUBSOT_4 == 0 ? "нет ИПУ" : Items.FKUBSOT_4 == 1 ? "расчет по ИПУ" : "";
                 dt.Rows.Add(Items.UL, Items.DOM, Items.CADR, Items.KW, Items.LIC, Items.F4ENUMELS, Items.ZAK, Items.FIO,
                     Items.FKUBSXVS,Items.FKUB1XVS, Items.FKUB2XVS, Items.FKUBSXV_2,Items.FKUB1XV_2, Items.FKUB2XV_2,
                     Items.FKUBSXV_3, Items.FKUB1XV_3, Items.FKUB2XV_3, Items.FKUBSXV_4, Items.FKUB1XV_4, Items.FKUB2XV_4,
                     Items.FKUBSOT_1, Items.FKUB1OT_1, Items.FKUB2OT_1, Items.FKUBSOT_2, Items.FKUB1OT_2, Items.FKUB2OT_2,
                     Items.FKUBSOT_3, Items.FKUB1OT_3, Items.FKUB2OT_3, Items.FKUBSOT_4, Items.FKUB1OT_4, Items.FKUB2OT_4);
             }
+            cacheApp.UpdateProgress(User, "Ожидайте... Идет скачивание файла.");
             return dt;
         }
-
         public DataTable CreateExcelGeneral()
         {
             var DbLIC = new DbLIC();
@@ -126,7 +113,6 @@ namespace BL.Excel
             cacheApp.AddProgress(User, "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             Counter counter = new Counter(new Logger(),new GeneratorDescriptons());
-            //SaveModelIPU saveModel = new SaveModelIPU();
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
             int i = 0;
             var Count = nonEmptyDataRows.Count();
@@ -137,7 +123,7 @@ namespace BL.Excel
                     try
                     {
                         var Procent = Math.Round((float)i / Count * 100,0);
-                        cacheApp.UpdateProgress(User, Procent.ToString()); ;
+                        cacheApp.UpdateProgress(User, Procent.ToString());
                         SaveModelIPU saveModel = new SaveModelIPU();
                         saveModel.FULL_LIC = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
                         saveModel.TypePU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");

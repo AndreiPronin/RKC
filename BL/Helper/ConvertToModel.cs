@@ -37,8 +37,7 @@ namespace BL.Helper
         }
         public static IPU ModelAddpu_To_IPU(ModelAddPU model)
         {
-            
-            var Typepu = GetDescriptionEnum.GetDescription(model.TYPE_PU);
+            var Typepu = model.TYPE_PU.GetDescription();
             var IPU = new IPU()
             {
                 BRAND_PU = model.BRAND_PU,

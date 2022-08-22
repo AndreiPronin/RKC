@@ -10,6 +10,7 @@ namespace RKC.App_Start
     using BL.ApiT_;
     using BL.Counters;
     using BL.Helper;
+    using BL.Security;
     using BL.Service;
     using BL.Services;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -75,6 +76,8 @@ namespace RKC.App_Start
             kernel.Bind<IReadFileBank>().To<ReadFileBank>();
             kernel.Bind<IPersonalData>().To<PersonalData>();
             kernel.Bind<IEBD>().To<EBD>();
+            kernel.Bind<ISecurityProvider>().To<SecurityProvider>();
+            kernel.Bind<IIntegrations>().To<Integrations>();
         }
     }
 }

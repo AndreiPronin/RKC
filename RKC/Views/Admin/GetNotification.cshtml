@@ -1,0 +1,32 @@
+﻿@model IEnumerable<DB.Model.Notifications>
+@{
+    ViewBag.Title = "GetNotification";
+}
+<div id="ButtonMenuBottom" class="menu-bt">
+    <button class="btn btn-primary" onclick="MenuBottomonOn()">Уведомления (@Model.Count())</button>
+</div>
+<div id="MenuBottom" class="menu-bt2 hidden">
+    <div class="" style="width: 58rem;">
+        <ul class="list-group list-group-flush">
+            @foreach (var Items in Model)
+            {
+                if (Items.Title == "ErrorIntegration")
+                {
+                    <li class="list-group-item">
+                        <p class="NullOrEmpty" >@Items.Title</p>
+                        <p class="NullOrEmpty" ><a href="/Counter/ErrorIntegration">@Items.Description</a></p>
+                    </li>
+                }
+                else
+                {
+                    <li class="list-group-item"><p>@Items.Title</p><p>@Items.Description</p></li>
+                }
+
+            }
+        </ul>
+        <button class="btn btn-primary" onclick="MenuBottomonOff()">Закрыть</button>
+    </div>
+</div>
+
+
+

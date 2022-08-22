@@ -52,6 +52,7 @@ false, false, false, false);
 false, false, false, false);
                 doc.Content.Find.Execute("{s_notp}", false, true, false, false, false, true, 1, false, persData.S_NOTP, 2,
 false, false, false, false);
+                
                 //BarcodeGenerator generator = new BarcodeGenerator(EncodeTypes.Code39Standard, "1234567890");
                 //Stream ms = new MemoryStream();
                 //generator.Save(ms, BarCodeImageFormat.Bmp);

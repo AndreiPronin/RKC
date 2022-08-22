@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Helper
+namespace System
 {
     public static class GetDescriptionEnum
     {
@@ -19,7 +19,7 @@ namespace BL.Helper
 		/// </remarks>
 		/// <param name="enumElement">Элемент перечисления</param>
 		/// <returns>Название элемента</returns>
-		public static string GetDescription(Enum enumElement)
+		public static string GetDescription(this Enum enumElement)
 		{
 			Type type = enumElement.GetType();
 

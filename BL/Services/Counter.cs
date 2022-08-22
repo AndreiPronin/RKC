@@ -24,6 +24,7 @@ namespace BL.Counters
         void UpdateReadings(SaveModelIPU saveModelIPU);
         void DeleteIPU(int IdPU);
         void AddPU(ModelAddPU modelAddPU, string FIO);
+        void UpdatePUIntegrations(SaveModelIPU saveModelIPU, string User, IPU_COUNTERS IPU_COUNTERS);
     }
     public class Counter: ICounter
     {
@@ -429,6 +430,13 @@ namespace BL.Counters
                 else { return false; }
 
             }
+        }
+        public void UpdatePUIntegrations(SaveModelIPU saveModelIPU, string User, IPU_COUNTERS IPU_COUNTERS)
+        {
+            saveModelIPU.IdPU = IPU_COUNTERS.ID_PU;
+            saveModelIPU.OVERWRITE_SEAL = true;
+            logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
+            Task.Run(() => UpdateReadings(saveModelIPU));
         }
     }
 }

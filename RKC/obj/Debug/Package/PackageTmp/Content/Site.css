@@ -340,3 +340,29 @@ textarea {
             transition: all 0.4s ease 0s;
         }
 }
+
+
+
+
+/*кнопка звонка*/
+
+.menu-bt2 {
+    margin-right: 20px;
+    margin-top: 20px;
+    float: right;
+    right: 0%;
+    bottom: 0%;
+    z-index: 999;
+    transition: .3s;
+}
+.menu-bt {
+    margin-right:20px;
+    margin-top:20px;
+    float:right;
+    right: 0%;
+    bottom: 0%;
+    z-index: 999;
+    transition: .3s;
+}
+   
+/* конец кнопки звонка */

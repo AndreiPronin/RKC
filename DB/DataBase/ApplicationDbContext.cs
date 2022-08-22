@@ -20,6 +20,11 @@ namespace DB.DataBase
         public DbSet<PersData> PersData { get; set; }
         public DbSet<PersDataDocument> PersDataDocument { get; set; }
         public DbSet<HelpСalculations> HelpСalculation { get; set; }
+        public DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public DbSet<Notifications> Notifications { get; set; }
+        public DbSet<IntegrationReadings> IntegrationReadings { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

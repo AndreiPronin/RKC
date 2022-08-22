@@ -11,9 +11,11 @@ namespace RKC.Extensions
     {
         public static string GetFIO(this IIdentity identity)
         {
-            var claim = ((ClaimsIdentity)identity).FindFirst("FIO");
+            string[] fio = ((ClaimsIdentity)identity).FindFirst("FIO")?.Value.Split(' ');
+            if (fio is null) return string.Empty;
+             var claim = fio[1];
             // Test for null to avoid issues during local testing
-            return (claim != null) ? claim.Value : string.Empty;
+            return claim;
         }
     }
 }

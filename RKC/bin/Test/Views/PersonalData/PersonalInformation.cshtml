@@ -186,7 +186,7 @@
                             <input type="button" class="btn btn-primary ShowAllDocument" value="Документы" data-toggle="modal" data-target="#ShowAllDocumentModal" />
                         </div>
                         <div class="col-md-3">
-                            <button disabled class="btn btn-primary DownLoadHelpСalculation">Квитанция</button>
+                            <button class="btn btn-primary DownLoadReceipt">Квитанция</button>
                         </div>
 
                     </div>
@@ -203,6 +203,16 @@
         <div class="container">
             <h3 class="text-center"></h3>
             <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC ничего не найдено</h1>
+            <div class="col-md-12 text-center">
+                 <div class="col-md-12 text-center">
+            <a href="/Counter/DetailedInformIPU?FULL_LIC=@ViewBag.FULL_LIC" target="_blank">
+                <input type="button" class="btn btn-primary" value="Приборы учета" />
+            </a>
+            <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@ViewBag.FULL_LIC.Trim()" target="_blank">
+                <input type="button" class="btn btn-primary PersData" value="Персональный данные" />
+            </a>
+                     </div>
+        </div>
             <div class="col-md-12">
                 <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
             </div>
@@ -248,6 +258,36 @@
                         $.ajax({
                             success: function (data) {
                                 window.open('/PersonalData/WatchHelpСalculation?FullLic=' + @ViewBag.FULL_LIC + '&DateFrom=' + datefrom + '&DateTo=' + dateto);
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+        });
+        $(".DownLoadReceipt").click(function (e) {
+            var Date = "@DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM")";
+            var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";
+            console.log(DateMax);
+            $.confirm({
+                title: 'Справка расчет',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="form-group">' +
+                    '<label>Выберите дату</label>' +
+                    '<input type="month" min="2017-01" max="'+DateMax+'" value="' + Date +'" placeholder="" id="DateReceipt" class="form-control" />' +
+                    '</div>' +
+                    '</form>',
+                buttons: {
+                    "Скачать": function () {
+                        $.ajax({
+                            success: function (data) {
+                                window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&Date=' + $("#DateReceipt").val();
                             },
                             error: function () {
                                 alert("Что то пошло не так. Обратитесь к администратору");

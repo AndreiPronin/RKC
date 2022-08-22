@@ -42,8 +42,22 @@ namespace BE.Counter
         [Description("Lic")]
         Lic = 2,
         [Description("General")]
-        General = 3
+        General = 3,
+        [Description("ReestrIPU")]
+        ReestrIPU = 4
+
     }
-
-
+    public enum ErrorIntegration
+    {
+        [Description("Большой объем. Объем больше 50")]
+        High = 1,
+        [Description("Нет ИПУ на лицевом счёте")]
+        NoPU = 2,
+        [Description("На лицевом счёте больше 1 ПУ")]
+        ManyPU = 3,
+        [Description("Показания ИПУ меньше предыдущего")]
+        Low = 4,
+        [Description("Не найден лицевой счет")]
+        NoLic = 5,
+    }
 }

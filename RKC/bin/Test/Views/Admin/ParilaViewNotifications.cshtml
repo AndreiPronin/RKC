@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "ParilaViewNotifications";
+}
+
+<h2>Создание уведомлений</h2>
+<div class="row">
+    <div class="col-md-4">
+        <input id="NotificationTitle" placeholder="Введите заголовок" class="form-control" />
+    </div>
+    <div class="col-md-4">
+        <textarea id="NotificationDescription" style="height:150px;" placeholder="Введите описание" class="form-control"></textarea>
+    </div>
+    <div class="col-md-4">
+       <button id="NotificationSave" class="btn btn-success">Сохранить</button>
+    </div>
+</div>
+<hr />
+<div id="NotificationsRsult"></div>
+<script>
+    $(document).ready(function (e) {
+        $("#NotificationSave").click(function (e) {
+            $.ajax({
+                url: '/Admin/AddNotifications?Title=' + $("#NotificationTitle").val() + '&Description=' + $("#NotificationDescription").val(),
+                success: function (data) {
+                    $("#NotificationsRsult").empty();
+                    $("#NotificationsRsult").append(data);
+                },
+                error: function () {
+                    $("#NotificationsRsult").append("Что то пошло не так. Обратитесь к администратору!");
+                }
+            });
+        })
+    });
+</script>
+

@@ -1,0 +1,23 @@
+﻿<h1>Панель Администратора</h1>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#report">Отчеты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#role">Права</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#notifications">Уведомления</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade" id="report">
+        @Html.Partial("PartialViewReport")
+    </div>
+    <div class="tab-pane fade" id="role">
+        @Html.Partial("PartialViewRole")
+    </div>
+    <div class="tab-pane fade" id="notifications">
+        @Html.Partial("ParilaViewNotifications")
+    </div>
+</div>

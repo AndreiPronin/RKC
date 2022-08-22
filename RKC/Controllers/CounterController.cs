@@ -15,6 +15,7 @@ using BL.Excel;
 using System.Web;
 using System.Data.Odbc;
 using BL.Service;
+using BL;
 
 namespace RKC.Controllers
 {
@@ -25,10 +26,11 @@ namespace RKC.Controllers
         private readonly Ilogger logger;
         private readonly IGeneratorDescriptons generatorDescriptons;
         private readonly ICacheApp cacheApp;
+        private readonly IIntegrations _integration;
         public readonly IFlagsAction flagsAction;
         public readonly IReadFileBank readFileBank;
         public CounterController(ICounter _counter, Ilogger _logger, IGeneratorDescriptons _generatorDescriptons, 
-            ICacheApp _cacheApp, IFlagsAction _flagsAction, IReadFileBank _readFileBank)
+            ICacheApp _cacheApp, IFlagsAction _flagsAction, IReadFileBank _readFileBank, IIntegrations integration)
         {
             counter = _counter;
             logger = _logger;
@@ -36,6 +38,7 @@ namespace RKC.Controllers
             cacheApp = _cacheApp;
             flagsAction = _flagsAction;
             readFileBank = _readFileBank;
+            _integration = integration;
         }
         // GET: Counter
         public ActionResult Index()
@@ -168,6 +171,7 @@ namespace RKC.Controllers
                 return Content($"Во время удаления произошла ошибка {ex.Message}");
             }
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult UploadFile(HttpPostedFileBase file, Banks Bank)
         {
             using (var binaryReader = new BinaryReader(file.InputStream))
@@ -178,12 +182,13 @@ namespace RKC.Controllers
             }
            
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult UploadFilePU(HttpPostedFileBase file, string User)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
                 var workbook = new XLWorkbook(file.InputStream);
-                wb.Worksheets.Add(new ExcelReader().LoadExcelPU(workbook,User,cacheApp));
+                wb.Worksheets.Add(new Excel().LoadExcelPU(workbook,User,cacheApp));
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
@@ -193,25 +198,29 @@ namespace RKC.Controllers
         }
         public ActionResult GetProgress(string Name)
         {
-            var rt = cacheApp.GetValueProgress(Name);
             return Content(cacheApp.GetValueProgress(Name));
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Export(TypeFile typeFile)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
                 if (typeFile.Equals(TypeFile.Counters))
                 {
-                    wb.Worksheets.Add(new ExcelReader().CreateExcelCounters());
+                    wb.Worksheets.Add(new Excel().CreateExcelCounters());
                 }
                 if (typeFile.Equals(TypeFile.Lic))
                 {
-                    wb.Worksheets.Add(new ExcelReader().CreateExcelLic());
+                    wb.Worksheets.Add(new Excel().CreateExcelLic(User.Identity.Name,cacheApp));
                 }
                 if (typeFile.Equals(TypeFile.General))
                 {
-                    wb.Worksheets.Add(new ExcelReader().CreateExcelGeneral());
+                    wb.Worksheets.Add(new Excel().CreateExcelGeneral());
+                }
+                if (typeFile.Equals(TypeFile.ReestrIPU))
+                {
+                    wb.Worksheets.Add(new Excel().CreateExcelGeneral());
                 }
                 using (MemoryStream stream = new MemoryStream())
                 {
@@ -221,9 +230,20 @@ namespace RKC.Controllers
             }
             // 
         }
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult RunIntegration()
+        {
+            _integration.LoadReadings("Integration", cacheApp);
+            return null;
+        }
         public ActionResult GetFileHelpCalculation()
         {
             return null;
+        }
+        public ActionResult ErrorIntegration()
+        {
+            return View(_integration.GetErrorIntegrationReadings());
         }
 
     }

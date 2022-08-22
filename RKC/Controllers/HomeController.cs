@@ -1,18 +1,10 @@
-﻿using BE.ApiT_;
-using BL.ApiT_;
-using BL.Counters;
-using BL.Extention;
+﻿using AppCache;
+using BL;
 using DB.DataBase;
-using DB.Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Xml;
-using System.Xml.Serialization;
-using WordGenerator;
 
 namespace RKC.Controllers
 {
@@ -43,15 +35,9 @@ namespace RKC.Controllers
     }
     public class HomeController : Controller
     {
-        IEBD _iEBD;
-        public HomeController(IEBD iEBD)
+
+        public HomeController()
         {
-            _iEBD = iEBD;
-            //_iEBD.CreateEBDAll();
-            //Question t = new Question();
-            //sss<Question> sss = new sss<Question>(t);
-            //var s = sss.Get();
-            //GenerateFileHelpCalculation.Generate("721077614", new DateTime(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month, 1));
         }
         public ActionResult Index()
         {

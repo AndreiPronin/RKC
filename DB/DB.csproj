@@ -53,15 +53,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBase\ApplicationDbContext.cs" />
+    <Compile Include="DataBase\DbPayment.cs" />
     <Compile Include="DataBase\DbTPlus.cs" />
     <Compile Include="DataBase\DbLIC.cs" />
     <Compile Include="DataBase\DBPersData.cs" />
     <Compile Include="Extention\DbLicExtention.cs" />
     <Compile Include="Model\ALL_LICS.cs" />
     <Compile Include="Model\ALL_LICS_ARCHIVE.cs" />
+    <Compile Include="Model\AspNetUserRoles.cs" />
+    <Compile Include="Model\IntegrationReadings.cs" />
     <Compile Include="Model\HelpСalculation.cs" />
     <Compile Include="Model\IPU_COUNTERS.cs" />
     <Compile Include="Model\IPU_LIC.cs" />
+    <Compile Include="Model\Notifications.cs" />
+    <Compile Include="Model\Payment.cs" />
     <Compile Include="Model\PersData.cs" />
     <Compile Include="Model\PersonalInformation.cs" />
     <Compile Include="Model\StateCalculation.cs" />
