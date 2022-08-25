@@ -35,8 +35,11 @@ namespace AppCache
         }
         public void UpdateProgress(string name, string value)
         {
-            MemoryCache memoryCache = MemoryCache.Default;
-            memoryCache.Set(name, value, DateTime.Now.AddMinutes(10));
+            if (Convert.ToDouble(value) > Convert.ToDouble(GetValueProgress(name)))
+            {
+                MemoryCache memoryCache = MemoryCache.Default;
+                memoryCache.Set(name, value, DateTime.Now.AddMinutes(10));
+            }
         }
         public string GetValue(string Url)
         {

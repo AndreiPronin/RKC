@@ -26,6 +26,11 @@ namespace RKC.Controllers
         {
             ViewBag.Roles = _securityProvider.GetAllRoles();
             ViewBag.User = _securityProvider.GetAllUser();
+            using (var db = new ApplicationDbContext())
+            {
+                ViewBag.Notifacation = db.Notifications.Where(x => x.IsDelete == false).ToList();
+            }
+                
             return View();
         }
         public ActionResult GetUserRoleInfo(string UserId)
@@ -65,10 +70,22 @@ namespace RKC.Controllers
             using (var db = new ApplicationDbContext())
             {
                 var notification = db.Notifications.Where(x => x.IsDelete == false).ToList();
-                var ErrorIntegration = db.IntegrationReadings.Select(x => x.IsError).Count();
-                notification.Add(new Notifications { Description = $"Ошибка интеграции {ErrorIntegration} ошибки", Title="ErrorIntegration" });
+                var ErrorIntegration = db.IntegrationReadings.Where(x => x.IsError == true).Select(x => x.IsError).Count();
+                if (ErrorIntegration > 0)
+                {
+                    notification.Add(new Notifications { Description = $"Ошибка показаний {ErrorIntegration} ошибки", Title = "Ошибка показаний ИПУ" });
+                }
                 return PartialView(notification);
             }
+        }
+        public ActionResult deleteNotification(int Id)
+        {
+            using(var db = new ApplicationDbContext())
+            {
+                db.Notifications.Remove(db.Notifications.Find(Id));
+                db.SaveChanges();
+            }
+            return Redirect("/Admin");
         }
 
     }

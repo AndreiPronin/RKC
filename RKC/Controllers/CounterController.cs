@@ -58,7 +58,8 @@ namespace RKC.Controllers
         {
             try
             {
-                if (cacheApp.Lock(User.Identity.GetFIO(), nameof(DetailedInformIPU) + FULL_LIC))
+                ViewBag.ErrorIntegration = _integration.GetErrorIntegrationReadings(FULL_LIC); 
+                if (cacheApp.Lock(User.Identity.GetFIOFull(), nameof(DetailedInformIPU) + FULL_LIC))
                 {
                     ViewBag.User = cacheApp.GetValue(nameof(DetailedInformIPU) + FULL_LIC);
                     ViewBag.IsLock = true;
@@ -118,7 +119,7 @@ namespace RKC.Controllers
         {
             try
             {
-                counter.AddPU(modelAddPU,User.Identity.GetFIO());
+                counter.AddPU(modelAddPU,User.Identity.GetFIOFull());
                 return null;
             }catch(Exception ex)
             {
@@ -128,7 +129,7 @@ namespace RKC.Controllers
         [HttpGet]
         public ActionResult clearCache(string Page)
         {
-            cacheApp.Delete(User.Identity.GetFIO(),Page);
+            cacheApp.Delete(User.Identity.GetFIOFull(),Page);
             return null;
         }
         [HttpGet]
@@ -149,7 +150,7 @@ namespace RKC.Controllers
         {
             try
             {
-                logger.ActionUsers(saveModelIPU.IdPU, generatorDescriptons.Generate(saveModelIPU), User.Identity.GetFIO());
+                logger.ActionUsers(saveModelIPU.IdPU, generatorDescriptons.Generate(saveModelIPU), User.Identity.GetFIOFull());
                 counter.UpdateReadings(saveModelIPU);
                 return Content("");
             }catch(Exception ex)
@@ -162,8 +163,20 @@ namespace RKC.Controllers
         {
             try
             {
-                logger.ActionUsers(IdPU, "Удалил ПУ", User.Identity.GetFIO());
+                logger.ActionUsers(IdPU, "Удалил ПУ", User.Identity.GetFIOFull());
                 counter.DeleteIPU(IdPU);
+                return Content("Удаление прошло успешно");
+            }
+            catch (Exception ex)
+            {
+                return Content($"Во время удаления произошла ошибка {ex.Message}");
+            }
+        }
+        public ActionResult DeleteError(int IdPU, string Lic)
+        {
+            try
+            {
+                counter.DeleteError(IdPU, Lic,User.Identity.GetFIOFull());
                 return Content("Удаление прошло успешно");
             }
             catch (Exception ex)
@@ -232,9 +245,9 @@ namespace RKC.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult RunIntegration()
+        public ActionResult RunIntegration(DateTime date)
         {
-            _integration.LoadReadings("Integration", cacheApp);
+            _integration.LoadReadings("Integration", cacheApp,date);
             return null;
         }
         public ActionResult GetFileHelpCalculation()
@@ -243,7 +256,19 @@ namespace RKC.Controllers
         }
         public ActionResult ErrorIntegration()
         {
-            return View(_integration.GetErrorIntegrationReadings());
+            return View(_integration.GetErrorIntegrationReadings().OrderByDescending(x=>x.IsError));
+        }
+        public ActionResult ErroIntegratinLoadExcel()
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(new Excel().ErroIntegratin());
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Интеграция .xlsx");
+                }
+            }
         }
 
     }

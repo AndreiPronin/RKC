@@ -230,6 +230,7 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var PersData = db.PersData.Find(persDataModel.idPersData);
+                
                 if (СomparisonModel.PersDataModel_To_PersData(PersData, persDataModel))
                 {
                     if (PersData.Main == true)
@@ -305,23 +306,29 @@ namespace BL.Services
                         Items.Main = true;
                         using(var dbAllLic = new DbLIC())
                         {
-                            try
-                            {
-                                var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == Items.Lic).FirstOrDefault();
-                                AllLIC.KL = Items.NumberOfPersons;
-                                AllLIC.SOBS = Convert.ToDecimal(Items.Square);
-                                AllLIC.FAMIL = Items.LastName;
-                                AllLIC.OTCH = Items.MiddleName;
-                                AllLIC.IMYA = Items.FirstName;
-                                AllLIC.FIO = $"{Items.LastName} {Items.FirstName} {Items.MiddleName}";
-                                dbAllLic.SaveChanges();
-                            }
-                            catch { }
+                            var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == Items.Lic).FirstOrDefault();
+                            AllLIC.KL = Items.NumberOfPersons != null ? Convert.ToDecimal(Items.NumberOfPersons) : 0;
+                            AllLIC.SOBS = Items.Square != null ? Convert.ToDecimal(Items.Square) : 0;
+                            AllLIC.FAMIL = Items.LastName;
+                            AllLIC.OTCH = Items.MiddleName;
+                            AllLIC.IMYA = Items.FirstName;
+                            AllLIC.FIO = $"{Items.LastName} {Items.FirstName?.ToUpper()[0]}.{Items.MiddleName?.ToUpper()[0]}.";
+                            dbAllLic.SaveChanges();
                         }
                     }
                 }
                 db.SaveChanges();
-
+                var PersMain = db.PersData.Where(x => x.Lic == Main.Lic && x.Main == true && (x.IsDelete == false || x.IsDelete == null))?.FirstOrDefault();
+                if (PersMain != null)
+                {
+                    var ListPers = db.PersData.Where(x => x.Lic == Main.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
+                    foreach (var Items in ListPers)
+                    {
+                        Items.Square = PersMain.Square;
+                        Items.NumberOfPersons = PersMain.NumberOfPersons;
+                    }
+                    db.SaveChanges();
+                }
             }
         }
         public void AddPersData(PersDataModel persDataModel, string User)

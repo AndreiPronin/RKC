@@ -20,8 +20,9 @@
                 <input type="button" name="@Model.FirstOrDefault().FULL_LIC" class="btn btn-primary AddPU" value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
             }
             <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
-            <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank"  data-tooltip="Закройте редактирование при переходе..." >
-            <input type="button" class="btn btn-primary PersData" value="Персональный данные" /></a>
+            <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank" data-tooltip="Закройте редактирование при переходе...">
+                <input type="button" class="btn btn-primary PersData" value="Персональный данные" />
+            </a>
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -41,6 +42,14 @@
                     {<p>Тип ПУ:  <input type="text" disabled="disabled" id="TYPE_PU" name="@Items.ID_PU" class="form-control" value="@Items.TYPE_PU" /> </p>}
                     else
                     {<p class="NullOrEmpty">Тип ПУ:</p>}
+                    @foreach(var Item in ViewBag.ErrorIntegration)
+                    {
+                        if (Item.TypePu == Items.TYPE_PU)
+                        {
+                        <p class="NullOrEmpty">Ошибка интеграции начальный @Item.InitialReadings конечные @Item.EndReadings текущие @Item.NowReadings </p>
+                        }
+                    }
+
                 </div>
                 <hr />
                 <div class="card-body field">
@@ -52,7 +61,7 @@
 
                                     <label class="col-sm-4 col-form-label">Дата акта ввода:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
+                                        <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
                                     </div>
 
                                 }
@@ -61,7 +70,7 @@
 
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Дата акта ввода:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
+                                        <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
                                     </div>
 
                                 }
@@ -72,14 +81,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label"> Номер ПУ:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="@Items.FULL_LIC"  tabIndex="@Index@{Index++;}" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
+                                        <input type="text" name="@Items.FULL_LIC" tabIndex="@Index@{Index++;}" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Номер ПУ:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="@Items.FULL_LIC"  tabIndex="@Index@{Index++;}" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
+                                        <input type="text" name="@Items.FULL_LIC" tabIndex="@Index@{Index++;}" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
                                     </div>
                                 }
                             </div>
@@ -90,14 +99,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label">Модель ПУ:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
+                                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Модель ПУ:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly"  tabIndex="@Index@{Index++;}" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
+                                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
                                     </div>
                                 }
 
@@ -109,14 +118,14 @@
                                     <label class="col-sm-4 col-form-label">Дата поверки:</label>
                                     <div class="col-sm-8">
 
-                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
+                                        <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Дата поверки:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
+                                        <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
                                     </div>
                                 }
 
@@ -127,14 +136,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label">Дата следующей поверки:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="DATE_CHECK_NEXT" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK_NEXT)" />
+                                        <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="DATE_CHECK_NEXT" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK_NEXT)" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Дата следующей поверки:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" readonly="readonly"  tabIndex="@Index@{Index++;}" id="DATE_CHECK_NEXT" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK_NEXT)" />
+                                        <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="DATE_CHECK_NEXT" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK_NEXT)" />
                                     </div>
                                 }
 
@@ -453,7 +462,7 @@
                         }
                         else
                         {<p class="text-center">Админ заблокировал эту страницу</p>}
-                }
+                    }
                 </div>
             </div>
         }
@@ -461,20 +470,20 @@
 }
 else
 {
-<div class="container">
-    <h3 class="text-center"></h3>
-    <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC не найдено ПУ</h1>
-    @if (ViewBag.isLock)
-    {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p> }
-<div class="col-md-12">
-    <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
-    <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPU" value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
-    <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
-    <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="Персональный данные" /></a>
-</div>
-    <div id="ResultSearchSave"></div>
-</div>
-    
+    <div class="container">
+        <h3 class="text-center"></h3>
+        <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC не найдено ПУ</h1>
+        @if (ViewBag.isLock)
+        {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>}
+        <div class="col-md-12">
+            <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
+            <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPU" value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
+            <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
+            <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="Персональный данные" /></a>
+        </div>
+        <div id="ResultSearchSave"></div>
+    </div>
+
 }
 <div id="ResultArchive"></div>
 <div id="HistoryEdit"></div>
@@ -565,11 +574,11 @@ else
         $(".OVERWRITE").click(function (e) {
             if ($(this).parent().find('.OVERWRITE').prop("checked")) {
                 $('.Saled').prop('readonly', false);
-               
+
             } else {
                 $('.Saled').prop('readonly', true);
             }
-           
+
         })
         $(".Cancellation").click(function (e) {
             $(this).addClass("hidden");
@@ -630,7 +639,7 @@ else
                     // alert(data + " Страница сейчас перезагрузится!");
                     if (data === "") {
                         window.location.reload();
-                    } else { alert(data);}
+                    } else { alert(data); }
                 },
                 error: function () {
                     alert("Что то пошло не так. Обратитесь к администратору");
@@ -694,7 +703,7 @@ else
                     content: 'Внимание объем меньше нуля !!!',
                     buttons: {
                         "Ok": function () {
-                            
+
                         },
                     }
                 });

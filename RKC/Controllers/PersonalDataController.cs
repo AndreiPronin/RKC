@@ -42,7 +42,7 @@ namespace RKC.Controllers
         {
             try
             {
-                if (_cacheApp.Lock(User.Identity.GetFIO(), nameof(DetailedInformPersData) + FULL_LIC))
+                if (_cacheApp.Lock(User.Identity.GetFIOFull(), nameof(DetailedInformPersData) + FULL_LIC))
                 {
                     ViewBag.User = _cacheApp.GetValue(nameof(DetailedInformPersData) + FULL_LIC);
                     ViewBag.IsLock = true;
@@ -74,13 +74,13 @@ namespace RKC.Controllers
         [HttpGet]
         public ActionResult clearCache(string Page)
         {
-            _cacheApp.Delete(User.Identity.GetFIO(), Page);
+            _cacheApp.Delete(User.Identity.GetFIOFull(), Page);
             return null;
         }
         [HttpPost]
         public ActionResult SaveFile(HttpPostedFileBase FileLoad, string NameFile,string Lic,int idPersData,string Fio)
         {
-            return Json(new { result = _personalData.saveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.').LastOrDefault(), NameFile, User.Identity.GetFIO()),
+            return Json(new { result = _personalData.saveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.').LastOrDefault(), NameFile, User.Identity.GetFIOFull()),
                 JsonRequestBehavior.AllowGet });
         }
         [HttpGet]
@@ -115,7 +115,7 @@ namespace RKC.Controllers
         [HttpGet]
         public ActionResult DeleteFile(int Id)
         {
-            _personalData.DeleteFile(Id,User.Identity.GetFIO());
+            _personalData.DeleteFile(Id,User.Identity.GetFIOFull());
             return null;
         }
         public static byte[] ConverToBytes(HttpPostedFileBase file)
@@ -129,12 +129,12 @@ namespace RKC.Controllers
         }
         public ActionResult SavePersonalData(PersDataModel persDataModel)
         {
-            _personalData.SavePersonalData(persDataModel, User.Identity.GetFIO());
+            _personalData.SavePersonalData(persDataModel, User.Identity.GetFIOFull());
             return null;
         }
         public ActionResult AddPersData(PersDataModel persDataModel)
         {
-            _personalData.AddPersData(persDataModel, User.Identity.GetFIO());
+            _personalData.AddPersData(persDataModel, User.Identity.GetFIOFull());
             return null;
         }
         public ActionResult HistoryEdit(int idPersData)
@@ -155,7 +155,7 @@ namespace RKC.Controllers
         }
         public ActionResult DeletePersonalData(int IdPersData)
         {
-            _personalData.DeletePers(IdPersData,User.Identity.GetFIO());
+            _personalData.DeletePers(IdPersData,User.Identity.GetFIOFull());
             return null;
         }
         public ActionResult DetailedInformPersDelete(string FULL_LIC)

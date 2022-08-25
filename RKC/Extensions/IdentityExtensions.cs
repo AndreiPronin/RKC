@@ -17,5 +17,11 @@ namespace RKC.Extensions
             // Test for null to avoid issues during local testing
             return claim;
         }
+        public static string GetFIOFull(this IIdentity identity)
+        {
+            string fio = ((ClaimsIdentity)identity).FindFirst("FIO")?.Value;
+            if (fio is null) return string.Empty;
+            return fio;
+        }
     }
 }

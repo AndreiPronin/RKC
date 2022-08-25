@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "PartialViewRole";
+}
+
+<h2>Выдача прав и удаление пользователей</h2>
+<div class="row">
+    <div class="col-md-4">
+        <label class="col-sm-4 col-form-label">Роль</label>
+        <div class="col-sm-8">
+            <select id="RoleUserAdd" class="form-control">
+                <option>Выберите роль</option>
+                @foreach (var Item in ViewBag.Roles)
+                {
+                    <option value="@Item.Id">@Item.Description</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-4 col-form-label">Пользователь</label>
+        <div class="col-sm-8">
+            <select id="UserRoleAdd" class="form-control">
+                <option>Выберите пользователя</option>
+                @foreach (var Item in ViewBag.User)
+                {
+                    <option value="@Item.Id">@Item.FIO</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <button id="AddRole" class="btn btn-success" >Сохранить</button>
+    </div>
+</div>
+<hr />
+<br />
+<div class="row text-center">
+    <div class="col-md-6 text-center">
+        <div class="col-md-8">
+            <select id="SearchUser" class="form-control">
+                <option>Пользователь</option>
+                @foreach (var Item in ViewBag.User)
+                {
+                    <option value="@Item.Id">@Item.FIO</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button id="SearchRole" class="btn btn-success">Найти</button>
+        </div>
+    </div>
+</div>
+<hr />
+<div id="SearchUserRsult"></div>
+<script>
+    $(document).ready(function (e) {
+        $("#SearchRole").click(function (e) {
+            $.ajax({
+                url: '/Admin/GetUserRoleInfo?UserId=' + $("#SearchUser").val(),
+                success: function (data) {
+                    $("#SearchUserRsult").empty();
+                    $("#SearchUserRsult").append(data);
+                },
+                error: function () {
+                    $("#SearchUserRsult").append("Что то пошло не так. Обратитесь к администратору!");
+                }
+            });
+        })
+        $("#AddRole").click(function (e) {
+            var UserId = $("#UserRoleAdd").val();
+            var UserRoleId = $("#RoleUserAdd").val();
+            $.ajax({
+                url: '/Admin/AddRole?UserId=' + UserId + '&UserRoleId=' + UserRoleId,
+                success: function (data) {
+                    alert(data);
+                    $("#SearchRole").click();
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору!");
+                }
+            });
+        })
+    });
+</script>
+

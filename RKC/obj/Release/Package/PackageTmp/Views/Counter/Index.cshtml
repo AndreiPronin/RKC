@@ -11,63 +11,6 @@
     <div class="inner two"></div>
     <div class="inner three"></div>
 </div>
-<div class="container">
-    @using (Html.BeginForm("UploadFile", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        if (User.IsInRole("Admin"))
-        {
-            <div style="margin-top:30px;" class="row">
-                <div class="col-md-4">
-                    @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
-                </div>
-                <div class="col-md-4">
-                    <select id="Bank" name="Bank" class="form-control" aria-label="Default select">
-                        <option selected>Выберите банк</option>
-                        <option value="1">Какой то банк</option>
-                        <option value="2">Почта</option>
-                        <option value="3">ВТБ</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" class="btn btn-success" value="Загрузить" />
-                </div>
-            </div>
-        }
-    }
-    @using (Html.BeginForm("UploadFilePU", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        if (User.IsInRole("Admin"))
-        {
-            <div style="margin-top:30px;" class="row">
-                <div class="col-md-4">
-                    @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
-                </div>
-                <div class="col-md-4">
-                    <input name="User" id="User" class="form-control" />
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
-                </div>
-            </div>
-        }
-    }
-    @if (User.IsInRole("Admin"))
-    {
-        <div style="margin-top:30px;" class="row">
-            <div class="col-md-4">
-                <select id="FileType" name="FileType" class="form-control" aria-label="Default select">
-                    <option selected>Выберите отчет</option>
-                    <option value="1">ИПУ_отчет из counters</option>
-                    <option value="2">ИПУ_отчет из lic</option>
-                    <option value="3">ИПУ_отчет общий</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <input type="submit" id="CreateExcelFile" class="btn btn-success" value="Скачать" />
-            </div>
-        </div>
-    }
-</div>
 <div class="progress hidden">
     <div class="progress-bar  " id="LoadingProcent" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 </div>

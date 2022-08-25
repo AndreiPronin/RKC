@@ -18,6 +18,9 @@ namespace DB.Model
         public DateTime? DateTime { get; set; }
         public bool IsError { get; set; }
         public string Description { get; set; }
+        public string InitialReadings { get; set; }
+        public string EndReadings { get; set; }
+        public string NowReadings { get; set; }
     }
 
 }

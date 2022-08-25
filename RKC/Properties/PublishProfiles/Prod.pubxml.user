@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>F:\Programing\RKC\RKC\bin\Prod</_PublishTargetUrl>
-    <History>True|2022-08-16T18:08:03.3971145Z;True|2022-07-14T10:04:42.5309977+03:00;True|2022-06-17T15:15:54.8067028+03:00;True|2022-06-17T09:22:45.7948773+03:00;True|2022-06-16T19:58:44.2522692+03:00;True|2022-05-28T12:00:03.9799422+03:00;True|2022-05-28T11:38:56.0140228+03:00;True|2022-05-27T11:54:14.5383614+03:00;True|2022-05-27T11:49:16.9033756+03:00;True|2022-05-26T21:07:24.9616605+03:00;True|2022-05-26T21:07:08.3459002+03:00;True|2022-05-26T21:04:11.2333176+03:00;True|2022-05-26T20:49:29.5447719+03:00;True|2022-05-26T15:06:46.2605578+03:00;True|2022-05-25T20:23:56.1042760+03:00;True|2022-05-23T20:08:33.3646640+03:00;False|2022-05-23T20:07:26.4148461+03:00;False|2022-05-23T20:07:18.3537878+03:00;True|2022-05-22T15:18:22.9792539+03:00;True|2022-05-22T14:48:23.0731103+03:00;True|2022-05-19T21:41:31.9724150+03:00;True|2022-05-19T21:27:05.4492808+03:00;True|2022-05-19T21:18:25.4679695+03:00;True|2022-05-16T20:51:18.5698574+03:00;</History>
+    <History>True|2022-08-25T18:31:37.1269410Z;True|2022-08-16T21:08:03.3971145+03:00;True|2022-07-14T10:04:42.5309977+03:00;True|2022-06-17T15:15:54.8067028+03:00;True|2022-06-17T09:22:45.7948773+03:00;True|2022-06-16T19:58:44.2522692+03:00;True|2022-05-28T12:00:03.9799422+03:00;True|2022-05-28T11:38:56.0140228+03:00;True|2022-05-27T11:54:14.5383614+03:00;True|2022-05-27T11:49:16.9033756+03:00;True|2022-05-26T21:07:24.9616605+03:00;True|2022-05-26T21:07:08.3459002+03:00;True|2022-05-26T21:04:11.2333176+03:00;True|2022-05-26T20:49:29.5447719+03:00;True|2022-05-26T15:06:46.2605578+03:00;True|2022-05-25T20:23:56.1042760+03:00;True|2022-05-23T20:08:33.3646640+03:00;False|2022-05-23T20:07:26.4148461+03:00;False|2022-05-23T20:07:18.3537878+03:00;True|2022-05-22T15:18:22.9792539+03:00;True|2022-05-22T14:48:23.0731103+03:00;True|2022-05-19T21:41:31.9724150+03:00;True|2022-05-19T21:27:05.4492808+03:00;True|2022-05-19T21:18:25.4679695+03:00;True|2022-05-16T20:51:18.5698574+03:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -16,10 +16,10 @@
       <publishTime>09/10/2013 20:29:20</publishTime>
     </File>
     <File Include="bin/AppCache.dll">
-      <publishTime>08/16/2022 21:07:54</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/AppCache.pdb">
-      <publishTime>08/16/2022 21:07:54</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/Aspose.BarCode.dll">
       <publishTime>07/25/2022 23:17:52</publishTime>
@@ -28,19 +28,19 @@
       <publishTime>05/09/2021 20:19:26</publishTime>
     </File>
     <File Include="bin/BE.dll">
-      <publishTime>08/16/2022 21:07:54</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/BE.pdb">
-      <publishTime>08/16/2022 21:07:54</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/BL.dll">
-      <publishTime>08/16/2022 21:07:55</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/BL.dll.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="bin/BL.pdb">
-      <publishTime>08/16/2022 21:07:55</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/ClosedXML.dll">
       <publishTime>12/16/2020 12:59:08</publishTime>
@@ -49,13 +49,13 @@
       <publishTime>12/16/2020 12:59:08</publishTime>
     </File>
     <File Include="bin/DB.dll">
-      <publishTime>08/16/2022 21:07:54</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/DB.dll.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="bin/DB.pdb">
-      <publishTime>08/16/2022 21:07:54</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>06/07/2017 01:59:22</publishTime>
@@ -136,10 +136,10 @@
       <publishTime>11/13/2012 16:19:34</publishTime>
     </File>
     <File Include="bin/RKC.dll">
-      <publishTime>08/16/2022 21:07:56</publishTime>
+      <publishTime>08/25/2022 21:31:33</publishTime>
     </File>
     <File Include="bin/RKC.pdb">
-      <publishTime>08/16/2022 21:07:56</publishTime>
+      <publishTime>08/25/2022 21:31:33</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/08/2018 08:38:48</publishTime>
@@ -403,13 +403,13 @@
       <publishTime>01/23/2014 17:57:34</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll">
-      <publishTime>08/16/2022 21:07:55</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll.config">
       <publishTime>08/12/2022 21:16:35</publishTime>
     </File>
     <File Include="bin/WordGenerator.pdb">
-      <publishTime>08/16/2022 21:07:55</publishTime>
+      <publishTime>08/25/2022 21:31:30</publishTime>
     </File>
     <File Include="bin/zxing.dll">
       <publishTime>02/03/2022 23:45:34</publishTime>
@@ -427,16 +427,16 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>05/29/2022 02:00:21</publishTime>
+      <publishTime>08/18/2022 18:40:52</publishTime>
     </File>
     <File Include="Content/bootstrap.css.map">
-      <publishTime>05/29/2022 02:00:21</publishTime>
+      <publishTime>08/18/2022 17:46:56</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>05/29/2022 02:00:21</publishTime>
+      <publishTime>08/18/2022 18:40:52</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css.map">
-      <publishTime>05/29/2022 02:00:21</publishTime>
+      <publishTime>08/18/2022 17:46:56</publishTime>
     </File>
     <File Include="Content/img/main/fon.jpg">
       <publishTime>06/02/2022 13:13:04</publishTime>
@@ -454,7 +454,10 @@
       <publishTime>06/01/2022 19:59:52</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>07/06/2022 21:33:19</publishTime>
+      <publishTime>08/24/2022 15:29:19</publishTime>
+    </File>
+    <File Include="Content/toastr.css">
+      <publishTime>08/18/2022 18:42:54</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>05/29/2022 02:00:22</publishTime>
@@ -478,10 +481,37 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
-      <publishTime>05/29/2022 02:00:21</publishTime>
+      <publishTime>08/18/2022 18:40:30</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
-      <publishTime>05/29/2022 02:00:21</publishTime>
+      <publishTime>08/18/2022 18:40:30</publishTime>
+    </File>
+    <File Include="Scripts/esm/popper-utils.js">
+      <publishTime>08/18/2022 17:24:59</publishTime>
+    </File>
+    <File Include="Scripts/esm/popper-utils.js.map">
+      <publishTime>08/18/2022 17:24:59</publishTime>
+    </File>
+    <File Include="Scripts/esm/popper-utils.min.js">
+      <publishTime>08/18/2022 17:24:59</publishTime>
+    </File>
+    <File Include="Scripts/esm/popper-utils.min.js.map">
+      <publishTime>08/18/2022 17:24:59</publishTime>
+    </File>
+    <File Include="Scripts/esm/popper.js">
+      <publishTime>08/18/2022 17:24:59</publishTime>
+    </File>
+    <File Include="Scripts/esm/popper.js.map">
+      <publishTime>08/18/2022 17:24:59</publishTime>
+    </File>
+    <File Include="Scripts/esm/popper.min.js">
+      <publishTime>08/18/2022 17:24:59</publishTime>
+    </File>
+    <File Include="Scripts/esm/popper.min.js.map">
+      <publishTime>08/18/2022 17:24:59</publishTime>
+    </File>
+    <File Include="Scripts/index.js.flow">
+      <publishTime>08/18/2022 17:24:58</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.js">
       <publishTime>05/29/2022 02:00:21</publishTime>
@@ -522,11 +552,254 @@
     <File Include="Scripts/modernizr-2.8.3.js">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
+    <File Include="Scripts/popper-utils.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/popper-utils.js.map">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/popper-utils.min.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/popper-utils.min.js.map">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/popper.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/popper.js.map">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/popper.min.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/popper.min.js.map">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/README.md">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/index.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/methods/defaults.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/methods/destroy.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/methods/disableEventListeners.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/methods/enableEventListeners.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/methods/placements.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/methods/update.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/applyStyle.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/arrow.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/computeStyle.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/flip.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/hide.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/index.js">
+      <publishTime>08/18/2022 17:24:58</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/inner.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/keepTogether.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/offset.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/preventOverflow.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/modifiers/shift.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/clockwise.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/computeAutoPlacement.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/debounce.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/find.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/findCommonOffsetParent.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/findIndex.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getBordersSize.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getBoundaries.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getBoundingClientRect.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getClientRect.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getFixedPositionOffsetParent.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getOffsetParent.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getOffsetRect.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getOffsetRectRelativeToArbitraryNode.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getOppositePlacement.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getOppositeVariation.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getOuterSizes.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getParentNode.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getPopperOffsets.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getReferenceNode.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getReferenceOffsets.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getRoot.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getRoundedOffsets.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getScroll.js">
+      <publishTime>08/18/2022 17:24:57</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getScrollParent.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getStyleComputedProperty.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getSupportedPropertyName.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getViewportOffsetRectRelativeToArtbitraryNode.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getWindow.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/getWindowSizes.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/includeScroll.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/index.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/isBrowser.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/isFixed.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/isFunction.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/isIE.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/isModifierEnabled.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/isModifierRequired.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/isNumeric.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/isOffsetContainer.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/removeEventListeners.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/runModifiers.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/setAttributes.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/setStyles.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/src/utils/setupEventListeners.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/umd/popper-utils.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/umd/popper-utils.js.map">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/umd/popper-utils.min.js">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/umd/popper-utils.min.js.map">
+      <publishTime>08/18/2022 17:24:56</publishTime>
+    </File>
+    <File Include="Scripts/umd/popper.js">
+      <publishTime>08/18/2022 17:24:55</publishTime>
+    </File>
+    <File Include="Scripts/umd/popper.js.flow">
+      <publishTime>08/18/2022 17:24:55</publishTime>
+    </File>
+    <File Include="Scripts/umd/popper.js.map">
+      <publishTime>08/18/2022 17:24:55</publishTime>
+    </File>
+    <File Include="Scripts/umd/popper.min.js">
+      <publishTime>08/18/2022 17:24:55</publishTime>
+    </File>
+    <File Include="Scripts/umd/popper.min.js.map">
+      <publishTime>08/18/2022 17:24:55</publishTime>
+    </File>
     <File Include="Template/HekpCalculation.xlsx">
       <publishTime>07/06/2022 20:41:07</publishTime>
     </File>
     <File Include="Template/Образец квитанции.docx">
-      <publishTime>08/16/2022 20:52:38</publishTime>
+      <publishTime>08/18/2022 21:01:34</publishTime>
     </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
       <publishTime>05/29/2022 02:00:21</publishTime>
@@ -564,14 +837,38 @@
     <File Include="Views/Account/_ExternalLoginsListPartial.cshtml">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
+    <File Include="Views/Admin/GetNotification.cshtml">
+      <publishTime>08/24/2022 15:27:02</publishTime>
+    </File>
+    <File Include="Views/Admin/GetUserRoleInfo.cshtml">
+      <publishTime>08/20/2022 17:47:49</publishTime>
+    </File>
+    <File Include="Views/Admin/Index.cshtml">
+      <publishTime>08/22/2022 19:59:37</publishTime>
+    </File>
+    <File Include="Views/Admin/ParilaViewIntegration.cshtml">
+      <publishTime>08/25/2022 20:35:06</publishTime>
+    </File>
+    <File Include="Views/Admin/ParilaViewNotifications.cshtml">
+      <publishTime>08/24/2022 15:13:21</publishTime>
+    </File>
+    <File Include="Views/Admin/PartialViewReport.cshtml">
+      <publishTime>08/20/2022 14:08:01</publishTime>
+    </File>
+    <File Include="Views/Admin/PartialViewRole.cshtml">
+      <publishTime>08/20/2022 17:36:24</publishTime>
+    </File>
     <File Include="Views/Counter/ArchiveAllLics.cshtml">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPU.cshtml">
-      <publishTime>07/03/2022 13:12:56</publishTime>
+      <publishTime>08/25/2022 21:20:38</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPUDelete.cshtml">
       <publishTime>06/15/2022 20:23:02</publishTime>
+    </File>
+    <File Include="Views/Counter/ErrorIntegration.cshtml">
+      <publishTime>08/23/2022 19:12:52</publishTime>
     </File>
     <File Include="Views/Counter/FromAddPU.cshtml">
       <publishTime>06/23/2022 13:46:32</publishTime>
@@ -580,7 +877,7 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Counter/Index.cshtml">
-      <publishTime>06/29/2022 21:35:50</publishTime>
+      <publishTime>08/20/2022 13:27:21</publishTime>
     </File>
     <File Include="Views/Counter/SearchIPU.cshtml">
       <publishTime>07/11/2022 14:08:37</publishTime>
@@ -613,13 +910,13 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersData.cshtml">
-      <publishTime>07/10/2022 17:47:59</publishTime>
+      <publishTime>08/19/2022 15:11:05</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersDelete.cshtml">
       <publishTime>06/16/2022 20:39:15</publishTime>
     </File>
     <File Include="Views/PersonalData/FormAddPers.cshtml">
-      <publishTime>06/24/2022 14:25:19</publishTime>
+      <publishTime>08/25/2022 19:39:26</publishTime>
     </File>
     <File Include="Views/PersonalData/HistoryEdit.cshtml">
       <publishTime>06/08/2022 21:40:53</publishTime>
@@ -640,10 +937,10 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/18/2022 23:37:09</publishTime>
+      <publishTime>08/20/2022 18:57:48</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>05/29/2022 02:00:21</publishTime>
+      <publishTime>08/18/2022 19:53:08</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
@@ -652,7 +949,7 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/16/2022 21:07:57</publishTime>
+      <publishTime>08/25/2022 21:31:33</publishTime>
     </File>
   </ItemGroup>
 </Project>
