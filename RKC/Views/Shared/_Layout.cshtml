@@ -48,7 +48,7 @@
             </div>
         </div>
     </div>
-        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Notifications")))
         {
              <div id="NotificationResultTimer"></div>
         } 

@@ -448,8 +448,9 @@
                         <input type="button" name="@Items.FULL_LIC-@TypePU" class="btn btn-primary Archive" value="История показания" data-toggle="modal" data-target="#ArchiveModal" />
                         <input type="button" value="Сохранить" class="btn btn-danger hidden  Save" />
                         <input type="button" name="@Items.ID_PU" value="Редактировать" class="btn btn-success Edit" />
-                        <input style="float:right;" name="@Items.TYPE_PU" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
+                        <input type="button" name="@Items.ID_PU" value="Убрать ошибку" class="btn btn-success DeleteError hidden" />
                         <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
+                        <input style="float:right;" name="@Items.TYPE_PU" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
                         <input type="button" name="@Items.ID_PU" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
                     }
                     else
@@ -671,6 +672,36 @@ else
                         });
                     },
                     "Отмена": function () {
+                        $.alert('Отменено!');
+                    }
+                }
+            });
+        })
+        $(".DeleteError").click(function (e) {
+            var lic = $('#FULL_LIC').val()
+            var IdPU = $(this).parent().find('.IdPU').val();
+            $.confirm({
+                title: 'Предупрждение!',
+                content: 'Внимание вы исправили ошибку ?',
+                buttons: {
+                    "Да": function () {
+                        $.ajax({
+                            url: '/Counter/DeleteError?IdPU=' + IdPU + '&Lic=' + lic,
+                            type: 'POST',
+                            data: JSON.stringify({
+                                IdPU: IdPU
+                            }),
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                // alert(data + " Страница сейчас перезагрузится!");
+                                window.location.reload();
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Нет": function () {
                         $.alert('Отменено!');
                     }
                 }

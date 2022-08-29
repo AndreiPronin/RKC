@@ -379,6 +379,7 @@ namespace BL.Excel
                             {
                                 counter.UpdatePUIntegrations(saveModel, User, IPU_COUNTERS.FirstOrDefault().ID_PU);
                                 dbApp.IntegrationReadings.Add(integrationReadings);
+                                dbApp.SaveChanges();
                             }
                             else
                             {

@@ -440,6 +440,7 @@
     <Content Include="Views\Admin\GetNotification.cshtml" />
     <Content Include="Views\Admin\ParilaViewIntegration.cshtml" />
     <Content Include="Views\Counter\ErrorIntegration.cshtml" />
+    <Content Include="Views\PersonalData\PaymentHistoryView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,6 +15,7 @@ namespace BL.Security
         List<AspNetUsers> GetAllUser();
         List<AspNetUserRoles> GetAllUserRoles();
         List<UserRoleInfo> GetUserRoles(string Name);
+        bool GetRoleUserNoLock(string UserId);
     }
     public class SecurityProvider : ISecurityProvider
     {
@@ -55,6 +56,15 @@ namespace BL.Security
                     userRoleInfo.Add(new UserRoleInfo { UserFio = UserFio, UserRole = Role.Description, UserId = Items.UserId, UserRoleId = Items.RoleId });
                 }
                 return userRoleInfo;
+            }
+        }
+        public bool GetRoleUserNoLock(string UserId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var UserRole = db.AspNetUserRoles.Where(x => x.UserId == UserId && x.RoleId == "8").FirstOrDefault();
+                if (UserRole == null) return true;
+                else return false;
             }
         }
     }

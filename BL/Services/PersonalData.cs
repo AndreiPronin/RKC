@@ -31,6 +31,7 @@ namespace BL.Services
         void AddPersData(PersDataModel persDataModel, string User);
         void DeletePers(int IdPersData, string User);
         string GetRoomTypeMain(string Full_Lic);
+        List<Payment> GetPaymentHistory(string Full_Lic);
 
     }
     public class PersonalData : IPersonalData
@@ -360,6 +361,13 @@ namespace BL.Services
                 var Pers = db.PersData.Find(IdPersData);
                 Pers.IsDelete = true;
                 db.SaveChanges();
+            }
+        }
+        public List<Payment> GetPaymentHistory(string Full_Lic)
+        {
+            using (var db = new DbPayment())
+            {
+                return db.Payment.Include(x => x.Counter).Include(x => x.Organization).Where(x => x.lic == Full_Lic).ToList();
             }
         }
     }

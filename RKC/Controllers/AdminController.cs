@@ -1,4 +1,5 @@
-﻿using BL.Security;
+﻿using BE.Service;
+using BL.Security;
 using DB.DataBase;
 using DB.Model;
 using Microsoft.AspNet.Identity;
@@ -13,7 +14,7 @@ using ApplicationDbContext = DB.DataBase.ApplicationDbContext;
 
 namespace RKC.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     public class AdminController : Controller
     {
         private readonly ISecurityProvider _securityProvider;
@@ -21,22 +22,26 @@ namespace RKC.Controllers
         {
             _securityProvider = securityProvider;
         }
-        // GET: Admin
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             ViewBag.Roles = _securityProvider.GetAllRoles();
             ViewBag.User = _securityProvider.GetAllUser();
+            
             using (var db = new ApplicationDbContext())
             {
                 ViewBag.Notifacation = db.Notifications.Where(x => x.IsDelete == false).ToList();
+                ViewBag.IntegrationTime = db.Flags.Find(((int)EnumFlags.LastIntegration)).DateTime;
             }
                 
             return View();
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult GetUserRoleInfo(string UserId)
         {
             return PartialView(_securityProvider.GetUserRoles(UserId));
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteRole(string UserId, string UserRoleId)
         {
             using(var db = new ApplicationDbContext())
@@ -47,6 +52,7 @@ namespace RKC.Controllers
             }
             return Content("Роль успешно удалена");
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult AddRole(string UserId, string UserRoleId)
         {
             using (var db = new ApplicationDbContext())
@@ -56,6 +62,7 @@ namespace RKC.Controllers
             }
             return Content("Роль успешно добавлена");
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult AddNotifications(string Title, string Description)
         {
             using (var db = new ApplicationDbContext())
@@ -65,6 +72,7 @@ namespace RKC.Controllers
             }
             return Content("Уведомление успешно добавлено");
         }
+        [Authorize(Roles = "Admin,Notifications")]
         public ActionResult GetNotification()
         {
             using (var db = new ApplicationDbContext())
@@ -78,6 +86,7 @@ namespace RKC.Controllers
                 return PartialView(notification);
             }
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult deleteNotification(int Id)
         {
             using(var db = new ApplicationDbContext())

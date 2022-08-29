@@ -26,6 +26,7 @@ namespace BL.Counters
         void AddPU(ModelAddPU modelAddPU, string FIO);
         void DeleteError(int IdPU, string Lic, string User);
         void UpdatePUIntegrations(SaveModelIPU saveModelIPU, string User, int ID_PU);
+        List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC);
     }
     public class Counter : ICounter
     {
@@ -463,6 +464,28 @@ namespace BL.Counters
                 saveModelIPU.OVERWRITE_SEAL = true;
                 logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
                 UpdateReadings(saveModelIPU);
+            }
+        }
+        public List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC)
+        {
+            List<IPU_COUNTERS> model = new List<IPU_COUNTERS>();
+            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.GVS1.GetDescription(), ID_PU = ((int)TypePU.GVS1) });
+            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.GVS2.GetDescription(), ID_PU = ((int)TypePU.GVS2) });
+            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.GVS3.GetDescription(), ID_PU = ((int)TypePU.GVS3) });
+            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.GVS4.GetDescription(), ID_PU = ((int)TypePU.GVS4) });
+            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.ITP1.GetDescription(), ID_PU = ((int)TypePU.ITP1) });
+            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.ITP2.GetDescription(), ID_PU = ((int)TypePU.ITP2) });
+            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.ITP3.GetDescription(), ID_PU = ((int)TypePU.ITP3) });
+            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.ITP4.GetDescription(), ID_PU = ((int)TypePU.ITP4) });
+            using (var db = new DbTPlus())
+            {
+                var Result = db.IPU_COUNTERS.Where(x => x.FULL_LIC == FullLIC && (x.CLOSE_ == null || x.CLOSE_ == false)).ToList();
+                foreach(var Items in Result)
+                {
+                    if (Items.TYPE_PU == model.FirstOrDefault(x => x.TYPE_PU == Items.TYPE_PU).TYPE_PU) 
+                        model.Remove(model.FirstOrDefault(x=>x.TYPE_PU == Items.TYPE_PU));
+                }
+                return model;
             }
         }
     }

@@ -163,5 +163,10 @@ namespace RKC.Controllers
             ViewBag.FULL_LIC = FULL_LIC;
             return View(_personalData.GetInfoPersDataDelete(FULL_LIC));
         }
+        public ActionResult PaymentHistoryView(string FullLic)
+        {
+            ViewBag.LIC = FullLic;
+            return View(_personalData.GetPaymentHistory(FullLic).OrderByDescending(x=>x.payment_date_day));
+        }
     }
 }

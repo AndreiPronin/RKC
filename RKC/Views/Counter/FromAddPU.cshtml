@@ -1,4 +1,4 @@
-﻿@model BE.Counter.ModelAddPU
+﻿@model IEnumerable<DB.Model.IPU_COUNTERS>
 
 <div class="modal fade" id="AddPUModal" tabindex="-1" role="dialog" aria-labelledby="ArchiveModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -26,14 +26,10 @@
                         <div class="col-sm-8">
                             <select id="TYPE_PU_Select" class="form-control">
                                 <option value="0" selected>Выберите тип</option>
-                                <option value="1">ГВС 1</option>
-                                <option value="2">ГВС 2</option>
-                                <option value="3">ГВС 3</option>
-                                <option value="4">ГВС 4</option>
-                                <option value="5">ОТП 1</option>
-                                <option value="6">ОТП 2</option>
-                                <option value="7">ОТП 3</option>
-                                <option value="8">ОТП 4</option>
+                                @foreach (var Items in Model)
+                                {
+                                    <option value="@Items.ID_PU">@Items.TYPE_PU</option>
+                                }
                             </select>
                         </div>
                     </div>

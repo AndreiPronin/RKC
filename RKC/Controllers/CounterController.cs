@@ -1,7 +1,7 @@
 ﻿using BE.Counter;
 using BL.Counters;
 using System;
-using System.Collections.Generic;
+using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;
 using RKC.Extensions;
@@ -16,6 +16,7 @@ using System.Web;
 using System.Data.Odbc;
 using BL.Service;
 using BL;
+using BL.Security;
 
 namespace RKC.Controllers
 {
@@ -29,9 +30,12 @@ namespace RKC.Controllers
         private readonly IIntegrations _integration;
         public readonly IFlagsAction flagsAction;
         public readonly IReadFileBank readFileBank;
+        public readonly ISecurityProvider _securityProvider;
         public CounterController(ICounter _counter, Ilogger _logger, IGeneratorDescriptons _generatorDescriptons, 
-            ICacheApp _cacheApp, IFlagsAction _flagsAction, IReadFileBank _readFileBank, IIntegrations integration)
+            ICacheApp _cacheApp, IFlagsAction _flagsAction, IReadFileBank _readFileBank, IIntegrations integration
+            , ISecurityProvider securityProvider)
         {
+            _securityProvider = securityProvider;
             counter = _counter;
             logger = _logger;
             generatorDescriptons = _generatorDescriptons;
@@ -70,7 +74,7 @@ namespace RKC.Controllers
                     ViewBag.IsLock = flagsAction.GetAction(nameof(DetailedInformIPU));
                 }
                 var Result = counter.DetailInfroms(FULL_LIC);
-                
+                if(ViewBag.IsLock == true) ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
                 if (Result.Count() > 0)
                 {
                     return View(Result);
@@ -112,13 +116,17 @@ namespace RKC.Controllers
         public ActionResult FromAddPU(string FullLIC) 
         {
             ViewBag.FULL_LIC = FullLIC;
-            return PartialView(new ModelAddPU());
+            return PartialView(counter.GetTypeNowUsePU(FullLIC));
         }
         [HttpPost]
         public ActionResult AddPU(ModelAddPU modelAddPU)
         {
             try
             {
+                if (string.IsNullOrEmpty(modelAddPU.FULL_LIC) || modelAddPU.FULL_LIC == "undefined")
+                {
+                    throw new Exception("Не найден лицевой счет, обратитесь к администратору");
+                }
                 counter.AddPU(modelAddPU,User.Identity.GetFIOFull());
                 return null;
             }catch(Exception ex)

@@ -3,11 +3,36 @@
     ViewBag.Title = "ParilaViewIntegration";
 }
 
-<div class="container">
-    <br />
-   <button id="RunReadingIntegration" class="btn btn-primary" >Запустить интеграцию показаний ИПУ</button>
+<br />
+<div style="margin-top:30px;" class="row">
+    <div class="col-md-4">
+        <input type="date" class="form-control" min="@ViewBag.IntegrationTime.AddDays(-1).ToString("yyyy-MM-dd")" max="@DateTime.Now.Date.ToString("yyyy-MM-dd")" id="DateRunReadingIntegration" value="@DateTime.Now.Month" />
+    </div>
+    <div class="col-md-4">
+        <label>Последняя интеграция @ViewBag.IntegrationTime.AddDays(-1).ToString("yyyy.MM.dd")</label>
+    </div>
+    <div class="col-md-2">
+        <button id="RunReadingIntegration" class="btn btn-primary">Запустить интеграцию показаний ИПУ</button>
+    </div>
 </div>
 <br />
+@using (Html.BeginForm("UploadFilePU", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    if (User.IsInRole("Admin"))
+    {
+        <div style="margin-top:30px;" class="row">
+            <div class="col-md-4">
+                @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                <input name="User" id="User" placeholder="Название от кого файл" class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
+            </div>
+        </div>
+    }
+}
 <div class="progress hidden">
     <div class="progress-bar" id="ResultRunReadingIntegration" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 </div>
@@ -15,7 +40,7 @@
     $(document).ready(function (e) {
         $("#RunReadingIntegration").click(function () {
             $.ajax({
-                url: '/Counter/RunIntegration',
+                url: '/Counter/RunIntegration?Date=' + $("#DateRunReadingIntegration").val(),
                 success: function (data) {
                     alert('Интеграция завершена');
                 },
@@ -32,6 +57,25 @@
             var intervalID = setInterval(function () {
                 $.ajax({
                     url: '/Counter/GetProgress?Name=Integration',
+                    success: function (data) {
+                        i = data;
+                    },
+                    error: function () {
+                        i = "Что то пошло не так. Обратитесь к администратору! Это ошибка связана с показанием процентов загрузки";
+                    }
+                });
+                // Добавляем ноль в начало цифры, которые до 10
+                $("#ResultRunReadingIntegration").css('width', i + '%');
+                $("#ResultRunReadingIntegration").text(i + '%');
+                if (i === 100) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
+            }, 3000);
+        })
+        $("#UploadFilePU").click(function (e) {
+            $("#ResultRunReadingIntegration").parent().removeClass("hidden");
+            var Cashe = $('#User').val();
+            var intervalID = setInterval(function () {
+                $.ajax({
+                    url: '/Counter/GetProgress?Name=' + Cashe,
                     success: function (data) {
                         i = data;
                     },

@@ -20,7 +20,7 @@
                 else
                 {
                     <li class="list-group-item"><p>@Items.Title
-                        @if (User.IsInRole("Admin"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Notifications"))
                         {<a id="NotificationSave" href="/admin/deleteNotification?Id=@Items.Id" class="btn btn-success">Удалить</a>}
                          </p><p>@Items.Description</p></li>
                 }

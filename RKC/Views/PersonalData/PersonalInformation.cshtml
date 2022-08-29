@@ -180,7 +180,7 @@
                             <button class="btn btn-primary DownLoadHelpСalculation">Справка расчет</button>
                         </div>
                         <div class="col-md-3">
-                            <button disabled class="btn btn-primary DownLoadHelpСalculation">История оплат</button>
+                            <button class="btn btn-primary PaymentHistory">История оплат</button>
                         </div>
                         <div class="col-md-3">
                             <input type="button" class="btn btn-primary ShowAllDocument" value="Документы" data-toggle="modal" data-target="#ShowAllDocumentModal" />
@@ -328,6 +328,25 @@
                 });
             }
             return false;
+        });
+        $(".PaymentHistory").click(function (e) {
+            var Date = "@DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM")";
+            var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";
+            console.log(DateMax);
+            $.confirm({
+                title: 'История оплат',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '</form>',
+                buttons: {
+                    "Просмотреть": function () {
+                        window.open('/PersonalData/PaymentHistoryView?FullLic=' + @ViewBag.FULL_LIC,'_blank');
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
         });
         setTimeout(Loader, 1000);
         $("#CloseLock").click(function () {

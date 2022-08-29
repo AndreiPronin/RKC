@@ -46,5 +46,6 @@ namespace DB.DataBase
         public int Id { get; set; }
         public string NameAction { get; set; }
         public bool Flag { get; set; }
+        public DateTime? DateTime { get; set; }
     }
 }

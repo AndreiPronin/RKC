@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using DB.Model;
+using BE.Service;
 
 namespace BL.Service
 {
@@ -58,7 +59,7 @@ namespace BL.Service
             var payment = dbs.Payment
                 .Include(x => x.Counter)
                 .Include(x => x.Organization)
-                .Where(x=>x.payment_period.Value.Month == period.Month && x.payment_period.Value.Year == period.Year)
+                .Where(x => x.payment_date_day.Value == period)
                 .ToList();
             var Count = payment.Count();
             int i = 0;
@@ -387,7 +388,14 @@ namespace BL.Service
                     }
                 }
             }
-            
+            var LastIntegration = dbApp.Flags.Find(((int)EnumFlags.LastIntegration));
+            LastIntegration.DateTime = DateTime.Now;
+            cacheApp.UpdateProgress(User, "100");
+            dbApp.SaveChanges();
+            dbApp.Dispose();
+            dbs.Dispose();
+            DbLIC.Dispose();
+            DbTPlus.Dispose();
         }
         public List<IntegrationReadings> GetErrorIntegrationReadings()
         {
