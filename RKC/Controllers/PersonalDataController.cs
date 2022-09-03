@@ -31,13 +31,14 @@ namespace RKC.Controllers
             _cacheApp = cacheApp;
             _flagsAction = flagsAction;
         }
+        [Authorize(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult PersonalInformation(string FullLic)
         {
             ViewBag.FULL_LIC = FullLic;
             ViewBag.StateCalc = _personalData.GetStateCalculation(FullLic); 
             return View(_personalData.GetPersonalInformation(FullLic));
         }
-      
+        [Authorize(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult DetailedInformPersData(string FULL_LIC)
         {
             try
@@ -78,6 +79,7 @@ namespace RKC.Controllers
             return null;
         }
         [HttpPost]
+        [Authorize(Roles = "PersWriter,Admin")]
         public ActionResult SaveFile(HttpPostedFileBase FileLoad, string NameFile,string Lic,int idPersData,string Fio)
         {
             return Json(new { result = _personalData.saveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.').LastOrDefault(), NameFile, User.Identity.GetFIOFull()),
@@ -113,6 +115,7 @@ namespace RKC.Controllers
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
         [HttpGet]
+        [Authorize(Roles = "PersWriter,Admin")]
         public ActionResult DeleteFile(int Id)
         {
             _personalData.DeleteFile(Id,User.Identity.GetFIOFull());
@@ -127,37 +130,44 @@ namespace RKC.Controllers
             }
             return fileData;
         }
+        [Authorize(Roles = "PersWriter,Admin")]
         public ActionResult SavePersonalData(PersDataModel persDataModel)
         {
             _personalData.SavePersonalData(persDataModel, User.Identity.GetFIOFull());
             return null;
         }
+        [Authorize(Roles = "PersWriter,Admin")]
         public ActionResult AddPersData(PersDataModel persDataModel)
         {
             _personalData.AddPersData(persDataModel, User.Identity.GetFIOFull());
             return null;
         }
+        [Authorize(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult HistoryEdit(int idPersData)
         {
             return PartialView(_personalData.GetHistory(idPersData));
         }
         [HttpGet]
+        [Authorize(Roles = "PersWriter,Admin")]
         public ActionResult EditMain(int idPersData)
         {
             _personalData.MakeToMain(idPersData);
             return null;
         }
+        [Authorize(Roles = "PersWriter,Admin")]
         public ActionResult FormAddPers(string FULL_LIC)
         {
             ViewBag.RoomType = _personalData.GetRoomTypeMain(FULL_LIC);
             ViewBag.FULL_LIC = FULL_LIC;
             return PartialView();
         }
+        [Authorize(Roles = "PersWriter,Admin")]
         public ActionResult DeletePersonalData(int IdPersData)
         {
             _personalData.DeletePers(IdPersData,User.Identity.GetFIOFull());
             return null;
         }
+        [Authorize(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult DetailedInformPersDelete(string FULL_LIC)
         {
             ViewBag.FULL_LIC = FULL_LIC;

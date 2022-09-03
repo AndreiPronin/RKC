@@ -59,5 +59,7 @@ namespace BE.Counter
         Low = 4,
         [Description("Не найден лицевой счет")]
         NoLic = 5,
+        [Description("Оплата есть а показаний нет")]
+        NoReadings = 6,
     }
 }

@@ -44,7 +44,7 @@ namespace BL.ApiT_
                 using(var db = new ApplicationDbContext())
                 {
                     IQueryable<PersData> persDatas = db.PersData.Where(x=>x.Main == true);
-                    var Data = persDatas.ToList();
+                    var Data = persDatas.Take(10).ToList();
                     var ListError = new List<string>();
                     #region
                     Parallel.ForEach(Data, Item =>

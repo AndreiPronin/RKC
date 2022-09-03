@@ -7,22 +7,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using System.Text;
 using System.Threading.Tasks;
 using DB.Model;
 using BE.Service;
+using BL.Extention;
 
 namespace BL.Service
 {
     public interface IIntegrations
     {
-        void LoadReadings(string User, ICacheApp cacheApp, DateTime period);
+        Task LoadReadings(string User, ICacheApp cacheApp, DateTime period);
         List<IntegrationReadings> GetErrorIntegrationReadings();
         List<IntegrationReadings> GetErrorIntegrationReadings(string FullLic);
     }
     public class Integrations : IIntegrations
     {
-        public void LoadReadings(string User, ICacheApp cacheApp,DateTime period)
+        public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period)
         {
             cacheApp.AddProgress(User, "0");
             Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
@@ -65,7 +65,6 @@ namespace BL.Service
             int i = 0;
             foreach(var data in payment)
             {
-               
                 var Procent = Math.Round((float)i / Count * 100, 0);
                 var Readings = Reading.Where(x => x.F4ENUMELS == data.lic).FirstOrDefault();
                 cacheApp.UpdateProgress(User, Procent.ToString());
@@ -80,9 +79,9 @@ namespace BL.Service
                             bool Error = false;
                             try
                             {
-                                
-                                var IPU_COUNTERS = Counters.Where(x => x.FULL_LIC == data.lic && 
-                                x.TYPE_PU.Contains(Item.name) && (x.CLOSE_ == null || x.CLOSE_ == false)).Select(x=> new { ID_PU = x.ID_PU }).ToList();
+
+                                var IPU_COUNTERS = Counters.Where(x => x.FULL_LIC == data.lic &&
+                                x.TYPE_PU.Contains(Item.name) && (x.CLOSE_ == null || x.CLOSE_ == false)).Select(x => new { ID_PU = x.ID_PU }).ToList();
                                 var saveModel = new SaveModelIPU();
                                 var integrationReadings = new IntegrationReadings();
                                 integrationReadings.Lic = data.lic;
@@ -340,14 +339,11 @@ namespace BL.Service
 
                                     }
                                 }
-                                if (Error == false) counter.UpdatePUIntegrations(saveModel,
+                                if (Error == false) await counter.UpdatePUIntegrations(saveModel,
                                     "Показания от " + data.Organization.name + " дата платежа " + data.payment_date.Value.ToString(),
-                                   IPU_COUNTERS.FirstOrDefault().ID_PU);
+                                    IPU_COUNTERS.FirstOrDefault().ID_PU);
                                 else integrationReadings.IsError = Error;
                                 dbApp.IntegrationReadings.Add(integrationReadings);
-                                dbApp.SaveChanges();
-
-
                             }
                             catch (Exception ex)
                             {
@@ -359,7 +355,6 @@ namespace BL.Service
                                 integrationReadings.NowReadings = Item.value.ToString();
                                 integrationReadings.Description = "Ошибка при интеграции";
                                 dbApp.IntegrationReadings.Add(integrationReadings);
-                                dbApp.SaveChanges();
 
                             }
                         }
@@ -375,22 +370,41 @@ namespace BL.Service
                             IntegrationReadings integrationReadings = new IntegrationReadings();
                             integrationReadings.Lic = data.lic;
                             integrationReadings.DateTime = data.payment_date_day;
-                            if (data.lic.StartsWith("8")) integrationReadings.IsError = false;
+                            if (data.lic.StartsWith("8") || data.lic.StartsWith("1")) integrationReadings.IsError = false;
                             else integrationReadings.IsError = true;
                             integrationReadings.Description = ErrorIntegration.NoLic.GetDescription();
                             dbApp.IntegrationReadings.Add(integrationReadings);
-                            dbApp.SaveChanges();
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
 
                     }
                 }
+                if (data.Counter.Count() == 0)
+                {
+                    var Integr = dbApp.IntegrationReadings.Where(x => x.Lic == data.lic && x.DateTime == data.payment_date_day && x.TypePu == "ГВС").ToList();
+                    if (Integr.Count() == 0)
+                    {
+                        IntegrationReadings integrationReadings = new IntegrationReadings();
+                        integrationReadings.Lic = data.lic;
+                        integrationReadings.TypePu = "ГВС";
+                        integrationReadings.DateTime = data.payment_date_day;
+                        integrationReadings.IsError = true;
+                        integrationReadings.Description = $"{ErrorIntegration.NoReadings.GetDescription()} сумма оплаты {data.transaction_amount}";
+                        dbApp.IntegrationReadings.Add(integrationReadings);
+                    }
+                }
             }
+            dbApp.SaveChanges();
             var LastIntegration = dbApp.Flags.Find(((int)EnumFlags.LastIntegration));
-            LastIntegration.DateTime = DateTime.Now;
+            LastIntegration.DateTime = period;
             cacheApp.UpdateProgress(User, "100");
+            //Counters.Dispose();
+            //Reading.Dispose();
+            //aLL_LICs.Dispose();
+            //IntegrsList.Dispose();
+            //payment.Dispose();
             dbApp.SaveChanges();
             dbApp.Dispose();
             dbs.Dispose();

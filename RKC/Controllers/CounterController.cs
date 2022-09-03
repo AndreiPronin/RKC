@@ -17,6 +17,7 @@ using System.Data.Odbc;
 using BL.Service;
 using BL;
 using BL.Security;
+using System.Threading.Tasks;
 
 namespace RKC.Controllers
 {
@@ -44,7 +45,6 @@ namespace RKC.Controllers
             readFileBank = _readFileBank;
             _integration = integration;
         }
-        // GET: Counter
         public ActionResult Index()
         {
             return View();
@@ -58,6 +58,7 @@ namespace RKC.Controllers
             return PartialView(Result);
         }
         [HttpGet]
+        [Authorize(Roles = "CounterWriter,CounterReader,Admin")]
         public ActionResult DetailedInformIPU(string FULL_LIC)
         {
             try
@@ -113,12 +114,14 @@ namespace RKC.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "CounterWriter,Admin")]
         public ActionResult FromAddPU(string FullLIC) 
         {
             ViewBag.FULL_LIC = FullLIC;
             return PartialView(counter.GetTypeNowUsePU(FullLIC));
         }
         [HttpPost]
+        [Authorize(Roles = "CounterWriter,Admin")]
         public ActionResult AddPU(ModelAddPU modelAddPU)
         {
             try
@@ -141,6 +144,7 @@ namespace RKC.Controllers
             return null;
         }
         [HttpGet]
+        [Authorize(Roles = "CounterWriter,CounterReader,Admin")]
         public ActionResult ArchiveAllLics(string id_pu)
         {
             ViewBag.FULL_LIC = id_pu.Split('-')[0];
@@ -149,11 +153,13 @@ namespace RKC.Controllers
             return PartialView(Result);
         }
         [HttpGet]
+        [Authorize(Roles = "CounterWriter,CounterReader,Admin")]
         public ActionResult HistoryEdit(int id_pu)
         {
             return PartialView(counter.HistoryEdit(id_pu));
         }
         [HttpPost]
+        [Authorize(Roles = "CounterWriter,Admin")]
         public ActionResult SaveIPU(SaveModelIPU saveModelIPU)
         {
             try
@@ -167,6 +173,7 @@ namespace RKC.Controllers
             }
         }
         [HttpPost]
+        [Authorize(Roles = "CounterWriter,Admin")]
         public ActionResult DeletePU(int IdPU)
         {
             try
@@ -253,19 +260,16 @@ namespace RKC.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult RunIntegration(DateTime date)
+        public async Task<ActionResult> RunIntegration(DateTime date)
         {
-            _integration.LoadReadings("Integration", cacheApp,date);
-            return null;
-        }
-        public ActionResult GetFileHelpCalculation()
-        {
+            await _integration.LoadReadings("Integration", cacheApp,date);
             return null;
         }
         public ActionResult ErrorIntegration()
         {
             return View(_integration.GetErrorIntegrationReadings().OrderByDescending(x=>x.IsError));
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult ErroIntegratinLoadExcel()
         {
             using (XLWorkbook wb = new XLWorkbook())

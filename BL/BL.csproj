@@ -70,8 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiT+\EBD.cs" />
+    <Compile Include="Extention\ListDispose.cs" />
     <Compile Include="Extention\StringWriterExtension.cs" />
     <Compile Include="Helper\СomparisonModel.cs" />
+    <Compile Include="Services\Court.cs" />
     <Compile Include="Services\Integrations.cs" />
     <Compile Include="Security\SecurityProvider.cs" />
     <Compile Include="Services\Counter.cs" />
