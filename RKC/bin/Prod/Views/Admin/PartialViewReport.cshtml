@@ -26,23 +26,7 @@
             </div>
         }
     }
-    @using (Html.BeginForm("UploadFilePU", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        if (User.IsInRole("Admin"))
-        {
-            <div style="margin-top:30px;" class="row">
-                <div class="col-md-4">
-                    @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
-                </div>
-                <div class="col-md-4">
-                    <input name="User" id="User" class="form-control" />
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
-                </div>
-            </div>
-        }
-    }
+    
     @if (User.IsInRole("Admin"))
     {
         <div style="margin-top:30px;" class="row">
@@ -52,6 +36,8 @@
                     <option value="1">ИПУ_отчет из counters</option>
                     <option value="2">ИПУ_отчет из lic</option>
                     <option value="3">ИПУ_отчет общий</option>
+                    <option value="4">Реестр ИПУ</option>
+                    <option value="5">Ebd xml</option>
                 </select>
             </div>
             <div class="col-md-2">

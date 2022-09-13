@@ -111,8 +111,14 @@ namespace RKC.Controllers
         [HttpGet]
         public ActionResult DownLoadReceipt(string FullLic, DateTime Date)
         {
-            var Result = GenerateFileHelpCalculation.Generate(FullLic, Date);
-            return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
+            try
+            {
+                var Result = GenerateFileHelpCalculation.Generate(FullLic, Date);
+                return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
+            }catch(Exception ex)
+            {
+                return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
+            }
         }
         [HttpGet]
         [Authorize(Roles = "PersWriter,Admin")]

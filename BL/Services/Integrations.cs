@@ -381,30 +381,11 @@ namespace BL.Service
 
                     }
                 }
-                if (data.Counter.Count() == 0)
-                {
-                    var Integr = dbApp.IntegrationReadings.Where(x => x.Lic == data.lic && x.DateTime == data.payment_date_day && x.TypePu == "ГВС").ToList();
-                    if (Integr.Count() == 0)
-                    {
-                        IntegrationReadings integrationReadings = new IntegrationReadings();
-                        integrationReadings.Lic = data.lic;
-                        integrationReadings.TypePu = "ГВС";
-                        integrationReadings.DateTime = data.payment_date_day;
-                        integrationReadings.IsError = true;
-                        integrationReadings.Description = $"{ErrorIntegration.NoReadings.GetDescription()} сумма оплаты {data.transaction_amount}";
-                        dbApp.IntegrationReadings.Add(integrationReadings);
-                    }
-                }
             }
             dbApp.SaveChanges();
             var LastIntegration = dbApp.Flags.Find(((int)EnumFlags.LastIntegration));
             LastIntegration.DateTime = period;
             cacheApp.UpdateProgress(User, "100");
-            //Counters.Dispose();
-            //Reading.Dispose();
-            //aLL_LICs.Dispose();
-            //IntegrsList.Dispose();
-            //payment.Dispose();
             dbApp.SaveChanges();
             dbApp.Dispose();
             dbs.Dispose();

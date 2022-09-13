@@ -341,3 +341,13 @@ F:\Programing\RKC\RKC\bin\System.Text.Json.xml
 F:\Programing\RKC\RKC\bin\System.Threading.Tasks.Extensions.xml
 F:\Programing\RKC\RKC\bin\System.ValueTuple.xml
 F:\Programing\RKC\RKC\bin\zxing.xml
+F:\Programing\RKC\RKC\bin\System.Net.Http.Formatting.dll
+F:\Programing\RKC\RKC\bin\System.Web.Http.dll
+F:\Programing\RKC\RKC\bin\System.Web.Http.WebHost.dll
+F:\Programing\RKC\RKC\bin\System.Net.Http.Formatting.xml
+F:\Programing\RKC\RKC\bin\System.Web.Http.xml
+F:\Programing\RKC\RKC\bin\System.Web.Http.WebHost.xml
+F:\Programing\RKC\RKC\bin\Ninject.Web.WebApi.dll
+F:\Programing\RKC\RKC\bin\Ninject.Web.WebApi.xml
+F:\Programing\RKC\RKC\bin\Ninject.Web.WebApi.WebHost.dll
+F:\Programing\RKC\RKC\bin\Ninject.Web.WebApi.WebHost.xml

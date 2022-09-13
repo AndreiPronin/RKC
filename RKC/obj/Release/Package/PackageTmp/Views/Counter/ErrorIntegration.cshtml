@@ -22,7 +22,7 @@
         {
             if (Items.IsError == false)
             {
-                <tr style="background-color:greenyellow">
+                <tr>
                     <td>@Items.Lic</td>
                     <td>@Items.TypePu</td>
                     <td>@Items.DateTime</td>
@@ -30,12 +30,18 @@
                     <td>@Items.InitialReadings</td>
                 <td>@Items.EndReadings</td>
                 <td>@Items.NowReadings</td>
-                <td><a class="btn btn-success" target="_blank" href="/Counter/DetailedInformIPU?FULL_LIC=@Items.Lic">Показать</a></td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-success" href="/Counter/ErroIntegratinDelete?Lic=@Items.Lic&TypePU=@Items.TypePu">Убрать ошибку</a>
+                    }
+                    <a class="btn btn-success" target="_blank" href="/Counter/DetailedInformIPU?FULL_LIC=@Items.Lic">Показать</a>
+                </td>
                 </tr>
             }
             else
             {
-                <tr style="background-color:#ffab8c">
+                <tr >
                     <td>@Items.Lic</td>
                     <td>@Items.TypePu</td>
                     <td>@Items.DateTime</td>
@@ -43,7 +49,13 @@
                     <td>@Items.InitialReadings</td>
                     <td>@Items.EndReadings</td>
                     <td>@Items.NowReadings</td>
-                    <td><a class="btn btn-danger" target="_blank" href="/Counter/DetailedInformIPU?FULL_LIC=@Items.Lic">Показать</a></td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-success" href="/Counter/ErroIntegratinDelete?Lic=@Items.Lic&TypePU=@Items.TypePu">Убрать ошибку</a>
+                        }
+                        <a class="btn btn-danger" target="_blank" href="/Counter/DetailedInformIPU?FULL_LIC=@Items.Lic">Показать</a>
+                    </td>
                 </tr>
             }
         }

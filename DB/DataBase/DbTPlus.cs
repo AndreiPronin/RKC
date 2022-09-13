@@ -11,11 +11,19 @@ namespace DB.DataBase
     public class DbTPlus: DbContext
     {
         public DbSet<IPU_COUNTERS> IPU_COUNTERS { get; set; }
+        public DbSet<FLAT> FLAT { get; set; }
+        public DbSet<MKD> MKD { get; set; }
         public DbSet<IPU> IPU { get; set; }
         public DbSet<IPU_counters_PE> IPU_counters_PE { get; set; }
         public DbSet<IPU_LIC> iPU_LICs { get; set; }
         public DbTPlus() : base("T+")
         {
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("IPU");
+            modelBuilder.Entity<FLAT>().ToTable("FLAT","dbo");
+            modelBuilder.Entity<MKD>().ToTable("MKD", "dbo");
         }
     }
 }

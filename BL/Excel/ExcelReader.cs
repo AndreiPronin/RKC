@@ -157,7 +157,7 @@ namespace BL.Excel
                         {
                             integrationReadings.Lic = saveModel.FULL_LIC;
                             integrationReadings.TypePu = saveModel.TypePU;
-                            integrationReadings.DateTime = DateTime.Now;
+                            integrationReadings.DateTime = Convert.ToDateTime(dataRow.Cell(11).Value);
                             if (saveModel.TypePU == TypePU.GVS1.GetDescription())
                             {
                                 if (Readings.FKUB2XVS - Convert.ToDecimal(saveModel.FKUB2XVS) > 50)
@@ -412,20 +412,50 @@ namespace BL.Excel
             }
             return dt;
         }
-        public DataTable LoadExcelPUBank(XLWorkbook Excels, string User)
+        public DataTable LoadExcelPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
+            cacheApp.AddProgress(User, "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
-            //SaveModelIPU saveModel = new SaveModelIPU();
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
+            var dbApp = new ApplicationDbContext();
+            var Count = nonEmptyDataRows.Count();
             int i = 0;
             foreach (var dataRow in nonEmptyDataRows)
             {
                 if (dataRow.RowNumber() > 1)
                 {
-                    var s = dataRow.Cell(3).Value;
+                    i++;
+                    try
+                    {
+                        var Procent = Math.Round((float)i / Count * 100, 0);
+                        cacheApp.UpdateProgress(User, Procent.ToString());
+                        SaveModelIPU saveModel = new SaveModelIPU();
+                        var integrationReadings = new IntegrationReadings();
+                        saveModel.FULL_LIC = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
+                        saveModel.TypePU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
+                        saveModel.NumberPU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
+                        saveModel.SEALNUMBER = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
+                        if (dataRow.Cell(6).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(6).Value); }
+                        if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(7).Value); }
+                        saveModel.MODEL_PU = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
+                        if (counter.UpdatePU(saveModel, User))
+                        {
+                            
+                            dbApp.IntegrationReadings.Add(integrationReadings);
+                            dbApp.SaveChanges();
+                        }
+                        else
+                        {
+                            saveModel.DESCRIPTION = $"Нет такого ПУ {saveModel.TypePU}";
+                            COUNTERsNotAdded.Add(saveModel);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        COUNTERsNotAdded.Add(new SaveModelIPU { FULL_LIC = $"Ошибка на {i} строке" });
+                    }
                 }
-
             }
             DataTable dt = new DataTable("Counter");
             dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Лицевой счет"),
@@ -434,7 +464,7 @@ namespace BL.Excel
                                         new DataColumn("Примечание")});
             foreach (var Items in COUNTERsNotAdded)
             {
-                dt.Rows.Add(Items.FULL_LIC, Items.TypePU, Items.NumberPU, "Не был загружен так как его не существует в бд");
+                dt.Rows.Add(Items.FULL_LIC, Items.TypePU, Items.NumberPU, Items.DESCRIPTION);
             }
             return dt;
         }
@@ -455,6 +485,31 @@ namespace BL.Excel
                 dt.Rows.Add(Items.Lic, Items.TypePu, Items.DateTime, Items.Description, 
                     Items.InitialReadings, Items.EndReadings, Items.NowReadings);
             }
+            return dt;
+        }
+        public DataTable ReestrIPU(string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User, "Получаю данные из бд");
+            DataTable dt = new DataTable("Counter");
+            dt.Columns.AddRange(new DataColumn[17] { new DataColumn("КОД ДОМА"),
+                                        new DataColumn("   УЛИЦА   "),
+                                        new DataColumn("  ДОМ  "),
+                                        new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
+            ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   "),new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
+            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   ПЛОМБА   "),new DataColumn("   ТИП ПЛОМБА   ")
+            ,new DataColumn("   ПЛОМБА 2   "),new DataColumn("   ТИП ПЛОМБА 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
+            ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
+            var DB = new ApplicationDbContext();
+            var Counters = DB.vw_CounterTPlus.ToList();
+            cacheApp.AddProgress(User, "Формирую Excel");
+            foreach (var Items in Counters)
+            {
+                dt.Rows.Add(Items.CodeHouse, Items.Streer, Items.Home, Items.Flat,
+                    Items.Lic, Items.Fio, Items.Pu, Items.PuNumber, Items.DataCheck, Items.DataNextCheck, 
+                    Items.Seal, Items.TypeSeal, Items.Seal2, Items.TypeSeal2, Items.SignPu, Items.EndReadings,Items.NowReadings);
+            }
+            cacheApp.AddProgress(User, "Скачиваю Excel");
+            
             return dt;
         }
     }

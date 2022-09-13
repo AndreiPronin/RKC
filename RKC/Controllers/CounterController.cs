@@ -18,6 +18,8 @@ using BL.Service;
 using BL;
 using BL.Security;
 using System.Threading.Tasks;
+using DB.DataBase;
+using BL.ApiT_;
 
 namespace RKC.Controllers
 {
@@ -32,9 +34,10 @@ namespace RKC.Controllers
         public readonly IFlagsAction flagsAction;
         public readonly IReadFileBank readFileBank;
         public readonly ISecurityProvider _securityProvider;
+        public readonly IEBD _ebd;
         public CounterController(ICounter _counter, Ilogger _logger, IGeneratorDescriptons _generatorDescriptons, 
             ICacheApp _cacheApp, IFlagsAction _flagsAction, IReadFileBank _readFileBank, IIntegrations integration
-            , ISecurityProvider securityProvider)
+            , ISecurityProvider securityProvider,IEBD ebd)
         {
             _securityProvider = securityProvider;
             counter = _counter;
@@ -44,6 +47,7 @@ namespace RKC.Controllers
             flagsAction = _flagsAction;
             readFileBank = _readFileBank;
             _integration = integration;
+            _ebd = ebd;
         }
         public ActionResult Index()
         {
@@ -211,18 +215,35 @@ namespace RKC.Controllers
            
         }
         [Authorize(Roles = "Admin")]
-        public ActionResult UploadFilePU(HttpPostedFileBase file, string User)
+        public ActionResult UploadFilePU(HttpPostedFileBase file, string User,int TypeLoad)
         {
-            using (XLWorkbook wb = new XLWorkbook())
+            if (TypeLoad == 1)
             {
-                var workbook = new XLWorkbook(file.InputStream);
-                wb.Worksheets.Add(new Excel().LoadExcelPU(workbook,User,cacheApp));
-                using (MemoryStream stream = new MemoryStream())
+                using (XLWorkbook wb = new XLWorkbook())
                 {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(new Excel().LoadExcelPU(workbook, User, cacheApp));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
                 }
             }
+            if(TypeLoad == 2)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(new Excel().LoadExcelPUProperty(workbook, User, cacheApp));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }
+            }
+            return null;
         }
         public ActionResult GetProgress(string Name)
         {
@@ -248,7 +269,11 @@ namespace RKC.Controllers
                 }
                 if (typeFile.Equals(TypeFile.ReestrIPU))
                 {
-                    wb.Worksheets.Add(new Excel().CreateExcelGeneral());
+                    wb.Worksheets.Add(new Excel().ReestrIPU(User.Identity.Name, cacheApp));
+                }
+                if (typeFile.Equals(TypeFile.EbdAll))
+                {
+                    return File(_ebd.CreateEBDAll(), "application/octet-stream","ebd.xml");
                 }
                 using (MemoryStream stream = new MemoryStream())
                 {
@@ -280,6 +305,20 @@ namespace RKC.Controllers
                     wb.SaveAs(stream);
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Интеграция .xlsx");
                 }
+            }
+        }
+        [Authorize(Roles = "Admin")]
+        public ActionResult ErroIntegratinDelete(string Lic,string TypePU)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.TypePu == TypePU && x.IsError == true).ToList();
+                foreach(var Items in Result)
+                {
+                    Items.IsError = false;
+                    db.SaveChanges();
+                }
+                return Redirect("/Counter/ErrorIntegration");
             }
         }
 

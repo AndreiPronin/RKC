@@ -1,4 +1,5 @@
 ﻿using DB.Model;
+using DB.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,7 @@ namespace DB.DataBase
         public DbSet<AspNetUsers> AspNetUsers { get; set; }
         public DbSet<Notifications> Notifications { get; set; }
         public DbSet<IntegrationReadings> IntegrationReadings { get; set; }
+        public DbSet<vw_CounterTPlus> vw_CounterTPlus { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

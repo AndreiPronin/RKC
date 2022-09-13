@@ -19,7 +19,7 @@
             {
                 <input type="button" name="@Model.FirstOrDefault().FULL_LIC" class="btn btn-primary AddPU" value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
             }
-            <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
+            <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank"><input type="button" class="btn btn-primary" value="История ранее установленых ПУ" /></a>
             <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank" data-tooltip="Закройте редактирование при переходе...">
                 <input type="button" class="btn btn-primary PersData" value="Персональный данные" />
             </a>
@@ -682,7 +682,7 @@ else
             var IdPU = $(this).parent().find('.IdPU').val();
             $.confirm({
                 title: 'Предупрждение!',
-                content: 'Внимание вы исправили ошбку ?',
+                content: 'Внимание вы исправили ошибку ?',
                 buttons: {
                     "Да": function () {
                         $.ajax({

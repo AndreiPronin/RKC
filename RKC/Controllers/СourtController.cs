@@ -15,13 +15,13 @@ namespace RKC.Controllers
     [Authorize(Roles = "Admin,Сourt")]
     public class СourtController : Controller
     {
-        private readonly ICourt _Сourt;
+        private readonly ICourt _court;
         private readonly Ilogger _logger;
         private readonly IGeneratorDescriptons _generatorDescriptons;
         private readonly ICacheApp _cacheApp;
         public readonly IFlagsAction _flagsAction;
         public readonly ISecurityProvider _securityProvider;
-        public СourtController(ICourt counter, Ilogger logger, IGeneratorDescriptons generatorDescriptons,
+        public СourtController(ICourt court, Ilogger logger, IGeneratorDescriptons generatorDescriptons,
             ICacheApp cacheApp, IFlagsAction flagsAction,
             ISecurityProvider securityProvider)
         {
@@ -30,7 +30,7 @@ namespace RKC.Controllers
             _generatorDescriptons = generatorDescriptons;
             _cacheApp = cacheApp;
             _flagsAction = flagsAction;
-
+            _court = court;
         }
         // GET: Сourt
         public ActionResult DetailedСourtData(string FULL_LIC)
@@ -43,7 +43,7 @@ namespace RKC.Controllers
                     ViewBag.IsLock = true;
                 }
                 else ViewBag.IsLock = false;
-                var Result = _Сourt.DetailInfroms(FULL_LIC);
+                var Result = _court.DetailInfroms(FULL_LIC);
                 if (ViewBag.IsLock == true) ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
                 if (Result.Count() > 0)
                 {

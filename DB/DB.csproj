@@ -61,16 +61,20 @@
     <Compile Include="Model\ALL_LICS.cs" />
     <Compile Include="Model\ALL_LICS_ARCHIVE.cs" />
     <Compile Include="Model\AspNetUserRoles.cs" />
+    <Compile Include="Model\FLAT.cs" />
     <Compile Include="Model\IntegrationReadings.cs" />
     <Compile Include="Model\HelpСalculation.cs" />
     <Compile Include="Model\IPU_COUNTERS.cs" />
     <Compile Include="Model\IPU_LIC.cs" />
+    <Compile Include="Model\KVIT.cs" />
+    <Compile Include="Model\MKD.cs" />
     <Compile Include="Model\Notifications.cs" />
     <Compile Include="Model\Payment.cs" />
     <Compile Include="Model\PersData.cs" />
     <Compile Include="Model\PersonalInformation.cs" />
     <Compile Include="Model\StateCalculation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\vw_CounterTPlus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
