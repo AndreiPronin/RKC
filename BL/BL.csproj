@@ -49,8 +49,12 @@
     <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
@@ -70,14 +74,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiT+\EBD.cs" />
+    <Compile Include="Excel\NotificationExcel.cs" />
     <Compile Include="Extention\ListDispose.cs" />
     <Compile Include="Extention\StringWriterExtension.cs" />
+    <Compile Include="Helper\Resposne.cs" />
     <Compile Include="Helper\СomparisonModel.cs" />
+    <Compile Include="Jobs\JobManager.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="Notification\NotificationMail.cs" />
+    <Compile Include="Query\QueryCheckDublicatePers.cs" />
+    <Compile Include="Query\QueryCheckDublicate.cs" />
     <Compile Include="Services\Court.cs" />
     <Compile Include="Services\Integrations.cs" />
     <Compile Include="Security\SecurityProvider.cs" />
     <Compile Include="Services\Counter.cs" />
-    <Compile Include="Excel\ExcelReader.cs" />
+    <Compile Include="Excel\Excel.cs" />
     <Compile Include="Helper\ConvertToModel.cs" />
     <Compile Include="Helper\FlagsAction.cs" />
     <Compile Include="Helper\GeneratorDescriptons.cs" />
@@ -100,13 +111,18 @@
       <Project>{cbb7243a-294b-4aac-ab39-32b3a27a7390}</Project>
       <Name>DB</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WordGenerator\WordGenerator.csproj">
+      <Project>{53AED92A-CB55-492C-B155-1A8F15EEB01A}</Project>
+      <Name>WordGenerator</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <Content Include="Tamplate\HekpCalculation.xlsx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Tamplate\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

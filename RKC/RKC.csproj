@@ -264,7 +264,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\ApiTplusController.cs" />
+    <Compile Include="Controllers\api\ApiJobController.cs" />
+    <Compile Include="Controllers\api\ApiTplusController.cs" />
     <Compile Include="Controllers\CounterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -390,6 +391,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Utility_Prod\RunJobDublicatePers.vbs" />
+    <Content Include="Utility_Prod\RunJobDublicatePU.vbs" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -14,7 +14,6 @@ namespace DB.DataBase
         public DbSet<FLAT> FLAT { get; set; }
         public DbSet<MKD> MKD { get; set; }
         public DbSet<IPU> IPU { get; set; }
-        public DbSet<IPU_counters_PE> IPU_counters_PE { get; set; }
         public DbSet<IPU_LIC> iPU_LICs { get; set; }
         public DbTPlus() : base("T+")
         {

@@ -70,19 +70,4 @@ namespace DB.Model
         public string FULL_LIC { get; set; }
         public ALL_LICS ALL_LICS = new ALL_LICS();
     }
-    [Table(name: "IPU_counters_PE", Schema = "IPU")]
-    public class IPU_counters_PE
-    {
-
-        public int id { get; set; }
-        public string FACTORY_NUMBER_PU { get; set; }
-        public string TYPE_PU { get; set; }
-        public DateTime? DATE_CHECK_NEXT { get; set; }
-        public string FULL_LIC { get; set; }
-       
-        public int? id_pu { get; set; }
-        public bool? Delete { get; set; }
-
-
-    }
 }

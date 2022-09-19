@@ -147,7 +147,12 @@
     </div>
 </div>
 <script>
+    function Reload() {
+        windows.location.reload();
+    }
+   
     $(document).ready(function (e) {
+        setTimeout(Reload, 480000);
         $("#Save").click(function (e) {
             if (Requared()) {
                 $.ajax({

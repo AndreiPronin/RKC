@@ -1,6 +1,9 @@
 using AppCache;
+using BL;
 using BL.ApiT_;
 using BL.Counters;
+using BL.Jobs;
+using BL.Notification;
 using BL.Services;
 using Ninject;
 using NUnit.Framework;
@@ -18,7 +21,7 @@ namespace RKC_TEST
         }
 
         [Test]
-        public void Test1()
+        public void GeneratePdf()
         {
             try
             {
@@ -33,12 +36,22 @@ namespace RKC_TEST
         public void EBD()
         {
             IKernel kernel = new StandardKernel();
-            NinjectWebCommon.RegisterServices(kernel);
+            Module.RegistrationService(kernel);
             ICacheApp cache = kernel.Get<ICacheApp>();
             IPersonalData pers = kernel.Get<IPersonalData>();
             ICounter counter = kernel.Get<ICounter>();
             var ebd = new EBD(cache, pers, counter);
             ebd.CreateEBDAll();
+        }
+        [Test]
+        public void CheckDublicate()
+        {
+            IKernel kernel = new StandardKernel();
+            Module.RegistrationService(kernel);
+            INotificationMail notificationMail = kernel.Get<INotificationMail>();
+            IJobManager JobManager = new JobManager(notificationMail);
+            JobManager.CheckDublicatePu();
+            JobManager.CheckDublicatePers();
         }
     }
 }

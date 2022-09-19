@@ -288,6 +288,7 @@
                         $.ajax({
                             success: function (data) {
                                 window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&Date=' + $("#DateReceipt").val();
+                                
                             },
                             error: function () {
                                 alert("Что то пошло не так. Обратитесь к администратору");

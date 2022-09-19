@@ -68,16 +68,7 @@ namespace RKC.App_Start
         /// <param name="kernel">The kernel.</param>
         public static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ICounter>().To<Counter>();
-            kernel.Bind<Ilogger>().To<Logger>();
-            kernel.Bind<IGeneratorDescriptons>().To<GeneratorDescriptons>();
-            kernel.Bind<ICacheApp>().To<CacheApp>().InSingletonScope();
-            kernel.Bind<IFlagsAction>().To<FlagsAction>().InSingletonScope();
-            kernel.Bind<IReadFileBank>().To<ReadFileBank>();
-            kernel.Bind<IPersonalData>().To<PersonalData>();
-            kernel.Bind<IEBD>().To<EBD>();
-            kernel.Bind<ISecurityProvider>().To<SecurityProvider>();
-            kernel.Bind<IIntegrations>().To<Integrations>();
+            Module.RegistrationService(kernel);
         }
     }
 }

@@ -498,16 +498,7 @@ namespace BL.Counters
                 DbTPlus.SaveChanges();
                 DbTPlus.Entry(iPU_COUNTERS).GetDatabaseValues();
                 int id = iPU_COUNTERS.ID_PU;
-                DbTPlus.IPU_counters_PE.Add(new IPU_counters_PE
-                {
-                    FULL_LIC = modelAddPU.FULL_LIC,
-                    DATE_CHECK_NEXT = modelAddPU.DATE_CHECK_NEXT,
-                    FACTORY_NUMBER_PU = modelAddPU.FACTORY_NUMBER_PU,
-                    id_pu = id,
-                    TYPE_PU = iPU_COUNTERS.TYPE_PU
-                });
                 DbTPlus.SaveChanges();
-               
                 logger.ActionUsers(id, $"Добавили прибор учета к лицевому счету {modelAddPU.FULL_LIC}", FIO);
             }
             using (var DbLIC = new DbLIC())

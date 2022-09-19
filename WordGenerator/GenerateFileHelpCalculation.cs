@@ -22,7 +22,7 @@ namespace WordGenerator
                 var SubLic = LIC.Substring(2, 7);
                 IQueryable<KVIT> Query = db.KVIT;
                 var Lic = Query.FirstOrDefault(x=>x.u4lic == SubLic && x.period.Value.Year == date.Year && x.period.Value.Month == date.Month);
-                if (Lic == null) throw new Exception("Ничего не найдена за выбранный период");
+                if (Lic == null) throw new Exception("Ничего не найдено за выбранный период");
                 string path = AppDomain.CurrentDomain.BaseDirectory + $@"Template\";
                 if (File.Exists(path + $@"Образец квитанции {LIC}.docx")) File.Delete(path + $@"Образец квитанции {LIC}.docx");
                 File.Copy(Path.Combine(path, "Образец квитанции.docx"), Path.Combine(path, $@"Образец квитанции {LIC}.docx"), true);
@@ -270,17 +270,17 @@ false, false, false, false);
                     BarcodeWriter generator = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
                     generator.Options = new ZXing.Common.EncodingOptions
                     {
-                        Width = 100,
-                        Height = 100
+                        Width = 140,
+                        Height = 140,
+                        Margin = 2
                     };
-                    generator.Write("111111111111111111111111111").Save(path + $@"{LIC}_QR.png");
-                    //generator = new BarcodeWriter() { Format = BarcodeFormat.CODE_128 };
-                    //generator.Options = new ZXing.Common.EncodingOptions
-                    //{
-                    //    Width = 50,
-                    //    Height = 50
-                    //};
-                    //generator.Write("111111111111111111111111111").Save(path + $@"{LIC}_QR.png");
+                    var FIO = Lic.fio.Trim().Split(' ');
+                    var sum = Convert.ToDouble(Lic.kopl.Trim().Replace(".",",")) * 100;
+                    var STR = $@"ST00011|Name=Мордовский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|
+BankName=Пензенское отделение № 8624 ПАО 'Сбербанк России' г. Пенза|BIC=045655635|CorrespAcc=30101810000000000635|PayeeINN=6315376946|
+Category=7|PersAcc=7{Lic.ng.Trim()}{Lic.lic.Trim()}|LastName={FIO[0]}|FitstName={FIO[1]}|MiddleName={FIO[2]}
+|PayerAddress={Lic.ul.Trim()}, дом {Lic.dom.Trim()}, кв. {Lic.kw.Trim()}|Sum={sum}";
+                    generator.Write(STR).Save(path + $@"{LIC}_QR.png");
                     try
                     {
                         Microsoft.Office.Interop.Word.Range qr = doc.Range(0, 0);
@@ -296,7 +296,7 @@ false, false, false, false);
                 }
                 catch(Exception ex) { }
                 doc.Save();
-                doc.ExportAsFixedFormat(path + $@"Образец квитанции {LIC}.pdf", Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
+                doc.ExportAsFixedFormat(path + $@"Квитанция {LIC}.pdf", Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
                 doc.Close(Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
                    Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat,
                    false);
@@ -305,7 +305,7 @@ false, false, false, false);
                 if (File.Exists(path + $@"{LIC}.png")) File.Delete(path + $@"{LIC}.png");
                 if (File.Exists(path + $@"{LIC}_QR.png")) File.Delete(path + $@"{LIC}_QR.png");
 
-                return new PersDataDocumentLoad() { FileBytes = File.ReadAllBytes(path + $@"Образец квитанции {LIC}.pdf"), FileName = $@"Квитанция {LIC}.pdf"};
+                return new PersDataDocumentLoad() { FileBytes = File.ReadAllBytes(path + $@"Квитанция {LIC}.pdf"), FileName = $@"Квитанция {LIC}.pdf"};
 
             }
 

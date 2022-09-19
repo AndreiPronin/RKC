@@ -48,6 +48,8 @@
     <Compile Include="Counter\modelUpdatePU.cs" />
     <Compile Include="Counter\SaveModelIPU.cs" />
     <Compile Include="Counter\SearchIPU_LICModel.cs" />
+    <Compile Include="JobManager\EnumJob.cs" />
+    <Compile Include="JobManager\MailNotSend.cs" />
     <Compile Include="PersData\PersDataDocumentLoad.cs" />
     <Compile Include="PersData\PersDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
