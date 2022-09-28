@@ -20,6 +20,7 @@ using BL.Security;
 using System.Threading.Tasks;
 using DB.DataBase;
 using BL.ApiT_;
+using BL.Notification;
 
 namespace RKC.Controllers
 {
@@ -35,9 +36,10 @@ namespace RKC.Controllers
         public readonly IReadFileBank readFileBank;
         public readonly ISecurityProvider _securityProvider;
         public readonly IEBD _ebd;
+        public readonly INotificationMail _notificationMail;
         public CounterController(ICounter _counter, Ilogger _logger, IGeneratorDescriptons _generatorDescriptons, 
             ICacheApp _cacheApp, IFlagsAction _flagsAction, IReadFileBank _readFileBank, IIntegrations integration
-            , ISecurityProvider securityProvider,IEBD ebd)
+            , ISecurityProvider securityProvider,IEBD ebd,INotificationMail notificationMail)
         {
             _securityProvider = securityProvider;
             counter = _counter;
@@ -48,6 +50,7 @@ namespace RKC.Controllers
             readFileBank = _readFileBank;
             _integration = integration;
             _ebd = ebd;
+            _notificationMail = notificationMail;
         }
         public ActionResult Index()
         {
@@ -287,7 +290,13 @@ namespace RKC.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> RunIntegration(DateTime date)
         {
-            await _integration.LoadReadings("Integration", cacheApp,date);
+            try
+            {
+                await _integration.LoadReadings("Integration", cacheApp, date, _notificationMail);
+            }catch(Exception ex)
+            {
+
+            }
             return null;
         }
         public ActionResult ErrorIntegration()

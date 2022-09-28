@@ -351,3 +351,6 @@ F:\Programing\RKC\RKC\bin\Ninject.Web.WebApi.dll
 F:\Programing\RKC\RKC\bin\Ninject.Web.WebApi.xml
 F:\Programing\RKC\RKC\bin\Ninject.Web.WebApi.WebHost.dll
 F:\Programing\RKC\RKC\bin\Ninject.Web.WebApi.WebHost.xml
+F:\Programing\RKC\RKC\bin\DotNetZip.dll
+F:\Programing\RKC\RKC\bin\DotNetZip.pdb
+F:\Programing\RKC\RKC\bin\DotNetZip.xml

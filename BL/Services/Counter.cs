@@ -596,7 +596,7 @@ namespace BL.Counters
             if (ID_PU != 0) {
                 saveModelIPU.IdPU = ID_PU;
                 saveModelIPU.OVERWRITE_SEAL = true;
-                await logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
+                logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
                 await UpdateReadingsAsync(saveModelIPU);
             }
         }

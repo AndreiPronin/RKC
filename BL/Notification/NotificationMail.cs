@@ -104,7 +104,7 @@ namespace BL.Notification
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:monitor"]);
                 mailMessage.To.Add(new MailAddress(ConfigurationManager.AppSettings["mail:to:monitor"]));
-                mailMessage.Subject = "Ошибка в работе ApiJob";
+                mailMessage.Subject = "Ошибка в работе приложения";
                 if(ex == null)
                 {
                     mailMessage.Body = message;

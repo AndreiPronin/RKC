@@ -57,8 +57,8 @@ namespace BL.ApiT_
                             var obj = new Object();
                             obj.system = Item.system_.Replace("", "").Trim();
                             obj.object_type = Item.object_t.Replace("", "").Trim();
-                            obj.object_id = $@"RBR {Item.object_id.Replace("", "").Trim()}";
-                            obj.parent_id = Item.parent_id.ToString().Replace("", "").Trim();
+                            obj.object_id = $@"RBR{Item.object_id.Replace("", "").Trim()}";
+                            obj.parent_id = $@"RBR{Item.parent_id.ToString().Replace("", "").Trim()}";
                             obj.object_disable = "false";
                             //obj.CadastralNumber = "";
                             obj.fias = Item.fias.Replace("", "").Trim();
@@ -68,7 +68,7 @@ namespace BL.ApiT_
                             obj.square_cold = Item.s_notp.Replace("", "").Replace(",", ".").Trim();
                             //obj.guid_tplu = " ";
                             obj.subject = Item.fio.Replace("", "").Trim();
-                            obj.giloe = Item.giloe.ToLower().Contains("жило") ? "true" : "false";
+                            obj.giloe = Item.giloe.ToLower().Contains("не") ? "false" : "true";
                             obj.address = new Address();
                             //obj.address.OKATO = "";
                             //obj.address.KLADR = "";
@@ -123,9 +123,9 @@ namespace BL.ApiT_
                         try
                         {
                             var obj = new Object();
-                            obj.system = Item.system.Replace("\v", "");
-                            obj.object_type = Item.object_type.Replace("\v", "");
-                            obj.object_id = $@"RBR {Item.object_id?.ToString().Replace("\v", "").Trim()}";
+                            obj.system = Item.system.Replace("\v", "").Trim();
+                            obj.object_type = Item.object_type.Replace("\v", "").Trim();
+                            obj.object_id = $@"RBR{Item.object_id?.ToString().Replace("\v", "").Trim()}";
                             obj.object_disable = "false";
                             //obj.CadastralNumber = "";
                             //obj.fias = Item.fias;

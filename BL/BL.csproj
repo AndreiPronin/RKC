@@ -82,8 +82,6 @@
     <Compile Include="Jobs\JobManager.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Notification\NotificationMail.cs" />
-    <Compile Include="Query\QueryCheckDublicatePers.cs" />
-    <Compile Include="Query\QueryCheckDublicate.cs" />
     <Compile Include="Services\Court.cs" />
     <Compile Include="Services\Integrations.cs" />
     <Compile Include="Security\SecurityProvider.cs" />

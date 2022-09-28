@@ -592,6 +592,7 @@ else
             window.location.reload();
         })
         $(".Save").click(function (e) {
+            $(".Save").addClass("hidden");
             var NumberPU = $(this).parent().find('#NumberPU').val();
 
             if ($(this).parent().find('.OVERWRITE').prop("checked")) {
@@ -649,6 +650,7 @@ else
 
         })
         $(".Delete").click(function (e) {
+            $(".Delete").addClass("hidden");
             var IdPU = $(this).parent().find('.IdPU').val();
             $.confirm({
                 title: 'Предупрждение!',
@@ -673,6 +675,7 @@ else
                     },
                     "Отмена": function () {
                         $.alert('Отменено!');
+                        window.location.reload();
                     }
                 }
             });

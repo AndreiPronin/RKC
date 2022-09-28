@@ -46,10 +46,12 @@
 <script>
     $(document).ready(function (e) {
         $("#RunReadingIntegration").click(function () {
+            $("#RunReadingIntegration").addClass("disabled");
             $.ajax({
                 url: '/Counter/RunIntegration?Date=' + $("#DateRunReadingIntegration").val(),
                 success: function (data) {
                     alert('Интеграция завершена');
+                    window.location.reload();
                 },
                 error: function () {
                     alert('Ошибка интеграции');
@@ -74,7 +76,7 @@
                 // Добавляем ноль в начало цифры, которые до 10
                 $("#ResultRunReadingIntegration").css('width', i + '%');
                 $("#ResultRunReadingIntegration").text(i + '%');
-                if (i === 100) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
+                if (i >= 99) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
             }, 3000);
         })
         $("#UploadFilePU").click(function (e) {

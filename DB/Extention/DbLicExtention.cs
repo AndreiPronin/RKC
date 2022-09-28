@@ -30,5 +30,4 @@ namespace DB.Extention
             this.Property(e => e.FKUB2OT_4).HasPrecision(11, 3);
         }
     }
-
 }

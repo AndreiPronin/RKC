@@ -19,20 +19,26 @@ namespace WordGenerator
         {
             using (var db = new DbLIC())
             {
-                var SubLic = LIC.Substring(2, 7);
-                IQueryable<KVIT> Query = db.KVIT;
-                var Lic = Query.FirstOrDefault(x=>x.u4lic == SubLic && x.period.Value.Year == date.Year && x.period.Value.Month == date.Month);
+                var SubLic = LIC.Substring(3, 6);
+                if (SubLic.StartsWith("0"))
+                {
+                    SubLic = " " + SubLic.Substring(1, 5);
+                }
+                IQueryable<KVIT> Query = db.KVIT.Where(x => x.lic == SubLic && x.period.Value.Year == date.Year && x.period.Value.Month == date.Month);
+                var Lic = Query.FirstOrDefault();
                 if (Lic == null) throw new Exception("Ничего не найдено за выбранный период");
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + $@"Template\Образец квитанции.docx",
+                    AppDomain.CurrentDomain.BaseDirectory + $@"Template\Образец квитанции {LIC} {date.Month}.docx");
                 string path = AppDomain.CurrentDomain.BaseDirectory + $@"Template\";
                 if (File.Exists(path + $@"Образец квитанции {LIC}.docx")) File.Delete(path + $@"Образец квитанции {LIC}.docx");
                 File.Copy(Path.Combine(path, "Образец квитанции.docx"), Path.Combine(path, $@"Образец квитанции {LIC}.docx"), true);
                 Application app = new Application();
-                _Document doc = app.Documents.Open(path + $@"Образец квитанции {LIC}.docx");
+                _Document doc = app.Documents.Open(path + $@"Образец квитанции {LIC} {date.Month}.docx");
                 try
                 {
                     doc.Content.Find.Execute("{address}", false, true, false, false, false, true, 1, false, $@"{Lic.ul.Trim()},дом {Lic.dom.Trim()},кв. {Lic.kw.Trim()}", 2,
 false, false, false, false);
-                    doc.Content.Find.Execute("{lic}", false, true, false, false, false, true, 1, false,$"7{Lic.ng}{Lic.lic}" , 2,
+                    doc.Content.Find.Execute("{lic}", false, true, false, false, false, true, 1, false,$"{LIC}" , 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{month}", false, true, false, false, false, true, 1, false, Lic.period.Value.ToString("MMMM,yyyy").Replace(",", " ").ToUpper(), 2,
     false, false, false, false);
@@ -296,16 +302,20 @@ Category=7|PersAcc=7{Lic.ng.Trim()}{Lic.lic.Trim()}|LastName={FIO[0]}|FitstName=
                 }
                 catch(Exception ex) { }
                 doc.Save();
-                doc.ExportAsFixedFormat(path + $@"Квитанция {LIC}.pdf", Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
+                doc.ExportAsFixedFormat(path + $@"Квитанция {LIC} {date.Month}.pdf", Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
                 doc.Close(Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
                    Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat,
                    false);
                 app.Quit();
-                if (File.Exists(path + $@"Образец квитанции {LIC}.docx")) File.Delete(path + $@"Образец квитанции {LIC}.docx");
+                if (File.Exists(path + $@"Образец квитанции {LIC} {date.Month}.docx")) 
+                    File.Delete(path + $@"Образец квитанции {LIC} {date.Month}.docx");
                 if (File.Exists(path + $@"{LIC}.png")) File.Delete(path + $@"{LIC}.png");
                 if (File.Exists(path + $@"{LIC}_QR.png")) File.Delete(path + $@"{LIC}_QR.png");
 
-                return new PersDataDocumentLoad() { FileBytes = File.ReadAllBytes(path + $@"Квитанция {LIC}.pdf"), FileName = $@"Квитанция {LIC}.pdf"};
+                return new PersDataDocumentLoad() { 
+                    FileBytes = File.ReadAllBytes(path + $@"Квитанция {LIC} {date.Month}.pdf"), 
+                    FileName = $@"Квитанция {LIC} {date.Month}.pdf"
+                };
 
             }
 

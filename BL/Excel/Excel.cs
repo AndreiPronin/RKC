@@ -439,13 +439,7 @@ namespace BL.Excel
                         if (dataRow.Cell(6).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(6).Value); }
                         if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(7).Value); }
                         saveModel.MODEL_PU = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
-                        if (counter.UpdatePU(saveModel, User))
-                        {
-                            
-                            dbApp.IntegrationReadings.Add(integrationReadings);
-                            dbApp.SaveChanges();
-                        }
-                        else
+                        if (!counter.UpdatePU(saveModel, User))
                         {
                             saveModel.DESCRIPTION = $"Нет такого ПУ {saveModel.TypePU}";
                             COUNTERsNotAdded.Add(saveModel);

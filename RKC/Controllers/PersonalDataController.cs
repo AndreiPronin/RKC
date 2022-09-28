@@ -11,12 +11,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WordGenerator;
+using Ionic.Zip;
 
 namespace RKC.Controllers
 {
     [Authorize]
     public class PersonalDataController : Controller
     {
+        private readonly object balanceLock = new object();
         private readonly IPersonalData _personalData;
         private readonly Ilogger _logger;
         private readonly IGeneratorDescriptons _generatorDescriptons;
@@ -109,16 +111,43 @@ namespace RKC.Controllers
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
         [HttpGet]
-        public ActionResult DownLoadReceipt(string FullLic, DateTime Date)
+        public ActionResult DownLoadReceipt(string FullLic, DateTime DateStart, DateTime DateEnd)
         {
-            try
+            if(DateStart == DateEnd)
             {
-                var Result = GenerateFileHelpCalculation.Generate(FullLic, Date);
-                return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
-            }catch(Exception ex)
-            {
-                return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
+                try
+                {
+                    var result = GenerateFileHelpCalculation.Generate(FullLic, DateEnd);
+                    return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
+                }catch(Exception ex)
+                {
+                    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
+                }
             }
+            List<PersDataDocumentLoad> persData = new List<PersDataDocumentLoad>();
+            while (DateStart >= DateEnd)
+            {
+                try
+                {
+                    persData.Add(GenerateFileHelpCalculation.Generate(FullLic, DateEnd));
+                }
+                catch (Exception ex)
+                {
+                   
+                }
+                DateEnd = DateEnd.AddMonths(1);
+            }
+            var outputStream = new MemoryStream();
+            using (ZipFile zip = new ZipFile())
+            {
+                foreach (var Items in persData)
+                {
+                    zip.AddEntry(Items.FileName,Items.FileBytes);
+                }
+                zip.Save(outputStream);
+            }
+            outputStream.Position = 0;
+            return File(outputStream, "application/zip", "Квитанция.zip");
         }
         [HttpGet]
         [Authorize(Roles = "PersWriter,Admin")]

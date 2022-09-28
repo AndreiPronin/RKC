@@ -16,6 +16,8 @@ namespace DB.DataBase
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new DbLicExtention());
+            modelBuilder.Entity<KVIT>()
+            .Property(e => e.lic).HasColumnType("VARCHAR").HasMaxLength(6);
         }
     }
 }

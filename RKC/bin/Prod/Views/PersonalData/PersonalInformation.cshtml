@@ -279,15 +279,18 @@
                 content: '' +
                     '<form action="" class="formName">' +
                     '<div class="form-group">' +
-                    '<label>Выберите дату</label>' +
-                    '<input type="month" min="2017-01" max="'+DateMax+'" value="' + Date +'" placeholder="" id="DateReceipt" class="form-control" />' +
+                    '<label>С какой даты</label>' +
+                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptEnd" class="form-control" />' +
+                    '<label>По какую даты</label>' +
+                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptStart" class="form-control" />' +
                     '</div>' +
                     '</form>',
                 buttons: {
                     "Скачать": function () {
                         $.ajax({
                             success: function (data) {
-                                window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&Date=' + $("#DateReceipt").val();
+                                window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart").val()
+                                    + '&DateEnd=' + $("#DateReceiptEnd").val();
                                 
                             },
                             error: function () {

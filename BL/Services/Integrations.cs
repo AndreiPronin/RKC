@@ -11,18 +11,19 @@ using System.Threading.Tasks;
 using DB.Model;
 using BE.Service;
 using BL.Extention;
+using BL.Notification;
 
 namespace BL.Service
 {
     public interface IIntegrations
     {
-        Task LoadReadings(string User, ICacheApp cacheApp, DateTime period);
+        Task LoadReadings(string User, ICacheApp cacheApp, DateTime period, INotificationMail _notificationMail);
         List<IntegrationReadings> GetErrorIntegrationReadings();
         List<IntegrationReadings> GetErrorIntegrationReadings(string FullLic);
     }
     public class Integrations : IIntegrations
     {
-        public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period)
+        public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period, INotificationMail _notificationMail)
         {
             cacheApp.AddProgress(User, "0");
             Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
@@ -347,6 +348,7 @@ namespace BL.Service
                             }
                             catch (Exception ex)
                             {
+                                _notificationMail.Error(ex);
                                 IntegrationReadings integrationReadings = new IntegrationReadings();
                                 integrationReadings.Lic = data.lic;
                                 integrationReadings.TypePu = Item.name;
