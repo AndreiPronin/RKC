@@ -22,7 +22,15 @@ namespace WordGenerator
                 var SubLic = LIC.Substring(3, 6);
                 if (SubLic.StartsWith("0"))
                 {
-                    SubLic = " " + SubLic.Substring(1, 5);
+                    SubLic = SubLic.Substring(1, 5);
+                    if (SubLic.StartsWith("0"))
+                    {
+                        SubLic = SubLic.Substring(1, 4);
+                        if (SubLic.StartsWith("0"))
+                        {
+                            SubLic = SubLic.Substring(1, 3);
+                        }
+                    }
                 }
                 IQueryable<KVIT> Query = db.KVIT.Where(x => x.lic == SubLic && x.period.Value.Year == date.Year && x.period.Value.Month == date.Month);
                 var Lic = Query.FirstOrDefault();
@@ -94,9 +102,9 @@ false, false, false, false);
     false, false, false, false);
                     doc.Content.Find.Execute("{it2}", false, true, false, false, false, true, 1, false, Lic.it2.Trim(), 2,
     false, false, false, false);
-                    doc.Content.Find.Execute("{it2}", false, true, false, false, false, true, 1, false, Lic.it5.Trim(), 2,
+                    doc.Content.Find.Execute("{it5}", false, true, false, false, false, true, 1, false, Lic.it5.Trim(), 2,
     false, false, false, false);
-                    doc.Content.Find.Execute("{it2}", false, true, false, false, false, true, 1, false, Lic.it3.Trim(), 2,
+                    doc.Content.Find.Execute("{it3}", false, true, false, false, false, true, 1, false, Lic.it3.Trim(), 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{it15}", false, true, false, false, false, true, 1, false, Lic.it15.Trim(), 2,
     false, false, false, false);

@@ -5,6 +5,7 @@ using BL.Helper;
 using ClosedXML.Excel;
 using DB.DataBase;
 using DB.Model;
+using DB.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -494,15 +495,15 @@ namespace BL.Excel
             ,new DataColumn("   ПЛОМБА 2   "),new DataColumn("   ТИП ПЛОМБА 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
             var DB = new ApplicationDbContext();
-            var Counters = DB.vw_CounterTPlus.ToList();
-            cacheApp.AddProgress(User, "Формирую Excel");
+            var Counters = DB.Database.SqlQuery<vw_CounterTPlus>("select * from dbo.vw_CounterTPlus").ToList();
+            cacheApp.Update(User, "Формирую Excel");
             foreach (var Items in Counters)
             {
                 dt.Rows.Add(Items.CodeHouse, Items.Streer, Items.Home, Items.Flat,
                     Items.Lic, Items.Fio, Items.Pu, Items.PuNumber, Items.DataCheck, Items.DataNextCheck, 
                     Items.Seal, Items.TypeSeal, Items.Seal2, Items.TypeSeal2, Items.SignPu, Items.EndReadings,Items.NowReadings);
             }
-            cacheApp.AddProgress(User, "Скачиваю Excel");
+            cacheApp.Update(User, "Скачиваю Excel");
             
             return dt;
         }

@@ -11,11 +11,11 @@ namespace DB.ViewModel
     [Table(name: "vw_CounterTPlus", Schema ="dbo")]
     public class vw_CounterTPlus
     {
-        [Key]
         public decimal? CodeHouse { get; set; }
         public string Streer { get; set; }
         public string Home { get; set; }
         public string Flat { get; set; }
+        [Key]
         public string Lic { get; set; }
         public string Fio { get; set; }
         public string Pu { get; set; }

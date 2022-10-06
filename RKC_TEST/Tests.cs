@@ -25,33 +25,33 @@ namespace RKC_TEST
         {
             try
             {
-                GenerateFileHelpCalculation.Generate("703027614", new System.DateTime(2022, 1, 2));
+                GenerateFileHelpCalculation.Generate("705004371", new System.DateTime(2022, 1, 2));
             }
             catch (Exception ex)
             {
                 Assert.IsTrue(true);
             }
         }
-        [Test]
-        public void EBD()
-        {
-            IKernel kernel = new StandardKernel();
-            Module.RegistrationService(kernel);
-            ICacheApp cache = kernel.Get<ICacheApp>();
-            IPersonalData pers = kernel.Get<IPersonalData>();
-            ICounter counter = kernel.Get<ICounter>();
-            var ebd = new EBD(cache, pers, counter);
-            ebd.CreateEBDAll();
-        }
-        [Test]
-        public void CheckDublicate()
-        {
-            IKernel kernel = new StandardKernel();
-            Module.RegistrationService(kernel);
-            INotificationMail notificationMail = kernel.Get<INotificationMail>();
-            IJobManager JobManager = new JobManager(notificationMail);
-            JobManager.CheckDublicatePu();
-            JobManager.CheckDublicatePers();
-        }
+        //[Test]
+        //public void EBD()
+        //{
+        //    IKernel kernel = new StandardKernel();
+        //    Module.RegistrationService(kernel);
+        //    ICacheApp cache = kernel.Get<ICacheApp>();
+        //    IPersonalData pers = kernel.Get<IPersonalData>();
+        //    ICounter counter = kernel.Get<ICounter>();
+        //    var ebd = new EBD(cache, pers, counter);
+        //    ebd.CreateEBDAll();
+        //}
+        //[Test]
+        //public void CheckDublicate()
+        //{
+        //    IKernel kernel = new StandardKernel();
+        //    Module.RegistrationService(kernel);
+        //    INotificationMail notificationMail = kernel.Get<INotificationMail>();
+        //    IJobManager JobManager = new JobManager(notificationMail);
+        //    JobManager.CheckDublicatePu();
+        //    JobManager.CheckDublicatePers();
+        //}
     }
 }
