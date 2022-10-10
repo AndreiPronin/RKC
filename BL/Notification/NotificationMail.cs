@@ -2,6 +2,7 @@
 using BL.Excel;
 using ClosedXML.Excel;
 using DB.Model;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -45,17 +46,17 @@ namespace BL.Notification
         public void SendMailReceipt(string FullLic,string Mail)
         {
             SmtpClient smtpClient = new SmtpClient();
-            smtpClient.Host = ConfigurationManager.AppSettings["mail:host:monitor"];
+            smtpClient.Host = ConfigurationManager.AppSettings["mail:host:T+"];
             smtpClient.EnableSsl = true;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.UseDefaultCredentials = false;
             smtpClient.Port = 587;
-            smtpClient.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mail:login:monitor"], ConfigurationManager.AppSettings["mail:pass:monitor"]);
+            smtpClient.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mail:login:T+"], ConfigurationManager.AppSettings["mail:pass:T+"]);
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:monitor"]);
-            mailMessage.Attachments.Add(new System.Net.Mail.Attachment($@"{AppDomain.CurrentDomain.BaseDirectory}Template\Квитанция {FullLic}.pdf"));
+            mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:T+"]);
+            mailMessage.Attachments.Add(new System.Net.Mail.Attachment($@"{AppDomain.CurrentDomain.BaseDirectory}Template\Квитанция {FullLic} {DateTime.Now.Month-1}.pdf"));
             mailMessage.To.Add(new MailAddress(Mail));
-            mailMessage.Subject = "Тест квитанции";
+            mailMessage.Subject = "Автоматическое отправление эл.квитанций";
             smtpClient.Send(mailMessage);
         }
         public void SendEmailAsyncDublicatePers(List<DuplicatePers> DuplicatePers)

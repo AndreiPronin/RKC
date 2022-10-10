@@ -186,7 +186,10 @@
                             <input type="button" class="btn btn-primary ShowAllDocument" value="Документы" data-toggle="modal" data-target="#ShowAllDocumentModal" />
                         </div>
                         <div class="col-md-3">
-                            <button class="btn btn-primary DownLoadReceipt">Квитанция</button>
+                            @if (User.IsInRole("DownLoadReceipt") || User.IsInRole("Admin"))
+                            {
+                                <button class="btn btn-primary DownLoadReceipt">Квитанция</button>
+                            }
                         </div>
 
                     </div>
@@ -275,7 +278,7 @@
             var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";
             console.log(DateMax);
             $.confirm({
-                title: 'Справка расчет',
+                title: 'Квитанция',
                 content: '' +
                     '<form action="" class="formName">' +
                     '<div class="form-group">' +

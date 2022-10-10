@@ -75,7 +75,7 @@ namespace BL.Service
                     foreach (var Item in data.Counter)
                     {
                         var Integr = IntegrsList.Where(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.DateTime == data.payment_date).Select(x => x.Lic).ToList();
-                        if (Integr.Count() == 0)
+                        if (Integr.Count() == 0 && Convert.ToDecimal(Item.value) != 0)
                         {
                             bool Error = false;
                             try
@@ -96,7 +96,7 @@ namespace BL.Service
                                     integrationReadings.EndReadings = Readings.FKUB2XVS.ToString();
                                     integrationReadings.InitialReadings = Readings.FKUB1XVS.ToString();
                                     integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS > 50)
+                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS > 30)
                                     {
                                         Error = true;
                                         integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -128,7 +128,7 @@ namespace BL.Service
                                     integrationReadings.EndReadings = Readings.FKUB2XV_2.ToString();
                                     integrationReadings.InitialReadings = Readings.FKUB1XV_2.ToString();
                                     integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 > 50)
+                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 > 30)
                                     {
                                         Error = true;
                                         integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -159,7 +159,7 @@ namespace BL.Service
                                     integrationReadings.EndReadings = Readings.FKUB2XV_3.ToString();
                                     integrationReadings.InitialReadings = Readings.FKUB1XV_3.ToString();
                                     integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 > 50)
+                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 > 30)
                                     {
                                         Error = true;
                                         integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -190,7 +190,7 @@ namespace BL.Service
                                     integrationReadings.EndReadings = Readings.FKUB2XV_4.ToString();
                                     integrationReadings.InitialReadings = Readings.FKUB1XV_4.ToString();
                                     integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 > 50)
+                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 > 30)
                                     {
                                         Error = true;
                                         integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -221,7 +221,7 @@ namespace BL.Service
                                     integrationReadings.EndReadings = Readings.FKUB2OT_1.ToString();
                                     integrationReadings.InitialReadings = Readings.FKUB1OT_1.ToString();
                                     integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 > 50)
+                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 > 30)
                                     {
                                         Error = true;
                                         integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -252,7 +252,7 @@ namespace BL.Service
                                     integrationReadings.EndReadings = Readings.FKUB2OT_2.ToString();
                                     integrationReadings.InitialReadings = Readings.FKUB1OT_2.ToString();
                                     integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 > 50)
+                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 > 30)
                                     {
                                         Error = true;
                                         integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -283,7 +283,7 @@ namespace BL.Service
                                     integrationReadings.EndReadings = Readings.FKUB2OT_3.ToString();
                                     integrationReadings.InitialReadings = Readings.FKUB1OT_3.ToString();
                                     integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 > 50)
+                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 > 30)
                                     {
                                         Error = true;
                                         integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -314,7 +314,7 @@ namespace BL.Service
                                     integrationReadings.EndReadings = Readings.FKUB2OT_4.ToString();
                                     integrationReadings.InitialReadings = Readings.FKUB1OT_4.ToString();
                                     integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 > 50)
+                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 > 30)
                                     {
                                         Error = true;
                                         integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";

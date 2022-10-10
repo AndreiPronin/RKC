@@ -197,15 +197,15 @@ false, false, false, false);
                     doc.Content.Find.Execute("{formula7}", false, true, false, false, false, true, 1, false,
                       !string.IsNullOrEmpty(Lic.sr4) || !string.IsNullOrEmpty(Lic.sn4) ? Lic.sted3.Trim() : "", 2,
     false, false, false, false);
-                    var formula = Math.Round(Convert.ToDouble(Lic.u1dolgzku.Trim().Replace(".",",")) + Convert.ToDouble(Lic.u1oplzku.Trim().Replace(".", ",")));
+                    var formula = Math.Round(Convert.ToDouble(Lic.u1dolgzku.Trim().Replace(".",",")) + Convert.ToDouble(Lic.u1oplzku.Trim().Replace(".", ",")), 2);
                     doc.Content.Find.Execute("{formula8}", false, true, false, false, false, true, 1, false,
                     formula.ToString() != "" ? formula.ToString() : "",2,
     false, false, false, false);
-                    formula = Math.Round(Convert.ToDouble(Lic.u1dolgpeny.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1dolgpeny.Trim().Replace(".", ",")));
+                    formula = Math.Round(Convert.ToDouble(Lic.u1dolgpeny.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1dolgpeny.Trim().Replace(".", ",")), 2);
                     doc.Content.Find.Execute("{formula9}", false, true, false, false, false, true, 1, false,
                     formula.ToString() != "" ? formula.ToString() : "", 2,
     false, false, false, false);
-                    formula = Math.Round(Convert.ToDouble(Lic.u1dolgzku.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1dolgpeny.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1nachzku.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1nachpeny.Trim().Replace(".", ",")));
+                    formula = Math.Round(Convert.ToDouble(Lic.u1dolgzku.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1dolgpeny.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1nachzku.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1nachpeny.Trim().Replace(".", ",")),2);
                     doc.Content.Find.Execute("{formula10}", false, true, false, false, false, true, 1, false,
                    formula.ToString() != "" ? formula.ToString() : "", 2,
     false, false, false, false);
@@ -231,54 +231,54 @@ false, false, false, false);
                      !string.IsNullOrEmpty(Lic.ipuot3_1) ? "Отопление3" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula18}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv1_1) ? Lic.ngvs1 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv1_1) ? Lic.ngvs1.Trim().Replace(" ","") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula19}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuxv2_1) ? Lic.ngvs2 : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuxv2_1) ? Lic.ngvs2.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula20}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuxv3_1) ? Lic.ngvs3 : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuxv3_1) ? Lic.ngvs3.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula21}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuxv4_1) ? Lic.ngvs4 : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuxv4_1) ? Lic.ngvs4.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula22}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot1_1) ? Lic.notp1 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot1_1) ? Lic.notp1.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula23}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuot2_1) ? Lic.notp2 : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuot2_1) ? Lic.notp2.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula24}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot3_1) ? Lic.notp3 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot3_1) ? Lic.notp3.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula25}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv1_1) ? Lic.dgvs1 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv1_1) ? Lic.dgvs1.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula26}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv2_1) ? Lic.dgvs2 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv2_1) ? Lic.dgvs2.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula27}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv3_1) ? Lic.dgvs3 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv3_1) ? Lic.dgvs3.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula28}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv4_1) ? Lic.dgvs4 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv4_1) ? Lic.dgvs4.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula29}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot1_1) ? Lic.dotp1 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot1_1) ? Lic.dotp1.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula30}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot2_1) ? Lic.dotp2 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot2_1) ? Lic.dotp2.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula31}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot3_1) ? Lic.dotp3 : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot3_1) ? Lic.dotp3.Trim() : "", 2,
     false, false, false, false);
-                    doc.Content.Find.Execute("{s_gil}", false, true, false, false, false, true, 1, false, Lic.dpukasobs, 2,
+                    doc.Content.Find.Execute("{s_gil}", false, true, false, false, false, true, 1, false, Lic.dpukasobs.Trim(), 2,
     false, false, false, false);
-                    doc.Content.Find.Execute("{s_nez}", false, true, false, false, false, true, 1, false, Lic.dpukanach, 2,
+                    doc.Content.Find.Execute("{s_nez}", false, true, false, false, false, true, 1, false, Lic.dpukanach.Trim(), 2,
     false, false, false, false);
-                    doc.Content.Find.Execute("{s_oi}", false, true, false, false, false, true, 1, false, Lic.s_oi, 2,
+                    doc.Content.Find.Execute("{s_oi}", false, true, false, false, false, true, 1, false, Lic.s_oi.Trim(), 2,
     false, false, false, false);
-                    doc.Content.Find.Execute("{s_notp}", false, true, false, false, false, true, 1, false, Lic.s_notp, 2,
+                    doc.Content.Find.Execute("{s_notp}", false, true, false, false, false, true, 1, false, Lic.s_notp.Trim(), 2,
     false, false, false, false);
 
                     BarcodeWriter generator = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };

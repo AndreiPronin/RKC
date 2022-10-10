@@ -110,6 +110,7 @@ namespace RKC.Controllers
             var Result = _personalData.DownLoadHelpСalculation(FullLic,DateFrom,DateTo);
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
+        [Authorize(Roles = "Admin,DownLoadReceipt")]
         [HttpGet]
         public ActionResult DownLoadReceipt(string FullLic, DateTime DateStart, DateTime DateEnd)
         {

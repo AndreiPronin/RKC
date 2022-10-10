@@ -128,6 +128,7 @@ namespace BL.Excel
                     i++;
                     try
                     {
+                         
                         Error = false;
                         var Procent = Math.Round((float)i / Count * 100, 0);
                         cacheApp.UpdateProgress(User, Procent.ToString());
@@ -161,7 +162,7 @@ namespace BL.Excel
                             integrationReadings.DateTime = Convert.ToDateTime(dataRow.Cell(11).Value);
                             if (saveModel.TypePU == TypePU.GVS1.GetDescription())
                             {
-                                if (Readings.FKUB2XVS - Convert.ToDecimal(saveModel.FKUB2XVS) > 50)
+                                if (Readings.FKUB2XVS - Convert.ToDecimal(saveModel.FKUB2XVS) > 30)
                                 {
                                     Error = true;
                                     integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -189,7 +190,7 @@ namespace BL.Excel
                             }
                             if (saveModel.TypePU == TypePU.GVS2.GetDescription())
                             {
-                                if (Readings.FKUB2XV_2 - saveModel.FKUB2XV_2 > 50)
+                                if (Readings.FKUB2XV_2 - saveModel.FKUB2XV_2 > 30)
                                 {
                                     Error = true;
                                     integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -216,7 +217,7 @@ namespace BL.Excel
                             }
                             if (saveModel.TypePU == TypePU.GVS3.GetDescription())
                             {
-                                if (Readings.FKUB2XV_3 - saveModel.FKUB2XV_3 > 50)
+                                if (Readings.FKUB2XV_3 - saveModel.FKUB2XV_3 > 30)
                                 {
                                     Error = true;
                                     integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -243,7 +244,7 @@ namespace BL.Excel
                             }
                             if (saveModel.TypePU == TypePU.GVS4.GetDescription())
                             {
-                                if (Readings.FKUB2XV_4 - saveModel.FKUB2XV_4 > 50)
+                                if (Readings.FKUB2XV_4 - saveModel.FKUB2XV_4 > 30)
                                 {
                                     Error = true;
                                     integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -270,7 +271,7 @@ namespace BL.Excel
                             }
                             if (saveModel.TypePU == TypePU.ITP1.GetDescription())
                             {
-                                if (Readings.FKUB2OT_1 - saveModel.FKUB2OT_1 > 50)
+                                if (Readings.FKUB2OT_1 - saveModel.FKUB2OT_1 > 30)
                                 {
                                     Error = true;
                                     integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -297,7 +298,7 @@ namespace BL.Excel
                             }
                             if (saveModel.TypePU == TypePU.ITP2.GetDescription())
                             {
-                                if (Readings.FKUB2OT_2 - saveModel.FKUB2OT_2 > 50)
+                                if (Readings.FKUB2OT_2 - saveModel.FKUB2OT_2 > 30)
                                 {
                                     Error = true;
                                     integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -324,7 +325,7 @@ namespace BL.Excel
                             }
                             if (saveModel.TypePU == TypePU.ITP3.GetDescription())
                             {
-                                if (Readings.FKUB2OT_3 - saveModel.FKUB2OT_3 > 50)
+                                if (Readings.FKUB2OT_3 - saveModel.FKUB2OT_3 > 30)
                                 {
                                     Error = true;
                                     integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
@@ -351,7 +352,7 @@ namespace BL.Excel
                             }
                             if (saveModel.TypePU == TypePU.ITP4.GetDescription())
                             {
-                                if (Readings.FKUB2OT_4 - saveModel.FKUB2OT_4 > 50)
+                                if (Readings.FKUB2OT_4 - saveModel.FKUB2OT_4 > 30)
                                 {
                                     Error = true;
                                     integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";

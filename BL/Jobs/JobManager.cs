@@ -79,8 +79,8 @@ namespace BL.Jobs
                     try
                     {
                         GenerateFileHelpCalculation.Generate(Items.Lic, DateTime.Now.AddMonths(-1));
-                        if (string.IsNullOrEmpty(Items.Email))
-                            throw new Exception("Пустой Email");
+                        //if (string.IsNullOrEmpty(Items.Email))
+                        //    throw new Exception("Пустой Email");
                         _notificationMail.SendMailReceipt(Items.Lic, "andrei@penzainf.ru");
                     }catch(Exception ex)
                     {
