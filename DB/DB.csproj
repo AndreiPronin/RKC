@@ -78,6 +78,8 @@
     <Compile Include="Query\QueryCheckDublicate.cs" />
     <Compile Include="Query\QueryCheckDublicatePers.cs" />
     <Compile Include="ViewModel\vw_CounterTPlus.cs" />
+    <Compile Include="ViewModel\vw_TplusIPU_GVS.cs" />
+    <Compile Include="ViewModel\vw_TplusIPU_OTP.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

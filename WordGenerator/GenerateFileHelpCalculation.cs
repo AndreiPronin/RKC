@@ -1,12 +1,15 @@
-﻿using Aspose.BarCode.Generation;
+﻿using AppCache;
+using Aspose.BarCode.Generation;
 using BE.PersData;
 using DB.DataBase;
 using DB.Model;
 using Microsoft.Office.Interop.Word;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ZXing;
@@ -17,6 +20,9 @@ namespace WordGenerator
     {
         public static PersDataDocumentLoad Generate(string LIC,DateTime date)
         {
+           Logger logger = LogManager.GetCurrentClassLogger();
+            ICacheApp cacheApp = new CacheApp();
+            cacheApp.AddProgress(LIC, "Получаю данные из БД");
             using (var db = new DbLIC())
             {
                 var SubLic = LIC.Substring(3, 6);
@@ -32,16 +38,18 @@ namespace WordGenerator
                         }
                     }
                 }
-                IQueryable<KVIT> Query = db.KVIT.Where(x => x.lic == SubLic && x.period.Value.Year == date.Year && x.period.Value.Month == date.Month);
-                var Lic = Query.FirstOrDefault();
+                var Lic = db.KVIT.FirstOrDefault(x => x.lic == SubLic && x.period.Value.Year == date.Year && x.period.Value.Month == date.Month);
                 if (Lic == null) throw new Exception("Ничего не найдено за выбранный период");
+                if(!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + $@"\Template\Kvit"))
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + $@"\Template\Kvit");
+                string path = AppDomain.CurrentDomain.BaseDirectory + $@"Template\Kvit\";
+                if (File.Exists(path + $@"Образец квитанции {LIC} {date.Month}.docx")) File.Delete(path + $@"Образец квитанции {LIC} {date.Month}.docx");
                 File.Copy(AppDomain.CurrentDomain.BaseDirectory + $@"Template\Образец квитанции.docx",
-                    AppDomain.CurrentDomain.BaseDirectory + $@"Template\Образец квитанции {LIC} {date.Month}.docx");
-                string path = AppDomain.CurrentDomain.BaseDirectory + $@"Template\";
-                if (File.Exists(path + $@"Образец квитанции {LIC}.docx")) File.Delete(path + $@"Образец квитанции {LIC}.docx");
-                File.Copy(Path.Combine(path, "Образец квитанции.docx"), Path.Combine(path, $@"Образец квитанции {LIC}.docx"), true);
+                    AppDomain.CurrentDomain.BaseDirectory + $@"Template\Kvit\Образец квитанции {LIC} {date.Month}.docx");
+                cacheApp.Update(LIC, "Начинаю формировать квитанцию");
                 Application app = new Application();
-                _Document doc = app.Documents.Open(path + $@"Образец квитанции {LIC} {date.Month}.docx");
+                var TempFile = $@"Образец квитанции {LIC} {date.Month}.docx";
+                _Document doc = app.Documents.Open(path + TempFile);
                 try
                 {
                     doc.Content.Find.Execute("{address}", false, true, false, false, false, true, 1, false, $@"{Lic.ul.Trim()},дом {Lic.dom.Trim()},кв. {Lic.kw.Trim()}", 2,
@@ -177,31 +185,31 @@ false, false, false, false);
                     doc.Content.Find.Execute("{dpuELNEZ}", false, true, false, false, false, true, 1, false, Lic.dpuelnez.Trim(), 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula1}", false, true, false, false, false, true, 1, false,
-                        !string.IsNullOrEmpty(Lic.sr15) ? "Перерасчет сальдо" : "", 2,
+                        !string.IsNullOrEmpty(Lic.sr15.Replace(" ","")) ? "Перерасчет сальдо" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula2}", false, true, false, false, false, true, 1, false,
-                       !string.IsNullOrEmpty(Lic.sr6) || !string.IsNullOrEmpty(Lic.sn6) ? "ОДН компонент ХВ" : "", 2,
+                       !string.IsNullOrEmpty(Lic.sr6.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn6.Replace(" ", "")) ? "ОДН компонент ХВ" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula3}", false, true, false, false, false, true, 1, false,
-                      !string.IsNullOrEmpty(Lic.sr4) || !string.IsNullOrEmpty(Lic.sn4) ? "ОДН компонент ТЭ" : "", 2,
+                      !string.IsNullOrEmpty(Lic.sr4.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn4.Replace(" ", "")) ? "ОДН компонент ТЭ" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula4}", false, true, false, false, false, true, 1, false,
-                       !string.IsNullOrEmpty(Lic.sr6) || !string.IsNullOrEmpty(Lic.sn6) ? "Куб.м." : "", 2,
+                       !string.IsNullOrEmpty(Lic.sr6.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn6.Replace(" ", "")) ? "Куб.м." : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula5}", false, true, false, false, false, true, 1, false,
-                      !string.IsNullOrEmpty(Lic.sr4) || !string.IsNullOrEmpty(Lic.sn4) ? "Гкал" : "", 2,
+                      !string.IsNullOrEmpty(Lic.sr4.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn4.Replace(" ", "")) ? "Гкал" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula6}", false, true, false, false, false, true, 1, false,
-                      !string.IsNullOrEmpty(Lic.sr6) || !string.IsNullOrEmpty(Lic.sn6) ? Lic.sted5.Trim() : "", 2,
+                      !string.IsNullOrEmpty(Lic.sr6.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn6.Replace(" ", "")) ? Lic.sted5.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula7}", false, true, false, false, false, true, 1, false,
-                      !string.IsNullOrEmpty(Lic.sr4) || !string.IsNullOrEmpty(Lic.sn4) ? Lic.sted3.Trim() : "", 2,
+                      !string.IsNullOrEmpty(Lic.sr4.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn4.Replace(" ", "")) ? Lic.sted3.Trim() : "", 2,
     false, false, false, false);
                     var formula = Math.Round(Convert.ToDouble(Lic.u1dolgzku.Trim().Replace(".",",")) + Convert.ToDouble(Lic.u1oplzku.Trim().Replace(".", ",")), 2);
                     doc.Content.Find.Execute("{formula8}", false, true, false, false, false, true, 1, false,
                     formula.ToString() != "" ? formula.ToString() : "",2,
     false, false, false, false);
-                    formula = Math.Round(Convert.ToDouble(Lic.u1dolgpeny.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1dolgpeny.Trim().Replace(".", ",")), 2);
+                    formula = Math.Round(Convert.ToDouble(Lic.u1dolgpeny.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1oplpeny.Trim().Replace(".", ",")), 2);
                     doc.Content.Find.Execute("{formula9}", false, true, false, false, false, true, 1, false,
                     formula.ToString() != "" ? formula.ToString() : "", 2,
     false, false, false, false);
@@ -210,67 +218,67 @@ false, false, false, false);
                    formula.ToString() != "" ? formula.ToString() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula11}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv1_1) ? "ГВС1" : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv1_1.Replace(" ", "")) ? "ГВС1" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula12}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuxv2_1) ? "ГВС2" : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuxv2_1.Replace(" ", "")) ? "ГВС2" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula13}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuxv3_1) ? "ГВС3" : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuxv3_1.Replace(" ", "")) ? "ГВС3" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula14}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuxv4_1) ? "ГВС4" : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuxv4_1.Replace(" ", "")) ? "ГВС4" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula15}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuot1_1) ? "Отопление1" : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuot1_1.Replace(" ", "")) ? "Отопление1" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula16}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuot2_1) ? "Отопление2" : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuot2_1.Replace(" ", "")) ? "Отопление2" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula17}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuot3_1) ? "Отопление3" : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuot3_1.Replace(" ", "")) ? "Отопление3" : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula18}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv1_1) ? Lic.ngvs1.Trim().Replace(" ","") : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv1_1.Replace(" ", "")) ? Lic.ngvs1.Trim().Replace(" ","") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula19}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuxv2_1) ? Lic.ngvs2.Trim().Replace(" ", "") : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuxv2_1.Replace(" ", "")) ? Lic.ngvs2.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula20}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuxv3_1) ? Lic.ngvs3.Trim().Replace(" ", "") : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuxv3_1.Replace(" ", "")) ? Lic.ngvs3.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula21}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuxv4_1) ? Lic.ngvs4.Trim().Replace(" ", "") : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuxv4_1.Replace(" ", "")) ? Lic.ngvs4.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula22}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot1_1) ? Lic.notp1.Trim().Replace(" ", "") : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot1_1.Replace(" ", "")) ? Lic.notp1.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula23}", false, true, false, false, false, true, 1, false,
-                     !string.IsNullOrEmpty(Lic.ipuot2_1) ? Lic.notp2.Trim().Replace(" ", "") : "", 2,
+                     !string.IsNullOrEmpty(Lic.ipuot2_1.Replace(" ", "")) ? Lic.notp2.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula24}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot3_1) ? Lic.notp3.Trim().Replace(" ", "") : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot3_1.Replace(" ", "")) ? Lic.notp3.Trim().Replace(" ", "") : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula25}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv1_1) ? Lic.dgvs1.Trim() : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv1_1.Replace(" ", "")) ? Lic.dgvs1.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula26}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv2_1) ? Lic.dgvs2.Trim() : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv2_1.Replace(" ", "")) ? Lic.dgvs2.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula27}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv3_1) ? Lic.dgvs3.Trim() : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv3_1.Replace(" ", "")) ? Lic.dgvs3.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula28}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuxv4_1) ? Lic.dgvs4.Trim() : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuxv4_1.Replace(" ", "")) ? Lic.dgvs4.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula29}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot1_1) ? Lic.dotp1.Trim() : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot1_1.Replace(" ", "")) ? Lic.dotp1.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula30}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot2_1) ? Lic.dotp2.Trim() : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot2_1.Replace(" ", "")) ? Lic.dotp2.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{formula31}", false, true, false, false, false, true, 1, false,
-                    !string.IsNullOrEmpty(Lic.ipuot3_1) ? Lic.dotp3.Trim() : "", 2,
+                    !string.IsNullOrEmpty(Lic.ipuot3_1.Replace(" ", "")) ? Lic.dotp3.Trim() : "", 2,
     false, false, false, false);
                     doc.Content.Find.Execute("{s_gil}", false, true, false, false, false, true, 1, false, Lic.dpukasobs.Trim(), 2,
     false, false, false, false);
@@ -280,7 +288,7 @@ false, false, false, false);
     false, false, false, false);
                     doc.Content.Find.Execute("{s_notp}", false, true, false, false, false, true, 1, false, Lic.s_notp.Trim(), 2,
     false, false, false, false);
-
+                    cacheApp.Update(LIC, "Сформировал квитацнию");
                     BarcodeWriter generator = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
                     generator.Options = new ZXing.Common.EncodingOptions
                     {
@@ -292,7 +300,7 @@ false, false, false, false);
                     var sum = Convert.ToDouble(Lic.kopl.Trim().Replace(".",",")) * 100;
                     var STR = $@"ST00011|Name=Мордовский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|
 BankName=Пензенское отделение № 8624 ПАО 'Сбербанк России' г. Пенза|BIC=045655635|CorrespAcc=30101810000000000635|PayeeINN=6315376946|
-Category=7|PersAcc=7{Lic.ng.Trim()}{Lic.lic.Trim()}|LastName={FIO[0]}|FitstName={FIO[1]}|MiddleName={FIO[2]}
+Category=7|PersAcc={LIC}|LastName={FIO[0]}|FitstName={FIO[1]}|MiddleName={FIO[2]}
 |PayerAddress={Lic.ul.Trim()}, дом {Lic.dom.Trim()}, кв. {Lic.kw.Trim()}|Sum={sum}";
                     generator.Write(STR).Save(path + $@"{LIC}_QR.png");
                     try
@@ -306,15 +314,25 @@ Category=7|PersAcc=7{Lic.ng.Trim()}{Lic.lic.Trim()}|LastName={FIO[0]}|FitstName=
                         ImgQr.WrapFormat.Type = Microsoft.Office.Interop.Word.WdWrapType.wdWrapBehind;
 
                     }
-                    catch { }
+                    catch(Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); }
                 }
-                catch(Exception ex) { }
-                doc.Save();
-                doc.ExportAsFixedFormat(path + $@"Квитанция {LIC} {date.Month}.pdf", Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
-                doc.Close(Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
-                   Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat,
-                   false);
-                app.Quit();
+                catch(Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); }
+                try
+                {
+
+                    //doc.Save();
+                    doc.ExportAsFixedFormat(path + $@"Квитанция {LIC} {date.Month}.pdf", Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
+                    doc.Close(Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
+                       Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat,
+                       false);
+                    app.DisplayAlerts = Microsoft.Office.Interop.Word.WdAlertLevel.wdAlertsNone;
+                    app.Quit();
+                }
+                catch (Exception ex)
+                {
+
+                }
+                cacheApp.Update(LIC, $"Очищаю временные файлы квитанцию");
                 if (File.Exists(path + $@"Образец квитанции {LIC} {date.Month}.docx")) 
                     File.Delete(path + $@"Образец квитанции {LIC} {date.Month}.docx");
                 if (File.Exists(path + $@"{LIC}.png")) File.Delete(path + $@"{LIC}.png");

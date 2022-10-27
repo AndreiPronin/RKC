@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AppCache
 {
@@ -18,21 +20,37 @@ namespace AppCache
         bool Lock(string name, string Url);
         void Update(string name, string Url);
         void Delete( string name ,string Url);
+        void Delete(string Key);
         bool isLock(string Key);
+        void UpdateProgres(string Key, string value);
 
     }
     public class CacheApp: ICacheApp
     {
         public bool AddProgress(string name, string value)
         {
-            MemoryCache memoryCache = MemoryCache.Default;
-            return memoryCache.Add(name, value, DateTime.Now.AddMinutes(200));
+            if (GetValue(name) == null)
+            {
+                MemoryCache memoryCache = MemoryCache.Default;
+                return memoryCache.Add(name, value, DateTime.Now.AddMinutes(10));
+            }
+            else
+            {
+                UpdateProgres(name, value);
+                return false;
+            }
+            
         }
         public string GetValueProgress(string Name)
         {
             MemoryCache memoryCache = MemoryCache.Default;
             return memoryCache.Get(Name) as string;
         }
+        /// <summary>
+        /// Обновление прогресс проценты
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         public void UpdateProgress(string name, string value)
         {
             if (Convert.ToDouble(value) > Convert.ToDouble(GetValueProgress(name)))
@@ -41,10 +59,20 @@ namespace AppCache
                 memoryCache.Set(name, value, DateTime.Now.AddMinutes(10));
             }
         }
-        public string GetValue(string Url)
+        /// <summary>
+        /// Обновление прогресс текстовое значение
+        /// </summary>
+        /// <param name="Key"></param>
+        /// <param name="value"></param>
+        public void UpdateProgres(string Key, string value)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            return memoryCache.Get(Url) as string;
+            memoryCache.Set(Key, value, DateTime.Now.AddMinutes(10));
+        }
+        public string GetValue(string Key)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            return memoryCache.Get(Key) as string;
         }
         public bool isLock(string Key)
         {
@@ -64,6 +92,7 @@ namespace AppCache
         public bool Lock(string userName, string Url)
         {
             MemoryCache memoryCache = MemoryCache.Default;
+            var ttt = GetValue(Url);
             if (GetValue(Url) == null)
             {
                 Add(userName, Url);
@@ -86,10 +115,10 @@ namespace AppCache
             return memoryCache.Add(Url, name, DateTime.Now.AddMinutes(10));
         }
 
-        public void Update(string name,string Url)
+        public void Update(string key,string value)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            memoryCache.Set(Url, name, DateTime.Now.AddMinutes(10));
+            memoryCache.Set(key, value, DateTime.Now.AddMinutes(10));
         }
 
         public void Delete(string name, string Url)
@@ -100,6 +129,11 @@ namespace AppCache
             {
                 memoryCache.Remove(Url);
             }
+        }
+        public void Delete(string Key)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            memoryCache.Remove(Key);
         }
     }
 }

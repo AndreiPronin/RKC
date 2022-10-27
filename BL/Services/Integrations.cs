@@ -54,7 +54,8 @@ namespace BL.Service
                 FKUB2OT_4 = x.FKUB2OT_4,
                 FKUB1OT_4 = x.FKUB1OT_4,
             }).ToList();
-            IQueryable<IntegrationReadings> Integrs = dbApp.IntegrationReadings;
+            var periods = period.AddDays(-1);
+            IQueryable<IntegrationReadings> Integrs = dbApp.IntegrationReadings.Where(x=>x.DateTime >= periods);
             var IntegrsList = Integrs.ToList();
 
             var payment = dbs.Payment
@@ -74,7 +75,7 @@ namespace BL.Service
                 {
                     foreach (var Item in data.Counter)
                     {
-                        var Integr = IntegrsList.Where(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.DateTime == data.payment_date).Select(x => x.Lic).ToList();
+                        var Integr = IntegrsList.Where(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id).Select(x => x.Lic).ToList();
                         if (Integr.Count() == 0 && Convert.ToDecimal(Item.value) != 0)
                         {
                             bool Error = false;
@@ -88,6 +89,7 @@ namespace BL.Service
                                 integrationReadings.Lic = data.lic;
                                 integrationReadings.TypePu = Item.name;
                                 integrationReadings.DateTime = data.payment_date;
+                                integrationReadings.IdCounterReadings = Item.id;
                                 Error = IPU_COUNTERS == null ? true : false;
                                 saveModel.TypePU = Item.name;
                                 saveModel.FULL_LIC = data.lic;
@@ -341,10 +343,11 @@ namespace BL.Service
                                     }
                                 }
                                 if (Error == false) await counter.UpdatePUIntegrations(saveModel,
-                                    "Показания от " + data.Organization.name + " дата платежа " + data.payment_date.Value.ToString(),
+                                    "Показания от " + data.Organization.name + " дата платежа " + data.payment_date_day.Value.ToString(),
                                     IPU_COUNTERS.FirstOrDefault().ID_PU);
                                 else integrationReadings.IsError = Error;
                                 dbApp.IntegrationReadings.Add(integrationReadings);
+                                dbApp.SaveChanges();
                             }
                             catch (Exception ex)
                             {
@@ -372,8 +375,15 @@ namespace BL.Service
                             IntegrationReadings integrationReadings = new IntegrationReadings();
                             integrationReadings.Lic = data.lic;
                             integrationReadings.DateTime = data.payment_date_day;
-                            if (data.lic.StartsWith("8") || data.lic.StartsWith("1")) integrationReadings.IsError = false;
-                            else integrationReadings.IsError = true;
+                            if(data.lic != null)
+                            {
+                                if (data.lic.StartsWith("8") || data.lic.StartsWith("1")) integrationReadings.IsError = false;
+                                else integrationReadings.IsError = true;
+                            }
+                            else
+                            {
+                                integrationReadings.IsError = true;
+                            }
                             integrationReadings.Description = ErrorIntegration.NoLic.GetDescription();
                             dbApp.IntegrationReadings.Add(integrationReadings);
                         }

@@ -6,10 +6,10 @@
 <br />
 <div style="margin-top:30px;" class="row">
     <div class="col-md-4">
-        <input type="date" class="form-control" min="@ViewBag.IntegrationTime.AddDays(-1).ToString("yyyy-MM-dd")" max="@DateTime.Now.Date.ToString("yyyy-MM-dd")" id="DateRunReadingIntegration" value="@DateTime.Now.Month" />
+        <input type="date" class="form-control" min="@ViewBag.IntegrationTime.ToString("yyyy-MM-dd")" max="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")" id="DateRunReadingIntegration" value="@DateTime.Now.Month" />
     </div>
     <div class="col-md-4">
-        <label>Последняя интеграция @ViewBag.IntegrationTime.AddDays(-1).ToString("yyyy.MM.dd")</label>
+        <label>Последняя интеграция @ViewBag.IntegrationTime.ToString("yyyy.MM.dd")</label>
     </div>
     <div class="col-md-2">
         <button id="RunReadingIntegration" class="btn btn-primary">Запустить интеграцию показаний ИПУ</button>
@@ -23,6 +23,14 @@
         <div style="margin-top:30px;" class="row">
             <div class="col-md-4">
                 @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                <select name="TypeLoad" id="TypeLoad" class="form-control">
+                    <option value="1">Показания</option>
+                    <option value="2">Обновление информаци ПУ</option>
+                    <option value="3">Изменения площадей</option>
+                </select>
+                @*<input name="Type" id="Type" class="form-control" />*@
             </div>
             <div class="col-md-4">
                 <input name="User" id="User" placeholder="Название от кого файл" class="form-control" />
@@ -39,10 +47,12 @@
 <script>
     $(document).ready(function (e) {
         $("#RunReadingIntegration").click(function () {
+            $("#RunReadingIntegration").addClass("disabled");
             $.ajax({
                 url: '/Counter/RunIntegration?Date=' + $("#DateRunReadingIntegration").val(),
                 success: function (data) {
                     alert('Интеграция завершена');
+                    window.location.reload();
                 },
                 error: function () {
                     alert('Ошибка интеграции');
@@ -67,7 +77,7 @@
                 // Добавляем ноль в начало цифры, которые до 10
                 $("#ResultRunReadingIntegration").css('width', i + '%');
                 $("#ResultRunReadingIntegration").text(i + '%');
-                if (i === 100) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
+                if (i >= 99) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
             }, 3000);
         })
         $("#UploadFilePU").click(function (e) {

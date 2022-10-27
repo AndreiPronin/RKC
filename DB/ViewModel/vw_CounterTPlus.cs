@@ -31,4 +31,5 @@ namespace DB.ViewModel
         public string EndReadings { get; set; }
         public int? NowReadings { get; set; }
     }
+   
 }

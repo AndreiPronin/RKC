@@ -96,6 +96,5 @@ namespace RKC.Controllers
             }
             return Redirect("/Admin");
         }
-
     }
 }

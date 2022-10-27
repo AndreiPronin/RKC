@@ -1,4 +1,5 @@
 ﻿using DB.Model;
+using DB.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,6 +15,8 @@ namespace DB.DataBase
         public DbSet<FLAT> FLAT { get; set; }
         public DbSet<MKD> MKD { get; set; }
         public DbSet<IPU> IPU { get; set; }
+        public DbSet<vw_TplusIPU_GVS> vw_TplusIPU_GVS { get; set; }
+        public DbSet<vw_TplusIPU_OTP> vw_TplusIPU_OTP { get; set; }
         public DbSet<IPU_LIC> iPU_LICs { get; set; }
         public DbTPlus() : base("T+")
         {

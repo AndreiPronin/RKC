@@ -272,6 +272,7 @@
     <Compile Include="Controllers\api\ApiTplusController.cs" />
     <Compile Include="Controllers\CounterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogResultController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonalDataController.cs" />
     <Compile Include="Controllers\СourtController.cs" />
@@ -467,6 +468,8 @@
     <Content Include="Views\Counter\ErrorIntegration.cshtml" />
     <Content Include="Views\PersonalData\PaymentHistoryView.cshtml" />
     <Content Include="Views\Сourt\DetailedСourtData.cshtml" />
+    <Content Include="Views\PersonalData\ReadingsHistoryView.cshtml" />
+    <Content Include="Views\LogResult\ShowLogResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

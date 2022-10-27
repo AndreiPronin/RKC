@@ -236,6 +236,7 @@ namespace BL.Helper
             }
             return Result.ToString();
         }
+
         private string SerializerToXML<T>(T model)
         {
             XmlSerializer serializer = new XmlSerializer(model.GetType());

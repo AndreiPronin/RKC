@@ -1,7 +1,9 @@
 ﻿using AppCache;
 using BE.Counter;
+using BE.PersData;
 using BL.Counters;
 using BL.Helper;
+using BL.Services;
 using ClosedXML.Excel;
 using DB.DataBase;
 using DB.Model;
@@ -13,6 +15,7 @@ using System.IO;
 using System.Linq;
 
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BL.Excel
@@ -464,6 +467,51 @@ namespace BL.Excel
             }
             return dt;
         }
+        public DataTable LoadExcelSquarePersProperty(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User, "0");
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons());
+            List<PersDataModel> PersDataModelNotAdded = new List<PersDataModel>();
+            var dbApp = new ApplicationDbContext();
+            var Count = nonEmptyDataRows.Count();
+            int i = 0;
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    i++;
+                    try
+                    {
+                        var Procent = Math.Round((float)i / Count * 100, 0);
+                        cacheApp.UpdateProgress(User, Procent.ToString());
+                        PersDataModel saveModel = new PersDataModel();
+                        var integrationReadings = new IntegrationReadings();
+                        saveModel.Square = dataRow.Cell(5).Value == "" ? 0 : Convert.ToDouble(dataRow.Cell(5).Value.ToString().Replace(".", ","));
+                        saveModel.Lic = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace("RBR","").Trim();
+                        try
+                        {
+                            personalData.UpdatePersDataSquareExcel(saveModel, User);
+                        }catch(Exception ex)
+                        {
+                            saveModel.Comment = $"Ошибка при обновление лицевого счета {saveModel.Lic} {ex}";
+                            PersDataModelNotAdded.Add(saveModel);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        PersDataModelNotAdded.Add(new PersDataModel { Comment = $"Ошибка на {i} строке" });
+                    }
+                }
+            }
+            DataTable dt = new DataTable("PersData");
+            dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Лицевой счет"), new DataColumn("Информация об ошибке") });
+            foreach (var Items in PersDataModelNotAdded)
+            {
+                dt.Rows.Add(Items.Lic,Items.Comment);
+            }
+            return dt;
+        }
         public DataTable ErroIntegratin()
         {
 
@@ -506,6 +554,57 @@ namespace BL.Excel
             }
             cacheApp.Update(User, "Скачиваю Excel");
             
+            return dt;
+        }
+        public DataTable TIpuGvs(string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User, "Получаю данные из бд");
+            DataTable dt = new DataTable("Counter");
+            dt.Columns.AddRange(new DataColumn[17] { new DataColumn("КОД ДОМА"),
+                                        new DataColumn("   УЛИЦА   "),
+                                        new DataColumn("  ДОМ  "),
+                                        new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
+            ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   "),new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
+            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   ПЛОМБА   "),new DataColumn("   ТИП ПЛОМБА   ")
+            ,new DataColumn("   ПЛОМБА 2   "),new DataColumn("   ТИП ПЛОМБА 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
+            ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
+            var DB = new DbTPlus();
+            var Counters = DB.Database.SqlQuery<vw_TplusIPU_GVS>("SELECT * FROM [T+].[dbo].[view_TplusIPU_GVS]").ToList();
+            cacheApp.Update(User, "Формирую Excel");
+            Thread.Sleep(10000);
+            foreach (var Items in Counters)
+            {
+                dt.Rows.Add(Items.CODE_HOUSE, Items.STREET, Items.HOME, Items.FLAT,
+                    Items.FULL_LIC, Items.FIO, Items.TYPE_PU, Items.FACTORY_NUMBER_PU, Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
+                    Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.END_READINGS, Items.NOW_READINGS);
+            }
+            cacheApp.Update(User, "Скачиваю Excel");
+            Thread.Sleep(10000);
+            return dt;
+        }
+        public DataTable TIpuOtp(string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User, "Получаю данные из бд");
+            DataTable dt = new DataTable("Counter");
+            dt.Columns.AddRange(new DataColumn[17] { new DataColumn("КОД ДОМА"),
+                                        new DataColumn("   УЛИЦА   "),
+                                        new DataColumn("  ДОМ  "),
+                                        new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
+            ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   "),new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
+            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   ПЛОМБА   "),new DataColumn("   ТИП ПЛОМБА   ")
+            ,new DataColumn("   ПЛОМБА 2   "),new DataColumn("   ТИП ПЛОМБА 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
+            ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
+            var DB = new DbTPlus();
+            var Counters = DB.Database.SqlQuery<vw_TplusIPU_OTP>("select * from [T+].[dbo].[view_TplusIPU_OTP]").ToList();
+            cacheApp.Update(User, "Формирую Excel");
+            foreach (var Items in Counters)
+            {
+                dt.Rows.Add(Items.CODE_HOUSE, Items.STREET, Items.HOME, Items.FLAT,
+                    Items.FULL_LIC, Items.FIO, Items.TYPE_PU, Items.FACTORY_NUMBER_PU, Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
+                    Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.END_READINGS, Items.NOW_READINGS);
+            }
+            cacheApp.Update(User, "Скачиваю Excel");
+
             return dt;
         }
     }

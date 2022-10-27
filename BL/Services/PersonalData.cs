@@ -32,6 +32,9 @@ namespace BL.Services
         void DeletePers(int IdPersData, string User);
         string GetRoomTypeMain(string Full_Lic);
         List<Payment> GetPaymentHistory(string Full_Lic);
+        List<Payment> GetReadingsHistory(string Full_Lic);
+        List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr,string Full_Lic);
+        void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User);
 
     }
     public class PersonalData : IPersonalData
@@ -122,12 +125,12 @@ namespace BL.Services
             ;
             if (file != null)
             {
-                if (!Directory.Exists($@"\\10.10.10.6\\doc_tplus\\{Lic}\\{Fio}"))
+                if (!Directory.Exists($@"\\10.10.10.17\\doc_tplus\\{Lic}\\{Fio}"))
                 {
-                    Directory.CreateDirectory($@"\\10.10.10.6\\doc_tplus\\{Lic}\\{Fio}");
+                    Directory.CreateDirectory($@"\\10.10.10.17\\doc_tplus\\{Lic}\\{Fio}");
                 }
-                if (File.Exists($@"\\10.10.10.6\doc_tplus\\{Lic}\\{Fio}\\{NameFile}.{TypeFile}")) return $@"Файл с название {NameFile} уже существует. Обратитесь к системному администратору!";
-                File.WriteAllBytes($@"\\10.10.10.6\\doc_tplus\\{Lic}\\{Fio}\\{NameFile}.{TypeFile}", file);
+                if (File.Exists($@"\\10.10.10.17\doc_tplus\\{Lic}\\{Fio}\\{NameFile}.{TypeFile}")) return $@"Файл с название {NameFile} уже существует. Обратитесь к системному администратору!";
+                File.WriteAllBytes($@"\\10.10.10.17\\doc_tplus\\{Lic}\\{Fio}\\{NameFile}.{TypeFile}", file);
                 using (var db = new ApplicationDbContext())
                 {
                     db.PersDataDocument.Add(new PersDataDocument
@@ -152,7 +155,7 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var Res = db.PersDataDocument.Where(x => x.id == Id).FirstOrDefault();
-                persDataDocument.FileBytes = File.ReadAllBytes($@"\\10.10.10.6\\doc_tplus\\{Res.DocumentPath}\\{Res.DocumentName}");
+                persDataDocument.FileBytes = File.ReadAllBytes($@"\\10.10.10.17\\doc_tplus\\{Res.DocumentPath}\\{Res.DocumentName}");
                 persDataDocument.FileName = Res.DocumentName;
 
             }
@@ -185,20 +188,7 @@ namespace BL.Services
                     //worksheet.RangeUsed().SetAutoFilter();
                     worksheet.Columns().AdjustToContents();
                     int RowNumber = 1;
-                    //foreach (var Items in Result)
-                    //{
-                    //    ComnNumber = 1;
-                    //    RowNumber++;
-                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.Period;
-                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.DK;
-                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HeatingСalculation;
-                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HeatingRecalculation;
-                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.GvsHeatingСalculation;
-                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.GvsHeatingRecalculation;
-                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HvHeatingСalculation;
-                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.HvHeatingRecalculation;
-                    //    worksheet.Cell(RowNumber, ComnNumber++).Value = Items.SN15;
-                    //}
+
                     MemoryStream m = new MemoryStream();
                     workbook.SaveAs(m);
                     persDataDocument.FileBytes = m.ToArray();
@@ -215,7 +205,7 @@ namespace BL.Services
                 db.PersDataDocument.Remove(Res);
                 _ilogger.ActionUsersPersData(Res.idPersData, $"Удалил файл {Res.DocumentName}", User);
                 db.SaveChanges();
-                File.Delete($@"\\10.10.10.6\\doc_tplus\\{Res.DocumentPath}\\{Res.DocumentName}");
+                File.Delete($@"\\10.10.10.17\\doc_tplus\\{Res.DocumentPath}\\{Res.DocumentName}");
                 return $"Файл {Res.DocumentName} успешно удален";
             }
         }
@@ -224,6 +214,30 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                return   db.LogsPersData.Where(x => x.idPersData == idPersData).OrderByDescending(x=>x.DateTime).ToList();
+            }
+        }
+        public void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var persInfo = db.PersData.FirstOrDefault(x => x.Lic == persDataModel.Lic && x.Main == true && x.IsDelete == false);
+                persDataModel.idPersData = persInfo.idPersData;
+                if (persInfo == null)
+                    throw new Exception("Не найден главный перс");
+                using (var dbAllLic = new DbLIC())
+                {
+                    var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == persDataModel.Lic).FirstOrDefault();
+                    AllLIC.SOBS = Convert.ToDecimal(persDataModel.Square);
+                    dbAllLic.SaveChanges();
+                }
+                _ilogger.ActionUsersPersData(persInfo.idPersData, $"Изменили площадь: было {persInfo.Square} стало {persDataModel.Square} \r\n", User);
+                var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && (x.IsDelete == false || x.IsDelete == null)).ToList();
+                foreach (var Items in ListPers)
+                {
+                    Items.Square = persDataModel.Square;
+                    Items.NumberOfPersons = persDataModel.NumberOfPersons;
+                }
+                db.SaveChanges();
             }
         }
         public void SavePersonalData(PersDataModel persDataModel, string User)
@@ -368,6 +382,22 @@ namespace BL.Services
             using (var db = new DbPayment())
             {
                 return db.Payment.Include(x => x.Counter).Include(x => x.Organization).Where(x => x.lic == Full_Lic).ToList();
+            }
+        }
+        public List<Payment> GetReadingsHistory(string Full_Lic)
+        {
+            using (var db = new DbPayment())
+            {
+                return db.Payment.Include(x => x.Counter).Include(x => x.Organization).Where(x => x.lic == Full_Lic).ToList();
+            }
+        }
+
+        public List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr, string Full_Lic)
+        {
+            using (var db = new DbPayment())
+            {
+                IQueryable<DB.Model.Counters> res = db.Counter.Include(x => x.Payment).Where(x => x.lic == Full_Lic && x.name == Parametr);
+                return res.ToList();
             }
         }
     }

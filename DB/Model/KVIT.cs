@@ -11,9 +11,6 @@ namespace DB.Model
     [Table(name: "KVIT",Schema = "dbo")]
     public class KVIT
     {
-        public string ng { get; set; }
-        public string cadr { get; set; }
-        public string cod_uo { get; set; }
         public string ul { get; set; }
         public string dom { get; set; }
         public string kw { get; set; }
@@ -22,196 +19,56 @@ namespace DB.Model
         public string sobs { get; set; }
         public string kl { get; set; }
         public string kopl { get; set; }
-        public string kopl_rub { get; set; }
-        public string kopl_kop { get; set; }
-        public string sted1 { get; set; }
-        public string koled1 { get; set; }
-        public string sn1 { get; set; }
-        public string sr1 { get; set; }
-        public string rdpu1 { get; set; }
-        public string it1 { get; set; }
         public string sted2 { get; set; }
         public string koled2 { get; set; }
         public string sn2 { get; set; }
         public string sr2 { get; set; }
-        public string rdpu2 { get; set; }
         public string it2 { get; set; }
         public string sted3 { get; set; }
         public string koled3 { get; set; }
         public string sn3 { get; set; }
         public string sr3 { get; set; }
-        public string rdpu3 { get; set; }
         public string it3 { get; set; }
-        public string sted4 { get; set; }
         public string koled4 { get; set; }
         public string sn4 { get; set; }
         public string sr4 { get; set; }
-        public string rdpu4 { get; set; }
         public string it4 { get; set; }
         public string sted5 { get; set; }
         public string koled5 { get; set; }
         public string sn5 { get; set; }
         public string sr5 { get; set; }
-        public string rdpu5 { get; set; }
         public string it5 { get; set; }
-        public string sted6 { get; set; }
         public string koled6 { get; set; }
         public string sn6 { get; set; }
         public string sr6 { get; set; }
-        public string rdpu6 { get; set; }
         public string it6 { get; set; }
-        public string sted7 { get; set; }
-        public string koled7 { get; set; }
-        public string sn7 { get; set; }
-        public string sr7 { get; set; }
-        public string rdpu7 { get; set; }
-        public string it7 { get; set; }
-        public string sted8 { get; set; }
-        public string koled8 { get; set; }
-        public string sn8 { get; set; }
-        public string sr8 { get; set; }
-        public string rdpu8 { get; set; }
-        public string it8 { get; set; }
-        public string sted9 { get; set; }
-        public string koled9 { get; set; }
-        public string sn9 { get; set; }
-        public string sr9 { get; set; }
-        public string rdpu9 { get; set; }
-        public string it9 { get; set; }
-        public string sted10 { get; set; }
-        public string koled10 { get; set; }
-        public string sn10 { get; set; }
-        public string sr10 { get; set; }
-        public string rdpu10 { get; set; }
-        public string it10 { get; set; }
-        public string sted11_1 { get; set; }
-        public string koled11_1 { get; set; }
-        public string sn11_1 { get; set; }
-        public string sted11_2 { get; set; }
-        public string koled11_2 { get; set; }
-        public string sn11_2 { get; set; }
-        public string sr11 { get; set; }
-        public string rdpu11 { get; set; }
-        public string it11 { get; set; }
-        public string sted12 { get; set; }
-        public string koled12 { get; set; }
-        public string sn12 { get; set; }
-        public string sr12 { get; set; }
-        public string rdpu12 { get; set; }
-        public string it12 { get; set; }
-        public string sted13 { get; set; }
-        public string koled13 { get; set; }
-        public string sn13 { get; set; }
-        public string sr13 { get; set; }
-        public string rdpu13 { get; set; }
-        public string it13 { get; set; }
-        public string sted14 { get; set; }
-        public string koled14 { get; set; }
-        public string sn14 { get; set; }
-        public string sr14 { get; set; }
-        public string rdpu14 { get; set; }
-        public string it14 { get; set; }
-        public string sted15 { get; set; }
-        public string koled15 { get; set; }
-        public string sn15 { get; set; }
         public string sr15 { get; set; }
-        public string rdpu15 { get; set; }
         public string it15 { get; set; }
-        public string u1lic { get; set; }
         public string u1nachzku { get; set; }
         public string u1oplzku { get; set; }
         public string u1dolgzku { get; set; }
-        public string u1koplzku { get; set; }
         public string u1nachpeny { get; set; }
         public string u1oplpeny { get; set; }
         public string u1dolgpeny { get; set; }
-        public string u1koplpeny { get; set; }
-        public string u1kopl { get; set; }
-        public string u2lic { get; set; }
-        public string u2nachzku { get; set; }
-        public string u2oplzku { get; set; }
-        public string u2dolgzku { get; set; }
-        public string u2koplzku { get; set; }
-        public string u3lic { get; set; }
-        public string u3nachzku { get; set; }
-        public string u3oplzku { get; set; }
-        public string u3dolgzku { get; set; }
-        public string u3koplzku { get; set; }
-        public string u4lic { get; set; }
-        public string u4nachzku { get; set; }
-        public string u4oplzku { get; set; }
-        public string u4dolgzku { get; set; }
-        public string u4koplzku { get; set; }
-        public string ipuel1_yes { get; set; }
-        public string ipuel1_1 { get; set; }
-        public string ipuel1_2 { get; set; }
-        public string ipuel2_yes { get; set; }
-        public string ipuel2_1 { get; set; }
-        public string ipuel2_2 { get; set; }
-        public string ipugv1_yes { get; set; }
-        public string ipugv1_1 { get; set; }
-        public string ipugv1_2 { get; set; }
-        public string ipugv2_yes { get; set; }
-        public string ipugv2_1 { get; set; }
-        public string ipugv2_2 { get; set; }
-        public string ipuxv1_yes { get; set; }
         public string ipuxv1_1 { get; set; }
         public string ipuxv1_2 { get; set; }
-        public string ipuxv2_yes { get; set; }
         public string ipuxv2_1 { get; set; }
         public string ipuxv2_2 { get; set; }
         public string dpuotrasx { get; set; }
         public string dpuotsum { get; set; }
         public string dpuotnez { get; set; }
         public string dpuotnach { get; set; }
-        public string dpuotsobs { get; set; }
-        public string dpugvrasx { get; set; }
         public string dpugvsum { get; set; }
         public string dpugvnez { get; set; }
         public string dpugvnach { get; set; }
-        public string dpugvsobs { get; set; }
         public string dpuxvrasx { get; set; }
         public string dpuxvsum { get; set; }
         public string dpuxvnez { get; set; }
         public string dpuxvnach { get; set; }
-        public string dpuxvsobs { get; set; }
         public string dpuelrasx { get; set; }
-        public string dpuelsum { get; set; }
         public string dpuelnez { get; set; }
-        public string dpuelnach { get; set; }
-        public string dpuelsobs { get; set; }
-        public string dpukarasx { get; set; }
-        public string dpukasum { get; set; }
-        public string dpukanez { get; set; }
         public string dpukanach { get; set; }
         public string dpukasobs { get; set; }
-        public string bardata { get; set; }
-        public string bar2data { get; set; }
-        public string yyyymm { get; set; }
-        public string szil { get; set; }
-        public string idn { get; set; }
-        public string antenna { get; set; }
-        public string nla { get; set; }
-        public string naim_ooo { get; set; }
-        public string namepodr { get; set; }
-        public string tel { get; set; }
-        public string adr_geu { get; set; }
-        public string fio_m { get; set; }
-        public string tel_m { get; set; }
-        public string numbbase { get; set; }
-        public bool? sel { get; set; }
-        public string subsid { get; set; }
-        public string zak { get; set; }
-        public string barcode128 { get; set; }
-        public string nodngvs { get; set; }
-        public string nodnxvs { get; set; }
-        public string nodnele { get; set; }
-        public string todngvs { get; set; }
-        public string todnxvs { get; set; }
-        public string todnele { get; set; }
-        public string soi { get; set; }
-        public string soi_ele { get; set; }
-        public string cust_usl { get; set; }
         public string els { get; set; }
         public string igku { get; set; }
         public string ipuxv3_1 { get; set; }
@@ -224,11 +81,8 @@ namespace DB.Model
         public string ipuot2_2 { get; set; }
         public string ipuot3_1 { get; set; }
         public string ipuot3_2 { get; set; }
-        public string ipuot4_1 { get; set; }
-        public string ipuot4_2 { get; set; }
         public string s_oi { get; set; }
         public string s_notp { get; set; }
-        public string komment { get; set; }
         public string ngvs1 { get; set; }
         public string ngvs2 { get; set; }
         public string ngvs3 { get; set; }
@@ -236,7 +90,6 @@ namespace DB.Model
         public string notp1 { get; set; }
         public string notp2 { get; set; }
         public string notp3 { get; set; }
-        public string notp4 { get; set; }
         public string dgvs1 { get; set; }
         public string dgvs2 { get; set; }
         public string dgvs3 { get; set; }
@@ -244,7 +97,6 @@ namespace DB.Model
         public string dotp1 { get; set; }
         public string dotp2 { get; set; }
         public string dotp3 { get; set; }
-        public string dotp4 { get; set; }
         [Key]
         public DateTime? period { get; set; }
         public int id { get; set; }

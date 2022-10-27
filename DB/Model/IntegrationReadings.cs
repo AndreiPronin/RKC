@@ -21,6 +21,7 @@ namespace DB.Model
         public string InitialReadings { get; set; }
         public string EndReadings { get; set; }
         public string NowReadings { get; set; }
+        public int? IdCounterReadings { get; set; }
     }
 
 }

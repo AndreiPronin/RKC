@@ -21,7 +21,7 @@
             }
             <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank"><input type="button" class="btn btn-primary" value="История ранее установленых ПУ" /></a>
             <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank" data-tooltip="Закройте редактирование при переходе...">
-                <input type="button" class="btn btn-primary PersData" value="Персональный данные" />
+                <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
             </a>
         </div>
         <div id="ResultSearchSave"></div>
@@ -480,7 +480,7 @@ else
             <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
             <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPU" value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
             <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
-            <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="Персональный данные" /></a>
+            <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="Персональные данные" /></a>
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -592,6 +592,7 @@ else
             window.location.reload();
         })
         $(".Save").click(function (e) {
+            $(".Save").addClass("hidden");
             var NumberPU = $(this).parent().find('#NumberPU').val();
 
             if ($(this).parent().find('.OVERWRITE').prop("checked")) {
@@ -649,6 +650,7 @@ else
 
         })
         $(".Delete").click(function (e) {
+            $(".Delete").addClass("hidden");
             var IdPU = $(this).parent().find('.IdPU').val();
             $.confirm({
                 title: 'Предупрждение!',
@@ -673,6 +675,7 @@ else
                     },
                     "Отмена": function () {
                         $.alert('Отменено!');
+                        window.location.reload();
                     }
                 }
             });

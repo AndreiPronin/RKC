@@ -34,7 +34,7 @@
                         <input type="button" class="btn btn-primary" value="Приборы учета" />
                     </a>
                     <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().full_lic.Trim()" target="_blank">
-                        <input type="button" class="btn btn-primary PersData" value="Персональный данные" />
+                        <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
                     </a>
                 </div>
                 <hr />
@@ -179,13 +179,16 @@
                         <div class="col-md-3">
                             <button class="btn btn-primary DownLoadHelpСalculation">Справка расчет</button>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <button class="btn btn-primary PaymentHistory">История оплат</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary ReadingsHistory">История показаний</button>
                         </div>
                         <div class="col-md-3">
                             <input type="button" class="btn btn-primary ShowAllDocument" value="Документы" data-toggle="modal" data-target="#ShowAllDocumentModal" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             @if (User.IsInRole("DownLoadReceipt") || User.IsInRole("Admin"))
                             {
                                 <button class="btn btn-primary DownLoadReceipt">Квитанция</button>
@@ -212,7 +215,7 @@
                 <input type="button" class="btn btn-primary" value="Приборы учета" />
             </a>
             <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@ViewBag.FULL_LIC.Trim()" target="_blank">
-                <input type="button" class="btn btn-primary PersData" value="Персональный данные" />
+                <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
             </a>
                      </div>
         </div>
@@ -283,23 +286,17 @@
                     '<form action="" class="formName">' +
                     '<div class="form-group">' +
                     '<label>С какой даты</label>' +
-                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptEnd" class="form-control" />' +
+                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptEnd1" class="form-control" />' +
                     '<label>По какую даты</label>' +
-                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptStart" class="form-control" />' +
+                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptStart1" class="form-control" />' +
                     '</div>' +
                     '</form>',
                 buttons: {
                     "Скачать": function () {
-                        $.ajax({
-                            success: function (data) {
-                                window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart").val()
-                                    + '&DateEnd=' + $("#DateReceiptEnd").val();
-                                
-                            },
-                            error: function () {
-                                alert("Что то пошло не так. Обратитесь к администратору");
-                            }
-                        });
+                        console.log($("#DateReceiptStart1").val());
+                        console.log($("#DateReceiptEnd1").val());
+                        window.open('/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val());
+                                //window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val();
                     },
                     "Отмена": function () {
 
@@ -337,9 +334,6 @@
             return false;
         });
         $(".PaymentHistory").click(function (e) {
-            var Date = "@DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM")";
-            var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";
-            console.log(DateMax);
             $.confirm({
                 title: 'История оплат',
                 content: '' +
@@ -348,6 +342,22 @@
                 buttons: {
                     "Просмотреть": function () {
                         window.open('/PersonalData/PaymentHistoryView?FullLic=' + @ViewBag.FULL_LIC,'_blank');
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+        });
+        $(".ReadingsHistory").click(function (e) {
+            $.confirm({
+                title: 'История показаний',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '</form>',
+                buttons: {
+                    "Просмотреть": function () {
+                        window.open('/PersonalData/ReadingsHistoryView?FullLic=' + @ViewBag.FULL_LIC,'_blank');
                     },
                     "Отмена": function () {
 

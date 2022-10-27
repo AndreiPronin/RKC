@@ -44,3 +44,7 @@ D:\Programing\RKC\WordGenerator\obj\Debug\WordGenerator.csproj.CoreCompileInputs
 D:\Programing\RKC\WordGenerator\obj\Debug\WordGenerator.csproj.CopyComplete
 D:\Programing\RKC\WordGenerator\obj\Debug\WordGenerator.dll
 D:\Programing\RKC\WordGenerator\obj\Debug\WordGenerator.pdb
+D:\Programing\RKC\WordGenerator\bin\Debug\NLog.dll
+D:\Programing\RKC\WordGenerator\bin\Debug\NLog.xml
+D:\Programing\RKC\WordGenerator\bin\Debug\AppCache.dll
+D:\Programing\RKC\WordGenerator\bin\Debug\AppCache.pdb

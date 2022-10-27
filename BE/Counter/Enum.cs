@@ -46,8 +46,11 @@ namespace BE.Counter
         [Description("ReestrIPU")]
         ReestrIPU = 4,
         [Description("ReestrIPU")]
-        EbdAll = 5
-
+        EbdAll = 5,
+        [Description("T+IpuGvs")]
+        TIpuGvs = 6,
+        [Description("T+IpuOtp")]
+        TIpuOtp = 7
     }
     public enum ErrorIntegration
     {

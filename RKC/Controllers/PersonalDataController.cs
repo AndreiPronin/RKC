@@ -107,8 +107,16 @@ namespace RKC.Controllers
         [HttpGet]
         public ActionResult DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
-            var Result = _personalData.DownLoadHelpСalculation(FullLic,DateFrom,DateTo);
-            return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
+            try
+            {
+                var Result = _personalData.DownLoadHelpСalculation(FullLic, DateFrom, DateTo);
+                _cacheApp.Delete(FullLic);
+                return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
+            }catch(Exception ex)
+            {
+                _cacheApp.Update(FullLic, ex.InnerException.Message);
+                return null;
+            }
         }
         [Authorize(Roles = "Admin,DownLoadReceipt")]
         [HttpGet]
@@ -116,14 +124,14 @@ namespace RKC.Controllers
         {
             if(DateStart == DateEnd)
             {
-                try
-                {
+                //try
+                //{
                     var result = GenerateFileHelpCalculation.Generate(FullLic, DateEnd);
                     return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
-                }catch(Exception ex)
-                {
-                    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
-                }
+                //}catch(Exception ex)
+                //{
+                //    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
+                //}
             }
             List<PersDataDocumentLoad> persData = new List<PersDataDocumentLoad>();
             while (DateStart >= DateEnd)
@@ -213,6 +221,11 @@ namespace RKC.Controllers
         {
             ViewBag.LIC = FullLic;
             return View(_personalData.GetPaymentHistory(FullLic).OrderByDescending(x=>x.payment_date_day));
+        }
+        public ActionResult ReadingsHistoryView(string FullLic)
+        {
+            ViewBag.LIC = FullLic;
+            return View(_personalData.GetReadingsHistory(FullLic).OrderByDescending(x => x.payment_date_day));
         }
     }
 }

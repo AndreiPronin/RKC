@@ -40,8 +40,10 @@ namespace DB.Model
         [Key]
         public int id { get; set; }
         public string name { get; set; }
-        public double value { get; set; }
+        public float value { get; set; }
         public int payment_id { get; set; }
+        public string lic { get; set; }
+        public DateTime? dt { get; set; }
         public Payment Payment { get; set; }
     }
     [Table(name: "organization", Schema = "dbo")]
@@ -49,7 +51,6 @@ namespace DB.Model
     {
         public int id { get; set; }
         public string name { get; set; }
-        public string parser_name { get; set; }
         public ICollection<Payment> Payment { get; set; }
     }
 

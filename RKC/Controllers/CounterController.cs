@@ -82,7 +82,8 @@ namespace RKC.Controllers
                     ViewBag.IsLock = flagsAction.GetAction(nameof(DetailedInformIPU));
                 }
                 var Result = counter.DetailInfroms(FULL_LIC);
-                if(ViewBag.IsLock == true) ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
+                if(ViewBag.IsLock == true && ViewBag.User == null) 
+                    ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
                 if (Result.Count() > 0)
                 {
                     return View(Result);
@@ -246,10 +247,24 @@ namespace RKC.Controllers
                     }
                 }
             }
+            if (TypeLoad == 3)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(new Excel().LoadExcelSquarePersProperty(workbook, User, cacheApp));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }
+            }
             return null;
         }
         public ActionResult GetProgress(string Name)
         {
+            var ttt = cacheApp.GetValueProgress(Name);
             return Content(cacheApp.GetValueProgress(Name));
         }
         [HttpGet]
@@ -277,6 +292,14 @@ namespace RKC.Controllers
                 if (typeFile.Equals(TypeFile.EbdAll))
                 {
                     return File(_ebd.CreateEBDAll(), "application/octet-stream","ebd.xml");
+                }
+                if (typeFile.Equals(TypeFile.TIpuOtp))
+                {
+                    wb.Worksheets.Add(new Excel().TIpuOtp(User.Identity.Name, cacheApp));
+                }
+                if (typeFile.Equals(TypeFile.TIpuGvs))
+                {
+                    wb.Worksheets.Add(new Excel().TIpuGvs(User.Identity.Name, cacheApp));
                 }
                 using (MemoryStream stream = new MemoryStream())
                 {

@@ -39,40 +39,17 @@
                         <td class="text-center font-weight-bold" scope="col">Дата платежа</td>
                         <td class="text-center font-weight-bold" scope="col">Сумма платежа</td>
                         <td class="text-center font-weight-bold" scope="col">Пункт оплаты</td>
-                        <td class="text-center font-weight-bold" scope="col">Показания ИПУ</td>
-                        <td class="text-center font-weight-bold" scope="col">Тип ИПУ</td>
                     </tr>
-
                 </tbody>
                 <tbody>
                     @foreach (var Items in Model)
                     {
-                        if (Items.Counter.Count() > 0)
-                        {
-                            foreach (var Item in Items.Counter)
-                            {
-                                <tr class="text-center" >
-                                    <td style=" white-space: pre;">@Items.payment_date_day.Value.ToString("MM-yyyy")</td>
-                                    <td style=" white-space: pre;">@Items.payment_date</td>
-                                    <td style=" white-space: pre;">@Items.transaction_amount</td>
-                                    <td style=" white-space: pre;">@Items.Organization.name</td>
-                                    <td style=" white-space: pre;">@Item.value</td>
-                                    <td style=" white-space: pre;">@Item.name</td>
-
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr class="text-center" >
-                                <td style=" white-space: pre;">@Items.payment_date_day.Value.ToString("MM-yyyy")</td>
-                                <td style=" white-space: pre;">@Items.payment_date</td>
-                                <td style=" white-space: pre;">@Items.transaction_amount</td>
-                                <td style=" white-space: pre;">@Items.Organization.name</td>
-                                <td style=" white-space: pre;"></td>
-                                <td style=" white-space: pre;"></td>
-                            </tr>
-                        }
+                        <tr class="text-center" >
+                            <td style=" white-space: pre;">@Items.payment_date_day.Value.ToString("MM-yyyy")</td>
+                            <td style=" white-space: pre;">@Items.payment_date</td>
+                            <td style=" white-space: pre;">@Items.transaction_amount</td>
+                            <td style=" white-space: pre;">@Items.Organization.name</td>
+                        </tr>
                     }
 
 
