@@ -5,12 +5,16 @@ using DB.Model;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using RKC.Models;
+using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ApplicationDbContext = DB.DataBase.ApplicationDbContext;
+using ApplicationContext = RKC.Models.ApplicationDbContext;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace RKC.Controllers
 {
@@ -25,13 +29,17 @@ namespace RKC.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            ViewBag.Roles = _securityProvider.GetAllRoles();
+            if(User.IsInRole("SuperAdmin"))
+                ViewBag.Roles = _securityProvider.GetAllRoles();
+            if (User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
+                ViewBag.Roles = _securityProvider.GetAllRolesWhithoutBoosRoles();
             ViewBag.User = _securityProvider.GetAllUser();
             
             using (var db = new ApplicationDbContext())
             {
                 ViewBag.Notifacation = db.Notifications.Where(x => x.IsDelete == false).ToList();
                 ViewBag.IntegrationTime = db.Flags.Find(((int)EnumFlags.LastIntegration)).DateTime;
+                ViewBag.LastLoadEbd = db.Flags.Find(((int)EnumFlags.LastLoadEbd)).DateTime;
             }
                 
             return View();
@@ -44,11 +52,17 @@ namespace RKC.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteRole(string UserId, string UserRoleId)
         {
-            using(var db = new ApplicationDbContext())
+            try
             {
-                var UserRole = db.AspNetUserRoles.FirstOrDefault(x => x.RoleId == UserRoleId && x.UserId == UserId);
-                db.AspNetUserRoles.Remove(UserRole);
-                db.SaveChanges();
+                using (var context = new ApplicationContext())
+                {
+                    var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+                    var roleName = new ApplicationDbContext().AspNetRoles.FirstOrDefault(x => x.Id == UserRoleId);
+                    userManager.RemoveFromRoles(UserId, roleName.Name);
+                }
+            }catch(Exception ex)
+            {
+                throw ex;
             }
             return Content("Роль успешно удалена");
         }

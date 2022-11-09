@@ -1,6 +1,7 @@
 ﻿using AppCache;
 using BL.ApiT_;
 using BL.Counters;
+using BL.Excel;
 using BL.Helper;
 using BL.Jobs;
 using BL.Notification;
@@ -32,6 +33,7 @@ namespace BL
             kernel.Bind<IIntegrations>().To<Integrations>();
             kernel.Bind<IJobManager>().To<JobManager>();
             kernel.Bind<INotificationMail>().To<NotificationMail>();
+            kernel.Bind<IExcel>().To<Excel.Excel>();
         }
     }
 }

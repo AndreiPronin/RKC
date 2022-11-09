@@ -68,6 +68,8 @@ namespace DB.Model
         public string SEALNUMBER2 { get; set; }
         public string TYPEOFSEAL2 { get; set; }
         public string FULL_LIC { get; set; }
+        public DateTime? CHECKPOINT_DATE { get;set; }
+        public double? CHECKPOINT_READINGS { get; set; }
         public ALL_LICS ALL_LICS = new ALL_LICS();
     }
 }

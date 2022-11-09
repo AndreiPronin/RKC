@@ -1,4 +1,5 @@
 ﻿using BE.PersData;
+using BL.Excel;
 using BL.Helper;
 using ClosedXML.Excel;
 using DB.DataBase;
@@ -34,6 +35,7 @@ namespace BL.Services
         List<Payment> GetPaymentHistory(string Full_Lic);
         List<Payment> GetReadingsHistory(string Full_Lic);
         List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr,string Full_Lic);
+        void UpdateSquareFlat(double? Square, string Lic);
         void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User);
 
     }
@@ -176,24 +178,8 @@ namespace BL.Services
             var dateTo = Convert.ToDateTime(DateTo.ToString("yyyy,MM")).AddMonths(1);
             using (var db = new ApplicationDbContext())
             {
-                //var Result = db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
-                using (var workbook = new XLWorkbook(AppDomain.CurrentDomain.BaseDirectory + "Template\\HekpCalculation.xlsx"))
-                {
-                    var worksheet = workbook.Worksheet(1);
-                    worksheet.Cell(5, 2).Value = "Тест";
-                   
-
-
-
-                    //worksheet.RangeUsed().SetAutoFilter();
-                    worksheet.Columns().AdjustToContents();
-                    int RowNumber = 1;
-
-                    MemoryStream m = new MemoryStream();
-                    workbook.SaveAs(m);
-                    persDataDocument.FileBytes = m.ToArray();
-                }
-
+                var Result = db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
+                persDataDocument.FileBytes  = ExcelHelpСalculation.Generate(Result);
             }
             return persDataDocument;
         }
@@ -213,7 +199,8 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-               return   db.LogsPersData.Where(x => x.idPersData == idPersData).OrderByDescending(x=>x.DateTime).ToList();
+                var ttt = db.LogsPersData.Where(x => x.idPersData == idPersData).OrderByDescending(x => x.DateTime).ToList();
+                return   db.LogsPersData.Where(x => x.idPersData == idPersData).OrderByDescending(x=>x.DateTime).ToList();
             }
         }
         public void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User)
@@ -265,17 +252,13 @@ namespace BL.Services
                     }
                 }
                 _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel), User);
-                //if(persDataModel.Main == true && (persDataModel.Square != PersData.Square 
-                //    || persDataModel.NumberOfPersons != PersData.NumberOfPersons))
-                //{
-                    var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
-                    foreach(var Items in ListPers)
-                    {
-                        Items.Square = persDataModel.Square;
-                        Items.NumberOfPersons = persDataModel.NumberOfPersons;
-                    }
-                    db.SaveChanges();
-                //}
+                var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
+                foreach(var Items in ListPers)
+                {
+                    Items.Square = persDataModel.Square;
+                    Items.NumberOfPersons = persDataModel.NumberOfPersons;
+                }
+                db.SaveChanges();
                 PersData.SendingElectronicReceipt = persDataModel.SendingElectronicReceipt;
                 PersData.DateAdd = persDataModel.DateAdd;
                 PersData.Comment = persDataModel.Comment;
@@ -303,8 +286,8 @@ namespace BL.Services
                 PersData.Tel1 = persDataModel.Tel1;
                 PersData.Tel2 = persDataModel.Tel2;
                 PersData.UserName = persDataModel.UserName;
-                
                 db.SaveChanges();
+                UpdateSquareFlat(persDataModel.Square, persDataModel.Lic);
             }
         }
         public void MakeToMain (int idPersData)
@@ -398,6 +381,19 @@ namespace BL.Services
             {
                 IQueryable<DB.Model.Counters> res = db.Counter.Include(x => x.Payment).Where(x => x.lic == Full_Lic && x.name == Parametr);
                 return res.ToList();
+            }
+        }
+        public void UpdateSquareFlat(double? Square, string Lic)
+        {
+            using(var db = new DbTPlus())
+            {
+                var flat = db.FLAT.Where(x => x.object_id == Lic).ToList();
+                foreach(var Items in flat)
+                {
+                    Items.square_all = Square;
+                    Items.date_edit = DateTime.Now.Date;
+                }
+                db.SaveChanges();
             }
         }
     }

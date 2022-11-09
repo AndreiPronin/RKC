@@ -11,5 +11,6 @@ namespace BE.Service
         DetailedInformIPU = 1,
         DetailedInformPersData = 2,
         LastIntegration = 3,
+        LastLoadEbd = 4,
     }
 }

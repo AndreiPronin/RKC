@@ -227,6 +227,7 @@
 
     }
 <div id="ShowAllDocument"></div>
+<div id="ShowLogs"></div>
 <input id="" value="@ViewBag.FULL_LIC" hidden />
 <script>
     function Loader() {
@@ -249,9 +250,12 @@
                     '</form>',
                 buttons: {
                     "Скачать": function () {
+                        var datefrom = $("#DateFrom").val();
+                        var dateto = $("#DateTo").val();
                         $.ajax({
                             success: function (data) {
-                                window.location = '/PersonalData/DownLoadHelpСalculation?FullLic=' + @ViewBag.FULL_LIC + '&DateFrom=' + $("#DateFrom").val() + '&DateTo=' + $("#DateTo").val();
+                                //window.location = '/PersonalData/DownLoadHelpСalculation?FullLic=' + @ViewBag.FULL_LIC + '&DateFrom=' + $("#DateFrom").val() + '&DateTo=' + $("#DateTo").val();
+                                window.open('/PersonalData/DownLoadHelpСalculation?FullLic=' + @ViewBag.FULL_LIC + '&DateFrom=' + datefrom + '&DateTo=' + dateto,"_self");
                             },
                             error: function () {
                                 alert("Что то пошло не так. Обратитесь к администратору");
@@ -292,11 +296,24 @@
                     '</div>' +
                     '</form>',
                 buttons: {
-                    "Скачать": function () {
-                        console.log($("#DateReceiptStart1").val());
-                        console.log($("#DateReceiptEnd1").val());
-                        window.open('/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val());
-                                //window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val();
+                    '<input type="button" class="btn btn-primary" value="Скачать" data-toggle="modal" data-target="#ShowLogResultModal" />': function () {
+                        $.ajax({
+                            url: '/LogResult/ShowLogResult?Objects=@ViewBag.FULL_LIC',
+                            type: 'Get',
+                            async: false,
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                console.log(data);
+                                $("#ShowLogs").empty();
+                                $("#ShowLogs").append(data);
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                        window.open('/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val(), "_self");
+                        //window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val();
+                        //window.open('/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val());
                     },
                     "Отмена": function () {
 

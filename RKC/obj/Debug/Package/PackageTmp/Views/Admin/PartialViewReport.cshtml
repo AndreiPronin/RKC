@@ -6,7 +6,7 @@
 <div class="container">
     @using (Html.BeginForm("UploadFile", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        if (User.IsInRole("Admin"))
+        @*if (User.IsInRole("Admin"))
         {
             <div style="margin-top:30px;" class="row">
                 <div class="col-md-4">
@@ -24,7 +24,7 @@
                     <input type="submit" class="btn btn-success" value="Загрузить" />
                 </div>
             </div>
-        }
+        }*@
     }
     
     @if (User.IsInRole("Admin"))
@@ -37,14 +37,21 @@
                     <option value="2">ИПУ_отчет из lic</option>
                     <option value="3">ИПУ_отчет общий</option>
                     <option value="4">Реестр ИПУ</option>
-                    <option value="5">Ebd xml</option>
+                    <option value="5">EBD общий</option>
+                    <option value="8">EBD MKD</option>
+                    <option value="9">EBD FLAT жп</option>
+                    <option value="10">EBD FLAT нжп</option>
                     <option value="6">выгрузка ИПУ  ГВС Т+</option>
                     <option value="7">выгрузка ИПУ ОТП Т+</option>
                 </select>
             </div>
+            <div class="col-md-4">
+                <input type="date" id="DateReportFile" class="form-control" />
+                <div>Последняя выгрузка @ViewBag.LastLoadEbd</div>
+            </div>
             <div class="col-md-2">
-                <input name="UserCreateExcelFile" id="UserCreateExcelFile" value="@User.Identity.Name" hidden class="form-control hidden" />
-                <input type="submit" id="CreateExcelFile" class="btn btn-success" value="Скачать" />
+                <input name="UserCreateReportlFile" id="UserCreateReportlFile" value="@User.Identity.Name" hidden class="form-control hidden" />
+                <input type="submit" id="CreateReportlFile" class="btn btn-success" value="Скачать" />
             </div>
         </div>
     }
@@ -53,14 +60,14 @@
 <div class="progress hidden">
     <div class="progress-bar  " id="LoadingProcent" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 </div>
-<div id="ResultCreateExcelFile" class="hidden" >
-    <textarea id="msgCreateExcelFile" style="width: 100%;" class="form-control" ></textarea>
+<div id="ResultCreateReportlFile" class="hidden" >
+    <textarea id="msgCreateReportlFile" style="width: 100%;" class="form-control" ></textarea>
 </div>
 
 <script>
     $(document).ready(function (e) {
-        $("#CreateExcelFile").click(function () {
-            location.href = '/Counter/Export?typeFile=' + $("#FileType").val();
+        $("#CreateReportlFile").click(function () {
+            location.href = '/Counter/Export?typeFile=' + $("#FileType").val() + '&dateTime=' + $("#DateReportFile").val();
         })
         $(".loader").addClass("hidden");
         var i = 0;
@@ -85,10 +92,10 @@
             }, 3000);
         })
         ///Создание файлов
-        $("#CreateExcelFile").click(function (e) {
-            $("#ResultCreateExcelFile").removeClass("hidden");
-            $("#msgCreateExcelFile").empty();
-            var Cashe = $('#UserCreateExcelFile').val();
+        $("#CreateReportlFile").click(function (e) {
+            $("#ResultCreateReportlFile").removeClass("hidden");
+            $("#msgCreateReportlFile").empty();
+            var Cashe = $('#UserCreateReportlFile').val();
             var intervalID = setInterval(function () {
                 $.ajax({
                     url: '/Counter/GetProgress?Name=' + Cashe,
@@ -100,7 +107,7 @@
                     }
                 });
                 // Добавляем ноль в начало цифры, которые до 10
-                $('#msgCreateExcelFile').val(i);
+                $('#msgCreateReportlFile').val(i);
                 if (i === "Ожидайте... Идет скачивание файла.") { clearInterval(intervalID); }
             }, 3000);
         })

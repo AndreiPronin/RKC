@@ -21,33 +21,38 @@ using System.Threading.Tasks;
 using DB.DataBase;
 using BL.ApiT_;
 using BL.Notification;
+using System.Collections.Generic;
+using DB.Model;
+using static System.Net.WebRequestMethods;
 
 namespace RKC.Controllers
 {
     [Authorize]
     public class CounterController : Controller
     {
-        private readonly ICounter counter;
-        private readonly Ilogger logger;
-        private readonly IGeneratorDescriptons generatorDescriptons;
-        private readonly ICacheApp cacheApp;
+        private readonly ICounter _counter;
+        private readonly Ilogger _logger;
+        private readonly IGeneratorDescriptons _generatorDescriptons;
+        private readonly ICacheApp _cacheApp;
         private readonly IIntegrations _integration;
-        public readonly IFlagsAction flagsAction;
-        public readonly IReadFileBank readFileBank;
+        private readonly IExcel _excel;
+        public readonly IFlagsAction _flagsAction;
+        public readonly IReadFileBank _readFileBank;
         public readonly ISecurityProvider _securityProvider;
         public readonly IEBD _ebd;
         public readonly INotificationMail _notificationMail;
-        public CounterController(ICounter _counter, Ilogger _logger, IGeneratorDescriptons _generatorDescriptons, 
-            ICacheApp _cacheApp, IFlagsAction _flagsAction, IReadFileBank _readFileBank, IIntegrations integration
-            , ISecurityProvider securityProvider,IEBD ebd,INotificationMail notificationMail)
+        public CounterController(ICounter counter, Ilogger logger, IGeneratorDescriptons generatorDescriptons, 
+            ICacheApp cacheApp, IFlagsAction flagsAction, IReadFileBank readFileBank, IIntegrations integration
+            , ISecurityProvider securityProvider,IEBD ebd,INotificationMail notificationMail, IExcel excel)
         {
+            _excel = excel;
             _securityProvider = securityProvider;
-            counter = _counter;
-            logger = _logger;
-            generatorDescriptons = _generatorDescriptons;
-            cacheApp = _cacheApp;
-            flagsAction = _flagsAction;
-            readFileBank = _readFileBank;
+            _counter = counter;
+            _logger = logger;
+            _generatorDescriptons = generatorDescriptons;
+            _cacheApp = cacheApp;
+            _flagsAction = flagsAction;
+            _readFileBank = readFileBank;
             _integration = integration;
             _ebd = ebd;
             _notificationMail = notificationMail;
@@ -59,7 +64,7 @@ namespace RKC.Controllers
         [HttpPost]
         public ActionResult SearchIPU(SearchIPU_LICModel searchModel)
         {
-            var Result = counter.SearchIPU_LIC(searchModel);
+            var Result = _counter.SearchIPU_LIC(searchModel);
             ViewBag.Count = Result.Count();
             ViewBag.Count = ViewBag.Count == 0 ? "Ничего не найдено" : $"Найдено {ViewBag.Count} записей";
             return PartialView(Result);
@@ -71,17 +76,17 @@ namespace RKC.Controllers
             try
             {
                 ViewBag.ErrorIntegration = _integration.GetErrorIntegrationReadings(FULL_LIC); 
-                if (cacheApp.Lock(User.Identity.GetFIOFull(), nameof(DetailedInformIPU) + FULL_LIC))
+                if (_cacheApp.Lock(User.Identity.GetFIOFull(), nameof(DetailedInformIPU) + FULL_LIC))
                 {
-                    ViewBag.User = cacheApp.GetValue(nameof(DetailedInformIPU) + FULL_LIC);
+                    ViewBag.User = _cacheApp.GetValue(nameof(DetailedInformIPU) + FULL_LIC);
                     ViewBag.IsLock = true;
                 }
                 else ViewBag.IsLock = false;
                 if (ViewBag.IsLock == false)
                 {
-                    ViewBag.IsLock = flagsAction.GetAction(nameof(DetailedInformIPU));
+                    ViewBag.IsLock = _flagsAction.GetAction(nameof(DetailedInformIPU));
                 }
-                var Result = counter.DetailInfroms(FULL_LIC);
+                var Result = _counter.DetailInfroms(FULL_LIC);
                 if(ViewBag.IsLock == true && ViewBag.User == null) 
                     ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
                 if (Result.Count() > 0)
@@ -90,8 +95,8 @@ namespace RKC.Controllers
                 }
                 else
                 {
-                    counter.AutoAddPU(FULL_LIC);
-                    Result = counter.DetailInfroms(FULL_LIC);
+                    _counter.AutoAddPU(FULL_LIC);
+                    Result = _counter.DetailInfroms(FULL_LIC);
                     if (Result.Count() == 0)
                     {
                         ViewBag.FULL_LIC = FULL_LIC;
@@ -108,7 +113,7 @@ namespace RKC.Controllers
         {
             try
             {
-                var Result = counter.DetailInfromsDelete(FULL_LIC);
+                var Result = _counter.DetailInfromsDelete(FULL_LIC);
 
                 if (Result.Count() > 0)
                 {
@@ -126,7 +131,7 @@ namespace RKC.Controllers
         public ActionResult FromAddPU(string FullLIC) 
         {
             ViewBag.FULL_LIC = FullLIC;
-            return PartialView(counter.GetTypeNowUsePU(FullLIC));
+            return PartialView(_counter.GetTypeNowUsePU(FullLIC));
         }
         [HttpPost]
         [Authorize(Roles = "CounterWriter,Admin")]
@@ -138,7 +143,7 @@ namespace RKC.Controllers
                 {
                     throw new Exception("Не найден лицевой счет, обратитесь к администратору");
                 }
-                counter.AddPU(modelAddPU,User.Identity.GetFIOFull());
+                _counter.AddPU(modelAddPU,User.Identity.GetFIOFull());
                 return null;
             }catch(Exception ex)
             {
@@ -148,7 +153,7 @@ namespace RKC.Controllers
         [HttpGet]
         public ActionResult clearCache(string Page)
         {
-            cacheApp.Delete(User.Identity.GetFIOFull(),Page);
+            _cacheApp.Delete(User.Identity.GetFIOFull(),Page);
             return null;
         }
         [HttpGet]
@@ -157,14 +162,14 @@ namespace RKC.Controllers
         {
             ViewBag.FULL_LIC = id_pu.Split('-')[0];
             ViewBag.TypePU = id_pu.Split('-')[1];
-            var Result = counter.HistoryIndinikation(id_pu.Split('-')[0]);
+            var Result = _counter.HistoryIndinikation(id_pu.Split('-')[0]);
             return PartialView(Result);
         }
         [HttpGet]
         [Authorize(Roles = "CounterWriter,CounterReader,Admin")]
         public ActionResult HistoryEdit(int id_pu)
         {
-            return PartialView(counter.HistoryEdit(id_pu));
+            return PartialView(_counter.HistoryEdit(id_pu));
         }
         [HttpPost]
         [Authorize(Roles = "CounterWriter,Admin")]
@@ -172,8 +177,8 @@ namespace RKC.Controllers
         {
             try
             {
-                logger.ActionUsers(saveModelIPU.IdPU, generatorDescriptons.Generate(saveModelIPU), User.Identity.GetFIOFull());
-                counter.UpdateReadings(saveModelIPU);
+                _logger.ActionUsers(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User.Identity.GetFIOFull());
+                _counter.UpdateReadings(saveModelIPU);
                 return Content("");
             }catch(Exception ex)
             {
@@ -186,8 +191,8 @@ namespace RKC.Controllers
         {
             try
             {
-                logger.ActionUsers(IdPU, "Удалил ПУ", User.Identity.GetFIOFull());
-                counter.DeleteIPU(IdPU);
+                _logger.ActionUsers(IdPU, "Удалил ПУ", User.Identity.GetFIOFull());
+                _counter.DeleteIPU(IdPU);
                 return Content("Удаление прошло успешно");
             }
             catch (Exception ex)
@@ -199,7 +204,7 @@ namespace RKC.Controllers
         {
             try
             {
-                counter.DeleteError(IdPU, Lic,User.Identity.GetFIOFull());
+                _counter.DeleteError(IdPU, Lic,User.Identity.GetFIOFull());
                 return Content("Удаление прошло успешно");
             }
             catch (Exception ex)
@@ -213,7 +218,7 @@ namespace RKC.Controllers
             using (var binaryReader = new BinaryReader(file.InputStream))
             {
                 byte[] fileData = binaryReader.ReadBytes(file.ContentLength);
-                var Result = readFileBank.Read(fileData, Bank);
+                var Result = _readFileBank.Read(fileData, Bank);
                 return View(Result);
             }
            
@@ -221,25 +226,12 @@ namespace RKC.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult UploadFilePU(HttpPostedFileBase file, string User,int TypeLoad)
         {
-            if (TypeLoad == 1)
-            {
-                using (XLWorkbook wb = new XLWorkbook())
-                {
-                    var workbook = new XLWorkbook(file.InputStream);
-                    wb.Worksheets.Add(new Excel().LoadExcelPU(workbook, User, cacheApp));
-                    using (MemoryStream stream = new MemoryStream())
-                    {
-                        wb.SaveAs(stream);
-                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
-                    }
-                }
-            }
             if(TypeLoad == 2)
             {
                 using (XLWorkbook wb = new XLWorkbook())
                 {
                     var workbook = new XLWorkbook(file.InputStream);
-                    wb.Worksheets.Add(new Excel().LoadExcelPUProperty(workbook, User, cacheApp));
+                    wb.Worksheets.Add(_excel.LoadExcelPUProperty(workbook, User, _cacheApp));
                     using (MemoryStream stream = new MemoryStream())
                     {
                         wb.SaveAs(stream);
@@ -252,7 +244,20 @@ namespace RKC.Controllers
                 using (XLWorkbook wb = new XLWorkbook())
                 {
                     var workbook = new XLWorkbook(file.InputStream);
-                    wb.Worksheets.Add(new Excel().LoadExcelSquarePersProperty(workbook, User, cacheApp));
+                    wb.Worksheets.Add(_excel.LoadExcelSquarePersProperty(workbook, User, _cacheApp));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }
+            }
+            if (TypeLoad == 4)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(_excel.LoadExcelNewPersonalData(workbook, User, _cacheApp));
                     using (MemoryStream stream = new MemoryStream())
                     {
                         wb.SaveAs(stream);
@@ -264,42 +269,56 @@ namespace RKC.Controllers
         }
         public ActionResult GetProgress(string Name)
         {
-            var ttt = cacheApp.GetValueProgress(Name);
-            return Content(cacheApp.GetValueProgress(Name));
+            return Content(_cacheApp.GetValueProgress(Name));
         }
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Export(TypeFile typeFile)
+        public ActionResult Export(TypeFile typeFile, DateTime? dateTime)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
+                if (dateTime.HasValue && (typeFile.Equals(TypeFile.EbdAll) || typeFile.Equals(TypeFile.EbdMkd)
+                    || typeFile.Equals(TypeFile.EbdFlatliving) || typeFile.Equals(TypeFile.EbdFlatNotliving)))
+                    _ebd.UpdateLastLoadEbd(dateTime.Value);
+                if (typeFile.Equals(TypeFile.EbdAll))
+                {
+                    return File(_ebd.CreateEBDAll(dateTime.Value), "application/octet-stream", $"{TypeFile.EbdAll.GetDescription()}.xml");
+                }
+                if (typeFile.Equals(TypeFile.EbdMkd))
+                {
+                    return File(_ebd.CreateEbdMkd(dateTime.Value), "application/octet-stream", $"{TypeFile.EbdMkd.GetDescription()}.xml");
+                }
+                if (typeFile.Equals(TypeFile.EbdFlatliving))
+                {
+                    return File(_ebd.CreateEbdFlatliving(dateTime.Value), "application/octet-stream", $"{TypeFile.EbdFlatliving.GetDescription()}.xml");
+                }
+                if (typeFile.Equals(TypeFile.EbdFlatNotliving))
+                {
+                    return File(_ebd.CreateEbdFlatNotliving(dateTime.Value), "application/octet-stream", $"{TypeFile.EbdFlatNotliving.GetDescription()}.xml");
+                }
                 if (typeFile.Equals(TypeFile.Counters))
                 {
-                    wb.Worksheets.Add(new Excel().CreateExcelCounters());
+                    wb.Worksheets.Add(_excel.CreateExcelCounters());
                 }
                 if (typeFile.Equals(TypeFile.Lic))
                 {
-                    wb.Worksheets.Add(new Excel().CreateExcelLic(User.Identity.Name,cacheApp));
+                    wb.Worksheets.Add(_excel.CreateExcelLic(User.Identity.Name, _cacheApp));
                 }
                 if (typeFile.Equals(TypeFile.General))
                 {
-                    wb.Worksheets.Add(new Excel().CreateExcelGeneral());
+                    wb.Worksheets.Add(_excel.CreateExcelGeneral());
                 }
                 if (typeFile.Equals(TypeFile.ReestrIPU))
                 {
-                    wb.Worksheets.Add(new Excel().ReestrIPU(User.Identity.Name, cacheApp));
-                }
-                if (typeFile.Equals(TypeFile.EbdAll))
-                {
-                    return File(_ebd.CreateEBDAll(), "application/octet-stream","ebd.xml");
+                    wb.Worksheets.Add(_excel.ReestrIPU(User.Identity.Name, _cacheApp));
                 }
                 if (typeFile.Equals(TypeFile.TIpuOtp))
                 {
-                    wb.Worksheets.Add(new Excel().TIpuOtp(User.Identity.Name, cacheApp));
+                    wb.Worksheets.Add(_excel.TIpuOtp(User.Identity.Name, _cacheApp));
                 }
                 if (typeFile.Equals(TypeFile.TIpuGvs))
                 {
-                    wb.Worksheets.Add(new Excel().TIpuGvs(User.Identity.Name, cacheApp));
+                    wb.Worksheets.Add(_excel.TIpuGvs(User.Identity.Name, _cacheApp));
                 }
                 using (MemoryStream stream = new MemoryStream())
                 {
@@ -311,11 +330,35 @@ namespace RKC.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin")]
+        public ActionResult LoadTemplate(TypeTemplateFile typeFile)
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                var workbook = new XLWorkbook();
+                if (typeFile.Equals(TypeTemplateFile.LoadExcelPUProperty))
+                {
+                    wb.Worksheets.Add(new ExcelTemplate().LoadExcelPUProperty());
+                }
+                if (typeFile.Equals(TypeTemplateFile.LoadExcelPersData))
+                {
+                    wb.Worksheets.Add(new ExcelTemplate().LoadExcelPUProperty());
+                }
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        $"{TypeTemplateFile.LoadExcelPUProperty.GetDescription()}.xlsx");
+                }
+            }
+            // 
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> RunIntegration(DateTime date)
         {
             try
             {
-                await _integration.LoadReadings("Integration", cacheApp, date, _notificationMail);
+                await _integration.LoadReadings("Integration", _cacheApp, date, _notificationMail);
             }catch(Exception ex)
             {
 
@@ -331,7 +374,7 @@ namespace RKC.Controllers
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
-                wb.Worksheets.Add(new Excel().ErroIntegratin());
+                wb.Worksheets.Add(_excel.ErroIntegratin());
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
@@ -340,15 +383,19 @@ namespace RKC.Controllers
             }
         }
         [Authorize(Roles = "Admin")]
-        public ActionResult ErroIntegratinDelete(string Lic,string TypePU)
+        public async Task<ActionResult> ErroIntegratinDelete(string Lic,string TypePU)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.TypePu == TypePU && x.IsError == true).ToList();
-                foreach(var Items in Result)
+                var Result = new List<IntegrationReadings>();
+                if(TypePU != "")
+                     Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.TypePu == TypePU && x.IsError == true).ToList();
+                if (TypePU == "")
+                    Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.Description == "Не найден лицевой счет" && x.IsError == true).ToList();
+                foreach (var Items in Result)
                 {
                     Items.IsError = false;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 }
                 return Redirect("/Counter/ErrorIntegration");
             }

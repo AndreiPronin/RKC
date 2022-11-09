@@ -30,6 +30,8 @@ namespace DB.Model
         public string gvs { get; set; }
         public string ipu_gvs { get; set; }
         public string ipu_otp { get; set; }
+        public string cadastral_number { get; set; }
+        public DateTime? date_edit { get; set; }
     }
 
 

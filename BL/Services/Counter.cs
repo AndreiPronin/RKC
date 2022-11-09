@@ -108,10 +108,11 @@ namespace BL.Counters
 
             using (var DbTPlus = new DbTPlus())
             {
-
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
                 IPU_COUNTERS.FACTORY_NUMBER_PU = string.IsNullOrEmpty(saveModelIPU.NumberPU) ? IPU_COUNTERS.FACTORY_NUMBER_PU : saveModelIPU.NumberPU;
                 IPU_COUNTERS.DATE_CHECK = saveModelIPU.DATE_CHECK == null ? IPU_COUNTERS.DATE_CHECK : saveModelIPU.DATE_CHECK;
+                IPU_COUNTERS.CHECKPOINT_DATE = saveModelIPU.CHECKPOINT_DATE == null ? IPU_COUNTERS.CHECKPOINT_DATE : saveModelIPU.CHECKPOINT_DATE;
+                IPU_COUNTERS.CHECKPOINT_READINGS = saveModelIPU.CHECKPOINT_READINGS == null ? IPU_COUNTERS.CHECKPOINT_READINGS : saveModelIPU.CHECKPOINT_READINGS;
                 IPU_COUNTERS.DATE_CHECK_NEXT = saveModelIPU.DATE_CHECK_NEXT == null ? IPU_COUNTERS.DATE_CHECK_NEXT : saveModelIPU.DATE_CHECK_NEXT;
                 IPU_COUNTERS.MODEL_PU = string.IsNullOrEmpty(saveModelIPU.MODEL_PU) ? IPU_COUNTERS.MODEL_PU : saveModelIPU.MODEL_PU;
                 IPU_COUNTERS.TYPEOFSEAL = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL) ? IPU_COUNTERS.TYPEOFSEAL : saveModelIPU.TYPEOFSEAL;
@@ -251,9 +252,11 @@ namespace BL.Counters
             using (var DbTPlus = new DbTPlus())
             {
 
-                var IPU_COUNTERS = await DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefaultAsync();
+                var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
                 IPU_COUNTERS.FACTORY_NUMBER_PU = string.IsNullOrEmpty(saveModelIPU.NumberPU) ? IPU_COUNTERS.FACTORY_NUMBER_PU : saveModelIPU.NumberPU;
                 IPU_COUNTERS.DATE_CHECK = saveModelIPU.DATE_CHECK == null ? IPU_COUNTERS.DATE_CHECK : saveModelIPU.DATE_CHECK;
+                IPU_COUNTERS.CHECKPOINT_DATE = saveModelIPU.CHECKPOINT_DATE == null ? IPU_COUNTERS.CHECKPOINT_DATE : saveModelIPU.CHECKPOINT_DATE;
+                IPU_COUNTERS.CHECKPOINT_READINGS = saveModelIPU.CHECKPOINT_READINGS == null ? IPU_COUNTERS.CHECKPOINT_READINGS : saveModelIPU.CHECKPOINT_READINGS;
                 IPU_COUNTERS.DATE_CHECK_NEXT = saveModelIPU.DATE_CHECK_NEXT == null ? IPU_COUNTERS.DATE_CHECK_NEXT : saveModelIPU.DATE_CHECK_NEXT;
                 IPU_COUNTERS.MODEL_PU = string.IsNullOrEmpty(saveModelIPU.MODEL_PU) ? IPU_COUNTERS.MODEL_PU : saveModelIPU.MODEL_PU;
                 IPU_COUNTERS.TYPEOFSEAL = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL) ? IPU_COUNTERS.TYPEOFSEAL : saveModelIPU.TYPEOFSEAL;
@@ -312,7 +315,6 @@ namespace BL.Counters
                     }
                 }
             }
-
             if (saveModelIPU.FKUB2XV_4 != null)
             {
                 using (var DbLIC = new DbLIC())
@@ -327,7 +329,6 @@ namespace BL.Counters
                     }
                 }
             }
-
             if (saveModelIPU.FKUB2OT_1 != null)
             {
                 using (var DbLIC = new DbLIC())
@@ -343,7 +344,6 @@ namespace BL.Counters
                     }
                 }
             }
-
             if (saveModelIPU.FKUB2OT_2 != null)
             {
                 using (var DbLIC = new DbLIC())
@@ -513,7 +513,6 @@ namespace BL.Counters
                 if (modelAddPU.TYPE_PU == TypePU.ITP3) { aLL_LICS.FKUBSOT_3 = 1; aLL_LICS.FKUB1OT_3 = modelAddPU.InitialReadings; aLL_LICS.FKUB2OT_3 = modelAddPU.EndReadings; }
                 if (modelAddPU.TYPE_PU == TypePU.ITP4) { aLL_LICS.FKUBSOT_4 = 1; aLL_LICS.FKUB1OT_4 = modelAddPU.InitialReadings; aLL_LICS.FKUB2OT_4 = modelAddPU.EndReadings; }
                     DbLIC.SaveChanges();
-
             }
 
         }

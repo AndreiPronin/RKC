@@ -22,6 +22,8 @@ namespace BE.Counter
         public string TypePU { get; set; }
         public string DESCRIPTION  { get; set; }
         public bool OVERWRITE_SEAL { get; set; }
+        public DateTime? CHECKPOINT_DATE { get; set; }   
+        public double? CHECKPOINT_READINGS { get; set; }
         public decimal? FKUB2XVS { get; set; }
         public decimal? FKUB2XV_2 { get; set; }
         public decimal? FKUB2XV_3 { get; set; }

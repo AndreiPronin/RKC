@@ -20,8 +20,26 @@ using System.Threading.Tasks;
 
 namespace BL.Excel
 {
-    public class Excel
+    public interface IExcel
     {
+        DataTable CreateExcelCounters();
+        DataTable CreateExcelLic(string User, ICacheApp cacheApp);
+        DataTable CreateExcelGeneral();
+        DataTable LoadExcelPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        DataTable LoadExcelNewPersonalData(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        DataTable LoadExcelSquarePersProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        DataTable ErroIntegratin();
+        DataTable ReestrIPU(string User, ICacheApp cacheApp);
+        DataTable TIpuGvs(string User, ICacheApp cacheApp);
+        DataTable TIpuOtp(string User, ICacheApp cacheApp);
+    }
+    public class Excel:IExcel
+    {
+        private readonly ICacheApp _cacheApp;
+        public Excel(ICacheApp cacheApp)
+        {
+            _cacheApp = cacheApp;
+        }
         public DataTable CreateExcelCounters()
         {
 
@@ -59,7 +77,7 @@ namespace BL.Excel
             cacheApp.UpdateProgress(User, "Получаю данные из бд");
             var DbLIC = new DbLIC();
             List<ALL_LICS> cOUNTERs = DbLIC.ALL_LICS.ToList();
-            cacheApp.UpdateProgress(User, $@"Получил {cOUNTERs.Count()} записей");
+            cacheApp.Update(User, $@"Получил {cOUNTERs.Count()} записей");
             foreach (var Items in cOUNTERs)
             {
                 dt.Rows.Add(Items.UL, Items.DOM, Items.CADR, Items.KW, Items.LIC, Items.F4ENUMELS, Items.ZAK, Items.FIO,
@@ -68,7 +86,7 @@ namespace BL.Excel
                     Items.FKUBSOT_1, Items.FKUB1OT_1, Items.FKUB2OT_1, Items.FKUBSOT_2, Items.FKUB1OT_2, Items.FKUB2OT_2,
                     Items.FKUBSOT_3, Items.FKUB1OT_3, Items.FKUB2OT_3, Items.FKUBSOT_4, Items.FKUB1OT_4, Items.FKUB2OT_4);
             }
-            cacheApp.UpdateProgress(User, "Ожидайте... Идет скачивание файла.");
+            cacheApp.Update(User, "Ожидайте... Идет скачивание файла.");
             return dt;
         }
         public DataTable CreateExcelGeneral()
@@ -425,7 +443,7 @@ namespace BL.Excel
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
             var dbApp = new ApplicationDbContext();
             var Count = nonEmptyDataRows.Count();
-            int i = 0;
+            int i = 1;
             foreach (var dataRow in nonEmptyDataRows)
             {
                 if (dataRow.RowNumber() > 1)
@@ -437,13 +455,26 @@ namespace BL.Excel
                         cacheApp.UpdateProgress(User, Procent.ToString());
                         SaveModelIPU saveModel = new SaveModelIPU();
                         var integrationReadings = new IntegrationReadings();
-                        saveModel.FULL_LIC = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
-                        saveModel.TypePU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
-                        saveModel.NumberPU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
+                        saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
+                        saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
+                        if (dataRow.Cell(3).Value != "") { saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value); }
+                        saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
+                        saveModel.MODEL_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
                         if (dataRow.Cell(6).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(6).Value); }
                         if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(7).Value); }
-                        saveModel.MODEL_PU = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
+                        saveModel.TYPEOFSEAL = dataRow.Cell(8).Value == "" ? "" : Convert.ToString(dataRow.Cell(8).Value).Replace(" ", "");
+                        saveModel.SEALNUMBER = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
+                        saveModel.TYPEOFSEAL2 = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
+                        saveModel.SEALNUMBER2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
+                        if (dataRow.Cell(12).Value != "")
+                        {
+                            var str = dataRow.Cell(12).Value.ToString().Replace(",", ".");
+                            saveModel.CHECKPOINT_DATE = Convert.ToDateTime(Convert.ToString(dataRow.Cell(12).Value).Replace(".", ","));
+                        }
+                        if (dataRow.Cell(13).Value != "")
+                        {
+                            saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(13).Value).Replace(".", ","));
+                        }
                         if (!counter.UpdatePU(saveModel, User))
                         {
                             saveModel.DESCRIPTION = $"Нет такого ПУ {saveModel.TypePU}";
@@ -464,6 +495,84 @@ namespace BL.Excel
             foreach (var Items in COUNTERsNotAdded)
             {
                 dt.Rows.Add(Items.FULL_LIC, Items.TypePU, Items.NumberPU, Items.DESCRIPTION);
+            }
+            return dt;
+        }
+        public DataTable LoadExcelNewPersonalData(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User, "0");
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons());
+            List<PersDataModel> PersNotAdded = new List<PersDataModel>();
+            var dbApp = new ApplicationDbContext();
+            var Count = nonEmptyDataRows.Count();
+            int i = 1;
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    i++;
+                    try
+                    {
+                        var Procent = Math.Round((float)i / Count * 100, 0);
+                        cacheApp.UpdateProgress(User, Procent.ToString());
+                        PersDataModel saveModel = new PersDataModel();
+                        
+                        saveModel.Lic = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
+                        saveModel.LastName = dataRow.Cell(2).Value == "" ? null : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
+                        saveModel.FirstName = dataRow.Cell(3).Value == "" ? null : Convert.ToString(dataRow.Cell(3).Value).Replace(" ", "");
+                        saveModel.MiddleName = dataRow.Cell(4).Value == "" ? null : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
+                        
+                        if (dataRow.Cell(5).Value != "")
+                            saveModel.DateOfBirth = Convert.ToDateTime(Convert.ToString(dataRow.Cell(5).Value).Replace(".", ","));
+                        saveModel.PlaceOfBirth = dataRow.Cell(6).Value == "" ? null : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
+                        saveModel.PassportSerial = dataRow.Cell(7).Value == "" ? "" : Convert.ToString(dataRow.Cell(7).Value).Replace(" ", "");
+                        saveModel.PassportNumber = dataRow.Cell(8).Value == "" ? "" : Convert.ToString(dataRow.Cell(8).Value).Replace(" ", "");
+                        saveModel.PassportIssued = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
+                        
+                        if (dataRow.Cell(10).Value != "")
+                            saveModel.PassportDate = Convert.ToDateTime(Convert.ToString(dataRow.Cell(10).Value).Replace(".", ","));
+                        if (dataRow.Cell(11).Value != "")
+                        {
+                            var tel = Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
+                            saveModel.Tel1 = $"+7{tel}";
+                        }
+                        saveModel.Comment1 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
+                        if (dataRow.Cell(13).Value != "")
+                        {
+                            var tel = Convert.ToString(dataRow.Cell(13).Value).Replace(" ", "");
+                            saveModel.Tel2 = $"+7{tel}";
+                        }
+                        saveModel.Email = dataRow.Cell(14).Value == "" ? "" : Convert.ToString(dataRow.Cell(14).Value).Replace(" ", "");
+                        saveModel.Comment = dataRow.Cell(15).Value == "" ? "" : Convert.ToString(dataRow.Cell(15).Value).Replace(" ", "");
+                        if (dataRow.Cell(17).Value != "")
+                            saveModel.DateAdd = Convert.ToDateTime(Convert.ToString(dataRow.Cell(17).Value).Replace(".", ","));
+                        saveModel.RoomType = dataRow.Cell(18).Value == "" ? "" : Convert.ToString(dataRow.Cell(18).Value).Replace(" ", "");
+                        if (dataRow.Cell(19).Value != "")
+                            saveModel.Main = Convert.ToBoolean(Convert.ToInt16(Convert.ToString(dataRow.Cell(19).Value).Replace(" ", "")));
+                        if (dataRow.Cell(20).Value != "")
+                            saveModel.IsDelete = Convert.ToBoolean(Convert.ToInt16(Convert.ToString(dataRow.Cell(20).Value).Replace(" ", "")));
+                        saveModel.SnilsNumber = dataRow.Cell(21).Value == "" ? "" : Convert.ToString(dataRow.Cell(21).Value).Replace(" ", "");
+                        saveModel.Inn = dataRow.Cell(22).Value == "" ? "" : Convert.ToString(dataRow.Cell(22).Value).Replace(" ", "");
+                        if (dataRow.Cell(23).Value != "")
+                            saveModel.NumberOfPersons = Convert.ToInt32(Convert.ToString(dataRow.Cell(23).Value).Replace(" ", ""));
+                        if (dataRow.Cell(24).Value != "")
+                            saveModel.Square = Convert.ToDouble(Convert.ToString(dataRow.Cell(24).Value).Replace(" ", ""));
+                        saveModel.SendingElectronicReceipt = dataRow.Cell(26).Value == "" ? "" : Convert.ToString(dataRow.Cell(26).Value).Replace(" ", "");
+                        personalData.AddPersData(saveModel, User);
+                    }
+                    catch (Exception ex)
+                    {
+                        PersNotAdded.Add(new PersDataModel { Lic = $"Ошибка на {i} строке", Comment = ex.Message });
+                    }
+                }
+            }
+            DataTable dt = new DataTable("PersData");
+            dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Лицевой счет"),
+                                        new DataColumn("Примечание")});
+            foreach (var Items in PersNotAdded)
+            {
+                dt.Rows.Add(Items.Lic, Items.Comment);
             }
             return dt;
         }

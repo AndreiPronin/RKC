@@ -18,11 +18,11 @@ namespace RKC.Controllers
             _ebd = ebd;
         }
         [HttpGet]
-        public HttpResponseMessage GetEbdXmlForTplus()
+        public HttpResponseMessage GetEbdXmlForTplus(DateTime? date)
         {
             var result = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new ByteArrayContent(_ebd.CreateEBDAll())
+                Content = new ByteArrayContent(_ebd.CreateEBDAll(date.Value))
             };
             result.Content.Headers.ContentDisposition =
                 new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")

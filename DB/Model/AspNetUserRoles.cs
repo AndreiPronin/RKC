@@ -11,6 +11,7 @@ namespace DB.Model
     [Table(name: "AspNetUserRoles", Schema ="dbo")]
     public class AspNetUserRoles
     {
+        
         public string UserId { get; set; }
         [Key]
         public string RoleId { get; set; }

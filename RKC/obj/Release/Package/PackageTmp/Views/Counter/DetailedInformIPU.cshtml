@@ -149,6 +149,42 @@
 
                             </div>
                             <hr />
+                            <div class="form-group row">
+                                @if (Items.CHECKPOINT_DATE != null)
+                                {
+                                    <label class="col-sm-4 col-form-label">Дата контрольного обхода:</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="CHECKPOINT_DATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.CHECKPOINT_DATE)" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="col-sm-4 NullOrEmpty col-form-label">Дата контрольного обхода:</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="CHECKPOINT_DATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.CHECKPOINT_DATE)" />
+                                    </div>
+                                }
+
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                @if (Items.CHECKPOINT_READINGS != null)
+                                {
+                                    <label class="col-sm-4 col-form-label">Показания контроллера:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" step="0.001" id="CHECKPOINT_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control CHECKPOINT_READINGS" value="@Items.CHECKPOINT_READINGS" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="col-sm-4 NullOrEmpty col-form-label">Показания контроллера:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" step="0.001" id="CHECKPOINT_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control CHECKPOINT_READINGS" value="@Items.CHECKPOINT_READINGS" />
+                                    </div>
+                                }
+
+                            </div>
+                            <hr />
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
@@ -611,6 +647,8 @@ else
                         MODEL_PU: $(this).parent().find('#MODEL_PU').val(),
                         DATE_CHECK: $(this).parent().find('#DATE_CHECK').val(),
                         DATE_CHECK_NEXT: $(this).parent().find('#DATE_CHECK_NEXT').val(),
+                        CHECKPOINT_DATE: $(this).parent().find('#CHECKPOINT_DATE').val(),
+                        CHECKPOINT_READINGS: $(this).parent().find('#CHECKPOINT_READINGS').val(),
                         INSTALLATIONDATE: $(this).parent().find('#INSTALLATIONDATE').val(),
                         SEALNUMBER: $(this).parent().find('#SEALNUMBER').val(),
                         TYPEOFSEAL: $(this).parent().find('#TYPEOFSEAL').val().trim(),

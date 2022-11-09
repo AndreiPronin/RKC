@@ -12,6 +12,7 @@ namespace BL.Security
     public interface ISecurityProvider
     {
         List<AspNetRoles> GetAllRoles();
+        List<AspNetRoles> GetAllRolesWhithoutBoosRoles();
         List<AspNetUsers> GetAllUser();
         List<AspNetUserRoles> GetAllUserRoles();
         List<UserRoleInfo> GetUserRoles(string Name);
@@ -24,6 +25,13 @@ namespace BL.Security
             using (var db = new ApplicationDbContext())
             {
                 return db.AspNetRoles.ToList();
+            }
+        }
+        public List<AspNetRoles> GetAllRolesWhithoutBoosRoles()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.AspNetRoles.Where(x=>x.Name != "SuperAdmin").ToList();
             }
         }
 

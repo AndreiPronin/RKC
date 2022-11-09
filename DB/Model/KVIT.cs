@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DB.Model
 {
-    [Table(name: "KVIT",Schema = "dbo")]
+    [Table(name: "KVIT2",Schema = "dbo")]
     public class KVIT
     {
         public string ul { get; set; }

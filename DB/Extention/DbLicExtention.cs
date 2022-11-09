@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DB.Extention
 {
-    class DbLicExtention : EntityTypeConfiguration<ALL_LICS>
+    class DbLicConfiguration : EntityTypeConfiguration<ALL_LICS>
     {
-        public DbLicExtention()
+        public DbLicConfiguration()
         {
             this.Property(e => e.FKUB1XVS).HasPrecision(11, 3);
             this.Property(e => e.FKUB1XV_2).HasPrecision(11, 3);

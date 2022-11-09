@@ -87,6 +87,11 @@ namespace RKC
             }
             return manager;
         }
+
+        public static implicit operator UserManager<IUser<string>>(ApplicationUserManager v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     // Настройка диспетчера входа для приложения.

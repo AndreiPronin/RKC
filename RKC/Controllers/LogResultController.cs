@@ -19,13 +19,16 @@ namespace RKC.Controllers
         {
             return View();
         }
-        public ActionResult ShowLogResult()
+        public ActionResult ShowLogResult(string Objects)
         {
+            ViewBag.Objects = Objects;
             return PartialView();
         }
         public ActionResult GetLog(string Name)
         {
-            var ttt = _cacheApp.GetValueProgress(Name);
+            var result = _cacheApp.GetValueProgress(Name);
+            if(result == null)
+                return Content("Загрузка.......");
             return Content(_cacheApp.GetValueProgress(Name));
         }
     }

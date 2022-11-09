@@ -35,6 +35,14 @@ namespace BE.Counter
         ITP4 = 8,
 
     }
+    public enum TypeTemplateFile
+    {
+        [Description("Изменение информации ПУ")]
+        LoadExcelPUProperty = 1,
+        [Description("Загрузка персов")]
+        LoadExcelPersData = 2,
+
+    }
     public enum TypeFile
     {
         [Description("Counters")]
@@ -45,12 +53,18 @@ namespace BE.Counter
         General = 3,
         [Description("ReestrIPU")]
         ReestrIPU = 4,
-        [Description("ReestrIPU")]
+        [Description("EBD общий")]
         EbdAll = 5,
         [Description("T+IpuGvs")]
         TIpuGvs = 6,
         [Description("T+IpuOtp")]
-        TIpuOtp = 7
+        TIpuOtp = 7,
+        [Description("EBD MKD")]
+        EbdMkd = 8,
+        [Description("EBD FLAT жп")]
+        EbdFlatliving = 9,
+        [Description("EBD FLAT нжп")]
+        EbdFlatNotliving = 10,
     }
     public enum ErrorIntegration
     {

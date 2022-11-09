@@ -5,6 +5,7 @@ namespace RKC.App_Start
 {
     using System;
     using System.Web;
+    using System.Windows.Media.Effects;
     using AppCache;
     using BL;
     using BL.ApiT_;
@@ -13,6 +14,7 @@ namespace RKC.App_Start
     using BL.Security;
     using BL.Service;
     using BL.Services;
+    using Microsoft.Owin;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
