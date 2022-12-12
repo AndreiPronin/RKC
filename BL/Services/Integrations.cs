@@ -121,9 +121,7 @@ namespace BL.Service
                                     else
                                     {
                                         saveModel.FKUB2XVS = Convert.ToDecimal(Item.value);
-
                                     }
-
                                 }
                                 if (saveModel.TypePU == TypePU.GVS2.GetDescription())
                                 {

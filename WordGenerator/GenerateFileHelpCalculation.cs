@@ -24,7 +24,7 @@ namespace WordGenerator
             ICacheApp cacheApp = new CacheApp();
             if (cacheApp.GetValueProgress(LIC) != null)
                 cacheApp.Delete(LIC);
-            cacheApp.AddProgress(LIC, "Получаю данные из БД");
+            cacheApp.AddProgress(LIC, $"Получаю данные из БД за {date}");
             using (var db = new DbLIC())
             {
                 var SubLic = LIC.Substring(3, 6);
@@ -48,13 +48,14 @@ namespace WordGenerator
                         cacheApp.AddProgress(LIC, "Ничего не найдено за выбранный период");
                         throw new Exception("Ничего не найдено за выбранный период");
                     }
-                    if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + $@"\Template\Kvit"))
-                        Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + $@"\Template\Kvit");
-                    string path = AppDomain.CurrentDomain.BaseDirectory + $@"Template\Kvit\";
+                    if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + $@"\Template\Kvit\{date:MMMM-yyyy}"))
+                        Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + $@"\Template\Kvit\{date:MMMM-yyyy}");
+                    string path = AppDomain.CurrentDomain.BaseDirectory + $@"Template\Kvit\{date:MMMM-yyyy}\";
                     if (File.Exists(path + $@"Образец квитанции {LIC} {date.Month}.docx")) File.Delete(path + $@"Образец квитанции {LIC} {date.Month}.docx");
+
                     File.Copy(AppDomain.CurrentDomain.BaseDirectory + $@"Template\Образец квитанции.docx",
-                        AppDomain.CurrentDomain.BaseDirectory + $@"Template\Kvit\Образец квитанции {LIC} {date.Month}.docx");
-                    cacheApp.Update(LIC, "Начинаю формировать квитанцию");
+                        AppDomain.CurrentDomain.BaseDirectory + $@"Template\Kvit\{date:MMMM-yyyy}\Образец квитанции {LIC} {date.Month}.docx");
+                    cacheApp.Update(LIC, $"Начинаю формировать квитанцию за {date}");
                     Application app = new Application();
                     var TempFile = $@"Образец квитанции {LIC} {date.Month}.docx";
                     _Document doc = app.Documents.Open(path + TempFile);
@@ -146,6 +147,8 @@ namespace WordGenerator
         false, false, false, false);
                         doc.Content.Find.Execute("{ipuxv4_1}", false, true, false, false, false, true, 1, false, Lic.ipuxv4_1.Trim(), 2,
         false, false, false, false);
+                        doc.Content.Find.Execute("{komment}", false, true, false, false, false, true, 1, false, Lic.komment?.Trim(), 2,
+      false, false, false, false);
                         doc.Content.Find.Execute("{ipuxv1_2}", false, true, false, false, false, true, 1, false, Lic.ipuxv1_2.Trim(), 2,
         false, false, false, false);
                         doc.Content.Find.Execute("{ipuxv2_2}", false, true, false, false, false, true, 1, false, Lic.ipuxv2_2.Trim(), 2,
@@ -296,7 +299,7 @@ namespace WordGenerator
         false, false, false, false);
                         doc.Content.Find.Execute("{s_notp}", false, true, false, false, false, true, 1, false, Lic.s_notp.Trim(), 2,
         false, false, false, false);
-                        cacheApp.Update(LIC, "Сформировал квитацнию");
+                        cacheApp.Update(LIC, $"Сформировал квитацнию за {date}");
                         BarcodeWriter generator = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
                         generator.Options = new ZXing.Common.EncodingOptions
                         {
@@ -324,7 +327,13 @@ Category=7|PersAcc={LIC}|LastName={FIO[0]}|FitstName={FIO[1]}|MiddleName={FIO[2]
                         }
                         catch (Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); }
                     }
-                    catch (Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); }
+                    catch (Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); 
+                        doc.Close(Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
+                           Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat,
+                           false);
+                        app.DisplayAlerts = Microsoft.Office.Interop.Word.WdAlertLevel.wdAlertsNone;
+                        app.Quit();
+                    }
                     try
                     {
 
@@ -339,6 +348,7 @@ Category=7|PersAcc={LIC}|LastName={FIO[0]}|FitstName={FIO[1]}|MiddleName={FIO[2]
                     catch (Exception ex)
                     {
                         cacheApp.Update(LIC, $"Ошибка {ex.Message}");
+                        app.Quit();
                     }
                     cacheApp.Update(LIC, $"Очищаю временные файлы квитанции");
                     if (File.Exists(path + $@"Образец квитанции {LIC} {date.Month}.docx"))
@@ -354,7 +364,7 @@ Category=7|PersAcc={LIC}|LastName={FIO[0]}|FitstName={FIO[1]}|MiddleName={FIO[2]
                     };
                 }catch(Exception ex)
                 {
-                    cacheApp.AddProgress(LIC, ex.InnerException.Message);
+                    cacheApp.AddProgress(LIC, ex.Message);
                     return new PersDataDocumentLoad()
                     {
                         FileBytes = new byte[0],

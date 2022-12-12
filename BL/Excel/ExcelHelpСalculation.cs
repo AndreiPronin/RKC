@@ -30,6 +30,7 @@ namespace BL.Excel
         }
         public static byte[] Generate(List<HelpСalculations> helpCalculations)
         {
+            helpCalculations = helpCalculations.OrderBy(x=>x.Period).ToList();
             using (XLWorkbook wb = new XLWorkbook())
             {
                 var worksheet = wb.Worksheets.Add("Справка расчёт");
@@ -102,7 +103,7 @@ namespace BL.Excel
                     worksheet.SetValue(i, 12, Items.HeatingRecalculation);
                     worksheet.SetValue(i, 13, Items.GvsHeatingСalculation);
                     worksheet.SetValue(i, 14, Items.GvsHeatingRecalculation);
-                    worksheet.SetValue(i, 16, Items.HvHeatingСalculation);
+                    worksheet.SetValue(i, 15, Items.HvHeatingСalculation);
                     worksheet.SetValue(i, 16, Items.HvHeatingRecalculation);
                     worksheet.SetValue(i, 17, Items.SN15);
                     i++;

@@ -15,6 +15,9 @@
 .font-weight-bold{
     font-weight:bold;
 }
+.botomHr {
+    border-bottom: 1px solid;
+}
 .mainText {
     color: white;
     width: 100%;

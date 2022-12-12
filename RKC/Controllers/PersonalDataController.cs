@@ -126,8 +126,8 @@ namespace RKC.Controllers
             {
                 //try
                 //{
-                    var result = GenerateFileHelpCalculation.Generate(FullLic, DateEnd);
-                    return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
+                var result = GenerateFileHelpCalculation.Generate(FullLic, DateEnd);
+                return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
                 //}catch(Exception ex)
                 //{
                 //    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);

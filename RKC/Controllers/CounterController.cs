@@ -27,7 +27,6 @@ using static System.Net.WebRequestMethods;
 
 namespace RKC.Controllers
 {
-    [Authorize]
     public class CounterController : Controller
     {
         private readonly ICounter _counter;
@@ -70,7 +69,6 @@ namespace RKC.Controllers
             return PartialView(Result);
         }
         [HttpGet]
-        [Authorize(Roles = "CounterWriter,CounterReader,Admin")]
         public ActionResult DetailedInformIPU(string FULL_LIC)
         {
             try
@@ -86,6 +84,7 @@ namespace RKC.Controllers
                 {
                     ViewBag.IsLock = _flagsAction.GetAction(nameof(DetailedInformIPU));
                 }
+                _counter.AutoAddPU(FULL_LIC);
                 var Result = _counter.DetailInfroms(FULL_LIC);
                 if(ViewBag.IsLock == true && ViewBag.User == null) 
                     ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
@@ -95,7 +94,7 @@ namespace RKC.Controllers
                 }
                 else
                 {
-                    _counter.AutoAddPU(FULL_LIC);
+                    
                     Result = _counter.DetailInfroms(FULL_LIC);
                     if (Result.Count() == 0)
                     {
@@ -128,7 +127,7 @@ namespace RKC.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "CounterWriter,Admin")]
-        public ActionResult FromAddPU(string FullLIC) 
+        public ActionResult FromAddPU(string FullLIC)
         {
             ViewBag.FULL_LIC = FullLIC;
             return PartialView(_counter.GetTypeNowUsePU(FullLIC));
@@ -143,9 +142,10 @@ namespace RKC.Controllers
                 {
                     throw new Exception("Не найден лицевой счет, обратитесь к администратору");
                 }
-                _counter.AddPU(modelAddPU,User.Identity.GetFIOFull());
+                _counter.AddPU(modelAddPU, User.Identity.GetFIOFull());
                 return null;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Content(ex.Message);
             }
@@ -153,7 +153,7 @@ namespace RKC.Controllers
         [HttpGet]
         public ActionResult clearCache(string Page)
         {
-            _cacheApp.Delete(User.Identity.GetFIOFull(),Page);
+            _cacheApp.Delete(User.Identity.GetFIOFull(), Page);
             return null;
         }
         [HttpGet]
@@ -180,7 +180,8 @@ namespace RKC.Controllers
                 _logger.ActionUsers(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User.Identity.GetFIOFull());
                 _counter.UpdateReadings(saveModelIPU);
                 return Content("");
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Content($"Во время обновления произошла ошибка {ex.Message}");
             }
@@ -204,7 +205,7 @@ namespace RKC.Controllers
         {
             try
             {
-                _counter.DeleteError(IdPU, Lic,User.Identity.GetFIOFull());
+                _counter.DeleteError(IdPU, Lic, User.Identity.GetFIOFull());
                 return Content("Удаление прошло успешно");
             }
             catch (Exception ex)
@@ -221,12 +222,12 @@ namespace RKC.Controllers
                 var Result = _readFileBank.Read(fileData, Bank);
                 return View(Result);
             }
-           
+
         }
         [Authorize(Roles = "Admin")]
-        public ActionResult UploadFilePU(HttpPostedFileBase file, string User,int TypeLoad)
+        public ActionResult UploadFilePU(HttpPostedFileBase file, string User, int TypeLoad)
         {
-            if(TypeLoad == 2)
+            if (TypeLoad == 2)
             {
                 using (XLWorkbook wb = new XLWorkbook())
                 {
@@ -258,6 +259,19 @@ namespace RKC.Controllers
                 {
                     var workbook = new XLWorkbook(file.InputStream);
                     wb.Worksheets.Add(_excel.LoadExcelNewPersonalData(workbook, User, _cacheApp));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }
+            }
+            if (TypeLoad == 5)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(_excel.MassClosePU(workbook, User, _cacheApp));
                     using (MemoryStream stream = new MemoryStream())
                     {
                         wb.SaveAs(stream);
@@ -323,7 +337,7 @@ namespace RKC.Controllers
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", GetDescriptionEnum.GetDescription(typeFile)+".xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", GetDescriptionEnum.GetDescription(typeFile) + ".xlsx");
                 }
             }
             // 
@@ -359,7 +373,8 @@ namespace RKC.Controllers
             try
             {
                 await _integration.LoadReadings("Integration", _cacheApp, date, _notificationMail);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
@@ -367,7 +382,7 @@ namespace RKC.Controllers
         }
         public ActionResult ErrorIntegration()
         {
-            return View(_integration.GetErrorIntegrationReadings().OrderByDescending(x=>x.IsError));
+            return View(_integration.GetErrorIntegrationReadings().OrderByDescending(x => x.IsError));
         }
         [Authorize(Roles = "Admin")]
         public ActionResult ErroIntegratinLoadExcel()
@@ -383,13 +398,13 @@ namespace RKC.Controllers
             }
         }
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> ErroIntegratinDelete(string Lic,string TypePU)
+        public async Task<ActionResult> ErroIntegratinDelete(string Lic, string TypePU)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var Result = new List<IntegrationReadings>();
-                if(TypePU != "")
-                     Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.TypePu == TypePU && x.IsError == true).ToList();
+                if (TypePU != "")
+                    Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.TypePu == TypePU && x.IsError == true).ToList();
                 if (TypePU == "")
                     Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.Description == "Не найден лицевой счет" && x.IsError == true).ToList();
                 foreach (var Items in Result)
@@ -400,6 +415,5 @@ namespace RKC.Controllers
                 return Redirect("/Counter/ErrorIntegration");
             }
         }
-
     }
 }

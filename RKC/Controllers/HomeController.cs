@@ -2,44 +2,27 @@
 using BL;
 using BL.ApiT_;
 using DB.DataBase;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace RKC.Controllers
 {
-    public enum Question
-    {
-        Role = 2,
-        ProjectFunding = 3,
-        TotalEmployee = 4,
-        NumberOfServers = 5,
-        TopBusinessConcern = 6
-    }
-    public class sss<T> where T : Enum
-    {
-        int result { get; set; }
-        public T ss  { get; set; }
-        public sss( T value)
-        {
-            ss = value;
-        }
-        public int Get()
-        {
-            
-            var values = Enum.GetValues(typeof(T));
-            foreach (int item in values)
-                result = (int)item;
-            return result;
-        }
-    }
+
     public class HomeController : Controller
     {
-        IEBD _eBD;
+       
         public HomeController(IEBD eBD)
         {
-            _eBD = eBD;
+            using (var db = new DbLIC())
+            {
+
+                //WordGenerator.GenerateFileHelpCalculation.Generate("703027614", new DateTime(2022, 10, 01));
+         
+            }
         }
         public ActionResult Index()
         {

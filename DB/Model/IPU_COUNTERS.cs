@@ -70,6 +70,8 @@ namespace DB.Model
         public string FULL_LIC { get; set; }
         public DateTime? CHECKPOINT_DATE { get;set; }
         public double? CHECKPOINT_READINGS { get; set; }
+        public DateTime? OPERATOR_CLOSE_DATE { get; set; }
+        public double? OPERATOR_CLOSE_READINGS { get; set; }
         public ALL_LICS ALL_LICS = new ALL_LICS();
     }
 }

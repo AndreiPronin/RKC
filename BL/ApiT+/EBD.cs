@@ -88,9 +88,9 @@ namespace BL.ApiT_
                             //obj.floors = "";
                             //obj.vid_blgu = "";
                             //obj.wall = "";
-                            obj.square_all = Item.square_object_all?.ToString().Replace("\v", "").Replace(",", ".");
-                            obj.square_cold = Item.square_cold_all?.ToString().Replace("\v", "").Replace(",", ".");
-                            obj.square_mop_all = Item.square_mop_all?.ToString().Replace("\v", "").Replace(",", ".");
+                            obj.square_all = Item.square_object_all?.ToString().Replace("\v", "").Replace(",", ".").Trim();
+                            obj.square_cold = Item.square_cold_all?.ToString().Replace("\v", "").Replace(",", ".").Trim();
+                            obj.square_mop_all = Item.square_mop_all?.ToString().Replace("\v", "").Replace(",", ".").Trim();
                             //obj.id_dogovor_iku = "";
                             //obj.otopl_7_12 = "";
                             //obj.ist_tpls = "";
@@ -112,10 +112,10 @@ namespace BL.ApiT_
                             obj.address.City.Type = "г";
                             //obj.address.District.Name = "";
                             //obj.address.District.Type = "";
-                            obj.address.Street.Name = Item.street.Replace("\v", "");
+                            obj.address.Street.Name = Item.street.Replace("\v", "").Trim();
                             obj.address.Street.Type = "ул";
                             obj.address.Level1.Type = "д";
-                            obj.address.Level1.Value = Item.home.Replace("\v", "");
+                            obj.address.Level1.Value = Item.home.Replace("\v", "").Trim();
                             obj.address.Note = $@"Российская Федерация, Пензенская область, г.Пенза, ул. {Item.street.Trim().Replace("\v", "")}, дом №{Item.home.Trim().Replace("\v", "")}";
                             obj.ODPU_EE = new ODPU_EE();
                             obj.ODPU_EE.status = Item.gvs.ToLower().Contains("да") ? "true" : "false";

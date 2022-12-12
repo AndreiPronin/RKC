@@ -54,7 +54,7 @@ namespace BL.Notification
             smtpClient.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mail:login:T+"], ConfigurationManager.AppSettings["mail:pass:T+"]);
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:T+"]);
-            mailMessage.Attachments.Add(new System.Net.Mail.Attachment($@"{AppDomain.CurrentDomain.BaseDirectory}Template\Квитанция {FullLic} {DateTime.Now.Month-1}.pdf"));
+            mailMessage.Attachments.Add(new System.Net.Mail.Attachment($@"{AppDomain.CurrentDomain.BaseDirectory}Template\Kvit\Квитанция {FullLic} {DateTime.Now.Month-1}.pdf"));
             mailMessage.To.Add(new MailAddress(Mail));
             mailMessage.Subject = "Автоматическое отправление эл.квитанций";
             smtpClient.Send(mailMessage);

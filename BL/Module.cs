@@ -34,6 +34,7 @@ namespace BL
             kernel.Bind<IJobManager>().To<JobManager>();
             kernel.Bind<INotificationMail>().To<NotificationMail>();
             kernel.Bind<IExcel>().To<Excel.Excel>();
+            kernel.Bind<ICourt>().To<Court>();
         }
     }
 }

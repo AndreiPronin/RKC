@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DB.Model
 {
-    [Table(name: "KVIT2",Schema = "dbo")]
+    [Table(name: "Receipt", Schema = "dbo")]
     public class KVIT
     {
         public string ul { get; set; }
@@ -82,6 +82,7 @@ namespace DB.Model
         public string ipuot3_1 { get; set; }
         public string ipuot3_2 { get; set; }
         public string s_oi { get; set; }
+        public string komment { get; set; }
         public string s_notp { get; set; }
         public string ngvs1 { get; set; }
         public string ngvs2 { get; set; }

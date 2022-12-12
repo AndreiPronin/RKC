@@ -199,7 +199,6 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                var ttt = db.LogsPersData.Where(x => x.idPersData == idPersData).OrderByDescending(x => x.DateTime).ToList();
                 return   db.LogsPersData.Where(x => x.idPersData == idPersData).OrderByDescending(x=>x.DateTime).ToList();
             }
         }
@@ -208,21 +207,21 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var persInfo = db.PersData.FirstOrDefault(x => x.Lic == persDataModel.Lic && x.Main == true && x.IsDelete == false);
-                persDataModel.idPersData = persInfo.idPersData;
                 if (persInfo == null)
                     throw new Exception("Не найден главный перс");
+                persDataModel.idPersData = persInfo.idPersData;
+                persDataModel.NumberOfPersons = persInfo.NumberOfPersons;
                 using (var dbAllLic = new DbLIC())
                 {
                     var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == persDataModel.Lic).FirstOrDefault();
                     AllLIC.SOBS = Convert.ToDecimal(persDataModel.Square);
                     dbAllLic.SaveChanges();
                 }
-                _ilogger.ActionUsersPersData(persInfo.idPersData, $"Изменили площадь: было {persInfo.Square} стало {persDataModel.Square} \r\n", User);
+                //_ilogger.ActionUsersPersData(persInfo.idPersData, $"Изменили площадь: было {persInfo.Square} стало {persDataModel.Square} \r\n", User);
                 var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && (x.IsDelete == false || x.IsDelete == null)).ToList();
                 foreach (var Items in ListPers)
                 {
                     Items.Square = persDataModel.Square;
-                    Items.NumberOfPersons = persDataModel.NumberOfPersons;
                 }
                 db.SaveChanges();
             }
@@ -287,7 +286,6 @@ namespace BL.Services
                 PersData.Tel2 = persDataModel.Tel2;
                 PersData.UserName = persDataModel.UserName;
                 db.SaveChanges();
-                UpdateSquareFlat(persDataModel.Square, persDataModel.Lic);
             }
         }
         public void MakeToMain (int idPersData)
@@ -392,6 +390,20 @@ namespace BL.Services
                 {
                     Items.square_all = Square;
                     Items.date_edit = DateTime.Now.Date;
+                }
+                db.SaveChanges();
+            }
+        }
+        public void UpdateSquareCadastrFlat(double? Square,string Cadastr, string Lic)
+        {
+            using (var db = new DbTPlus())
+            {
+                var flat = db.FLAT.Where(x => x.object_id == Lic).ToList();
+                foreach (var Items in flat)
+                {
+                    Items.square_all = Square;
+                    Items.date_edit = DateTime.Now.Date;
+                    Items.cadastral_number = !string.IsNullOrEmpty(Cadastr) ? Cadastr : Items.cadastral_number;
                 }
                 db.SaveChanges();
             }

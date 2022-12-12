@@ -43,20 +43,20 @@ namespace RKC.Controllers
                     ViewBag.IsLock = true;
                 }
                 else ViewBag.IsLock = false;
-                var Result = _court.DetailInfroms(FULL_LIC);
+                //var Result = _court.DetailInfroms(FULL_LIC);
                 if (ViewBag.IsLock == true) ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
-                if (Result.Count() > 0)
-                {
-                    return View(Result);
-                }
-                else
-                {
-                    if (Result.Count() == 0)
-                    {
-                        ViewBag.FULL_LIC = FULL_LIC;
-                    }
-                    return View(Result);
-                }
+                //if (Result.Count() > 0)
+                //{
+                    return View();
+                //}
+                //else
+                //{
+                //    if (Result.Count() == 0)
+                //    {
+                //        ViewBag.FULL_LIC = FULL_LIC;
+                //    }
+                //    return View(Result);
+                //}
             }
             catch (Exception ex)
             {

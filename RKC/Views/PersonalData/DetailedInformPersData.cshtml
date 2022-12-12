@@ -301,12 +301,14 @@ else
     function Loader() {
         $(".loader").addClass("hidden");
     }
+
     $(document).ready(function (e) {
+        $(".PassportNumber").mask("99999?9");
         $("#Tel1").mask("+79999999999");
         $("#Tel2").mask("+79999999999");
         $(".SnilsNumber").mask("999-999-999-99");
         $(".PassportSerial").mask("9999");
-        $(".PassportNumber").mask("999999");
+        
         $(document).on('keypress', 'input,select', function (e) {
             if (e.which == 13) {
                 e.preventDefault();

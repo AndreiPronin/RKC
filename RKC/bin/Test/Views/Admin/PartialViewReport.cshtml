@@ -7,26 +7,42 @@
     @using (Html.BeginForm("UploadFile", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @*if (User.IsInRole("Admin"))
-        {
-            <div style="margin-top:30px;" class="row">
-                <div class="col-md-4">
-                    @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+            {
+                <div style="margin-top:30px;" class="row">
+                    <div class="col-md-4">
+                        @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        <select id="Bank" name="Bank" class="form-control" aria-label="Default select">
+                            <option selected>Выберите банк</option>
+                            <option value="1">Какой то банк</option>
+                            <option value="2">Почта</option>
+                            <option value="3">ВТБ</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="btn btn-success" value="Загрузить" />
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <select id="Bank" name="Bank" class="form-control" aria-label="Default select">
-                        <option selected>Выберите банк</option>
-                        <option value="1">Какой то банк</option>
-                        <option value="2">Почта</option>
-                        <option value="3">ВТБ</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" class="btn btn-success" value="Загрузить" />
-                </div>
-            </div>
-        }*@
+            }*@
     }
-    
+    @if (User.IsInRole("Admin"))
+    {
+        <div style="margin-top:30px;" class="row">
+            <div class="col-md-8">
+                <select id="FileTemplateType" name="FileTemplateType" class="form-control" aria-label="Default select">
+                    <option selected>Выберите Шаблон</option>
+                    <option value="1">Изменение информации ПУ</option>
+                    <option value="2">Шаблон загрузки персов</option>
+                </select>
+            </div>
+           
+            <div class="col-md-4">
+                <input type="submit" id="CreateTemplateFile" class="btn btn-success" value="Скачать" />
+            </div>
+        </div>
+    }
+    <hr />
     @if (User.IsInRole("Admin"))
     {
         <div style="margin-top:30px;" class="row">
@@ -47,7 +63,7 @@
             </div>
             <div class="col-md-4">
                 <input type="date" id="DateReportFile" class="form-control" />
-                <div>Последняя выгрузка @ViewBag.LastLoadEbd</div>
+                <div>Последняя выгрузка EBD @ViewBag.LastLoadEbd</div>
             </div>
             <div class="col-md-2">
                 <input name="UserCreateReportlFile" id="UserCreateReportlFile" value="@User.Identity.Name" hidden class="form-control hidden" />
@@ -68,6 +84,9 @@
     $(document).ready(function (e) {
         $("#CreateReportlFile").click(function () {
             location.href = '/Counter/Export?typeFile=' + $("#FileType").val() + '&dateTime=' + $("#DateReportFile").val();
+        })
+        $("#CreateTemplateFile").click(function () {
+            location.href = '/Counter/LoadTemplate?typeFile=' + $("#FileTemplateType").val();
         })
         $(".loader").addClass("hidden");
         var i = 0;

@@ -201,7 +201,9 @@ namespace BL.Helper
                 if (IPU_COUNTERS.SEALNUMBER2 != saveModelIPU.SEALNUMBER2 && !string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2)) Result.Append($"Изменили номер пломбы2: было {IPU_COUNTERS.SEALNUMBER2} стало {saveModelIPU.SEALNUMBER2}  \r\n");
                 if (IPU_COUNTERS.CHECKPOINT_DATE != saveModelIPU.CHECKPOINT_DATE && saveModelIPU.CHECKPOINT_DATE != null) Result.Append($"Изменили дату контрольного обхода: было {IPU_COUNTERS.CHECKPOINT_DATE} стало {saveModelIPU.CHECKPOINT_DATE}  \r\n");
                 if (IPU_COUNTERS.CHECKPOINT_READINGS != saveModelIPU.CHECKPOINT_READINGS && saveModelIPU.CHECKPOINT_READINGS != null) Result.Append($"Изменили показания контрольного обхода: было {IPU_COUNTERS.CHECKPOINT_READINGS} стало {saveModelIPU.CHECKPOINT_READINGS}  \r\n");
-                if (IPU_COUNTERS.DESCRIPTION != saveModelIPU.DESCRIPTION && !string.IsNullOrEmpty(saveModelIPU.DESCRIPTION)) Result.Append($"{saveModelIPU.DESCRIPTION}\r\n");
+                if (IPU_COUNTERS.OPERATOR_CLOSE_DATE != saveModelIPU.OPERATOR_CLOSE_DATE && saveModelIPU.OPERATOR_CLOSE_DATE != null) Result.Append($"Изменили дату закрытия: было {IPU_COUNTERS.OPERATOR_CLOSE_DATE} стало {saveModelIPU.OPERATOR_CLOSE_DATE}  \r\n");
+                if (IPU_COUNTERS.OPERATOR_CLOSE_READINGS != saveModelIPU.OPERATOR_CLOSE_READINGS && saveModelIPU.OPERATOR_CLOSE_READINGS != null) Result.Append($"Изменили конечные показания при закрытии: было {IPU_COUNTERS.OPERATOR_CLOSE_READINGS} стало {saveModelIPU.OPERATOR_CLOSE_READINGS}  \r\n");
+                if (IPU_COUNTERS.DESCRIPTION != saveModelIPU.DESCRIPTION && !string.IsNullOrEmpty(saveModelIPU.DESCRIPTION)) Result.Append($"Изменили примечание: {saveModelIPU.DESCRIPTION}\r\n");
             }
 
             return Result.ToString();

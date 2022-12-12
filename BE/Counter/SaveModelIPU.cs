@@ -24,6 +24,8 @@ namespace BE.Counter
         public bool OVERWRITE_SEAL { get; set; }
         public DateTime? CHECKPOINT_DATE { get; set; }   
         public double? CHECKPOINT_READINGS { get; set; }
+        public DateTime? OPERATOR_CLOSE_DATE { get; set; }
+        public double? OPERATOR_CLOSE_READINGS { get; set; }
         public decimal? FKUB2XVS { get; set; }
         public decimal? FKUB2XV_2 { get; set; }
         public decimal? FKUB2XV_3 { get; set; }

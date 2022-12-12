@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKC", "RKC\RKC.csproj", "{7EEB84E3-727D-42E7-9A9D-E4A6B6F241BA}"
 EndProject
@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{D4CDA0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordGenerator", "WordGenerator\WordGenerator.csproj", "{53AED92A-CB55-492C-B155-1A8F15EEB01A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKC_TEST", "RKC_TEST\RKC_TEST.csproj", "{6D0A0C18-101C-4816-8052-ECAD3BC826A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RKC_TEST", "RKC_TEST\RKC_TEST.csproj", "{6D0A0C18-101C-4816-8052-ECAD3BC826A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

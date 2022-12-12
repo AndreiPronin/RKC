@@ -47,8 +47,8 @@ namespace RKC.Controllers
         {
             var Lic = FullLic.Split(';');
             for(int i = 0; i < Lic.Length; i++)
-                if (!string.IsNullOrEmpty(Lic[i]))
-                    _job.SendReceipt(FullLic);
+                if (!string.IsNullOrEmpty(Lic[i].Trim()))
+                    _job.SendReceipt(Lic[i].Trim());
             return Resposne.CreateResponse200();
         }
     }

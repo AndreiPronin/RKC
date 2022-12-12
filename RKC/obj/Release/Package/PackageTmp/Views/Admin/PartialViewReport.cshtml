@@ -33,7 +33,7 @@
                 <select id="FileTemplateType" name="FileTemplateType" class="form-control" aria-label="Default select">
                     <option selected>Выберите Шаблон</option>
                     <option value="1">Изменение информации ПУ</option>
-                  
+                    <option value="2">Шаблон загрузки персов</option>
                 </select>
             </div>
            
@@ -63,7 +63,7 @@
             </div>
             <div class="col-md-4">
                 <input type="date" id="DateReportFile" class="form-control" />
-                <div>Последняя выгрузка @ViewBag.LastLoadEbd</div>
+                <div>Последняя выгрузка EBD @ViewBag.LastLoadEbd</div>
             </div>
             <div class="col-md-2">
                 <input name="UserCreateReportlFile" id="UserCreateReportlFile" value="@User.Identity.Name" hidden class="form-control hidden" />

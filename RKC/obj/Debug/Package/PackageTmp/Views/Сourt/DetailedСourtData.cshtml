@@ -3,201 +3,251 @@
     ViewBag.Title = "Датальная информация";
     var Index = 1;
 }
+<style>
+    .container {
+        width: 90% !important;
+    }
+</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<div class="container text-center">
+    <h3 class="text-center">Лицевой счет 777777777 № судебного приказа 54678946</h3>
+    <input type="button" value="Сохранить" class="btn btn-success hidden  Save" />
+    <input type="button" name="" value="Редактировать" class="btn btn-success Edit" />
+    <input type="button" value="Отмена" class="btn btn-primary hidden Cancellation" />
+    <input sname="" type="button" value="Закрыть дело" class="btn btn-danger hidden Delete" />
+    <input type="button" name="" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
+</div>
+<div class="loader">
+    <div class="inner one"></div>
+    <div class="inner two"></div>
+    <div class="inner three"></div>
+</div>
+<div class="card-body field">
 
-@if (string.IsNullOrEmpty(ViewBag.FULL_LIC))
-{
-    <div class="container">
-        <h3 class="text-center">Детальная информация по лицевому счету  @Model.FirstOrDefault().Lic</h3>
-        <div class="col-md-12">
-            <button id="CloseLock" name="@Model.FirstOrDefault().Lic" class="btn btn-success">Закрыть страницу</button>
-            @if (!ViewBag.isLock)
-            {
-                <input type="button" name="@Model.FirstOrDefault().Lic" class="btn btn-primary AddPersonalData" value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
-            }
-            <a href="/PersonalData/DetailedInformPersDelete?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank"><input type="button" class="btn btn-primary" value="История " /></a>
-            <a href="/Counter/DetailedInformIPU?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank" data-tooltip="Закройте редактирование при переходе...">
-                <input type="button" class="btn btn-primary" value="ПУ" />
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">ФИО Гпх:</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start text-center">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Улица</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                    <h5 class="mb-1">Дом</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                    <h5 class="mb-1">Квартира</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">ФИО Собственника:</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Дата возбуждении Исполнительного Производства</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">ФИО ГПХ передачи в ССП</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Дата принятие заявления на суд. приказ Судубными участками</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Номер исполнительного производства</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Дата постановления об окончании ИД и возврат СП</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Основание окончания ИП</h5>
+                    <select disabled class="custom-select form-control GroundsForEndingIP">
+                        <option selected><i class="fa fa-angle-double-right"></i>Выбирается из выпадающего списка</option>
+                        <option value="1">п.3, п.4, ч.1 ст.46 – о невозможности взыскания по исполнительному документу </option>
+                        <option value="2">п.1 ч.1 ст.47 - фактическое исполнение требований</option>
+                        <option value="3">п.4 ч.1 ст.47 - возвращение исполнительного документа по требованию суда, другого органа или должностного лица, выдавших исполнительный документ</option>
+                        <option value="3">п.7 ч.1 ст.47 - признание должника банкротом и направления исполнительного документа арбитражному управляющему</option>
+                        <option value="3">п.10 ч.1 ст.47 - подача взыскателем заявления об окончании исполнительного производства </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">№ судебного приказа</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">№ судебного участка</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Дата СП</h5>
+                    <small><input type="date" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">г/р</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Дата передачи судебного приказа в ФССП</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Период задолжности начальный</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Период задолжности конечный</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Общая сумма долга предъявленная в суд</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Дата оплаты основного долга</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
             </a>
         </div>
     </div>
-    <div class="loader">
-        <div class="inner one"></div>
-        <div class="inner two"></div>
-        <div class="inner three"></div>
-    </div>
-    <div class="row">
-        @foreach (var Items in Model)
-        {
-
-            <div style="margin-top:10px;" class="card">
-                <div class="card-body field">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Фамилия:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Items.LastName" />
-                                </div>
-                                <label class="col-sm-4 col-form-label">Имя:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="FirstName" class="form-control " value="@Items.FirstName" />
-                                    @*<input type="date" readonly="readonly" id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.MiddleName)" />*@
-                                </div>
-                                <label class="col-sm-4 col-form-label">Отчество:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="MiddleName" class="form-control " value="@Items.MiddleName" />
-                                </div>
-                                <label class="col-sm-4 col-form-label">Дата рождения:</label>
-                                <div class="col-sm-8">
-                                    <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="DateOfBirth" class="form-control " value="@string.Format("{0:yyyy-MM-dd}", Items.DateOfBirth)" />
-                                </div>
-                                <label class="col-sm-4 col-form-label">Место рождения:</label>
-                                <div class="col-sm-8">
-                                    <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="PlaceOfBirth" class="form-control ">@Items.PlaceOfBirth</textarea>
-                                </div>
-                                <label class="col-sm-4 col-form-label">СНИЛС:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="SnilsNumber" class="form-control SnilsNumber" value="@Items.SnilsNumber" />
-                                </div>
-                                <label class="col-sm-4 col-form-label">ИНН:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.Inn" />
-                                </div>
-                                <div class="col-sm-12 text-center">
-                                    <p>Паспортные данные</p>
-                                </div>
-                                <label class="col-sm-4 col-form-label">Cерия:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" tabIndex="@Index@{Index++;}" readonly="readonly" id="PassportSerial" class="form-control PassportSerial" value="@Items.PassportSerial" />
-                                </div>
-                                <label class="col-sm-4 col-form-label">Номер:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="PassportNumber" class="form-control PassportNumber" value="@Items.PassportNumber" />
-                                </div>
-                                <label class="col-sm-4 col-form-label">Дата выдачи:</label>
-                                <div class="col-sm-8">
-                                    <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="PassportDate" class="form-control " value="@string.Format("{0:yyyy-MM-dd}", Items.PassportDate)" />
-                                </div>
-                                <label class="col-sm-4 col-form-label">Кем выдан:</label>
-                                <div class="col-sm-8">
-                                    <textarea readonly="readonly" id="PassportIssued" tabIndex="@Index@{Index++;}" class="form-control PassportIssued">@Items.PassportIssued</textarea>
-                                </div>
-                            </div>
-                            <hr />
-                        </div>
-                        <div class="col-md-6">
-
-                            <label class="col-sm-4 col-form-label">Телефон1:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Tel1" class="form-control" value="@Items.Tel1" />
-                                <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="Comment1" class="form-control">@Items.Comment1</textarea>
-                            </div>
-                            <label class="col-sm-4 col-form-label">Телефон2:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Tel2" class="form-control" value="@Items.Tel2" />
-                                @*<textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="Comment2" class="form-control">@Items.Comment2</textarea>*@
-                            </div>
-                           
-                            @if (Items.Main == true)
-                            {
-                                <label class="col-sm-4 col-form-label">Количество человек:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="NumberOfPersons" class="form-control" value="@Items.NumberOfPersons" />
-                                </div>
-                                <label class="col-sm-4 col-form-label">Площадь:</label>
-                                <div class="col-sm-8">
-                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Square" class="form-control" value="@Items.Square" />
-                                </div>
-                            }
-                            else
-                            {
-                                { Items.NumberOfPersons = Items.NumberOfPersons == null ? 0 : Items.NumberOfPersons; }
-                                <label class="col-sm-4 col-form-label">Количество человек:</label>
-                                <div class="col-sm-8">
-                                    <label class="col-sm-4 col-form-label">@Items.NumberOfPersons</label>
-                                </div>
-                                { Items.Square = Items.Square == null ? 0 : Items.Square; }
-                                <label class="col-sm-4 col-form-label">Площадь:</label>
-                                <div class="col-sm-8">
-                                    <label class="col-sm-4 col-form-label">@Items.Square</label>
-                                </div>
-                            }
-                            <label class="col-sm-4 col-form-label">Комментарий:</label>
-                            <div class="col-sm-8">
-                                <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="Comment" class="form-control">@Items.Comment</textarea>
-                            </div>
-                            <input type="text" hidden="hidden" id="FIO" name="@Items.FirstName @Items.MiddleName @Items.LastName" class="FIO" value="@Items" />
-                            <input type="checkbox" hidden="hidden" id="Main" name="" class="" checked="@Items.Main" />
-                            <input type="text" hidden="hidden" id="Lic" name="" class="" value="@Items.Lic" />
-                        </div>
-                    </div>
-
-                    @if (!ViewBag.isLock)
-                    {
-                        <input type="button" name="@Items.idPersData" value="Сохранить" class="btn btn-danger hidden  Save" />
-                        <input type="button" name="@Items.idPersData" value="Редактировать" class="btn btn-success Edit" />
-                        if (Items.Main != true)
-                        {
-                            <input style="float:right;" name="@Items.idPersData" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
-                        }
-                        <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
-                        <input type="button" name="@Items.idPersData" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
-                    }
-                    else
-                    {
-
-                        <input type="button" name="@Items.Lic" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
-                        if (!string.IsNullOrEmpty(ViewBag.User))
-                        {
-                            <p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>
-                        }
-                        else
-                        {<p class="text-center">Админ заблокировал эту страницу</p>}
-                    }
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Дата оплаты Гос. Пошлины</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
                 </div>
-            </div>
-        }
-    </div>
-}
-else
-{
-    <div class="container">
-        <h3 class="text-center"></h3>
-        <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC ничего не найдено</h1>
-        @if (ViewBag.isLock)
-        {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>}
-        <div class="col-md-12">
-            <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
-            <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPersonalData" value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Сумма Гос. Пошлины</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Сумма оплаты Гос. Пошлины</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Гос. Пошлина остаток задолжности</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Сумма оплаты предъявленная в суд (руб)</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Остаток задолжности</h5>
+                    <small><input type="text" readonly="readonly" tabIndex="" id="INSTALLATIONDATE" class="form-control" value="77777777" /></small>
+                </div>
+            </a>
         </div>
     </div>
-
-}
-<div id="HistoryEdit"></div>
-<div id="FormAddCourt"></div>
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Примечание</h5>
+                    <textarea style="height:150px;" class="form-control" ></textarea>
+                </div>
+            </a>
+            <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h4 class="mb-1">Документы</h4>
+                    <a href="/PersonalData/DownLoadFile?Id=63" target="_blank">Скачать Выписка.docx</a><br />
+                    <a href="/PersonalData/DownLoadFile?Id=63" target="_blank">Скачать Выписка.docx</a><br />
+                    <a href="/PersonalData/DownLoadFile?Id=63" target="_blank">Скачать Выписка.docx</a>
+                   
+                    <div class="form-group text-center" style="margin-top:20px">
+                        <div class="col-sm-6">
+                            <input name="FileLoad" class="form-control file" type="file" />
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" id="NameFile" list="NameFileTemplate" autocomplete="off" placeholder="Название файла" class="form-control NameFileFile" name="NameFile" value="" />
+                            <datalist id="NameFileTemplate">
+                                <option>Выписка</option>
+                                <option>Договор</option>
+                                <option>Заявление</option>
+                                <option>Справка</option>
+                                <option>Документ удостоверяющий личность</option>
+                                <option>Документ на ИПУ</option>
+                                <option>Прочие</option>
+                            </datalist>
+                        </div>
+                        <input type="submit" class="btn btn-primary " value="Добавить" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
 <script>
-    function Loader() {
-        $(".loader").addClass("hidden");
-    }
     $(document).ready(function (e) {
-        $("#Tel1").mask("+79999999999");
-        $("#Tel2").mask("+79999999999");
-        $(".SnilsNumber").mask("999-999-999-99");
-        $(".PassportSerial").mask("9999");
-        $(".PassportNumber").mask("999999");
-        $(document).on('keypress', 'input,select', function (e) {
-            if (e.which == 13) {
-                e.preventDefault();
-                var $next = $('[tabIndex=' + (+this.tabIndex + 1) + ']');
-                console.log($next.length);
-                if (!$next.length) {
-                    $next = $('[tabIndex=1]');
-                }
-                $next.focus().click();
-            }
-        });
+        $("#NotificationResultTimer").addClass("hidden");
+        $(".loader").addClass("hidden");
+        $(".Edit").click(function (e) {
+            $(this).parent().find('select').prop('disabled', false);
+            $(this).parent().find('input').removeClass('hidden');
+            $(this).addClass("hidden");
+            $('.col-md-3').find(':input').each(function (i, input) {
+                $(input).prop('readonly', false);
+            });
+            $(".GroundsForEndingIP").removeAttr("disabled");
+            
+        })
+        $(".Cancellation").click(function (e) {
+            window.location.reload();
+        })
     });
 </script>
 
