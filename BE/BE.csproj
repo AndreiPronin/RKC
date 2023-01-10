@@ -52,6 +52,7 @@
     <Compile Include="JobManager\MailNotSend.cs" />
     <Compile Include="PersData\PersDataDocumentLoad.cs" />
     <Compile Include="PersData\PersDataModel.cs" />
+    <Compile Include="PersData\PersNotFoundInLic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\EnumFlags.cs" />
     <Compile Include="Service\ReadFilesModel.cs" />

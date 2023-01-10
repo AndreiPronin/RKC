@@ -172,14 +172,14 @@
                             <div class="form-group row">
                                 @if (Items.CHECKPOINT_READINGS != null)
                                 {
-                                    <label class="col-sm-4 col-form-label">Показания контроллера:</label>
+                                    <label class="col-sm-4 col-form-label">Показания контролера:</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="CHECKPOINT_READINGS" readonly="readonly" class="form-control Saled CHECKPOINT_READINGS" value="@Items.CHECKPOINT_READINGS" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <label class="col-sm-4 NullOrEmpty col-form-label">Показания контроллера:</label>
+                                    <label class="col-sm-4 NullOrEmpty col-form-label">Показания контролера:</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="CHECKPOINT_READINGS" readonly="readonly" class="form-control Saled CHECKPOINT_READINGS" value="@Items.CHECKPOINT_READINGS" />
                                     </div>
@@ -257,14 +257,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label">Номер пломбы1:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly"  id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
+                                        <input type="text" readonly="readonly" id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Номер пломбы1:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly"  id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
+                                        <input type="text" readonly="readonly" id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
                                     </div>
                                 }
 
@@ -305,14 +305,14 @@
                                 {
                                     <label class="col-sm-4 col-form-label">Номер пломбы2:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly"  id="SEALNUMBER2" class="form-control" value="@Items.SEALNUMBER2" />
+                                        <input type="text" readonly="readonly" id="SEALNUMBER2" class="form-control" value="@Items.SEALNUMBER2" />
                                     </div>
                                 }
                                 else
                                 {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Номер пломбы2:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" readonly="readonly"  id="SEALNUMBER2" class="form-control" value="@Items.SEALNUMBER2" />
+                                        <input type="text" readonly="readonly" id="SEALNUMBER2" class="form-control" value="@Items.SEALNUMBER2" />
                                     </div>
                                 }
 
@@ -325,11 +325,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1XVS"  readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1XVS" />
+                                        <input type="text" id="FKUB1XVS" readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1XVS" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2XVS"  readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2XVS" />
+                                        <input type="text" id="FKUB2XVS" readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2XVS" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -346,11 +346,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1XV_2"  readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1XV_2" />
+                                        <input type="text" id="FKUB1XV_2" readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1XV_2" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2XV_2"  readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2XV_2" />
+                                        <input type="text" id="FKUB2XV_2" readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2XV_2" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -360,18 +360,18 @@
                                 </div>
                                 { TypePU = "FKUB1XV_2"; }
                             }
-                            @{ I = Items.ALL_LICS.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 2 ? "расчет по средему" : Items.ALL_LICS.FKUBSXV_3 == 3 ? "расчет по нормативу" : ""; }
+                            @{ I = Items.ALL_LICS.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 2 ? "расчет по среднему" : Items.ALL_LICS.FKUBSXV_3 == 3 ? "расчет по нормативу" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ГВС3")
                             {
                                 <p>Признак ИПУ: ГВС 3 @I</p>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1XV_3"  readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1XV_3" />
+                                        <input type="text" id="FKUB1XV_3" readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1XV_3" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2XV_3"  readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2XV_3" />
+                                        <input type="text" id="FKUB2XV_3" readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2XV_3" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -388,11 +388,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1XV_4"  readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1XV_4" />
+                                        <input type="text" id="FKUB1XV_4" readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1XV_4" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2XV_4"  readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2XV_4" />
+                                        <input type="text" id="FKUB2XV_4" readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2XV_4" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -403,18 +403,18 @@
                                 { TypePU = "FKUB1XV_4"; }
                             }
 
-                            @{ I = Items.ALL_LICS.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 2 ? "расчет по средему" : Items.ALL_LICS.FKUBSOT_1 == 3 ? "расчет по нормативу" : ""; }
+                            @{ I = Items.ALL_LICS.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 2 ? "расчет по среднему" : Items.ALL_LICS.FKUBSOT_1 == 3 ? "расчет по нормативу" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ОТП1")
                             {
                                 <p>Признак ИПУ: отопление 1 @I</p>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1OT_1"  readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1OT_1" />
+                                        <input type="text" id="FKUB1OT_1" readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1OT_1" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2OT_1"  readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2OT_1" />
+                                        <input type="text" id="FKUB2OT_1" readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2OT_1" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -432,11 +432,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1OT_2"  readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1OT_2" />
+                                        <input type="text" id="FKUB1OT_2" readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1OT_2" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2OT_2"  readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2OT_2" />
+                                        <input type="text" id="FKUB2OT_2" readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2OT_2" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -454,11 +454,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1OT_3"  readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1OT_3" />
+                                        <input type="text" id="FKUB1OT_3" readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1OT_3" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2OT_3"  readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2OT_3" />
+                                        <input type="text" id="FKUB2OT_3" readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2OT_3" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -476,11 +476,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label"> Начальные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB1OT_4"  readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1OT_4" />
+                                        <input type="text" id="FKUB1OT_4" readonly="readonly" class="form-control Saled SaledConfirm1" value="@Items.ALL_LICS.FKUB1OT_4" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Конечные показания: </label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="FKUB2OT_4"  readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2OT_4" />
+                                        <input type="text" id="FKUB2OT_4" readonly="readonly" class="form-control Saled SaledConfirm2" value="@Items.ALL_LICS.FKUB2OT_4" />
                                     </div>
                                     <label class="col-sm-4 col-form-label"> Объем: </label>
                                     <div class="col-sm-8">
@@ -516,6 +516,10 @@
                         </div>
                     </div>
                     <input type="button" name="@Items.ID_PU" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
+                     @if (User.IsInRole("Admin"))
+                     {
+                        <input type="button" name="@Items.TYPE_PU" class="btn btn-primary RecoveryPu" value="Востановить ПУ"/>
+                     }
                 </div>
             </div>
         }
@@ -659,15 +663,15 @@ else
             });
 
         })
-        $(".Delete").click(function (e) {
+        $(".RecoveryPu").click(function (e) {
             var IdPU = $(this).parent().find('.IdPU').val();
             $.confirm({
                 title: 'Предупрждение!',
-                content: 'Внимание вы пытаетесь удалить ПУ ' + $(this).attr('name') + ' !!!',
+                content: 'Внимание вы пытаетесь востановить ПУ ' + $(this).attr('name') + ' !!!',
                 buttons: {
                     "Да": function () {
                         $.ajax({
-                            url: '/Counter/DeletePU',
+                            url: '/Counter/RecoveryPu',
                             type: 'POST',
                             data: JSON.stringify({
                                 IdPU: IdPU

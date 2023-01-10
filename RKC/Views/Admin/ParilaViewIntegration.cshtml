@@ -6,7 +6,7 @@
 <br />
 <div style="margin-top:30px;" class="row">
     <div class="col-md-4">
-        <input type="date" class="form-control" min="@ViewBag.IntegrationTime.ToString("yyyy-MM-dd")" max="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")" id="DateRunReadingIntegration" value="@DateTime.Now.Month" />
+        <input type="date" class="form-control" min="@ViewBag.IntegrationTime.ToString("yyyy-MM-dd")" max="@DateTime.Now.Date.AddDays(0).ToString("yyyy-MM-dd")" id="DateRunReadingIntegration" value="@DateTime.Now.Month" />
     </div>
     <div class="col-md-4">
         <label>Последняя интеграция @ViewBag.IntegrationTime.ToString("yyyy.MM.dd")</label>
@@ -26,10 +26,12 @@
             </div>
             <div class="col-md-2">
                 <select name="TypeLoad" id="TypeLoad" class="form-control">
+                    <option value="1">Открытие новых ИПУ</option>
                     <option value="2">Обновление информаци ПУ</option>
                     <option value="3">Изменения площадей</option>
                     <option value="4">Загрузка персов</option>
-                    <option value="5">Массовое закрытие ПУ</option>
+                    <option value="5">Обновление персов главных</option>
+                    <option value="6">Массовое закрытие ПУ</option>
                 </select>
                 @*<input name="Type" id="Type" class="form-control" />*@
             </div>

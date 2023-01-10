@@ -201,6 +201,21 @@ namespace RKC.Controllers
                 return Content($"Во время удаления произошла ошибка {ex.Message}");
             }
         }
+        [HttpPost]
+        [Authorize(Roles = "CounterWriter,Admin")]
+        public ActionResult RecoveryPU(int IdPU)
+        {
+            try
+            {
+                _logger.ActionUsers(IdPU, "Востановил ПУ", User.Identity.GetFIOFull());
+                _counter.RecoveryIPU(IdPU);
+                return Content("Удаление прошло успешно");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Во время удаления произошла ошибка {ex.Message}");
+            }
+        }
         public ActionResult DeleteError(int IdPU, string Lic)
         {
             try
@@ -227,6 +242,19 @@ namespace RKC.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult UploadFilePU(HttpPostedFileBase file, string User, int TypeLoad)
         {
+            if (TypeLoad == 1)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(_excel.LoadExcelNewPUProperty(workbook, User, _cacheApp));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }
+            }
             if (TypeLoad == 2)
             {
                 using (XLWorkbook wb = new XLWorkbook())
@@ -267,6 +295,19 @@ namespace RKC.Controllers
                 }
             }
             if (TypeLoad == 5)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(_excel.LoadExcelUpdatePersonalDataMain(workbook, User, _cacheApp));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }
+            }
+            if (TypeLoad == 6)
             {
                 using (XLWorkbook wb = new XLWorkbook())
                 {

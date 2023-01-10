@@ -56,8 +56,7 @@ namespace BL.Service
             }).ToList();
             var periods = period.AddDays(-1);
             IQueryable<IntegrationReadings> Integrs = dbApp.IntegrationReadings.Where(x=>x.DateTime >= periods);
-            var IntegrsList = Integrs.ToList();
-
+            var IntegrsList = Integrs.ToList();//--------------------------
             var payment = dbs.Payment
                 .Include(x => x.Counter)
                 .Include(x => x.Organization)
@@ -76,7 +75,7 @@ namespace BL.Service
                     foreach (var Item in data.Counter)
                     {
                         var Integr = IntegrsList.Where(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id).Select(x => x.Lic).ToList();
-                        if (Integr.Count() == 0 && Convert.ToDecimal(Item.value) != 0)
+                        if (Integr.Count() == 0)
                         {
                             bool Error = false;
                             try
@@ -91,253 +90,218 @@ namespace BL.Service
                                 integrationReadings.DateTime = data.payment_date;
                                 integrationReadings.IdCounterReadings = Item.id;
                                 Error = IPU_COUNTERS == null ? true : false;
+                                if (IPU_COUNTERS.Count() == 0)
+                                {
+                                    Error = true;
+                                    var Ipu_Close = Counters.Where(x => x.FULL_LIC == data.lic &&
+                               x.TYPE_PU.Contains(Item.name)).Select(x => new { Close = x.CLOSE_ }).FirstOrDefault();
+                                    if(Ipu_Close.Close == true)
+                                        integrationReadings.Description += $@"{ErrorIntegration.IpuClose.GetDescription()} {Item.name} ";
+                                    else 
+                                        integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
+                                }
+                                if (IPU_COUNTERS.Count() > 1)
+                                {
+                                    Error = true;
+                                    integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
+                                }
                                 saveModel.TypePU = Item.name;
                                 saveModel.FULL_LIC = data.lic;
-                                if (saveModel.TypePU == TypePU.GVS1.GetDescription())
-                                {
-                                    integrationReadings.EndReadings = Readings.FKUB2XVS.ToString();
-                                    integrationReadings.InitialReadings = Readings.FKUB1XVS.ToString();
-                                    integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS > 30)
+                                if (Error != true) { 
+                                    if (saveModel.TypePU == TypePU.GVS1.GetDescription())
                                     {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                        integrationReadings.EndReadings = Readings.FKUB2XVS.ToString();
+                                        integrationReadings.InitialReadings = Readings.FKUB1XVS.ToString();
+                                        integrationReadings.NowReadings = Item.value.ToString();
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS > 30)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                        }
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS < 0)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
+                                        }
+                                        else
+                                        {
+                                            saveModel.FKUB2XVS = Convert.ToDecimal(Item.value);
+                                        }
                                     }
-                                    else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS < 0)
+                                    if (saveModel.TypePU == TypePU.GVS2.GetDescription())
                                     {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() == 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() > 1)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                    }
-                                    else
-                                    {
-                                        saveModel.FKUB2XVS = Convert.ToDecimal(Item.value);
-                                    }
-                                }
-                                if (saveModel.TypePU == TypePU.GVS2.GetDescription())
-                                {
-                                    integrationReadings.EndReadings = Readings.FKUB2XV_2.ToString();
-                                    integrationReadings.InitialReadings = Readings.FKUB1XV_2.ToString();
-                                    integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 > 30)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                    }
-                                    else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 < 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() == 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() > 1)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                    }
-                                    else
-                                    {
-                                        saveModel.FKUB2XV_2 = Convert.ToDecimal(Item.value);
+                                        integrationReadings.EndReadings = Readings.FKUB2XV_2.ToString();
+                                        integrationReadings.InitialReadings = Readings.FKUB1XV_2.ToString();
+                                        integrationReadings.NowReadings = Item.value.ToString();
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 > 30)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                        }
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 < 0)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
+                                        }
+                                        else
+                                        {
+                                            saveModel.FKUB2XV_2 = Convert.ToDecimal(Item.value);
 
+                                        }
                                     }
-                                }
-                                if (saveModel.TypePU == TypePU.GVS3.GetDescription())
-                                {
-                                    integrationReadings.EndReadings = Readings.FKUB2XV_3.ToString();
-                                    integrationReadings.InitialReadings = Readings.FKUB1XV_3.ToString();
-                                    integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 > 30)
+                                    if (saveModel.TypePU == TypePU.GVS3.GetDescription())
                                     {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                    }
-                                    else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 < 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() == 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() > 1)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                    }
-                                    else
-                                    {
-                                        saveModel.FKUB2XV_3 = Convert.ToDecimal(Item.value);
+                                        integrationReadings.EndReadings = Readings.FKUB2XV_3.ToString();
+                                        integrationReadings.InitialReadings = Readings.FKUB1XV_3.ToString();
+                                        integrationReadings.NowReadings = Item.value.ToString();
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 > 30)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                        }
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 < 0)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
+                                        }
+                                        else
+                                        {
+                                            saveModel.FKUB2XV_3 = Convert.ToDecimal(Item.value);
 
+                                        }
                                     }
-                                }
-                                if (saveModel.TypePU == TypePU.GVS4.GetDescription())
-                                {
-                                    integrationReadings.EndReadings = Readings.FKUB2XV_4.ToString();
-                                    integrationReadings.InitialReadings = Readings.FKUB1XV_4.ToString();
-                                    integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 > 30)
+                                    if (saveModel.TypePU == TypePU.GVS4.GetDescription())
                                     {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                    }
-                                    else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 < 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() == 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() > 1)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                    }
-                                    else
-                                    {
-                                        saveModel.FKUB2XV_4 = Convert.ToDecimal(Item.value);
+                                        integrationReadings.EndReadings = Readings.FKUB2XV_4.ToString();
+                                        integrationReadings.InitialReadings = Readings.FKUB1XV_4.ToString();
+                                        integrationReadings.NowReadings = Item.value.ToString();
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 > 30)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                        }
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 < 0)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
+                                        }
+                                        else
+                                        {
+                                            saveModel.FKUB2XV_4 = Convert.ToDecimal(Item.value);
 
+                                        }
                                     }
-                                }
-                                if (saveModel.TypePU == TypePU.ITP1.GetDescription())
-                                {
-                                    integrationReadings.EndReadings = Readings.FKUB2OT_1.ToString();
-                                    integrationReadings.InitialReadings = Readings.FKUB1OT_1.ToString();
-                                    integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 > 30)
+                                    if (saveModel.TypePU == TypePU.ITP1.GetDescription())
                                     {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                    }
-                                    else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 < 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() == 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() > 1)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                    }
-                                    else
-                                    {
-                                        saveModel.FKUB2OT_1 = Convert.ToDecimal(Item.value);
+                                        integrationReadings.EndReadings = Readings.FKUB2OT_1.ToString();
+                                        integrationReadings.InitialReadings = Readings.FKUB1OT_1.ToString();
+                                        integrationReadings.NowReadings = Item.value.ToString();
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 > 30)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                        }
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 <= 0)
+                                        {
+                                            if (Readings.FKUB2OT_1 == 0 && Convert.ToDecimal(Item.value) == 0)
+                                            {
+                                                saveModel.FKUB2OT_1 = Convert.ToDecimal(Item.value);
+                                            }
+                                            else if(Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 < 0)
+                                            {
+                                                Error = true;
+                                                integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
+                                            }
+                                        }
+                                        if(Error == false)
+                                        {
+                                            saveModel.FKUB2OT_1 = Convert.ToDecimal(Item.value);
 
+                                        }
                                     }
-                                }
-                                if (saveModel.TypePU == TypePU.ITP2.GetDescription())
-                                {
-                                    integrationReadings.EndReadings = Readings.FKUB2OT_2.ToString();
-                                    integrationReadings.InitialReadings = Readings.FKUB1OT_2.ToString();
-                                    integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 > 30)
+                                    if (saveModel.TypePU == TypePU.ITP2.GetDescription())
                                     {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                    }
-                                    else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 < 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() == 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() > 1)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                    }
-                                    else
-                                    {
-                                        saveModel.FKUB2OT_2 = Convert.ToDecimal(Item.value);
+                                        integrationReadings.EndReadings = Readings.FKUB2OT_2.ToString();
+                                        integrationReadings.InitialReadings = Readings.FKUB1OT_2.ToString();
+                                        integrationReadings.NowReadings = Item.value.ToString();
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 > 30)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                        }
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 <= 0)
+                                        {
+                                            if (Readings.FKUB2OT_2 == 0 && Convert.ToDecimal(Item.value) == 0)
+                                            {
+                                                saveModel.FKUB2OT_2 = Convert.ToDecimal(Item.value);
+                                            }
+                                            else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 < 0)
+                                            {
+                                                Error = true;
+                                                integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
+                                            }
+                                        }
+                                        if (Error == false)
+                                        {
+                                            saveModel.FKUB2OT_2 = Convert.ToDecimal(Item.value);
 
+                                        }
                                     }
-                                }
-                                if (saveModel.TypePU == TypePU.ITP3.GetDescription())
-                                {
-                                    integrationReadings.EndReadings = Readings.FKUB2OT_3.ToString();
-                                    integrationReadings.InitialReadings = Readings.FKUB1OT_3.ToString();
-                                    integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 > 30)
+                                    if (saveModel.TypePU == TypePU.ITP3.GetDescription())
                                     {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                    }
-                                    else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 < 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() == 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() > 1)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                    }
-                                    else
-                                    {
-                                        saveModel.FKUB2OT_3 = Convert.ToDecimal(Item.value);
+                                        integrationReadings.EndReadings = Readings.FKUB2OT_3.ToString();
+                                        integrationReadings.InitialReadings = Readings.FKUB1OT_3.ToString();
+                                        integrationReadings.NowReadings = Item.value.ToString();
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 > 30)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                        }
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 <= 0)
+                                        {
+                                            if (Readings.FKUB2OT_3 == 0 && Convert.ToDecimal(Item.value) == 0)
+                                            {
+                                                saveModel.FKUB2OT_3 = Convert.ToDecimal(Item.value);
+                                            }
+                                            else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 < 0)
+                                            {
+                                                Error = true;
+                                                integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
+                                            }
+                                        }
+                                        if (Error == false)
+                                        {
+                                            saveModel.FKUB2OT_3 = Convert.ToDecimal(Item.value);
 
+                                        }
                                     }
-                                }
-                                if (saveModel.TypePU == TypePU.ITP4.GetDescription())
-                                {
-                                    integrationReadings.EndReadings = Readings.FKUB2OT_4.ToString();
-                                    integrationReadings.InitialReadings = Readings.FKUB1OT_4.ToString();
-                                    integrationReadings.NowReadings = Item.value.ToString();
-                                    if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 > 30)
+                                    if (saveModel.TypePU == TypePU.ITP4.GetDescription())
                                     {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                    }
-                                    else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 < 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() == 0)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
-                                    }
-                                    else if (IPU_COUNTERS.Count() > 1)
-                                    {
-                                        Error = true;
-                                        integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                    }
-                                    else
-                                    {
-                                        saveModel.FKUB2OT_4 = Convert.ToDecimal(Item.value);
+                                        integrationReadings.EndReadings = Readings.FKUB2OT_4.ToString();
+                                        integrationReadings.InitialReadings = Readings.FKUB1OT_4.ToString();
+                                        integrationReadings.NowReadings = Item.value.ToString();
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 > 30)
+                                        {
+                                            Error = true;
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                        }
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 <= 0)
+                                        {
+                                            if (Readings.FKUB2OT_4 == 0 && Convert.ToDecimal(Item.value) == 0)
+                                            {
+                                                saveModel.FKUB2OT_4 = Convert.ToDecimal(Item.value);
+                                            }
+                                            else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 < 0)
+                                            {
+                                                Error = true;
+                                                integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
+                                            }
+                                        }
+                                        if (Error == false)
+                                        {
+                                            saveModel.FKUB2OT_4 = Convert.ToDecimal(Item.value);
 
+                                        }
                                     }
                                 }
                                 if (Error == false) await counter.UpdatePUIntegrations(saveModel,

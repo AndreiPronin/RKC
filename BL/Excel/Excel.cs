@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +25,9 @@ namespace BL.Excel
         DataTable CreateExcelLic(string User, ICacheApp cacheApp);
         DataTable CreateExcelGeneral();
         DataTable LoadExcelPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        DataTable LoadExcelNewPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelNewPersonalData(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        DataTable LoadExcelUpdatePersonalDataMain(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable MassClosePU(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelSquarePersProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable ErroIntegratin();
@@ -121,9 +122,9 @@ namespace BL.Excel
             //{
             //    //var FKUBSXVS = Items.FKUBSXVS == 0 ? "нет ИПУ" : Items.FKUBSXVS == 1 ? "расчет по ИПУ" : Items.FKUBSXVS == 2 ? "расчет по среднему" : Items.FKUBSXVS == 3 ? "расчет по нормативу" : "";
             //    //var FKUBSXV_2 = Items.FKUBSXV_2 == 0 ? "нет ИПУ" : Items.FKUBSXV_2 == 1 ? "расчет по ИПУ" : "";
-            //    //var FKUBSXV_3 = Items.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.FKUBSXV_3 == 2 ? "расчет по средему" : Items.FKUBSXV_3 == 3 ? "расчет по нормативу" : "";
+            //    //var FKUBSXV_3 = Items.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.FKUBSXV_3 == 2 ? "расчет по среднему" : Items.FKUBSXV_3 == 3 ? "расчет по нормативу" : "";
             //    //var FKUBSXV_4 = Items.FKUBSXV_4 == 0 ? "нет ИПУ" : Items.FKUBSXV_4 == 1 ? "расчет по ИПУ" : "";
-            //    //var FKUBSOT_1 = Items.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.FKUBSOT_1 == 2 ? "расчет по средему" : Items.FKUBSOT_1 == 3 ? "расчет по нормативу" : "";
+            //    //var FKUBSOT_1 = Items.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.FKUBSOT_1 == 2 ? "расчет по среднему" : Items.FKUBSOT_1 == 3 ? "расчет по нормативу" : "";
             //    //var FKUBSOT_2 = Items.FKUBSOT_2 == 0 ? "нет ИПУ" : Items.FKUBSOT_2 == 1 ? "расчет по ИПУ" : "";
             //    //var FKUBSOT_3 = Items.FKUBSOT_3 == 0 ? "нет ИПУ" : Items.FKUBSOT_3 == 1 ? "расчет по ИПУ" : "";
             //    //var FKUBSOT_4 = Items.FKUBSOT_4 == 0 ? "нет ИПУ" : Items.FKUBSOT_4 == 1 ? "расчет по ИПУ" : "";
@@ -500,6 +501,153 @@ namespace BL.Excel
             foreach (var Items in COUNTERsNotAdded)
             {
                 dt.Rows.Add(Items.FULL_LIC, Items.TypePU, Items.NumberPU, Items.DESCRIPTION);
+            }
+            return dt;
+        }
+        public DataTable LoadExcelNewPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User, "0");
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
+            List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
+            var dbApp = new ApplicationDbContext();
+            var Count = nonEmptyDataRows.Count();
+            int i = 1;
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    i++;
+                    try
+                    {
+                        var Procent = Math.Round((float)i / Count * 100, 0);
+                        cacheApp.UpdateProgress(User, Procent.ToString());
+                        SaveModelIPU saveModel = new SaveModelIPU();
+                        var integrationReadings = new IntegrationReadings();
+                        saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
+                        saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
+                        if (dataRow.Cell(3).Value != "") { saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value); }
+                        saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
+                        saveModel.MODEL_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
+                        if (dataRow.Cell(6).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(6).Value); }
+                        if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(7).Value); }
+                        saveModel.TYPEOFSEAL = dataRow.Cell(8).Value == "" ? "" : Convert.ToString(dataRow.Cell(8).Value).Replace(" ", "");
+                        saveModel.SEALNUMBER = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
+                        saveModel.TYPEOFSEAL2 = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
+                        saveModel.SEALNUMBER2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
+                        if (dataRow.Cell(12).Value != "")
+                        {
+                            var str = dataRow.Cell(12).Value.ToString().Replace(",", ".");
+                            saveModel.CHECKPOINT_DATE = Convert.ToDateTime(Convert.ToString(dataRow.Cell(12).Value).Replace(".", ","));
+                        }
+                        if (dataRow.Cell(13).Value != "")
+                        {
+                            saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(13).Value).Replace(".", ","));
+                        }
+                        if (!counter.UpdateNewPU(saveModel, User))
+                        {
+                            saveModel.DESCRIPTION = $"Нет такого ПУ {saveModel.TypePU}";
+                            COUNTERsNotAdded.Add(saveModel);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        COUNTERsNotAdded.Add(new SaveModelIPU { FULL_LIC = $"Ошибка на {i} строке" });
+                    }
+                }
+            }
+            DataTable dt = new DataTable("Counter");
+            dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Лицевой счет"),
+                                        new DataColumn("Тип ПУ"),
+                                        new DataColumn("Номер"),
+                                        new DataColumn("Примечание")});
+            foreach (var Items in COUNTERsNotAdded)
+            {
+                dt.Rows.Add(Items.FULL_LIC, Items.TypePU, Items.NumberPU, Items.DESCRIPTION);
+            }
+            return dt;
+        }
+        public DataTable LoadExcelUpdatePersonalDataMain(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User, "0");
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons());
+            List<PersDataModel> PersNotAdded = new List<PersDataModel>();
+            var dbApp = new ApplicationDbContext();
+            var Count = nonEmptyDataRows.Count();
+            int i = 1;
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    i++;
+                    try
+                    {
+                        var Procent = Math.Round((float)i / Count * 100, 0);
+                        cacheApp.UpdateProgress(User, Procent.ToString());
+                        PersDataModel saveModel = new PersDataModel();
+
+                        saveModel.Lic = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Trim();
+
+                        if (dataRow.Cell(5).Value != "") {
+                            DateTime.TryParse(Convert.ToString(dataRow.Cell(2).Value).Replace(".", ","), out DateTime date);
+                            saveModel.DateOfBirth = date;
+                        }
+                        saveModel.PlaceOfBirth = dataRow.Cell(3).Value == "" ? null : Convert.ToString(dataRow.Cell(3).Value).Trim();
+                        saveModel.PassportSerial = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Trim();
+                        saveModel.PassportNumber = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Trim();
+                        saveModel.PassportIssued = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Trim();
+
+                        if (dataRow.Cell(7).Value != "")
+                        {
+                            DateTime.TryParse(Convert.ToString(dataRow.Cell(7).Value).Replace(".", ","), out DateTime date);
+                            saveModel.PassportDate = date;
+                        }
+                           
+                        if (dataRow.Cell(8).Value != "")
+                        {
+                            var tel = Convert.ToString(dataRow.Cell(8).Value).Trim();
+                            saveModel.Tel1 = $"+7{tel}";
+                        }
+                        saveModel.Comment1 = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Trim();
+                        if (dataRow.Cell(10).Value != "")
+                        {
+                            var tel = Convert.ToString(dataRow.Cell(10).Value).Trim();
+                            saveModel.Tel2 = $"+7{tel}";
+                        }
+                        saveModel.Email = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Trim();
+                        saveModel.Comment = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Trim();
+                        if (dataRow.Cell(14).Value != "")
+                            saveModel.DateAdd = Convert.ToDateTime(Convert.ToString(dataRow.Cell(14).Value).Replace(".", ","));
+                        saveModel.RoomType = dataRow.Cell(15).Value == "" ? "" : Convert.ToString(dataRow.Cell(15).Value).Trim();
+                        //if (dataRow.Cell(16).Value != "")
+                        //    saveModel.Main = Convert.ToBoolean(Convert.ToInt16(Convert.ToString(dataRow.Cell(16).Value).Trim()));
+                        if (dataRow.Cell(17).Value != "")
+                            saveModel.IsDelete = Convert.ToBoolean(Convert.ToInt16(Convert.ToString(dataRow.Cell(17).Value).Trim()));
+                        saveModel.SnilsNumber = dataRow.Cell(18).Value == "" ? "" : Convert.ToString(dataRow.Cell(18).Value).Trim();
+                        saveModel.Inn = dataRow.Cell(19).Value == "" ? "" : Convert.ToString(dataRow.Cell(19).Value).Trim();
+                        if (dataRow.Cell(20).Value != "")
+                            saveModel.NumberOfPersons = Convert.ToInt32(Convert.ToString(dataRow.Cell(20).Value).Trim());
+                        if (dataRow.Cell(21).Value != "")
+                            saveModel.Square = Convert.ToDouble(Convert.ToString(dataRow.Cell(21).Value).Trim());
+                        saveModel.SendingElectronicReceipt = dataRow.Cell(22).Value == "" ? "" : Convert.ToString(dataRow.Cell(22).Value).Trim();
+                        personalData.SavePersonalDataMain(saveModel, User);
+                    }
+                    catch (Exception ex)
+                    {
+                        if(ex.InnerException != null)
+                            PersNotAdded.Add(new PersDataModel { Lic = $"Ошибка на {i} строке", Comment = ex.InnerException?.Message });
+                        else
+                            PersNotAdded.Add(new PersDataModel { Lic = $"Ошибка на {i} строке", Comment = ex.Message });
+                    }
+                }
+            }
+            DataTable dt = new DataTable("PersData");
+            dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Лицевой счет"),
+                                        new DataColumn("Примечание")});
+            foreach (var Items in PersNotAdded)
+            {
+                dt.Rows.Add(Items.Lic, Items.Comment);
             }
             return dt;
         }

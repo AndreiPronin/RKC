@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiT+\EBD.cs" />
+    <Compile Include="Excel\ExaminationToExcel.cs" />
     <Compile Include="Excel\ExcelHelpСalculation.cs" />
     <Compile Include="Excel\ExcelTemplate.cs" />
     <Compile Include="Excel\NotificationExcel.cs" />

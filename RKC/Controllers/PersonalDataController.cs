@@ -12,6 +12,9 @@ using System.Web;
 using System.Web.Mvc;
 using WordGenerator;
 using Ionic.Zip;
+using ClosedXML.Excel;
+using static System.Net.WebRequestMethods;
+using BL.Excel;
 
 namespace RKC.Controllers
 {
@@ -226,6 +229,20 @@ namespace RKC.Controllers
         {
             ViewBag.LIC = FullLic;
             return View(_personalData.GetReadingsHistory(FullLic).OrderByDescending(x => x.payment_date_day));
+        }
+        [Authorize(Roles = "SuperAdmin")]
+        public ActionResult ExaminationPersIsLic()
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                var workbook = new XLWorkbook();
+                wb.Worksheets.Add(new ExaminationToExcel().ExaminationPersIsLic(User.Identity.Name,_cacheApp));
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчет проверки персов.xlsx");
+                }
+            }
         }
     }
 }

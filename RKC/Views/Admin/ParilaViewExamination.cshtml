@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "ParilaViewIntegration";
+}
+
+<br />
+<div style="margin-top:30px;" class="row">
+    <div class="col-md-6">
+        <button id="ExaminationPuIsLic" class="btn btn-primary" >Проверка ПУ наличие в лик</button>
+    </div>
+    <div class="col-md-6">
+        <button id="ExaminationPersIsLic" class="btn btn-primary">Проверка Перс наличие в лик</button>
+    </div>
+</div>
+<div id="ExaminationResult"></div>
+<br />
+<script>
+    $(document).ready(function (e) {
+        $("#ExaminationPuIsLic").click(function () {
+            $("#ExaminationPuIsLic").addClass("disabled");
+            $.ajax({
+                url: '/Counter/RunIntegration?Date=' + $("#DateRunReadingIntegration").val(),
+                success: function (data) {
+                    alert('Проверка завершена');
+                    window.location.reload();
+                },
+                error: function () {
+                    alert('Ошибка проверки');
+                }
+            });
+        })
+        $("#ExaminationPersIsLic").click(function () {
+            $("#ExaminationPersIsLic").addClass("disabled");
+            window.location.href = "/PersonalData/ExaminationPersIsLic";
+        })
+    });
+</script>
+

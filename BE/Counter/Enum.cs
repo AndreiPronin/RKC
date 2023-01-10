@@ -80,5 +80,7 @@ namespace BE.Counter
         NoLic = 5,
         [Description("Оплата есть а показаний нет")]
         NoReadings = 6,
+        [Description("Прибор учета закрыт")]
+        IpuClose = 7,
     }
 }

@@ -28,6 +28,7 @@ namespace BL.Services
         string DeleteFile(int Id, string User);
         List<LogsPersData> GetHistory(int idPersData);
         void SavePersonalData(PersDataModel persDataModelView, string User);
+        void SavePersonalDataMain(PersDataModel persDataModel, string User);
         void MakeToMain(int idPersData);
         void AddPersData(PersDataModel persDataModel, string User);
         void DeletePers(int IdPersData, string User);
@@ -288,6 +289,60 @@ namespace BL.Services
                 db.SaveChanges();
             }
         }
+        public void SavePersonalDataMain(PersDataModel persDataModel, string User)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var PErsData = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main == true).ToList();
+                if (PErsData.Count() == 0)
+                {
+                    new Exception($"На лицевом счете {persDataModel.Lic} нет основного");
+                }
+                if (PErsData.Count() > 1)
+                {
+                    new Exception($"На лицевом счете {persDataModel.Lic} более одного основного");
+                }
+                var pers = PErsData.FirstOrDefault();
+                var PersData = db.PersData.Find(pers.idPersData);
+                persDataModel.idPersData = pers.idPersData;
+                _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel), User);
+                var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
+                foreach (var Items in ListPers)
+                {
+                    Items.Square = persDataModel.Square != null ? persDataModel.Square : Items.Square;
+                    Items.NumberOfPersons = persDataModel.NumberOfPersons != null ? persDataModel.NumberOfPersons : Items.NumberOfPersons;
+                }
+                db.SaveChanges();
+                PersData.SendingElectronicReceipt = string.IsNullOrEmpty(persDataModel.SendingElectronicReceipt) ? PersData.SendingElectronicReceipt : persDataModel.SendingElectronicReceipt;
+                PersData.DateAdd = persDataModel.DateAdd == null ? PersData.DateAdd : persDataModel.DateAdd;
+                PersData.Comment = string.IsNullOrEmpty(persDataModel.Comment) ? PersData.Comment : persDataModel.Comment;
+                PersData.Comment1 = string.IsNullOrEmpty(persDataModel.Comment1) ? PersData.Comment1 : persDataModel.Comment1;
+                PersData.Comment2 = string.IsNullOrEmpty(persDataModel.Comment2) ? PersData.Comment2 : persDataModel.Comment2;
+                PersData.DateOfBirth = persDataModel.DateOfBirth == null ? PersData.DateOfBirth : persDataModel.DateOfBirth;
+                PersData.Email = string.IsNullOrEmpty(persDataModel.Email) ? PersData.Email : persDataModel.Email;
+                PersData.FirstName = string.IsNullOrEmpty(persDataModel.FirstName) ? PersData.FirstName : persDataModel.FirstName;
+                PersData.Inn = string.IsNullOrEmpty(persDataModel.Inn) ? PersData.Inn : persDataModel.Inn;
+                PersData.IsDelete = persDataModel.IsDelete == null ? PersData.IsDelete : persDataModel.IsDelete;
+                PersData.LastName = string.IsNullOrEmpty(persDataModel.LastName) ? PersData.LastName : persDataModel.LastName;
+                PersData.Lic = string.IsNullOrEmpty(persDataModel.Lic) ? PersData.Lic : persDataModel.Lic;
+                PersData.Main = persDataModel.Main == null ? PersData.Main : persDataModel.Main;
+                PersData.MiddleName = persDataModel.MiddleName == null ? PersData.MiddleName : persDataModel.MiddleName;
+                PersData.NumberOfPersons = persDataModel.NumberOfPersons == null ? PersData.NumberOfPersons : persDataModel.NumberOfPersons;
+                PersData.PassportDate = persDataModel.PassportDate == null ? PersData.PassportDate : persDataModel.PassportDate;
+                PersData.PassportIssued = persDataModel.PassportIssued == null ? PersData.PassportIssued : persDataModel.PassportIssued;
+                PersData.PassportNumber = persDataModel.PassportNumber == null ? PersData.PassportNumber : persDataModel.PassportNumber;
+                PersData.PassportSerial = string.IsNullOrEmpty(persDataModel.PassportSerial) ? PersData.PassportSerial : persDataModel.PassportSerial;
+                PersData.PlaceOfBirth = string.IsNullOrEmpty(persDataModel.PlaceOfBirth) ? PersData.PlaceOfBirth : persDataModel.PlaceOfBirth;
+                PersData.RoomType = string.IsNullOrEmpty(persDataModel.RoomType) ? PersData.RoomType : persDataModel.RoomType;
+                PersData.SnilsNumber = string.IsNullOrEmpty(persDataModel.SnilsNumber) ? PersData.SnilsNumber : persDataModel.SnilsNumber;
+                PersData.Square = persDataModel.Square == null ? PersData.Square : persDataModel.Square;
+                PersData.StateLic = string.IsNullOrEmpty(persDataModel.StateLic) ? PersData.StateLic : persDataModel.StateLic;
+                PersData.Tel1 = string.IsNullOrEmpty(persDataModel.Tel1) ? PersData.Tel1 : persDataModel.Tel1;
+                PersData.Tel2 = string.IsNullOrEmpty(persDataModel.Tel2) ? PersData.Tel2 : persDataModel.Tel2;
+                PersData.UserName = string.IsNullOrEmpty(persDataModel.UserName) ? PersData.UserName : persDataModel.UserName;
+                db.SaveChanges();
+            }
+        }
         public void MakeToMain (int idPersData)
         {
             using (var db = new ApplicationDbContext())
@@ -372,7 +427,6 @@ namespace BL.Services
                 return db.Payment.Include(x => x.Counter).Include(x => x.Organization).Where(x => x.lic == Full_Lic).ToList();
             }
         }
-
         public List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr, string Full_Lic)
         {
             using (var db = new DbPayment())

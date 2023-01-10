@@ -33,7 +33,7 @@ namespace RKC.Controllers
                     _job.CheckDublicatePers();
                     break;
                 case (int)EnumJob.SendReceipt:
-                    if(User.IsInRole("Admin"))
+                    if(User.IsInRole("SuperAdmin"))
                         _job.SendReceipt();
                     break;
                 default:

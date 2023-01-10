@@ -74,15 +74,21 @@ namespace BL.Jobs
                 {
                     persData = db.PersData.Where(x => x.Main == true && x.Lic == FullLic).ToList();
                 }
+                bool trigger = true;
                 foreach(var Items in persData)
                 {
                     try
                     {
-                        GenerateFileHelpCalculation.Generate(Items.Lic, DateTime.Now.AddMonths(-1));
-                        if (string.IsNullOrEmpty(Items.Email))
-                            throw new Exception("Пустой Email");
-                        _notificationMail.SendMailReceipt(Items.Lic, Items.Email);
-                        receiptNotSend.Add(new ReceiptNotSend { FullLic = Items.Lic, Comment = "Отправлена квитанция" });
+                        if(Items.Lic == "720060208")
+                            trigger = false;
+                        if (trigger == false)
+                        {
+                            GenerateFileHelpCalculation.Generate(Items.Lic, DateTime.Now.AddMonths(-1));
+                            if (string.IsNullOrEmpty(Items.Email))
+                                throw new Exception("Пустой Email");
+                            _notificationMail.SendMailReceipt(Items.Lic, Items.Email);
+                            receiptNotSend.Add(new ReceiptNotSend { FullLic = Items.Lic, Comment = "Отправлена квитанция" });
+                        }
                     }
                     catch(Exception ex)
                     {

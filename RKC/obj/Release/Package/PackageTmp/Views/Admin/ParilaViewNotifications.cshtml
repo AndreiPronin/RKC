@@ -24,6 +24,11 @@
     </div>
     <div class="col-md-4">
         <button id="SendReceiptLicSend" class="btn btn-success">Отправить</button>
+        <br />
+        @if (User.IsInRole("SuperAdmin"))
+        {
+        <button id="SendReceiptAllSend" class="btn btn-success">Запустить массовую рассылку</button>
+        }
     </div>
 </div>
 <hr />
@@ -51,6 +56,18 @@
                 url: 'api/SendReceiptLic?FullLic=' + $("#SendReceiptLic").val(),
                 success: function (data) {
                     alert("Все отправлено");
+                },
+                error: function () {
+                    $("#NotificationsRsult").append("Что то пошло не так. Обратитесь к администратору!");
+                }
+            });
+        })
+        $("#SendReceiptAllSend").click(function (e) {
+            $.ajax({
+                url: '/api/ApiJob/3',
+                success: function (data) {
+                    alert("Все отправлено");
+                    window.location.reload();
                 },
                 error: function () {
                     $("#NotificationsRsult").append("Что то пошло не так. Обратитесь к администратору!");

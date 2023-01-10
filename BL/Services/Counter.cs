@@ -25,6 +25,7 @@ namespace BL.Counters
         void DeleteIPU(int IdPU);
         void AddPU(ModelAddPU modelAddPU, string FIO);
         void DeleteError(int IdPU, string Lic, string User);
+        void RecoveryIPU(int IdPU);
         Task UpdatePUIntegrations(SaveModelIPU saveModelIPU, string User, int ID_PU);
         List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC);
     }
@@ -105,7 +106,6 @@ namespace BL.Counters
         }
         public void UpdateReadings(SaveModelIPU saveModelIPU)
         {
-
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
@@ -125,7 +125,6 @@ namespace BL.Counters
                 IPU_COUNTERS.TYPEOFSEAL2 = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2) ? IPU_COUNTERS.TYPEOFSEAL2 : saveModelIPU.TYPEOFSEAL2;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                 DbTPlus.SaveChanges();
-
             }
             if (saveModelIPU.FKUB2XVS != null)
             {
@@ -172,7 +171,6 @@ namespace BL.Counters
                     }
                 }
             }
-
             if (saveModelIPU.FKUB2XV_4 != null)
             {
                 using (var DbLIC = new DbLIC())
@@ -187,7 +185,6 @@ namespace BL.Counters
                     }
                 }
             }
-
             if (saveModelIPU.FKUB2OT_1 != null)
             {
                 using (var DbLIC = new DbLIC())
@@ -203,7 +200,6 @@ namespace BL.Counters
                     }
                 }
             }
-
             if (saveModelIPU.FKUB2OT_2 != null)
             {
                 using (var DbLIC = new DbLIC())
@@ -253,7 +249,6 @@ namespace BL.Counters
 
             using (var DbTPlus = new DbTPlus())
             {
-
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
                 IPU_COUNTERS.FACTORY_NUMBER_PU = string.IsNullOrEmpty(saveModelIPU.NumberPU) ? IPU_COUNTERS.FACTORY_NUMBER_PU : saveModelIPU.NumberPU;
                 IPU_COUNTERS.DATE_CHECK = saveModelIPU.DATE_CHECK == null ? IPU_COUNTERS.DATE_CHECK : saveModelIPU.DATE_CHECK;
@@ -269,7 +264,6 @@ namespace BL.Counters
                 IPU_COUNTERS.TYPEOFSEAL2 = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2) ? IPU_COUNTERS.TYPEOFSEAL2 : saveModelIPU.TYPEOFSEAL2;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                 await DbTPlus.SaveChangesAsync();
-
             }
             if (saveModelIPU.FKUB2XVS != null)
             {
@@ -456,6 +450,19 @@ namespace BL.Counters
                 }
             }
         }
+        public void RecoveryIPU(int IdPU)
+        {
+            using (var DbTPlus = new DbTPlus())
+            {
+
+                IPU_COUNTERS iPU_COUNTERS = DbTPlus.IPU_COUNTERS.FirstOrDefault(x => x.ID_PU == IdPU && x.CLOSE_ == true);
+                iPU_COUNTERS.CLOSE_ = null;
+                iPU_COUNTERS.DATE_CLOSE = null;
+                iPU_COUNTERS.CHECKPOINT_DATE = null;
+                iPU_COUNTERS.CHECKPOINT_READINGS = null;
+                DbTPlus.SaveChanges();
+            }
+        }
         public void DeleteError(int IdPU, string Lic,string User)
         {
             using(var db = new DbTPlus())
@@ -588,13 +595,43 @@ namespace BL.Counters
 
             }
         }
+        public bool UpdateNewPU(SaveModelIPU saveModelIPU, string User)
+        {
+            using (var DbTPlus = new DbTPlus())
+            {
+                var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ != true).FirstOrDefault();
+                if (IPU_COUNTERS == null)
+                {
+                    AutoAddPU(saveModelIPU.FULL_LIC);
+                    IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ != true).FirstOrDefault();
+                }
+
+                //if(IPU_COUNTERS == null)
+                //{
+                //    //AutoAddPU(saveModelIPU.FULL_LIC);
+                //    IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ == null).FirstOrDefault();
+                //}
+                if (IPU_COUNTERS != null)
+                {
+                    saveModelIPU.IdPU = IPU_COUNTERS.ID_PU;
+                    saveModelIPU.OVERWRITE_SEAL = false;
+                    logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
+                    Task.Run(() => UpdateReadings(saveModelIPU));
+                    //new Thread(x=> UpdateReadings(saveModelIPU)).Start();
+                    return true;
+                }
+                else { return false; }
+
+            }
+        }
         public async Task UpdatePUIntegrations(SaveModelIPU saveModelIPU, string User, int ID_PU)
         {
             if (ID_PU != 0) {
                 saveModelIPU.IdPU = ID_PU;
                 saveModelIPU.OVERWRITE_SEAL = true;
+                var Descriptrion = _generatorDescriptons.Generate(saveModelIPU);
                 await UpdateReadingsAsync(saveModelIPU);
-                logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
+                await logger.ActionUsersAsync(saveModelIPU.IdPU, Descriptrion, User);
             }
         }
         public List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC)
