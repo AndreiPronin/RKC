@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,13 @@ namespace BL.Extention
 {
     public static class ListDispose
     {
-        public static void Dispose<T>(this IEnumerable<T> source)
+        public static void DisposeAll(this IEnumerable set)
         {
-            foreach (IDisposable disposableObject in source)
+            foreach (Object obj in set)
             {
-                disposableObject.Dispose();
-            };
+                IDisposable disp = obj as IDisposable;
+                if (disp != null) { disp.Dispose(); }
+            }
         }
 
     }

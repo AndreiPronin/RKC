@@ -11,14 +11,6 @@ namespace System
 {
     public static class GetDescriptionEnum
     {
-		/// <summary>
-		/// Приведение значения перечисления в удобочитаемый формат.
-		/// </summary>
-		/// <remarks>
-		/// Для корректной работы необходимо использовать атрибут [Description("Name")] для каждого элемента перечисления.
-		/// </remarks>
-		/// <param name="enumElement">Элемент перечисления</param>
-		/// <returns>Название элемента</returns>
 		public static string GetDescription(this Enum enumElement)
 		{
 			Type type = enumElement.GetType();

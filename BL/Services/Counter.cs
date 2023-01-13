@@ -458,8 +458,8 @@ namespace BL.Counters
                 IPU_COUNTERS iPU_COUNTERS = DbTPlus.IPU_COUNTERS.FirstOrDefault(x => x.ID_PU == IdPU && x.CLOSE_ == true);
                 iPU_COUNTERS.CLOSE_ = null;
                 iPU_COUNTERS.DATE_CLOSE = null;
-                iPU_COUNTERS.CHECKPOINT_DATE = null;
-                iPU_COUNTERS.CHECKPOINT_READINGS = null;
+                iPU_COUNTERS.OPERATOR_CLOSE_DATE = null;
+                iPU_COUNTERS.OPERATOR_CLOSE_READINGS = null;
                 DbTPlus.SaveChanges();
             }
         }

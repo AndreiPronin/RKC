@@ -53,7 +53,7 @@
         })
         $("#SendReceiptLicSend").click(function (e) {
             $.ajax({
-                url: 'api/SendReceiptLic?FullLic=' + $("#SendReceiptLic").val(),
+                url: '/api/SendReceiptLic?FullLic=' + $("#SendReceiptLic").val(),
                 success: function (data) {
                     alert("Все отправлено");
                 },

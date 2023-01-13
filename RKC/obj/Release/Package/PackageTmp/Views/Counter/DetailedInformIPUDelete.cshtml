@@ -172,14 +172,14 @@
                             <div class="form-group row">
                                 @if (Items.CHECKPOINT_READINGS != null)
                                 {
-                                    <label class="col-sm-4 col-form-label">Показания контроллера:</label>
+                                    <label class="col-sm-4 col-form-label">Показания контролера:</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="CHECKPOINT_READINGS" readonly="readonly" class="form-control Saled CHECKPOINT_READINGS" value="@Items.CHECKPOINT_READINGS" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <label class="col-sm-4 NullOrEmpty col-form-label">Показания контроллера:</label>
+                                    <label class="col-sm-4 NullOrEmpty col-form-label">Показания контролера:</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="CHECKPOINT_READINGS" readonly="readonly" class="form-control Saled CHECKPOINT_READINGS" value="@Items.CHECKPOINT_READINGS" />
                                     </div>
@@ -360,7 +360,7 @@
                                 </div>
                                 { TypePU = "FKUB1XV_2"; }
                             }
-                            @{ I = Items.ALL_LICS.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 2 ? "расчет по средему" : Items.ALL_LICS.FKUBSXV_3 == 3 ? "расчет по нормативу" : ""; }
+                            @{ I = Items.ALL_LICS.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 2 ? "расчет по среднему" : Items.ALL_LICS.FKUBSXV_3 == 3 ? "расчет по нормативу" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ГВС3")
                             {
                                 <p>Признак ИПУ: ГВС 3 @I</p>
@@ -403,7 +403,7 @@
                                 { TypePU = "FKUB1XV_4"; }
                             }
 
-                            @{ I = Items.ALL_LICS.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 2 ? "расчет по средему" : Items.ALL_LICS.FKUBSOT_1 == 3 ? "расчет по нормативу" : ""; }
+                            @{ I = Items.ALL_LICS.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 2 ? "расчет по среднему" : Items.ALL_LICS.FKUBSOT_1 == 3 ? "расчет по нормативу" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ОТП1")
                             {
                                 <p>Признак ИПУ: отопление 1 @I</p>

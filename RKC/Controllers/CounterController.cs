@@ -456,5 +456,19 @@ namespace RKC.Controllers
                 return Redirect("/Counter/ErrorIntegration");
             }
         }
+        [Authorize(Roles = "SuperAdmin")]
+        public ActionResult ExaminationPuIsLic()
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                var workbook = new XLWorkbook();
+                wb.Worksheets.Add(new ExaminationToExcel().ExaminationPuIsLic(User.Identity.Name, _cacheApp));
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчет проверки приборов учета.xlsx");
+                }
+            }
+        }
     }
 }
