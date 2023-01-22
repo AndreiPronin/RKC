@@ -18,20 +18,13 @@
     $(document).ready(function (e) {
         $("#ExaminationPuIsLic").click(function () {
             $("#ExaminationPuIsLic").addClass("disabled");
-            $.ajax({
-                url: '/Counter/RunIntegration?Date=' + $("#DateRunReadingIntegration").val(),
-                success: function (data) {
-                    alert('Проверка завершена');
-                    window.location.reload();
-                },
-                error: function () {
-                    alert('Ошибка проверки');
-                }
-            });
+            window.location.href = "/Counter/ExaminationPuIsLic";
+            $("#ExaminationPuIsLic").removeClass("disabled");
         })
         $("#ExaminationPersIsLic").click(function () {
             $("#ExaminationPersIsLic").addClass("disabled");
             window.location.href = "/PersonalData/ExaminationPersIsLic";
+            $("#ExaminationPersIsLic").removeClass("disabled");
         })
     });
 </script>

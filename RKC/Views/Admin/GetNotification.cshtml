@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "GetNotification";
 }
+@if (Model.Count() != 0)
+{
 <div id="ButtonMenuBottom" class="menu-bt">
     <button class="btn btn-primary" onclick="MenuBottomonOn()">Уведомления (@Model.Count())</button>
 </div>
@@ -30,6 +32,7 @@
         <button class="btn btn-primary" onclick="MenuBottomonOff()">Закрыть</button>
     </div>
 </div>
+}
 
 
 

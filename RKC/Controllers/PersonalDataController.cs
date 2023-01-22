@@ -15,6 +15,7 @@ using Ionic.Zip;
 using ClosedXML.Excel;
 using static System.Net.WebRequestMethods;
 using BL.Excel;
+using System.Threading.Tasks;
 
 namespace RKC.Controllers
 {
@@ -103,16 +104,16 @@ namespace RKC.Controllers
             return PartialView(Result);
         }
         [HttpGet]
-        public ActionResult WatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
+        public async Task<ActionResult> WatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
-            return View(_personalData.GetInfoHelpСalculation(FullLic, DateFrom, DateTo).OrderBy(x=>x.Period));
+            return View( await _personalData.GetInfoHelpСalculation(FullLic, DateFrom, DateTo));
         }
         [HttpGet]
-        public ActionResult DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
+        public async Task<ActionResult> DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
             try
             {
-                var Result = _personalData.DownLoadHelpСalculation(FullLic, DateFrom, DateTo);
+                var Result = await _personalData.DownLoadHelpСalculation(FullLic, DateFrom, DateTo);
                 _cacheApp.Delete(FullLic);
                 return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
             }catch(Exception ex)

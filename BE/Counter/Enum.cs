@@ -49,10 +49,10 @@ namespace BE.Counter
         Counters = 1,
         [Description("Lic")]
         Lic = 2,
-        [Description("General")]
-        General = 3,
-        [Description("ReestrIPU")]
-        ReestrIPU = 4,
+        [Description("Log Pers")]
+        LogPers = 3,
+        [Description("Log Counter")]
+        LogCounter = 4,
         [Description("EBD общий")]
         EbdAll = 5,
         [Description("T+IpuGvs")]

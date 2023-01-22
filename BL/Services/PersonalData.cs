@@ -1,7 +1,7 @@
 ﻿using BE.PersData;
 using BL.Excel;
+using BL.Extention;
 using BL.Helper;
-using ClosedXML.Excel;
 using DB.DataBase;
 using DB.Model;
 using System;
@@ -23,8 +23,8 @@ namespace BL.Services
         List<PersData> GetInfoPersDataDelete(string FullLic);
         string saveFile(byte[] file, int idPersData, string Fio, string Lic, string TypeFile, string NameFile, string User);
         PersDataDocumentLoad DownLoadFile(int Id);
-        List<HelpСalculations> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
-        PersDataDocumentLoad DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
+        Task<List<HelpCalculationsModel>> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
+        Task<PersDataDocumentLoad> DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
         string DeleteFile(int Id, string User);
         List<LogsPersData> GetHistory(int idPersData);
         void SavePersonalData(PersDataModel persDataModelView, string User);
@@ -38,7 +38,6 @@ namespace BL.Services
         List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr,string Full_Lic);
         void UpdateSquareFlat(double? Square, string Lic);
         void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User);
-
     }
     public class PersonalData : IPersonalData
     {
@@ -68,7 +67,20 @@ namespace BL.Services
                 catch { return new StateCalculation() { Period = DateTime.Now }; }
             }
         }
-        public List<HelpСalculations> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
+        //public List<HelpСalculations> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
+        //{
+        //    var dateFrom = Convert.ToDateTime(DateFrom.ToString("yyyy,MM"));
+        //    var dateTo = Convert.ToDateTime(DateTo.ToString("yyyy,MM")).AddMonths(1);
+        //    using (var db = new ApplicationDbContext())
+        //    {
+        //        try
+        //        {
+        //            return db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
+        //        }
+        //        catch { return new List<HelpСalculations>(); }
+        //    }
+        //}
+        public async Task<List<HelpCalculationsModel>> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
             var dateFrom = Convert.ToDateTime(DateFrom.ToString("yyyy,MM"));
             var dateTo = Convert.ToDateTime(DateTo.ToString("yyyy,MM")).AddMonths(1);
@@ -76,9 +88,48 @@ namespace BL.Services
             {
                 try
                 {
-                    return db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
+                    var SubLic = FullLic.ConvertLicToSubLic(FullLic);
+                    List<HelpCalculationsModel> helpCalculationsModels = new List<HelpCalculationsModel>();
+                    var dbLic = new DbLIC();
+                    var HelpCalc = db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToListAsync();
+                    DateTo = DateTo.AddMonths(1);
+                    var Receipt = dbLic.KVIT.Where(x => x.lic == SubLic && x.period.Value >= DateFrom && x.period.Value <= DateTo).Select(x=> new
+                    {
+                        Period = x.period,
+                        HeatingRecalculationRate = x.sted2,
+                        HeatingСalculationGcal = x.sn2,
+                        GvsHeatingRecalculationRate = x.sted3,
+                        GvsHeatingСalculationGcal = x.sn3,
+                        HvHeatingСalculationGcal = x.sted5,
+                        HvHeatingRecalculationRate = x.sn5
+
+                    }).ToListAsync();
+                    await Task.WhenAll(HelpCalc, Receipt);
+                    helpCalculationsModels = helpCalculationsModels.ConvertToModelHelpCalculations(HelpCalc.Result);
+                    foreach(var Item in HelpCalc.Result)
+                    {
+                        try
+                        {
+                            var receipt = Receipt.Result.FirstOrDefault(x => x.Period.Value.Month == Item.Period.Value.Month && x.Period.Value.Year == Item.Period.Value.Year);
+                            var helpModel = helpCalculationsModels.FirstOrDefault(x => x.Period.Value.Month == Item.Period.Value.Month && x.Period.Value.Year == Item.Period.Value.Year);
+                            if (!string.IsNullOrEmpty(receipt?.HeatingRecalculationRate))
+                                helpModel.HeatingRecalculationRate = Convert.ToDecimal(receipt?.HeatingRecalculationRate.Replace(".", ","));
+                            if (!string.IsNullOrEmpty(receipt?.HeatingСalculationGcal))
+                                helpModel.HeatingСalculationGcal = Convert.ToDecimal(receipt?.HeatingСalculationGcal.Replace(".", ","));
+                            if (!string.IsNullOrEmpty(receipt?.GvsHeatingRecalculationRate))
+                                helpModel.GvsHeatingRecalculationRate = Convert.ToDecimal(receipt?.GvsHeatingRecalculationRate.Replace(".", ","));
+                            if (!string.IsNullOrEmpty(receipt?.GvsHeatingСalculationGcal))
+                                helpModel.GvsHeatingСalculationGcal = Convert.ToDecimal(receipt?.GvsHeatingСalculationGcal.Replace(".", ","));
+                            if (!string.IsNullOrEmpty(receipt?.HvHeatingСalculationGcal))
+                                helpModel.HvHeatingСalculationGcal = Convert.ToDecimal(receipt?.HvHeatingСalculationGcal.Replace(".", ","));
+                            if (!string.IsNullOrEmpty(receipt?.HvHeatingRecalculationRate))
+                                helpModel.HvHeatingRecalculationRate = Convert.ToDecimal(receipt?.HvHeatingRecalculationRate.Replace(".", ","));
+                        }
+                        catch { }
+                    }
+                    return helpCalculationsModels.OrderBy(x => x.Period).ToList();
                 }
-                catch { return new List<HelpСalculations>(); }
+                catch { return new List<HelpCalculationsModel>(); }
             }
         }
         public List<PersData> GetInfoPersData(string FullLic)
@@ -171,7 +222,7 @@ namespace BL.Services
         /// <param name="DateFrom"></param>
         /// <param name="DateTo"></param>
         /// <returns></returns>
-        public PersDataDocumentLoad DownLoadHelpСalculation(string FullLic,DateTime DateFrom, DateTime DateTo)
+        public async Task<PersDataDocumentLoad> DownLoadHelpСalculation(string FullLic,DateTime DateFrom, DateTime DateTo)
         {
             PersDataDocumentLoad persDataDocument = new PersDataDocumentLoad();
             persDataDocument.FileName = $@"Справка расчета {FullLic}.xlsx";
@@ -179,7 +230,8 @@ namespace BL.Services
             var dateTo = Convert.ToDateTime(DateTo.ToString("yyyy,MM")).AddMonths(1);
             using (var db = new ApplicationDbContext())
             {
-                var Result = db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
+                var Result = await GetInfoHelpСalculation(FullLic, dateFrom, dateTo);
+                //var Result = db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
                 persDataDocument.FileBytes  = ExcelHelpСalculation.Generate(Result);
             }
             return persDataDocument;
@@ -246,7 +298,6 @@ namespace BL.Services
                             AllLIC.OTCH = persDataModel.MiddleName;
                             AllLIC.IMYA = persDataModel.FirstName;
                             AllLIC.FIO = $"{persDataModel.LastName} {persDataModel.FirstName?.ToUpper()[0]}.{persDataModel.MiddleName?.ToUpper()[0]}.";
-                            
                             dbAllLic.SaveChanges();
                         }
                     }

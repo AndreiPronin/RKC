@@ -27,6 +27,7 @@ using static System.Net.WebRequestMethods;
 
 namespace RKC.Controllers
 {
+    [Authorize]
     public class CounterController : Controller
     {
         private readonly ICounter _counter;
@@ -328,7 +329,7 @@ namespace RKC.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Export(TypeFile typeFile, DateTime? dateTime)
+        public async Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
@@ -357,15 +358,15 @@ namespace RKC.Controllers
                 }
                 if (typeFile.Equals(TypeFile.Lic))
                 {
-                    wb.Worksheets.Add(_excel.CreateExcelLic(User.Identity.Name, _cacheApp));
+                    wb.Worksheets.Add( await _excel.CreateExcelLic(User.Identity.Name, _cacheApp));
                 }
-                if (typeFile.Equals(TypeFile.General))
+                if (typeFile.Equals(TypeFile.LogPers))
                 {
-                    wb.Worksheets.Add(_excel.CreateExcelGeneral());
+                    wb.Worksheets.Add( await _excel.CreateExcelLogPers());
                 }
-                if (typeFile.Equals(TypeFile.ReestrIPU))
+                if (typeFile.Equals(TypeFile.LogCounter))
                 {
-                    wb.Worksheets.Add(_excel.ReestrIPU(User.Identity.Name, _cacheApp));
+                    wb.Worksheets.Add( await _excel.CreateExcelLogCounter());
                 }
                 if (typeFile.Equals(TypeFile.TIpuOtp))
                 {

@@ -51,6 +51,7 @@
     <Compile Include="Counter\SearchIPU_LICModel.cs" />
     <Compile Include="JobManager\EnumJob.cs" />
     <Compile Include="JobManager\MailNotSend.cs" />
+    <Compile Include="PersData\HelpCalculationsModel.cs" />
     <Compile Include="PersData\PersDataDocumentLoad.cs" />
     <Compile Include="PersData\PersDataModel.cs" />
     <Compile Include="PersData\PersNotFoundInLic.cs" />
@@ -58,6 +59,5 @@
     <Compile Include="Service\EnumFlags.cs" />
     <Compile Include="Service\ReadFilesModel.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

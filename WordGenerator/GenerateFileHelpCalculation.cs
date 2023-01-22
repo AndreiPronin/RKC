@@ -157,6 +157,8 @@ namespace WordGenerator
      false, false, false, false);
                         doc.Content.Find.Execute("{komment3}", false, true, false, false, false, true, 1, false, Comment[2], 2,
      false, false, false, false);
+                        doc.Content.Find.Execute("{komment4}", false, true, false, false, false, true, 1, false, Comment[3], 2,
+    false, false, false, false);
                         doc.Content.Find.Execute("{ipuxv1_2}", false, true, false, false, false, true, 1, false, Lic.ipuxv1_2?.Trim(), 2,
         false, false, false, false);
                         doc.Content.Find.Execute("{ipuxv2_2}", false, true, false, false, false, true, 1, false, Lic.ipuxv2_2?.Trim(), 2,
@@ -387,12 +389,12 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
         public static string[] Substring(string T)
         {
             int z = 0;
-            var arr = new string[3];
+            var arr = new string[4];
             if(T == null) return arr;
             for (int i = 0; i < T.Length-1; i++)
             {
                 if(i>1000)break;
-                if (i == 255 || i == 511 || i == 766)
+                if (i == 252 || i == 506 || i == 761)
                     z++;
                 arr[z] += T[i];
             }

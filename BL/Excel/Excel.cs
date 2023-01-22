@@ -9,8 +9,10 @@ using DB.DataBase;
 using DB.Model;
 using DB.ViewModel;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,8 +24,9 @@ namespace BL.Excel
     public interface IExcel
     {
         DataTable CreateExcelCounters();
-        DataTable CreateExcelLic(string User, ICacheApp cacheApp);
-        DataTable CreateExcelGeneral();
+        Task<DataTable> CreateExcelLic(string User, ICacheApp cacheApp);
+        Task<DataTable> CreateExcelLogPers();
+        Task<DataTable> CreateExcelLogCounter();
         DataTable LoadExcelPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelNewPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelNewPersonalData(XLWorkbook Excels, string User, ICacheApp cacheApp);
@@ -31,7 +34,6 @@ namespace BL.Excel
         DataTable MassClosePU(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelSquarePersProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable ErroIntegratin();
-        DataTable ReestrIPU(string User, ICacheApp cacheApp);
         DataTable TIpuGvs(string User, ICacheApp cacheApp);
         DataTable TIpuOtp(string User, ICacheApp cacheApp);
     }
@@ -63,7 +65,7 @@ namespace BL.Excel
             }
             return dt;
         }
-        public DataTable CreateExcelLic(string User, ICacheApp cacheApp)
+        public async Task<DataTable> CreateExcelLic(string User, ICacheApp cacheApp)
         {
             cacheApp.AddProgress(User, "0");
             DataTable dt = new DataTable("Counter");
@@ -82,9 +84,9 @@ namespace BL.Excel
                                         , new DataColumn("         ТИП расчет ОТП4         "), new DataColumn(" Начальные показания ОТП4"), new DataColumn(" Конечные показания ОТП4")}) ;
             cacheApp.UpdateProgress(User, "Получаю данные из бд");
             var DbLIC = new DbLIC();
-            List<ALL_LICS> cOUNTERs = DbLIC.ALL_LICS.ToList();
-            cacheApp.Update(User, $@"Получил {cOUNTERs.Count()} записей");
-            foreach (var Items in cOUNTERs)
+            List<ALL_LICS> AllLic = await DbLIC.ALL_LICS.ToListAsync();
+            cacheApp.Update(User, $@"Получил {AllLic.Count()} записей");
+            foreach (var Items in AllLic)
             {
                 dt.Rows.Add(Items.UL, Items.DOM, Items.CADR, Items.KW, Items.LIC, Items.F4ENUMELS, Items.ZAK, Items.FIO,
                     Items.FKUBSXVS,Items.FKUB1XVS, Items.FKUB2XVS, Items.FKUBSXV_2,Items.FKUB1XV_2, Items.FKUB2XV_2,
@@ -93,47 +95,6 @@ namespace BL.Excel
                     Items.FKUBSOT_3, Items.FKUB1OT_3, Items.FKUB2OT_3, Items.FKUBSOT_4, Items.FKUB1OT_4, Items.FKUB2OT_4);
             }
             cacheApp.Update(User, "Ожидайте... Идет скачивание файла.");
-            return dt;
-        }
-        public DataTable CreateExcelGeneral()
-        {
-            var DbLIC = new DbLIC();
-            var DbTPlus = new DbTPlus();
-            var Result = DbLIC.ALL_LICS.Join(DbTPlus.IPU_COUNTERS,
-                a => a.F4ENUMELS,
-                p => p.FULL_LIC,
-                (a, p) => new { a.UL,a.DOM,a.CADR,a.KW,a.LIC,p.FULL_LIC,p.TYPE_PU,p.FACTORY_NUMBER_PU,p.BRAND_PU,p.MODEL_PU,p.GIS_ID_PU }
-                ).ToList();
-            DataTable dt = new DataTable("Counter");
-            //dt.Columns.AddRange(new DataColumn[32] { new DataColumn("Улица         "),
-            //                            new DataColumn("Дом "),
-            //                            new DataColumn("КАДР   "),
-            //                            new DataColumn("Квартира         "),
-            //                            new DataColumn("Кор. лицевой счет"),new DataColumn("Лицевой счет"),new DataColumn("ZAK"),new DataColumn("         ФИО         ")
-            //                            , new DataColumn("         ТИП расчет ГВС1         "), new DataColumn(" Начальные показания ГВС1"), new DataColumn(" Конечные показания ГВС1")
-            //                            , new DataColumn("         ТИП расчет ГВС2         "), new DataColumn(" Начальные показания ГВС2"), new DataColumn(" Конечные показания ГВС2")
-            //                            , new DataColumn("         ТИП расчет ГВС3         "), new DataColumn(" Начальные показания ГВС3"), new DataColumn(" Конечные показания ГВС3")
-            //                            , new DataColumn("         ТИП расчет ГВС4         "), new DataColumn(" Начальные показания ГВС4"), new DataColumn(" Конечные показания ГВС4")
-            //                            , new DataColumn("         ТИП расчет ОТП1         "), new DataColumn(" Начальные показания ОТП1"), new DataColumn(" Конечные показания ОТП1")
-            //                            , new DataColumn("         ТИП расчет ОТП2         "), new DataColumn(" Начальные показания ОТП2"), new DataColumn(" Конечные показания ОТП2")
-            //                            , new DataColumn("         ТИП расчет ОТП3         "), new DataColumn(" Начальные показания ОТП3"), new DataColumn(" Конечные показания ОТП3")
-            //                            , new DataColumn("         ТИП расчет ОТП4         "), new DataColumn(" Начальные показания ОТП4"), new DataColumn(" Конечные показания ОТП4")});
-            //foreach (var Items in Result)
-            //{
-            //    //var FKUBSXVS = Items.FKUBSXVS == 0 ? "нет ИПУ" : Items.FKUBSXVS == 1 ? "расчет по ИПУ" : Items.FKUBSXVS == 2 ? "расчет по среднему" : Items.FKUBSXVS == 3 ? "расчет по нормативу" : "";
-            //    //var FKUBSXV_2 = Items.FKUBSXV_2 == 0 ? "нет ИПУ" : Items.FKUBSXV_2 == 1 ? "расчет по ИПУ" : "";
-            //    //var FKUBSXV_3 = Items.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.FKUBSXV_3 == 2 ? "расчет по среднему" : Items.FKUBSXV_3 == 3 ? "расчет по нормативу" : "";
-            //    //var FKUBSXV_4 = Items.FKUBSXV_4 == 0 ? "нет ИПУ" : Items.FKUBSXV_4 == 1 ? "расчет по ИПУ" : "";
-            //    //var FKUBSOT_1 = Items.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.FKUBSOT_1 == 2 ? "расчет по среднему" : Items.FKUBSOT_1 == 3 ? "расчет по нормативу" : "";
-            //    //var FKUBSOT_2 = Items.FKUBSOT_2 == 0 ? "нет ИПУ" : Items.FKUBSOT_2 == 1 ? "расчет по ИПУ" : "";
-            //    //var FKUBSOT_3 = Items.FKUBSOT_3 == 0 ? "нет ИПУ" : Items.FKUBSOT_3 == 1 ? "расчет по ИПУ" : "";
-            //    //var FKUBSOT_4 = Items.FKUBSOT_4 == 0 ? "нет ИПУ" : Items.FKUBSOT_4 == 1 ? "расчет по ИПУ" : "";
-            //    //dt.Rows.Add(Items.UL, Items.DOM, Items.CADR, Items.KW, Items.LIC, Items.F4ENUMELS, Items.ZAK, Items.FIO,
-            //    //    Items.FKUBSXVS, Items.FKUB1XVS, Items.FKUB2XVS, Items.FKUBSXV_2, Items.FKUB1XV_2, Items.FKUB2XV_2,
-            //    //    Items.FKUBSXV_3, Items.FKUB1XV_3, Items.FKUB2XV_3, Items.FKUBSXV_4, Items.FKUB1XV_4, Items.FKUB2XV_4,
-            //    //    Items.FKUBSOT_1, Items.FKUB1OT_1, Items.FKUB2OT_1, Items.FKUBSOT_2, Items.FKUB1OT_2, Items.FKUB2OT_2,
-            //    //    Items.FKUBSOT_3, Items.FKUB1OT_3, Items.FKUB2OT_3, Items.FKUBSOT_4, Items.FKUB1OT_4, Items.FKUB2OT_4);
-            //}
             return dt;
         }
         public DataTable LoadExcelPU(XLWorkbook Excels, string User, ICacheApp cacheApp)
@@ -802,11 +763,11 @@ namespace BL.Excel
                         var integrationReadings = new IntegrationReadings();
                         saveModel.Square = dataRow.Cell(5).Value == "" ? 0 : Convert.ToDouble(dataRow.Cell(5).Value.ToString().Replace(".", ","));
                         saveModel.Lic = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace("RBR","").Trim();
-                        var CadatrNumber = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(3).Value).Trim();
+                        var CadastrNumber = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(3).Value).Trim();
                         try
                         {
                             personalData.UpdatePersDataSquareExcel(saveModel, User);
-                            personalData.UpdateSquareCadastrFlat(saveModel.Square, CadatrNumber, saveModel.Lic);
+                            personalData.UpdateSquareCadastrFlat(saveModel.Square, CadastrNumber, saveModel.Lic);
                         }
                         catch(Exception ex)
                         {
@@ -845,31 +806,6 @@ namespace BL.Excel
                 dt.Rows.Add(Items.Lic, Items.TypePu, Items.DateTime, Items.Description, 
                     Items.InitialReadings, Items.EndReadings, Items.NowReadings);
             }
-            return dt;
-        }
-        public DataTable ReestrIPU(string User, ICacheApp cacheApp)
-        {
-            cacheApp.AddProgress(User, "Получаю данные из бд");
-            DataTable dt = new DataTable("Counter");
-            dt.Columns.AddRange(new DataColumn[17] { new DataColumn("КОД ДОМА"),
-                                        new DataColumn("   УЛИЦА   "),
-                                        new DataColumn("  ДОМ  "),
-                                        new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
-            ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   "),new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
-            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   ПЛОМБА   "),new DataColumn("   ТИП ПЛОМБА   ")
-            ,new DataColumn("   ПЛОМБА 2   "),new DataColumn("   ТИП ПЛОМБА 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
-            ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
-            var DB = new ApplicationDbContext();
-            var Counters = DB.Database.SqlQuery<vw_CounterTPlus>("select * from dbo.vw_CounterTPlus").ToList();
-            cacheApp.Update(User, "Формирую Excel");
-            foreach (var Items in Counters)
-            {
-                dt.Rows.Add(Items.CodeHouse, Items.Streer, Items.Home, Items.Flat,
-                    Items.Lic, Items.Fio, Items.Pu, Items.PuNumber, Items.DataCheck, Items.DataNextCheck, 
-                    Items.Seal, Items.TypeSeal, Items.Seal2, Items.TypeSeal2, Items.SignPu, Items.EndReadings,Items.NowReadings);
-            }
-            cacheApp.Update(User, "Скачиваю Excel");
-            
             return dt;
         }
         public DataTable TIpuGvs(string User, ICacheApp cacheApp)
@@ -923,5 +859,91 @@ namespace BL.Excel
 
             return dt;
         }
+        public async Task<DataTable> CreateExcelLogPers()
+        {
+            DataTable dt = new DataTable("Pers");
+            dt.Columns.AddRange(new DataColumn[5] {new DataColumn("Лицевой счет"),new DataColumn("Основной/не основной"), new DataColumn("Дата"), new DataColumn("Пользователь"),
+            new DataColumn("Описание действий")});
+            using (var AppDb = new ApplicationDbContext())
+            {
+                var Period = DateTime.Now.AddMonths(-2);
+                var logPers = await AppDb.LogsPersData.Where(x => x.DateTime >= Period).ToListAsync();
+                var PersData = await AppDb.PersData.ToListAsync();
+                Object Lock = new Object();
+                Parallel.ForEach(logPers, new ParallelOptions { MaxDegreeOfParallelism = 4 }, Item =>
+                {
+                    try
+                    {
+                        var Pers = PersData.FirstOrDefault(x => x.idPersData == Item.idPersData);
+                        lock (Lock)
+                        {
+                            if (Pers != null)
+                                if (Pers.Main.HasValue && Pers.Main.Value == true)
+                                    Pers.Comment = "Основной";
+                                else
+                                    Pers.Comment = "Не основной";
+
+                            dt.Rows.Add(Pers?.Lic, Pers.Comment, Item?.DateTime, Item.UserName, Item.Description);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                    }
+                });
+                
+            }
+            return dt;
+        }
+        public async Task<DataTable> CreateExcelLogCounter()
+        {
+            DataTable dt = new DataTable("Counter");
+            dt.Columns.AddRange(new DataColumn[5] {new DataColumn("Лицевой счет"),new DataColumn("Тип ПУ"), new DataColumn("Дата"), new DataColumn("Пользователь"),
+            new DataColumn("Описание действий")});
+            using (var AppDb = new ApplicationDbContext())
+            {
+                var Period = DateTime.Now.AddMonths(-1);
+                var logCounter = await AppDb.Log.Where(x => x.DateTime >= Period).ToListAsync();
+                using (var DbTplus = new DbTPlus())
+                {
+                    Object Lock = new Object();
+                    var IPU_COUNTERS = await DbTplus.IPU_COUNTERS.ToListAsync();
+                    Parallel.ForEach(logCounter, new ParallelOptions { MaxDegreeOfParallelism = 4 }, Item =>
+                    {
+                        lock (Lock)
+                        {
+                            var Pu = IPU_COUNTERS.FirstOrDefault(x => x.ID_PU == Item.IdPU);
+                            dt.Rows.Add(Pu?.FULL_LIC, Pu?.TYPE_PU, Item.DateTime, Item.UserName, Item.Description);
+                        }
+                    });
+                    
+                }
+            }
+            return dt;
+        }
+        //public DataTable ReestrIPU(string User, ICacheApp cacheApp)
+        //{
+        //    cacheApp.AddProgress(User, "Получаю данные из бд");
+        //    DataTable dt = new DataTable("Counter");
+        //    dt.Columns.AddRange(new DataColumn[17] { new DataColumn("КОД ДОМА"),
+        //                                new DataColumn("   УЛИЦА   "),
+        //                                new DataColumn("  ДОМ  "),
+        //                                new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
+        //    ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   "),new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
+        //    ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   ПЛОМБА   "),new DataColumn("   ТИП ПЛОМБА   ")
+        //    ,new DataColumn("   ПЛОМБА 2   "),new DataColumn("   ТИП ПЛОМБА 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
+        //    ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
+        //    var DB = new ApplicationDbContext();
+        //    var Counters = DB.Database.SqlQuery<vw_CounterTPlus>("select * from dbo.vw_CounterTPlus").ToList();
+        //    cacheApp.Update(User, "Формирую Excel");
+        //    foreach (var Items in Counters)
+        //    {
+        //        dt.Rows.Add(Items.CodeHouse, Items.Streer, Items.Home, Items.Flat,
+        //            Items.Lic, Items.Fio, Items.Pu, Items.PuNumber, Items.DataCheck, Items.DataNextCheck,
+        //            Items.Seal, Items.TypeSeal, Items.Seal2, Items.TypeSeal2, Items.SignPu, Items.EndReadings, Items.NowReadings);
+        //    }
+        //    cacheApp.Update(User, "Скачиваю Excel");
+
+        //    return dt;
+        //}
     }
 }
