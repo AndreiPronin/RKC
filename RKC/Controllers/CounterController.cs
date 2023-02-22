@@ -24,6 +24,8 @@ using BL.Notification;
 using System.Collections.Generic;
 using DB.Model;
 using static System.Net.WebRequestMethods;
+using BL.Services;
+using BE.Roles;
 
 namespace RKC.Controllers
 {
@@ -41,9 +43,10 @@ namespace RKC.Controllers
         public readonly ISecurityProvider _securityProvider;
         public readonly IEBD _ebd;
         public readonly INotificationMail _notificationMail;
+        private readonly IBaseService _baseService;
         public CounterController(ICounter counter, Ilogger logger, IGeneratorDescriptons generatorDescriptons, 
             ICacheApp cacheApp, IFlagsAction flagsAction, IReadFileBank readFileBank, IIntegrations integration
-            , ISecurityProvider securityProvider,IEBD ebd,INotificationMail notificationMail, IExcel excel)
+            , ISecurityProvider securityProvider,IEBD ebd,INotificationMail notificationMail, IExcel excel, IBaseService baseService)
         {
             _excel = excel;
             _securityProvider = securityProvider;
@@ -56,6 +59,7 @@ namespace RKC.Controllers
             _integration = integration;
             _ebd = ebd;
             _notificationMail = notificationMail;
+            _baseService = baseService;
         }
         public ActionResult Index()
         {
@@ -87,6 +91,7 @@ namespace RKC.Controllers
                 }
                 _counter.AutoAddPU(FULL_LIC);
                 var Result = _counter.DetailInfroms(FULL_LIC);
+                ViewBag.ZAK = _baseService.GetStatusCloseOpenLic(FULL_LIC);
                 if(ViewBag.IsLock == true && ViewBag.User == null) 
                     ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
                 if (Result.Count() > 0)
@@ -127,14 +132,14 @@ namespace RKC.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles = "CounterWriter,Admin")]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public ActionResult FromAddPU(string FullLIC)
         {
             ViewBag.FULL_LIC = FullLIC;
             return PartialView(_counter.GetTypeNowUsePU(FullLIC));
         }
         [HttpPost]
-        [Authorize(Roles = "CounterWriter,Admin")]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public ActionResult AddPU(ModelAddPU modelAddPU)
         {
             try
@@ -158,7 +163,7 @@ namespace RKC.Controllers
             return null;
         }
         [HttpGet]
-        [Authorize(Roles = "CounterWriter,CounterReader,Admin")]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter + "," + RolesEnums.CounterReader)]
         public ActionResult ArchiveAllLics(string id_pu)
         {
             ViewBag.FULL_LIC = id_pu.Split('-')[0];
@@ -167,13 +172,13 @@ namespace RKC.Controllers
             return PartialView(Result);
         }
         [HttpGet]
-        [Authorize(Roles = "CounterWriter,CounterReader,Admin")]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter + "," + RolesEnums.CounterReader)]
         public ActionResult HistoryEdit(int id_pu)
         {
             return PartialView(_counter.HistoryEdit(id_pu));
         }
         [HttpPost]
-        [Authorize(Roles = "CounterWriter,Admin")]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public ActionResult SaveIPU(SaveModelIPU saveModelIPU)
         {
             try
@@ -188,7 +193,7 @@ namespace RKC.Controllers
             }
         }
         [HttpPost]
-        [Authorize(Roles = "CounterWriter,Admin")]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public ActionResult DeletePU(int IdPU)
         {
             try
@@ -203,7 +208,7 @@ namespace RKC.Controllers
             }
         }
         [HttpPost]
-        [Authorize(Roles = "CounterWriter,Admin")]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public ActionResult RecoveryPU(int IdPU)
         {
             try
@@ -229,7 +234,7 @@ namespace RKC.Controllers
                 return Content($"Во время удаления произошла ошибка {ex.Message}");
             }
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RolesEnums.Admin)]
         public ActionResult UploadFile(HttpPostedFileBase file, Banks Bank)
         {
             using (var binaryReader = new BinaryReader(file.InputStream))
@@ -240,7 +245,7 @@ namespace RKC.Controllers
             }
 
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RolesEnums.Admin)]
         public ActionResult UploadFilePU(HttpPostedFileBase file, string User, int TypeLoad)
         {
             if (TypeLoad == 1)
@@ -328,7 +333,7 @@ namespace RKC.Controllers
             return Content(_cacheApp.GetValueProgress(Name));
         }
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RolesEnums.Admin)]
         public async Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime)
         {
             using (XLWorkbook wb = new XLWorkbook())
@@ -385,7 +390,7 @@ namespace RKC.Controllers
             // 
         }
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RolesEnums.Admin)]
         public ActionResult LoadTemplate(TypeTemplateFile typeFile)
         {
             using (XLWorkbook wb = new XLWorkbook())
@@ -409,7 +414,7 @@ namespace RKC.Controllers
             // 
         }
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RolesEnums.Admin)]
         public async Task<ActionResult> RunIntegration(DateTime date)
         {
             try
@@ -426,7 +431,7 @@ namespace RKC.Controllers
         {
             return View(_integration.GetErrorIntegrationReadings().OrderByDescending(x => x.IsError));
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = RolesEnums.Admin)]
         public ActionResult ErroIntegratinLoadExcel()
         {
             using (XLWorkbook wb = new XLWorkbook())
@@ -457,7 +462,7 @@ namespace RKC.Controllers
                 return Redirect("/Counter/ErrorIntegration");
             }
         }
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = RolesEnums.SuperAdmin)]
         public ActionResult ExaminationPuIsLic()
         {
             using (XLWorkbook wb = new XLWorkbook())

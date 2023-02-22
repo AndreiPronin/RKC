@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NaturalSort</name>
+    </assembly>
+    <members>
+        <member name="T:NaturalSort.NaturalSortComparer">
+            <summary>
+            A comparer of strings that preserves the order of numerical substrings.
+            For example, <c>File2</c> comes before <c>File10</c>, which is the opposite of
+            usual lexicographical ordering.
+            </summary>
+            <remarks>
+            <see langword="null"/> values are sorted to the start of the collection.
+            The comparison is case-sensitive.
+            </remarks>
+        </member>
+        <member name="P:NaturalSort.NaturalSortComparer.Ordinal">
+            <summary>
+            Gets a singleton instance of this comparer for which non-integer characters are compared ordinally.
+            </summary>
+        </member>
+        <member name="M:NaturalSort.NaturalSortComparer.Compare(System.String,System.String)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

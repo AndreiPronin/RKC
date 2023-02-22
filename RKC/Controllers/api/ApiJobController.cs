@@ -23,7 +23,6 @@ namespace RKC.Controllers
         [HttpGet]
         public HttpResponseMessage RunJob(int id)
         {
-            var rr = User.Identity.Name;
             switch (id)
             {
                 case (int)EnumJob.CheckDublicatePu:
@@ -45,10 +44,7 @@ namespace RKC.Controllers
         [HttpGet]
         public HttpResponseMessage SendReceiptLic(string FullLic)
         {
-            var Lic = FullLic.Split(';');
-            for(int i = 0; i < Lic.Length; i++)
-                if (!string.IsNullOrEmpty(Lic[i].Trim()))
-                    _job.SendReceipt(Lic[i].Trim());
+            _job.SendReceipt(FullLic);
             return Resposne.CreateResponse200();
         }
     }

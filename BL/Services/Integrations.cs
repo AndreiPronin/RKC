@@ -53,6 +53,7 @@ namespace BL.Service
                 FKUB1OT_3 = x.FKUB1OT_3,
                 FKUB2OT_4 = x.FKUB2OT_4,
                 FKUB1OT_4 = x.FKUB1OT_4,
+                ZAK = x.ZAK,
             }).ToList();
             var periods = period.AddDays(-1);
             IQueryable<IntegrationReadings> Integrs = dbApp.IntegrationReadings.Where(x=>x.DateTime >= periods);
@@ -89,7 +90,13 @@ namespace BL.Service
                                 integrationReadings.TypePu = Item.name;
                                 integrationReadings.DateTime = data.payment_date;
                                 integrationReadings.IdCounterReadings = Item.id;
+                                integrationReadings.NowReadings = Item.value.ToString();
                                 Error = IPU_COUNTERS == null ? true : false;
+                                if(Readings.ZAK != null)
+                                {
+                                    Error = true;
+                                    integrationReadings.Description += $@"{ErrorIntegration.LicClose.GetDescription()} ";
+                                }
                                 if (IPU_COUNTERS.Count() == 0)
                                 {
                                     Error = true;
@@ -105,6 +112,7 @@ namespace BL.Service
                                     Error = true;
                                     integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
                                 }
+                                
                                 saveModel.TypePU = Item.name;
                                 saveModel.FULL_LIC = data.lic;
                                 if (Error != true) { 

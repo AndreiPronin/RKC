@@ -14,11 +14,15 @@
             <button id="CloseLock" name="@Model.FirstOrDefault().Lic" class="btn btn-success">Закрыть страницу</button>
             @if (!ViewBag.isLock)
             {
-                <input type="button" name="@Model.FirstOrDefault().Lic" class="btn btn-primary AddPersonalData" value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
+                if (ViewBag.ZAK != true)
+                {
+                    <input type="button" name="@Model.FirstOrDefault().Lic" class="btn btn-primary AddPersonalData" value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
+                }
             }
             <a href="/PersonalData/DetailedInformPersDelete?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank"><input type="button" class="btn btn-primary" value="История " /></a>
-            <a href="/Counter/DetailedInformIPU?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank"  data-tooltip="Закройте редактирование при переходе..." >
-            <input type="button"  class="btn btn-primary" value="ПУ" /></a>
+            <a href="/Counter/DetailedInformIPU?FULL_LIC=@Model.FirstOrDefault().Lic" target="_blank" data-tooltip="Закройте редактирование при переходе...">
+                <input type="button" class="btn btn-primary" value="ПУ" />
+            </a>
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -42,7 +46,10 @@
                     {
                         if (!ViewBag.isLock)
                         {
+                            if (ViewBag.ZAK != true)
+                            {
                             <input class="btn btn-primary EditMain" name="@Items.idPersData" id="" value="Сделать основным" />
+                            }
                         }
                     }
                 </div>
@@ -255,7 +262,10 @@
                     @if (!ViewBag.isLock)
                     {
                         <input type="button" name="@Items.idPersData" value="Сохранить" class="btn btn-danger hidden  Save" />
+                        if (ViewBag.ZAK != true)
+                        {
                         <input type="button" name="@Items.idPersData" value="Редактировать" class="btn btn-success Edit" />
+                        }
                         if (Items.Main != true)
                         {
                             <input style="float:right;" name="@Items.idPersData" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
@@ -272,7 +282,7 @@
                             <p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>
                         }
                         else
-                        {<p class="text-center">Админ заблокировал эту страницу</p>}
+                        {<p class="text-center">ПО закрыто для изменений.</p>}
                     }
                 </div>
             </div>
@@ -288,7 +298,11 @@ else
         {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>}
     <div class="col-md-12">
         <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
-        <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPersonalData"  value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
+        @if (ViewBag.ZAK != true)
+        {
+        <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPersonalData" value="Добавить проживающего" data-toggle="modal" data-target="#AddPersData" />
+        }
+        
     </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -382,6 +396,8 @@ else
                 $(this).parent().find('.NameFileFile').addClass("Required");
             } else {
                 $(this).parent().find('.NameFileFile').remove("Required");
+                $(".loader").removeClass("hidden");
+                $(".AddDoc").prop('disabled', true);
                 $.ajax({
                     url: "/PersonalData/SaveFile",
                     type: "POST",
@@ -389,9 +405,13 @@ else
                     async: true,
                     success: function (data) {
                         alert(data.result)
+                        $(".loader").addClass("hidden");
+                        $(".AddDoc").prop('disabled', false);
                     },
                     error: function (data) {
                         alert('Ошибка обратитесь к системному администратору!');
+                        $(".loader").addClass("hidden");
+                        $(".AddDoc").prop('disabled', false);
                     },
                     cache: false,
                     contentType: false,

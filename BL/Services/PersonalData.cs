@@ -1,4 +1,5 @@
 ﻿using BE.PersData;
+using BL.Counters;
 using BL.Excel;
 using BL.Extention;
 using BL.Helper;
@@ -35,6 +36,8 @@ namespace BL.Services
         string GetRoomTypeMain(string Full_Lic);
         List<Payment> GetPaymentHistory(string Full_Lic);
         List<Payment> GetReadingsHistory(string Full_Lic);
+        void CloseLic(string FullLic, ICounter _counter);
+        void OpenLic(string FullLic);
         List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr,string Full_Lic);
         void UpdateSquareFlat(double? Square, string Lic);
         void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User);
@@ -54,7 +57,7 @@ namespace BL.Services
             {
                 return db.PersonalInformation.Where(x => x.full_lic == FullLic).ToList();
             }
-        }
+        }   
         public StateCalculation GetStateCalculation(string FullLic)
         {
             using (var db = new ApplicationDbContext())
@@ -67,19 +70,6 @@ namespace BL.Services
                 catch { return new StateCalculation() { Period = DateTime.Now }; }
             }
         }
-        //public List<HelpСalculations> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
-        //{
-        //    var dateFrom = Convert.ToDateTime(DateFrom.ToString("yyyy,MM"));
-        //    var dateTo = Convert.ToDateTime(DateTo.ToString("yyyy,MM")).AddMonths(1);
-        //    using (var db = new ApplicationDbContext())
-        //    {
-        //        try
-        //        {
-        //            return db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
-        //        }
-        //        catch { return new List<HelpСalculations>(); }
-        //    }
-        //}
         public async Task<List<HelpCalculationsModel>> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
             var dateFrom = Convert.ToDateTime(DateFrom.ToString("yyyy,MM"));
@@ -97,11 +87,11 @@ namespace BL.Services
                     {
                         Period = x.period,
                         HeatingRecalculationRate = x.sted2,
-                        HeatingСalculationGcal = x.sn2,
+                        HeatingСalculationGcal = x.koled2,
                         GvsHeatingRecalculationRate = x.sted3,
-                        GvsHeatingСalculationGcal = x.sn3,
+                        GvsHeatingСalculationGcal = x.koled3,
                         HvHeatingСalculationGcal = x.sted5,
-                        HvHeatingRecalculationRate = x.sn5
+                        HvHeatingRecalculationRate = x.koled5
 
                     }).ToListAsync();
                     await Task.WhenAll(HelpCalc, Receipt);
@@ -337,6 +327,7 @@ namespace BL.Services
                 PersData.Tel1 = persDataModel.Tel1;
                 PersData.Tel2 = persDataModel.Tel2;
                 PersData.UserName = persDataModel.UserName;
+                PersData.DateEdit = DateTime.Now;
                 db.SaveChanges();
             }
         }
@@ -511,6 +502,45 @@ namespace BL.Services
                     Items.cadastral_number = !string.IsNullOrEmpty(Cadastr) ? Cadastr : Items.cadastral_number;
                 }
                 db.SaveChanges();
+            }
+        }
+        private async Task ResetNumberOfPersonsAndSquarePers(string FullLic)
+        {
+            using (var appDb = new ApplicationDbContext())
+            {
+                var AllPers = await appDb.PersData.Where(x => x.Lic == FullLic).ToListAsync();
+                foreach(var Item in AllPers)
+                {
+                    Item.Square = 0;
+                    Item.NumberOfPersons = 0;
+                }
+                await appDb.SaveChangesAsync();
+            }
+        }
+
+        public void CloseLic(string FullLic, ICounter _counter)
+        {
+            using (var dbLic = new DbLIC())
+            {
+                var lic = dbLic.ALL_LICS.FirstOrDefault(x => x.F4ENUMELS == FullLic);
+                lic.ZAK = "0";
+                dbLic.SaveChanges();
+                var Ipu = _counter.DetailInfroms(FullLic);
+                foreach(var Item in Ipu)
+                {
+                    _counter.DeleteIPU(Item.ID_PU);
+                }
+                Task.Run(() => ResetNumberOfPersonsAndSquarePers(FullLic));
+                Task.Run(() => new BaseService().ClosePersInLic(FullLic));
+            }
+        }
+        public void OpenLic(string FullLic)
+        {
+            using (var dbLic = new DbLIC())
+            {
+                var lic = dbLic.ALL_LICS.FirstOrDefault(x => x.F4ENUMELS == FullLic);
+                lic.ZAK = null;
+                dbLic.SaveChanges();
             }
         }
     }

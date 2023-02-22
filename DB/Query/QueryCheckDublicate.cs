@@ -1,5 +1,5 @@
 ﻿
-namespace BL.Query
+namespace DB.Query
 {
     public static class QueryCheckDublicate
     {

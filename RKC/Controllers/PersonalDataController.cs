@@ -16,6 +16,9 @@ using ClosedXML.Excel;
 using static System.Net.WebRequestMethods;
 using BL.Excel;
 using System.Threading.Tasks;
+using BE.Roles;
+using BL.Counters;
+using WordGenerator.Enums;
 
 namespace RKC.Controllers
 {
@@ -28,14 +31,20 @@ namespace RKC.Controllers
         private readonly IGeneratorDescriptons _generatorDescriptons;
         private readonly ICacheApp _cacheApp;
         public readonly IFlagsAction _flagsAction;
+        private readonly ICounter _counter;
+        private readonly IBaseService _baseService;
+        private readonly IPdfFactory _pdfFactory;
         public PersonalDataController(IPersonalData personalData, Ilogger logger, IGeneratorDescriptons generatorDescriptons,
-            ICacheApp cacheApp, IFlagsAction flagsAction)
+            ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory)
         {
+            _counter = counter;
             _personalData = personalData;
             _logger = logger;
             _generatorDescriptons = generatorDescriptons;
             _cacheApp = cacheApp;
             _flagsAction = flagsAction;
+            _baseService = baseService;
+            _pdfFactory = pdfFactory;
         }
         [Authorize(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult PersonalInformation(string FullLic)
@@ -59,6 +68,7 @@ namespace RKC.Controllers
                 {
                     ViewBag.IsLock = _flagsAction.GetAction(nameof(DetailedInformPersData));
                 }
+                ViewBag.ZAK = _baseService.GetStatusCloseOpenLic(FULL_LIC);
                 var Result = _personalData.GetInfoPersData(FULL_LIC);
                 if (Result.Count() > 0)
                 {
@@ -130,7 +140,8 @@ namespace RKC.Controllers
             {
                 //try
                 //{
-                var result = GenerateFileHelpCalculation.Generate(FullLic, DateEnd);
+
+                var result = _pdfFactory.CreatePdf(PdfType.Personal).Generate(FullLic, DateEnd);
                 return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
                 //}catch(Exception ex)
                 //{
@@ -142,7 +153,7 @@ namespace RKC.Controllers
             {
                 try
                 {
-                    persData.Add(GenerateFileHelpCalculation.Generate(FullLic, DateEnd));
+                    persData.Add(_pdfFactory.CreatePdf(PdfType.Personal).Generate(FullLic, DateEnd));
                 }
                 catch (Exception ex)
                 {
@@ -161,6 +172,20 @@ namespace RKC.Controllers
             }
             outputStream.Position = 0;
             return File(outputStream, "application/zip", "Квитанция.zip");
+        }
+        [HttpGet]
+        [Authorize(Roles = RolesEnums.Admin + ","+ RolesEnums.SuperAdmin)]
+        public ActionResult CloseLic(string FullLic)
+        {
+            _personalData.CloseLic(FullLic, _counter);
+            return null;
+        }
+        [HttpGet]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.SuperAdmin)]
+        public ActionResult OpenLic(string FullLic)
+        {
+            _personalData.OpenLic(FullLic);
+            return null;
         }
         [HttpGet]
         [Authorize(Roles = "PersWriter,Admin")]
@@ -231,7 +256,7 @@ namespace RKC.Controllers
             ViewBag.LIC = FullLic;
             return View(_personalData.GetReadingsHistory(FullLic).OrderByDescending(x => x.payment_date_day));
         }
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = RolesEnums.SuperAdmin)]
         public ActionResult ExaminationPersIsLic()
         {
             using (XLWorkbook wb = new XLWorkbook())

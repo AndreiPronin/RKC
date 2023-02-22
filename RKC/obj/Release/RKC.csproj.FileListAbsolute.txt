@@ -552,3 +552,5 @@ D:\Programing\RKC\RKC\obj\Release\RKC.dll
 D:\Programing\RKC\RKC\obj\Release\RKC.pdb
 D:\Programing\RKC\RKC\bin\NLog.dll
 D:\Programing\RKC\RKC\bin\NLog.xml
+D:\Programing\RKC\RKC\bin\NaturalSort.dll
+D:\Programing\RKC\RKC\bin\NaturalSort.xml

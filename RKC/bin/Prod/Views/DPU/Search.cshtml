@@ -1,0 +1,63 @@
+﻿<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<div class="loader">
+    <div class="inner one"></div>
+    <div class="inner two"></div>
+    <div class="inner three"></div>
+</div>
+<div>
+    <div style="text-align:center;margin-top:15px;">
+        <div class="input-group">
+            <input class="form-control" id="Text" style="max-width:100%;" />
+            <span id="" class="input-group-addon clear">X</span>
+        </div>
+        
+    </div>
+</div>
+<div id="ResultSearchDpu"></div>
+<script>
+    $(document).ready(function (e) {
+        $(".loader").addClass("hidden");
+        $('#Text').autocomplete({
+            delay: 500,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/DPU/SearchAutocompleteDpu?Text=" + $('#Text').val(), type: "Get", dataType: "json",
+                    //original code
+                    //data: { searchText: request.id, maxResults: 10 },
+                    //updated code; updated to request.term 
+                    //and removed the maxResults since you are not using it on the server side
+                    data: { id: request.term },
+
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            //original code
+                            //return { label: item.FullName, value: item.FullName, id: item.TagId }; 
+                            //updated code
+                            return { label: item.Value, value: item.Value, id: item.Id };
+                        }));
+                    },
+                });
+            },
+            select: function (event, ui) {
+                $(".loader").removeClass("hidden");
+                console.log(ui.item.id);
+                $("#ResultSearchDpu").empty();
+                $.ajax({
+                    type: "Get",
+                    url: "/DPU/DpuInfo?id=" + ui.item.id,
+                    success: function (data) {
+                        $("#ResultSearchDpu").empty();
+                        $("#ResultSearchDpu").append(data);
+                        $(".loader").addClass("hidden");
+                    }
+                });
+                $("input[type=hidden]").val(ui.item.id);
+            }
+        })
+        $('.clear').click(function () {
+            $('#Text').val('');
+            $("#ResultSearchDpu").empty();
+        })
+    })
+</script>

@@ -14,9 +14,24 @@
     {
         <p class="text-center NullOrEmpty" > Лицевой счет закрыт </p>
     }
-    <div class="col-md-12">
-        <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
-    </div>
+<div class="col-md-12">
+    <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
+    @if (User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+    {
+        if (Model.FirstOrDefault().ZAK == null)
+        {
+            <a>
+                <input type="button" class="btn btn-danger CloseLick" style="float:right" value="Закрыть лицевой счет" />
+            </a>
+        }
+        else
+        {
+            <a>
+                <input type="button" class="btn btn-success OpenLick" style="float: right" value="Открыть лицевой счет" />
+            </a>
+        }
+    }
+</div>
     <div id="ResultSearchSave"></div>
 </div>
     <div class="loader">
@@ -36,6 +51,7 @@
                     <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().full_lic.Trim()" target="_blank">
                         <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
                     </a>
+                   
                 </div>
                 <hr />
                 <div class="card-body field">
@@ -83,55 +99,60 @@
                                 <div class="col-sm-8">
                                     <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.Square" />
                                 </div>
+                                <label class="col-sm-4 col-form-label" style=" white-space: pre-wrap;">Кадастровый номер помещения:</label>
+                                <div class="col-sm-8">
+                                    <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="PlaceOfBirth" class="form-control ">@Items.CadastrNumberFlat</textarea>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="col-sm-4 col-form-label">Код ФИАС:</label>
+                            <label class="col-sm-4 col-form-label" style=" white-space: pre-wrap;">Уникальный номер помещения в ГИС:</label>
                             <div class="col-sm-8">
-                                <textarea readonly="readonly" tabIndex="@Index@{Index++;}" id="PlaceOfBirth" class="form-control ">@Items.Fias</textarea>
-
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.UniqueApartmentNumber" />
                             </div>
-                            <label class="col-sm-4 col-form-label">els:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.els" />
-                            </div>
-                            <label class="col-sm-4 col-form-label">igku:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.igku" />
-                            </div>
-                            <div class="col-sm-12 text-center">
-                                <p>Тариф</p>
-                            </div>
-                            <label class="col-sm-4 col-form-label">Отопление:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.TARIF2" />
-                            </div>
-                            <label class="col-sm-4 col-form-label">ГВС компонент ТЭ:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.TARIF3" />
-                            </div>
-                            <label class="col-sm-4 col-form-label">ГВС компонент ХВ:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.TARIF5" />
-                            </div>
-                            <div class="col-sm-12 text-center">
-                                <p>Площадь помещений дома:</p>
-                            </div>
-                            <label class="col-sm-4 col-form-label">S жилых помещений:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_GIL" />
-                            </div>
-                            <label class="col-sm-4 col-form-label">S нежилых помещений:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_NEZ" />
-                            </div>
-                            <label class="col-sm-4 col-form-label">S общего имущества:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_OI" />
-                            </div>
-                            <label class="col-sm-4 col-form-label">в т.ч. не отапливаемая:</label>
-                            <div class="col-sm-8">
-                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_NOTP" />
+                            <div class="col-md-12">
+                                <label class="col-sm-4 col-form-label">els:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.els" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">igku:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.IdGku" />
+                                </div>
+                                <div class="col-sm-12 text-center">
+                                    <p>Тариф</p>
+                                </div>
+                                <label class="col-sm-4 col-form-label">Отопление:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.TARIF2" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">ГВС компонент ТЭ:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.TARIF3" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">ГВС компонент ХВ:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.TARIF5" />
+                                </div>
+                                <div class="col-sm-12 text-center">
+                                    <p>Площадь помещений дома:</p>
+                                </div>
+                                <label class="col-sm-4 col-form-label">S жилых помещений:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_GIL" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">S нежилых помещений:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_NEZ" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">S общего имущества:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_OI" />
+                                </div>
+                                <label class="col-sm-4 col-form-label">в т.ч. не отапливаемая:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@Items.S_NOTP" />
+                                </div>
                             </div>
                         </div>
                         <hr />
@@ -349,6 +370,45 @@
                 });
             }
             return false;
+        });
+        $(".CloseLick").click(function (e) {
+            $.confirm({
+                title: 'Предупрждение!',
+                content: 'Внимание вы пытаетесь закрыть лицевой счет ' + @ViewBag.FULL_LIC + ', оставьте комментарий в персах',
+                buttons: {
+                    "Да": function () {
+                        $.ajax({
+                            url: '/PersonalData/CloseLic?FullLic=' +@ViewBag.FULL_LIC,
+                            type: 'Get',
+                            async: false,
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                window.location.reload();
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+                        $.alert('Отменено!');
+                    }
+                }
+            });
+        });
+        $(".OpenLick").click(function (e) {
+            $.ajax({
+                url: '/PersonalData/OpenLic?FullLic=' +@ViewBag.FULL_LIC,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
         });
         $(".PaymentHistory").click(function (e) {
             $.confirm({

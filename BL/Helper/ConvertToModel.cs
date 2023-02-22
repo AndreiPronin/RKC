@@ -90,7 +90,8 @@ namespace BL.Helper
                 StateLic = persDataModel.StateLic,
                 Tel1 = persDataModel.Tel1,
                 Tel2 = persDataModel.Tel2,
-                UserName = persDataModel.UserName
+                UserName = persDataModel.UserName,
+                DateEdit = DateTime.Now
             };
         }
         

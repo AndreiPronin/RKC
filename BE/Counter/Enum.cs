@@ -82,5 +82,7 @@ namespace BE.Counter
         NoReadings = 6,
         [Description("Прибор учета закрыт")]
         IpuClose = 7,
+        [Description("Лицевой счет закрыт")]
+        LicClose = 8,
     }
 }

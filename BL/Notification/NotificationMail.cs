@@ -86,7 +86,7 @@ namespace BL.Notification
                     var writer = new StreamWriter(stream);
                     writer.Flush();
                     stream.Position = 0;
-                    var File = new System.Net.Mail.Attachment(stream, "Не отправленная почта.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                    var File = new System.Net.Mail.Attachment(stream, "Отчет отправки почты.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                     SendMail(File);
                 }
             }

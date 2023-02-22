@@ -14,5 +14,15 @@ namespace BL.Helper
         {
             return new HttpResponseMessage(HttpStatusCode.OK); ;
         }
+        public static HttpResponseMessage CreateResponse400()
+        {
+            return new HttpResponseMessage(HttpStatusCode.BadRequest); ;
+        }
+        public static HttpResponseMessage CreateResponse500(string Message)
+        {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            response.Content = new StringContent(Message);
+            return response;
+        }
     }
 }

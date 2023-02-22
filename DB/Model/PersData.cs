@@ -40,6 +40,7 @@ namespace DB.Model
         public double? Square { get; set; }
         public string StateLic { get; set; } = "";
         public string SendingElectronicReceipt { get; set; }
+        public DateTime? DateEdit { get; set; }
         public virtual ICollection<PersDataDocument> PersDataDocument { get; set; }
 
     }

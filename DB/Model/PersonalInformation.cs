@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DB.Model
 {
-    [Table(name: "PersonalInformations", Schema = "dbo")]
+    [Table(name: "PersonalInformations_New", Schema = "dbo")]
     public class PersonalInformations
     {
         [Key]
@@ -22,9 +22,10 @@ namespace DB.Model
         public string RoomType { get; set; }
         public decimal? NumberPerson { get; set; }
         public decimal? Square { get; set; }
-        public string Fias { get; set; }
+        public string CadastrNumberFlat { get; set; }
+        public string UniqueApartmentNumber { get;set; }
         public string els { get; set; }
-        public string igku { get; set; }
+        public string IdGku { get; set; }
         public decimal? TARIF2 { get; set; }
         public decimal? TARIF3 { get; set; }
         public decimal? TARIF5 { get; set; }

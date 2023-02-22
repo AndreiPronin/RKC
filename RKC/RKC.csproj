@@ -271,10 +271,12 @@
     <Compile Include="Controllers\api\ApiJobController.cs" />
     <Compile Include="Controllers\api\ApiTplusController.cs" />
     <Compile Include="Controllers\CounterController.cs" />
+    <Compile Include="Controllers\DPUController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogResultController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonalDataController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\СourtController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -290,6 +292,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Dpu.css" />
     <Content Include="Content\img\main\fon2.jpg" />
     <Content Include="Content\img\main\fon.jpg" />
     <Content Include="Content\img\main\sky.jpg" />
@@ -319,11 +322,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.autocomplete.js" />
+    <Content Include="Scripts\jquery.autocomplete.min.js" />
     <Content Include="Scripts\jquery.maskedinput.js" />
     <Content Include="Scripts\jquery.maskedinput.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -477,6 +483,17 @@
     <Content Include="Views\LogResult\ShowLogResult.cshtml" />
     <Content Include="Views\Admin\ParilaViewExamination.cshtml" />
     <Content Include="Template\Образец квитанции.docx" />
+    <Content Include="Views\DPU\Index.cshtml" />
+    <Content Include="Views\DPU\Search.cshtml" />
+    <Content Include="Views\DPU\Payments.cshtml" />
+    <Content Include="Views\DPU\AdminPanel.cshtml" />
+    <Content Include="Views\DPU\DpuInfo.cshtml" />
+    <Content Include="Views\DPU\WatchHelpСalculation.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\AdminPanel.cshtml" />
+    <Content Include="Views\Report\Search.cshtml" />
+    <Content Include="Views\DPU\DpuDictionarySummaryHouses.cshtml" />
+    <Content Include="Template\Образец квитанции DPU.docx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

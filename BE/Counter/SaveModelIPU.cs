@@ -16,6 +16,8 @@ namespace BE.Counter
         public DateTime? DATE_CHECK_NEXT { get; set; }
         public DateTime? INSTALLATIONDATE { get; set; }
         public string SEALNUMBER { get; set; }
+        public string BRAND_PU { get; set; }
+        public string GIS_ID_PU { get; set; }
         public string TYPEOFSEAL { get; set; }
         public string SEALNUMBER2 { get; set; }
         public string TYPEOFSEAL2 { get; set; }

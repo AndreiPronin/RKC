@@ -15,27 +15,13 @@ namespace BL.Excel
 {
     public static class ExcelHelpСalculation
     {
-        public static void SetValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, string value)
-        {
-            xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
-        }
-        public static void SetValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, decimal? value)
-        {
-            xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
-        }
-        public static void MergeAndValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst,  int rowLast, int columnLast, string value)
-        {
-            xLWorksheet.Range(rowFirst, columnFirst, rowLast, columnLast).Merge();
-            xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
-            xLWorksheet.Cell(rowFirst, columnFirst).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-        }
         public static byte[] Generate(List<HelpCalculationsModel> helpCalculations)
         {
             helpCalculations = helpCalculations.OrderBy(x=>x.Period).ToList();
             using (XLWorkbook wb = new XLWorkbook())
             {
                 var worksheet = wb.Worksheets.Add("Справка расчёт");
-                worksheet.MergeAndValue(3,5,3,10, $"Справка по лицевому счету № {helpCalculations.First().LIC}" );
+                worksheet.MergeAndValue(3,5,3,10, $"Справка по лицевому счету № {helpCalculations.LastOrDefault().LIC}" );
                 worksheet.Cell(3,5).Style.Font.Bold = true;
                 worksheet.Column(1).Width = 25.0;
                 //worksheet.Column(11).Width = 17.0;
@@ -50,17 +36,17 @@ namespace BL.Excel
                 worksheet.Column(23).Width = 17.0;
                 worksheet.Column(23).Style.Alignment.WrapText = true;
                 worksheet.SetValue(5, 1, "Адрес:");
-                worksheet.SetValue(5, 2, $"{helpCalculations.First().UL.ToLower().toUpperFirst().Trim()} дом {helpCalculations.First().DOM.Trim()} {helpCalculations.First().KW.Trim()}");
+                worksheet.SetValue(5, 2, $"{helpCalculations.LastOrDefault().UL.ToLower().toUpperFirst().Trim()} дом {helpCalculations.LastOrDefault().DOM.Trim()} {helpCalculations.LastOrDefault().KW.Trim()}");
                 worksheet.SetValue(6, 1, "ФИО:");
                 try
                 {
-                    worksheet.SetValue(6, 2, $"{helpCalculations.First().FIO.Split()[0].ToLower().toUpperFirst()} {helpCalculations.First().FIO.Split()[1].ToLower().toUpperFirst()} {helpCalculations.First().FIO.Split()[2].ToLower().toUpperFirst()}");
+                    worksheet.SetValue(6, 2, $"{helpCalculations.LastOrDefault().FIO.Split()[0].ToLower().toUpperFirst()} {helpCalculations.LastOrDefault().FIO.Split()[1].ToLower().toUpperFirst()} {helpCalculations.LastOrDefault().FIO.Split()[2].ToLower().toUpperFirst()}");
                 }
                 catch { }
                 worksheet.SetValue(7, 1, "Площадь:");
-                worksheet.SetValue(7, 2, $"{helpCalculations.First().Square}");
+                worksheet.SetValue(7, 2, $"{helpCalculations.LastOrDefault().Square}");
                 worksheet.SetValue(8, 1, "Количество человек:");
-                worksheet.SetValue(8, 2, $"{helpCalculations.First().NumberPerson}");
+                worksheet.SetValue(8, 2, $"{helpCalculations.LastOrDefault().NumberPerson}");
                 worksheet.MergeAndValue(9, 1, 9, 10, $"Состояние расчётов");
                 worksheet.MergeAndValue(9, 11, 9, 23, $"Детализация по услугам");
                 worksheet.MergeAndValue(10, 1, 12, 1, $"период");
@@ -122,8 +108,8 @@ namespace BL.Excel
                     worksheet.SetValue(i, 16, Items.GvsHeatingRecalculationRate);
                     worksheet.SetValue(i, 17, Items.GvsHeatingСalculation);
                     worksheet.SetValue(i, 18, Items.GvsHeatingRecalculation);
-                    worksheet.SetValue(i, 19, Items.HvHeatingСalculationGcal);
-                    worksheet.SetValue(i, 20, Items.HvHeatingRecalculationRate);
+                    worksheet.SetValue(i, 19, Items.HvHeatingRecalculationRate);
+                    worksheet.SetValue(i, 20, Items.HvHeatingСalculationGcal);
                     worksheet.SetValue(i, 21, Items.HvHeatingСalculation);
                     worksheet.SetValue(i, 22, Items.HvHeatingRecalculation);
 
@@ -159,14 +145,96 @@ namespace BL.Excel
                 }
             }
         }
-        public static string toUpperFirst(this string s)
+        public static byte[] Generate(List<DPUHelpCalculationInstallation> helpCalculations)
         {
-            if (String.IsNullOrEmpty(s))
+            helpCalculations = helpCalculations.OrderBy(x => x.Period).ToList();
+            using (XLWorkbook wb = new XLWorkbook())
             {
-                return s;
-            }
+                var DPU = helpCalculations.FirstOrDefault();
+                var worksheet = wb.Worksheets.Add("Справка расчёт");
+                
+                worksheet.Row(15).Style.Alignment.WrapText = true;
+                worksheet.Row(15).Style.Font.Italic = true;
+                worksheet.Row(15).Style.Font.FontSize = 9;
+                worksheet.Row(15).Height = 30.0;
+                worksheet.Column(1).Width = 15.0;
+                worksheet.Row(16).Height = 75.0;
+                worksheet.Row(16).Style.Font.Bold = true;
+                worksheet.Row(1).Style.Font.Bold = true;
+                worksheet.Row(16).Style.Alignment.WrapText = true;
+                worksheet.MergeAndValue(1, 1, 1, 8, $"Расчет размера платы за Установку ОДПУ по лицевому счету");
+                worksheet.MergeAndValue(1, 10, 1, 12, $"{DPU.NewFullLic}");
+                worksheet.MergeAndValue(2, 1, 2, 3, "Адрес жилого помещения:");
+                worksheet.SetValue(2, 5, $"ул  {DPU.Street} дом {DPU.Home} кв. {DPU.Flat}");
+                worksheet.MergeAndValue(3, 1, 3, 4, "Площадь жилого помещения:");
+                worksheet.SetValue(3, 5, DPU.Sobs);
+                worksheet.MergeAndValue(4, 1, 4, 4, "Доля в праве общей стоимости:");
+                worksheet.SetValue(4, 5, DPU.ShareInCommonOwnership);
 
-            return char.ToUpper(s[0]) + s.Substring(1).ToLower();
+                worksheet.MergeAndValue(6, 1, 6, 3, "Общая площадь МКД:");
+                worksheet.SetValue(6, 6, DPU.TotalAreaMKD);
+                worksheet.MergeAndValue(7, 1, 7, 4, "Общая площадь жилых помещений:");
+                worksheet.SetValue(7, 6, DPU.TotalAreaMKDResidentialPremises);
+                worksheet.MergeAndValue(8, 1, 8, 4, "Общая площадь нежилых помещений:");
+                worksheet.SetValue(8, 6, DPU.TotalAreaMKDNonResidentialPremises);
+
+                worksheet.MergeAndValue(10, 1, 10, 4, "Стоимость установки ОДПУ ТЭ:");
+                worksheet.SetValue(10, 8, Math.Round(DPU.TotalCostOdpu.Value,2));
+                worksheet.MergeAndValue(11, 1, 11, 6, "Стоимость установки ОДПУ ТЭ для жилых помещений:");
+                worksheet.SetValue(11, 8, Math.Round(DPU.TotalCostOdpuResidentialPremises.Value,2));
+                worksheet.MergeAndValue(12, 1, 12, 6, "Стоимость установки ОДПУ ТЭ для нежилых помещений:");
+                worksheet.SetValue(12, 8, Math.Round(DPU.TotalCostOdpuNonResidentialPremises.Value,2));
+                worksheet.MergeAndValue(14, 1, 14, 4, "Единовременный платеж:");
+                worksheet.SetValue(14, 5, Math.Round(DPU.OneTimePayment.Value,2));
+                worksheet.MergeAndValue(15, 1,15,11, "Расчет при выборе платежа с рассрочкой.Оплата в рассрочку сроком до 5 лет ежемесячно, с оплатой процентов за предоставление рассрочки в размере ставки рефинансирования ЦБ РФ, действующей на дату начисления:");
+                worksheet.SetValue(16, 1, "Период");
+                worksheet.SetValue(16, 2, "Процентная ставка");
+                worksheet.SetValue(16, 3, "Начислено основной платеж с рассрочкой");
+                worksheet.SetValue(16, 4, "Начислено процентов");
+                worksheet.SetValue(16, 5, "Итого Платеж с рассрочкой");
+                worksheet.SetValue(16, 6, "Оплачено Основной долг");
+                worksheet.SetValue(16, 7, "Оплачено проценты");
+                worksheet.SetValue(16, 8, "Итого Оплачено");
+                worksheet.SetValue(16, 9, "К оплате с учетом задолжен./ переплаты платежа с рассрочкой");
+                worksheet.SetValue(16, 10, "Сальдо на конец периода Основной долг");
+                worksheet.SetValue(16, 11, "Сальдо на конец периода проценты");
+                int i = 17;
+                //worksheet.Range(2, 17,2000,11).SetDataType(XLDataType.Number);
+                foreach (var Item in helpCalculations)
+                {
+                    worksheet.SetValue(i, 1, Item.Period.Value.ToString("MM-yyyy"));
+                    worksheet.SetValue(i, 2, Math.Round(Item.PercentageRate.Value,2));
+                    worksheet.SetValue(i, 3, Math.Round(Item.AccruedMainPayment.Value, 2));
+                    worksheet.SetValue(i, 4, Math.Round(Item.AccruedPercentage.Value, 2));
+                    worksheet.SetValue(i, 5, Math.Round(Item.TotalAccrued.Value, 2));
+                    worksheet.SetValue(i, 6, Math.Round(Item.PaymentMainDebt.Value, 2));
+                    worksheet.SetValue(i, 7, Math.Round(Item.PercentagePayment.Value, 2));
+                    worksheet.SetValue(i, 8, Math.Round(Item.Paid.Value, 2));
+                    worksheet.SetValue(i, 9, Math.Round(Item.ToPay.Value, 2));
+                    worksheet.SetValue(i, 10, Math.Round(Item.SaldoBeginningPeriod.Value, 2));
+                    worksheet.SetValue(i, 11, Math.Round(Item.SaldoEndPeriodPercentage.Value, 2));
+                    i++;
+                }
+                worksheet.SetValue(i, 1, "Итого:");
+                worksheet.Cell("C" + i).FormulaA1 = $"sum(C17:C{i - 1})";
+                worksheet.Cell("D" + i).FormulaA1 = $"sum(D17:D{i - 1})";
+                worksheet.Cell("F" + i).FormulaA1 = $"sum(F17:F{i - 1})";
+                worksheet.Cell("G" + i).FormulaA1 = $"sum(G17:G{i - 1})";
+                worksheet.Cell("H" + i).FormulaA1 = $"sum(H17:H{i - 1})";
+
+                worksheet.Range(16, 1, i, 11).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Range(16, 1, i, 11).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    var writer = new StreamWriter(stream);
+                    writer.Flush();
+                    stream.Position = 0;
+                    return stream.ToArray();
+                }
+            }
         }
     }
 }

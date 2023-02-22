@@ -1,0 +1,285 @@
+﻿@model DB.Model.DPUHelpCalculationInstallation
+
+@{
+    ViewBag.Title = "Датальная информация";
+    var Index = 1;
+    var FullNames = Model.FullName.Split(' ');
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<input id="DpuId" value="@Model.Id" hidden />
+<div class="container text-center">
+    <h3 class="text-center">Детальная информация по лицевому счету: @Model.NewFullLic </h3>
+</div>
+<div class="card">
+    <div class="panel-body">
+        <div class="col-md-12">
+            <div class="col-md-5">
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Лицевой счет:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="NewFullLic" class="form-control " value="@Model.NewFullLic" />
+                    </div>
+                </div>
+                <div class="line" />
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Фамилия:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames[1]" />
+                    </div>
+                </div>
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Имя:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames[2]" />
+                    </div>
+                </div>
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Отчество:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames[0]" />
+                    </div>
+                </div>
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Улица:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.Street" />
+                    </div>
+                </div>
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Дом:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.Home" />
+                    </div>
+                </div>
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Квартира:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.Flat" />
+                    </div>
+                </div>
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Площадь:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.Sobs" />
+                    </div>
+                </div>
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Период начала выставления:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@string.Format("{0:dd-MM-yyyy}", Model.Period)" />
+                    </div>
+                </div>
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Период рассрочки 60 мес:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.FillLic" />
+                    </div>
+                </div>
+                <div class="col-md-12 paddingTop">
+                    <label class="col-sm-4 col-form-label">Текущая % ставка:</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.PercentageRate" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label class="col-sm-12 col-form-label">Общая площадь МКД:</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.TotalAreaMKD" />
+                </div>
+                <label class="col-sm-12 col-form-label">Общая площадь жилых помещений:</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.TotalAreaMKDResidentialPremises" />
+                </div>
+                <label class="col-sm-12 col-form-label">Общая площадь нежилых помещений:</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.TotalAreaMKDNonResidentialPremises" />
+                </div>
+                <label class="col-sm-12 col-form-label">Стоимость установки ОДПУ ТЭ:</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.TotalCostOdpu" />
+                </div>
+                <label class="col-sm-12 col-form-label">Стоимость установки ОДПУ ТЭ для ж.п.:</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.TotalCostOdpuResidentialPremises" />
+                </div>
+                <label class="col-sm-12 col-form-label">Стоимость установки ОДПУ ТЭ для н.п.:</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.TotalCostOdpuNonResidentialPremises" />
+                </div>
+                <label class="col-sm-12 col-form-label">Доля в праве общей стоимости:</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.ShareInCommonOwnership" />
+                </div>
+                <label class="col-sm-12 col-form-label">Единовременный платеж:</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.OneTimePayment" />
+                </div>
+                <label class="col-sm-12 col-form-label">Сумма для полного погашения:</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@Model.ShareInCommonOwnership" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="list-group">
+                    <h5 class="mb-1">Примечание</h5>
+                    <textarea style="height:350px;" id="NoteText" class="form-control">@Model.Note</textarea>
+                    <button id="saveNote" class="btn btn-success">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 20px; margin-bottom: 30px;">
+        <div class="form-group col-sm-4"> <button type="submit" id="Hecpl" class="btn btn-primary DownLoadHelpСalculation">Справка расчёт</button> </div>
+        <div class="form-group col-sm-4"> <button type="submit" class="btn btn-primary HistoryPayment ">История оплат</button> </div>
+        <div class="form-group col-sm-4"> <button type="submit" class="btn btn-primary DownLoadReceipt">Квитанция</button> </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function (e) {
+        $("#saveNote").click(function (e) {
+            $.ajax({
+                type: "Post",
+                data: {
+                    Id: $("#DpuId").val(),
+                    Note: $("#NoteText").val(),
+                },
+                url: "/DPU/DpuSaveNote",
+                success: function (data) {
+                    toastr.options.positionClass = "toast-top-left";
+                    toastr.options.timeOut = 2000; // 1.5s
+                    toastr.success('Успешно сохранено');
+                },
+                error: function (data) {
+                    toastr.options.timeOut = 5000; // 1.5s
+                    toastr.error(data);
+                }
+            });
+        })
+         $(".DownLoadHelpСalculation").click(function (e) {
+            var Date = "@DateTime.Now.Date.ToString("yyyy-MM")";
+            console.log(Date);
+            $.confirm({
+                title: 'Справка расчет',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="form-group">' +
+                    '<label>С какой даты</label>' +
+                    '<input type="month" min="2017-01" value="2017-01" placeholder="" id="DateFrom" class="form-control" />' +
+                    '<label>По какую даты</label>' +
+                    '<input type="month" min="2017-01" value="'+Date+'" placeholder="" id="DateTo" class="form-control" />' +
+                    '</div>' +
+                    '</form>',
+                buttons: {
+                    "Скачать": function () {
+                        var datefrom = $("#DateFrom").val();
+                        var dateto = $("#DateTo").val();
+                        $.ajax({
+                            success: function (data) {
+                                //window.location = '/PersonalData/DownLoadHelpСalculation?FullLic=' + @ViewBag.FULL_LIC + '&DateFrom=' + $("#DateFrom").val() + '&DateTo=' + $("#DateTo").val();
+                                window.open('/DPU/DownLoadHelpСalculation?FullLic=' + @Model.NewFullLic + '&DateFrom=' + datefrom + '&DateTo=' + dateto,"_self");
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Просмотр": function () {
+                        var datefrom = $("#DateFrom").val();
+                        var dateto = $("#DateTo").val();
+                        $.ajax({
+                            success: function (data) {
+                                window.open('/DPU/WatchHelpСalculation?FullLic=' + @Model.NewFullLic + '&DateFrom=' + datefrom + '&DateTo=' + dateto);
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+         });
+         $(".HistoryPayment").click(function (e) {
+            var Date = "@DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM")";
+            var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";
+            console.log(DateMax);
+            $.confirm({
+                title: 'История оплат',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="form-group">' +
+                    '<label>С какой даты</label>' +
+                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptEnd1" class="form-control" />' +
+                    '<label>По какую даты</label>' +
+                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptStart1" class="form-control" />' +
+                    '</div>' +
+                    '</form>',
+                buttons: {
+                    '<input type="button" class="btn btn-primary" value="Скачать" data-toggle="modal" data-target="#ShowLogResultModal" />': function () {
+                        $.ajax({
+                            url: '/LogResult/ShowLogResult?Objects=@Model.NewFullLic',
+                            type: 'Get',
+                            async: false,
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                console.log(data);
+                                $("#ShowLogs").empty();
+                                $("#ShowLogs").append(data);
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                        window.open('/PersonalData/DownLoadReceipt?FullLic=' + @Model.NewFullLic + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val(), "_self");
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+        });
+        $(".DownLoadReceipt").click(function (e) {
+            var Date = "@DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM")";
+            var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";
+            console.log(DateMax);
+            $.confirm({
+                title: 'Квитанция',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="form-group">' +
+                    '<label>С какой даты</label>' +
+                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptEnd1" class="form-control" />' +
+                    '<label>По какую даты</label>' +
+                    '<input type="month" min="2017-01" max="' + DateMax + '" value="' + Date + '" placeholder="" id="DateReceiptStart1" class="form-control" />' +
+                    '</div>' +
+                    '</form>',
+                buttons: {
+                    '<input type="button" class="btn btn-primary" value="Скачать" data-toggle="modal" data-target="#ShowLogResultModal" />': function () {
+                        $.ajax({
+                            url: '/LogResult/ShowLogResult?Objects=@Model.NewFullLic',
+                            type: 'Get',
+                            async: false,
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                console.log(data);
+                                $("#ShowLogs").empty();
+                                $("#ShowLogs").append(data);
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                        window.open('/PersonalData/DownLoadReceipt?FullLic=' + @Model.NewFullLic + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val(), "_self");
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+        });
+    })
+</script>

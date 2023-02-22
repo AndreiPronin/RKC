@@ -8,12 +8,17 @@ using BL.Notification;
 using BL.Security;
 using BL.Service;
 using BL.Services;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Ninject;
+using Ninject.Extensions.Factory;
+using Ninject.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WordGenerator;
+using WordGenerator.interfaces;
 
 namespace BL
 {
@@ -35,6 +40,16 @@ namespace BL
             kernel.Bind<INotificationMail>().To<NotificationMail>();
             kernel.Bind<IExcel>().To<Excel.Excel>();
             kernel.Bind<ICourt>().To<Court>();
+            kernel.Bind<IExcelDpu>().To<ExcelDpu>();
+            kernel.Bind<IDpu>().To<Dpu>();
+            kernel.Bind<IReport>().To<Report>();
+            kernel.Bind<IBaseService>().To<BaseService>();
+
+
+            kernel.Bind<IPdfGenerate>().To<ReceiptPersonal>().Named("Personal");
+            kernel.Bind<IPdfGenerate>().To<ReceiptDPU>().Named("Dpu");
+            kernel.Bind<IPdfFactory>().To<ReceiptFactory>();
+
         }
     }
 }

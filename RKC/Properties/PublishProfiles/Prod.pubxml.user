@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Programing\RKC\RKC\bin\Prod</_PublishTargetUrl>
-    <History>True|2023-01-17T16:57:19.1363302Z;True|2023-01-16T20:04:18.2471257+03:00;True|2023-01-15T15:15:45.8586599+03:00;True|2023-01-10T20:10:17.5529716+03:00;True|2023-01-10T20:09:12.0119699+03:00;False|2023-01-10T20:08:48.1458406+03:00;False|2023-01-10T20:08:03.3278048+03:00;True|2022-12-25T18:07:44.6253781+03:00;True|2022-12-25T17:55:43.0526435+03:00;True|2022-12-21T20:44:20.9930855+03:00;True|2022-12-15T20:12:07.5159874+03:00;True|2022-12-14T20:49:36.5506992+03:00;True|2022-12-08T23:28:35.4870837+03:00;True|2022-11-24T17:39:39.2172039+03:00;True|2022-11-21T20:01:55.6991851+03:00;True|2022-11-13T20:03:11.7839758+03:00;True|2022-11-13T18:36:41.8965501+03:00;True|2022-11-13T17:20:16.3759281+03:00;True|2022-11-13T17:19:16.8779079+03:00;True|2022-11-10T21:39:51.3932742+03:00;True|2022-11-09T21:03:51.0622411+03:00;True|2022-11-09T20:48:29.1943342+03:00;True|2022-11-08T21:49:03.6895543+03:00;True|2022-10-27T18:03:28.0063857+03:00;True|2022-10-22T13:16:01.3154206+03:00;True|2022-10-22T13:05:17.4229310+03:00;True|2022-10-13T09:32:30.0726197+03:00;True|2022-10-10T21:49:07.6941855+03:00;True|2022-10-08T20:44:58.4762606+03:00;True|2022-10-07T19:01:42.5760678+03:00;True|2022-10-03T15:23:57.5045187+03:00;True|2022-10-03T13:32:47.1199602+03:00;True|2022-09-27T20:46:01.0774183+03:00;True|2022-09-27T20:24:08.8705848+03:00;True|2022-09-27T20:19:49.1091074+03:00;True|2022-09-27T19:58:31.4603116+03:00;True|2022-09-20T21:14:18.4936190+03:00;True|2022-09-19T21:02:14.0119094+03:00;True|2022-09-18T20:48:54.3079313+03:00;True|2022-09-18T20:43:36.4400539+03:00;True|2022-09-14T20:11:11.3643051+03:00;True|2022-09-11T01:53:36.1617960+03:00;True|2022-09-11T01:51:24.3527458+03:00;True|2022-09-08T10:36:10.2994028+03:00;True|2022-09-08T09:47:32.2973482+03:00;True|2022-08-25T21:49:52.8964264+03:00;True|2022-08-25T21:31:37.1269410+03:00;True|2022-08-16T21:08:03.3971145+03:00;True|2022-07-14T10:04:42.5309977+03:00;True|2022-06-17T15:15:54.8067028+03:00;True|2022-06-17T09:22:45.7948773+03:00;True|2022-06-16T19:58:44.2522692+03:00;True|2022-05-28T12:00:03.9799422+03:00;True|2022-05-28T11:38:56.0140228+03:00;True|2022-05-27T11:54:14.5383614+03:00;True|2022-05-27T11:49:16.9033756+03:00;True|2022-05-26T21:07:24.9616605+03:00;True|2022-05-26T21:07:08.3459002+03:00;True|2022-05-26T21:04:11.2333176+03:00;True|2022-05-26T20:49:29.5447719+03:00;True|2022-05-26T15:06:46.2605578+03:00;True|2022-05-25T20:23:56.1042760+03:00;True|2022-05-23T20:08:33.3646640+03:00;False|2022-05-23T20:07:26.4148461+03:00;False|2022-05-23T20:07:18.3537878+03:00;True|2022-05-22T15:18:22.9792539+03:00;True|2022-05-22T14:48:23.0731103+03:00;True|2022-05-19T21:41:31.9724150+03:00;True|2022-05-19T21:27:05.4492808+03:00;True|2022-05-19T21:18:25.4679695+03:00;True|2022-05-16T20:51:18.5698574+03:00;</History>
+    <History>True|2023-02-19T17:51:31.5854891Z;True|2023-02-15T21:29:52.9924169+03:00;True|2023-02-15T20:50:27.2275742+03:00;True|2023-02-15T20:41:51.2151740+03:00;True|2023-02-14T20:43:56.5169335+03:00;True|2023-02-12T17:13:44.3698460+03:00;True|2023-02-12T17:13:27.3397803+03:00;True|2023-02-12T17:12:41.0809727+03:00;True|2023-02-12T17:12:15.0068148+03:00;True|2023-01-31T20:56:53.2341063+03:00;True|2023-01-17T19:57:19.1363302+03:00;True|2023-01-16T20:04:18.2471257+03:00;True|2023-01-15T15:15:45.8586599+03:00;True|2023-01-10T20:10:17.5529716+03:00;True|2023-01-10T20:09:12.0119699+03:00;False|2023-01-10T20:08:48.1458406+03:00;False|2023-01-10T20:08:03.3278048+03:00;True|2022-12-25T18:07:44.6253781+03:00;True|2022-12-25T17:55:43.0526435+03:00;True|2022-12-21T20:44:20.9930855+03:00;True|2022-12-15T20:12:07.5159874+03:00;True|2022-12-14T20:49:36.5506992+03:00;True|2022-12-08T23:28:35.4870837+03:00;True|2022-11-24T17:39:39.2172039+03:00;True|2022-11-21T20:01:55.6991851+03:00;True|2022-11-13T20:03:11.7839758+03:00;True|2022-11-13T18:36:41.8965501+03:00;True|2022-11-13T17:20:16.3759281+03:00;True|2022-11-13T17:19:16.8779079+03:00;True|2022-11-10T21:39:51.3932742+03:00;True|2022-11-09T21:03:51.0622411+03:00;True|2022-11-09T20:48:29.1943342+03:00;True|2022-11-08T21:49:03.6895543+03:00;True|2022-10-27T18:03:28.0063857+03:00;True|2022-10-22T13:16:01.3154206+03:00;True|2022-10-22T13:05:17.4229310+03:00;True|2022-10-13T09:32:30.0726197+03:00;True|2022-10-10T21:49:07.6941855+03:00;True|2022-10-08T20:44:58.4762606+03:00;True|2022-10-07T19:01:42.5760678+03:00;True|2022-10-03T15:23:57.5045187+03:00;True|2022-10-03T13:32:47.1199602+03:00;True|2022-09-27T20:46:01.0774183+03:00;True|2022-09-27T20:24:08.8705848+03:00;True|2022-09-27T20:19:49.1091074+03:00;True|2022-09-27T19:58:31.4603116+03:00;True|2022-09-20T21:14:18.4936190+03:00;True|2022-09-19T21:02:14.0119094+03:00;True|2022-09-18T20:48:54.3079313+03:00;True|2022-09-18T20:43:36.4400539+03:00;True|2022-09-14T20:11:11.3643051+03:00;True|2022-09-11T01:53:36.1617960+03:00;True|2022-09-11T01:51:24.3527458+03:00;True|2022-09-08T10:36:10.2994028+03:00;True|2022-09-08T09:47:32.2973482+03:00;True|2022-08-25T21:49:52.8964264+03:00;True|2022-08-25T21:31:37.1269410+03:00;True|2022-08-16T21:08:03.3971145+03:00;True|2022-07-14T10:04:42.5309977+03:00;True|2022-06-17T15:15:54.8067028+03:00;True|2022-06-17T09:22:45.7948773+03:00;True|2022-06-16T19:58:44.2522692+03:00;True|2022-05-28T12:00:03.9799422+03:00;True|2022-05-28T11:38:56.0140228+03:00;True|2022-05-27T11:54:14.5383614+03:00;True|2022-05-27T11:49:16.9033756+03:00;True|2022-05-26T21:07:24.9616605+03:00;True|2022-05-26T21:07:08.3459002+03:00;True|2022-05-26T21:04:11.2333176+03:00;True|2022-05-26T20:49:29.5447719+03:00;True|2022-05-26T15:06:46.2605578+03:00;True|2022-05-25T20:23:56.1042760+03:00;True|2022-05-23T20:08:33.3646640+03:00;False|2022-05-23T20:07:26.4148461+03:00;False|2022-05-23T20:07:18.3537878+03:00;True|2022-05-22T15:18:22.9792539+03:00;True|2022-05-22T14:48:23.0731103+03:00;True|2022-05-19T21:41:31.9724150+03:00;True|2022-05-19T21:27:05.4492808+03:00;True|2022-05-19T21:18:25.4679695+03:00;True|2022-05-16T20:51:18.5698574+03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -17,10 +17,10 @@
       <publishTime>09/10/2013 20:29:20</publishTime>
     </File>
     <File Include="bin/AppCache.dll">
-      <publishTime>10/26/2022 20:53:08</publishTime>
+      <publishTime>02/19/2023 20:51:27</publishTime>
     </File>
     <File Include="bin/AppCache.pdb">
-      <publishTime>10/26/2022 20:53:08</publishTime>
+      <publishTime>02/19/2023 20:51:27</publishTime>
     </File>
     <File Include="bin/Aspose.BarCode.dll">
       <publishTime>07/25/2022 23:17:52</publishTime>
@@ -29,19 +29,19 @@
       <publishTime>05/09/2021 20:19:26</publishTime>
     </File>
     <File Include="bin/BE.dll">
-      <publishTime>01/15/2023 15:15:42</publishTime>
+      <publishTime>02/19/2023 20:51:27</publishTime>
     </File>
     <File Include="bin/BE.pdb">
-      <publishTime>01/15/2023 15:15:42</publishTime>
+      <publishTime>02/19/2023 20:51:27</publishTime>
     </File>
     <File Include="bin/BL.dll">
-      <publishTime>01/17/2023 19:54:50</publishTime>
+      <publishTime>02/19/2023 20:51:28</publishTime>
     </File>
     <File Include="bin/BL.dll.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="bin/BL.pdb">
-      <publishTime>01/17/2023 19:54:50</publishTime>
+      <publishTime>02/19/2023 20:51:28</publishTime>
     </File>
     <File Include="bin/ClosedXML.dll">
       <publishTime>12/16/2020 12:59:08</publishTime>
@@ -50,13 +50,13 @@
       <publishTime>12/16/2020 12:59:08</publishTime>
     </File>
     <File Include="bin/DB.dll">
-      <publishTime>12/08/2022 19:42:32</publishTime>
+      <publishTime>02/19/2023 20:51:27</publishTime>
     </File>
     <File Include="bin/DB.dll.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="bin/DB.pdb">
-      <publishTime>12/08/2022 19:42:32</publishTime>
+      <publishTime>02/19/2023 20:51:27</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>06/07/2017 01:59:22</publishTime>
@@ -121,6 +121,9 @@
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>07/25/2012 15:48:56</publishTime>
     </File>
+    <File Include="bin/NaturalSort.dll">
+      <publishTime>05/26/2021 07:35:52</publishTime>
+    </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 04:06:16</publishTime>
     </File>
@@ -152,10 +155,10 @@
       <publishTime>11/13/2012 16:19:34</publishTime>
     </File>
     <File Include="bin/RKC.dll">
-      <publishTime>01/17/2023 19:54:50</publishTime>
+      <publishTime>02/19/2023 20:51:28</publishTime>
     </File>
     <File Include="bin/RKC.pdb">
-      <publishTime>01/17/2023 19:54:50</publishTime>
+      <publishTime>02/19/2023 20:51:28</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/08/2018 08:38:48</publishTime>
@@ -428,13 +431,13 @@
       <publishTime>01/23/2014 17:57:34</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll">
-      <publishTime>01/17/2023 19:54:50</publishTime>
+      <publishTime>02/19/2023 20:51:27</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll.config">
       <publishTime>08/12/2022 21:16:35</publishTime>
     </File>
     <File Include="bin/WordGenerator.pdb">
-      <publishTime>01/17/2023 19:54:50</publishTime>
+      <publishTime>02/19/2023 20:51:27</publishTime>
     </File>
     <File Include="bin/zxing.dll">
       <publishTime>02/03/2022 23:45:34</publishTime>
@@ -463,6 +466,9 @@
     <File Include="Content/bootstrap.min.css.map">
       <publishTime>08/18/2022 17:46:56</publishTime>
     </File>
+    <File Include="Content/Dpu.css">
+      <publishTime>02/05/2023 15:50:03</publishTime>
+    </File>
     <File Include="Content/img/main/fon.jpg">
       <publishTime>06/02/2022 13:13:04</publishTime>
     </File>
@@ -478,8 +484,11 @@
     <File Include="Content/img/main/БРБ_лого.png">
       <publishTime>06/01/2022 19:59:52</publishTime>
     </File>
+    <File Include="Content/SideBar.css">
+      <publishTime>01/18/2023 22:06:00</publishTime>
+    </File>
     <File Include="Content/Site.css">
-      <publishTime>12/20/2022 19:31:58</publishTime>
+      <publishTime>02/18/2023 18:34:54</publishTime>
     </File>
     <File Include="Content/toastr.css">
       <publishTime>08/18/2022 18:42:54</publishTime>
@@ -538,6 +547,9 @@
     <File Include="Scripts/index.js.flow">
       <publishTime>08/18/2022 17:24:58</publishTime>
     </File>
+    <File Include="Scripts/jquery-1.10.2.min.js">
+      <publishTime>01/29/2023 16:07:23</publishTime>
+    </File>
     <File Include="Scripts/jquery-3.4.1.js">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
@@ -555,6 +567,12 @@
     </File>
     <File Include="Scripts/jquery-3.4.1.slim.min.map">
       <publishTime>05/29/2022 02:00:21</publishTime>
+    </File>
+    <File Include="Scripts/jquery.autocomplete.js">
+      <publishTime>01/29/2023 17:05:09</publishTime>
+    </File>
+    <File Include="Scripts/jquery.autocomplete.min.js">
+      <publishTime>01/29/2023 16:48:48</publishTime>
     </File>
     <File Include="Scripts/jquery.maskedinput.js">
       <publishTime>06/16/2022 09:22:59</publishTime>
@@ -824,7 +842,7 @@
       <publishTime>07/06/2022 20:41:07</publishTime>
     </File>
     <File Include="Template/Образец квитанции.docx">
-      <publishTime>01/17/2023 19:56:33</publishTime>
+      <publishTime>01/20/2023 10:16:56</publishTime>
     </File>
     <File Include="Utility_Prod/RunJobDublicatePers.vbs">
       <publishTime>09/19/2022 11:43:34</publishTime>
@@ -869,7 +887,7 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Admin/GetNotification.cshtml">
-      <publishTime>10/30/2022 18:42:02</publishTime>
+      <publishTime>01/22/2023 17:12:38</publishTime>
     </File>
     <File Include="Views/Admin/GetUserRoleInfo.cshtml">
       <publishTime>08/20/2022 17:47:49</publishTime>
@@ -896,10 +914,10 @@
       <publishTime>12/27/2022 19:34:03</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPU.cshtml">
-      <publishTime>12/27/2022 19:34:13</publishTime>
+      <publishTime>02/11/2023 12:57:53</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPUDelete.cshtml">
-      <publishTime>12/27/2022 19:34:21</publishTime>
+      <publishTime>02/13/2023 18:58:24</publishTime>
     </File>
     <File Include="Views/Counter/ErrorIntegration.cshtml">
       <publishTime>09/08/2022 10:31:54</publishTime>
@@ -914,10 +932,31 @@
       <publishTime>08/20/2022 13:27:21</publishTime>
     </File>
     <File Include="Views/Counter/SearchIPU.cshtml">
-      <publishTime>07/11/2022 14:08:37</publishTime>
+      <publishTime>02/13/2023 09:35:32</publishTime>
     </File>
     <File Include="Views/Counter/UploadFile.cshtml">
       <publishTime>05/29/2022 18:51:44</publishTime>
+    </File>
+    <File Include="Views/DPU/AdminPanel.cshtml">
+      <publishTime>01/30/2023 20:26:04</publishTime>
+    </File>
+    <File Include="Views/DPU/DpuDictionarySummaryHouses.cshtml">
+      <publishTime>02/17/2023 19:25:01</publishTime>
+    </File>
+    <File Include="Views/DPU/DpuInfo.cshtml">
+      <publishTime>02/18/2023 13:07:05</publishTime>
+    </File>
+    <File Include="Views/DPU/Index.cshtml">
+      <publishTime>02/16/2023 19:08:20</publishTime>
+    </File>
+    <File Include="Views/DPU/Payments.cshtml">
+      <publishTime>01/29/2023 15:13:01</publishTime>
+    </File>
+    <File Include="Views/DPU/Search.cshtml">
+      <publishTime>02/16/2023 18:10:05</publishTime>
+    </File>
+    <File Include="Views/DPU/WatchHelpСalculation.cshtml">
+      <publishTime>02/06/2023 22:17:29</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>06/02/2022 21:06:37</publishTime>
@@ -947,7 +986,7 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersData.cshtml">
-      <publishTime>11/13/2022 18:36:08</publishTime>
+      <publishTime>02/18/2023 18:44:42</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersDelete.cshtml">
       <publishTime>06/16/2022 20:39:15</publishTime>
@@ -962,7 +1001,7 @@
       <publishTime>10/08/2022 19:11:29</publishTime>
     </File>
     <File Include="Views/PersonalData/PersonalInformation.cshtml">
-      <publishTime>12/20/2022 20:06:48</publishTime>
+      <publishTime>02/16/2023 15:22:14</publishTime>
     </File>
     <File Include="Views/PersonalData/ReadingsHistoryView.cshtml">
       <publishTime>10/27/2022 18:28:55</publishTime>
@@ -971,7 +1010,16 @@
       <publishTime>07/03/2022 13:51:43</publishTime>
     </File>
     <File Include="Views/PersonalData/WatchHelpСalculation.cshtml">
-      <publishTime>08/31/2022 13:47:37</publishTime>
+      <publishTime>02/07/2023 20:24:28</publishTime>
+    </File>
+    <File Include="Views/Report/AdminPanel.cshtml">
+      <publishTime>02/13/2023 19:23:01</publishTime>
+    </File>
+    <File Include="Views/Report/Index.cshtml">
+      <publishTime>02/09/2023 18:54:16</publishTime>
+    </File>
+    <File Include="Views/Report/Search.cshtml">
+      <publishTime>02/11/2023 13:31:23</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>05/29/2022 02:00:21</publishTime>
@@ -980,7 +1028,7 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>08/27/2022 12:56:44</publishTime>
+      <publishTime>02/18/2023 15:48:38</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>08/18/2022 19:53:08</publishTime>
@@ -995,7 +1043,7 @@
       <publishTime>12/05/2022 20:39:48</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/16/2023 20:04:15</publishTime>
+      <publishTime>02/19/2023 20:51:29</publishTime>
     </File>
   </ItemGroup>
 </Project>

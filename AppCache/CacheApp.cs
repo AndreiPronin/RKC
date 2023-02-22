@@ -47,7 +47,7 @@ namespace AppCache
             return memoryCache.Get(Name) as string;
         }
         /// <summary>
-        /// Обновление прогресс проценты
+        /// Обновление прогресс цифры
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>

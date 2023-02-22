@@ -1,29 +1,26 @@
 ﻿using AppCache;
-using Aspose.BarCode.Generation;
 using BE.PersData;
 using DB.DataBase;
-using DB.Model;
 using Microsoft.Office.Interop.Word;
 using NLog;
-using NLog.LayoutRenderers.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using WordGenerator.Extentions;
+using WordGenerator.interfaces;
 using ZXing;
 
 namespace WordGenerator
 {
-    public static class GenerateFileHelpCalculation
+
+    public class ReceiptPersonal : IPdfGenerate
     {
-        public static PersDataDocumentLoad Generate(string LIC,DateTime date)
+        public PersDataDocumentLoad Generate(string LIC, DateTime date)
         {
-           Logger logger = LogManager.GetCurrentClassLogger();
+            Logger logger = LogManager.GetCurrentClassLogger();
             ICacheApp cacheApp = new CacheApp();
             if (cacheApp.GetValueProgress(LIC) != null)
                 cacheApp.Delete(LIC);
@@ -150,7 +147,7 @@ namespace WordGenerator
         false, false, false, false);
                         doc.Content.Find.Execute("{ipuxv4_1}", false, true, false, false, false, true, 1, false, Lic.ipuxv4_1?.Trim(), 2,
         false, false, false, false);
-                        var Comment = Substring(Lic.komment?.Trim()); 
+                        var Comment = Substring(Lic.komment?.Trim());
                         doc.Content.Find.Execute("{komment1}", false, true, false, false, false, true, 1, false, Comment[0], 2,
       false, false, false, false);
                         doc.Content.Find.Execute("{komment2}", false, true, false, false, false, true, 1, false, Comment[1], 2,
@@ -332,12 +329,14 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
         false, false, false, false);
                             Range rangeImgQr = doc.Range(qr.Start, qr.End);
                             var ImgQr = doc.InlineShapes.AddPicture(path + $@"{LIC}_QR.png", false, true, rangeImgQr).ConvertToShape();
-                            ImgQr.WrapFormat.Type = Microsoft.Office.Interop.Word.WdWrapType.wdWrapBehind;
+                            ImgQr.WrapFormat.Type = Microsoft.Office.Interop.Word.WdWrapType.wdWrapFront;
 
                         }
                         catch (Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); }
                     }
-                    catch (Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); 
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}");
                         doc.Close(Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
                            Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat,
                            false);
@@ -372,7 +371,8 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
                         FileBytes = File.ReadAllBytes(path + $@"Квитанция {LIC} {date.Month}.pdf"),
                         FileName = $@"Квитанция {LIC} {date.Month}.pdf"
                     };
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     cacheApp.AddProgress(LIC, ex.Message);
                     return new PersDataDocumentLoad()
@@ -383,17 +383,15 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
                 }
 
             }
-            
-
         }
-        public static string[] Substring(string T)
+        public string[] Substring(string T)
         {
             int z = 0;
             var arr = new string[4];
-            if(T == null) return arr;
-            for (int i = 0; i < T.Length-1; i++)
+            if (T == null) return arr;
+            for (int i = 0; i < T.Length - 1; i++)
             {
-                if(i>1000)break;
+                if (i > 1000) break;
                 if (i == 252 || i == 506 || i == 761)
                     z++;
                 arr[z] += T[i];
@@ -401,4 +399,5 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
             return arr;
         }
     }
+    
 }

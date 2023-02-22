@@ -31,7 +31,7 @@
     <button id="ClosePage"  class="btn btn-success">Закрыть страницу</button>
     <input type="button" class="btn btn-primary printDiv" id="" value="Печать справки" />
 </div>
-<h2>Справка расчета</h2>
+<h2>Справка расчет</h2>
 @if (Model.Count() > 0)
 {
 
@@ -162,9 +162,9 @@
                             <td>@Items.GvsHeatingRecalculation</td>
                             @{ GvsHeatingRecalculation = GvsHeatingRecalculation + Items.GvsHeatingRecalculation;}
 
-                            <td>@Items.HvHeatingСalculationGcal</td>
-                            @{ HvHeatingСalculationGcal = HvHeatingСalculationGcal + Items.HvHeatingСalculationGcal;}
                             <td>@Items.HvHeatingRecalculationRate</td>
+                            @{ HvHeatingСalculationGcal = HvHeatingСalculationGcal + Items.HvHeatingСalculationGcal;}
+                            <td>@Items.HvHeatingСalculationGcal</td>
                             @{ HvHeatingRecalculationRate = HvHeatingRecalculationRate + Items.HvHeatingRecalculationRate;}
                             <td>@Items.HvHeatingСalculation</td>
                             @{ HvHeatingСalculation = HvHeatingСalculation + Items.HvHeatingСalculation;}

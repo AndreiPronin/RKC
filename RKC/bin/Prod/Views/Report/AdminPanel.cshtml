@@ -1,0 +1,138 @@
+﻿@using System.Data.SqlClient;
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<div class="row" style="margin-top:15px;">
+    <div class="col-md-6">
+        <select id="reportEditSelect" class="form-control" style="max-width: 100%;" aria-label="Выберите отчет для редактирования">
+            <option selected>Выберите отчет для редактирования</option>
+            @foreach (var Item in ViewBag.DropDownList)
+            {
+                <option value="@Item.Id">@Item.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6">
+        <button id="EditSqlScipt" class="btn btn-success">Редактировать</button>
+        <button id="DeleteReport" class="btn btn-danger">Удалить</button>
+    </div>
+    <div class="col-md-12">
+        <hr />
+    </div>
+    <div class="col-md-6">
+        <textarea id="SqlQuery" style="max-width: 100%; height: 600px;" class="form-control">Введите sql запрос</textarea>
+    </div>
+    <div class="col-md-2">
+        <input id="NameSqlScipt" class="form-control" placeholder="Название отчета" />
+    </div>
+    <div class="col-md-2">
+        <button id="SaveSqlScipt" class="btn btn-success">Сохранить</button>
+        <button id="RefreshSqlScipt" class="btn btn-primary hidden">Обновить</button>
+        <button id="CanselSqlScipt" class="btn btn-danger hidden">Отмена</button>
+    </div>
+    <div id="result"></div>
+</div>
+<script>
+    function Reload() {
+        window.location.reload();
+    }
+    $(document).ready(function () {
+        $("#SaveSqlScipt").click(function (e) {
+            $.ajax({
+                type: "Post",
+                data: {
+                    SqlQuery: $("#SqlQuery").val(),
+                    SqlName: $("#NameSqlScipt").val(),
+                },
+                url: "/Report/SaveSqlQuery",
+                success: function (data) {
+                    //window.open('/Report/SaveSqlQuery?SqlQuery=' + $("#SqlQuery").val() + '&SqlName=' + $("#NameSqlScipt").val(), "_self");
+                    toastr.options.positionClass = "toast-top-left";
+                    toastr.options.timeOut = 3000; // 1.5s
+                    toastr.success('Успешно выполнено.Страница обновится автоматически!');
+                    setTimeout(Reload, 3000);
+                },
+                error: function (data) {
+                    toastr.options.timeOut = 5000; // 1.5s
+                    toastr.error("Ошибка сохранения " + data.responseText);
+                }
+            });
+        })
+        $("#DeleteReport").click(function (e) {
+            $.ajax({
+                type: "Delete",
+                url: "/Report/DeleteSqlQuery?Id=" + $("#reportEditSelect").val(),
+                success: function (data) {
+                    //window.open('/Report/SaveSqlQuery?SqlQuery=' + $("#SqlQuery").val() + '&SqlName=' + $("#NameSqlScipt").val(), "_self");
+                    toastr.options.positionClass = "toast-top-left";
+                    toastr.options.timeOut = 3000; // 1.5s
+                    toastr.success('Успешно выполнено. Страница обновится автоматически!');
+                    setTimeout(Reload, 3000);
+                },
+                error: function (data) {
+                    toastr.options.positionClass = "toast-top-left";
+                    toastr.options.timeOut = 5000; // 1.5s
+                    toastr.error("Ошибка удаления. Возможно отчет уже удален. Обновите страницу!");
+                }
+            });
+        })
+        $("#EditSqlScipt").click(function (e) {
+            $.ajax({
+                type: "Get",
+                url: "/Report/GetEditSqlScript?Id=" + $("#reportEditSelect").val(),
+                success: function (data) {
+                    console.log(data);
+                    $("#NameSqlScipt").val(data.SqlName);
+                    $("#SqlQuery").val(data.SqlQuery);
+                    $("#SaveSqlScipt").addClass("hidden");
+                    $("#RefreshSqlScipt").removeClass("hidden");
+                    $("#CanselSqlScipt").removeClass("hidden");
+                    $("#reportEditSelect").prop('disabled', true);
+                    //window.open('/Report/SaveSqlQuery?SqlQuery=' + $("#SqlQuery").val() + '&SqlName=' + $("#NameSqlScipt").val(), "_self");
+                    toastr.options.positionClass = "toast-top-left";
+                    toastr.options.timeOut = 3000; // 1.5s
+                    toastr.success('Успешно выполнено.');
+                },
+                error: function (data) {
+                    toastr.options.positionClass = "toast-top-left";
+                    toastr.options.timeOut = 5000; // 1.5s
+                    toastr.error("Ошибка получения. Возможно отчет удален. Обновите страницу!");
+                }
+            });
+        })
+        $("#CanselSqlScipt").click(function (e) {
+            $("#SaveSqlScipt").removeClass("hidden");
+            $("#RefreshSqlScipt").addClass("hidden");
+            $("#CanselSqlScipt").addClass("hidden");
+            $("#NameSqlScipt").val("");
+            $("#SqlQuery").val("");
+            $("#reportEditSelect").prop('disabled', false);
+        })
+        $("#RefreshSqlScipt").click(function (e) {
+            $.ajax({
+                type: "Post",
+                data: {
+                    SqlQuery: $("#SqlQuery").val(),
+                    SqlName: $("#NameSqlScipt").val(),
+                    Id: $("#reportEditSelect").val()
+                },
+                url: "/Report/RefreshSqlQuery",
+                success: function (data) {
+                    $("#SaveSqlScipt").removeClass("hidden");
+                    $("#RefreshSqlScipt").addClass("hidden");
+                    $("#CanselSqlScipt").addClass("hidden");
+                    $("#NameSqlScipt").val("");
+                    $("#SqlQuery").val("");
+                    //window.open('/Report/SaveSqlQuery?SqlQuery=' + $("#SqlQuery").val() + '&SqlName=' + $("#NameSqlScipt").val(), "_self");
+                    toastr.options.positionClass = "toast-top-left";
+                    toastr.options.timeOut = 3000; // 1.5s
+                    toastr.success('Успешно выполнено.Страница обновится автоматически!');
+                    setTimeout(Reload, 3000);
+                },
+                error: function (data) {
+                    toastr.options.positionClass = "toast-top-left";
+                    toastr.options.timeOut = 5000; // 1.5s
+                    toastr.error("Ошибка сохранения " + data.responseText);
+                }
+            });
+        })
+    })
+</script>

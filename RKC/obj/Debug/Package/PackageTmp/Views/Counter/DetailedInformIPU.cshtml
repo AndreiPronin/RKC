@@ -17,7 +17,11 @@
             <button id="CloseLock" name="@Model.FirstOrDefault().FULL_LIC" class="btn btn-success">Закрыть страницу</button>
             @if (!ViewBag.isLock)
             {
-                <input type="button" name="@Model.FirstOrDefault().FULL_LIC" class="btn btn-primary AddPU" value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
+                if (ViewBag.ZAK != true)
+                {
+                    <input type="button" name="@Model.FirstOrDefault().FULL_LIC"  class="btn btn-primary AddPU"
+                           value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
+                }
             }
             <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank"><input type="button" class="btn btn-primary" value="История ранее установленых ПУ" /></a>
             <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank" data-tooltip="Закройте редактирование при переходе...">
@@ -39,14 +43,21 @@
                 <div class="card-header text-center">
                     <input id="FULL_LIC" value="@Items.FULL_LIC" hidden="hidden" />
                     @if (!string.IsNullOrEmpty(Items.TYPE_PU))
-                    {<p>Тип ПУ:  <input type="text" disabled="disabled" id="TYPE_PU" name="@Items.ID_PU" class="form-control" value="@Items.TYPE_PU" /> </p>}
+                    {
+                        <div class="col-md-6">
+                            <p>Тип ПУ:  <input type="text" disabled="disabled" id="TYPE_PU" name="@Items.ID_PU" class="form-control" value="@Items.TYPE_PU" /> </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>ID ПУ в ГИС:  <input type="text" disabled="disabled" id="TYPE_PU" name="@Items.ID_PU" class="form-control" value="@Items.GIS_ID_PU" /> </p>
+                        </div>
+                    }
                     else
                     {<p class="NullOrEmpty">Тип ПУ:</p>}
-                    @foreach(var Item in ViewBag.ErrorIntegration)
+                    @foreach (var Item in ViewBag.ErrorIntegration)
                     {
                         if (Item.TypePu == Items.TYPE_PU)
                         {
-                        <p class="NullOrEmpty">Ошибка интеграции начальный @Item.InitialReadings конечные @Item.EndReadings текущие @Item.NowReadings </p>
+                            <p class="NullOrEmpty">Ошибка интеграции начальный @Item.InitialReadings конечные @Item.EndReadings текущие @Item.NowReadings </p>
                         }
                     }
 
@@ -532,7 +543,7 @@
                             <p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>
                         }
                         else
-                        {<p class="text-center">Админ заблокировал эту страницу</p>}
+                        {<p class="text-center">ПО закрыто для изменений.</p>}
                     }
                 </div>
             </div>
@@ -548,7 +559,10 @@ else
         {<p class="text-center">В данный момент страницу редактирует  @ViewBag.User</p>}
         <div class="col-md-12">
             <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
-            <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPU" value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
+            @if (ViewBag.ZAK != true)
+            {
+                <input type="button" name="@ViewBag.FULL_LIC" class="btn btn-primary AddPU" value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
+            }
             <a href="/counter/DetailedInformIPUDelete?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="История ранее установленых ПУ" /></a>
             <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@ViewBag.FULL_LIC" target="_blank"><input type="button" class="btn btn-primary AddPU" value="Персональные данные" /></a>
         </div>

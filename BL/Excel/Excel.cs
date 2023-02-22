@@ -426,21 +426,23 @@ namespace BL.Excel
                         saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
                         if (dataRow.Cell(3).Value != "") { saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value); }
                         saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
-                        saveModel.MODEL_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
-                        if (dataRow.Cell(6).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(6).Value); }
-                        if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(7).Value); }
-                        saveModel.TYPEOFSEAL = dataRow.Cell(8).Value == "" ? "" : Convert.ToString(dataRow.Cell(8).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
-                        saveModel.TYPEOFSEAL2 = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
-                        if (dataRow.Cell(12).Value != "")
+                        saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
+                        saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
+                        if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value); }
+                        if (dataRow.Cell(8).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value); }
+                        saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
+                        saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
+                        saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
+                        saveModel.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
+                        saveModel.GIS_ID_PU = dataRow.Cell(13).Value == "" ? "" : Convert.ToString(dataRow.Cell(13).Value).Replace(" ", "");
+                        if (dataRow.Cell(14).Value != "")
                         {
-                            var str = dataRow.Cell(12).Value.ToString().Replace(",", ".");
-                            saveModel.CHECKPOINT_DATE = Convert.ToDateTime(Convert.ToString(dataRow.Cell(12).Value).Replace(".", ","));
+                            var str = dataRow.Cell(14).Value.ToString().Replace(",", ".");
+                            saveModel.CHECKPOINT_DATE = Convert.ToDateTime(Convert.ToString(dataRow.Cell(14).Value).Replace(".", ","));
                         }
-                        if (dataRow.Cell(13).Value != "")
+                        if (dataRow.Cell(15).Value != "")
                         {
-                            saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(13).Value).Replace(".", ","));
+                            saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(15).Value).Replace(".", ","));
                         }
                         if (!counter.UpdatePU(saveModel, User))
                         {
@@ -489,22 +491,23 @@ namespace BL.Excel
                         saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
                         if (dataRow.Cell(3).Value != "") { saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value); }
                         saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
-                        saveModel.MODEL_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
-                        if (dataRow.Cell(6).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(6).Value); }
-                        if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(7).Value); }
-                        saveModel.TYPEOFSEAL = dataRow.Cell(8).Value == "" ? "" : Convert.ToString(dataRow.Cell(8).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
-                        saveModel.TYPEOFSEAL2 = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
-                        if (dataRow.Cell(12).Value != "")
-                        {
-                            var str = dataRow.Cell(12).Value.ToString().Replace(",", ".");
-                            saveModel.CHECKPOINT_DATE = Convert.ToDateTime(Convert.ToString(dataRow.Cell(12).Value).Replace(".", ","));
-                        }
-                        if (dataRow.Cell(13).Value != "")
-                        {
-                            saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(13).Value).Replace(".", ","));
-                        }
+                        saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
+                        saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
+                        if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value); }
+                        if (dataRow.Cell(8).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value); }
+                        saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
+                        saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
+                        saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
+                        saveModel.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
+                        //if (dataRow.Cell(12).Value != "")
+                        //{
+                        //    var str = dataRow.Cell(12).Value.ToString().Replace(",", ".");
+                        //    saveModel.CHECKPOINT_DATE = Convert.ToDateTime(Convert.ToString(dataRow.Cell(12).Value).Replace(".", ","));
+                        //}
+                        //if (dataRow.Cell(13).Value != "")
+                        //{
+                        //    saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(13).Value).Replace(".", ","));
+                        //}
                         if (!counter.UpdateNewPU(saveModel, User))
                         {
                             saveModel.DESCRIPTION = $"Нет такого ПУ {saveModel.TypePU}";
@@ -817,8 +820,8 @@ namespace BL.Excel
                                         new DataColumn("  ДОМ  "),
                                         new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
             ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   "),new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
-            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   ПЛОМБА   "),new DataColumn("   ТИП ПЛОМБА   ")
-            ,new DataColumn("   ПЛОМБА 2   "),new DataColumn("   ТИП ПЛОМБА 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
+            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   № пломбы 1   "),new DataColumn("   Тип пломбы1   ")
+            ,new DataColumn("   № пломбы 2   "),new DataColumn("   Тип пломбы 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
             var DB = new DbTPlus();
             var Counters = DB.Database.SqlQuery<vw_TplusIPU_GVS>("SELECT * FROM [T+].[dbo].[view_TplusIPU_GVS]").ToList();
@@ -920,30 +923,5 @@ namespace BL.Excel
             }
             return dt;
         }
-        //public DataTable ReestrIPU(string User, ICacheApp cacheApp)
-        //{
-        //    cacheApp.AddProgress(User, "Получаю данные из бд");
-        //    DataTable dt = new DataTable("Counter");
-        //    dt.Columns.AddRange(new DataColumn[17] { new DataColumn("КОД ДОМА"),
-        //                                new DataColumn("   УЛИЦА   "),
-        //                                new DataColumn("  ДОМ  "),
-        //                                new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
-        //    ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   "),new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
-        //    ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   ПЛОМБА   "),new DataColumn("   ТИП ПЛОМБА   ")
-        //    ,new DataColumn("   ПЛОМБА 2   "),new DataColumn("   ТИП ПЛОМБА 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
-        //    ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
-        //    var DB = new ApplicationDbContext();
-        //    var Counters = DB.Database.SqlQuery<vw_CounterTPlus>("select * from dbo.vw_CounterTPlus").ToList();
-        //    cacheApp.Update(User, "Формирую Excel");
-        //    foreach (var Items in Counters)
-        //    {
-        //        dt.Rows.Add(Items.CodeHouse, Items.Streer, Items.Home, Items.Flat,
-        //            Items.Lic, Items.Fio, Items.Pu, Items.PuNumber, Items.DataCheck, Items.DataNextCheck,
-        //            Items.Seal, Items.TypeSeal, Items.Seal2, Items.TypeSeal2, Items.SignPu, Items.EndReadings, Items.NowReadings);
-        //    }
-        //    cacheApp.Update(User, "Скачиваю Excel");
-
-        //    return dt;
-        //}
     }
 }

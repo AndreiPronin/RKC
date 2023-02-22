@@ -19,6 +19,7 @@ namespace DB.DataBase
         public DbSet<Log> Log { get; set; }
         public DbSet<Flags> Flags { get; set; }
         public DbSet<PersData> PersData { get; set; }
+        public DbSet<Reports> Reports { get; set; }
         public DbSet<PersDataDocument> PersDataDocument { get; set; }
         public DbSet<HelpСalculations> HelpСalculation { get; set; }
         public DbSet<AspNetRoles> AspNetRoles { get; set; }
@@ -27,6 +28,8 @@ namespace DB.DataBase
         public DbSet<Notifications> Notifications { get; set; }
         public DbSet<IntegrationReadings> IntegrationReadings { get; set; }
         public DbSet<vw_CounterTPlus> vw_CounterTPlus { get; set; }
+        public DbSet<DPUHelpCalculationInstallation> dPUHelpCalculationInstallations { get; set; }
+        public DbSet<DPUSummaryHouses> dPUSummaryHouses { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

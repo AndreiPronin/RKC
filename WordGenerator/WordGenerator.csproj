@@ -47,6 +47,9 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1004\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.5.0.4\lib\net46\NLog.dll</HintPath>
     </Reference>
@@ -71,8 +74,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\PdfType.cs" />
     <Compile Include="Extentions\ArrayExtentions.cs" />
-    <Compile Include="GenerateFileHelpCalculation.cs" />
+    <Compile Include="interfaces\IPdfGenerator.cs" />
+    <Compile Include="ReceiptDPU.cs" />
+    <Compile Include="ReceiptPersonal.cs" />
+    <Compile Include="PdfFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

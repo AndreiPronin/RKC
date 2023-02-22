@@ -1,0 +1,38 @@
+﻿<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<div class="row" style="margin-top:15px;">
+    <div class="col-md-6">
+        <select id="reportDownload" class="form-control" style="max-width: 100%;" aria-label="Default select example">
+            <option selected>Выберите отчет для скачивания</option>
+            @foreach (var Item in ViewBag.DropDownList)
+            {
+                <option value="@Item.Id">@Item.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6">
+        <button id="DownLoadSqlScipt" class="btn btn-success">Скачать</button>
+    </div>
+    
+    <div id="result"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#DownLoadSqlScipt").click(function (e) {
+            $.ajax({
+                success: function (data) {
+                    try {
+                        window.open('/Report/DownloadReport?Id=' + $("#reportDownload").val(), "_self");
+                        toastr.options.positionClass = "toast-top-left";
+                        toastr.options.timeOut = 2000; // 1.5s
+                        toastr.success('Успешно');
+                    } catch {
+                        toastr.options.timeOut = 2000; // 1.5s
+                        toastr.error("Ошибка Скачивания");
+                    }
+                }
+            });
+        })
+
+
+    })
+</script>

@@ -1,4 +1,9 @@
 ﻿<!DOCTYPE html>
+@using BE.Roles;
+@{ 
+    var Style = "";
+}
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -9,15 +14,22 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
-    @RenderSection("scripts", required: false)
 
+    @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+    @if (!Request.Url.AbsoluteUri.Contains(":80")) {
+        Style = "red!important";
+    }
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+   
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: @Style" >
         <div id="wrapper">
             <div id="sidebar-wrapper">
-                <div class="TimeAndDate">
+                <div class="TimeAndDate"  style="background-color: @Style">
                     <div id="Date"></div>
                     <div style="display: inline-flex;">
                         <div id="hours">:</div>
@@ -56,19 +68,28 @@
         <!-- Sidebar -->
         <div id="sidebar-wrapper2">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-                <li class="active">
-                    <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">ПУ и Персы</i></a>
+                <li id="Billing" class="active">
+                    <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">Биллинг Т+</i></a>
                 </li>
-                <li>
-                    @if (User.IsInRole("Admin"))
+                <li id="DPU">
+                    @if (User.IsInRole(@RolesEnums.DPUReader) || User.IsInRole(@RolesEnums.DPUEdit) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
                     {
-                        <a href="#"><i class="glyphicon glyphicon-ruble icons" aria-hidden="true"></i> <i class="Padding">ДПУ</i></a>
+                        <a href="/DPU"><i class="glyphicon glyphicon-ruble icons" aria-hidden="true"></i> <i class="Padding">ДПУ</i></a>
                     }
                     @*<ul class="nav-pills nav-stacked" style="list-style-type:none;">
                         <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример1</a></li>
                         <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример2</a></li>
                     </ul>*@
                 </li>
+                <li id="Report">
+                    <a href="/Report"><i class="glyphicon glyphicon-list-alt icons" aria-hidden="true"></i> <i class="Padding">Отчеты</i></a>
+                </li>
+                @if (User.IsInRole(RolesEnums.Admin))
+                {
+                     <li id="Court">
+                        <a href="/Court"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
+                    </li>
+                }
                 <hr />
                 <li style="bottom: 0px; position: absolute; bottom: 0px; " >
                     <p style="color:white; margin-left:35px;" >Ссылки на другие системы</p>
@@ -118,6 +139,21 @@
         );
     }
     $(document).ready(function () {
+        let HREF = window.location.href;
+        //if (!HREF.includes(":80")) {
+        //    console.log("setStyle")
+        //    $("#navBars").css("background-color:", "#f1058c !important;");
+        //}
+        $("#menu li.active").removeClass("active");
+        if (HREF.includes("DPU")) {
+            $("#DPU").addClass("active");
+        } else if (HREF.includes("Counter") || HREF.includes("PersonalData") ) {
+            $("#Billing").addClass("active");
+        } else if (HREF.includes("Report")) {
+            $("#Report").addClass("active");
+        } else if (HREF.includes("Court")) {
+            $("#Court").addClass("active");
+        }
         initMenu();
     });
     setInterval(function () {

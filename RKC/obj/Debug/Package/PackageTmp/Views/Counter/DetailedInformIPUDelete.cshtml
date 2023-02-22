@@ -667,7 +667,7 @@ else
             var IdPU = $(this).parent().find('.IdPU').val();
             $.confirm({
                 title: 'Предупрждение!',
-                content: 'Внимание вы пытаетесь востановить ПУ ' + $(this).attr('name') + ' !!!',
+                content: 'Внимание вы пытаетесь востановить ПУ ' + $(this).attr('name') + ', не забудьте внести показания по ИПУ !!!',
                 buttons: {
                     "Да": function () {
                         $.ajax({

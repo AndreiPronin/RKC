@@ -49,6 +49,9 @@
     <Compile Include="Counter\modelUpdatePU.cs" />
     <Compile Include="Counter\SaveModelIPU.cs" />
     <Compile Include="Counter\SearchIPU_LICModel.cs" />
+    <Compile Include="DPU\DpuDataDocumentLoad.cs" />
+    <Compile Include="DPU\DpuNotAddDb.cs" />
+    <Compile Include="DPU\SearchAutocompleteResultDPU.cs" />
     <Compile Include="JobManager\EnumJob.cs" />
     <Compile Include="JobManager\MailNotSend.cs" />
     <Compile Include="PersData\HelpCalculationsModel.cs" />
@@ -56,6 +59,9 @@
     <Compile Include="PersData\PersDataModel.cs" />
     <Compile Include="PersData\PersNotFoundInLic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\EditSqlScritpt.cs" />
+    <Compile Include="Report\SqlQueryReports.cs" />
+    <Compile Include="Roles\RolesEnums.cs" />
     <Compile Include="Service\EnumFlags.cs" />
     <Compile Include="Service\ReadFilesModel.cs" />
   </ItemGroup>

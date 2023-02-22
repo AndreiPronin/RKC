@@ -15,10 +15,7 @@ namespace RKC.Controllers
             _cacheApp = cacheApp;
         }
         // GET: LogResult
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() => View();
         public ActionResult ShowLogResult(string Objects)
         {
             ViewBag.Objects = Objects;

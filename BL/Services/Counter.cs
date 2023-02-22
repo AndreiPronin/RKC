@@ -42,18 +42,25 @@ namespace BL.Counters
         {
             using (var model = new DbLIC())
             {
-                IQueryable<ALL_LICS> query = model.ALL_LICS;
-                if (searchModel.LIC != 0)
-                    query = query.Where(x => x.F4ENUMELS.Contains(searchModel.LIC.ToString()));
-                if (!string.IsNullOrEmpty(searchModel.FIO))
-                    query = query.Where(x => x.FIO.Contains(searchModel.FIO));
-                if (!string.IsNullOrEmpty(searchModel.street))
-                    query = query.Where(x => x.UL.Contains(searchModel.street));
-                if (!string.IsNullOrEmpty(searchModel.home))
-                    query = query.Where(x => x.DOM == searchModel.home);
-                if (!string.IsNullOrEmpty(searchModel.flat))
-                    query = query.Where(x => x.KW.Contains(searchModel.flat));
-                return query.Take(30).ToList();
+                try
+                {
+                    IQueryable<ALL_LICS> query = model.ALL_LICS;
+                    if (searchModel.LIC != 0)
+                        query = query.Where(x => x.F4ENUMELS.Contains(searchModel.LIC.ToString()));
+                    if (!string.IsNullOrEmpty(searchModel.FIO))
+                        query = query.Where(x => x.FIO.Contains(searchModel.FIO));
+                    if (!string.IsNullOrEmpty(searchModel.street))
+                        query = query.Where(x => x.UL.Contains(searchModel.street));
+                    if (!string.IsNullOrEmpty(searchModel.home))
+                        query = query.Where(x => x.DOM == searchModel.home);
+                    if (!string.IsNullOrEmpty(searchModel.flat))
+                        query = query.Where(x => x.KW.Contains(searchModel.flat));
+
+                    return query.Take(30).ToList();
+                }catch(Exception e)
+                {
+                    return null;
+                }
             }
         }
         public List<IPU_COUNTERS> DetailInfroms(string IPU_LIC)
@@ -123,6 +130,8 @@ namespace BL.Counters
                 IPU_COUNTERS.DESCRIPTION = string.IsNullOrEmpty(saveModelIPU.DESCRIPTION) ? IPU_COUNTERS.DESCRIPTION : saveModelIPU.DESCRIPTION;
                 IPU_COUNTERS.SEALNUMBER2 = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2) ? IPU_COUNTERS.SEALNUMBER2 : saveModelIPU.SEALNUMBER2;
                 IPU_COUNTERS.TYPEOFSEAL2 = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2) ? IPU_COUNTERS.TYPEOFSEAL2 : saveModelIPU.TYPEOFSEAL2;
+                IPU_COUNTERS.GIS_ID_PU = string.IsNullOrEmpty(saveModelIPU.GIS_ID_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.GIS_ID_PU;
+                IPU_COUNTERS.BRAND_PU = string.IsNullOrEmpty(saveModelIPU.BRAND_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.BRAND_PU;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                 DbTPlus.SaveChanges();
             }
@@ -262,6 +271,8 @@ namespace BL.Counters
                 IPU_COUNTERS.DESCRIPTION = string.IsNullOrEmpty(saveModelIPU.DESCRIPTION) ? IPU_COUNTERS.DESCRIPTION : saveModelIPU.DESCRIPTION;
                 IPU_COUNTERS.SEALNUMBER2 = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2) ? IPU_COUNTERS.SEALNUMBER2 : saveModelIPU.SEALNUMBER2;
                 IPU_COUNTERS.TYPEOFSEAL2 = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2) ? IPU_COUNTERS.TYPEOFSEAL2 : saveModelIPU.TYPEOFSEAL2;
+                IPU_COUNTERS.GIS_ID_PU = string.IsNullOrEmpty(saveModelIPU.GIS_ID_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.GIS_ID_PU;
+                IPU_COUNTERS.BRAND_PU = string.IsNullOrEmpty(saveModelIPU.BRAND_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.BRAND_PU;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                 await DbTPlus.SaveChangesAsync();
             }
