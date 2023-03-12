@@ -466,6 +466,8 @@ D:\Programing\RKC\RKC\bin\System.Web.WebPages.Razor.dll
 D:\Programing\RKC\RKC\bin\WebActivatorEx.dll
 D:\Programing\RKC\RKC\bin\WebGrease.dll
 D:\Programing\RKC\RKC\bin\WordGenerator.dll
+D:\Programing\RKC\RKC\bin\NaturalSort.dll
+D:\Programing\RKC\RKC\bin\NLog.dll
 D:\Programing\RKC\RKC\bin\zxing.dll
 D:\Programing\RKC\RKC\bin\AppCache.pdb
 D:\Programing\RKC\RKC\bin\BE.pdb
@@ -525,6 +527,8 @@ D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Programing\RKC\RKC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Programing\RKC\RKC\bin\NaturalSort.xml
+D:\Programing\RKC\RKC\bin\NLog.xml
 D:\Programing\RKC\RKC\bin\zxing.xml
 D:\Programing\RKC\RKC\bin\ru\System.Web.Helpers.resources.dll
 D:\Programing\RKC\RKC\bin\ru\System.Web.Mvc.resources.dll
@@ -550,7 +554,3 @@ D:\Programing\RKC\RKC\obj\Debug\RKC.csproj.CoreCompileInputs.cache
 D:\Programing\RKC\RKC\obj\Debug\RKC.csproj.CopyComplete
 D:\Programing\RKC\RKC\obj\Debug\RKC.dll
 D:\Programing\RKC\RKC\obj\Debug\RKC.pdb
-D:\Programing\RKC\RKC\bin\NLog.dll
-D:\Programing\RKC\RKC\bin\NLog.xml
-D:\Programing\RKC\RKC\bin\NaturalSort.dll
-D:\Programing\RKC\RKC\bin\NaturalSort.xml

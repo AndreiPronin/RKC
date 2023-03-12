@@ -497,6 +497,27 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                @{var DIMESSIONS = Items.DIMENSION != null ? Items.DIMENSION.DIMENSION_NAME : "";}
+                                @if (string.IsNullOrEmpty(DIMESSIONS))
+                                {
+                                    <label style="font-weight:inherit;" class="col-sm-4 NullOrEmpty col-form-label;">Еденица измерения:</label>
+                                }
+                                else
+                                {
+                                    <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Еденица измерения:</label>
+                                }
+                                <div class="col-sm-8">
+                                    <select disabled id="DIMENSION" class="form-control">
+
+                                        <option>@DIMESSIONS</option>
+                                        @foreach (var Item in ViewBag.DIMENSION)
+                                        {
+                                            <option value="@Item.ID">@Item.DIMENSION_NAME</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 @if (!string.IsNullOrEmpty(Items.DESCRIPTION))
                                 {
                                     <label class="col-sm-4 col-form-label">Примечание:</label>

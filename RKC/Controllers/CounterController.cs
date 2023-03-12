@@ -39,13 +39,13 @@ namespace RKC.Controllers
         private readonly IIntegrations _integration;
         private readonly IExcel _excel;
         public readonly IFlagsAction _flagsAction;
-        public readonly IReadFileBank _readFileBank;
+        public readonly IDictionary _dictionary;
         public readonly ISecurityProvider _securityProvider;
         public readonly IEBD _ebd;
         public readonly INotificationMail _notificationMail;
         private readonly IBaseService _baseService;
         public CounterController(ICounter counter, Ilogger logger, IGeneratorDescriptons generatorDescriptons, 
-            ICacheApp cacheApp, IFlagsAction flagsAction, IReadFileBank readFileBank, IIntegrations integration
+            ICacheApp cacheApp, IFlagsAction flagsAction, IDictionary dictionary, IIntegrations integration
             , ISecurityProvider securityProvider,IEBD ebd,INotificationMail notificationMail, IExcel excel, IBaseService baseService)
         {
             _excel = excel;
@@ -55,7 +55,7 @@ namespace RKC.Controllers
             _generatorDescriptons = generatorDescriptons;
             _cacheApp = cacheApp;
             _flagsAction = flagsAction;
-            _readFileBank = readFileBank;
+            _dictionary = dictionary;
             _integration = integration;
             _ebd = ebd;
             _notificationMail = notificationMail;
@@ -74,7 +74,7 @@ namespace RKC.Controllers
             return PartialView(Result);
         }
         [HttpGet]
-        public ActionResult DetailedInformIPU(string FULL_LIC)
+        public async Task<ActionResult> DetailedInformIPU(string FULL_LIC)
         {
             try
             {
@@ -92,7 +92,8 @@ namespace RKC.Controllers
                 _counter.AutoAddPU(FULL_LIC);
                 var Result = _counter.DetailInfroms(FULL_LIC);
                 ViewBag.ZAK = _baseService.GetStatusCloseOpenLic(FULL_LIC);
-                if(ViewBag.IsLock == true && ViewBag.User == null) 
+                ViewBag.DIMENSION = await _dictionary.GetDIMENSION();
+                if (ViewBag.IsLock == true && ViewBag.User == null) 
                     ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
                 if (Result.Count() > 0)
                 {
@@ -114,12 +115,12 @@ namespace RKC.Controllers
             }
         }
         [HttpGet]
-        public ActionResult DetailedInformIPUDelete(string FULL_LIC)
+        public async Task<ActionResult> DetailedInformIPUDelete(string FULL_LIC)
         {
             try
             {
-                var Result = _counter.DetailInfromsDelete(FULL_LIC);
-
+                var Result = _counter.DetailInfroms(FULL_LIC,true);
+                ViewBag.DIMENSION = await _dictionary.GetDIMENSION();
                 if (Result.Count() > 0)
                 {
                     ViewBag.FULL_LIC = FULL_LIC;
@@ -133,9 +134,10 @@ namespace RKC.Controllers
         }
         [HttpGet]
         [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
-        public ActionResult FromAddPU(string FullLIC)
+        public async Task<ActionResult> FromAddPU(string FullLIC)
         {
             ViewBag.FULL_LIC = FullLIC;
+            ViewBag.DIMENSION = await _dictionary.GetDIMENSION();
             return PartialView(_counter.GetTypeNowUsePU(FullLIC));
         }
         [HttpPost]
@@ -179,12 +181,12 @@ namespace RKC.Controllers
         }
         [HttpPost]
         [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
-        public ActionResult SaveIPU(SaveModelIPU saveModelIPU)
+        public async Task<ActionResult> SaveIPU(SaveModelIPU saveModelIPU)
         {
             try
             {
                 _logger.ActionUsers(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User.Identity.GetFIOFull());
-                _counter.UpdateReadings(saveModelIPU);
+                await _counter.UpdateReadings(saveModelIPU);
                 return Content("");
             }
             catch (Exception ex)
@@ -235,18 +237,7 @@ namespace RKC.Controllers
             }
         }
         [Authorize(Roles = RolesEnums.Admin)]
-        public ActionResult UploadFile(HttpPostedFileBase file, Banks Bank)
-        {
-            using (var binaryReader = new BinaryReader(file.InputStream))
-            {
-                byte[] fileData = binaryReader.ReadBytes(file.ContentLength);
-                var Result = _readFileBank.Read(fileData, Bank);
-                return View(Result);
-            }
-
-        }
-        [Authorize(Roles = RolesEnums.Admin)]
-        public ActionResult UploadFilePU(HttpPostedFileBase file, string User, int TypeLoad)
+        public async Task<ActionResult> UploadFilePU(HttpPostedFileBase file, string User, int TypeLoad)
         {
             if (TypeLoad == 1)
             {
@@ -318,7 +309,7 @@ namespace RKC.Controllers
                 using (XLWorkbook wb = new XLWorkbook())
                 {
                     var workbook = new XLWorkbook(file.InputStream);
-                    wb.Worksheets.Add(_excel.MassClosePU(workbook, User, _cacheApp));
+                    wb.Worksheets.Add( await _excel.MassClosePU(workbook, User, _cacheApp));
                     using (MemoryStream stream = new MemoryStream())
                     {
                         wb.SaveAs(stream);
@@ -419,7 +410,7 @@ namespace RKC.Controllers
         {
             try
             {
-                await _integration.LoadReadings("Integration", _cacheApp, date, _notificationMail);
+                await _integration.LoadReadings("Integration", _cacheApp, date, _notificationMail, _counter);
             }
             catch (Exception ex)
             {

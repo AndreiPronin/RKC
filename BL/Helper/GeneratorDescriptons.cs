@@ -204,6 +204,7 @@ namespace BL.Helper
                 if (IPU_COUNTERS.OPERATOR_CLOSE_DATE != saveModelIPU.OPERATOR_CLOSE_DATE && saveModelIPU.OPERATOR_CLOSE_DATE != null) Result.Append($"Изменили дату закрытия: было {IPU_COUNTERS.OPERATOR_CLOSE_DATE} стало {saveModelIPU.OPERATOR_CLOSE_DATE}  \r\n");
                 if (IPU_COUNTERS.OPERATOR_CLOSE_READINGS != saveModelIPU.OPERATOR_CLOSE_READINGS && saveModelIPU.OPERATOR_CLOSE_READINGS != null) Result.Append($"Изменили конечные показания при закрытии: было {IPU_COUNTERS.OPERATOR_CLOSE_READINGS} стало {saveModelIPU.OPERATOR_CLOSE_READINGS}  \r\n");
                 if (IPU_COUNTERS.DESCRIPTION != saveModelIPU.DESCRIPTION && !string.IsNullOrEmpty(saveModelIPU.DESCRIPTION)) Result.Append($"Изменили примечание: {saveModelIPU.DESCRIPTION}\r\n");
+                if (saveModelIPU.DIMENSION != null && saveModelIPU.DIMENSION.Id != 0 && IPU_COUNTERS.DIMENSION_ID != saveModelIPU.DIMENSION.Id) Result.Append($"Изменили еденицу измерения: {saveModelIPU.DIMENSION.Name}\r\n");
             }
 
             return Result.ToString();

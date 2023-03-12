@@ -72,6 +72,8 @@ namespace DB.Model
         public double? CHECKPOINT_READINGS { get; set; }
         public DateTime? OPERATOR_CLOSE_DATE { get; set; }
         public double? OPERATOR_CLOSE_READINGS { get; set; }
+        public int? DIMENSION_ID { get;set;}
+        public DIMENSION DIMENSION { get; set; }
         public ALL_LICS ALL_LICS = new ALL_LICS();
     }
 }

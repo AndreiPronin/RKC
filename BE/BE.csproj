@@ -43,15 +43,27 @@
   <ItemGroup>
     <Compile Include="Admin\UserRoleInfo.cs" />
     <Compile Include="ApiT+\XmlForT+Flat.cs" />
+    <Compile Include="Counter\DIMENSION.cs" />
     <Compile Include="Counter\Enum.cs" />
     <Compile Include="Counter\IpuNotFoundInLick.cs" />
     <Compile Include="Counter\ModelAddPU.cs" />
     <Compile Include="Counter\modelUpdatePU.cs" />
     <Compile Include="Counter\SaveModelIPU.cs" />
     <Compile Include="Counter\SearchIPU_LICModel.cs" />
+    <Compile Include="Court\CourtBankruptcy.cs" />
+    <Compile Include="Court\CourtDocumentScans.cs" />
+    <Compile Include="Court\CourtExecutionFSSP.cs" />
+    <Compile Include="Court\CourtExecutionInPF.cs" />
+    <Compile Include="Court\CourtGeneralInformation.cs" />
+    <Compile Include="Court\CourtInstallmentPlan.cs" />
+    <Compile Include="Court\CourtLitigationWork.cs" />
+    <Compile Include="Court\CourtStateDuty.cs" />
+    <Compile Include="Court\CourtWork.cs" />
+    <Compile Include="Court\CourtWriteOff.cs" />
     <Compile Include="DPU\DpuDataDocumentLoad.cs" />
     <Compile Include="DPU\DpuNotAddDb.cs" />
     <Compile Include="DPU\SearchAutocompleteResultDPU.cs" />
+    <Compile Include="DPU\SerachAutoCompleteModel.cs" />
     <Compile Include="JobManager\EnumJob.cs" />
     <Compile Include="JobManager\MailNotSend.cs" />
     <Compile Include="PersData\HelpCalculationsModel.cs" />

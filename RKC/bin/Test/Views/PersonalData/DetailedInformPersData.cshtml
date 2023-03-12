@@ -396,6 +396,8 @@ else
                 $(this).parent().find('.NameFileFile').addClass("Required");
             } else {
                 $(this).parent().find('.NameFileFile').remove("Required");
+                $(".loader").removeClass("hidden");
+                $(".AddDoc").prop('disabled', true);
                 $.ajax({
                     url: "/PersonalData/SaveFile",
                     type: "POST",
@@ -403,9 +405,13 @@ else
                     async: true,
                     success: function (data) {
                         alert(data.result)
+                        $(".loader").addClass("hidden");
+                        $(".AddDoc").prop('disabled', false);
                     },
                     error: function (data) {
                         alert('Ошибка обратитесь к системному администратору!');
+                        $(".loader").addClass("hidden");
+                        $(".AddDoc").prop('disabled', false);
                     },
                     cache: false,
                     contentType: false,

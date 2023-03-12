@@ -136,6 +136,19 @@
                         </div>
                     </div>
                     <hr />
+                    <div class="form-group row">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Еденица измерения:</label>
+                        <div class="col-sm-8">
+                            <select id="DIMENSION_" class="form-control">
+                                <option value=""></option>
+                                @foreach (var Item in ViewBag.DIMENSION)
+                                {
+                                    <option value="@Item.ID">@Item.DIMENSION_NAME</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
                 </div>
             </div>
 
@@ -177,6 +190,9 @@
                             TYPEOFSEAL: $('#TYPEOFSEAL_').val(),
                             SEALNUMBER2: $('#SEALNUMBER_2').val(),
                             TYPEOFSEAL2: $('#TYPEOFSEAL_2').val(),
+                            DIMENSION: {
+                               id: $('#DIMENSION_').val()
+                            }
                         }
                     }),
                     contentType: 'application/json; charset=utf-8',

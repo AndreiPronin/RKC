@@ -68,7 +68,7 @@ namespace BE.Counter
     }
     public enum ErrorIntegration
     {
-        [Description("Большой объем. Объем больше 30")]
+        [Description("Большой объем. Объем больше ")]
         High = 1,
         [Description("Нет ИПУ на лицевом счёте")]
         NoPU = 2,

@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<DB.Model.DPUSummaryHouses>
-
+<style>
+    .fontWeight tr th {
+        font-weight: 100;
+    }
+</style>
 <table class="table table-bordered">
     <thead>
-        <tr class="info">
+        <tr style="background-color:white !important">
             <th scope="col">cadr</th>
             <th scope="col">улица</th>
             <th scope="col">дом</th>
@@ -16,10 +20,10 @@
             <th scope="col">Период выставления</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="fontWeight" >
         @foreach (var Item in Model)
         {
-            <tr class="info">
+            <tr style="background-color:white !important">
                 <th>@Item.Cadr</th>
                 <th>@Item.Street</th>
                 <th>@Item.Home</th>

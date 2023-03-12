@@ -12,19 +12,22 @@ using DB.Model;
 using BE.Service;
 using BL.Extention;
 using BL.Notification;
+using System.Threading;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace BL.Service
 {
     public interface IIntegrations
     {
-        Task LoadReadings(string User, ICacheApp cacheApp, DateTime period, INotificationMail _notificationMail);
+        Task LoadReadings(string User, ICacheApp cacheApp, DateTime period, INotificationMail _notificationMail, ICounter _counter);
         List<IntegrationReadings> GetErrorIntegrationReadings();
         List<IntegrationReadings> GetErrorIntegrationReadings(string FullLic);
     }
     public class Integrations : IIntegrations
     {
-        public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period, INotificationMail _notificationMail)
+        public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period, INotificationMail _notificationMail, ICounter _counter)
         {
+            object Lock = new object();
             cacheApp.AddProgress(User, "0");
             Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
@@ -33,7 +36,8 @@ namespace BL.Service
             var DbTPlus = new DbTPlus();
             var dbApp = new ApplicationDbContext();
             IQueryable<IPU_COUNTERS> Counter = DbTPlus.IPU_COUNTERS;
-            var Counters = Counter.ToList();
+            var Counters = _counter.DetailInfromsAllAsync();
+
             IQueryable<ALL_LICS> aLL_LICs = DbLIC.ALL_LICS;
             var Reading = aLL_LICs.Select(x => new {
                 F4ENUMELS = x.F4ENUMELS,
@@ -54,36 +58,48 @@ namespace BL.Service
                 FKUB2OT_4 = x.FKUB2OT_4,
                 FKUB1OT_4 = x.FKUB1OT_4,
                 ZAK = x.ZAK,
-            }).ToList();
+            }).ToListAsync();
             var periods = period.AddDays(-1);
             IQueryable<IntegrationReadings> Integrs = dbApp.IntegrationReadings.Where(x=>x.DateTime >= periods);
-            var IntegrsList = Integrs.ToList();//--------------------------
-            var payment = dbs.Payment
+            var IntegrsList = Integrs.ToListAsync();//--------------------------
+            var payment = dbs.Payment.AsNoTracking()
                 .Include(x => x.Counter)
                 .Include(x => x.Organization)
                 .Where(x => x.payment_date_day.Value == period)
-                .ToList();
-            var Count = payment.Count();
+                .ToListAsync();
+            await Task.WhenAll(payment, IntegrsList, Reading,Counters);
+            var tasks = new Task[] {
+                payment,IntegrsList,Reading,Counters
+            };
+            await Task.WhenAll(tasks);
+            var Count = payment.Result.Count();
             int i = 0;
-            foreach(var data in payment)
+            foreach(var data in payment.Result)
             {
                 var Procent = Math.Round((float)i / Count * 100, 0);
-                var Readings = Reading.Where(x => x.F4ENUMELS == data.lic).FirstOrDefault();
+                var Readings = Reading.Result.Where(x => x.F4ENUMELS == data.lic).FirstOrDefault();
                 cacheApp.UpdateProgress(User, Procent.ToString());
                 i++;
                 if (Readings != null)
                 {
                     foreach (var Item in data.Counter)
                     {
-                        var Integr = IntegrsList.Where(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id).Select(x => x.Lic).ToList();
+                        var Integr = IntegrsList.Result.Where(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id).Select(x => x.Lic).ToList();
                         if (Integr.Count() == 0)
                         {
                             bool Error = false;
                             try
                             {
-
-                                var IPU_COUNTERS = Counters.Where(x => x.FULL_LIC == data.lic &&
-                                x.TYPE_PU.Contains(Item.name) && (x.CLOSE_ == null || x.CLOSE_ == false)).Select(x => new { ID_PU = x.ID_PU }).ToList();
+                                int? MinValue = 0;
+                                int? MaxValue = 30;
+                                var IPU_COUNTERS = Counters.Result.Where(x => x.FULL_LIC == data.lic &&
+                                x.TYPE_PU.Contains(Item.name) && (x.CLOSE_ == null || x.CLOSE_ == false)).ToList();
+                               
+                                if (IPU_COUNTERS.Count() != 0 && IPU_COUNTERS.FirstOrDefault().DIMENSION != null)
+                                {
+                                     MinValue = IPU_COUNTERS.FirstOrDefault().DIMENSION.MinValue ?? MinValue;
+                                     MaxValue = IPU_COUNTERS.FirstOrDefault().DIMENSION.MaxValue ?? MaxValue;
+                                }
                                 var saveModel = new SaveModelIPU();
                                 var integrationReadings = new IntegrationReadings();
                                 integrationReadings.Lic = data.lic;
@@ -100,11 +116,16 @@ namespace BL.Service
                                 if (IPU_COUNTERS.Count() == 0)
                                 {
                                     Error = true;
-                                    var Ipu_Close = Counters.Where(x => x.FULL_LIC == data.lic &&
+                                    var Ipu_Close = Counters.Result.Where(x => x.FULL_LIC == data.lic &&
                                x.TYPE_PU.Contains(Item.name)).Select(x => new { Close = x.CLOSE_ }).FirstOrDefault();
-                                    if(Ipu_Close.Close == true)
-                                        integrationReadings.Description += $@"{ErrorIntegration.IpuClose.GetDescription()} {Item.name} ";
-                                    else 
+                                    if (Ipu_Close != null)
+                                    {
+                                        if (Ipu_Close.Close == true)
+                                            integrationReadings.Description += $@"{ErrorIntegration.IpuClose.GetDescription()} {Item.name} ";
+                                        else
+                                            integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
+                                    }
+                                    else
                                         integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
                                 }
                                 if (IPU_COUNTERS.Count() > 1)
@@ -121,12 +142,12 @@ namespace BL.Service
                                         integrationReadings.EndReadings = Readings.FKUB2XVS.ToString();
                                         integrationReadings.InitialReadings = Readings.FKUB1XVS.ToString();
                                         integrationReadings.NowReadings = Item.value.ToString();
-                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS > 30)
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS > MaxValue)
                                         {
                                             Error = true;
-                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription(MaxValue)} ";
                                         }
-                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS < 0)
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XVS < MinValue)
                                         {
                                             Error = true;
                                             integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
@@ -141,12 +162,12 @@ namespace BL.Service
                                         integrationReadings.EndReadings = Readings.FKUB2XV_2.ToString();
                                         integrationReadings.InitialReadings = Readings.FKUB1XV_2.ToString();
                                         integrationReadings.NowReadings = Item.value.ToString();
-                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 > 30)
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 > MaxValue)
                                         {
                                             Error = true;
-                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription(MaxValue)} ";
                                         }
-                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 < 0)
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_2 < MinValue)
                                         {
                                             Error = true;
                                             integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
@@ -162,12 +183,12 @@ namespace BL.Service
                                         integrationReadings.EndReadings = Readings.FKUB2XV_3.ToString();
                                         integrationReadings.InitialReadings = Readings.FKUB1XV_3.ToString();
                                         integrationReadings.NowReadings = Item.value.ToString();
-                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 > 30)
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 > MaxValue)
                                         {
                                             Error = true;
-                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription(MaxValue)} ";
                                         }
-                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 < 0)
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_3 < MinValue)
                                         {
                                             Error = true;
                                             integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
@@ -183,12 +204,12 @@ namespace BL.Service
                                         integrationReadings.EndReadings = Readings.FKUB2XV_4.ToString();
                                         integrationReadings.InitialReadings = Readings.FKUB1XV_4.ToString();
                                         integrationReadings.NowReadings = Item.value.ToString();
-                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 > 30)
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 > MaxValue)
                                         {
                                             Error = true;
-                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription(MaxValue)} ";
                                         }
-                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 < 0)
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2XV_4 < MinValue)
                                         {
                                             Error = true;
                                             integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
@@ -204,18 +225,18 @@ namespace BL.Service
                                         integrationReadings.EndReadings = Readings.FKUB2OT_1.ToString();
                                         integrationReadings.InitialReadings = Readings.FKUB1OT_1.ToString();
                                         integrationReadings.NowReadings = Item.value.ToString();
-                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 > 30)
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 > MaxValue)
                                         {
                                             Error = true;
-                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription(MaxValue)} ";
                                         }
-                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 <= 0)
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 <= MinValue)
                                         {
-                                            if (Readings.FKUB2OT_1 == 0 && Convert.ToDecimal(Item.value) == 0)
+                                            if (Readings.FKUB2OT_1 == 0 && Convert.ToDecimal(Item.value) == MaxValue)
                                             {
                                                 saveModel.FKUB2OT_1 = Convert.ToDecimal(Item.value);
                                             }
-                                            else if(Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 < 0)
+                                            else if(Convert.ToDecimal(Item.value) - Readings.FKUB2OT_1 < MinValue)
                                             {
                                                 Error = true;
                                                 integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
@@ -232,18 +253,18 @@ namespace BL.Service
                                         integrationReadings.EndReadings = Readings.FKUB2OT_2.ToString();
                                         integrationReadings.InitialReadings = Readings.FKUB1OT_2.ToString();
                                         integrationReadings.NowReadings = Item.value.ToString();
-                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 > 30)
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 > MaxValue)
                                         {
                                             Error = true;
-                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription(MaxValue)} ";
                                         }
-                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 <= 0)
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 <= MinValue)
                                         {
-                                            if (Readings.FKUB2OT_2 == 0 && Convert.ToDecimal(Item.value) == 0)
+                                            if (Readings.FKUB2OT_2 == 0 && Convert.ToDecimal(Item.value) == MinValue)
                                             {
                                                 saveModel.FKUB2OT_2 = Convert.ToDecimal(Item.value);
                                             }
-                                            else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 < 0)
+                                            else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_2 < MinValue)
                                             {
                                                 Error = true;
                                                 integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
@@ -260,18 +281,18 @@ namespace BL.Service
                                         integrationReadings.EndReadings = Readings.FKUB2OT_3.ToString();
                                         integrationReadings.InitialReadings = Readings.FKUB1OT_3.ToString();
                                         integrationReadings.NowReadings = Item.value.ToString();
-                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 > 30)
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 > MaxValue)
                                         {
                                             Error = true;
-                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription(MaxValue)} ";
                                         }
-                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 <= 0)
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 <= MinValue)
                                         {
-                                            if (Readings.FKUB2OT_3 == 0 && Convert.ToDecimal(Item.value) == 0)
+                                            if (Readings.FKUB2OT_3 == 0 && Convert.ToDecimal(Item.value) == MinValue)
                                             {
                                                 saveModel.FKUB2OT_3 = Convert.ToDecimal(Item.value);
                                             }
-                                            else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 < 0)
+                                            else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_3 < MinValue)
                                             {
                                                 Error = true;
                                                 integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
@@ -288,18 +309,18 @@ namespace BL.Service
                                         integrationReadings.EndReadings = Readings.FKUB2OT_4.ToString();
                                         integrationReadings.InitialReadings = Readings.FKUB1OT_4.ToString();
                                         integrationReadings.NowReadings = Item.value.ToString();
-                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 > 30)
+                                        if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 > MaxValue)
                                         {
                                             Error = true;
-                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
+                                            integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription(MaxValue)} ";
                                         }
-                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 <= 0)
+                                        else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 <= MinValue)
                                         {
-                                            if (Readings.FKUB2OT_4 == 0 && Convert.ToDecimal(Item.value) == 0)
+                                            if (Readings.FKUB2OT_4 == 0 && Convert.ToDecimal(Item.value) == MinValue)
                                             {
                                                 saveModel.FKUB2OT_4 = Convert.ToDecimal(Item.value);
                                             }
-                                            else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 < 0)
+                                            else if (Convert.ToDecimal(Item.value) - Readings.FKUB2OT_4 < MinValue)
                                             {
                                                 Error = true;
                                                 integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
@@ -313,11 +334,10 @@ namespace BL.Service
                                     }
                                 }
                                 if (Error == false) await counter.UpdatePUIntegrations(saveModel,
-                                    "Показания от " + data.Organization.name + " дата платежа " + data.payment_date_day.Value.ToString(),
-                                    IPU_COUNTERS.FirstOrDefault().ID_PU);
+                                "Показания от " + data.Organization.name + " дата платежа " + data.payment_date_day.Value.ToString(),
+                                IPU_COUNTERS.FirstOrDefault().ID_PU);
                                 else integrationReadings.IsError = Error;
                                 dbApp.IntegrationReadings.Add(integrationReadings);
-                                dbApp.SaveChanges();
                             }
                             catch (Exception ex)
                             {
@@ -330,7 +350,6 @@ namespace BL.Service
                                 integrationReadings.NowReadings = Item.value.ToString();
                                 integrationReadings.Description = "Ошибка при интеграции";
                                 dbApp.IntegrationReadings.Add(integrationReadings);
-
                             }
                         }
                     }

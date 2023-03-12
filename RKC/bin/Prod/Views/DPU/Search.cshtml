@@ -16,7 +16,11 @@
 </div>
 <div id="ResultSearchDpu"></div>
 <script>
+
     $(document).ready(function (e) {
+        function AutoCompleteSet() {
+            $('#Text').autocomplete("search");
+        }
         $(".loader").addClass("hidden");
         $('#Text').autocomplete({
             delay: 500,
@@ -32,9 +36,12 @@
                     success: function (data) {
                         response($.map(data, function (item) {
                             //original code
-                            //return { label: item.FullName, value: item.FullName, id: item.TagId }; 
+                            //return { label: item.FullName, value: item.FullName, id: item.TagId };
                             //updated code
                             return { label: item.Value, value: item.Value, id: item.Id };
+                            //return $("<li>")
+                            //    .append("<div>" + item.Value + "<br>" + item.Value + "</div>")
+                            //    .appendTo("#ui-id-1");
                         }));
                     },
                 });
@@ -59,5 +66,9 @@
             $('#Text').val('');
             $("#ResultSearchDpu").empty();
         })
+        $('#SearchButton').click(function (e) {
+            setTimeout(AutoCompleteSet, 300)
+        })
+
     })
 </script>

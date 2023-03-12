@@ -271,13 +271,13 @@
     <Compile Include="Controllers\api\ApiJobController.cs" />
     <Compile Include="Controllers\api\ApiTplusController.cs" />
     <Compile Include="Controllers\CounterController.cs" />
+    <Compile Include="Controllers\CourtController.cs" />
     <Compile Include="Controllers\DPUController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogResultController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonalDataController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Controllers\СourtController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -478,7 +478,7 @@
     <Content Include="Views\Admin\ParilaViewIntegration.cshtml" />
     <Content Include="Views\Counter\ErrorIntegration.cshtml" />
     <Content Include="Views\PersonalData\PaymentHistoryView.cshtml" />
-    <Content Include="Views\Сourt\DetailedСourtData.cshtml" />
+    <Content Include="Views\Court\DetailedСourtData.cshtml" />
     <Content Include="Views\PersonalData\ReadingsHistoryView.cshtml" />
     <Content Include="Views\LogResult\ShowLogResult.cshtml" />
     <Content Include="Views\Admin\ParilaViewExamination.cshtml" />
@@ -494,6 +494,17 @@
     <Content Include="Views\Report\Search.cshtml" />
     <Content Include="Views\DPU\DpuDictionarySummaryHouses.cshtml" />
     <Content Include="Template\Образец квитанции DPU.docx" />
+    <Content Include="Views\Court\Index.cshtml" />
+    <Content Include="Views\Court\PartialGeneralInformation.cshtml" />
+    <Content Include="Views\Court\PartialCourtWork.cshtml" />
+    <Content Include="Views\Court\PartialExecutionInPF.cshtml" />
+    <Content Include="Views\Court\PartialLitigationWork.cshtml" />
+    <Content Include="Views\Court\PartialInstallmentPlan.cshtml" />
+    <Content Include="Views\Court\PartialBankruptcy.cshtml" />
+    <Content Include="Views\Court\PartialWriteOff.cshtml" />
+    <Content Include="Views\Court\PartialStateDuty.cshtml" />
+    <Content Include="Views\Court\PartialDocumentScans.cshtml" />
+    <Content Include="Views\Court\PartialExecutionFSSP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

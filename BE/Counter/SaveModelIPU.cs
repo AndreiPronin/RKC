@@ -44,5 +44,6 @@ namespace BE.Counter
         public decimal? FKUB1OT_2 { get; set; }
         public decimal? FKUB1OT_3 { get; set; }
         public decimal? FKUB1OT_4 { get; set; }
+        public DIMENSION DIMENSION { get; set; }
     }
 }

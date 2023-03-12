@@ -48,3 +48,5 @@ D:\Programing\RKC\WordGenerator\bin\Release\NLog.dll
 D:\Programing\RKC\WordGenerator\bin\Release\NLog.xml
 D:\Programing\RKC\WordGenerator\bin\Release\AppCache.dll
 D:\Programing\RKC\WordGenerator\bin\Release\AppCache.pdb
+D:\Programing\RKC\WordGenerator\bin\Release\Ninject.dll
+D:\Programing\RKC\WordGenerator\bin\Release\Ninject.xml

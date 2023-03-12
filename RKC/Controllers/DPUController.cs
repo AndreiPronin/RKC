@@ -162,7 +162,14 @@ namespace RKC.Controllers
             {
                 foreach (var Items in persData)
                 {
-                    zip.AddEntry(Items.FileName, Items.FileBytes);
+                    try
+                    {
+                        zip.AddEntry(Items.FileName, Items.FileBytes);
+                    }
+                    catch
+                    {
+                        zip.AddEntry(Items.FileName+ DateTime.Now.Date, Items.FileBytes);
+                    }
                 }
                 zip.Save(outputStream);
             }

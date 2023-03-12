@@ -31,7 +31,7 @@ namespace BL.Excel
         DataTable LoadExcelNewPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelNewPersonalData(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelUpdatePersonalDataMain(XLWorkbook Excels, string User, ICacheApp cacheApp);
-        DataTable MassClosePU(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        Task<DataTable> MassClosePU(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelSquarePersProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable ErroIntegratin();
         DataTable TIpuGvs(string User, ICacheApp cacheApp);
@@ -693,7 +693,7 @@ namespace BL.Excel
             }
             return dt;
         }
-        public DataTable MassClosePU(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        public async Task<DataTable> MassClosePU(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
             cacheApp.AddProgress(User, "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
@@ -725,8 +725,9 @@ namespace BL.Excel
                         {
                             saveModel.OPERATOR_CLOSE_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(5).Value).Replace(".",","));
                         }
-                        _logger.ActionUsersAsync(result.ID_PU, _generatorDescriptons.Generate(saveModel), User);
-                        _counter.UpdateReadings(saveModel);
+                        var T1 = _logger.ActionUsersAsync(result.ID_PU, _generatorDescriptons.Generate(saveModel), User);
+                        var T2 = _counter.UpdateReadings(saveModel);
+                        await Task.WhenAll(T1, T2);
                         _counter.DeleteIPU(result.ID_PU);
                     }
                     catch (Exception ex)

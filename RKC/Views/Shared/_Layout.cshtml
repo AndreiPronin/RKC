@@ -64,7 +64,7 @@
    {
 
 
-<div id="wrapper2" class="toggled-2" >
+    <div id="wrapper2" class="toggled-2" >
         <!-- Sidebar -->
         <div id="sidebar-wrapper2">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
@@ -108,7 +108,7 @@
                 </div>
             </div>
         </div>*@
-        </div>
+    </div>
    }
     <!-- /#page-content-wrapper -->
     @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Notifications")))
@@ -153,7 +153,9 @@
             $("#Report").addClass("active");
         } else if (HREF.includes("Court")) {
             $("#Court").addClass("active");
+            console.log("fdsfsdf");
         }
+        console.log(HREF);
         initMenu();
     });
     setInterval(function () {

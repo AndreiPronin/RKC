@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<style>
+    .container {
+        width: 95% !important;
+    }
+</style>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<div class="loader">
+    <div class="inner one"></div>
+    <div class="inner two"></div>
+    <div class="inner three"></div>
+</div>
+
+<div class="col-md-1">
+    <div id="mySidenav" class="sidenav">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#GeneralInformation">Общая информация</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" id="SearchButton" href="#CourtWork">Судебная работа</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#ExecutionInPF">Исполнение в ПФ</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#ExecutionFSSP">Исполнение в ФССП</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#LitigationWork">Исковая работа</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#InstallmentPlan">Рассрочка</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#Bankruptcy">Банкротство</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#WriteOff">Списание</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#StateDuty">Госпошлина</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#DocumentScans">Сканы документов</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="col-md-11">
+    <h2 class="text-center">Судебные дела</h2>
+    <div id="ResultSearchCourt"></div>
+
+    <div class="tab-content">
+        <div class="tab-pane fade" id="GeneralInformation">
+            @Html.Partial("PartialGeneralInformation")
+        </div>
+        <div class="tab-pane fade" id="CourtWork">
+            @Html.Partial("PartialCourtWork")
+        </div>
+        <div class="tab-pane fade" id="ExecutionInPF">
+            @Html.Partial("PartialExecutionInPF")
+        </div>
+        <div class="tab-pane fade" id="ExecutionFSSP">
+            @Html.Partial("PartialExecutionFSSP")
+        </div>
+        <div class="tab-pane fade" id="LitigationWork">
+            @Html.Partial("PartialLitigationWork")
+        </div>
+        <div class="tab-pane fade" id="InstallmentPlan">
+            @Html.Partial("PartialInstallmentPlan")
+        </div>
+        <div class="tab-pane fade" id="Bankruptcy">
+            @Html.Partial("PartialBankruptcy")
+        </div>
+        <div class="tab-pane fade" id="WriteOff">
+            @Html.Partial("PartialWriteOff")
+        </div>
+        <div class="tab-pane fade" id="StateDuty">
+            @Html.Partial("PartialStateDuty")
+        </div>
+        <div class="tab-pane fade" id="DocumentScans">
+            @Html.Partial("PartialDocumentScans")
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function (e) {
+        $('#loadMe').click(function (e) {
+            $('#load').show();
+            $("#load").attr("src", "https://www.sibeeshpassion.com/");
+        });
+
+        $(".loader").addClass("hidden");
+        $('#Text').autocomplete({
+            delay: 500,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/DPU/SearchAutocompleteDpu?Text=" + $('#Text').val(), type: "Get", dataType: "json",
+                    //original code
+                    //data: { searchText: request.id, maxResults: 10 },
+                    //updated code; updated to request.term
+                    //and removed the maxResults since you are not using it on the server side
+                    data: { id: request.term },
+
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            //original code
+                            //return { label: item.FullName, value: item.FullName, id: item.TagId };
+                            //updated code
+                            return { label: item.Value, value: item.Value, id: item.Id };
+                        }));
+                    },
+                });
+            },
+            select: function (event, ui) {
+                $(".loader").removeClass("hidden");
+                console.log(ui.item.id);
+                $("#ResultSearchCourt").empty();
+                $.ajax({
+                    type: "Get",
+                    url: "/DPU/DpuInfo?id=" + ui.item.id,
+                    success: function (data) {
+                        $("#ResultSearchCourt").empty();
+                        $("#ResultSearchCourt").append(data);
+                        $(".loader").addClass("hidden");
+                    }
+                });
+                $("input[type=hidden]").val(ui.item.id);
+            }
+        })
+        $('.clear').click(function () {
+            $('#Text').val('');
+            $("#ResultSearchDpu").empty();
+        })
+    })
+</script>

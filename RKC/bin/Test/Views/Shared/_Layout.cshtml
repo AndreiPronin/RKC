@@ -3,6 +3,7 @@
 @{ 
     var Style = "";
 }
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -28,7 +29,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: @Style" >
         <div id="wrapper">
             <div id="sidebar-wrapper">
-                <div class="TimeAndDate">
+                <div class="TimeAndDate"  style="background-color: @Style">
                     <div id="Date"></div>
                     <div style="display: inline-flex;">
                         <div id="hours">:</div>
@@ -83,6 +84,12 @@
                 <li id="Report">
                     <a href="/Report"><i class="glyphicon glyphicon-list-alt icons" aria-hidden="true"></i> <i class="Padding">Отчеты</i></a>
                 </li>
+                @if (User.IsInRole(RolesEnums.Admin))
+                {
+                     <li id="Court">
+                        <a href="/Court"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
+                    </li>
+                }
                 <hr />
                 <li style="bottom: 0px; position: absolute; bottom: 0px; " >
                     <p style="color:white; margin-left:35px;" >Ссылки на другие системы</p>
@@ -144,8 +151,9 @@
             $("#Billing").addClass("active");
         } else if (HREF.includes("Report")) {
             $("#Report").addClass("active");
+        } else if (HREF.includes("Court")) {
+            $("#Court").addClass("active");
         }
-        
         initMenu();
     });
     setInterval(function () {

@@ -1,11 +1,15 @@
-﻿using DB.Model;
+﻿using DB.Extention;
+using DB.Model;
+using DB.Model.Court;
 using DB.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,9 +34,26 @@ namespace DB.DataBase
         public DbSet<vw_CounterTPlus> vw_CounterTPlus { get; set; }
         public DbSet<DPUHelpCalculationInstallation> dPUHelpCalculationInstallations { get; set; }
         public DbSet<DPUSummaryHouses> dPUSummaryHouses { get; set; }
+        public DbSet<CourtBankruptcy> CourtBankruptcy { get; set; }
+        public DbSet<CourtWork> CourtWork { get; set; }
+        public DbSet<CourtDocumentScans> CourtCourtDocumentScans { get; set; }
+        public DbSet<CourtExecutionFSSP> CourtExecutionFSSP { get; set; }
+        public DbSet<CourtExecutionInPF> CourtExecutionInPF { get; set; }
+        public DbSet<CourtGeneralInformation> CourtGeneralInformation { get; set; }
+        public DbSet<CourtInstallmentPlan> CourtInstallmentPlan { get; set; }
+        public DbSet<CourtLitigationWork> CourtLitigationWork { get; set; }
+        public DbSet<CourtStateDuty> CourtStateDuty { get; set; }
+        public DbSet<CourtWriteOff> CourtWriteOff { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CourtDocumentScans>()
+            .HasRequired<CourtGeneralInformation>(s => s.CourtGeneralInformation)
+            .WithMany(g => g.CourtDocumentScans)
+            .HasForeignKey<int>(s => s.CourtDocumentScansId);
         }
     }
     [Table(name: "LogsIpu", Schema = "dbo")]

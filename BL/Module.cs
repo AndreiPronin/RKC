@@ -31,7 +31,6 @@ namespace BL
             kernel.Bind<IGeneratorDescriptons>().To<GeneratorDescriptons>();
             kernel.Bind<ICacheApp>().To<CacheApp>().InSingletonScope();
             kernel.Bind<IFlagsAction>().To<FlagsAction>().InSingletonScope();
-            kernel.Bind<IReadFileBank>().To<ReadFileBank>();
             kernel.Bind<IPersonalData>().To<PersonalData>();
             kernel.Bind<IEBD>().To<EBD>();
             kernel.Bind<ISecurityProvider>().To<SecurityProvider>();
@@ -44,11 +43,12 @@ namespace BL
             kernel.Bind<IDpu>().To<Dpu>();
             kernel.Bind<IReport>().To<Report>();
             kernel.Bind<IBaseService>().To<BaseService>();
-
+            kernel.Bind<IDictionary>().To<Dictionarys>();
 
             kernel.Bind<IPdfGenerate>().To<ReceiptPersonal>().Named("Personal");
             kernel.Bind<IPdfGenerate>().To<ReceiptDPU>().Named("Dpu");
             kernel.Bind<IPdfFactory>().To<ReceiptFactory>();
+    
 
         }
     }

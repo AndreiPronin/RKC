@@ -208,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiT+\EBD.cs" />
+    <Compile Include="Extention\ArrayExtention.cs" />
     <Compile Include="Extention\BaseExcelExtenstion.cs" />
     <Compile Include="Excel\ExaminationToExcel.cs" />
     <Compile Include="Excel\ExcelDpu.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Notification\NotificationMail.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\Court.cs" />
+    <Compile Include="Services\Dictionarys.cs" />
     <Compile Include="Services\Dpu.cs" />
     <Compile Include="Services\Integrations.cs" />
     <Compile Include="Security\SecurityProvider.cs" />
@@ -238,7 +240,6 @@
     <Compile Include="Helper\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PersonalData.cs" />
-    <Compile Include="Services\ReadFileBank.cs" />
     <Compile Include="Services\Report.cs" />
   </ItemGroup>
   <ItemGroup>

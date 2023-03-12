@@ -42,7 +42,7 @@ namespace BL.Services
         void UpdateSquareFlat(double? Square, string Lic);
         void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User);
     }
-    public class PersonalData : IPersonalData
+    public class PersonalData : BaseService, IPersonalData
     {
         Ilogger _ilogger;
         IGeneratorDescriptons _generatorDescriptons;
@@ -338,11 +338,11 @@ namespace BL.Services
                 var PErsData = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main == true).ToList();
                 if (PErsData.Count() == 0)
                 {
-                    new Exception($"На лицевом счете {persDataModel.Lic} нет основного");
+                   throw new Exception($"На лицевом счете {persDataModel.Lic} нет основного");
                 }
                 if (PErsData.Count() > 1)
                 {
-                    new Exception($"На лицевом счете {persDataModel.Lic} более одного основного");
+                    throw new Exception($"На лицевом счете {persDataModel.Lic} более одного основного");
                 }
                 var pers = PErsData.FirstOrDefault();
                 var PersData = db.PersData.Find(pers.idPersData);
@@ -531,7 +531,7 @@ namespace BL.Services
                     _counter.DeleteIPU(Item.ID_PU);
                 }
                 Task.Run(() => ResetNumberOfPersonsAndSquarePers(FullLic));
-                Task.Run(() => new BaseService().ClosePersInLic(FullLic));
+                Task.Run(() => ClosePersInLic(FullLic));
             }
         }
         public void OpenLic(string FullLic)

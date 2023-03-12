@@ -12,6 +12,7 @@ namespace DB.DataBase
     public class DbTPlus: DbContext
     {
         public DbSet<IPU_COUNTERS> IPU_COUNTERS { get; set; }
+        public DbSet<DIMENSION> DIMENSIONs { get; set; }
         public DbSet<FLAT> FLAT { get; set; }
         public DbSet<MKD> MKD { get; set; }
         public DbSet<IPU> IPU { get; set; }
@@ -26,6 +27,7 @@ namespace DB.DataBase
             modelBuilder.HasDefaultSchema("IPU");
             modelBuilder.Entity<FLAT>().ToTable("FLAT","dbo");
             modelBuilder.Entity<MKD>().ToTable("MKD", "dbo");
+            
         }
     }
 }

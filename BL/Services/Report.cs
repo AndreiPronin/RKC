@@ -32,15 +32,9 @@ namespace BL.Services
 
                 List<List<object>> lists = new List<List<object>>();
                 var ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                //var ttt = ConfigurationManager.GetSection("DefaultConnection").ToString();
-                using (SqlConnection connection =
-                new SqlConnection(ConnectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
-                    // SELECT TOP (1000) * FROM [DBF_SQL].[ALL_LICS].[ALL_LICS]
                     SqlCommand command = new SqlCommand(Report.SqlQuery, connection);
-                    // Open the connection in a try/catch block.
-                    // Create and execute the DataReader, writing the result
-                    // set to the console window.
                     try
                     {
                         connection.Open();

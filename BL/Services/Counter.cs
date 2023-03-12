@@ -9,19 +9,21 @@ using System.Text;
 using System.Threading.Tasks;
 using BL.Helper;
 using System.Threading;
+using BL.Services;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace BL.Counters
 {
     public interface ICounter
     {
         List<ALL_LICS> SearchIPU_LIC(SearchIPU_LICModel searchModel);
-        List<IPU_COUNTERS> DetailInfroms(string IPU_LIC);
-        List<IPU_COUNTERS> DetailInfromsDelete(string IPU_LIC);
+        List<IPU_COUNTERS> DetailInfroms(string IPU_LIC, bool Close = false);
+        Task<List<IPU_COUNTERS>> DetailInfromsAllAsync();
         ALL_LICS Indications(string IPU_LIC);
         List<ALL_LICS_ARCHIVE> HistoryIndinikation(string IPU_LIC);
         List<Log> HistoryEdit(int IdIPU);
         void AutoAddPU(string Full_LIC);
-        void UpdateReadings(SaveModelIPU saveModelIPU);
+        Task UpdateReadings(SaveModelIPU saveModelIPU);
         void DeleteIPU(int IdPU);
         void AddPU(ModelAddPU modelAddPU, string FIO);
         void DeleteError(int IdPU, string Lic, string User);
@@ -29,7 +31,7 @@ namespace BL.Counters
         Task UpdatePUIntegrations(SaveModelIPU saveModelIPU, string User, int ID_PU);
         List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC);
     }
-    public class Counter : ICounter
+    public class Counter :BaseService, ICounter
     {
         private readonly Ilogger logger;
         private readonly IGeneratorDescriptons _generatorDescriptons;
@@ -63,7 +65,7 @@ namespace BL.Counters
                 }
             }
         }
-        public List<IPU_COUNTERS> DetailInfroms(string IPU_LIC)
+        public List<IPU_COUNTERS> DetailInfroms(string IPU_LIC,bool Close = false)
         {
             ALL_LICS aLL_LICS = new ALL_LICS();
             using (var DBAll = new DbLIC())
@@ -72,29 +74,32 @@ namespace BL.Counters
             }
             using (var DbTPlus = new DbTPlus())
             {
-                List<IPU_COUNTERS> iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == IPU_LIC && x.CLOSE_ != true).ToList();
+                IEnumerable<IPU_COUNTERS> iPU_COUNTERs = Enumerable.Empty<IPU_COUNTERS>();
+                if (Close == false)
+                    iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == IPU_LIC && x.CLOSE_ != true).ToList();
+                else
+                    iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == IPU_LIC && x.CLOSE_ == true).ToList();
                 foreach (var Items in iPU_COUNTERs)
                 {
                     Items.ALL_LICS = aLL_LICS;
+                    Items.DIMENSION = DbTPlus.DIMENSIONs.Find(Items.DIMENSION_ID);
                 }
                 return iPU_COUNTERs.OrderBy(x => x.TYPE_PU).ToList();
             }
         }
-        public List<IPU_COUNTERS> DetailInfromsDelete(string IPU_LIC)
+        public async Task<List<IPU_COUNTERS>> DetailInfromsAllAsync()
         {
-            ALL_LICS aLL_LICS = new ALL_LICS();
-            using (var DBAll = new DbLIC())
-            {
-                aLL_LICS = DBAll.ALL_LICS.Where(x => x.F4ENUMELS == IPU_LIC).FirstOrDefault();
-            }
+           
             using (var DbTPlus = new DbTPlus())
             {
-                List<IPU_COUNTERS> iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == IPU_LIC && x.CLOSE_ == true).ToList();
+                IEnumerable<IPU_COUNTERS> iPU_COUNTERs = Enumerable.Empty<IPU_COUNTERS>();
+                iPU_COUNTERs = await DbTPlus.IPU_COUNTERS.Where(x=>x.CLOSE_ != false).ToListAsync();
+                var DIMENSIONs = await DbTPlus.DIMENSIONs.ToListAsync();
                 foreach (var Items in iPU_COUNTERs)
                 {
-                    Items.ALL_LICS = aLL_LICS;
+                    Items.DIMENSION = DIMENSIONs.FirstOrDefault(x => x.ID == Items.DIMENSION_ID.Value);
                 }
-                return iPU_COUNTERs.OrderBy(x => x.ID_PU).ToList();
+                return iPU_COUNTERs.OrderBy(x => x.TYPE_PU).ToList();
             }
         }
         public ALL_LICS Indications(string IPU_LIC)
@@ -111,7 +116,7 @@ namespace BL.Counters
                 return DbLIC.ALL_LICS_ARCHIVE.Where(x => x.F4ENUMELS == IPU_LIC).OrderByDescending(x => x.period).ToList();
             }
         }
-        public void UpdateReadings(SaveModelIPU saveModelIPU)
+        public async Task UpdateReadings(SaveModelIPU saveModelIPU)
         {
             using (var DbTPlus = new DbTPlus())
             {
@@ -131,127 +136,12 @@ namespace BL.Counters
                 IPU_COUNTERS.SEALNUMBER2 = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2) ? IPU_COUNTERS.SEALNUMBER2 : saveModelIPU.SEALNUMBER2;
                 IPU_COUNTERS.TYPEOFSEAL2 = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2) ? IPU_COUNTERS.TYPEOFSEAL2 : saveModelIPU.TYPEOFSEAL2;
                 IPU_COUNTERS.GIS_ID_PU = string.IsNullOrEmpty(saveModelIPU.GIS_ID_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.GIS_ID_PU;
-                IPU_COUNTERS.BRAND_PU = string.IsNullOrEmpty(saveModelIPU.BRAND_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.BRAND_PU;
+                IPU_COUNTERS.BRAND_PU = string.IsNullOrEmpty(saveModelIPU.BRAND_PU) ? IPU_COUNTERS.BRAND_PU : saveModelIPU.BRAND_PU;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
+                IPU_COUNTERS.DIMENSION_ID = saveModelIPU.DIMENSION != null ? saveModelIPU.DIMENSION.Id : IPU_COUNTERS.DIMENSION_ID;
                 DbTPlus.SaveChanges();
             }
-            if (saveModelIPU.FKUB2XVS != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        try
-                        {
-                            aLL_LICS.FKUB2XVS = saveModelIPU.FKUB2XVS == null ? aLL_LICS.FKUB2XVS : saveModelIPU.FKUB2XVS;
-                            aLL_LICS.FKUB1XVS = saveModelIPU.FKUB1XVS == null ? aLL_LICS.FKUB1XVS : saveModelIPU.FKUB1XVS;
-                            aLL_LICS.FKUBSXVS = 1;
-                            DbLIC.SaveChanges();
-                        } catch (Exception ex) { }
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2XV_2 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2XV_2 = saveModelIPU.FKUB2XV_2 == null ? aLL_LICS.FKUB2XV_2 : saveModelIPU.FKUB2XV_2;
-                        aLL_LICS.FKUB1XV_2 = saveModelIPU.FKUB1XV_2 == null ? aLL_LICS.FKUB1XV_2 : saveModelIPU.FKUB1XV_2;
-                        aLL_LICS.FKUBSXV_2 = 1;
-                        DbLIC.SaveChanges();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2XV_3 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2XV_3 = saveModelIPU.FKUB2XV_3 == null ? aLL_LICS.FKUB2XV_3 : saveModelIPU.FKUB2XV_3;
-                        aLL_LICS.FKUB1XV_3 = saveModelIPU.FKUB1XV_3 == null ? aLL_LICS.FKUB1XV_3 : saveModelIPU.FKUB1XV_3;
-                        aLL_LICS.FKUBSXV_3 = 1;
-                        DbLIC.SaveChanges();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2XV_4 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2XV_4 = saveModelIPU.FKUB2XV_4 == null ? aLL_LICS.FKUB2XV_4 : saveModelIPU.FKUB2XV_4;
-                        aLL_LICS.FKUB1XV_4 = saveModelIPU.FKUB1XV_4 == null ? aLL_LICS.FKUB1XV_4 : saveModelIPU.FKUB1XV_4;
-                        aLL_LICS.FKUBSXV_4 = 1;
-                        DbLIC.SaveChanges();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2OT_1 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-
-                    ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2OT_1 = saveModelIPU.FKUB2OT_1 == null ? aLL_LICS.FKUB2OT_1 : saveModelIPU.FKUB2OT_1;
-                        aLL_LICS.FKUB1OT_1 = saveModelIPU.FKUB1OT_1 == null ? aLL_LICS.FKUB1OT_1 : saveModelIPU.FKUB1OT_1;
-                        aLL_LICS.FKUBSOT_1 = 1;
-                        DbLIC.SaveChanges();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2OT_2 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2OT_2 = saveModelIPU.FKUB2OT_2 == null ? aLL_LICS.FKUB2OT_2 : saveModelIPU.FKUB2OT_2;
-                        aLL_LICS.FKUB1OT_2 = saveModelIPU.FKUB1OT_2 == null ? aLL_LICS.FKUB1OT_2 : saveModelIPU.FKUB1OT_2;
-                        aLL_LICS.FKUBSOT_2 = 1;
-                        DbLIC.SaveChanges();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2OT_3 != null)
-            {
-
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2OT_3 = saveModelIPU.FKUB2OT_3 == null ? aLL_LICS.FKUB2OT_3 : saveModelIPU.FKUB2OT_3;
-                        aLL_LICS.FKUB1OT_3 = saveModelIPU.FKUB1OT_3 == null ? aLL_LICS.FKUB1OT_3 : saveModelIPU.FKUB1OT_3;
-                        aLL_LICS.FKUBSOT_3 = 1;
-                        DbLIC.SaveChanges();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2OT_4 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefault();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2OT_4 = saveModelIPU.FKUB2OT_4 == null ? aLL_LICS.FKUB2OT_4 : saveModelIPU.FKUB2OT_4;
-                        aLL_LICS.FKUB1OT_4 = saveModelIPU.FKUB1OT_4 == null ? aLL_LICS.FKUB1OT_4 : saveModelIPU.FKUB1OT_4;
-                        aLL_LICS.FKUBSOT_4 = 1;
-                        DbLIC.SaveChanges();
-                    }
-                }
-            }
+            await UpdateLicReadings(saveModelIPU);
         }
         public async Task UpdateReadingsAsync(SaveModelIPU saveModelIPU)
         {
@@ -276,120 +166,7 @@ namespace BL.Counters
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                 await DbTPlus.SaveChangesAsync();
             }
-            if (saveModelIPU.FKUB2XVS != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = await DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefaultAsync();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2XVS = saveModelIPU.FKUB2XVS == null ? aLL_LICS.FKUB2XVS : saveModelIPU.FKUB2XVS;
-                        aLL_LICS.FKUB1XVS = saveModelIPU.FKUB1XVS == null ? aLL_LICS.FKUB1XVS : saveModelIPU.FKUB1XVS;
-                        aLL_LICS.FKUBSXVS = 1;
-                        await DbLIC.SaveChangesAsync();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2XV_2 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = await DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefaultAsync();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2XV_2 = saveModelIPU.FKUB2XV_2 == null ? aLL_LICS.FKUB2XV_2 : saveModelIPU.FKUB2XV_2;
-                        aLL_LICS.FKUB1XV_2 = saveModelIPU.FKUB1XV_2 == null ? aLL_LICS.FKUB1XV_2 : saveModelIPU.FKUB1XV_2;
-                        aLL_LICS.FKUBSXV_2 = 1;
-                        await DbLIC.SaveChangesAsync();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2XV_3 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = await DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefaultAsync();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2XV_3 = saveModelIPU.FKUB2XV_3 == null ? aLL_LICS.FKUB2XV_3 : saveModelIPU.FKUB2XV_3;
-                        aLL_LICS.FKUB1XV_3 = saveModelIPU.FKUB1XV_3 == null ? aLL_LICS.FKUB1XV_3 : saveModelIPU.FKUB1XV_3;
-                        aLL_LICS.FKUBSXV_3 = 1;
-                        await DbLIC.SaveChangesAsync();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2XV_4 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = await DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefaultAsync();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2XV_4 = saveModelIPU.FKUB2XV_4 == null ? aLL_LICS.FKUB2XV_4 : saveModelIPU.FKUB2XV_4;
-                        aLL_LICS.FKUB1XV_4 = saveModelIPU.FKUB1XV_4 == null ? aLL_LICS.FKUB1XV_4 : saveModelIPU.FKUB1XV_4;
-                        aLL_LICS.FKUBSXV_4 = 1;
-                        await DbLIC.SaveChangesAsync();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2OT_1 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-
-                    ALL_LICS aLL_LICS = await DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefaultAsync();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2OT_1 = saveModelIPU.FKUB2OT_1 == null ? aLL_LICS.FKUB2OT_1 : saveModelIPU.FKUB2OT_1;
-                        aLL_LICS.FKUB1OT_1 = saveModelIPU.FKUB1OT_1 == null ? aLL_LICS.FKUB1OT_1 : saveModelIPU.FKUB1OT_1;
-                        aLL_LICS.FKUBSOT_1 = 1;
-                        await DbLIC.SaveChangesAsync();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2OT_2 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = await DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefaultAsync();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2OT_2 = saveModelIPU.FKUB2OT_2 == null ? aLL_LICS.FKUB2OT_2 : saveModelIPU.FKUB2OT_2;
-                        aLL_LICS.FKUB1OT_2 = saveModelIPU.FKUB1OT_2 == null ? aLL_LICS.FKUB1OT_2 : saveModelIPU.FKUB1OT_2;
-                        aLL_LICS.FKUBSOT_2 = 1;
-                        await DbLIC.SaveChangesAsync();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2OT_3 != null)
-            {
-
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = await DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefaultAsync();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2OT_3 = saveModelIPU.FKUB2OT_3 == null ? aLL_LICS.FKUB2OT_3 : saveModelIPU.FKUB2OT_3;
-                        aLL_LICS.FKUB1OT_3 = saveModelIPU.FKUB1OT_3 == null ? aLL_LICS.FKUB1OT_3 : saveModelIPU.FKUB1OT_3;
-                        aLL_LICS.FKUBSOT_3 = 1;
-                        await DbLIC.SaveChangesAsync();
-                    }
-                }
-            }
-            if (saveModelIPU.FKUB2OT_4 != null)
-            {
-                using (var DbLIC = new DbLIC())
-                {
-                    ALL_LICS aLL_LICS = await DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefaultAsync();
-                    if (saveModelIPU.OVERWRITE_SEAL)
-                    {
-                        aLL_LICS.FKUB2OT_4 = saveModelIPU.FKUB2OT_4 == null ? aLL_LICS.FKUB2OT_4 : saveModelIPU.FKUB2OT_4;
-                        aLL_LICS.FKUB1OT_4 = saveModelIPU.FKUB1OT_4 == null ? aLL_LICS.FKUB1OT_4 : saveModelIPU.FKUB1OT_4;
-                        aLL_LICS.FKUBSOT_4 = 1;
-                        await DbLIC.SaveChangesAsync();
-                    }
-                }
-            }
+            await UpdateLicReadings(saveModelIPU);
         }
         public void DeleteIPU(int IdPU)
         {

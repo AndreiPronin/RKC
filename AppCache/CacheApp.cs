@@ -15,6 +15,8 @@ namespace AppCache
         void UpdateProgress(string name, string value);
         string GetValueProgress(string Name);
         string GetValue(string Url);
+        T GetValue<T>(string Key);
+        void SetValue<T>(string Key, T value);
         bool AddLock(string name, string Method);
         bool Add(string name, string Url);
         bool Lock(string name, string Url);
@@ -73,6 +75,22 @@ namespace AppCache
         {
             MemoryCache memoryCache = MemoryCache.Default;
             return memoryCache.Get(Key) as string;
+        }
+        public T GetValue<T>(string Key)
+        {
+            try
+            {
+                MemoryCache memoryCache = MemoryCache.Default;
+                return (T)memoryCache.Get(Key);
+            }catch(Exception e)
+            {
+                return default(T);
+            }
+        }
+        public void SetValue<T>(string Key, T value)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            memoryCache.Set(Key, value, DateTime.Now.AddHours(10));
         }
         public bool isLock(string Key)
         {
