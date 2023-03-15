@@ -7,7 +7,6 @@ using BL.Notification;
 using BL.Services;
 using Ninject;
 using NUnit.Framework;
-using RKC.App_Start;
 using System;
 using WordGenerator;
 
@@ -25,7 +24,7 @@ namespace RKC_TEST
         {
             try
             {
-                GenerateFileHelpCalculation.Generate("705004371", new System.DateTime(2022, 1, 2));
+                //GenerateFileHelpCalculation.Generate("705004371", new System.DateTime(2022, 1, 2));
             }
             catch (Exception ex)
             {

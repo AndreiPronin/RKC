@@ -87,7 +87,7 @@
                 @if (User.IsInRole(RolesEnums.Admin))
                 {
                      <li id="Court">
-                        <a href="/Court"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
+                        <a href="/Court/Serach"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
                     </li>
                 }
                 <hr />
@@ -153,7 +153,6 @@
             $("#Report").addClass("active");
         } else if (HREF.includes("Court")) {
             $("#Court").addClass("active");
-            console.log("fdsfsdf");
         }
         console.log(HREF);
         initMenu();

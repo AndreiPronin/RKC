@@ -20,25 +20,25 @@
                             <span class="NullOrEmpty" > основной </span>
                         }
                     </a>
-                                <label>Количество документов @Items.PersDataDocument.Count()</label>
+                        <label>Количество документов @Items.PersDataDocument.Count()</label>
                                
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="collapse multi-collapse" id="DocColapse_@Items.idPersData">
-                                            <div>
-                                                @foreach (var Item in Items.PersDataDocument)
-                                                {
-                                                    <div class="col-sm-6 text-center">
-                                                        <a href="/PersonalData/DownLoadFile?Id=@Item.id" target="_blank">Скачать @Item.DocumentName</a>
-                                                        <label style="margin-left:20px;cursor:pointer" class="NullOrEmpty">
-                                                            <input type="text" class="FileName" hidden="hidden" value="@Item.DocumentName" />
-                                                        </label>
-                                                    </div>
-                                                }
+                        <div class="row">
+                            <div class="col">
+                                <div class="collapse multi-collapse" id="DocColapse_@Items.idPersData">
+                                    <div>
+                                        @foreach (var Item in Items.PersDataDocument)
+                                        {
+                                            <div class="col-sm-6 text-center">
+                                                <a href="/PersonalData/DownLoadFile?Id=@Item.id" target="_blank">Скачать @Item.DocumentName</a>
+                                                <label style="margin-left:20px;cursor:pointer" class="NullOrEmpty">
+                                                    <input type="text" class="FileName" hidden="hidden" value="@Item.DocumentName" />
+                                                </label>
                                             </div>
-                                        </div>
+                                        }
                                     </div>
                                 </div>
+                            </div>
+                        </div>
                     }
                 </div>
             <div class="modal-footer">

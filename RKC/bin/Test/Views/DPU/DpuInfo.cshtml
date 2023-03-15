@@ -1,5 +1,6 @@
 ﻿@model DB.Model.DPUHelpCalculationInstallation
 
+@using BL.Extention;
 @{
     ViewBag.Title = "Датальная информация";
     var Index = 1;
@@ -25,19 +26,19 @@
                 <div class="col-md-12 paddingTop">
                     <label class="col-sm-4 col-form-label">Фамилия:</label>
                     <div class="col-sm-8">
-                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames[1]" />
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames.TryGetValue(1)" />
                     </div>
                 </div>
                 <div class="col-md-12 paddingTop">
                     <label class="col-sm-4 col-form-label">Имя:</label>
                     <div class="col-sm-8">
-                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames[2]" />
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames.TryGetValue(1)" />
                     </div>
                 </div>
                 <div class="col-md-12 paddingTop">
                     <label class="col-sm-4 col-form-label">Отчество:</label>
                     <div class="col-sm-8">
-                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames[0]" />
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames.TryGetValue(2)" />
                     </div>
                 </div>
                 <div class="col-md-12 paddingTop">
@@ -67,7 +68,7 @@
                 <div class="col-md-12 paddingTop">
                     <label class="col-sm-4 col-form-label">Период начала выставления:</label>
                     <div class="col-sm-8">
-                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@string.Format("{0:dd-MM-yyyy}", Model.Period)" />
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@string.Format("{0:dd.MM.yyyy}", Model.Period)" />
                     </div>
                 </div>
                 <div class="col-md-12 paddingTop">

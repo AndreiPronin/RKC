@@ -38,6 +38,22 @@ namespace DB.Model.Court
         /// </summary>
         public string SendApplicationFSSP { get; set; }
         /// <summary>
+        /// Сумма по заявлению в ФССП - всего
+        /// </summary>
+        public double? SumApplicationAll { get; set; }
+        /// <summary>
+        /// Сумма по заявлению в ФССП - ОД
+        /// </summary>
+        public double? SumApplicationOd { get; set; }
+        /// <summary>
+        /// Сумма по заявлению в ФССП - пени
+        /// </summary>
+        public double? SumApplicationPeny { get; set; }
+        /// <summary>
+        /// Сумма по заявлению в ФССП - ГП
+        /// </summary>
+        public double? SumApplicationGp { get; set; }
+        /// <summary>
         /// Сумма по заявлению в ПФ - всего
         /// </summary>
         public double? SumApplicationPFAll { get; set; }

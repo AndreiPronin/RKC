@@ -32,7 +32,7 @@ namespace BE.Court
         /// <summary>
         /// Дата списания
         /// </summary>
-        public string DateWriteOff { get; set; }
+        public DateTime? DateWriteOff { get; set; }
         /// <summary>
         /// Примечание
         /// </summary>

@@ -554,3 +554,5 @@ D:\Programing\RKC\RKC\obj\Debug\RKC.csproj.CoreCompileInputs.cache
 D:\Programing\RKC\RKC\obj\Debug\RKC.csproj.CopyComplete
 D:\Programing\RKC\RKC\obj\Debug\RKC.dll
 D:\Programing\RKC\RKC\obj\Debug\RKC.pdb
+D:\Programing\RKC\RKC\bin\AutoMapper.dll
+D:\Programing\RKC\RKC\bin\AutoMapper.xml

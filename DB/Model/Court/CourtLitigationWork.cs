@@ -26,6 +26,26 @@ namespace DB.Model.Court
         /// </summary>
         public DateTime? DateSubmission { get; set; }
         /// <summary>
+        /// Дата передачи документов в ПИР РЦПО
+        /// </summary>
+        public DateTime? DateSendPirRCO { get; set; }
+        /// <summary>
+        /// Взысканная сумма - всего
+        /// </summary>
+        public double? AmountWithdrawnAll { get; set; }
+        /// <summary>
+        /// Взысканная сумма - ОД
+        /// </summary>
+        public double? AmountWithdrawnOd { get; set; }
+        /// <summary>
+        /// Взысканная сумма - пени
+        /// </summary>
+        public double? AmountWithdrawnPeny { get; set; }
+        /// <summary>
+        /// Взысканная сумма - ГП
+        /// </summary>
+        public double? AmountWithdrawnGp { get; set; }
+        /// <summary>
         /// Наименование суда
         /// </summary>
         public string NameCourt { get; set; }

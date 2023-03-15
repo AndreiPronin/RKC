@@ -23,19 +23,9 @@ namespace RKC.Controllers
 
     public class HomeController : Controller
     {
-        public HomeController()
+        public HomeController(IEBD eBD)
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var ttt = db.CourtGeneralInformation.Include(x => x.CourtBankruptcy)
-                    .Include(x => x.CourtInstallmentPlan)
-                    .Include(x=>x.CourtExecutionInPF)
-                    .Include(x => x.CourtLitigationWork)
-                    .Include(x=>x.CourtWork)
-                    .Include(x => x.CourtWriteOff)
-                    .Include(x => x.CourtStateDuty)
-                    .Include(c=>c.CourtDocumentScans).FirstOrDefault();
-            }
+           
         }
         public ActionResult Index()
         {

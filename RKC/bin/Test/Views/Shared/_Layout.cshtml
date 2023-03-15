@@ -64,7 +64,7 @@
    {
 
 
-<div id="wrapper2" class="toggled-2" >
+    <div id="wrapper2" class="toggled-2" >
         <!-- Sidebar -->
         <div id="sidebar-wrapper2">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
@@ -87,7 +87,7 @@
                 @if (User.IsInRole(RolesEnums.Admin))
                 {
                      <li id="Court">
-                        <a href="/Court"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
+                        <a href="/Court/Serach"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
                     </li>
                 }
                 <hr />
@@ -108,7 +108,7 @@
                 </div>
             </div>
         </div>*@
-        </div>
+    </div>
    }
     <!-- /#page-content-wrapper -->
     @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Notifications")))
@@ -154,6 +154,7 @@
         } else if (HREF.includes("Court")) {
             $("#Court").addClass("active");
         }
+        console.log(HREF);
         initMenu();
     });
     setInterval(function () {

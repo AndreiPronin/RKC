@@ -12,14 +12,7 @@ namespace DB.Model.Court
     {
         [Key]
         public int Id { get; set; }
-        /// <summary>
-        /// ID клиента
-        /// </summary>
-        public string IdClient { get; set; }
-        /// <summary>
-        /// ID долга
-        /// </summary>
-        public string IdВuty { get; set; }
+
         /// <summary>
         /// № л/с
         /// </summary>
@@ -61,9 +54,21 @@ namespace DB.Model.Court
         /// </summary>
         public string DateBirthday { get; set; }
         /// <summary>
-        /// Паспортные данные
+        /// Паспортные дата
         /// </summary>
-        public string PasportData { get; set; }
+        public string PasportDate { get; set; }
+        /// <summary>
+        /// Паспортные номер
+        /// </summary>
+        public string PasportNumber { get; set; }
+        /// <summary>
+        /// Паспортные серия
+        /// </summary>
+        public string PasportSeria { get; set; }
+        /// <summary>
+        /// Паспортные кем выдан
+        /// </summary>
+        public string PasportIssue { get; set; }
         /// <summary>
         /// ИНН
         /// </summary>

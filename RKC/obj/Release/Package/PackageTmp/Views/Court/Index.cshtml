@@ -1,4 +1,4 @@
-﻿
+﻿@model DB.Model.Court.CourtGeneralInformation
 @{
     ViewBag.Title = "Index";
 }
@@ -19,8 +19,11 @@
 <div class="col-md-1">
     <div id="mySidenav" class="sidenav">
         <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#GeneralInformation">Общая информация</a>
+            @*<li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#GeneralInformation">Главная</a>
+            </li>*@
+            <li class="nav-item active">
+                <a class="nav-link active" data-toggle="tab" id="#GeneralInformationButton" href="#GeneralInformation">Общая информация</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" id="SearchButton" href="#CourtWork">Судебная работа</a>
@@ -53,49 +56,82 @@
     </div>
 </div>
 <div class="col-md-11">
-    <h2 class="text-center">Судебные дела</h2>
+    <h2 class="text-center">Номер судебного приказа № @Model.CourtWork.NumberSP</h2>
+    @*<label>Select 1</label>
+        <select name="field2" class="form-control" id="field2" multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="3" onchange="console.log(this.selectedOptions)">
+            <option value="1">Audi</option>
+            <option selected value="2">BMW</option>
+            <option selected value="3">Mercedes</option>
+            <option value="4">Volvo</option>
+            <option value="5">Lexus</option>
+            <option value="6">Tesla</option>
+        </select>*@
     <div id="ResultSearchCourt"></div>
+    @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post))
+    {
+        <input type="submit" class="btn hidden btn-success" id="Save" value="Coхранить" />
+        <input type="button" class="btn btn-success" id="EditData" value="Редактировать" />
+        <input type="button" class="btn hidden btn-danger" id="Cancel" value="Отмена" />
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="GeneralInformation">
+                @Html.Partial("PartialGeneralInformation", Model)
+            </div>
+            <div class="tab-pane fade" id="CourtWork">
+                @Html.Partial("PartialCourtWork", Model)
+            </div>
+            <div class="tab-pane fade" id="ExecutionInPF">
+                @Html.Partial("PartialExecutionInPF", Model)
+            </div>
+            <div class="tab-pane fade" id="ExecutionFSSP">
+                @Html.Partial("PartialExecutionFSSP", Model)
+            </div>
+            <div class="tab-pane fade" id="LitigationWork">
+                @Html.Partial("PartialLitigationWork", Model)
+            </div>
+            <div class="tab-pane fade" id="InstallmentPlan">
+                @Html.Partial("PartialInstallmentPlan", Model)
+            </div>
+            <div class="tab-pane fade" id="Bankruptcy">
+                @Html.Partial("PartialBankruptcy", Model)
+            </div>
+            <div class="tab-pane fade" id="WriteOff">
+                @Html.Partial("PartialWriteOff", Model)
+            </div>
+            <div class="tab-pane fade" id="StateDuty">
+                @Html.Partial("PartialStateDuty", Model)
+            </div>
+            <div class="tab-pane fade" id="DocumentScans">
+                @Html.Partial("PartialDocumentScans", Model)
+            </div>
+        </div>
 
-    <div class="tab-content">
-        <div class="tab-pane fade" id="GeneralInformation">
-            @Html.Partial("PartialGeneralInformation")
-        </div>
-        <div class="tab-pane fade" id="CourtWork">
-            @Html.Partial("PartialCourtWork")
-        </div>
-        <div class="tab-pane fade" id="ExecutionInPF">
-            @Html.Partial("PartialExecutionInPF")
-        </div>
-        <div class="tab-pane fade" id="ExecutionFSSP">
-            @Html.Partial("PartialExecutionFSSP")
-        </div>
-        <div class="tab-pane fade" id="LitigationWork">
-            @Html.Partial("PartialLitigationWork")
-        </div>
-        <div class="tab-pane fade" id="InstallmentPlan">
-            @Html.Partial("PartialInstallmentPlan")
-        </div>
-        <div class="tab-pane fade" id="Bankruptcy">
-            @Html.Partial("PartialBankruptcy")
-        </div>
-        <div class="tab-pane fade" id="WriteOff">
-            @Html.Partial("PartialWriteOff")
-        </div>
-        <div class="tab-pane fade" id="StateDuty">
-            @Html.Partial("PartialStateDuty")
-        </div>
-        <div class="tab-pane fade" id="DocumentScans">
-            @Html.Partial("PartialDocumentScans")
-        </div>
-    </div>
+    }
 </div>
 <script>
     $(document).ready(function (e) {
-        $('#loadMe').click(function (e) {
-            $('#load').show();
-            $("#load").attr("src", "https://www.sibeeshpassion.com/");
-        });
-
+        $('#GeneralInformationButton').click();
+        $("#EditData").click(function (e) {
+            $("#Save").removeClass("hidden");
+            $("#Cancel").removeClass("hidden");
+            $("#EditData").addClass("hidden");
+            $('div input').each(function () {
+                $(this).prop('readonly', false);;
+            });
+            $('div textarea').each(function () {
+                $(this).prop('readonly', false);;
+            });
+        })
+        $("#Cancel").click(function (e) {
+            $("#Save").addClass("hidden");
+            $("#Cancel").addClass("hidden");
+            $("#EditData").removeClass("hidden");
+            $('div input').each(function () {
+                $(this).prop('readonly', true);;
+            });
+            $('div textarea').each(function () {
+                $(this).prop('readonly', true);;
+            });
+        })
         $(".loader").addClass("hidden");
         $('#Text').autocomplete({
             delay: 500,
@@ -140,3 +176,5 @@
         })
     })
 </script>
+
+<script src="~/Scripts/multiselect-dropdown.js"></script>

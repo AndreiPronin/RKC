@@ -80,7 +80,7 @@ namespace DB.Model.Court
         /// <summary>
         /// Сумма исполнения от ПФ
         /// </summary>
-        public double SumExecutionPf { get; set; }
+        public double? SumExecutionPf { get; set; }
         /// <summary>
         /// Примечание
         /// </summary>

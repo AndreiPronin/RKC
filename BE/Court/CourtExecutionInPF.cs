@@ -36,7 +36,7 @@ namespace BE.Court
         /// <summary>
         /// Сумма по заявлению в ПФ - всего
         /// </summary>
-        public double? SumApplicationPfAll { get;set; }
+        public double? SumApplicationPfAll { get; set; }
         /// <summary>
         /// Сумма по заявлению в ПФ - ОД
         /// </summary>
@@ -76,7 +76,7 @@ namespace BE.Court
         /// <summary>
         /// Сумма исполнения от ПФ
         /// </summary>
-        public double SumExecutionPf { get; set; }
+        public double? SumExecutionPf { get; set; }
         /// <summary>
         /// Примечание
         /// </summary>

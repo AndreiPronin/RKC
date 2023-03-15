@@ -1,0 +1,157 @@
+﻿@model DB.Model.Court.CourtGeneralInformation
+<h2 class="">Судебная работа</h2>
+<div class="row">
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Сумма задолженности на текущую дату:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumDebtNowDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumDebtNowDate })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма задолженности, переданная в суд - всего:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumDebtSendCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumDebtSendCourt })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма ОД предъявленная в суд:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumOdSendCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumOdSendCourt })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма пени предъявленная в суд:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumPenySendCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumPenySendCourt, })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма ГП (указанная в судебном приказе):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumGP, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumGP })
+        </div>
+        <label class="col-sm-12 col-form-label">Период задолженности начальный:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.PeriodDebtBegin, new { @type = "Date", @readonly = "readonly", @class = "form-control", @Value = (Model.CourtWork.PeriodDebtBegin.HasValue ? Model.CourtWork.PeriodDebtBegin.Value.ToString("yyyy-MM-dd") : string.Empty) })
+        </div>
+        <label class="col-sm-12 col-form-label">Период задолженности конечный:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.PeriodDebtEnd, "{0:MM-dd-yyyy}", new { @type = "Date", @readonly = "readonly", @class = "form-control",
+           @Value = (Model.CourtWork.PeriodDebtEnd.HasValue ? Model.CourtWork.PeriodDebtEnd.Value.ToString("yyyy-MM-dd") : string.Empty) })
+        </div>
+        <label class="col-sm-12 col-form-label">ФИО сотрудника (направившего дело в суд):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.FioSendCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.FioSendCourt })
+        </div>
+        <label class="col-sm-12 col-form-label">Способ отправки заявления в суд:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SubmitApplicationCourt, new { @readonly = "readonly", @dicId = "17", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWork.SubmitApplicationCourt })
+        </div>
+        <label class="col-sm-12 col-form-label">Наименование суда:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.NameCourt, new { @readonly = "readonly", @dicId = "1", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWork.NameCourt })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата принятия заявления судом:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DateReceptionCourt, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtWork.DateReceptionCourt.HasValue ? Model.CourtWork.DateReceptionCourt.Value.ToString("yyyy-MM-dd") : string.Empty) })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Дата Определения о возврате заявления на выдачу СП</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DateReturnCourtSP, new { @type ="Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.DateReturnCourtSP })
+        </div>
+        <label class="col-sm-12 col-form-label">Причина возврата заявления:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.ReasonReturningApplication, new { @readonly = "readonly", @dicId = "2", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWork.ReasonReturningApplication })
+        </div>
+        <label class="col-sm-12 col-form-label">№ СП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.NumberSP, new { @disabled = "disabled", @class = "form-control", @Value = Model.CourtWork.NumberSP })
+        </div>
+        <label class="col-sm-12 col-sm-12 col-form-label">Дата СП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DateSP, new {@type="Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.DateSP })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма оплаты - всего (добровольно):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumPayAll, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumPayAll })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма оплаты ОД (добровольно):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumPayOD, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumPayOD })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата оплаты ОД (добровольно):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DatePayOD, new {@type="Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.DatePayOD })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма оплаты пени (добровольно):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumPayPeny, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumPayPeny })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата оплаты пени (добровольно):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DatePayPeny, new {@type="Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.DatePayPeny })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма оплаты ГП (добровольно):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumPayGP, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumPayGP })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата оплаты ГП (добровольно):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DatePayGP, new { @type="Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.DatePayGP })
+        </div>
+        <label class="col-sm-12 col-form-label">Примечание:</label>
+        <div class="col-sm-8">
+            @Html.TextAreaFor(m => m.CourtWork.Comment, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.Comment })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Сумма излишне уплаченной ГП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.SumPayGP, new { @type="Number", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.SumPayGP })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата определения на возврат излишне уплаченной ГП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DateReturnCourtSP, new { @type="Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.DateReturnCourtSP })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата передачи определения на возврат излишне уплаченной ГП в бухгалтерию:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DateReturnCourtSP, new {@type="Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.DateReturnCourtSP })
+        </div>
+        <label style="margin-top:150px;" class="col-sm-12 col-form-label">Cумма излишне уплаченной гп:</label>
+        <div class="col-sm-8">
+            @{var resRequisitesSumGPPlusSumPayGP = Model.CourtWork.RequisitesSumGP - Model.CourtWork.SumPayGP; }
+            <input class="form-control" id="RequisitesSumGPPlusSumPayGP" disabled="disabled" value="@resRequisitesSumGPPlusSumPayGP" />
+        </div>
+        <label class="col-sm-12 col-form-label">Реквизиты ГП: сумма платежного поручения:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.RequisitesSumGP, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.RequisitesSumGP })
+        </div>
+        <label class="col-sm-12 col-form-label">Реквизиты ГП: дата платежного поручения:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.RequisitesDateGP, new { @type="Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.RequisitesDateGP })
+        </div>
+        <label class="col-sm-12 col-form-label">Реквизиты ГП: номер платежного поручения:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.RequisitesNumberGP, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.RequisitesNumberGP })
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function (e) {
+        $("#CourtWork_SumGP").keyup(function () {
+            let sum = $("#CourtWork_RequisitesSumGP").val() - $("#CourtWork_SumGP").val();
+            $("#RequisitesSumGPPlusSumPayGP").val(sum)
+            $("#Save").removeClass("hidden");
+            if (sum < 0) {
+                $("#Save").addClass("hidden");
+                callError("Cумма излишне уплаченной гп, значение отличное от нуля");
+            }
+        })
+        $("#CourtWork_RequisitesSumGP").keyup(function () {
+            let sum = $("#CourtWork_RequisitesSumGP").val() - $("#CourtWork_SumGP").val();
+            $("#RequisitesSumGPPlusSumPayGP").val(sum)
+            $("#Save").removeClass("hidden");
+            if (sum < 0) {
+                $("#Save").addClass("hidden");
+                callError("Cумма излишне уплаченной гп, значение отличное от нуля");
+            }
+        })
+
+    })
+</script>
+

@@ -58,21 +58,29 @@
     <Compile Include="DataBase\DbLIC.cs" />
     <Compile Include="DataBase\DBPersData.cs" />
     <Compile Include="Extention\DbLicExtention.cs" />
-    <Compile Include="Migrations\202303111127473_CourtFirst.cs" />
-    <Compile Include="Migrations\202303111127473_CourtFirst.designer.cs">
-      <DependentUpon>202303111127473_CourtFirst.cs</DependentUpon>
+    <Compile Include="Migrations\202303131323387_AddPasportDataCourt.cs" />
+    <Compile Include="Migrations\202303131323387_AddPasportDataCourt.designer.cs">
+      <DependentUpon>202303131323387_AddPasportDataCourt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202303121058180_Courts.cs" />
-    <Compile Include="Migrations\202303121058180_Courts.designer.cs">
-      <DependentUpon>202303121058180_Courts.cs</DependentUpon>
+    <Compile Include="Migrations\202303150852389_editCourtWork.cs" />
+    <Compile Include="Migrations\202303150852389_editCourtWork.designer.cs">
+      <DependentUpon>202303150852389_editCourtWork.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202303121112344_Courtadd-documents.cs" />
-    <Compile Include="Migrations\202303121112344_Courtadd-documents.designer.cs">
-      <DependentUpon>202303121112344_Courtadd-documents.cs</DependentUpon>
+    <Compile Include="Migrations\202303150927400_editCourtWork2.cs" />
+    <Compile Include="Migrations\202303150927400_editCourtWork2.designer.cs">
+      <DependentUpon>202303150927400_editCourtWork2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202303121319308_CourtFSSP.cs" />
-    <Compile Include="Migrations\202303121319308_CourtFSSP.designer.cs">
-      <DependentUpon>202303121319308_CourtFSSP.cs</DependentUpon>
+    <Compile Include="Migrations\202303151343178_EditCourtLitigationWork.cs" />
+    <Compile Include="Migrations\202303151343178_EditCourtLitigationWork.designer.cs">
+      <DependentUpon>202303151343178_EditCourtLitigationWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303151351035_EditCourtLitigationWork2.cs" />
+    <Compile Include="Migrations\202303151351035_EditCourtLitigationWork2.designer.cs">
+      <DependentUpon>202303151351035_EditCourtLitigationWork2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303151627447_EditCourt2.cs" />
+    <Compile Include="Migrations\202303151627447_EditCourt2.designer.cs">
+      <DependentUpon>202303151627447_EditCourt2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ALL_LICS.cs" />
@@ -88,7 +96,7 @@
     <Compile Include="Model\Court\CourtLitigationWork.cs" />
     <Compile Include="Model\Court\CourtStateDuty.cs" />
     <Compile Include="Model\Court\CourtWriteOff.cs" />
-    <Compile Include="Model\Court\DictiomaryModel\NameCourt.cs" />
+    <Compile Include="Model\Court\DictiomaryModel\CourtNameDictionary.cs" />
     <Compile Include="Model\Court\ReasonsRevokingIDExecution.cs" />
     <Compile Include="Model\DIMENSION.cs" />
     <Compile Include="Model\DPUHelpCalculationInstallation.cs" />
@@ -119,17 +127,23 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202303111127473_CourtFirst.resx">
-      <DependentUpon>202303111127473_CourtFirst.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303131323387_AddPasportDataCourt.resx">
+      <DependentUpon>202303131323387_AddPasportDataCourt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303121058180_Courts.resx">
-      <DependentUpon>202303121058180_Courts.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303150852389_editCourtWork.resx">
+      <DependentUpon>202303150852389_editCourtWork.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303121112344_Courtadd-documents.resx">
-      <DependentUpon>202303121112344_Courtadd-documents.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303150927400_editCourtWork2.resx">
+      <DependentUpon>202303150927400_editCourtWork2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303121319308_CourtFSSP.resx">
-      <DependentUpon>202303121319308_CourtFSSP.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303151343178_EditCourtLitigationWork.resx">
+      <DependentUpon>202303151343178_EditCourtLitigationWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303151351035_EditCourtLitigationWork2.resx">
+      <DependentUpon>202303151351035_EditCourtLitigationWork2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303151627447_EditCourt2.resx">
+      <DependentUpon>202303151627447_EditCourt2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

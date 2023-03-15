@@ -337,6 +337,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\multiselect-dropdown.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -505,6 +506,9 @@
     <Content Include="Views\Court\PartialStateDuty.cshtml" />
     <Content Include="Views\Court\PartialDocumentScans.cshtml" />
     <Content Include="Views\Court\PartialExecutionFSSP.cshtml" />
+    <Content Include="Views\Court\Serach.cshtml" />
+    <Content Include="Views\Court\ShowAllCourtModal.cshtml" />
+    <Content Include="Views\Court\SearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -562,7 +566,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63094</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44345/</IISUrl>
+          <IISUrl>http://localhost:44348/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

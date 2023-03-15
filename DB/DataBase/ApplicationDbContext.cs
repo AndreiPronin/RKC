@@ -1,6 +1,7 @@
 ﻿using DB.Extention;
 using DB.Model;
 using DB.Model.Court;
+using DB.Model.Court.DictiomaryModel;
 using DB.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -44,9 +45,15 @@ namespace DB.DataBase
         public DbSet<CourtLitigationWork> CourtLitigationWork { get; set; }
         public DbSet<CourtStateDuty> CourtStateDuty { get; set; }
         public DbSet<CourtWriteOff> CourtWriteOff { get; set; }
+        public DbSet<CourtNameDictionary> CourtNameDictionaries { get; set; }
+        public DbSet<CourtValueDictionary> CourtValueDictionary { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+        }
+        public void DisabledProxy()
+        {
+            base.Configuration.ProxyCreationEnabled = false;
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -54,6 +61,10 @@ namespace DB.DataBase
             .HasRequired<CourtGeneralInformation>(s => s.CourtGeneralInformation)
             .WithMany(g => g.CourtDocumentScans)
             .HasForeignKey<int>(s => s.CourtDocumentScansId);
+            modelBuilder.Entity<CourtValueDictionary>()
+          .HasRequired<CourtNameDictionary>(s => s.CourtNameDictionary)
+          .WithMany(g => g.CourtValueDictionaries)
+          .HasForeignKey<int>(s => s.CourtNameDictionaryId);
         }
     }
     [Table(name: "LogsIpu", Schema = "dbo")]

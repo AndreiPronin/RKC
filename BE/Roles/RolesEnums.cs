@@ -35,5 +35,11 @@ namespace BE.Roles
         public const string SuperAdmin = "SuperAdmin";
         [Description("DownLoadReceipt")]
         public const string DownLoadReceipt = "DownLoadReceipt";
+        [Description("CourtReader")]
+        public const string CourtReader = "CourtReader";
+        [Description("CourtWhriter")]
+        public const string CourtWhriter = "CourtWhriter";
+        [Description("CourtAdmin")]
+        public const string CourtAdmin = "CourtAdmin";
     }
 }

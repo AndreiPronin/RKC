@@ -18,13 +18,17 @@ namespace DB.Model.Court
         public double? SumOdSendCourt { get; set; }
         public double? SumPenySendCourt { get; set; }
         public double? SumGP { get; set; }
-        public string RequisitesGP { get; set; }
+        public double? RequisitesSumGP { get; set; }
+        public DateTime? RequisitesDateGP { get; set; }
+        public string RequisitesNumberGP { get; set; }
         public DateTime? PeriodDebtBegin { get; set; }
         public DateTime? PeriodDebtEnd { get; set; }
         public string FioSendCourt { get; set; }
+        public string SubmitApplicationCourt { get; set; }
         public string NameCourt { get; set; }
         public DateTime? DateReceptionCourt { get; set; }
         public DateTime? DateReturnCourtSP { get; set; }
+        public string ReasonReturningApplication { get; set; }
         public string NumberSP { get; set; }
         public DateTime? DateSP { get; set; }
         public double? SumPayAll { get; set; }

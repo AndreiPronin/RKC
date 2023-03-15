@@ -51,7 +51,12 @@
                     <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().full_lic.Trim()" target="_blank">
                         <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
                     </a>
-                   
+                    <a>
+                        @if (User.IsInRole(BE.Roles.RolesEnums.CounterReader) || User.IsInRole(BE.Roles.RolesEnums.CourtWhriter) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                        {
+                        <input type="button" class="btn btn-primary ShowAllCourt" value="Судебные дела" data-toggle="modal" data-target="#ShowAllCourtModal" />
+                        }
+                    </a>
                 </div>
                 <hr />
                 <div class="card-body field">
@@ -248,6 +253,7 @@
 
     }
 <div id="ShowAllDocument"></div>
+<div id="ShowAllCourt"></div>
 <div id="ShowLogs"></div>
 <input id="" value="@ViewBag.FULL_LIC" hidden />
 <script>
@@ -456,6 +462,24 @@
                 success: function (data) {
                     $("#ShowAllDocument").empty();
                     $("#ShowAllDocument").append(data);
+                    $(".loader").addClass("hidden");
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
+
+        })
+         $(".ShowAllCourt").click(function (e) {
+            $(".loader").removeClass("hidden");
+            $.ajax({
+                url: '/Court/ShowAllCourtModal?FullLic=' +@ViewBag.FULL_LIC,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#ShowAllCourt").empty();
+                    $("#ShowAllCourt").append(data);
                     $(".loader").addClass("hidden");
                 },
                 error: function () {

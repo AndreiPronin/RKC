@@ -1,1 +1,98 @@
-﻿<h2>Общая информация</h2>
+﻿@model DB.Model.Court.CourtGeneralInformation
+<h2 class="">Общая информация</h2>
+<div class="row">
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Паспорт серия:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.PasportSeria, new { @readonly = "readonly", @class = "form-control", @Value = Model.PasportSeria })
+        </div>
+        <label class="col-sm-12 col-form-label">Паспорт Номер:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.PasportNumber, new { @readonly = "readonly", @class = "form-control", @Value = Model.PasportNumber })
+        </div>
+        <label class="col-sm-12 col-form-label">Паспорт кем выдан:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.PasportIssue, new { @readonly = "readonly", @class = "form-control", @Value = Model.PasportIssue })
+        </div>
+        <label class="col-sm-12 col-form-label">Паспорт дата выдачи</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.PasportDate, new { @type = "date", @readonly = "readonly", @class = "form-control", @Value = Model.PasportDate })
+        </div>
+        <label class="col-sm-12 col-form-label">№ л/с:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Lic, new { @disabled = "disabled", @class = "form-control", @Value = Model.Lic })
+        </div>
+        <label class="col-sm-12 col-form-label">Регион:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.City, new { @readonly = "readonly", @class = "form-control", @Value = Model.City })
+        </div>
+        <label class="col-sm-12 col-form-label">Город/нас.пункт:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Region, new { @readonly = "readonly", @class = "form-control", @Value = Model.Region })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Улица:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Street, new { @readonly = "readonly", @class = "form-control", @Value = Model.Street })
+        </div>
+        <label class="col-sm-12 col-form-label">Дом:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Home, new { @readonly = "readonly", @class = "form-control", @Value = Model.Home })
+        </div>
+        <label class="col-sm-12 col-form-label">Кв:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Flat, new { @readonly = "readonly", @class = "form-control", @Value = Model.Flat })
+        </div>
+        <label class="col-sm-12 col-form-label">ФИО должника</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.FioDuty, new { @readonly = "readonly", @class = "form-control", @Value = Model.FioDuty })
+        </div>
+        <label class="col-sm-12 col-form-label">Пол:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Floor, new { @readonly = "readonly", @class = "form-control", @Value = Model.Floor })
+        </div>
+        <label class="col-sm-12 col-form-label">Доля собственности:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.ShareOfOwnership, new { @readonly = "readonly", @class = "form-control", @Value = Model.ShareOfOwnership })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата рождения:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.DateBirthday, new { @type= "date", @readonly = "readonly", @class = "form-control", @Value = Model.DateBirthday })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">ИНН:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Inn, new { @readonly = "readonly", @class = "form-control", @Value = Model.Inn })
+        </div>
+        <label class="col-sm-12 col-form-label">СНИЛС:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Snils, new { @readonly = "readonly", @class = "form-control", @Value = Model.Snils })
+        </div>
+        <label class="col-sm-12 col-form-label">Пенсионер:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Pensioner, new { @readonly = "readonly", @class = "form-control", @Value = Model.Pensioner })
+        </div>
+        <label class="col-sm-12 col-form-label">Исключение из рассылки</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.ExclusionMailing, new { @readonly = "readonly", @class = "form-control", @Value = Model.ExclusionMailing })
+        </div>
+        <label class="col-sm-12 col-form-label">Причины исключения из рассылки:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.ReasonsExclusionMailing, new { @readonly = "readonly", @class = "form-control", @Value = Model.ReasonsExclusionMailing })
+        </div>
+        <label class="col-sm-12 col-form-label">Исключение из судебной работы:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.ExclusionCourtWork, new { @readonly = "readonly", @class = "form-control", @Value = Model.ExclusionCourtWork })
+        </div>
+        <label class="col-sm-12 col-form-label">Причины исключения из судебной работы:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.ReasonsCourtWork, new { @readonly = "readonly", @class = "form-control", @Value = Model.ReasonsCourtWork })
+        </div>
+        <label class="col-sm-12 col-form-label">Примечание:</label>
+        <div class="col-sm-8">
+            @Html.TextAreaFor(m => m.Comment, new { @readonly = "readonly", @class = "form-control", @Value = Model.Comment })
+        </div>
+    </div>
+</div>

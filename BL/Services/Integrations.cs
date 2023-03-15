@@ -36,10 +36,10 @@ namespace BL.Service
             var DbTPlus = new DbTPlus();
             var dbApp = new ApplicationDbContext();
             IQueryable<IPU_COUNTERS> Counter = DbTPlus.IPU_COUNTERS;
-            var Counters = _counter.DetailInfromsAllAsync();
+            var Counters = await _counter.DetailInfromsAllAsync();
 
             IQueryable<ALL_LICS> aLL_LICs = DbLIC.ALL_LICS;
-            var Reading = aLL_LICs.Select(x => new {
+            var Reading = await aLL_LICs.Select(x => new {
                 F4ENUMELS = x.F4ENUMELS,
                 FKUB2XVS = x.FKUB2XVS,
                 FKUB1XVS = x.FKUB1XVS,
@@ -61,30 +61,25 @@ namespace BL.Service
             }).ToListAsync();
             var periods = period.AddDays(-1);
             IQueryable<IntegrationReadings> Integrs = dbApp.IntegrationReadings.Where(x=>x.DateTime >= periods);
-            var IntegrsList = Integrs.ToListAsync();//--------------------------
-            var payment = dbs.Payment.AsNoTracking()
+            var IntegrsList = await Integrs.ToListAsync();//--------------------------
+            var payment = await dbs.Payment.AsNoTracking()
                 .Include(x => x.Counter)
                 .Include(x => x.Organization)
                 .Where(x => x.payment_date_day.Value == period)
                 .ToListAsync();
-            await Task.WhenAll(payment, IntegrsList, Reading,Counters);
-            var tasks = new Task[] {
-                payment,IntegrsList,Reading,Counters
-            };
-            await Task.WhenAll(tasks);
-            var Count = payment.Result.Count();
+            var Count = payment.Count();
             int i = 0;
-            foreach(var data in payment.Result)
+            foreach(var data in payment)
             {
                 var Procent = Math.Round((float)i / Count * 100, 0);
-                var Readings = Reading.Result.Where(x => x.F4ENUMELS == data.lic).FirstOrDefault();
+                var Readings = Reading.Where(x => x.F4ENUMELS == data.lic).FirstOrDefault();
                 cacheApp.UpdateProgress(User, Procent.ToString());
                 i++;
                 if (Readings != null)
                 {
                     foreach (var Item in data.Counter)
                     {
-                        var Integr = IntegrsList.Result.Where(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id).Select(x => x.Lic).ToList();
+                        var Integr = IntegrsList.Where(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id).Select(x => x.Lic).ToList();
                         if (Integr.Count() == 0)
                         {
                             bool Error = false;
@@ -92,7 +87,7 @@ namespace BL.Service
                             {
                                 int? MinValue = 0;
                                 int? MaxValue = 30;
-                                var IPU_COUNTERS = Counters.Result.Where(x => x.FULL_LIC == data.lic &&
+                                var IPU_COUNTERS = Counters.Where(x => x.FULL_LIC == data.lic &&
                                 x.TYPE_PU.Contains(Item.name) && (x.CLOSE_ == null || x.CLOSE_ == false)).ToList();
                                
                                 if (IPU_COUNTERS.Count() != 0 && IPU_COUNTERS.FirstOrDefault().DIMENSION != null)
@@ -116,7 +111,7 @@ namespace BL.Service
                                 if (IPU_COUNTERS.Count() == 0)
                                 {
                                     Error = true;
-                                    var Ipu_Close = Counters.Result.Where(x => x.FULL_LIC == data.lic &&
+                                    var Ipu_Close = Counters.Where(x => x.FULL_LIC == data.lic &&
                                x.TYPE_PU.Contains(Item.name)).Select(x => new { Close = x.CLOSE_ }).FirstOrDefault();
                                     if (Ipu_Close != null)
                                     {

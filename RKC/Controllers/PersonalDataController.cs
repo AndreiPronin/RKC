@@ -34,8 +34,9 @@ namespace RKC.Controllers
         private readonly ICounter _counter;
         private readonly IBaseService _baseService;
         private readonly IPdfFactory _pdfFactory;
+        private readonly ICourt _court;
         public PersonalDataController(IPersonalData personalData, Ilogger logger, IGeneratorDescriptons generatorDescriptons,
-            ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory)
+            ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory, ICourt court)
         {
             _counter = counter;
             _personalData = personalData;
@@ -45,6 +46,7 @@ namespace RKC.Controllers
             _flagsAction = flagsAction;
             _baseService = baseService;
             _pdfFactory = pdfFactory;
+            _court = court;
         }
         [Authorize(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult PersonalInformation(string FullLic)

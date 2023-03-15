@@ -41,7 +41,7 @@ namespace BE.Court
         /// <summary>
         /// Примечание
         /// </summary>
-        public string Commnet { get; set; }
+        public string Comment { get; set; }
         public CourtGeneralInformation CourtGeneralInformation { get; set; }
     }
 }

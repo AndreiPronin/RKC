@@ -10,30 +10,98 @@ namespace BE.Court
     public class CourtGeneralInformation
     {
         public int Id { get; set; }
-        public string IdClient { get; set; }
-        public string IdВuty { get; set; }
+
+        /// <summary>
+        /// № л/с
+        /// </summary>
         public string Lic { get; set; }
+        /// <summary>
+        /// регион
+        /// </summary>
         public string Region { get; set; }
+        /// <summary>
+        /// город/нас.пункт
+        /// </summary>
         public string City { get; set; }
+        /// <summary>
+        /// улица
+        /// </summary>
         public string Street { get; set; }
+        /// <summary>
+        /// дом
+        /// </summary>
         public string Home { get; set; }
+        /// <summary>
+        /// кв
+        /// </summary>
         public string Flat { get; set; }
+        /// <summary>
+        /// ФИО должника
+        /// </summary>
         public string FioDuty { get; set; }
+        /// <summary>
+        /// пол
+        /// </summary>
         public string Floor { get; set; }
+        /// <summary>
+        /// Доля собственности
+        /// </summary>
         public string ShareOfOwnership { get; set; }
+        /// <summary>
+        /// Дата рождения
+        /// </summary>
         public string DateBirthday { get; set; }
-        public string PasportData { get; set; }
+        /// <summary>
+        /// Паспортные дата
+        /// </summary>
+        public string PasportDate { get; set; }
+        /// <summary>
+        /// Паспортные номер
+        /// </summary>
+        public string PasportNumber { get; set; }
+        /// <summary>
+        /// Паспортные серия
+        /// </summary>
+        public string PasportSeria { get; set; }
+        /// <summary>
+        /// Паспортные кем выдан
+        /// </summary>
+        public string PasportIssue { get; set; }
+        /// <summary>
+        /// ИНН
+        /// </summary>
         public string Inn { get; set; }
+        /// <summary>
+        /// СНИЛС
+        /// </summary>
         public string Snils { get; set; }
+        /// <summary>
+        /// Пенсионер
+        /// </summary>
         public string Pensioner { get; set; }
+        /// <summary>
+        /// Исключение из рассылки
+        /// </summary>
         public string ExclusionMailing { get; set; }
-        public string ReasonsExclusionMailing  { get; set; }
+        /// <summary>
+        /// Причины исключения из рассылки
+        /// </summary>
+        public string ReasonsExclusionMailing { get; set; }
+        /// <summary>
+        /// Исключение из судебной работы
+        /// </summary>
         public string ExclusionCourtWork { get; set; }
+        /// <summary>
+        /// Причины исключения из судебной работы
+        /// </summary>
         public string ReasonsCourtWork { get; set; }
+        /// <summary>
+        /// Примечание
+        /// </summary>
         public string Comment { get; set; }
         public virtual CourtWork CourtWork { get; set; }
         public ICollection<CourtDocumentScans> CourtDocumentScans { get; set; }
-        //public ExecutionFSSP ExecutionFSSP { get; set; }
+        public CourtExecutionFSSP CourtExecutionFSSP { get; set; }
         public virtual CourtExecutionInPF CourtExecutionInPF { get; set; }
         public virtual CourtInstallmentPlan CourtInstallmentPlan { get; set; }
         public virtual CourtBankruptcy CourtBankruptcy { get; set; }

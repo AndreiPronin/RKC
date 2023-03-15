@@ -97,7 +97,8 @@ namespace BL.Counters
                 var DIMENSIONs = await DbTPlus.DIMENSIONs.ToListAsync();
                 foreach (var Items in iPU_COUNTERs)
                 {
-                    Items.DIMENSION = DIMENSIONs.FirstOrDefault(x => x.ID == Items.DIMENSION_ID.Value);
+                    if(Items.DIMENSION_ID != null)
+                        Items.DIMENSION = DIMENSIONs.FirstOrDefault(x => x.ID == Items.DIMENSION_ID.Value);
                 }
                 return iPU_COUNTERs.OrderBy(x => x.TYPE_PU).ToList();
             }

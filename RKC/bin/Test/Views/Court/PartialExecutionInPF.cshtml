@@ -1,0 +1,83 @@
+﻿@model DB.Model.Court.CourtGeneralInformation
+<h2 class="">Исполнение в ПФ</h2>
+<div class="row">
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">ФИО сотрудника (направившего СП в ИО)</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.FioSendSpInIo, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.FioSendSpInIo })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата передачи СП в ИО:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.DateSendSpInIo, new { @type="Date", @readonly = "readonly",@class = "form-control", @Value = Model.CourtExecutionInPF.DateSendSpInIo })
+        </div>
+        <label class="col-sm-12 col-form-label">Исполнительный орган (ФССП, ПФ, Банк):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.ExecutiveAgency, new {  @readonly = "readonly", @dicId = "3", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionInPF.ExecutiveAgency })
+        </div>
+        <label class="col-sm-12 col-form-label">Адрес ИО:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.AdresIo, new { @readonly = "readonly", @dicId = "3", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionInPF.AdresIo })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата отправки заявления+ИД в ПФ о взыскании:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.DateSendApplicationIdInPf, new { @type = "Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.DateSendApplicationIdInPf })
+        </div>
+        <label class="col-sm-12 col-form-label">Способ отправки оригиналов заявления+ИД в ПФ:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.WaySendOriginalApplicationIdInPf, new {  @readonly = "readonly", @dicId = "17", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionInPF.WaySendOriginalApplicationIdInPf })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Сумма по заявлению в ПФ - всего</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.SumApplicationPfAll, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.SumApplicationPfAll })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма по заявлению в ПФ - ОД:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.SumApplicationPfOd, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.SumApplicationPfOd })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма по заявлению в ПФ - пени:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.SumApplicationPfPeny, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.SumApplicationPfPeny })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма по заявлению в ПФ - ГП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.SumApplicationPfGp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.SumApplicationPfGp })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата получения к исполнению ПФ:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.DateReturnPF, new { @type = "Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.DateReturnPF })
+        </div>
+        <label class="col-sm-12 col-form-label">Срок нахождения на исполнени (дн.):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.LengthStayDay, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.LengthStayDay })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Дата возврата ИД из ПФ</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.DateReturnIdPF, new { @type = "Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.DateReturnIdPF })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата отзыва ИД:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.DateReturnId, new { @type = "Date", @readonly = "readonly", @dicId = "13", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionInPF.DateReturnId })
+        </div>
+        <label class="col-sm-12 col-form-label">Причина отзыва/возврата ИД из ПФ:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.ReasonReturnIdPf, new {  @readonly = "readonly", @dicId = "14", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionInPF.ReasonReturnIdPf })
+        </div>
+        <label class="col-sm-12 col-form-label">Исх. № письма от ПФ о возврате ИД:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.NumberMailPfReturnId, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.NumberMailPfReturnId })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма исполнения от ПФ:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.SumExecutionPf, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.SumExecutionPf })
+        </div>
+        <label class="col-sm-12 col-form-label">Примечание:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.Comment, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.Comment })
+        </div>
+    </div>
+</div>
+
