@@ -101,8 +101,13 @@ namespace DB.Model.Court
         /// Примечание
         /// </summary>
         public string Comment { get; set; }
+        /// <summary>
+        /// Дата создания
+        /// </summary>
+        public string DateCreate { get; set; }
         public virtual CourtWork CourtWork { get; set; }
         public ICollection<CourtDocumentScans> CourtDocumentScans { get; set; }
+        public ICollection<CourtWorkRequisites> CourtWorkRequisites { get; set; }
         public CourtExecutionFSSP CourtExecutionFSSP { get; set; }
         public virtual CourtExecutionInPF CourtExecutionInPF { get; set; }
         public virtual CourtInstallmentPlan CourtInstallmentPlan { get; set; }

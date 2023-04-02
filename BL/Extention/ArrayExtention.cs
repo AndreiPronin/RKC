@@ -19,6 +19,17 @@ namespace BL.Extention
                 return "";
             }
         }
+        public static string TryGetValue(this string Value, int index)
+        {
+            try
+            {
+                return Value[index].ToString();
+            }
+            catch
+            {
+                return "";
+            }
+        }
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>
 (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {

@@ -212,6 +212,31 @@
 }
 
 #mySidenav {
-    width: 150px;
+    width: 140px;
+}
+
+@media screen and (max-width: 1000px) {
+    #mySidenav {
+        width: 50px;
+    }
+    #mySidenav:hover {
+        width: 150px;
+    }
+    .navbar-brand {
+        display: none;
+    }
+    .TimeAndDate {
+        display: none !important;
+    }
+}
+@media screen and (max-width: 1200px) {
+
+    .navbar-brand {
+        display: none;
+    }
+
+    .TimeAndDate {
+        display: none !important;
+    }
 }
 

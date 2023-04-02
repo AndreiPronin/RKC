@@ -5,8 +5,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<script> 
-    function callError(message) {
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
+<script>
+    function callErrorShowConfirm(message) {
         $.confirm({
             title: 'Исправьте ошибки прежде чем сохранить !!!',
             content: '' +
@@ -21,10 +22,43 @@
             }
         });
     }
+    function callError(object) {
+        object.addClass("Required");
+    }
+    function removeError(object) {
+        object.removeClass("Required");
+    }
+    function callErrorText(object,message) {
+        object.addClass("Required");
+        object.before(`<p class='callErrorText' style='color:red' >` + message +`</p>`);
+    }
+    function removeErrorText(object) {
+        $(".callErrorText").remove();
+        object.removeClass("Required");
+    }
+    function UpdateCourtWordRequisites() {
+            $("#PartialViewCourtWorkRequisites").empty();
+            $.ajax({
+                url: '/Court/PartialViewCourtWorkRequisites?Id=' + @Model.Id,
+                type: 'Post',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#PartialViewCourtWorkRequisites").append(data);
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
+        }
 </script>
 <style>
     .container {
         width: 95% !important;
+    }
+
+    textarea {
+        width: 300px !important;
+        height: 150px !important;
     }
 </style>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -37,15 +71,15 @@
 
 <div class="col-md-1">
     <div id="mySidenav" class="sidenav">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" id="myTab">
             @*<li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#GeneralInformation">Главная</a>
                 </li>*@
             <li class="nav-item active">
-                <a class="nav-link active" data-toggle="tab" id="#GeneralInformationButton" href="#GeneralInformation">Общая информация</a>
+                <a class="nav-link active" data-toggle="tab" id="GeneralInformationButton" href="#GeneralInformation">Общая информация</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" id="SearchButton" href="#CourtWork">Судебная работа</a>
+            <li class="nav-item" id="CourtWorkButton" >
+                <a class="nav-link" data-toggle="tab" href="#CourtWork">Судебная работа</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#ExecutionInPF">Исполнение в ПФ</a>
@@ -75,23 +109,14 @@
     </div>
 </div>
 <div class="col-md-11">
-    <h2 class="text-center">Номер судебного приказа № @Model.CourtWork.NumberSP</h2>
-    @*<input class="form-control DictionaryAutoComplete" placeholder="" />\*@
-    @*<label>Select 1</label>
-        <select name="field2" class="form-control" id="field2" multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="3" onchange="console.log(this.selectedOptions)">
-            <option value="1">Audi</option>
-            <option selected value="2">BMW</option>
-            <option selected value="3">Mercedes</option>
-            <option value="4">Volvo</option>
-            <option value="5">Lexus</option>
-            <option value="6">Tesla</option>
-        </select>*@
+    <h2 class="text-center">Ф.И.О. должника @Model.FioDuty Судебный приказ № @Model.CourtWork.NumberSP </h2>
     <div id="ResultSearchCourt"></div>
-    @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post))
+    @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post, new { onsubmit = "this.querySelectorAll('input').forEach(i => i.disabled = false)" }))
     {
         <input type="submit" class="btn hidden btn-success" id="Save" value="Coхранить" />
         <input type="button" class="btn btn-success" id="EditData" value="Редактировать" />
         <input type="button" class="btn hidden btn-danger" id="Cancel" value="Отмена" />
+        <input type="button" class="btn btn-danger" id="ClosePage" value="Закрыть страницу" />
         <div class="tab-content">
             <div class="tab-pane fade active in" id="GeneralInformation">
                 @Html.Partial("PartialGeneralInformation", Model)
@@ -129,7 +154,29 @@
 </div>
 <script>
     $(document).ready(function (e) {
-        $('#GeneralInformationButton').click();
+        $("#PasportNumber").mask("99999?9");
+        $("#Snils").mask("999-999-999-99");
+        $("#PasportSeria").mask("9999");
+        $("#Snils").mask("999-999-999-99");
+        $("#Inn").mask("99999999999");
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+        //$('#CourtWorkButton').click();
+        //$('a[data-toggle="tab"]').on('click', function (e) {
+        //    console.log("set" + $(e.target).attr('href'));
+        //    localStorage.setItem('activeTab', $(e.target).attr('href'));
+        //});
+        //var activeTab = localStorage.getItem('activeTab');
+        //if (activeTab) {
+            
+        //    var index = $('#myTab a[href="' + activeTab + '"]').parent().index();
+        //    console.log(index);
+        //    //$("#myTab").tabs("option", "active", index);
+        //}
         $("#EditData").click(function (e) {
             $("#Save").removeClass("hidden");
             $("#Cancel").removeClass("hidden");
@@ -140,6 +187,9 @@
             $('div textarea').each(function () {
                 $(this).prop('readonly', false);;
             });
+        })
+        $("#ClosePage").click(function (e) {
+            window.close();
         })
         $("#Cancel").click(function (e) {
             $("#Save").addClass("hidden");
@@ -159,17 +209,9 @@
             source: function (request, response) {
                 $.ajax({
                     url: "/DPU/SearchAutocompleteDpu?Text=" + $('#Text').val(), type: "Get", dataType: "json",
-                    //original code
-                    //data: { searchText: request.id, maxResults: 10 },
-                    //updated code; updated to request.term
-                    //and removed the maxResults since you are not using it on the server side
                     data: { id: request.term },
-
                     success: function (data) {
                         response($.map(data, function (item) {
-                            //original code
-                            //return { label: item.FullName, value: item.FullName, id: item.TagId };
-                            //updated code
                             return { label: item.Value, value: item.Value, id: item.Id };
                         }));
                     },
@@ -199,11 +241,35 @@
         var val = '';
         var atr = '';
 
+        $('.DictionaryAutoCompleteNotRequired').keyup(function () {
+            val = $(this).val();
+            atr = $(this).attr("dicId");
+            console.log(selectDic);
+            return;
+        }).autocomplete({
+            delay: 500,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Court/AutocompleteDictionary?Text=" + val + '&id=' + atr, type: "Get", dataType: "json",
+                    data: { id: request.term },
+                    success: function (data) {
+                        if (data.length > 0) {
+                            response($.map(data, function (item) {
+                                return { label: item, value: item };
+                            }));
+                        }
+                    },
+                });
+            },
+            minLength: 0,
+        }).focus(function () {
+            $(this).autocomplete("search");
+        })
         $('.DictionaryAutoComplete').keyup(function () {
             val = $(this).val();
             atr = $(this).attr("dicId");
-            console.log(val);
-            console.log(atr);
+            console.log(selectDic);
+            return;
         }).autocomplete({
             delay: 500,
             source: function (request, response) {
@@ -212,6 +278,12 @@
                     data: { id: request.term },
 
                     success: function (data) {
+                        if (data.length == 1) {
+                            if (val == data[0]) {
+                                selectDic = false;
+                                return { label: data[0], value: data[0] };
+                            }
+                        }
                         if (data.length > 0) {
                             response($.map(data, function (item) {
                                 selectDic = true;
@@ -237,9 +309,11 @@
                 $(this).autocomplete("search");
             }
         }).focusout(function (e) {
-            if (selectDic == true) {
-                $(this).val("");
-                selectDic = false;
+            if ($(this).attr("readonly") == undefined) {
+                if (selectDic == true) {
+                    $(this).val("");
+                    selectDic = false;
+                }
             }
         })
     })

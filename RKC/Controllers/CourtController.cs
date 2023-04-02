@@ -4,15 +4,18 @@ using BE.Roles;
 using BL.Helper;
 using BL.Security;
 using BL.Services;
+using DB.DataBase;
 using Microsoft.AspNet.Identity;
 using RKC.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static ClosedXML.Excel.XLPredefinedFormat;
+using DateTime = System.DateTime;
 
 namespace RKC.Controllers
 {
@@ -47,20 +50,28 @@ namespace RKC.Controllers
         {
             return View();
         }
+        public async Task<ActionResult> AdminPanel()
+        {
+            ViewBag.Dic = await _dictionary.GetAllCourtNameDictionaries();
+            return View();
+        }
         public async Task<ActionResult> SearchResult(SearchModel searchModel)
         {
             var Result =  await _court.Serach(searchModel);
             return PartialView(Result);
         }
         [Authorize(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
-        public async Task<ActionResult> CreateCourt(string FullLic, string NumberIP)
+        public async Task<ActionResult> CreateCourt(string FullLic)
         {
             if(string.IsNullOrEmpty(FullLic) || FullLic == "undefined")
                 return Redirect("/Home/ResultEmpty?Message=" + "Нельзя указать пустой лицевой счет!");
-            if (string.IsNullOrEmpty(NumberIP) || NumberIP == "undefined")
-                return Redirect("/Home/ResultEmpty?Message=" + "Нельзя указать пустой номер судебного приказа!");
-            var Result = await _court.CreateCourt(FullLic, NumberIP);
+            var Result = await _court.CreateCourt(FullLic, DateTime.Now.ToString());
             return Redirect("/Court/Index?Id=" + Result);
+        }
+        public async Task<ActionResult> DeleteCourt(int Id)
+        {
+            await _court.DeleteCourt(Id);
+            return Redirect("/Court/Serach");
         }
         [Authorize(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> SaveCourt(CourtGeneralInformation courtGeneralInformation)
@@ -80,36 +91,89 @@ namespace RKC.Controllers
             var result = await _dictionary.GetCourtNameDictionaries(Text,Id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        //public ActionResult DetailedСourtData(string FULL_LIC)
-        //{
-        //    try
-        //    {
-        //        if (_cacheApp.Lock(User.Identity.GetFIOFull(), nameof(DetailedСourtData) + FULL_LIC))
-        //        {
-        //            ViewBag.User = _cacheApp.GetValue(nameof(DetailedСourtData) + FULL_LIC);
-        //            ViewBag.IsLock = true;
-        //        }
-        //        else ViewBag.IsLock = false;
-        //        //var Result = _court.DetailInfroms(FULL_LIC);
-        //        if (ViewBag.IsLock == true) ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
-        //        //if (Result.Count() > 0)
-        //        //{
-        //        return View();
-        //        //}
-        //        //else
-        //        //{
-        //        //    if (Result.Count() == 0)
-        //        //    {
-        //        //        ViewBag.FULL_LIC = FULL_LIC;
-        //        //    }
-        //        //    return View(Result);
-        //        //}
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
-        //    }
-        //}
+        public async Task<ActionResult> GetPartialDictionaryId(int Id)
+        {
+            var Result = await _dictionary.GetCourtValueDictionaryId(Id);
+            return PartialView(Result);
+        }
+        public async Task<ActionResult> AddDicValue(int Id, string Value)
+        {
+            using (var AppDb = new ApplicationDbContext())
+            {
+                AppDb.CourtValueDictionary.Add(new DB.Model.Court.DictiomaryModel.CourtValueDictionary
+                {
+                    CourtNameDictionaryId = Id,
+                    Name = Value,
+                });
+                await AppDb.SaveChangesAsync();
+            }
+            return null;
+        }
+        public async Task<ActionResult> AddNewDic(string Value)
+        {
+            using (var AppDb = new ApplicationDbContext())
+            {
+                AppDb.CourtNameDictionaries.Add(new DB.Model.Court.DictiomaryModel.CourtNameDictionary
+                {
+                    Name = Value,
+                });
+                await AppDb.SaveChangesAsync();
+            }
+            return null;
+        }
+        public async Task<ActionResult> AddCourtWorkRequisites(CourtWorkRequisites courtWorkRequisites)
+        {
+            await _court.AddCourtWorkRequisites(courtWorkRequisites);
+            return Content("Успешно добавлено");
+        }
+        public async Task<ActionResult> RemoveCourtWorkRequisites(int Id)
+        {
+            await _court.RemoveCourtWorkRequisites(Id);
+            return Content("Успешно удалено");
+        }
+        public async Task<ActionResult> PartialViewCourtWorkRequisites(int Id)
+        {
+            var res = await _court.GetCourtWorkRequisites(Id);
+            return PartialView(res);
+        }
+        public async Task<ActionResult> PartialViewGetAllFilesInCourt(int Id)
+        {
+            var Res = await _court.GetDocumentScans(Id);
+            return PartialView(Res);
+        }
+        [HttpPost]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
+        public async Task<ActionResult> SaveFile(HttpPostedFileBase FileLoad, string NameFile, string Lic, int CourtId)
+        {
+            return Json(new
+            {
+                result = await _court.saveFile(ConverToBytes(FileLoad), CourtId, Lic, FileLoad.FileName.Split('.').LastOrDefault(), NameFile, User.Identity.GetFIOFull()),
+                JsonRequestBehavior.AllowGet
+            });
+        }
+        [HttpGet]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
+        public async Task<ActionResult> DownLoadFile(int Id)
+        {
+            var Result = await _court.DownLoadFile(Id);
+            return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
+        }
+        [HttpGet]
+        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
+        public async Task<ActionResult> DeleteFile(int Id)
+        {
+            await _court.DeleteFile(Id, User.Identity.GetFIOFull());
+            return null;
+        }
+        public static byte[] ConverToBytes(HttpPostedFileBase file)
+        {
+            byte[] fileData = null;
+            using (var binaryReader = new BinaryReader(file.InputStream))
+            {
+                fileData = binaryReader.ReadBytes(file.ContentLength);
+            }
+            return fileData;
+        }
     }
 }
 

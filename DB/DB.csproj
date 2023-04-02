@@ -82,6 +82,18 @@
     <Compile Include="Migrations\202303151627447_EditCourt2.designer.cs">
       <DependentUpon>202303151627447_EditCourt2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202303160757173_AddDateCreateCourt.cs" />
+    <Compile Include="Migrations\202303160757173_AddDateCreateCourt.designer.cs">
+      <DependentUpon>202303160757173_AddDateCreateCourt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303231750052_addRequsits.cs" />
+    <Compile Include="Migrations\202303231750052_addRequsits.designer.cs">
+      <DependentUpon>202303231750052_addRequsits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303280955259_ScanDocumentCourt.cs" />
+    <Compile Include="Migrations\202303280955259_ScanDocumentCourt.designer.cs">
+      <DependentUpon>202303280955259_ScanDocumentCourt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ALL_LICS.cs" />
     <Compile Include="Model\ALL_LICS_ARCHIVE.cs" />
@@ -95,6 +107,7 @@
     <Compile Include="Model\Court\CourtBankruptcy.cs" />
     <Compile Include="Model\Court\CourtLitigationWork.cs" />
     <Compile Include="Model\Court\CourtStateDuty.cs" />
+    <Compile Include="Model\Court\CourtWorkRequisites.cs" />
     <Compile Include="Model\Court\CourtWriteOff.cs" />
     <Compile Include="Model\Court\DictiomaryModel\CourtNameDictionary.cs" />
     <Compile Include="Model\Court\ReasonsRevokingIDExecution.cs" />
@@ -144,6 +157,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202303151627447_EditCourt2.resx">
       <DependentUpon>202303151627447_EditCourt2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303160757173_AddDateCreateCourt.resx">
+      <DependentUpon>202303160757173_AddDateCreateCourt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303231750052_addRequsits.resx">
+      <DependentUpon>202303231750052_addRequsits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303280955259_ScanDocumentCourt.resx">
+      <DependentUpon>202303280955259_ScanDocumentCourt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

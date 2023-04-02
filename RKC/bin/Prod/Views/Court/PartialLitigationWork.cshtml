@@ -1,1 +1,136 @@
-﻿<h2>LitigationWork</h2>
+﻿@model DB.Model.Court.CourtGeneralInformation
+<h2>Исковая работа</h2>
+<div class="row">
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Дата определения об отмене СП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateDecisionCansel, new { @type = "Date", @readonly = "readonly", @class = "form-control",
+           @Value = (Model.CourtLitigationWork.DateDecisionCansel.HasValue ? Model.CourtLitigationWork.DateDecisionCansel.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата получения определения об отмене СП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateReceipt, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtLitigationWork.DateReceipt.HasValue ? Model.CourtLitigationWork.DateReceipt.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата передачи документов в ПИР РЦПО:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateSendPirRCO, new { @type = "Date", @readonly = "readonly", @class = "form-control",
+           @Value = (Model.CourtLitigationWork.DateSendPirRCO.HasValue ? Model.CourtLitigationWork.DateSendPirRCO.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата передачи искового заявления в суд:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateSubmission, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtLitigationWork.DateSubmission.HasValue ? Model.CourtLitigationWork.DateSubmission.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Наименование суда:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.NameCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.NameCourt })
+        </div>
+        <label class="col-sm-12 col-form-label">ФИО сотрудника (направившего дело в суд):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.FioSendCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.FioSendCourt })
+        </div>
+        <label class="col-sm-12 col-form-label">Способ отправки заявления в суд:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.HowSubmitApplicationCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.HowSubmitApplicationCourt })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Cумма иска - всего</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumIskaAll, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.SumIskaAll })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма ОД предъявленная в суд:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumOdSendCourt, new { @readonly = "readonly", @dicId = "13", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtLitigationWork.SumOdSendCourt })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма пени предъявленная в суд:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumPenySendCourt, new { @type = "date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtLitigationWork.SumPenySendCourt.HasValue ? Model.CourtLitigationWork.SumPenySendCourt.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма госпошлины( указанная в иске):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumStateDuty, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.SumStateDuty })
+        </div>
+        <label class="col-sm-12 col-form-label">Период задолженности начальный:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.PeriodDebtBegin, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtLitigationWork.PeriodDebtBegin.HasValue ? Model.CourtLitigationWork.PeriodDebtBegin.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Период задолженности конечный</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.PeriodDebtEnd, new { @type = "date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtLitigationWork.PeriodDebtEnd.HasValue ? Model.CourtLitigationWork.PeriodDebtEnd.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Реквизиты ГП - сумма:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.GPDetailsAmount, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.GPDetailsAmount })
+        </div>
+        <label class="col-sm-12 col-form-label">Реквизиты ГП - дата платежного поручения:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.GPDetailsDatePayment, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtLitigationWork.GPDetailsDatePayment.HasValue ? Model.CourtLitigationWork.GPDetailsDatePayment.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Реквизиты ГП - номер платежного поручения:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.GPDetailsPaymentOrderNuumber, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.GPDetailsPaymentOrderNuumber })
+        </div>
+       
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Дата решения</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateDecision, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtLitigationWork.DateDecision.HasValue ? Model.CourtLitigationWork.DateDecision.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата вступления решения в з.с.:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateEntryDecision, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtLitigationWork.DateEntryDecision.HasValue ? Model.CourtLitigationWork.DateEntryDecision.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Взысканная сумма - всего:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnAll, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnAll })
+        </div>
+        <label class="col-sm-12 col-form-label">Взысканная сумма - ОД:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnOd, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnOd })
+        </div>
+        <label class="col-sm-12 col-form-label">Взысканная сумма - пени:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnPeny, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnPeny })
+        </div>
+        <label class="col-sm-12 col-form-label">Взысканная сумма - ГП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnGp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnGp })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата запроса ИЛ:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.RequestDateIl, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.RequestDateIl })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата выдачи ИЛ:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateIssueIL, new { @type = "Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.DateIssueIL })
+        </div>
+        <label class="col-sm-12 col-form-label">Номер ИЛ:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.NumberIl, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.NumberIl })
+        </div>
+        <label class="col-sm-12 col-form-label">Примечание:</label>
+        <div class="col-sm-8">
+            @Html.TextAreaFor(m => m.CourtLitigationWork.Comment, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.Comment })
+        </div>
+    </div>
+</div>
+

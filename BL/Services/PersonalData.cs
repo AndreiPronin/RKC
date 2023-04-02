@@ -41,6 +41,7 @@ namespace BL.Services
         List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr,string Full_Lic);
         void UpdateSquareFlat(double? Square, string Lic);
         void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User);
+        void SavePersonalDataFioLic(PersDataModel persDataModel);
     }
     public class PersonalData : BaseService, IPersonalData
     {
@@ -57,12 +58,12 @@ namespace BL.Services
             {
                 return db.PersonalInformation.Where(x => x.full_lic == FullLic).ToList();
             }
-        }   
+        }
         public StateCalculation GetStateCalculation(string FullLic)
         {
             using (var db = new ApplicationDbContext())
             {
-                
+
                 try
                 {
                     return db.StateCalculation.Where(x => x.F4ENUMELS == FullLic).OrderByDescending(x => x.Period).First();
@@ -83,7 +84,7 @@ namespace BL.Services
                     var dbLic = new DbLIC();
                     var HelpCalc = db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToListAsync();
                     DateTo = DateTo.AddMonths(1);
-                    var Receipt = dbLic.KVIT.Where(x => x.lic == SubLic && x.period.Value >= DateFrom && x.period.Value <= DateTo).Select(x=> new
+                    var Receipt = dbLic.KVIT.Where(x => x.lic == SubLic && x.period.Value >= DateFrom && x.period.Value <= DateTo).Select(x => new
                     {
                         Period = x.period,
                         HeatingRecalculationRate = x.sted2,
@@ -96,7 +97,7 @@ namespace BL.Services
                     }).ToListAsync();
                     await Task.WhenAll(HelpCalc, Receipt);
                     helpCalculationsModels = helpCalculationsModels.ConvertToModelHelpCalculations(HelpCalc.Result);
-                    foreach(var Item in HelpCalc.Result)
+                    foreach (var Item in HelpCalc.Result)
                     {
                         try
                         {
@@ -131,12 +132,12 @@ namespace BL.Services
                     var Res = db.PersData.Where(x => x.Lic == FullLic && (x.IsDelete == false || x.IsDelete == null)).Include("PersDataDocument").OrderByDescending(x => x.Main).ToList();
                     return Res;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     var res = ex.InnerException.Message;
                     return null;
                 }
-                    
+
             }
         }
         public List<PersData> GetInfoPersDataDelete(string FullLic)
@@ -212,7 +213,7 @@ namespace BL.Services
         /// <param name="DateFrom"></param>
         /// <param name="DateTo"></param>
         /// <returns></returns>
-        public async Task<PersDataDocumentLoad> DownLoadHelpСalculation(string FullLic,DateTime DateFrom, DateTime DateTo)
+        public async Task<PersDataDocumentLoad> DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
             PersDataDocumentLoad persDataDocument = new PersDataDocumentLoad();
             persDataDocument.FileName = $@"Справка расчета {FullLic}.xlsx";
@@ -222,7 +223,7 @@ namespace BL.Services
             {
                 var Result = await GetInfoHelpСalculation(FullLic, dateFrom, dateTo);
                 //var Result = db.HelpСalculation.Where(x => x.LIC == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
-                persDataDocument.FileBytes  = ExcelHelpСalculation.Generate(Result);
+                persDataDocument.FileBytes = ExcelHelpСalculation.Generate(Result);
             }
             return persDataDocument;
         }
@@ -242,7 +243,7 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                return   db.LogsPersData.Where(x => x.idPersData == idPersData).OrderByDescending(x=>x.DateTime).ToList();
+                return db.LogsPersData.Where(x => x.idPersData == idPersData).OrderByDescending(x => x.DateTime).ToList();
             }
         }
         public void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User)
@@ -274,7 +275,7 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var PersData = db.PersData.Find(persDataModel.idPersData);
-                
+
                 if (СomparisonModel.PersDataModel_To_PersData(PersData, persDataModel))
                 {
                     if (PersData.Main == true)
@@ -294,7 +295,7 @@ namespace BL.Services
                 }
                 _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel), User);
                 var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
-                foreach(var Items in ListPers)
+                foreach (var Items in ListPers)
                 {
                     Items.Square = persDataModel.Square;
                     Items.NumberOfPersons = persDataModel.NumberOfPersons;
@@ -335,10 +336,10 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                var PErsData = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main == true).ToList();
+                var PErsData = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main == true && x.IsDelete != true).ToList();
                 if (PErsData.Count() == 0)
                 {
-                   throw new Exception($"На лицевом счете {persDataModel.Lic} нет основного");
+                    throw new Exception($"На лицевом счете {persDataModel.Lic} нет основного");
                 }
                 if (PErsData.Count() > 1)
                 {
@@ -383,6 +384,19 @@ namespace BL.Services
                 PersData.Tel2 = string.IsNullOrEmpty(persDataModel.Tel2) ? PersData.Tel2 : persDataModel.Tel2;
                 PersData.UserName = string.IsNullOrEmpty(persDataModel.UserName) ? PersData.UserName : persDataModel.UserName;
                 db.SaveChanges();
+            }
+        }
+        public void SavePersonalDataFioLic(PersDataModel persDataModel)
+        {
+            using (var dbAllLic = new DbLIC())
+            {
+                var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == persDataModel.Lic).FirstOrDefault();
+               
+                AllLIC.FAMIL = string.IsNullOrEmpty(persDataModel.LastName) ? AllLIC.FAMIL : persDataModel.LastName; ;
+                AllLIC.OTCH = string.IsNullOrEmpty(persDataModel.MiddleName) ? AllLIC.OTCH : persDataModel.MiddleName; ; ;
+                AllLIC.IMYA = string.IsNullOrEmpty(persDataModel.FirstName) ? AllLIC.IMYA : persDataModel.FirstName; ; ;
+                AllLIC.FIO = $"{AllLIC.FAMIL} {AllLIC.IMYA?.ToUpper().TryGetValue(0)}.{AllLIC.OTCH?.ToUpper().TryGetValue(0)}.";
+                dbAllLic.SaveChanges();
             }
         }
         public void MakeToMain (int idPersData)
@@ -517,7 +531,6 @@ namespace BL.Services
                 await appDb.SaveChangesAsync();
             }
         }
-
         public void CloseLic(string FullLic, ICounter _counter)
         {
             using (var dbLic = new DbLIC())

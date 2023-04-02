@@ -556,3 +556,6 @@ D:\Programing\RKC\RKC\obj\Debug\RKC.dll
 D:\Programing\RKC\RKC\obj\Debug\RKC.pdb
 D:\Programing\RKC\RKC\bin\AutoMapper.dll
 D:\Programing\RKC\RKC\bin\AutoMapper.xml
+D:\Programing\RKC\RKC\bin\itextsharp.dll
+D:\Programing\RKC\RKC\bin\BouncyCastle.Crypto.dll
+D:\Programing\RKC\RKC\bin\itextsharp.xml

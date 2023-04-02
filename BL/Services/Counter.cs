@@ -93,7 +93,7 @@ namespace BL.Counters
             using (var DbTPlus = new DbTPlus())
             {
                 IEnumerable<IPU_COUNTERS> iPU_COUNTERs = Enumerable.Empty<IPU_COUNTERS>();
-                iPU_COUNTERs = await DbTPlus.IPU_COUNTERS.Where(x=>x.CLOSE_ != false).ToListAsync();
+                iPU_COUNTERs = await DbTPlus.IPU_COUNTERS.ToListAsync();
                 var DIMENSIONs = await DbTPlus.DIMENSIONs.ToListAsync();
                 foreach (var Items in iPU_COUNTERs)
                 {
@@ -163,7 +163,7 @@ namespace BL.Counters
                 IPU_COUNTERS.SEALNUMBER2 = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2) ? IPU_COUNTERS.SEALNUMBER2 : saveModelIPU.SEALNUMBER2;
                 IPU_COUNTERS.TYPEOFSEAL2 = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL2) ? IPU_COUNTERS.TYPEOFSEAL2 : saveModelIPU.TYPEOFSEAL2;
                 IPU_COUNTERS.GIS_ID_PU = string.IsNullOrEmpty(saveModelIPU.GIS_ID_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.GIS_ID_PU;
-                IPU_COUNTERS.BRAND_PU = string.IsNullOrEmpty(saveModelIPU.BRAND_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.BRAND_PU;
+                IPU_COUNTERS.BRAND_PU = string.IsNullOrEmpty(saveModelIPU.BRAND_PU) ? IPU_COUNTERS.BRAND_PU : saveModelIPU.BRAND_PU;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                 await DbTPlus.SaveChangesAsync();
             }
@@ -376,7 +376,7 @@ namespace BL.Counters
                     saveModelIPU.IdPU = IPU_COUNTERS.ID_PU;
                     saveModelIPU.OVERWRITE_SEAL = false;
                     logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
-                    Task.Run(() => UpdateReadings(saveModelIPU));
+                    Task.Run(async () => await UpdateReadings(saveModelIPU));
                     //new Thread(x=> UpdateReadings(saveModelIPU)).Start();
                     return true;
                 }

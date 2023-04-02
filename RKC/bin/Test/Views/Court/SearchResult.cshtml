@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<DB.Model.Court.CourtGeneralInformation>
+@using BE.Roles;
 @{int i = 1;}
 <p>@ViewBag.Count</p>
 <table class="table">
@@ -37,8 +38,12 @@
                     {
                         <td></td>
                     }
-                <td>
-                    <a href="/Court/Index?Id=@Items.Id" target="_blank" class="btn btn-primary">Показать подробную информацию</a>
+                    <td>
+                        <a href="/Court/Index?Id=@Items.Id" target="_blank" class="btn btn-primary">Показать подробную информацию</a>
+                        @if (User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <a href="/Court/DeleteCourt?Id=@Items.Id" class="btn btn-danger">Удалить</a>
+                    }
                 </td>
             </tr>
             i++;

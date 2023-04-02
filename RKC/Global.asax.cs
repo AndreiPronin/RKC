@@ -1,3 +1,4 @@
+using RKC.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace RKC
     {
         protected void Application_Start()
         {
+            CustomModelBindersConfig.RegisterCustomModelBinders();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

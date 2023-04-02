@@ -3,6 +3,7 @@ using BE.Admin;
 using BE.DPU;
 using BL;
 using BL.ApiT_;
+using BL.Services;
 using DB.DataBase;
 using DB.Model;
 using DB.Query;
@@ -25,7 +26,7 @@ namespace RKC.Controllers
     {
         public HomeController(IEBD eBD)
         {
-           
+            //var rrr = Parser.PdfParser();
         }
         public ActionResult Index()
         {

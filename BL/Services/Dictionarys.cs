@@ -14,6 +14,8 @@ namespace BL.Services
     {
         Task<List<DIMENSION>> GetDIMENSION();
         Task<List<string>> GetCourtNameDictionaries(string Text, int Id);
+        Task<List<CourtNameDictionary>> GetAllCourtNameDictionaries();
+        Task<List<CourtValueDictionary>> GetCourtValueDictionaryId(int Id);
     }
     public class Dictionarys : IDictionary
     {
@@ -30,11 +32,27 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
+                if (string.IsNullOrEmpty(Text))
+                    return await db.CourtValueDictionary.Where(x => x.CourtNameDictionaryId == Id).Select(x => x.Name).ToListAsync();
                 var Result = await db.CourtValueDictionary.Where(x => x.CourtNameDictionaryId == Id && x.Name.Contains(Text)).Select(x=>x.Name).ToListAsync();
                 return Result;
             }
-               
-
+        }
+        public async Task<List<CourtValueDictionary>> GetCourtValueDictionaryId(int Id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var Result = await db.CourtValueDictionary.Where(x => x.CourtNameDictionaryId == Id).ToListAsync();
+                return Result;
+            }
+        }
+        public async Task<List<CourtNameDictionary>> GetAllCourtNameDictionaries()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var Result = await db.CourtNameDictionaries.ToListAsync();
+                return Result;
+            }
         }
     }
 }

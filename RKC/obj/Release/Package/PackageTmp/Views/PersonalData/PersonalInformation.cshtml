@@ -52,7 +52,10 @@
                         <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
                     </a>
                     <a>
+                        @if (User.IsInRole(BE.Roles.RolesEnums.CounterReader) || User.IsInRole(BE.Roles.RolesEnums.CourtWhriter) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                        {
                         <input type="button" class="btn btn-primary ShowAllCourt" value="Судебные дела" data-toggle="modal" data-target="#ShowAllCourtModal" />
+                        }
                     </a>
                 </div>
                 <hr />

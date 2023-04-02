@@ -11,7 +11,10 @@
     <div class="inner two"></div>
     <div class="inner three"></div>
 </div>
-
+@if (User.IsInRole(BE.Roles.RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
+{
+<a href="/Court/AdminPanel"><button class="btn btn-primary">Админ панель</button></a>
+}
 <h1 class="page-header"></h1>
 <div class="container">
     <div class="row">
@@ -135,12 +138,10 @@
                     '<div class="form-group">' +
                     '<label>Лицевой счет</label>' +
                     '<input type="number" onkeyup="Call()" placeholder="" id="FullLic" class="form-control FullLic" />' +
-                    '<label>Номер ИП</label>' +
-                    '<input type=""  placeholder="" id="NumberIP" class="form-control " />' +
                     '</form>',
                 buttons: {
                     '<input type="button" class="btn btn-primary" value="Создать" data-toggle="modal" data-target="#ShowLogResultModal" />': function () {
-                        window.open('/Court/CreateCourt?FullLic=' + $("#FullLic").val() + '&NumberIP=' + $("#NumberIP").val(), "_blank");
+                        window.open('/Court/CreateCourt?FullLic=' + $("#FullLic").val(), "_blank");
                     },
                     "Отмена": function () {
 
@@ -151,9 +152,9 @@
         });
        
 
-        $("#LIC").keyup(function () {
-            if ($("#LIC").val().length > 4) {
-                SearchIPU();
+        $("#Lic").keyup(function () {
+            if ($("#Lic").val().length > 4) {
+                SearchCourt();
             }
         })
         $("#ClearFilter").click(function () {
@@ -164,37 +165,37 @@
         })
         $("#NumberIl").keyup(function () {
             if ($("#NumberIl").val().length > 4) {
-                SearchIPU();
+                SearchCourt();
             }
         })
         $("#NumberSp").keyup(function () {
             if ($("#NumberSp").val().length > 4) {
-                SearchIPU();
+                SearchCourt();
             }
         })
         $("#NumberIp").keyup(function () {
             if ($("#NumberIp").val().length > 4) {
-                SearchIPU();
+                SearchCourt();
             }
         })
         $("#Street").keyup(function () {
             if ($("#Street").val().length > 4) {
-                SearchIPU();
+                SearchCourt();
             }
         })
         $("#FullName").keyup(function () {
             if ($("#FullName").val().length > 4) {
-                SearchIPU();
+                SearchCourt();
             }
         })
         $("#Home").keyup(function () {
             if ($("#Home").val().length > 1) {
-                SearchIPU();
+                SearchCourt();
             }
         })
         $("#Flat").keyup(function () {
             if ($("#Flat").val().length > 0) {
-                SearchIPU();
+                SearchCourt();
             }
         })
         var i = 0;

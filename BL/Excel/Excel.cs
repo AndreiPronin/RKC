@@ -36,6 +36,7 @@ namespace BL.Excel
         DataTable ErroIntegratin();
         DataTable TIpuGvs(string User, ICacheApp cacheApp);
         DataTable TIpuOtp(string User, ICacheApp cacheApp);
+        DataTable LoadExcelUpdatePersonalDataMainFio(XLWorkbook Excels, string User, ICacheApp cacheApp);
     }
     public class Excel:IExcel
     {
@@ -97,311 +98,6 @@ namespace BL.Excel
             cacheApp.Update(User, "Ожидайте... Идет скачивание файла.");
             return dt;
         }
-        public DataTable LoadExcelPU(XLWorkbook Excels, string User, ICacheApp cacheApp)
-        {
-            cacheApp.AddProgress(User, "0");
-            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            Counter counter = new Counter(new Logger(),new GeneratorDescriptons());
-            List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
-            var DbTPlus = new DbTPlus();
-            var DbLIC = new DbLIC();
-            var dbApp = new ApplicationDbContext();
-            int i = 0;
-            bool Error = false;
-            var Count = nonEmptyDataRows.Count();
-            foreach (var dataRow in nonEmptyDataRows)
-            {
-                if (dataRow.RowNumber() > 1)
-                {
-                    i++;
-                    try
-                    {
-                         
-                        Error = false;
-                        var Procent = Math.Round((float)i / Count * 100, 0);
-                        cacheApp.UpdateProgress(User, Procent.ToString());
-                        SaveModelIPU saveModel = new SaveModelIPU();
-                        var integrationReadings = new IntegrationReadings();
-                        saveModel.FULL_LIC = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
-                        saveModel.TypePU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
-                        saveModel.NumberPU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
-                        var Readings = DbLIC.ALL_LICS.FirstOrDefault(x => x.F4ENUMELS == saveModel.FULL_LIC);
-                        var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModel.FULL_LIC && x.TYPE_PU.Contains(saveModel.TypePU) && (x.CLOSE_ == null || x.CLOSE_ == false)).ToList();
-                        if (dataRow.Cell(6).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(6).Value); }
-                        if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(7).Value); }
-                        saveModel.MODEL_PU = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
-                        if (saveModel.TypePU == "ГВС1" && dataRow.Cell(8).Value != "") saveModel.FKUB2XVS = Convert.ToDecimal(dataRow.Cell(8).Value);
-                        if (saveModel.TypePU == "ГВС2" && dataRow.Cell(8).Value != "") saveModel.FKUB2XV_2 = Convert.ToDecimal(dataRow.Cell(8).Value);
-                        if (saveModel.TypePU == "ГВС3" && dataRow.Cell(8).Value != "") saveModel.FKUB2XV_3 = Convert.ToDecimal(dataRow.Cell(8).Value);
-                        if (saveModel.TypePU == "ГВС4" && dataRow.Cell(8).Value != "") saveModel.FKUB2XV_4 = Convert.ToDecimal(dataRow.Cell(8).Value);
-                        if (saveModel.TypePU == "ОТП1" && dataRow.Cell(8).Value != "") saveModel.FKUB2OT_1 = Convert.ToDecimal(dataRow.Cell(8).Value);
-                        if (saveModel.TypePU == "ОТП2" && dataRow.Cell(8).Value != "") saveModel.FKUB2OT_2 = Convert.ToDecimal(dataRow.Cell(8).Value);
-                        if (saveModel.TypePU == "ОТП3" && dataRow.Cell(8).Value != "") saveModel.FKUB2OT_3 = Convert.ToDecimal(dataRow.Cell(8).Value);
-                        if (saveModel.TypePU == "ОТП4" && dataRow.Cell(8).Value != "") saveModel.FKUB2OT_4 = Convert.ToDecimal(dataRow.Cell(8).Value);
-                        var Month = DateTime.Now.Date.Month;
-                        var Year = DateTime.Now.Date.Year;
-                        var Integr = dbApp.IntegrationReadings.Where(x => x.Lic == saveModel.FULL_LIC && x.TypePu.Contains(saveModel.TypePU)
-                        && x.DateTime.Value.Month == Month && x.DateTime.Value.Year == Year).ToList();
-                        if (Integr.Count() == 0)
-                        {
-                            integrationReadings.Lic = saveModel.FULL_LIC;
-                            integrationReadings.TypePu = saveModel.TypePU;
-                            integrationReadings.DateTime = Convert.ToDateTime(dataRow.Cell(11).Value);
-                            if (saveModel.TypePU == TypePU.GVS1.GetDescription())
-                            {
-                                if (Readings.FKUB2XVS - Convert.ToDecimal(saveModel.FKUB2XVS) > 30)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                }
-                                else if (Convert.ToDecimal(saveModel.FKUB2XVS) - Readings.FKUB2XVS < 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                }
-                                else if (IPU_COUNTERS.Count() == 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {saveModel.TypePU} ";
-                                }
-                                else if (IPU_COUNTERS.Count() > 1)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                }
-                                else
-                                {
-                                    saveModel.FKUB2XVS = saveModel.FKUB2XVS;
-                                }
-
-                            }
-                            if (saveModel.TypePU == TypePU.GVS2.GetDescription())
-                            {
-                                if (Readings.FKUB2XV_2 - saveModel.FKUB2XV_2 > 30)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                }
-                                else if (saveModel.FKUB2XV_2 - Readings.FKUB2XV_2 < 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                }
-                                else if (IPU_COUNTERS.Count() == 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {saveModel.TypePU} ";
-                                }
-                                else if (IPU_COUNTERS.Count() > 1)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                }
-                                else
-                                {
-                                    saveModel.FKUB2XV_2 = saveModel.FKUB2XV_2;
-                                }
-                            }
-                            if (saveModel.TypePU == TypePU.GVS3.GetDescription())
-                            {
-                                if (Readings.FKUB2XV_3 - saveModel.FKUB2XV_3 > 30)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                }
-                                else if (saveModel.FKUB2XV_3 - Readings.FKUB2XV_3 < 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                }
-                                else if (IPU_COUNTERS.Count() == 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {saveModel.TypePU} ";
-                                }
-                                else if (IPU_COUNTERS.Count() > 1)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                }
-                                else
-                                {
-                                    saveModel.FKUB2XV_3 = saveModel.FKUB2XV_3;
-                                }
-                            }
-                            if (saveModel.TypePU == TypePU.GVS4.GetDescription())
-                            {
-                                if (Readings.FKUB2XV_4 - saveModel.FKUB2XV_4 > 30)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                }
-                                else if (saveModel.FKUB2XV_4 - Readings.FKUB2XV_4 < 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                }
-                                else if (IPU_COUNTERS.Count() == 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {saveModel.TypePU} ";
-                                }
-                                else if (IPU_COUNTERS.Count() > 1)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                }
-                                else
-                                {
-                                    saveModel.FKUB2XV_4 = saveModel.FKUB2XV_4;
-                                }
-                            }
-                            if (saveModel.TypePU == TypePU.ITP1.GetDescription())
-                            {
-                                if (Readings.FKUB2OT_1 - saveModel.FKUB2OT_1 > 30)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                }
-                                else if (saveModel.FKUB2OT_1 - Readings.FKUB2OT_1 < 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                }
-                                else if (IPU_COUNTERS.Count() == 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {saveModel.TypePU} ";
-                                }
-                                else if (IPU_COUNTERS.Count() > 1)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                }
-                                else
-                                {
-                                    saveModel.FKUB2OT_1 = saveModel.FKUB2OT_1;
-                                }
-                            }
-                            if (saveModel.TypePU == TypePU.ITP2.GetDescription())
-                            {
-                                if (Readings.FKUB2OT_2 - saveModel.FKUB2OT_2 > 30)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                }
-                                else if (saveModel.FKUB2OT_2 - Readings.FKUB2OT_2 < 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                }
-                                else if (IPU_COUNTERS.Count() == 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {saveModel.TypePU} ";
-                                }
-                                else if (IPU_COUNTERS.Count() > 1)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                }
-                                else
-                                {
-                                    saveModel.FKUB2OT_2 = saveModel.FKUB2OT_2;
-                                }
-                            }
-                            if (saveModel.TypePU == TypePU.ITP3.GetDescription())
-                            {
-                                if (Readings.FKUB2OT_3 - saveModel.FKUB2OT_3 > 30)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                }
-                                else if (saveModel.FKUB2OT_3 - Readings.FKUB2OT_3 < 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                }
-                                else if (IPU_COUNTERS.Count() == 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {saveModel.TypePU} ";
-                                }
-                                else if (IPU_COUNTERS.Count() > 1)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                }
-                                else
-                                {
-                                    saveModel.FKUB2OT_3 = saveModel.FKUB2OT_3;
-                                }
-                            }
-                            if (saveModel.TypePU == TypePU.ITP4.GetDescription())
-                            {
-                                if (Readings.FKUB2OT_4 - saveModel.FKUB2OT_4 > 30)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.High.GetDescription()} ";
-                                }
-                                else if (saveModel.FKUB2OT_4 - Readings.FKUB2OT_4 < 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.Low.GetDescription()} ";
-                                }
-                                else if (IPU_COUNTERS.Count() == 0)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {saveModel.TypePU} ";
-                                }
-                                else if (IPU_COUNTERS.Count() > 1)
-                                {
-                                    Error = true;
-                                    integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
-                                }
-                                else
-                                {
-                                    saveModel.FKUB2OT_4 = saveModel.FKUB2OT_4;
-                                }
-                            }
-                            if (Error == false)
-                            {
-                                counter.UpdatePUIntegrations(saveModel, User, IPU_COUNTERS.FirstOrDefault().ID_PU);
-                                dbApp.IntegrationReadings.Add(integrationReadings);
-                                dbApp.SaveChanges();
-                            }
-                            else
-                            {
-                                saveModel.DESCRIPTION = integrationReadings.Description;
-                                COUNTERsNotAdded.Add(saveModel);
-                                integrationReadings.IsError = true;
-                                dbApp.IntegrationReadings.Add(integrationReadings);
-                            }
-                        }
-                        else
-                        {
-                            saveModel.DESCRIPTION = $"Уже были внесены показания по этому ПУ {Integr.FirstOrDefault().DateTime}";
-                            COUNTERsNotAdded.Add(saveModel);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        COUNTERsNotAdded.Add(new SaveModelIPU { FULL_LIC = $"Ошибка на {i} строке" });
-                    }
-                }
-            }
-            DataTable dt = new DataTable("Counter");
-            dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Лицевой счет"),
-                                        new DataColumn("Тип ПУ"),
-                                        new DataColumn("Номер"),
-                                        new DataColumn("Примечание")});
-            foreach (var Items in COUNTERsNotAdded)
-            {
-                dt.Rows.Add(Items.FULL_LIC, Items.TypePU, Items.NumberPU,Items.DESCRIPTION);
-            }
-            return dt;
-        }
         public DataTable LoadExcelPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
             cacheApp.AddProgress(User, "0");
@@ -421,6 +117,7 @@ namespace BL.Excel
                         var Procent = Math.Round((float)i / Count * 100, 0);
                         cacheApp.UpdateProgress(User, Procent.ToString());
                         SaveModelIPU saveModel = new SaveModelIPU();
+                        saveModel.DIMENSION = new BE.Counter.DIMENSION();
                         var integrationReadings = new IntegrationReadings();
                         saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
                         saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
@@ -435,6 +132,7 @@ namespace BL.Excel
                         saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
                         saveModel.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
                         saveModel.GIS_ID_PU = dataRow.Cell(13).Value == "" ? "" : Convert.ToString(dataRow.Cell(13).Value).Replace(" ", "");
+                        //saveModel.DIMENSION.Id = dataRow.Cell(14).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(14).Value);
                         if (dataRow.Cell(14).Value != "")
                         {
                             var str = dataRow.Cell(14).Value.ToString().Replace(",", ".");
@@ -444,6 +142,7 @@ namespace BL.Excel
                         {
                             saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(15).Value).Replace(".", ","));
                         }
+                        saveModel.DIMENSION.Id = dataRow.Cell(16).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(16).Value);
                         if (!counter.UpdatePU(saveModel, User))
                         {
                             saveModel.DESCRIPTION = $"Нет такого ПУ {saveModel.TypePU}";
@@ -486,6 +185,7 @@ namespace BL.Excel
                         var Procent = Math.Round((float)i / Count * 100, 0);
                         cacheApp.UpdateProgress(User, Procent.ToString());
                         SaveModelIPU saveModel = new SaveModelIPU();
+                        saveModel.DIMENSION = new BE.Counter.DIMENSION();
                         var integrationReadings = new IntegrationReadings();
                         saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
                         saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
@@ -499,15 +199,7 @@ namespace BL.Excel
                         saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
                         saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
                         saveModel.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
-                        //if (dataRow.Cell(12).Value != "")
-                        //{
-                        //    var str = dataRow.Cell(12).Value.ToString().Replace(",", ".");
-                        //    saveModel.CHECKPOINT_DATE = Convert.ToDateTime(Convert.ToString(dataRow.Cell(12).Value).Replace(".", ","));
-                        //}
-                        //if (dataRow.Cell(13).Value != "")
-                        //{
-                        //    saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(13).Value).Replace(".", ","));
-                        //}
+                        saveModel.DIMENSION.Id = dataRow.Cell(13).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(13).Value);
                         if (!counter.UpdateNewPU(saveModel, User))
                         {
                             saveModel.DESCRIPTION = $"Нет такого ПУ {saveModel.TypePU}";
@@ -615,6 +307,50 @@ namespace BL.Excel
             }
             return dt;
         }
+        public DataTable LoadExcelUpdatePersonalDataMainFio(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User, "0");
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons());
+            List<PersDataModel> PersNotAdded = new List<PersDataModel>();
+            var Count = nonEmptyDataRows.Count();
+            int i = 1;
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    i++;
+                    try
+                    {
+                        var Procent = Math.Round((float)i / Count * 100, 0);
+                        cacheApp.UpdateProgress(User, Procent.ToString());
+                        PersDataModel saveModel = new PersDataModel();
+
+                        saveModel.Lic = dataRow.Cell(1).Value == "" ? null : Convert.ToString(dataRow.Cell(1).Value).Trim();
+                        saveModel.LastName = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Trim();
+                        saveModel.FirstName = dataRow.Cell(3).Value == "" ? "" : Convert.ToString(dataRow.Cell(3).Value).Trim();
+                        saveModel.MiddleName = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Trim();
+                        personalData.SavePersonalDataMain(saveModel, User);
+                        personalData.SavePersonalDataFioLic(saveModel);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.InnerException != null)
+                            PersNotAdded.Add(new PersDataModel { Lic = $"Ошибка на {i} строке", Comment = ex.InnerException?.Message });
+                        else
+                            PersNotAdded.Add(new PersDataModel { Lic = $"Ошибка на {i} строке", Comment = ex.Message });
+                    }
+                }
+            }
+            DataTable dt = new DataTable("PersData");
+            dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Лицевой счет"),
+                                        new DataColumn("Примечание")});
+            foreach (var Items in PersNotAdded)
+            {
+                dt.Rows.Add(Items.Lic, Items.Comment);
+            }
+            return dt;
+        }
         public DataTable LoadExcelNewPersonalData(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
             cacheApp.AddProgress(User, "0");
@@ -673,8 +409,12 @@ namespace BL.Excel
                         saveModel.Inn = dataRow.Cell(22).Value == "" ? "" : Convert.ToString(dataRow.Cell(22).Value).Trim();
                         if (dataRow.Cell(23).Value != "")
                             saveModel.NumberOfPersons = Convert.ToInt32(Convert.ToString(dataRow.Cell(23).Value).Trim());
+                        else if (saveModel.Main == true && dataRow.Cell(23).Value != "")
+                            throw new Exception("Не указано колличество человек");
                         if (dataRow.Cell(24).Value != "")
                             saveModel.Square = Convert.ToDouble(Convert.ToString(dataRow.Cell(24).Value).Trim());
+                        else if(saveModel.Main == true && dataRow.Cell(24).Value != "")
+                            throw new Exception("Не указана площадь");
                         saveModel.SendingElectronicReceipt = dataRow.Cell(26).Value == "" ? "" : Convert.ToString(dataRow.Cell(26).Value).Trim();
                         personalData.AddPersData(saveModel, User);
                     }

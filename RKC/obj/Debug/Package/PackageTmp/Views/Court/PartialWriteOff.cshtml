@@ -34,7 +34,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Примечание:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWriteOff.Comment, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWriteOff.Comment })
+            @Html.TextAreaFor(m => m.CourtWriteOff.Comment, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWriteOff.Comment })
         </div>
     </div>
 </div>

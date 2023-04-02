@@ -278,6 +278,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonalDataController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Extensions\CustomModelBinders.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -509,6 +510,10 @@
     <Content Include="Views\Court\Serach.cshtml" />
     <Content Include="Views\Court\ShowAllCourtModal.cshtml" />
     <Content Include="Views\Court\SearchResult.cshtml" />
+    <Content Include="Views\Court\AdminPanel.cshtml" />
+    <Content Include="Views\Court\GetPartialDictionaryId.cshtml" />
+    <Content Include="Views\Court\PartialViewCourtWorkRequisites.cshtml" />
+    <Content Include="Views\Court\PartialViewGetAllFilesInCourt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

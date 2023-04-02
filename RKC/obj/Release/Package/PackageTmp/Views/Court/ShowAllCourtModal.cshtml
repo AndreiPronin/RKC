@@ -15,13 +15,16 @@
                     @foreach (var Item in Model)
                     {
                         <div class="col-sm-12 text-center">
-                            <a href="/Court/Index?Id=@Item.Id" target="_blank">Судебное дело @Item.CourtWork.NumberSP</a>
+                            <a href="/Court/Index?Id=@Item.Id" target="_blank">Судебное дело @Item.DateCreate</a>
                         </div>
                     }
                 </div>
             </div>
             <div class="modal-footer">
-                 <button type="button" id="AddCourt" style="float:left" class="btn btn-primary">Создать</button>
+                @if (User.IsInRole(BE.Roles.RolesEnums.CounterReader) || User.IsInRole(BE.Roles.RolesEnums.CourtWhriter) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                {
+                    <button type="button" id="AddCourt" style="float:left" class="btn btn-primary">Создать</button>
+                }
                 <button type="button" class="btn btn-secondary" id="Close" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
@@ -39,12 +42,10 @@
                     '<div class="form-group">' +
                     '<label>Лицевой счет</label>' +
                     '<input type="number" disabled placeholder="" id="FullLic" class="form-control FullLic" value="@ViewBag.FullLic" />' +
-                    '<label>Номер ИП</label>' +
-                    '<input type="" style="z-index:9999999999999999;"  placeholder="" id="NumberIP" class="form-control " />' +
                     '</form>',
                 buttons: {
                     '<input type="button" class="btn btn-primary" value="Создать" data-toggle="modal" data-target="#ShowLogResultModal" />': function () {
-                        window.open('/Court/CreateCourt?FullLic=' + $("#FullLic").val() + '&NumberIP=' + $("#NumberIP").val(), "_blank");
+                        window.open('/Court/CreateCourt?FullLic=' + $("#FullLic").val(), "_blank");
                     },
                     "Отмена": function () {
 

@@ -554,3 +554,8 @@ D:\Programing\RKC\RKC\bin\NLog.dll
 D:\Programing\RKC\RKC\bin\NLog.xml
 D:\Programing\RKC\RKC\bin\NaturalSort.dll
 D:\Programing\RKC\RKC\bin\NaturalSort.xml
+D:\Programing\RKC\RKC\bin\AutoMapper.dll
+D:\Programing\RKC\RKC\bin\AutoMapper.xml
+D:\Programing\RKC\RKC\bin\itextsharp.dll
+D:\Programing\RKC\RKC\bin\BouncyCastle.Crypto.dll
+D:\Programing\RKC\RKC\bin\itextsharp.xml

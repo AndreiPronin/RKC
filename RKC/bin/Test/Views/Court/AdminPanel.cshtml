@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "AdminPanel";
+}
+
+<h2>Панель Администратор</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Выберите справочник:</label>
+        <div class="col-sm-12">
+            <select id="Dictionary" class="form-control">
+                <option value="" selected disabled hidden>Справочник</option>
+                @foreach (var Item in ViewBag.Dic)
+                {
+                    <option value="@Item.Id">@Item.Name</option>
+                }
+            </select>
+        </div>
+        <label class="col-sm-12 col-form-label">Добавление справочника:</label>
+        <div class="col-sm-12">
+            <div class="input-group">
+                <input class="form-control" id="NewDic" value="" placeholder="Введите значение..." />
+                <span class="input-group-btn">
+                    <button id="AddNewDic" class="btn btn-success">Добавить</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Добавление к выбранному справочнику:</label>
+        <div class="col-sm-12">
+            <div class="input-group">
+                <input class="form-control" id="DicValue" value="" placeholder="Введите значение..." />
+                <span class="input-group-btn">
+                    <button id="AddDicValue" class="btn btn-success">Добавить</button>
+                </span>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-4">
+            <label class="col-sm-12 col-form-label">Значения справочника:</label>
+            <div class="col-sm-8">
+                <div id="resultSearchDic"></div>
+            </div>
+        </div>
+    </div>
+<script>
+    $(document).ready(function () {
+        $("#Dictionary").change(function (e) {
+            console.log($("#Dictionary").val());
+            $.ajax({
+                url: "/Court/GetPartialDictionaryId?Id=" + $("#Dictionary").val(),
+                success(data) {
+                    $("#resultSearchDic").empty();
+                    $("#resultSearchDic").append(data);
+                }
+            })
+        })
+        $("#AddDicValue").click(function (e) {
+            $.ajax({
+                url: "/Court/AddDicValue?Id=" + $("#Dictionary").val() + "&Value=" + $("#DicValue").val(),
+                success(data) {
+                    $.ajax({
+                        url: "/Court/GetPartialDictionaryId?Id=" + $("#Dictionary").val(),
+                        success(data) {
+                            $("#resultSearchDic").empty();
+                            $("#resultSearchDic").append(data);
+                        }
+                    })
+                }
+            })
+        })
+        $("#AddNewDic").click(function (e) {
+            $.ajax({
+                url: "/Court/AddNewDic?&Value=" + $("#NewDic").val(),
+                success(data) {
+                    alert("Успешно добавлено! Страница перезагрузится автоматически!");
+                    window.location.reload();
+                }
+            })
+        })
+    })
+</script>

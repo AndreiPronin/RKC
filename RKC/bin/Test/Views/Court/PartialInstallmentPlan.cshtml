@@ -4,7 +4,9 @@
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Дата  принятия заявления на  реструктуризацию (рассрочку):</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring, new { @type="Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring })
+            @Html.TextBoxFor(m => m.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring, new { @type="Date", @readonly = "readonly", @class = "form-control",
+           @Value = (Model.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring.HasValue ? Model.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
         </div>
         <label class="col-sm-12 col-form-label">Сумма Реструктуризации (рассрочки):</label>
         <div class="col-sm-8">

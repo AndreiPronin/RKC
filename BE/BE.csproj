@@ -52,6 +52,7 @@
     <Compile Include="Counter\SearchIPU_LICModel.cs" />
     <Compile Include="Court\ChangedValues.cs" />
     <Compile Include="Court\CourtBankruptcy.cs" />
+    <Compile Include="Court\CourtDataDocumentLoad.cs" />
     <Compile Include="Court\CourtDocumentScans.cs" />
     <Compile Include="Court\CourtExecutionFSSP.cs" />
     <Compile Include="Court\CourtExecutionInPF.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Court\CourtLitigationWork.cs" />
     <Compile Include="Court\CourtStateDuty.cs" />
     <Compile Include="Court\CourtWork.cs" />
+    <Compile Include="Court\CourtWorkRequisites.cs" />
     <Compile Include="Court\CourtWriteOff.cs" />
     <Compile Include="Court\SearchModel.cs" />
     <Compile Include="DPU\DpuDataDocumentLoad.cs" />

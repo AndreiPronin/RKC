@@ -99,6 +99,10 @@ namespace BE.Court
         /// Примечание
         /// </summary>
         public string Comment { get; set; }
+        /// <summary>
+        /// Дата создания
+        /// </summary>
+        public string DateCreate { get; set; }
         public virtual CourtWork CourtWork { get; set; }
         public ICollection<CourtDocumentScans> CourtDocumentScans { get; set; }
         public CourtExecutionFSSP CourtExecutionFSSP { get; set; }

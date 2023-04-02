@@ -11,15 +11,15 @@ namespace DB.Model.Court
     {
         [Key]
         public int Id { get; set; }
-        public int CourtDocumentScansId { get; set; }
+        public int CourtGeneralInformId { get; set; }
         /// <summary>
         /// Наименование документа
         /// </summary>
         public string CourtDocumentScansName { get; set; }
         /// <summary>
-        /// Дата документа
+        /// Путь для документа
         /// </summary>
-        public DateTime? DocumentDate { get; set; }
+        public string DocumentPath { get; set; }
         /// <summary>
         /// Дата загрузки документа
         /// </summary>

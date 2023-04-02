@@ -237,7 +237,7 @@ namespace RKC.Controllers
             }
         }
         [Authorize(Roles = RolesEnums.Admin)]
-        public async Task<ActionResult> UploadFilePU(HttpPostedFileBase file, string User, int TypeLoad)
+        public async Task<ActionResult> UploadFile(HttpPostedFileBase file, string User, int TypeLoad)
         {
             if (TypeLoad == 1)
             {
@@ -310,6 +310,19 @@ namespace RKC.Controllers
                 {
                     var workbook = new XLWorkbook(file.InputStream);
                     wb.Worksheets.Add( await _excel.MassClosePU(workbook, User, _cacheApp));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }
+            }
+            if (TypeLoad == 7)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(_excel.LoadExcelUpdatePersonalDataMainFio(workbook, User, _cacheApp));
                     using (MemoryStream stream = new MemoryStream())
                     {
                         wb.SaveAs(stream);
