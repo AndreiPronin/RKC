@@ -295,10 +295,13 @@ namespace BL.Services
                 }
                 _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel), User);
                 var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
-                foreach (var Items in ListPers)
+                if (PersData.Main == true)
                 {
-                    Items.Square = persDataModel.Square;
-                    Items.NumberOfPersons = persDataModel.NumberOfPersons;
+                    foreach (var Items in ListPers)
+                    {
+                        Items.Square = persDataModel.Square;
+                        Items.NumberOfPersons = persDataModel.NumberOfPersons;
+                    }
                 }
                 db.SaveChanges();
                 PersData.SendingElectronicReceipt = persDataModel.SendingElectronicReceipt;
@@ -315,7 +318,6 @@ namespace BL.Services
                 PersData.Lic = persDataModel.Lic;
                 PersData.Main = persDataModel.Main;
                 PersData.MiddleName = persDataModel.MiddleName;
-                PersData.NumberOfPersons = persDataModel.NumberOfPersons;
                 PersData.PassportDate = persDataModel.PassportDate;
                 PersData.PassportIssued = persDataModel.PassportIssued;
                 PersData.PassportNumber = persDataModel.PassportNumber;
@@ -323,7 +325,11 @@ namespace BL.Services
                 PersData.PlaceOfBirth = persDataModel.PlaceOfBirth;
                 PersData.RoomType = persDataModel.RoomType;
                 PersData.SnilsNumber = persDataModel.SnilsNumber;
-                PersData.Square = persDataModel.Square;
+                if (PersData.Main == true)
+                {
+                    PersData.Square = persDataModel.Square;
+                    PersData.NumberOfPersons = persDataModel.NumberOfPersons;
+                }
                 PersData.StateLic = persDataModel.StateLic;
                 PersData.Tel1 = persDataModel.Tel1;
                 PersData.Tel2 = persDataModel.Tel2;
@@ -404,7 +410,7 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var Main = db.PersData.Find(idPersData);
-                var AllPers = db.PersData.Where(x => x.Lic == Main.Lic).ToList();
+                var AllPers = db.PersData.Where(x => x.Lic == Main.Lic && x.IsDelete != true).ToList();
                 foreach(var Items in AllPers)
                 {
                     Items.Main = false;
