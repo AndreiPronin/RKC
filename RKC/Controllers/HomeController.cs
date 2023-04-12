@@ -9,12 +9,15 @@ using DB.Model;
 using DB.Query;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.OpenIdConnect;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using WordGenerator;
 using WordGenerator.Enums;
@@ -30,6 +33,7 @@ namespace RKC.Controllers
         }
         public ActionResult Index()
         {
+            var sss = User.Identity.IsAuthenticated;
             //_eBD.CreateEBDAll();
             return View();
         }
@@ -39,6 +43,23 @@ namespace RKC.Controllers
             ViewBag.Message = Message;
             return View();
         }
-        
+
+        public ActionResult Test()
+        {
+            var sss = User.Identity.IsAuthenticated;
+            var tt = User;
+            return Content("Test");
+        }
+        [Route("signin-oidc")]
+        public void SignIn()
+        {
+            if (!Request.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.Challenge(
+                    new AuthenticationProperties { RedirectUri = "/" },
+                    OpenIdConnectAuthenticationDefaults.AuthenticationType);
+            }
+        }
+
     }
 }

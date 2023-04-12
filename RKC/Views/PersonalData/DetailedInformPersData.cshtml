@@ -423,7 +423,6 @@ else
         setTimeout(Loader, 1000);
        
         $(".AddPersonalData").click(function (e) {
-
             var FULL_LIC = $(e.target).attr("name");
             $(".loader").removeClass("hidden");
             $.ajax({
@@ -517,7 +516,7 @@ else
                         SnilsNumber: $(this).parent().find('#SnilsNumber').val(),
                         Inn: $(this).parent().find('#Inn').val(),
                         NumberOfPersons: $(this).parent().find('#NumberOfPersons').val(),
-                        Square: $(this).parent().find('#Square').val(),
+                        Square: $(this).parent().find('#Square').val().replace(',','.'),
                         StateLic: $(this).parent().find('#StateLic').val(),
                     }
                 }),

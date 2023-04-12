@@ -56,43 +56,22 @@
     <Compile Include="DataBase\DbPayment.cs" />
     <Compile Include="DataBase\DbTPlus.cs" />
     <Compile Include="DataBase\DbLIC.cs" />
-    <Compile Include="DataBase\DBPersData.cs" />
     <Compile Include="Extention\DbLicExtention.cs" />
-    <Compile Include="Migrations\202303131323387_AddPasportDataCourt.cs" />
-    <Compile Include="Migrations\202303131323387_AddPasportDataCourt.designer.cs">
-      <DependentUpon>202303131323387_AddPasportDataCourt.cs</DependentUpon>
+    <Compile Include="Migrations\202304061420494_init.cs" />
+    <Compile Include="Migrations\202304061420494_init.designer.cs">
+      <DependentUpon>202304061420494_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202303150852389_editCourtWork.cs" />
-    <Compile Include="Migrations\202303150852389_editCourtWork.designer.cs">
-      <DependentUpon>202303150852389_editCourtWork.cs</DependentUpon>
+    <Compile Include="Migrations\202304120813481_AddRequsitsSumGp.cs" />
+    <Compile Include="Migrations\202304120813481_AddRequsitsSumGp.designer.cs">
+      <DependentUpon>202304120813481_AddRequsitsSumGp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202303150927400_editCourtWork2.cs" />
-    <Compile Include="Migrations\202303150927400_editCourtWork2.designer.cs">
-      <DependentUpon>202303150927400_editCourtWork2.cs</DependentUpon>
+    <Compile Include="Migrations\202304121142220_AddColumntAdressCourt.cs" />
+    <Compile Include="Migrations\202304121142220_AddColumntAdressCourt.designer.cs">
+      <DependentUpon>202304121142220_AddColumntAdressCourt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202303151343178_EditCourtLitigationWork.cs" />
-    <Compile Include="Migrations\202303151343178_EditCourtLitigationWork.designer.cs">
-      <DependentUpon>202303151343178_EditCourtLitigationWork.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303151351035_EditCourtLitigationWork2.cs" />
-    <Compile Include="Migrations\202303151351035_EditCourtLitigationWork2.designer.cs">
-      <DependentUpon>202303151351035_EditCourtLitigationWork2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303151627447_EditCourt2.cs" />
-    <Compile Include="Migrations\202303151627447_EditCourt2.designer.cs">
-      <DependentUpon>202303151627447_EditCourt2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303160757173_AddDateCreateCourt.cs" />
-    <Compile Include="Migrations\202303160757173_AddDateCreateCourt.designer.cs">
-      <DependentUpon>202303160757173_AddDateCreateCourt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303231750052_addRequsits.cs" />
-    <Compile Include="Migrations\202303231750052_addRequsits.designer.cs">
-      <DependentUpon>202303231750052_addRequsits.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303280955259_ScanDocumentCourt.cs" />
-    <Compile Include="Migrations\202303280955259_ScanDocumentCourt.designer.cs">
-      <DependentUpon>202303280955259_ScanDocumentCourt.cs</DependentUpon>
+    <Compile Include="Migrations\202304121155032_deleteColumnDateIo.cs" />
+    <Compile Include="Migrations\202304121155032_deleteColumnDateIo.designer.cs">
+      <DependentUpon>202304121155032_deleteColumnDateIo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ALL_LICS.cs" />
@@ -140,32 +119,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202303131323387_AddPasportDataCourt.resx">
-      <DependentUpon>202303131323387_AddPasportDataCourt.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202304061420494_init.resx">
+      <DependentUpon>202304061420494_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303150852389_editCourtWork.resx">
-      <DependentUpon>202303150852389_editCourtWork.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202304120813481_AddRequsitsSumGp.resx">
+      <DependentUpon>202304120813481_AddRequsitsSumGp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303150927400_editCourtWork2.resx">
-      <DependentUpon>202303150927400_editCourtWork2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202304121142220_AddColumntAdressCourt.resx">
+      <DependentUpon>202304121142220_AddColumntAdressCourt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303151343178_EditCourtLitigationWork.resx">
-      <DependentUpon>202303151343178_EditCourtLitigationWork.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303151351035_EditCourtLitigationWork2.resx">
-      <DependentUpon>202303151351035_EditCourtLitigationWork2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303151627447_EditCourt2.resx">
-      <DependentUpon>202303151627447_EditCourt2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303160757173_AddDateCreateCourt.resx">
-      <DependentUpon>202303160757173_AddDateCreateCourt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303231750052_addRequsits.resx">
-      <DependentUpon>202303231750052_addRequsits.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303280955259_ScanDocumentCourt.resx">
-      <DependentUpon>202303280955259_ScanDocumentCourt.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202304121155032_deleteColumnDateIo.resx">
+      <DependentUpon>202304121155032_deleteColumnDateIo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

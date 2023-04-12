@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+
+
 <script>
     function callErrorShowConfirm(message) {
         $.confirm({
@@ -73,45 +75,46 @@
     <div id="mySidenav" class="sidenav">
         <ul class="nav nav-tabs" id="myTab">
             @*<li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#GeneralInformation">Главная</a>
-                </li>*@
-            <li class="nav-item active">
-                <a class="nav-link active" data-toggle="tab" id="GeneralInformationButton" href="#GeneralInformation">Общая информация</a>
+            <a class="nav-link" data-toggle="tab" href="#GeneralInformation">Главная</a>
+        </li>*@
+            <li class="nav-item active" id="GeneralInformationButton">
+                <a class="nav-link" data-toggle="tab"  href="#GeneralInformation">Общая информация</a>
             </li>
-            <li class="nav-item" id="CourtWorkButton" >
-                <a class="nav-link" data-toggle="tab" href="#CourtWork">Судебная работа</a>
+            <li class="nav-item" id="CourtWorkButton">
+                <a class="nav-link" data-toggle="tab" data-bs-target="#profile"  href="#CourtWork">Судебная работа</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="ExecutionInPFButton">
                 <a class="nav-link" data-toggle="tab" href="#ExecutionInPF">Исполнение в ПФ</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="ExecutionFSSPButton">
                 <a class="nav-link" data-toggle="tab" href="#ExecutionFSSP">Исполнение в ФССП</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="LitigationWorkButton">
                 <a class="nav-link" data-toggle="tab" href="#LitigationWork">Исковая работа</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="InstallmentPlanButton">
                 <a class="nav-link" data-toggle="tab" href="#InstallmentPlan">Рассрочка</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="BankruptcyButton">
                 <a class="nav-link" data-toggle="tab" href="#Bankruptcy">Банкротство</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="WriteOffButton">
                 <a class="nav-link" data-toggle="tab" href="#WriteOff">Списание</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="StateDutyButton">
                 <a class="nav-link" data-toggle="tab" href="#StateDuty">Госпошлина</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="DocumentScansButton">
                 <a class="nav-link" data-toggle="tab" href="#DocumentScans">Сканы документов</a>
             </li>
         </ul>
     </div>
 </div>
 <div class="col-md-11">
-    <h2 class="text-center">Ф.И.О. должника @Model.FioDuty Судебный приказ № @Model.CourtWork.NumberSP </h2>
+    <h2 class="text-center">@Model.FioDuty СП № @Model.CourtWork.NumberSP </h2>
     <div id="ResultSearchCourt"></div>
-    @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post, new { onsubmit = "this.querySelectorAll('input').forEach(i => i.disabled = false)" }))
+    @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post,
+    new { onsubmit = "this.querySelectorAll('input').forEach(i => i.disabled = false);this.querySelectorAll('textarea').forEach(i => i.disabled = false)" }))
     {
         <input type="submit" class="btn hidden btn-success" id="Save" value="Coхранить" />
         <input type="button" class="btn btn-success" id="EditData" value="Редактировать" />
@@ -152,6 +155,7 @@
 
     }
 </div>
+
 <script>
     $(document).ready(function (e) {
         $("#PasportNumber").mask("99999?9");
@@ -165,24 +169,61 @@
                 return false;
             }
         });
-        //$('#CourtWorkButton').click();
-        //$('a[data-toggle="tab"]').on('click', function (e) {
-        //    console.log("set" + $(e.target).attr('href'));
-        //    localStorage.setItem('activeTab', $(e.target).attr('href'));
-        //});
-        //var activeTab = localStorage.getItem('activeTab');
-        //if (activeTab) {
-            
-        //    var index = $('#myTab a[href="' + activeTab + '"]').parent().index();
-        //    console.log(index);
-        //    //$("#myTab").tabs("option", "active", index);
-        //}
+        $("input").on('click keyup change focus', function (e) {
+            let equalDate = @DateTimeOffset.Now.ToUnixTimeSeconds();
+            console.log($(this).attr('NotMaxDAte'))
+            if (($(this).attr('type').toLowerCase() == "date" || $(this).attr('type').toLowerCase() == "month") && $(this).attr('NotMaxDAte') != "true") {
+                if (Date.parse($(this).val())) {
+                    $("#Save").removeClass("hidden");
+                    removeErrorText($(this));
+                    removeError($(this));
+                    removeError($(this));
+                    if ((Date.parse($(this).val()) * 0.001) > equalDate) {
+                        $("#Save").addClass("hidden");
+                        callErrorText($(this), "Максимальная дата @DateTime.Now.Date.ToString("dd.MM.yyyy")");
+                        callError($(this));
+                        callError($(this))
+                    }
+                }
+            }
+
+        })
+        ///Clear
+        $(".nav-tabs li").each(function () {
+            $(this).removeClass("active");
+        });
+        $(".tab-content div").each(function () {
+            $(this).removeClass("active in");
+        });
+        $('a[data-toggle="tab"]').on('click', function (e) {
+            console.log($(e.target).attr('href'));
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab) {
+            $(".nav-tabs li").each(function () {
+                $(this).removeClass("active");
+            });
+            $(".tab-content div").each(function () {
+                $(this).removeClass("active in");
+            });
+            $(activeTab + 'Button').addClass("active");
+            $(activeTab).addClass("active in");
+        } else {
+            $("#GeneralInformationButton").addClass("active");
+            $("#GeneralInformation").addClass("active in");
+        }
+
         $("#EditData").click(function (e) {
             $("#Save").removeClass("hidden");
             $("#Cancel").removeClass("hidden");
             $("#EditData").addClass("hidden");
+            $("#AddCourtWorkRequisites").removeClass("hidden");
             $('div input').each(function () {
                 $(this).prop('readonly', false);;
+            });
+            $('.removeCourtWorkRequisites').each(function () {
+                $(this).removeClass("hidden");
             });
             $('div textarea').each(function () {
                 $(this).prop('readonly', false);;
@@ -263,6 +304,8 @@
             },
             minLength: 0,
         }).focus(function () {
+            val = $(this).val();
+            atr = $(this).attr("dicId");
             $(this).autocomplete("search");
         })
         $('.DictionaryAutoComplete').keyup(function () {

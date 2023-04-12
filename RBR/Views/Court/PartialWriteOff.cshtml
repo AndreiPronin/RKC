@@ -1,0 +1,41 @@
+﻿@model DB.Model.Court.CourtGeneralInformation
+<h2>Списание</h2>
+<div class="row">
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Документы подготовлены к списанию (да/нет):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.DocumentsPreparedWriteOff, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWriteOff.DocumentsPreparedWriteOff })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма списания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.SumWriteOff, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWriteOff.SumWriteOff })
+        </div>
+        <label class="col-sm-12 col-form-label">Начальный период списания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.DateWriteOffBegin, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtWriteOff.DateWriteOffBegin.HasValue ? Model.CourtWriteOff.DateWriteOffBegin.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Конечный период списания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.DateWriteOffEnd, new { @type = "Date", @readonly = "readonly", @class = "form-control",
+           @Value = (Model.CourtWriteOff.DateWriteOffEnd.HasValue ? Model.CourtWriteOff.DateWriteOffEnd.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Статус списания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.WriteOffStatus, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWriteOff.WriteOffStatus })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата списания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.DateWriteOff, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+           @Value = (Model.CourtWriteOff.DateWriteOff.HasValue ? Model.CourtWriteOff.DateWriteOff.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Примечание:</label>
+        <div class="col-sm-8">
+            @Html.TextAreaFor(m => m.CourtWriteOff.Comment, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWriteOff.Comment })
+        </div>
+    </div>
+</div>
+

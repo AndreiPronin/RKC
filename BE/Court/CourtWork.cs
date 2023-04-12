@@ -17,11 +17,16 @@ namespace BE.Court
         public double? RequisitesSumGP { get; set; }
         public DateTime? RequisitesDateGP { get; set; }
         public string RequisitesNumberGP { get; set; }
+        public double? AmountOverpaidGP { get; set; }
         public DateTime? PeriodDebtBegin { get; set; }
         public DateTime? PeriodDebtEnd { get; set; }
         public string FioSendCourt { get; set; }
         public string SubmitApplicationCourt { get; set; }
         public string NameCourt { get; set; }
+        /// <summary>
+        /// Адресс суда
+        /// </summary>
+        public string AddressCourt { get; set; }
         public DateTime? DateReceptionCourt { get; set; }
         public DateTime? DateReturnCourtSP { get; set; }
         public string ReasonReturningApplication { get; set; }

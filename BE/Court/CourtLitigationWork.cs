@@ -47,6 +47,10 @@ namespace BE.Court
         /// </summary>
         public string NameCourt { get; set; }
         /// <summary>
+        /// Адресс суда
+        /// </summary>
+        public string AddressCourt { get; set; }
+        /// <summary>
         /// ФИО сотрудника (направившего дело в суд)
         /// </summary>
         public string FioSendCourt { get; set; }

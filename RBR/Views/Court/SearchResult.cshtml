@@ -1,0 +1,53 @@
+﻿@model IEnumerable<DB.Model.Court.CourtGeneralInformation>
+@using BE.Roles;
+@{int i = 1;}
+<p>@ViewBag.Count</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Номер лицевого счета</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">ФИО</th>
+            <th scope="col">Номер ИП</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Items in Model)
+        {
+            <tr>
+                <th scope="row">@i</th>
+                <td>@Items.Lic</td>
+                <td>
+                    @{if (Items.Street?.Length > 0)
+                        { <span>улица @Items.Street</span>;
+                        } }
+                    @{if (Items.Home?.Length > 0)
+                        { <span>дом @Items.Home</span>;
+                        } }
+                    @{if (Items.Flat?.Length > 0)
+                        { <span>кв. @Items.Flat</span>;
+                        } }
+                </td>
+                <td>@Items.FioDuty</td>
+                    @if (Items.CourtWork!= null)
+                    {
+                        <td>@Items.CourtExecutionFSSP.NumberIP</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        <a href="/Court/Index?Id=@Items.Id" target="_blank" class="btn btn-primary">Показать подробную информацию</a>
+                        @if (User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <a href="/Court/DeleteCourt?Id=@Items.Id" class="btn btn-danger">Удалить</a>
+                    }
+                </td>
+            </tr>
+            i++;
+            
+        }
+    </tbody>
+</table>

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.OpenIdConnect;
 using RKC.Models;
 
 namespace RKC.Controllers
@@ -63,6 +64,15 @@ namespace RKC.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
+        }
+        public void Logins()
+        {
+            if (!Request.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.Challenge();
+                return;
+            }
+            Response.Redirect("/");
         }
 
         //

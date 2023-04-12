@@ -14,10 +14,6 @@ namespace BE.Court
         /// </summary>
         public string FioSendSpInIo { get; set; }
         /// <summary>
-        /// Дата передачи СП в ИО
-        /// </summary>
-        public DateTime? DateSendSpInIo { set; get; }
-        /// <summary>
         /// Исполнительный орган (ФССП, ПФ, Банк)
         /// </summary>
         public string ExecutiveAgency { get; set; }

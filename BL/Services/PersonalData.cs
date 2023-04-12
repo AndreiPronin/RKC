@@ -30,7 +30,7 @@ namespace BL.Services
         List<LogsPersData> GetHistory(int idPersData);
         void SavePersonalData(PersDataModel persDataModelView, string User);
         void SavePersonalDataMain(PersDataModel persDataModel, string User);
-        void MakeToMain(int idPersData);
+        void MakeToMain(int idPersData, string User);
         void AddPersData(PersDataModel persDataModel, string User);
         void DeletePers(int IdPersData, string User);
         string GetRoomTypeMain(string Full_Lic);
@@ -405,11 +405,12 @@ namespace BL.Services
                 dbAllLic.SaveChanges();
             }
         }
-        public void MakeToMain (int idPersData)
+        public void MakeToMain (int idPersData, string User)
         {
             using (var db = new ApplicationDbContext())
             {
                 var Main = db.PersData.Find(idPersData);
+                _ilogger.ActionUsersPersData(idPersData, "Сделал основным", User);
                 var AllPers = db.PersData.Where(x => x.Lic == Main.Lic && x.IsDelete != true).ToList();
                 foreach(var Items in AllPers)
                 {

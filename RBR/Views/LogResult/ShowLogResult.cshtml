@@ -1,0 +1,43 @@
+﻿<div class="modal fade" id="ShowLogResultModal" tabindex="-1" role="dialog" aria-labelledby="ShowLogResultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Лог по лицевому счету @ViewBag.Objects</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p id="LogResult"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var Int = 0;
+        var intervalID = setInterval(function () {
+            Int++;
+            $.ajax({
+                url: '/LogResult/GetLog?Name=@ViewBag.Objects',
+                success: function (data) {
+                    i = data;
+                },
+                error: function (data) {
+                    i = "Что то пошло не так. Обратитесь к администратору!";
+                }
+            });
+            console.log(Int);
+            $("#LogResult").text(i);
+            if (Int >= 30) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
+        }, 1000);
+    })
+</script>

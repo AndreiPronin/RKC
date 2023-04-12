@@ -226,7 +226,7 @@ namespace RKC.Controllers
         [Authorize(Roles = "PersWriter,Admin")]
         public ActionResult EditMain(int idPersData)
         {
-            _personalData.MakeToMain(idPersData);
+            _personalData.MakeToMain(idPersData, User.Identity.GetFIOFull());
             return null;
         }
         [Authorize(Roles = "PersWriter,Admin")]

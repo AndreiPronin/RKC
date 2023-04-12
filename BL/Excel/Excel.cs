@@ -556,23 +556,31 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User, "Получаю данные из бд");
             DataTable dt = new DataTable("Counter");
-            dt.Columns.AddRange(new DataColumn[17] { new DataColumn("КОД ДОМА"),
+            dt.Columns.AddRange(new DataColumn[21] { new DataColumn("КОД ДОМА"),
                                         new DataColumn("   УЛИЦА   "),
                                         new DataColumn("  ДОМ  "),
                                         new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
-            ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   "),new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
+            ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ДАТА АКТА ВВОДА В ЭКСПЛУАТАЦИЮ   ")
+            ,new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   ")
+            ,new DataColumn("   БРЕНД ПУ   ")
+            ,new DataColumn("   МОДЕЛЬ ПУ   ")
+            ,new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
             ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   № пломбы 1   "),new DataColumn("   Тип пломбы1   ")
             ,new DataColumn("   № пломбы 2   "),new DataColumn("   Тип пломбы 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
+            ,new DataColumn("   РАЗМЕРНОСТЬ   ")
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
             var DB = new DbTPlus();
-            var Counters = DB.Database.SqlQuery<vw_TplusIPU_GVS>("SELECT * FROM [T+].[dbo].[view_TplusIPU_GVS]").ToList();
+            var Counters = DB.Database.SqlQuery<view_TplusIPU_GVS>("SELECT * FROM [T+].[dbo].[view_TplusIPU_GVS]").ToList();
             cacheApp.Update(User, "Формирую Excel");
             Thread.Sleep(10000);
             foreach (var Items in Counters)
             {
                 dt.Rows.Add(Items.CODE_HOUSE, Items.STREET, Items.HOME, Items.FLAT,
-                    Items.FULL_LIC, Items.FIO, Items.TYPE_PU, Items.FACTORY_NUMBER_PU, Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
-                    Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.END_READINGS, Items.NOW_READINGS);
+                    Items.FULL_LIC, Items.FIO, Items.TYPE_PU, Items.INSTALLATIONDATE, Items.FACTORY_NUMBER_PU,
+                    Items.BRAND_PU,
+                    Items.MODEL_PU, 
+                    Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
+                    Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.DIMENSION_NAME, Items.END_READINGS, Items.NOW_READINGS);
             }
             cacheApp.Update(User, "Скачиваю Excel");
             Thread.Sleep(10000);
@@ -582,22 +590,30 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User, "Получаю данные из бд");
             DataTable dt = new DataTable("Counter");
-            dt.Columns.AddRange(new DataColumn[17] { new DataColumn("КОД ДОМА"),
+            dt.Columns.AddRange(new DataColumn[21] { new DataColumn("КОД ДОМА"),
                                         new DataColumn("   УЛИЦА   "),
                                         new DataColumn("  ДОМ  "),
                                         new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
-            ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   "),new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
-            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   ПЛОМБА   "),new DataColumn("   ТИП ПЛОМБА   ")
-            ,new DataColumn("   ПЛОМБА 2   "),new DataColumn("   ТИП ПЛОМБА 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
+            ,new DataColumn("   ФИО   ") ,new DataColumn("   ПРИБОР УЧЕТА   "),new DataColumn("   ДАТА АКТА ВВОДА В ЭКСПЛУАТАЦИЮ   ")
+            ,new DataColumn("   ЗАВОДСКОЙ НОМЕР ИПУ   ")
+            ,new DataColumn("   БРЕНД ПУ   ")
+            ,new DataColumn("   МОДЕЛЬ ПУ   ")
+            ,new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
+            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   № пломбы 1   "),new DataColumn("   Тип пломбы1   ")
+            ,new DataColumn("   № пломбы 2   "),new DataColumn("   Тип пломбы 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
+            ,new DataColumn("   РАЗМЕРНОСТЬ   ")
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
             var DB = new DbTPlus();
-            var Counters = DB.Database.SqlQuery<vw_TplusIPU_OTP>("select * from [T+].[dbo].[view_TplusIPU_OTP]").ToList();
+            var Counters = DB.Database.SqlQuery<view_TplusIPU_OTP>("select * from [T+].[dbo].[view_TplusIPU_OTP]").ToList();
             cacheApp.Update(User, "Формирую Excel");
             foreach (var Items in Counters)
             {
                 dt.Rows.Add(Items.CODE_HOUSE, Items.STREET, Items.HOME, Items.FLAT,
-                    Items.FULL_LIC, Items.FIO, Items.TYPE_PU, Items.FACTORY_NUMBER_PU, Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
-                    Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.END_READINGS, Items.NOW_READINGS);
+                    Items.FULL_LIC, Items.FIO, Items.TYPE_PU, Items.INSTALLATIONDATE, Items.FACTORY_NUMBER_PU,
+                    Items.BRAND_PU,
+                    Items.MODEL_PU,
+                    Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
+                    Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.DIMENSION_NAME, Items.END_READINGS, Items.NOW_READINGS);
             }
             cacheApp.Update(User, "Скачиваю Excel");
 

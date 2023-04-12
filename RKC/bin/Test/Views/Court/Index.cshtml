@@ -55,6 +55,7 @@
     .container {
         width: 95% !important;
     }
+
     textarea {
         width: 300px !important;
         height: 150px !important;
@@ -70,15 +71,15 @@
 
 <div class="col-md-1">
     <div id="mySidenav" class="sidenav">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" id="myTab">
             @*<li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#GeneralInformation">Главная</a>
                 </li>*@
             <li class="nav-item active">
-                <a class="nav-link active" data-toggle="tab" id="#GeneralInformationButton" href="#GeneralInformation">Общая информация</a>
+                <a class="nav-link active" data-toggle="tab" id="GeneralInformationButton" href="#GeneralInformation">Общая информация</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" id="SearchButton" href="#CourtWork">Судебная работа</a>
+            <li class="nav-item" id="CourtWorkButton" >
+                <a class="nav-link" data-toggle="tab" href="#CourtWork">Судебная работа</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#ExecutionInPF">Исполнение в ПФ</a>
@@ -110,7 +111,8 @@
 <div class="col-md-11">
     <h2 class="text-center">Ф.И.О. должника @Model.FioDuty Судебный приказ № @Model.CourtWork.NumberSP </h2>
     <div id="ResultSearchCourt"></div>
-    @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post, new { onsubmit = "this.querySelectorAll('input').forEach(i => i.disabled = false)" }))
+    @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post, 
+        new { onsubmit = "this.querySelectorAll('input').forEach(i => i.disabled = false);this.querySelectorAll('textarea').forEach(i => i.disabled = false)" }))
     {
         <input type="submit" class="btn hidden btn-success" id="Save" value="Coхранить" />
         <input type="button" class="btn btn-success" id="EditData" value="Редактировать" />
@@ -164,7 +166,18 @@
                 return false;
             }
         });
-        $('#GeneralInformationButton').click();
+        //$('#CourtWorkButton').click();
+        //$('a[data-toggle="tab"]').on('click', function (e) {
+        //    console.log("set" + $(e.target).attr('href'));
+        //    localStorage.setItem('activeTab', $(e.target).attr('href'));
+        //});
+        //var activeTab = localStorage.getItem('activeTab');
+        //if (activeTab) {
+            
+        //    var index = $('#myTab a[href="' + activeTab + '"]').parent().index();
+        //    console.log(index);
+        //    //$("#myTab").tabs("option", "active", index);
+        //}
         $("#EditData").click(function (e) {
             $("#Save").removeClass("hidden");
             $("#Cancel").removeClass("hidden");
@@ -245,12 +258,14 @@
                             response($.map(data, function (item) {
                                 return { label: item, value: item };
                             }));
-                        } 
+                        }
                     },
                 });
             },
             minLength: 0,
         }).focus(function () {
+            val = $(this).val();
+            atr = $(this).attr("dicId");
             $(this).autocomplete("search");
         })
         $('.DictionaryAutoComplete').keyup(function () {

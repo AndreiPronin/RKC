@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DB.Model.DPUSummaryHouses>
+<style>
+    .fontWeight tr th {
+        font-weight: 100;
+    }
+</style>
+<table class="table table-bordered">
+    <thead>
+        <tr style="background-color:white !important">
+            <th scope="col">cadr</th>
+            <th scope="col">улица</th>
+            <th scope="col">дом</th>
+            <th scope="col">Общая стоимость ОДПУ</th>
+            <th scope="col">Общая стоимость ОДПУ для жилых помещений</th>
+            <th scope="col">Общая стоимость ОДПУ для нежилых помещений</th>
+            <th scope="col">Общая площадь МКД</th>
+            <th scope="col">Общая площадь жилых помещений МКД</th>
+            <th scope="col">Общая площадь нежилых помещений МКД</th>
+            <th scope="col">Дата передачи в РБР</th>
+            <th scope="col">Период выставления</th>
+        </tr>
+    </thead>
+    <tbody class="fontWeight" >
+        @foreach (var Item in Model)
+        {
+            <tr style="background-color:white !important">
+                <th>@Item.Cadr</th>
+                <th>@Item.Street</th>
+                <th>@Item.Home</th>
+                <th>@Item.TotalCostODPU</th>
+                <th>@Item.TotalCostOdpuResidentialPremises</th>
+                <th>@Item.TotalCostOdpuNonResidentialPremises</th>
+                <th>@Item.TotalAreaMKD</th>
+                <th>@Item.TotalAreaMKDResidentialPremises</th>
+                <th>@Item.TotalAreaMKDNonResidentialPremises</th>
+                <th>@Item.DateTransferRBR.Value.ToString("dd.MM.yyyy")</th>
+                <th>@Item.PeriodExhibit.Value.ToString("dd.MM.yyyy")</th>
+            </tr>
+        }
+        
+
+    </tbody>
+</table>
+

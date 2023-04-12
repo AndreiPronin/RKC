@@ -1,0 +1,61 @@
+﻿@model IEnumerable<DB.Model.Court.CourtGeneralInformation>
+<div class="modal fade" id="ShowAllCourtModal" tabindex="-1" role="dialog" aria-labelledby="ShowAllCourtLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Судебные дело по лицевому счету @ViewBag.FullLic</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body text-center">
+                <label>Количество судебных дел @Model.Count()</label>
+                <div class="row text-center">
+                    @foreach (var Item in Model)
+                    {
+                        <div class="col-sm-12 text-center">
+                            <a href="/Court/Index?Id=@Item.Id" target="_blank">Судебное дело @Item.DateCreate</a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                @if (User.IsInRole(BE.Roles.RolesEnums.CounterReader) || User.IsInRole(BE.Roles.RolesEnums.CourtWhriter) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                {
+                    <button type="button" id="AddCourt" style="float:left" class="btn btn-primary">Создать</button>
+                }
+                <button type="button" class="btn btn-secondary" id="Close" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function (e) {
+        $(".loader").addClass("hidden");
+        $("#AddCourt").click(function (e) {
+            $("#Close").click();
+            $.confirm({
+                title: 'Создание судебного дела',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="form-group">' +
+                    '<label>Лицевой счет</label>' +
+                    '<input type="number" disabled placeholder="" id="FullLic" class="form-control FullLic" value="@ViewBag.FullLic" />' +
+                    '</form>',
+                buttons: {
+                    '<input type="button" class="btn btn-primary" value="Создать" data-toggle="modal" data-target="#ShowLogResultModal" />': function () {
+                        window.open('/Court/CreateCourt?FullLic=' + $("#FullLic").val(), "_blank");
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+
+        });
+    });
+</script>
+
+
+

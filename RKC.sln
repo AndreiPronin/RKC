@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordGenerator", "WordGenera
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RKC_TEST", "RKC_TEST\RKC_TEST.csproj", "{6D0A0C18-101C-4816-8052-ECAD3BC826A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excels", "ExcelAddIns\Excels.csproj", "{C20C939E-FF43-45FA-8A2B-98FF6E1A082A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,12 +55,17 @@ Global
 		{6D0A0C18-101C-4816-8052-ECAD3BC826A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D0A0C18-101C-4816-8052-ECAD3BC826A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D0A0C18-101C-4816-8052-ECAD3BC826A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C20C939E-FF43-45FA-8A2B-98FF6E1A082A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C20C939E-FF43-45FA-8A2B-98FF6E1A082A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C20C939E-FF43-45FA-8A2B-98FF6E1A082A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C20C939E-FF43-45FA-8A2B-98FF6E1A082A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{53AED92A-CB55-492C-B155-1A8F15EEB01A} = {D4CDA000-5AE9-453C-B435-5BDDFB4ED0B5}
+		{C20C939E-FF43-45FA-8A2B-98FF6E1A082A} = {D4CDA000-5AE9-453C-B435-5BDDFB4ED0B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58A82ABA-CE7C-4C7F-894B-CC3ADC6F372F}

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "View";
+}
+
+<h2 class="text-center" style="color:red;" >@ViewBag.Message</h2>
+<h1 class="text-center">Через <span class="seconds">5</span> секунд страница закроется </h1>
+<script>
+    $(document).ready(function () {
+        var _Seconds = $('.seconds').text(),
+            int;
+        int = setInterval(function () {
+            if (_Seconds > 0) {
+                _Seconds--;
+                $('.seconds').text(_Seconds); 
+            } else {
+                clearInterval(int); 
+                window.close();
+            }
+        }, 1000);
+        
+
+    })
+</script>
+
