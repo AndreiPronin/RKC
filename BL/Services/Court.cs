@@ -26,7 +26,7 @@ namespace BL.Services
         Task<CourtGeneralInformation> DetailInfroms(int Id);
         Task<List<CourtGeneralInformation>> Serach(SearchModel searchModel);
         Task<int> CreateCourt(string FullLic, string NumberIP);
-        Task<int> SaveCourt(BE.Court.CourtGeneralInformation courtGeneralInformation);
+        Task<int> SaveCourt(BE.Court.CourtGeneralInformation courtGeneralInformation, string User);
         Task<List<CourtGeneralInformation>> GetAllCourtFullLic(string FullLic);
         Task AddCourtWorkRequisites (BE.Court.CourtWorkRequisites courtWorkRequisites);
         Task RemoveCourtWorkRequisites(int id);
@@ -40,9 +40,13 @@ namespace BL.Services
     public class Court : ICourt
     {
         private readonly IPersonalData _personalData;
-        public Court(IPersonalData personalData)
+        private readonly Ilogger _ilogger;
+        private readonly IGeneratorDescriptons _generatorDescriptons;
+        public Court(IPersonalData personalData, Ilogger ilogger, IGeneratorDescriptons generatorDescriptons)
         {
             _personalData = personalData;
+            _ilogger = ilogger;
+            _generatorDescriptons = generatorDescriptons;
         }
         public async Task<CourtGeneralInformation> DetailInfroms(int Id)
         {
@@ -61,7 +65,7 @@ namespace BL.Services
                 return Result;
             }
         }
-        public async Task<int> SaveCourt(BE.Court.CourtGeneralInformation courtGeneralInformation)
+        public async Task<int> SaveCourt(BE.Court.CourtGeneralInformation courtGeneralInformation, string User)
         {
             using (var dbApp = new ApplicationDbContext())
             {
@@ -86,6 +90,8 @@ namespace BL.Services
                     cfg.CreateMap<BE.Court.CourtExecutionInPF, DB.Model.Court.CourtExecutionInPF>().BeforeMap((s, d) => s.CourtGeneralInformationId = d.CourtGeneralInformationId);
                     cfg.CreateMap<BE.Court.CourtExecutionFSSP, DB.Model.Court.CourtExecutionFSSP>().ForMember(x => x.CourtGeneralInformationId, opt => opt.Ignore());
                 });
+                _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id,
+                    _generatorDescriptons.Generate(courtGeneralInformation,courtGeneralInformationDb, User));
                 var mapper = new Mapper(config);
                 courtGeneralInformationDb = mapper.Map<BE.Court.CourtGeneralInformation, DB.Model.Court.CourtGeneralInformation>(courtGeneralInformation);
                 courtGeneralInformationDb.CourtBankruptcy.CourtGeneralInformationId = courtGeneralInformation.Id;

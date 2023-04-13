@@ -16,6 +16,5 @@ namespace BE.Court
         public string NumberSp { get; set; }
         public string NumberIl { get; set; }
         public string NumberIp { get; set; }
-
     }
 }

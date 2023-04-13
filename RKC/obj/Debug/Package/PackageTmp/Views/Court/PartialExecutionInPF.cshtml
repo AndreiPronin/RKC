@@ -17,7 +17,7 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionInPF.FioSendSpInIo, new { @readonly = "readonly", @dicId = "20", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionInPF.FioSendSpInIo })
         </div>
-        <label class="col-sm-12 col-form-label">Дата передачи СП в ИО:</label>
+        @*<label class="col-sm-12 col-form-label">Дата передачи СП в ИО:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionInPF.DateSendSpInIo, new
             {
@@ -26,14 +26,14 @@
                 @class = "form-control",
            @Value = (Model.CourtExecutionInPF.DateSendSpInIo.HasValue ? Model.CourtExecutionInPF.DateSendSpInIo.Value.ToString("yyyy-MM-dd") : string.Empty)
             })
-        </div>
+        </div>*@
         <label class="col-sm-12 col-form-label">Исполнительный орган (ФССП, ПФ, Банк):</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionInPF.ExecutiveAgency, new { @readonly = "readonly", @dicId = "3", @class = "form-control DictionaryAutoCompletePf", @Value = Model.CourtExecutionInPF.ExecutiveAgency })
         </div>
         <label class="col-sm-12 col-form-label">Адрес ИО:</label>
         <div class="col-sm-8">
-            @Html.TextAreaFor(m => m.CourtExecutionInPF.AdresIo, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.AdresIo })
+            @Html.TextAreaFor(m => m.CourtExecutionInPF.AdresIo, new {@style = "width: 300px !important; height: 50px !important;", @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.AdresIo })
         </div>
         <label class="col-sm-12 col-form-label">Дата отправки заявления+ИД в ПФ о взыскании:</label>
         <div class="col-sm-8">
@@ -101,8 +101,7 @@
             {
                 @type = "Date",
                 @readonly = "readonly",
-                @dicId = "13",
-                @class = "form-control DictionaryAutoComplete",
+                @class = "form-control",
            @Value = (Model.CourtExecutionInPF.DateReturnId.HasValue ? Model.CourtExecutionInPF.DateReturnId.Value.ToString("yyyy-MM-dd") : string.Empty)
             })
         </div>

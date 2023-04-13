@@ -1,4 +1,5 @@
 ﻿using BE.Counter;
+using BE.Court;
 using BE.PersData;
 using DB.DataBase;
 using DB.Model;
@@ -17,6 +18,7 @@ namespace BL.Helper
     {
         string Generate(SaveModelIPU saveModelIPU);
         string Generate(PersDataModel PersDataModel);
+        string Generate(CourtGeneralInformation courtGeneralInformation, DB.Model.Court.CourtGeneralInformation courtGeneralInformationDb, string User);
     }
     public class GeneratorDescriptons : IGeneratorDescriptons
     {
@@ -242,6 +244,22 @@ namespace BL.Helper
             return Result.ToString();
         }
 
+        public string Generate(CourtGeneralInformation courtGeneralBe, DB.Model.Court.CourtGeneralInformation courtGeneralDb, string User)
+        {
+            StringBuilder Result = new StringBuilder();
+            Result.AppendLine($"{DateTime.Now} Пользователь {User} изменил:");
+            if(courtGeneralBe.Pensioner != courtGeneralDb.Pensioner)
+                Result.AppendLine($"Пенсионер: было {courtGeneralDb.Pensioner} стало {courtGeneralBe.Pensioner}");
+            if (courtGeneralBe.Inn != courtGeneralDb.Inn)
+                Result.AppendLine($"Инн: было {courtGeneralDb.Inn} стало {courtGeneralBe.Inn}");
+            if (courtGeneralBe.PasportIssue != courtGeneralDb.PasportIssue)
+                Result.AppendLine($"Паспорт кем выдан: было {courtGeneralDb.PasportIssue} стало {courtGeneralBe.PasportIssue}");
+            if (courtGeneralBe.FioDuty != courtGeneralDb.FioDuty)
+                Result.AppendLine($"Фио должника: было {courtGeneralDb.FioDuty} стало {courtGeneralBe.FioDuty}");
+            if (courtGeneralBe.City != courtGeneralDb.City)
+                Result.AppendLine($"Горд: было {courtGeneralDb.City} стало {courtGeneralBe.City}");
+            return Result.ToString();
+        }
         private string SerializerToXML<T>(T model)
         {
             XmlSerializer serializer = new XmlSerializer(model.GetType());

@@ -76,7 +76,7 @@ namespace RKC.Controllers
         [Authorize(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> SaveCourt(CourtGeneralInformation courtGeneralInformation)
         {
-            var Id =  await _court.SaveCourt(courtGeneralInformation);
+            var Id =  await _court.SaveCourt(courtGeneralInformation, User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Id);
         }
         [Authorize(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
@@ -95,6 +95,10 @@ namespace RKC.Controllers
         {
             var Result = await _dictionary.GetCourtValueDictionaryId(Id);
             return PartialView(Result);
+        }
+        public async Task<ActionResult> GetActionUser(string Lic, int IdCourt)
+        {
+            return Content("");
         }
         public async Task<ActionResult> AddDicValue(int Id, string Value)
         {
