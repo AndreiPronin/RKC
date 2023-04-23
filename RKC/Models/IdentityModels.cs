@@ -9,13 +9,17 @@ namespace RKC.Models
     // В профиль пользователя можно добавить дополнительные данные, если указать больше свойств для класса ApplicationUser. Подробности см. на странице https://go.microsoft.com/fwlink/?LinkID=317594.
     public class ApplicationUser : IdentityUser
     {
-        public string FIO { get; set; } // добавляем свойство Age
+        public string FIO { get; set; } // добавляем свойство FIO
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            userIdentity.AddClaim(new Claim("FIO", FIO));// CustomName - это ваше новое поле, добавленное пользователю
+            try
+            {
+                userIdentity.AddClaim(new Claim("FIO", FIO));// CustomName - это ваше новое поле, добавленное пользователю
+            }
+            catch { }
             // Здесь добавьте утверждения пользователя
             return userIdentity;
         }

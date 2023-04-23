@@ -19,7 +19,7 @@ using DateTime = System.DateTime;
 
 namespace RKC.Controllers
 {
-    [Authorize(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
+    [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
     public class CourtController : Controller
     {
         private readonly ICourt _court;
@@ -43,6 +43,16 @@ namespace RKC.Controllers
         }
         public async Task<ActionResult> Index(int Id = 0)
         {
+            if (_cacheApp.Lock(User.Identity.GetFIOFull(), nameof(CourtController) + nameof(Index) + Id))
+            {
+                ViewBag.User = _cacheApp.GetValue(nameof(CourtController) + nameof(Index) + Id);
+                ViewBag.IsLock = true;
+            }
+            else ViewBag.IsLock = false;
+            if (ViewBag.IsLock == false)
+            {
+                //ViewBag.IsLock = _flagsAction.GetAction(nameof(CourtController) + nameof(Index));
+            }
             var Model = await _court.DetailInfroms(Id); 
             return View(Model);
         }
@@ -60,12 +70,12 @@ namespace RKC.Controllers
             var Result =  await _court.Serach(searchModel);
             return PartialView(Result);
         }
-        [Authorize(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> CreateCourt(string FullLic)
         {
             if(string.IsNullOrEmpty(FullLic) || FullLic == "undefined")
                 return Redirect("/Home/ResultEmpty?Message=" + "Нельзя указать пустой лицевой счет!");
-            var Result = await _court.CreateCourt(FullLic, DateTime.Now.ToString());
+            var Result = await _court.CreateCourt(FullLic, DateTime.Now.ToString(), User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Result);
         }
         public async Task<ActionResult> DeleteCourt(int Id)
@@ -73,13 +83,13 @@ namespace RKC.Controllers
             await _court.DeleteCourt(Id);
             return Redirect("/Court/Serach");
         }
-        [Authorize(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> SaveCourt(CourtGeneralInformation courtGeneralInformation)
         {
             var Id =  await _court.SaveCourt(courtGeneralInformation, User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Id);
         }
-        [Authorize(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
+        [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
         public async Task<ActionResult> ShowAllCourtModal(string FullLic)
         {
             ViewBag.FullLic = FullLic;
@@ -96,9 +106,9 @@ namespace RKC.Controllers
             var Result = await _dictionary.GetCourtValueDictionaryId(Id);
             return PartialView(Result);
         }
-        public async Task<ActionResult> GetActionUser(string Lic, int IdCourt)
+        public string GetActionUser(string Lic, int IdCourt)
         {
-            return Content("");
+            return _logger.GetActionUserCourt(Lic,IdCourt);
         }
         public async Task<ActionResult> AddDicValue(int Id, string Value)
         {
@@ -146,7 +156,7 @@ namespace RKC.Controllers
             return PartialView(Res);
         }
         [HttpPost]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> SaveFile(HttpPostedFileBase FileLoad, string NameFile, string Lic, int CourtId)
         {
             return Json(new
@@ -156,14 +166,15 @@ namespace RKC.Controllers
             });
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> DownLoadFile(int Id)
         {
             var Result = await _court.DownLoadFile(Id);
+          
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> DeleteFile(int Id)
         {
             await _court.DeleteFile(Id, User.Identity.GetFIOFull());

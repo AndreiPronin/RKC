@@ -6,6 +6,7 @@ using BL.Services;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using Ionic.Zip;
+using RKC.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,14 +18,13 @@ using System.Web.Http.Results;
 using System.Web.Mvc;
 using WordGenerator;
 using WordGenerator.Enums;
-using AuthorizeAttribute = System.Web.Mvc.AuthorizeAttribute;
 using HttpGetAttribute = System.Web.Mvc.HttpGetAttribute;
 using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 
 namespace RKC.Controllers
 {
 
-    [Authorize(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
+    [Auth(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
     public class DPUController : Controller
     {
         private readonly IExcelDpu _excelDpu;
@@ -49,7 +49,7 @@ namespace RKC.Controllers
             var result = await _dpu.SearchAutocompleteDPU(Text);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        [Authorize(Roles = RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> UploadFilePU(HttpPostedFileBase file, int TypeLoad)
         {
             if (TypeLoad == 1)
@@ -81,19 +81,19 @@ namespace RKC.Controllers
             return null;
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> DpuInfo(int id)
         {
             return PartialView(await _dpu.GetDpu(id));
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> DpuDictionarySummaryHouses()
         {
             return PartialView(await _dpu.GetDPUSummaryHouses());
         }
         [HttpPost]
-        [Authorize(Roles = RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> DpuSaveNote([FromBody]int? Id, [FromBody] string Note)
         {
             await _dpu.DpuSaveNote(Id.Value, Note);
@@ -101,7 +101,7 @@ namespace RKC.Controllers
         }
         
         [HttpGet]
-        [Authorize(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> WatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
             try
@@ -115,7 +115,7 @@ namespace RKC.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.DPUReader + "," + RolesEnums.DPUEdit + "," + RolesEnums.DPUAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
             try
@@ -128,7 +128,7 @@ namespace RKC.Controllers
                 return null;
             }
         }
-        [Authorize(Roles = "Admin,DownLoadReceipt")]
+        [Auth(Roles = "Admin,DownLoadReceipt")]
         [HttpGet]
         public ActionResult DownLoadReceipt(string FullLic, DateTime DateStart, DateTime DateEnd)
         {

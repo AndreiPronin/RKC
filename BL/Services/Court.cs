@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static ClosedXML.Excel.XLPredefinedFormat;
 using CourtGeneralInformation = DB.Model.Court.CourtGeneralInformation;
+using DateTime = System.DateTime;
 
 namespace BL.Services
 {
@@ -25,7 +26,7 @@ namespace BL.Services
     {
         Task<CourtGeneralInformation> DetailInfroms(int Id);
         Task<List<CourtGeneralInformation>> Serach(SearchModel searchModel);
-        Task<int> CreateCourt(string FullLic, string NumberIP);
+        Task<int> CreateCourt(string FullLic, string NumberIP, string User);
         Task<int> SaveCourt(BE.Court.CourtGeneralInformation courtGeneralInformation, string User);
         Task<List<CourtGeneralInformation>> GetAllCourtFullLic(string FullLic);
         Task AddCourtWorkRequisites (BE.Court.CourtWorkRequisites courtWorkRequisites);
@@ -115,7 +116,7 @@ namespace BL.Services
                 return courtGeneralInformation.Id;
             }
         }
-        public async Task<int> CreateCourt(string FullLic,string DateCreate)
+        public async Task<int> CreateCourt(string FullLic,string DateCreate, string User)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -150,6 +151,7 @@ namespace BL.Services
                 db.CourtStateDuty.Add(new DB.Model.Court.CourtStateDuty { CourtGeneralInformationId = Id });
                 db.CourtExecutionFSSP.Add(new DB.Model.Court.CourtExecutionFSSP { CourtGeneralInformationId = Id });
                 await db.SaveChangesAsync();
+                _ilogger.ActionUserCourt(Model.Lic, Model.Id, $"Пользователь {User} создал дело");
                 return Model.Id;
             }
         }
@@ -274,6 +276,7 @@ namespace BL.Services
                 File.WriteAllBytes($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{NameFile}.{TypeFile}", file);
                 using (var db = new ApplicationDbContext())
                 {
+                    _ilogger.ActionUserCourt(Lic, CourtGeneralId, $"{DateTime.Now} Пользователь {User} добавил файл: {NameFile}.{TypeFile}");
                     db.CourtCourtDocumentScans.Add(new DB.Model.Court.CourtDocumentScans
                     {
                         DocumentPath = $@"{Lic}\\{CourtGeneralId}",
@@ -295,7 +298,8 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                var Res = db.CourtCourtDocumentScans.Where(x => x.Id == Id).FirstOrDefault();
+                var Res = db.CourtCourtDocumentScans.Where(x => x.Id == Id).Include(x=>x.CourtGeneralInformation).FirstOrDefault();
+                _ilogger.ActionUserCourt(Res.CourtGeneralInformation.Lic, Res.CourtGeneralInformation.Id, $"{DateTime.Now} Пользователь {User} удалил файл: {Res.CourtDocumentScansName}");
                 db.CourtCourtDocumentScans.Remove(Res);
                 await db.SaveChangesAsync();
                 File.Delete($@"\\10.10.10.17\\doc_tplus_court\\{Res.DocumentPath}\\{Res.CourtDocumentScansName}");

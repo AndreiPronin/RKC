@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
+using IdentityModel.Client;
+using IdentityServer3.Core.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
@@ -13,27 +17,20 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin;
+using Microsoft.Owin.Host.SystemWeb;
+using Microsoft.Owin.Infrastructure;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Notifications;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Owin;
 using RKC.Models;
+using SameSiteMode = System.Web.SameSiteMode;
 
 namespace RKC
 {
     public partial class Startup
     {
-        public static string OidcAuthority = "https://localhost:5443";
-        public static string OidcRedirectUrl = "https://localhost:44345";
-        public static string OidcClientId = "client_id_swagger";
-        public static string OidcClientSecret = "client_secret_swagger";
-        private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> context)
-        {
-            context.HandleResponse();
-            context.Response.Redirect("/Home/Error?message=" + context.Exception.Message);
-            return Task.FromResult(0);
-        }
         // Дополнительные сведения о настройке аутентификации см. на странице https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -60,7 +57,7 @@ namespace RKC
                 }
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
+           
             // Позволяет приложению временно хранить информацию о пользователе, пока проверяется второй фактор двухфакторной проверки подлинности.
             app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
 
@@ -70,88 +67,110 @@ namespace RKC
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
 
-            // OpenId Connect    
-            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-            jwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
+            // OpenId Connect
+            //AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
 
-            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
-
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
-
-            var redirectUri = new Uri(OidcRedirectUrl);
+            // the following is a workaround for https://github.com/aspnet/AspNetKatana/issues/386
+            // make sure to only enable when running on localhost without https
             var openIdConnectOptions = new OpenIdConnectAuthenticationOptions
             {
-                Authority = OidcAuthority,
-                ClientId = OidcClientId,
-                ClientSecret = OidcClientSecret,
-                PostLogoutRedirectUri = OidcRedirectUrl,
-                ResponseType = OpenIdConnectResponseType.Code, // authorization code flow
-                ResponseMode = null, // leave undefined, defaults to query
-                Scope = "api1.read", // enables openid connect
-                RedirectUri = OidcRedirectUrl,
-                SignInAsAuthenticationType = "Cookies",
-                RedeemCode = true, // authorization code flow
-                SecurityTokenValidator = new MyValid(),
-                Notifications = new OpenIdConnectAuthenticationNotifications()
+                AuthenticationType = "Единая точка входа",
+                RequireHttpsMetadata = false,
+                Authority = ConfigurationManager.AppSettings["App:OpenId"],
+                ClientId = "mvc4Simple",
+                ClientSecret = "secret",
+                ResponseType = "code id_token token",
+                Scope = "openid profile api1.read",//Include that scope here
+                UseTokenLifetime = false,
+                
+                RedirectUri = ConfigurationManager.AppSettings["App:Host"],
+                PostLogoutRedirectUri = ConfigurationManager.AppSettings["App:Host"],
+                SignInAsAuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                SaveTokens = true,
+                RedeemCode = true,
+                CookieManager = new SystemWebCookieManager(),
+                //ProtocolValidator = new OpenIdConnectProtocolValidator
+                //{
+                //    //RequireStateValidation = false,
+                //    RequireNonce = false,
+                //},
+                //TokenValidationParameters = new TokenValidationParameters()
+                //{
+                //    RoleClaimType = "role",
+                //    NameClaimType = "name",
+                //},
+                
+                Notifications = new OpenIdConnectAuthenticationNotifications
                 {
-                    //
-                    // If there is a code in the OpenID Connect response, redeem it for an access token and refresh token, and store those away.
-                    //
-                    AuthenticationFailed = OnAuthenticationFailed,
-
-                    SecurityTokenValidated = n =>
+                    SecurityTokenValidated = context =>
                     {
-                        var id = n.AuthenticationTicket.Identity;
+                        context.AuthenticationTicket.Identity.AddClaim(new
+                        Claim(ClaimTypes.NameIdentifier, context.ProtocolMessage.IdToken));
+                        context.AuthenticationTicket.Identity.AddClaim(new Claim("access_token",
+                 context.ProtocolMessage.AccessToken));//Set access token in access_token claim
+                        return Task.FromResult(0);
+                    },
+                    //AuthorizationCodeReceived = (context) =>
+                    //{
+                    //    var code = context.Code;
+                    //    ClientCredential credential = new ClientCredential("mvc4Simple", "secret");
+                    //    string tenantID = context.AuthenticationTicket.Identity.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
+                    //    string signedInUserID = context.AuthenticationTicket.Identity.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    //    AuthenticationContext authContext = new AuthenticationContext(string.Format("https://login.windows.net/{0}", tenantID), new EFADALTokenCache(signedInUserID));
+                    //    AuthenticationResult result = authContext.AcquireTokenByAuthorizationCodeAsync(
+                    //                code, new Uri(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Path)), credential, graphResourceID);
 
-                        //// we want to keep first name, last name, subject and roles
-                        //var givenName = id.FindFirst(Constants.ClaimTypes.GivenName);
-                        //var familyName = id.FindFirst(Constants.ClaimTypes.FamilyName);
-                        //var sub = id.FindFirst(Constants.ClaimTypes.Subject);
-                        //var roles = id.FindAll(Constants.ClaimTypes.Role);
+                    //    return Task.FromResult(0);
+                    //},
+                    AuthenticationFailed = context =>
+                    {
+                        if (context.Exception.Message.Contains("IDX21323"))
+                        {
+                            context.HandleResponse();
+                            context.Response.Redirect("/Home/ResultEmpty/?Message=Недостаточно прав для просмотра" );
+                            return Task.FromResult(1);
+                        }
+                   
+                        return Task.FromResult(0);
+                    },
+                    RedirectToIdentityProvider = n =>
+                    {
+                        if (n.ProtocolMessage.RequestType ==
+              Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectRequestType.Logout)
+                        {
+                            var idTokenHint = n.OwinContext.Authentication.User.FindFirst("id_token");
+                            if (idTokenHint != null)
+                            {
+                                n.ProtocolMessage.IdTokenHint = idTokenHint.Value;
+                            }
 
-                        //// create new identity and set name and role claim type
-                        var nid = new ClaimsIdentity(
-                            id.AuthenticationType,
-                            ClaimTypes.Name,
-                            ClaimTypes.Role);
-
-                        nid.AddClaims(id.Claims);
-                        nid.AddClaim(new Claim("id_token", n.ProtocolMessage.IdToken));
-                        nid.AddClaim(new Claim("access_Token", n.ProtocolMessage.AccessToken));
-
-                        ////nid.AddClaim(givenName);
-                        ////nid.AddClaim(familyName);
-                        ////nid.AddClaim(sub);
-                        ////nid.AddClaims(roles);
-
-                        ////// add some other app specific claim
-                        // Connect to you ASP.NET database for example
-                        ////nid.AddClaim(new Claim("app_specific", "some data"));
-
-                        //// keep the id_token for logout
-                        //nid.AddClaim(new Claim("id_token", n.ProtocolMessage.IdToken));
-
-                        n.AuthenticationTicket = new AuthenticationTicket(
-                            nid,
-                            n.AuthenticationTicket.Properties);
-
+                        }
+                        //if (n.ProtocolMessage.RequestType == OpenIdConnectRequestType.Authentication)
+                        //{
+                        //    var nonceKey = HttpContext.Current.Response.Cookies.AllKeys.Where(x => x.Contains("nonce")).FirstOrDefault();
+                        //    if (nonceKey != null)
+                        //    {
+                        //        var nonce = HttpContext.Current.Response.Cookies.Get(nonceKey);
+                        //        nonce.SameSite = SameSiteMode.None;
+                        //    }
+                        //}
                         return Task.FromResult(0);
                     }
                 }
             };
+            //var redirectUri = new Uri(ConfigurationManager.AppSettings["App:Host"]);
+            //if (!"https".Equals(redirectUri.Scheme) && redirectUri.IsLoopback)
+            //{
+            //    openIdConnectOptions.ProtocolValidator = new OpenIdConnectProtocolValidator
+            //    {
 
-            // the following is a workaround for https://github.com/aspnet/AspNetKatana/issues/386
-            // make sure to only enable when running on localhost without https
-            if (!"https".Equals(redirectUri.Scheme) && redirectUri.IsLoopback)
-            {
-                openIdConnectOptions.ProtocolValidator = new OpenIdConnectProtocolValidator
-                {
-                    RequireStateValidation = false,
-                    RequireNonce = false,
-                };
-            }
+            //        RequireState = false,
+                 
+            //        RequireNonce = true,
+            //    };
+            //}
 
-            app.UseOpenIdConnectAuthentication(openIdConnectOptions);
+            //app.UseOpenIdConnectAuthentication(openIdConnectOptions);
 
 
             // Раскомментируйте приведенные далее строки, чтобы включить вход с помощью сторонних поставщиков входа
@@ -173,22 +192,17 @@ namespace RKC
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap =
+        new Dictionary<string, string>();
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                //CookieHttpOnly = true,
+                 AuthenticationMode = AuthenticationMode.Active
+            });
+            app.UseOpenIdConnectAuthentication(openIdConnectOptions);
         }
     }
-    public class MyValid : ISecurityTokenValidator
-    {
-        public bool CanValidateToken => throw new NotImplementedException();
-
-        public int MaximumTokenSizeInBytes { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public bool CanReadToken(string securityToken)
-        {
-            return true;
-        }
-
-        public ClaimsPrincipal ValidateToken(string securityToken, TokenValidationParameters validationParameters, out SecurityToken validatedToken)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    
 }

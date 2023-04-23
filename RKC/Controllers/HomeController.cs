@@ -47,11 +47,12 @@ namespace RKC.Controllers
         public ActionResult Test()
         {
             var sss = User.Identity.IsAuthenticated;
+            var tt2 = User.IsInRole("Admin");
             var tt = User;
             return Content("Test");
         }
         [Route("signin-oidc")]
-        public void SignIn()
+        public ActionResult SignIn()
         {
             if (!Request.IsAuthenticated)
             {
@@ -59,6 +60,7 @@ namespace RKC.Controllers
                     new AuthenticationProperties { RedirectUri = "/" },
                     OpenIdConnectAuthenticationDefaults.AuthenticationType);
             }
+            return Content("Test");
         }
 
     }

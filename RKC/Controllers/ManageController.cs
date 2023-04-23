@@ -7,11 +7,12 @@ using BL.Helper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using RKC.Extensions;
 using RKC.Models;
 
 namespace RKC.Controllers
 {
-    [Authorize]
+    [Auth]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

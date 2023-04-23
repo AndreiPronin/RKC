@@ -15,6 +15,7 @@ using System.Web.Mvc;
 using ApplicationDbContext = DB.DataBase.ApplicationDbContext;
 using ApplicationContext = RKC.Models.ApplicationDbContext;
 using Microsoft.AspNet.Identity.Owin;
+using RKC.Extensions;
 
 namespace RKC.Controllers
 {
@@ -26,7 +27,7 @@ namespace RKC.Controllers
         {
             _securityProvider = securityProvider;
         }
-        [Authorize(Roles = "Admin")]
+        [Auth(Roles = "Admin")]
         public ActionResult Index()
         {
             if(User.IsInRole("SuperAdmin"))
@@ -44,12 +45,12 @@ namespace RKC.Controllers
                 
             return View();
         }
-        [Authorize(Roles = "Admin")]
+        [Auth(Roles = "Admin")]
         public ActionResult GetUserRoleInfo(string UserId)
         {
             return PartialView(_securityProvider.GetUserRoles(UserId));
         }
-        [Authorize(Roles = "Admin")]
+        [Auth(Roles = "Admin")]
         public ActionResult DeleteRole(string UserId, string UserRoleId)
         {
             try
@@ -66,7 +67,7 @@ namespace RKC.Controllers
             }
             return Content("Роль успешно удалена");
         }
-        [Authorize(Roles = "Admin")]
+        [Auth(Roles = "Admin")]
         public ActionResult AddRole(string UserId, string UserRoleId)
         {
             using (var db = new ApplicationDbContext())
@@ -76,7 +77,7 @@ namespace RKC.Controllers
             }
             return Content("Роль успешно добавлена");
         }
-        [Authorize(Roles = "Admin")]
+        [Auth(Roles = "Admin")]
         public ActionResult AddNotifications(string Title, string Description)
         {
             using (var db = new ApplicationDbContext())
@@ -86,7 +87,7 @@ namespace RKC.Controllers
             }
             return Content("Уведомление успешно добавлено");
         }
-        [Authorize(Roles = "Admin,Notifications")]
+        [Auth(Roles = "Admin,Notifications")]
         public ActionResult GetNotification()
         {
             using (var db = new ApplicationDbContext())
@@ -100,7 +101,7 @@ namespace RKC.Controllers
                 return PartialView(notification);
             }
         }
-        [Authorize(Roles = "Admin")]
+        [Auth(Roles = "Admin")]
         public ActionResult deleteNotification(int Id)
         {
             using(var db = new ApplicationDbContext())

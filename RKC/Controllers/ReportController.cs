@@ -3,6 +3,7 @@ using BE.Roles;
 using BL.Services;
 using ClosedXML.Excel;
 using Microsoft.Ajax.Utilities;
+using RKC.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -29,7 +30,7 @@ namespace RKC.Controllers
             ViewBag.DropDownList = _report.GetSqlQueryReports();
             return View();
         }
-        [Authorize(Roles = RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.Admin)]
         [HttpPost]
         public async Task<ActionResult> SaveSqlQuery(string SqlQuery, string SqlName)
         {
@@ -43,7 +44,7 @@ namespace RKC.Controllers
                 throw ex;
             }
         }
-        [Authorize(Roles = RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.Admin)]
         [HttpDelete]
         public async Task<ActionResult> DeleteSqlQuery(int Id)
         {
@@ -70,13 +71,13 @@ namespace RKC.Controllers
                 throw ex;
             }
         }
-        [Authorize(Roles = RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.Admin)]
         [HttpGet]
         public JsonResult GetEditSqlScript(int Id)
         {
             return Json(_report.GetEditSqlScript(Id), JsonRequestBehavior.AllowGet);
         }
-        [Authorize(Roles = RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.Admin)]
         [HttpPost]
         public async Task<ActionResult> RefreshSqlQuery(string SqlQuery, string SqlName,int Id)
         {

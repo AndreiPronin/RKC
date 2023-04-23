@@ -35,6 +35,11 @@
         $("#CourtWork_RequisitesSumGP").val($("#sumaRequsitsGp").val());
         let summCourtWork = +$("#CourtWork_RequisitesSumGP").val() - $("#CourtWork_SumGP").val();
         $("#CourtWork_AmountOverpaidGP").val(summCourtWork.toFixed(2));
+        if (!$("#Save").hasClass("hidden")) {
+            $('.removeCourtWorkRequisites').each(function () {
+                $(this).removeClass("hidden");
+            });
+        }
         $(".removeCourtWorkRequisites").click(function () {
             var Id = $(this).attr("name");
             $.ajax({

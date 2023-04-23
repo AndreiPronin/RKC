@@ -358,6 +358,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonalDataController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Extensions\AuthAttribute.cs" />
     <Compile Include="Extensions\CustomModelBinders.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">

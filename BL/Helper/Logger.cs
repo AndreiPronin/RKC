@@ -18,6 +18,7 @@ namespace BL.Helper
         void ActionUsersPersData(int idPersData, string Description, string User);
         Task ActionUsersAsync(int IdPU, string Description, string User);
         void ActionUserCourt(string Lic, int CourtGeneralId, string Text);
+        string GetActionUserCourt(string Lic, int CourtGeneralId);
     }
     public class Logger:Ilogger
     {
@@ -56,17 +57,38 @@ namespace BL.Helper
         }
         public void ActionUserCourt(string Lic,int CourtGeneralId, string Text)
         {
+            if(string.IsNullOrEmpty(Text))
+                return;
             var FilePath = $@"\\10.10.10.17\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{CourtGeneralId}.log";
             if (!Directory.Exists($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}"))
             {
                 Directory.CreateDirectory($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}");
             }
             if (File.Exists(FilePath))
-                File.AppendAllText(FilePath, Text);
+            {
+                var OldText = File.ReadAllText(FilePath);
+                Text += Environment.NewLine;
+                Text += OldText;
+                File.WriteAllText(FilePath, Text);
+            }
             else
             {
                 File.Create(FilePath).Close();
-                File.WriteAllText(FilePath, Text);
+                
+                File.WriteAllText(FilePath, Text + Environment.NewLine);
+            }
+        }
+        public string GetActionUserCourt(string Lic, int CourtGeneralId)
+        {
+            var FilePath = $@"\\10.10.10.17\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{CourtGeneralId}.log";
+            if (File.Exists(FilePath))
+            {
+                var Text = File.ReadAllText(FilePath);
+                return Text;
+            }
+            else
+            {
+                return "";
             }
         }
     }

@@ -19,6 +19,7 @@ namespace AppCache
         void SetValue<T>(string Key, T value);
         bool AddLock(string name, string Method);
         bool Add(string name, string Url);
+        bool AddLock30Minute(string name, string Method);
         bool Lock(string name, string Url);
         void Update(string name, string Url);
         void Delete( string name ,string Url);
@@ -110,7 +111,6 @@ namespace AppCache
         public bool Lock(string userName, string Url)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            var ttt = GetValue(Url);
             if (GetValue(Url) == null)
             {
                 Add(userName, Url);
@@ -123,6 +123,11 @@ namespace AppCache
             return true;
         }
         public bool AddLock(string name, string Method)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            return memoryCache.Add(name, Method, DateTime.Now.AddMinutes(10));
+        }
+        public bool AddLock30Minute(string name, string Method)
         {
             MemoryCache memoryCache = MemoryCache.Default;
             return memoryCache.Add(name, Method, DateTime.Now.AddMinutes(10));

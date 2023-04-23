@@ -26,7 +26,7 @@ using BE.Roles;
 
 namespace RKC.Controllers
 {
-    [Authorize]
+    [Auth]
     public class CounterController : Controller
     {
         private readonly ICounter _counter;
@@ -130,7 +130,7 @@ namespace RKC.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public async Task<ActionResult> FromAddPU(string FullLIC)
         {
             ViewBag.FULL_LIC = FullLIC;
@@ -138,7 +138,7 @@ namespace RKC.Controllers
             return PartialView(_counter.GetTypeNowUsePU(FullLIC));
         }
         [HttpPost]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public ActionResult AddPU(ModelAddPU modelAddPU)
         {
             try
@@ -162,7 +162,7 @@ namespace RKC.Controllers
             return null;
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter + "," + RolesEnums.CounterReader)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter + "," + RolesEnums.CounterReader)]
         public ActionResult ArchiveAllLics(string id_pu)
         {
             ViewBag.FULL_LIC = id_pu.Split('-')[0];
@@ -171,13 +171,13 @@ namespace RKC.Controllers
             return PartialView(Result);
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter + "," + RolesEnums.CounterReader)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter + "," + RolesEnums.CounterReader)]
         public ActionResult HistoryEdit(int id_pu)
         {
             return PartialView(_counter.HistoryEdit(id_pu));
         }
         [HttpPost]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public async Task<ActionResult> SaveIPU(SaveModelIPU saveModelIPU)
         {
             try
@@ -192,7 +192,7 @@ namespace RKC.Controllers
             }
         }
         [HttpPost]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public ActionResult DeletePU(int IdPU)
         {
             try
@@ -207,7 +207,7 @@ namespace RKC.Controllers
             }
         }
         [HttpPost]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
         public ActionResult RecoveryPU(int IdPU)
         {
             try
@@ -233,7 +233,7 @@ namespace RKC.Controllers
                 return Content($"Во время удаления произошла ошибка {ex.Message}");
             }
         }
-        [Authorize(Roles = RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.Admin)]
         public async Task<ActionResult> UploadFile(HttpPostedFileBase file, string User, int TypeLoad)
         {
             if (TypeLoad == 1)
@@ -334,7 +334,7 @@ namespace RKC.Controllers
             return Content(_cacheApp.GetValueProgress(Name));
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.Admin)]
         public async Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime)
         {
             using (XLWorkbook wb = new XLWorkbook())
@@ -391,7 +391,7 @@ namespace RKC.Controllers
             // 
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.Admin)]
         public ActionResult LoadTemplate(TypeTemplateFile typeFile)
         {
             using (XLWorkbook wb = new XLWorkbook())
@@ -415,7 +415,7 @@ namespace RKC.Controllers
             // 
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.Admin)]
         public async Task<ActionResult> RunIntegration(DateTime date)
         {
             try
@@ -424,7 +424,7 @@ namespace RKC.Controllers
             }
             catch (Exception ex)
             {
-
+                return Redirect("home/ResultEmpty?Message=" + ex.Message);
             }
             return null;
         }
@@ -432,7 +432,7 @@ namespace RKC.Controllers
         {
             return View(_integration.GetErrorIntegrationReadings().OrderByDescending(x => x.IsError));
         }
-        [Authorize(Roles = RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.Admin)]
         public ActionResult ErroIntegratinLoadExcel()
         {
             using (XLWorkbook wb = new XLWorkbook())
@@ -445,7 +445,7 @@ namespace RKC.Controllers
                 }
             }
         }
-        [Authorize(Roles = "Admin")]
+        [Auth(Roles = "Admin")]
         public async Task<ActionResult> ErroIntegratinDelete(string Lic, string TypePU)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -463,7 +463,7 @@ namespace RKC.Controllers
                 return Redirect("/Counter/ErrorIntegration");
             }
         }
-        [Authorize(Roles = RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.SuperAdmin)]
         public ActionResult ExaminationPuIsLic()
         {
             using (XLWorkbook wb = new XLWorkbook())

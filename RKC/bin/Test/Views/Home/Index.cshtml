@@ -18,7 +18,7 @@
         <p id="animationText2" class="lead text-muted"></p>
         <img id="Img" style="width: 150px; margin-top: 10%; height: 100px; display: none; " src="~/Content/img/main/T_Plus_Group_Logo.png" />
         <p>
-            <a href="#" style="margin-top: 10%; background-color: #b95c19 !important; border-color: #b95c19!important;" class="btn btn-warning btn-lg">Узнать больше &raquo;</a>
+            <a href="#" style="margin-top: 10%;  background-color: #b95c19 !important; border-color: #b95c19!important;" id="knowBig" class="btn btn-warning btn-lg">Узнать больше &raquo;</a>
 
         </p>
     </div>
@@ -34,7 +34,15 @@
     <p style="color:white">&copy; @DateTime.Now.Year - ООО Расчетно-биллинговые решения</p>
 </footer>
 <script>
+
+       
+   
     $(document).ready(function () {
+        $("#knowBig").click(function (e) {
+            var audio = new Audio(); // Создаём новый элемент Audio
+            audio.src = 'http://10.10.10.15:9999/content/Дважды Краснознаменный Академический ансамбль песни и пляски Российской Армии имени А.В.Александрова - Гимн Росии (запись 2004 г.).mp3'; // Указываем путь к звуку "клика"
+            audio.autoplay = true; // Автоматически запускаем
+        })
         $('#Img').fadeIn(5000);
         var i = 0;
         var txt = 'ООО Расчетно-биллинговые решения'; /* Текст */

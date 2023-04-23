@@ -22,7 +22,7 @@ using WordGenerator.Enums;
 
 namespace RKC.Controllers
 {
-    [Authorize]
+    [Auth]
     public class PersonalDataController : Controller
     {
         private readonly object balanceLock = new object();
@@ -48,14 +48,14 @@ namespace RKC.Controllers
             _pdfFactory = pdfFactory;
             _court = court;
         }
-        [Authorize(Roles = "PersWriter,PersReader,Admin")]
+        [Auth(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult PersonalInformation(string FullLic)
         {
             ViewBag.FULL_LIC = FullLic;
             ViewBag.StateCalc = _personalData.GetStateCalculation(FullLic); 
             return View(_personalData.GetPersonalInformation(FullLic));
         }
-        [Authorize(Roles = "PersWriter,PersReader,Admin")]
+        [Auth(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult DetailedInformPersData(string FULL_LIC)
         {
             try
@@ -97,7 +97,7 @@ namespace RKC.Controllers
             return null;
         }
         [HttpPost]
-        [Authorize(Roles = "PersWriter,Admin")]
+        [Auth(Roles = "PersWriter,Admin")]
         public ActionResult SaveFile(HttpPostedFileBase FileLoad, string NameFile,string Lic,int idPersData,string Fio)
         {
             return Json(new { result = _personalData.saveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.').LastOrDefault(), NameFile, User.Identity.GetFIOFull()),
@@ -134,7 +134,7 @@ namespace RKC.Controllers
                 return null;
             }
         }
-        [Authorize(Roles = "Admin,DownLoadReceipt")]
+        [Auth(Roles = "Admin,DownLoadReceipt")]
         [HttpGet]
         public ActionResult DownLoadReceipt(string FullLic, DateTime DateStart, DateTime DateEnd)
         {
@@ -176,21 +176,21 @@ namespace RKC.Controllers
             return File(outputStream, "application/zip", "Квитанция.zip");
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin + ","+ RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + ","+ RolesEnums.SuperAdmin)]
         public ActionResult CloseLic(string FullLic)
         {
             _personalData.CloseLic(FullLic, _counter);
             return null;
         }
         [HttpGet]
-        [Authorize(Roles = RolesEnums.Admin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.SuperAdmin)]
         public ActionResult OpenLic(string FullLic)
         {
             _personalData.OpenLic(FullLic);
             return null;
         }
         [HttpGet]
-        [Authorize(Roles = "PersWriter,Admin")]
+        [Auth(Roles = "PersWriter,Admin")]
         public ActionResult DeleteFile(int Id)
         {
             _personalData.DeleteFile(Id,User.Identity.GetFIOFull());
@@ -205,44 +205,44 @@ namespace RKC.Controllers
             }
             return fileData;
         }
-        [Authorize(Roles = "PersWriter,Admin")]
+        [Auth(Roles = "PersWriter,Admin")]
         public ActionResult SavePersonalData(PersDataModel persDataModel)
         {
             _personalData.SavePersonalData(persDataModel, User.Identity.GetFIOFull());
             return null;
         }
-        [Authorize(Roles = "PersWriter,Admin")]
+        [Auth(Roles = "PersWriter,Admin")]
         public ActionResult AddPersData(PersDataModel persDataModel)
         {
             _personalData.AddPersData(persDataModel, User.Identity.GetFIOFull());
             return null;
         }
-        [Authorize(Roles = "PersWriter,PersReader,Admin")]
+        [Auth(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult HistoryEdit(int idPersData)
         {
             return PartialView(_personalData.GetHistory(idPersData));
         }
         [HttpGet]
-        [Authorize(Roles = "PersWriter,Admin")]
+        [Auth(Roles = "PersWriter,Admin")]
         public ActionResult EditMain(int idPersData)
         {
             _personalData.MakeToMain(idPersData, User.Identity.GetFIOFull());
             return null;
         }
-        [Authorize(Roles = "PersWriter,Admin")]
+        [Auth(Roles = "PersWriter,Admin")]
         public ActionResult FormAddPers(string FULL_LIC)
         {
             ViewBag.RoomType = _personalData.GetRoomTypeMain(FULL_LIC);
             ViewBag.FULL_LIC = FULL_LIC;
             return PartialView();
         }
-        [Authorize(Roles = "PersWriter,Admin")]
+        [Auth(Roles = "PersWriter,Admin")]
         public ActionResult DeletePersonalData(int IdPersData)
         {
             _personalData.DeletePers(IdPersData,User.Identity.GetFIOFull());
             return null;
         }
-        [Authorize(Roles = "PersWriter,PersReader,Admin")]
+        [Auth(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult DetailedInformPersDelete(string FULL_LIC)
         {
             ViewBag.FULL_LIC = FULL_LIC;
@@ -258,7 +258,7 @@ namespace RKC.Controllers
             ViewBag.LIC = FullLic;
             return View(_personalData.GetReadingsHistory(FullLic).OrderByDescending(x => x.payment_date_day));
         }
-        [Authorize(Roles = RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.SuperAdmin)]
         public ActionResult ExaminationPersIsLic()
         {
             using (XLWorkbook wb = new XLWorkbook())
