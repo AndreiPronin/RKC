@@ -157,7 +157,22 @@
         console.log(HREF);
         initMenu();
     });
-    setInterval(function () {
+    let notifi = @User.IsInRole(RolesEnums.Notifications).ToString().ToLower();
+    if (notifi) {
+        setInterval(function () {
+            $.ajax({
+                url: '/Admin/GetNotification',
+                success: function (data) {
+                    $("#NotificationResultTimer").empty();
+                    $("#NotificationResultTimer").append(data);
+                },
+                error: function () {
+                    i = "Что то пошло не так. Обратитесь к администратору!";
+                }
+            });
+        }, 30000);
+    }
+    if (notifi) {
         $.ajax({
             url: '/Admin/GetNotification',
             success: function (data) {
@@ -168,17 +183,7 @@
                 i = "Что то пошло не так. Обратитесь к администратору!";
             }
         });
-    }, 30000);
-    $.ajax({
-        url: '/Admin/GetNotification',
-        success: function (data) {
-            $("#NotificationResultTimer").empty();
-            $("#NotificationResultTimer").append(data);
-        },
-        error: function () {
-            i = "Что то пошло не так. Обратитесь к администратору!";
-        }
-    });
+    }
     function MenuBottomonOn() {
         $("#MenuBottom").removeClass('hidden');
         $("#ButtonMenuBottom").addClass('hidden');
@@ -188,7 +193,7 @@
         $("#ButtonMenuBottom").removeClass('hidden');
     }
     $(document).ready(function (e) {
-        
+
         // Создаем две переменные с названиями месяцев и названиями дней.
         var monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
         var dayNames = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]

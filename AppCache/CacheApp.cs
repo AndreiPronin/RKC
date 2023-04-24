@@ -85,7 +85,7 @@ namespace AppCache
                 return (T)memoryCache.Get(Key);
             }catch(Exception e)
             {
-                return default(T);
+                return default;
             }
         }
         public void SetValue<T>(string Key, T value)

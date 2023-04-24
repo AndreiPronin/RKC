@@ -35,8 +35,9 @@ namespace RKC.Controllers
         private readonly IBaseService _baseService;
         private readonly IPdfFactory _pdfFactory;
         private readonly ICourt _court;
+        private readonly IDictionary _dictionary;
         public PersonalDataController(IPersonalData personalData, Ilogger logger, IGeneratorDescriptons generatorDescriptons,
-            ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory, ICourt court)
+            ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory, ICourt court, IDictionary dictionary)
         {
             _counter = counter;
             _personalData = personalData;
@@ -47,6 +48,7 @@ namespace RKC.Controllers
             _baseService = baseService;
             _pdfFactory = pdfFactory;
             _court = court;
+            _dictionary = dictionary;
         }
         [Auth(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult PersonalInformation(string FullLic)
@@ -72,6 +74,8 @@ namespace RKC.Controllers
                 }
                 ViewBag.ZAK = _baseService.GetStatusCloseOpenLic(FULL_LIC);
                 var Result = _personalData.GetInfoPersData(FULL_LIC);
+                ViewBag.FlatTypeDic = _dictionary.GetFlatType();
+                ViewBag.FlatType = _baseService.GetFlatTypeLic(FULL_LIC);
                 if (Result.Count() > 0)
                 {
                     return View(Result);

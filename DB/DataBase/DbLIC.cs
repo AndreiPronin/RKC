@@ -10,6 +10,7 @@ namespace DB.DataBase
         public DbSet<ALL_LICS_ARCHIVE> ALL_LICS_ARCHIVE { get; set; }
         public DbSet<ALL_LICS> ALL_LICS { get; set; }
         public DbSet<KVIT> KVIT { get; set; }
+        public DbSet<FlatTypeDto> FlatTypes { get; set; }
         public DbLIC() : base("DBF_SQL")
         {
         }

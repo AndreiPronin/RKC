@@ -95,6 +95,7 @@
     <Compile Include="Model\DPUSummaryHouses.cs" />
     <Compile Include="Model\Duplicate.cs" />
     <Compile Include="Model\FLAT.cs" />
+    <Compile Include="Model\FlatType.cs" />
     <Compile Include="Model\IntegrationReadings.cs" />
     <Compile Include="Model\HelpСalculation.cs" />
     <Compile Include="Model\IPU_COUNTERS.cs" />

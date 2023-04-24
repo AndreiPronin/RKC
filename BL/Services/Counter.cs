@@ -366,22 +366,18 @@ namespace BL.Counters
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ != true).FirstOrDefault();
-                //if(IPU_COUNTERS == null)
-                //{
-                //    //AutoAddPU(saveModelIPU.FULL_LIC);
-                //    IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ == null).FirstOrDefault();
-                //}
                 if (IPU_COUNTERS != null)
                 {
                     saveModelIPU.IdPU = IPU_COUNTERS.ID_PU;
                     saveModelIPU.OVERWRITE_SEAL = false;
-                    logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
+                    logger.ActionUsers(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
+                   
                     Task.Run(async () => await UpdateReadings(saveModelIPU));
+                   
                     //new Thread(x=> UpdateReadings(saveModelIPU)).Start();
                     return true;
                 }
                 else { return false; }
-
             }
         }
         public bool UpdateNewPU(SaveModelIPU saveModelIPU, string User)
@@ -394,18 +390,13 @@ namespace BL.Counters
                     AutoAddPU(saveModelIPU.FULL_LIC);
                     IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ != true).FirstOrDefault();
                 }
-
-                //if(IPU_COUNTERS == null)
-                //{
-                //    //AutoAddPU(saveModelIPU.FULL_LIC);
-                //    IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ == null).FirstOrDefault();
-                //}
                 if (IPU_COUNTERS != null)
                 {
                     saveModelIPU.IdPU = IPU_COUNTERS.ID_PU;
                     saveModelIPU.OVERWRITE_SEAL = false;
-                    logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
-                    Task.Run(() => UpdateReadings(saveModelIPU));
+                    _ = Task.Run(async () => await logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User));
+                    //logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
+                    _ = Task.Run(() => UpdateReadings(saveModelIPU));
                     //new Thread(x=> UpdateReadings(saveModelIPU)).Start();
                     return true;
                 }

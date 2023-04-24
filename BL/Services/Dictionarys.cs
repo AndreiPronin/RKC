@@ -16,6 +16,7 @@ namespace BL.Services
         Task<List<string>> GetCourtNameDictionaries(string Text, int Id);
         Task<List<CourtNameDictionary>> GetAllCourtNameDictionaries();
         Task<List<CourtValueDictionary>> GetCourtValueDictionaryId(int Id);
+        List<FlatTypeDto> GetFlatType();
     }
     public class Dictionarys : IDictionary
     {
@@ -51,6 +52,14 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var Result = await db.CourtNameDictionaries.ToListAsync();
+                return Result;
+            }
+        }
+        public List<FlatTypeDto> GetFlatType()
+        {
+            using (var db = new DbLIC())
+            {
+                var Result = db.FlatTypes.ToList();
                 return Result;
             }
         }

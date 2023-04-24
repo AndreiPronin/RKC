@@ -23,6 +23,7 @@ using DB.Model;
 using static System.Net.WebRequestMethods;
 using BL.Services;
 using BE.Roles;
+using System.Data.Entity;
 
 namespace RKC.Controllers
 {
@@ -446,7 +447,7 @@ namespace RKC.Controllers
             }
         }
         [Auth(Roles = "Admin")]
-        public async Task<ActionResult> ErroIntegratinDelete(string Lic, string TypePU)
+        public async Task<ActionResult> ErroIntegratinDelete(string Lic, string TypePU, int? Id)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -455,10 +456,16 @@ namespace RKC.Controllers
                     Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.TypePu == TypePU && x.IsError == true).ToList();
                 if (TypePU == "")
                     Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.Description == "Не найден лицевой счет" && x.IsError == true).ToList();
+                if(string.IsNullOrEmpty(Lic) && string.IsNullOrEmpty(TypePU) && Id.HasValue)
+                {
+                    var Integr = await db.IntegrationReadings.FirstOrDefaultAsync(x => x.Id == Id.Value );
+                    Integr.IsError = false;
+                    _ = await db.SaveChangesAsync();
+                }
                 foreach (var Items in Result)
                 {
                     Items.IsError = false;
-                    await db.SaveChangesAsync();
+                   _ = await db.SaveChangesAsync();
                 }
                 return Redirect("/Counter/ErrorIntegration");
             }

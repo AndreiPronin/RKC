@@ -275,25 +275,22 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var PersData = db.PersData.Find(persDataModel.idPersData);
-
-                if (СomparisonModel.PersDataModel_To_PersData(PersData, persDataModel))
+                _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel), User);
+                if (PersData.Main == true)
                 {
-                    if (PersData.Main == true)
+                    using (var dbAllLic = new DbLIC())
                     {
-                        using (var dbAllLic = new DbLIC())
-                        {
-                            var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == persDataModel.Lic).FirstOrDefault();
-                            AllLIC.KL = persDataModel.NumberOfPersons;
-                            AllLIC.SOBS = Convert.ToDecimal(persDataModel.Square);
-                            AllLIC.FAMIL = persDataModel.LastName;
-                            AllLIC.OTCH = persDataModel.MiddleName;
-                            AllLIC.IMYA = persDataModel.FirstName;
-                            AllLIC.FIO = $"{persDataModel.LastName} {persDataModel.FirstName?.ToUpper()[0]}.{persDataModel.MiddleName?.ToUpper()[0]}.";
-                            dbAllLic.SaveChanges();
-                        }
+                        var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == persDataModel.Lic).FirstOrDefault();
+                        AllLIC.KL = persDataModel.NumberOfPersons;
+                        AllLIC.SOBS = Convert.ToDecimal(persDataModel.Square);
+                        AllLIC.FAMIL = persDataModel.LastName;
+                        AllLIC.OTCH = persDataModel.MiddleName;
+                        AllLIC.IMYA = persDataModel.FirstName;
+                        AllLIC.F4EPLOMBA = persDataModel.FlatTypeId;
+                        AllLIC.FIO = $"{persDataModel.LastName} {persDataModel.FirstName?.ToUpper()[0]}.{persDataModel.MiddleName?.ToUpper()[0]}.";
+                        dbAllLic.SaveChanges();
                     }
                 }
-                _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel), User);
                 var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
                 if (PersData.Main == true)
                 {

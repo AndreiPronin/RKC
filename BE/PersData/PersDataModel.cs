@@ -36,5 +36,7 @@ namespace BE.PersData
         public double? Square { get; set; }
         public string StateLic { get; set; }
         public string SendingElectronicReceipt { get; set; }
+        public string FlatTypeId { get; set; }
+        public string FlatType { get; set; }
     }
 }

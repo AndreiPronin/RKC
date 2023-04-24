@@ -1,6 +1,7 @@
 ﻿using BE.Counter;
 using BE.Court;
 using BE.PersData;
+using BL.Services;
 using DB.DataBase;
 using DB.Model;
 using System;
@@ -20,7 +21,7 @@ namespace BL.Helper
         string Generate(PersDataModel PersDataModel);
         string Generate(CourtGeneralInformation courtGeneralInformation, DB.Model.Court.CourtGeneralInformation courtGeneralInformationDb, string User);
     }
-    public class GeneratorDescriptons : IGeneratorDescriptons
+    public class GeneratorDescriptons :BaseService, IGeneratorDescriptons
     {
         public string Generate(SaveModelIPU saveModelIPU)
         {
@@ -214,12 +215,15 @@ namespace BL.Helper
         public string Generate(PersDataModel PersDataModel)
         {
             StringBuilder Result = new StringBuilder();
+            var FlatType = GetFlatTypeLic(PersDataModel.Lic);
+            if (PersDataModel.FlatTypeId != FlatType.FlatTypeId)
+                Result.Append($"Изменил категорию помещения: было {FlatType.FlatType} стало {PersDataModel.FlatType} \r\n");
             using (var db = new ApplicationDbContext()) {
                 PersData PersData = db.PersData.Where(x => x.idPersData == PersDataModel.idPersData).FirstOrDefault();
                 if (PersData?.FirstName != PersDataModel.FirstName && !string.IsNullOrEmpty(PersDataModel.FirstName)) Result.Append($"Изменили Имя: было {PersData.FirstName} стало {PersDataModel.FirstName} \r\n");
                 if (PersData?.LastName != PersDataModel.LastName && !string.IsNullOrEmpty(PersDataModel.LastName)) Result.Append($"Изменили Фамилию: было {PersData.LastName} стало {PersDataModel.LastName} \r\n");
                 if (PersData?.MiddleName != PersDataModel.MiddleName && !string.IsNullOrEmpty(PersDataModel.MiddleName)) Result.Append($"Изменили отчество: было {PersData.MiddleName} стало {PersDataModel.MiddleName} \r\n");
-                if (PersData?.DateOfBirth != PersDataModel.DateOfBirth && PersDataModel.DateOfBirth != null ) Result.Append($"Изменили дату рождения: было {PersData.DateOfBirth} стало {PersDataModel.DateOfBirth} \r\n");
+                if (PersData?.DateOfBirth != PersDataModel.DateOfBirth && PersDataModel.DateOfBirth != null) Result.Append($"Изменили дату рождения: было {PersData.DateOfBirth} стало {PersDataModel.DateOfBirth} \r\n");
                 //if (PersData.Lic != PersDataModel.Lic && !string.IsNullOrEmpty(PersDataModel.Lic)) Result.Append($"Изменили номер ПУ: было {PersData.Lic} стало {PersDataModel.Lic} \r\n");
                 if (PersData?.PlaceOfBirth != PersDataModel.PlaceOfBirth && !string.IsNullOrEmpty(PersDataModel.PlaceOfBirth)) Result.Append($"Изменили место рождения: было {PersData.PlaceOfBirth} стало {PersDataModel.PlaceOfBirth} \r\n");
                 if (PersData?.PassportSerial != PersDataModel.PassportSerial && !string.IsNullOrEmpty(PersDataModel.PassportSerial)) Result.Append($"Изменили паспорт серию: было {PersData.PassportSerial} стало {PersDataModel.PassportSerial} \r\n");
