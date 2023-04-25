@@ -595,6 +595,7 @@
     <Content Include="Views\Court\GetPartialDictionaryId.cshtml" />
     <Content Include="Views\Court\PartialViewCourtWorkRequisites.cshtml" />
     <Content Include="Views\Court\PartialViewGetAllFilesInCourt.cshtml" />
+    <Content Include="Views\Admin\ParilaViewBlock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

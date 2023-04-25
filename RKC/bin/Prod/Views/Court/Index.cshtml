@@ -78,10 +78,10 @@
             <a class="nav-link" data-toggle="tab" href="#GeneralInformation">Главная</a>
         </li>*@
             <li class="nav-item active" id="GeneralInformationButton">
-                <a class="nav-link" data-toggle="tab"  href="#GeneralInformation">Общая информация</a>
+                <a class="nav-link" data-toggle="tab" href="#GeneralInformation">Общая информация</a>
             </li>
             <li class="nav-item" id="CourtWorkButton">
-                <a class="nav-link" data-toggle="tab" data-bs-target="#profile"  href="#CourtWork">Судебная работа</a>
+                <a class="nav-link" data-toggle="tab" data-bs-target="#profile" href="#CourtWork">Судебная работа</a>
             </li>
             <li class="nav-item" id="ExecutionInPFButton">
                 <a class="nav-link" data-toggle="tab" href="#ExecutionInPF">Исполнение в ПФ</a>
@@ -107,6 +107,9 @@
             <li class="nav-item" id="DocumentScansButton">
                 <a class="nav-link" data-toggle="tab" href="#DocumentScans">Сканы документов</a>
             </li>
+            <li class="nav-item" id="UserHistoryActionButton">
+                <a class="nav-link" data-toggle="tab" href="#UserHistoryAction">История действий пользователя</a>
+            </li>
         </ul>
     </div>
 </div>
@@ -116,10 +119,17 @@
     @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post,
     new { onsubmit = "this.querySelectorAll('input').forEach(i => i.disabled = false);this.querySelectorAll('textarea').forEach(i => i.disabled = false)" }))
     {
-        <input type="submit" class="btn hidden btn-success" id="Save" value="Coхранить" />
-        <input type="button" class="btn btn-success" id="EditData" value="Редактировать" />
-        <input type="button" class="btn hidden btn-danger" id="Cancel" value="Отмена" />
-        <input type="button" class="btn btn-danger" id="ClosePage" value="Закрыть страницу" />
+        if (!ViewBag.IsLock)
+        {
+            <input type="submit" class="btn hidden btn-success" id="Save" value="Coхранить" />
+            <input type="button" class="btn btn-success" id="EditData" value="Редактировать" />
+            <input type="button" class="btn hidden btn-danger" id="Cancel" value="Отмена" />
+            <input type="button" class="btn btn-danger" id="ClosePage" value="Закрыть страницу" />
+        }
+        else
+        {
+            <p>В данный момент страницу редактирует @ViewBag.User</p>
+        }
         <div class="tab-content">
             <div class="tab-pane fade active in" id="GeneralInformation">
                 @Html.Partial("PartialGeneralInformation", Model)
@@ -151,6 +161,9 @@
             <div class="tab-pane fade" id="DocumentScans">
                 @Html.Partial("PartialDocumentScans", Model)
             </div>
+            <div class="tab-pane fade" id="UserHistoryAction">
+                <div id="UserHistoryActionResult"></div>
+            </div>
         </div>
 
     }
@@ -169,6 +182,18 @@
                 return false;
             }
         });
+        $("#UserHistoryActionButton").click(function () {
+            $.ajax({
+                url: "/Court/GetActionUser?Lic=" + @Model.Lic + '&IdCourt=' + @Model.Id,
+                success: function (data) {
+                    $("#UserHistoryActionResult").empty();
+                    $("#UserHistoryActionResult").append('<h4 style= "white-space: break-spaces;">' + data + '</h4>');
+                },
+                Error: function (e) {
+                    alert("Ошибка. Обратитесь к администратору")
+                }
+            });
+        })
         $("input").on('click keyup change focus', function (e) {
             let equalDate = @DateTimeOffset.Now.ToUnixTimeSeconds();
             console.log($(this).attr('NotMaxDAte'))
@@ -186,7 +211,6 @@
                     }
                 }
             }
-
         })
         ///Clear
         $(".nav-tabs li").each(function () {
@@ -209,6 +233,9 @@
             });
             $(activeTab + 'Button').addClass("active");
             $(activeTab).addClass("active in");
+            if (activeTab == '#UserHistoryAction') {
+                $("#UserHistoryActionButton").click();
+            }
         } else {
             $("#GeneralInformationButton").addClass("active");
             $("#GeneralInformation").addClass("active in");
@@ -245,39 +272,7 @@
             });
         })
         $(".loader").addClass("hidden");
-        $('#Text').autocomplete({
-            delay: 500,
-            source: function (request, response) {
-                $.ajax({
-                    url: "/DPU/SearchAutocompleteDpu?Text=" + $('#Text').val(), type: "Get", dataType: "json",
-                    data: { id: request.term },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.Value, value: item.Value, id: item.Id };
-                        }));
-                    },
-                });
-            },
-            select: function (event, ui) {
-                $(".loader").removeClass("hidden");
-                console.log(ui.item.id);
-                $("#ResultSearchCourt").empty();
-                $.ajax({
-                    type: "Get",
-                    url: "/DPU/DpuInfo?id=" + ui.item.id,
-                    success: function (data) {
-                        $("#ResultSearchCourt").empty();
-                        $("#ResultSearchCourt").append(data);
-                        $(".loader").addClass("hidden");
-                    }
-                });
-                $("input[type=hidden]").val(ui.item.id);
-            }
-        })
-        $('.clear').click(function () {
-            $('#Text').val('');
-            $("#ResultSearchDpu").empty();
-        })
+
         var selectDic = true;
         var val = '';
         var atr = '';

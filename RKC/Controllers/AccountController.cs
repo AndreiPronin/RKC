@@ -160,7 +160,7 @@ namespace RKC.Controllers
         public ActionResult LockAction(string Page)
         {
             flagsAction.Trigger(Page);
-            return Redirect("/Manage");
+            return Redirect("/Admin");
         }
         //
         // POST: /Account/Register

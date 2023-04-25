@@ -16,6 +16,7 @@ using ApplicationDbContext = DB.DataBase.ApplicationDbContext;
 using ApplicationContext = RKC.Models.ApplicationDbContext;
 using Microsoft.AspNet.Identity.Owin;
 using RKC.Extensions;
+using BL.Helper;
 
 namespace RKC.Controllers
 {
@@ -23,9 +24,11 @@ namespace RKC.Controllers
     public class AdminController : Controller
     {
         private readonly ISecurityProvider _securityProvider;
-        public AdminController(ISecurityProvider securityProvider)
+        private readonly IFlagsAction _flagsAction;
+        public AdminController(ISecurityProvider securityProvider, IFlagsAction flagsAction)
         {
             _securityProvider = securityProvider;
+            _flagsAction = flagsAction;
         }
         [Auth(Roles = "Admin")]
         public ActionResult Index()
@@ -35,7 +38,9 @@ namespace RKC.Controllers
             if (User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
                 ViewBag.Roles = _securityProvider.GetAllRolesWhithoutBoosRoles();
             ViewBag.User = _securityProvider.GetAllUser();
-            
+
+            ViewBag.StatusDetailedInformIPU = _flagsAction.GetAction("DetailedInformIPU");
+            ViewBag.DetailedInformPersData = _flagsAction.GetAction("DetailedInformPersData");
             using (var db = new ApplicationDbContext())
             {
                 ViewBag.Notifacation = db.Notifications.Where(x => x.IsDelete == false).ToList();
