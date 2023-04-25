@@ -228,7 +228,6 @@
     <Compile Include="Extention\StringWriterExtension.cs" />
     <Compile Include="Helper\ConvertToModelCourt.cs" />
     <Compile Include="Helper\Resposne.cs" />
-    <Compile Include="Helper\СomparisonModel.cs" />
     <Compile Include="Jobs\JobManager.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Notification\NotificationMail.cs" />

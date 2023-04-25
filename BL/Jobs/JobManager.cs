@@ -83,16 +83,12 @@ namespace BL.Jobs
                             var lic = Lic[i].Trim();
                             persData.Add(db.PersData.FirstOrDefault(x => x.Main == true && x.Lic == lic));
                         }
-                            
-                    //persData = db.PersData.Where(x => x.Main == true && x.Lic == FullLic).ToList();
                 }
                 var Recept = _pdfFactory.CreatePdf(PdfType.Personal);
                 foreach (var Items in persData)
                 {
                     try
                     {
-
-
                         Recept.Generate(Items.Lic, DateTime.Now.AddMonths(-1));
                         if (string.IsNullOrEmpty(Items.Email))
                             throw new Exception("Пустой Email");
@@ -102,7 +98,6 @@ namespace BL.Jobs
                     catch(Exception ex)
                     {
                         receiptNotSend.Add(new ReceiptNotSend { FullLic = Items.Lic, Comment = ex.Message });
-                        //break;
                     }
                 }
                 if (receiptNotSend.Count() > 0)

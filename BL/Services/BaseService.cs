@@ -24,7 +24,18 @@ namespace BL.Services
         /// <param name="FullLic"></param>
         /// <returns></returns>
         Task ClosePersInLic(string FullLic);
+        /// <summary>
+        /// Информацию по типу помещения
+        /// </summary>
+        /// <param name="FullLic">Номер лицевого счета</param>
+        /// <returns></returns>
         FlatTypeDto GetFlatTypeLic (string FullLic);
+        /// <summary>
+        /// Информацию по типу помещения
+        /// </summary>
+        /// <param name="FullLic">Id типа помещения</param>
+        /// <returns></returns>
+        FlatTypeDto GetFlatTypeById(string Id);
     }
     public class BaseService : IBaseService
     {
@@ -178,6 +189,15 @@ namespace BL.Services
             {
                 var res = DbLIC.ALL_LICS.Select(x=>new { x.F4EPLOMBA, x.F4ENUMELS }).FirstOrDefault(x => x.F4ENUMELS == FullLic);
                 var Id = res.F4EPLOMBA.ToString();
+                var FlatType = DbLIC.FlatTypes.FirstOrDefault(x => x.FlatTypeId == Id);
+                return FlatType == null ? new FlatTypeDto() : FlatType;
+            }
+
+        }
+        public FlatTypeDto GetFlatTypeById(string Id)
+        {
+            using (var DbLIC = new DbLIC())
+            {
                 var FlatType = DbLIC.FlatTypes.FirstOrDefault(x => x.FlatTypeId == Id);
                 return FlatType == null ? new FlatTypeDto() : FlatType;
             }

@@ -216,7 +216,7 @@ namespace BL.Helper
         {
             StringBuilder Result = new StringBuilder();
             var FlatType = GetFlatTypeLic(PersDataModel.Lic);
-            if (PersDataModel.FlatTypeId != FlatType.FlatTypeId)
+            if (!string.IsNullOrEmpty(PersDataModel.FlatTypeId) && PersDataModel.FlatTypeId != FlatType.FlatTypeId)
                 Result.Append($"Изменил категорию помещения: было {FlatType.FlatType} стало {PersDataModel.FlatType} \r\n");
             using (var db = new ApplicationDbContext()) {
                 PersData PersData = db.PersData.Where(x => x.idPersData == PersDataModel.idPersData).FirstOrDefault();

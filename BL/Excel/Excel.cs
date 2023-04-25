@@ -43,11 +43,13 @@ namespace BL.Excel
         private readonly ICacheApp _cacheApp;
         private readonly IGeneratorDescriptons _generatorDescriptons;
         private readonly Ilogger _logger;
-        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger)
+        private readonly IDictionary _dictionary;
+        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, IDictionary dictionary)
         {
             _cacheApp = cacheApp;
             _generatorDescriptons = generatorDescriptons;
             _logger = logger;
+            _dictionary = dictionary;
         }
         public DataTable CreateExcelCounters()
         {
@@ -229,6 +231,7 @@ namespace BL.Excel
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons());
             List<PersDataModel> PersNotAdded = new List<PersDataModel>();
+            var flatTypes = _dictionary.GetFlatType();
             var dbApp = new ApplicationDbContext();
             var Count = nonEmptyDataRows.Count();
             int i = 1;
@@ -287,6 +290,11 @@ namespace BL.Excel
                         if (dataRow.Cell(21).Value != "")
                             saveModel.Square = Convert.ToDouble(Convert.ToString(dataRow.Cell(21).Value).Trim());
                         saveModel.SendingElectronicReceipt = dataRow.Cell(22).Value == "" ? "" : Convert.ToString(dataRow.Cell(22).Value).Trim();
+                        saveModel.FlatTypeId = dataRow.Cell(23).Value == "" ? "" : Convert.ToString(dataRow.Cell(23).Value).Trim();
+                        if (!string.IsNullOrEmpty(saveModel.FlatTypeId))
+                            if (flatTypes.FirstOrDefault(x => x.FlatTypeId == saveModel.FlatTypeId) == null)
+                                throw new Exception("Указаный Id помещения не найден в справочнике");
+
                         personalData.SavePersonalDataMain(saveModel, User);
                     }
                     catch (Exception ex)

@@ -5,6 +5,7 @@ using BL.Extention;
 using BL.Helper;
 using DB.DataBase;
 using DB.Model;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -351,7 +352,18 @@ namespace BL.Services
                 var pers = PErsData.FirstOrDefault();
                 var PersData = db.PersData.Find(pers.idPersData);
                 persDataModel.idPersData = pers.idPersData;
+                if(!string.IsNullOrEmpty(persDataModel.FlatTypeId))
+                    persDataModel.FlatType = GetFlatTypeById(persDataModel.FlatTypeId).FlatType;
+
                 _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel), User);
+                using (var dbAllLic = new DbLIC())
+                {
+                    var AllLIC = dbAllLic.ALL_LICS.Where(x => x.F4ENUMELS == persDataModel.Lic).FirstOrDefault();
+                    AllLIC.KL = persDataModel.NumberOfPersons != null ? persDataModel.NumberOfPersons : AllLIC.KL;
+                    AllLIC.SOBS = persDataModel.Square != null ? Convert.ToDecimal(persDataModel.Square) : AllLIC.SOBS;
+                    AllLIC.F4EPLOMBA = string.IsNullOrEmpty(persDataModel.FlatTypeId) ? AllLIC.F4EPLOMBA : persDataModel.FlatTypeId;
+                    dbAllLic.SaveChanges();
+                }
                 var ListPers = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main != true && (x.IsDelete == false || x.IsDelete == null)).ToList();
                 foreach (var Items in ListPers)
                 {
