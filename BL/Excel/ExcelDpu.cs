@@ -3,6 +3,7 @@ using BE.DPU;
 using ClosedXML.Excel;
 using DB.DataBase;
 using DB.Model;
+using DB.Query;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
@@ -42,13 +43,13 @@ namespace BL.Excel
                                 Message = "Ошибка не указан период \r\n";
                             var Period = Convert.ToDateTime(dataRow.Cell(1).Value);
                             var Lic = dataRow.Cell(6).Value != "" ? Convert.ToString(dataRow.Cell(4).Value) : "";
-                            var lic = await context.dPUHelpCalculationInstallations.Where(x => x.Lic == Lic
-                            && x.Period.Value.Year == Period.Year && x.Period.Value.Month == Period.Month).ToListAsync();
+                            var lic = context.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).Where(x => x.Lic == Lic
+                            && x.Period.Year == Period.Year && x.Period.Month == Period.Month).ToList();
                             if(lic.Count() != 0)
                                 Message = "Ошибка такой месяц уже существует \r\n";
                             if (!string.IsNullOrEmpty(Message))
                                 throw new Exception(Message);
-                            var Models = new DPUHelpCalculationInstallation();
+                            var Models = new DPUHelpCalculationInstallationView();
                             Models.Period = Period;
                             Models.Street =  dataRow.Cell(2).Value != "" ? Convert.ToString(dataRow.Cell(2).Value) : "";
                             Models.Home = dataRow.Cell(3).Value != "" ? Convert.ToString(dataRow.Cell(3).Value) : "";
@@ -84,7 +85,7 @@ namespace BL.Excel
                             Models.ToPay = dataRow.Cell(33).Value != "" ? Convert.ToDouble(dataRow.Cell(33).Value) : 0;
                             Models.SaldoEndPeriodDebt = dataRow.Cell(34).Value != "" ? Convert.ToDouble(dataRow.Cell(34).Value) : 0;
                             Models.SaldoEndPeriodPercentage = dataRow.Cell(35).Value != "" ? Convert.ToDouble(dataRow.Cell(35).Value) : 0;
-                            context.dPUHelpCalculationInstallations.Add(Models);
+                            //context.dPUHelpCalculationInstallations.Add(Models);
                         }
                         catch(Exception e)
                         {
@@ -128,25 +129,25 @@ namespace BL.Excel
                             if (dataRow.Cell(10).Value != "")
                                 DateTransferRBR = Convert.ToDateTime(dataRow.Cell(10).Value);
                             var Cadr = dataRow.Cell(6).Value != "" ? Convert.ToString(dataRow.Cell(4).Value) : "";
-                            var lic = await context.dPUSummaryHouses.Where(x => x.Cadr == Cadr
-                            && x.PeriodExhibit.Value.Year == Period.Year && x.PeriodExhibit.Value.Month == Period.Month).ToListAsync();
-                            if (lic.Count() != 0)
-                                Message = "Ошибка такой месяц уже существует \r\n";
-                            if (!string.IsNullOrEmpty(Message))
-                                throw new Exception(Message);
-                            var Models = new DPUSummaryHouses();
-                            Models.Cadr = dataRow.Cell(1).Value != "" ? Convert.ToString(dataRow.Cell(1).Value) : "";
-                            Models.Street = dataRow.Cell(2).Value != "" ? Convert.ToString(dataRow.Cell(2).Value) : "";
-                            Models.Home = dataRow.Cell(3).Value != "" ? Convert.ToString(dataRow.Cell(3).Value) : "";
-                            Models.TotalCostODPU = dataRow.Cell(4).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
-                            Models.TotalCostOdpuResidentialPremises = dataRow.Cell(5).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
-                            Models.TotalCostOdpuNonResidentialPremises = dataRow.Cell(6).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
-                            Models.TotalAreaMKD = dataRow.Cell(7).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
-                            Models.TotalAreaMKDResidentialPremises = dataRow.Cell(8).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
-                            Models.TotalAreaMKDNonResidentialPremises = dataRow.Cell(9).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
-                            Models.DateTransferRBR = DateTransferRBR;
-                            Models.PeriodExhibit = Period;
-                            context.dPUSummaryHouses.Add(Models);
+                            //var lic = await context.dPUSummaryHouses.Where(x => x.Cadr == Cadr
+                            //&& x.PeriodExhibid.Value.Year == Period.Year && x.PeriodExhibid.Value.Month == Period.Month).ToListAsync();
+                            //if (lic.Count() != 0)
+                            //    Message = "Ошибка такой месяц уже существует \r\n";
+                            //if (!string.IsNullOrEmpty(Message))
+                            //    throw new Exception(Message);
+                            //var Models = new DPUSummaryHousesView();
+                            //Models.Cadr = dataRow.Cell(1).Value != "" ? Convert.ToString(dataRow.Cell(1).Value) : "";
+                            //Models.Street = dataRow.Cell(2).Value != "" ? Convert.ToString(dataRow.Cell(2).Value) : "";
+                            //Models.Home = dataRow.Cell(3).Value != "" ? Convert.ToString(dataRow.Cell(3).Value) : "";
+                            //Models.TotalCostOdpu = dataRow.Cell(4).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
+                            //Models.TotalCostOdpuResidentialPremises = dataRow.Cell(5).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
+                            //Models.TotalCostOdpuNonResidentialPremises = dataRow.Cell(6).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
+                            //Models.TotalAreaMKD = dataRow.Cell(7).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
+                            //Models.TotalAreaMKDResidentialPremises = dataRow.Cell(8).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
+                            //Models.TotalAreaMKDNonResidentialPremises = dataRow.Cell(9).Value != "" ? Convert.ToDouble(dataRow.Cell(4).Value) : 0;
+                            //Models.DateTransferRBR = DateTransferRBR;
+                            //Models.PeriodExhibid = Period;
+                            //context.dPUSummaryHouses.Add(Models);
                         }
                         catch (Exception e)
                         {

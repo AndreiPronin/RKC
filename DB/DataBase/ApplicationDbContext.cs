@@ -33,8 +33,8 @@ namespace DB.DataBase
         public DbSet<Notifications> Notifications { get; set; }
         public DbSet<IntegrationReadings> IntegrationReadings { get; set; }
         public DbSet<vw_CounterTPlus> vw_CounterTPlus { get; set; }
-        public DbSet<DPUHelpCalculationInstallation> dPUHelpCalculationInstallations { get; set; }
-        public DbSet<DPUSummaryHouses> dPUSummaryHouses { get; set; }
+        //public DbSet<DPUHelpCalculationInstallationView> dPUHelpCalculationInstallations { get; set; }
+        //public DbSet<DPUSummaryHousesView> dPUSummaryHouses { get; set; }
         public DbSet<CourtBankruptcy> CourtBankruptcy { get; set; }
         public DbSet<CourtWork> CourtWork { get; set; }
         public DbSet<CourtDocumentScans> CourtCourtDocumentScans { get; set; }
@@ -58,6 +58,7 @@ namespace DB.DataBase
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+           
             modelBuilder.Entity<CourtDocumentScans>()
             .HasRequired<CourtGeneralInformation>(s => s.CourtGeneralInformation)
             .WithMany(g => g.CourtDocumentScans)

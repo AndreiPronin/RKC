@@ -250,6 +250,8 @@ namespace RKC.Controllers
         public ActionResult DetailedInformPersDelete(string FULL_LIC)
         {
             ViewBag.FULL_LIC = FULL_LIC;
+            ViewBag.FlatTypeDic = _dictionary.GetFlatType();
+            ViewBag.FlatType = _baseService.GetFlatTypeLic(FULL_LIC);
             return View(_personalData.GetInfoPersDataDelete(FULL_LIC));
         }
         public ActionResult PaymentHistoryView(string FullLic)

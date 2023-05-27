@@ -27,14 +27,16 @@ namespace RKC.Controllers
 
     public class HomeController : Controller
     {
+        private readonly IEBD _eBD;
         public HomeController(IEBD eBD)
         {
+            _eBD = eBD;
             //var rrr = Parser.PdfParser();
         }
         public ActionResult Index()
         {
             var sss = User.Identity.IsAuthenticated;
-            //_eBD.CreateEBDAll();
+            //_eBD.CreateEbdFlatliving(DateTime.Now);
             return View();
         }
         public ActionResult ResultEmpty(string Message)
@@ -51,17 +53,5 @@ namespace RKC.Controllers
             var tt = User;
             return Content("Test");
         }
-        [Route("signin-oidc")]
-        public ActionResult SignIn()
-        {
-            if (!Request.IsAuthenticated)
-            {
-                HttpContext.GetOwinContext().Authentication.Challenge(
-                    new AuthenticationProperties { RedirectUri = "/" },
-                    OpenIdConnectAuthenticationDefaults.AuthenticationType);
-            }
-            return Content("Test");
-        }
-
     }
 }

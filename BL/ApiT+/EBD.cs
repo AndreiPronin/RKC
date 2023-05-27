@@ -69,7 +69,7 @@ namespace BL.ApiT_
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEbdMkd));
                 using (var db = new DbTPlus())
                 {
-                    IQueryable<MKD> Mkd_ = db.MKD.Where(x => x.date_edit.Value >= dateTime);
+                    List<MKD> Mkd_ = db.Database.SqlQuery<MKD>($"SELECT * FROM [T+].[dbo].[EBD_MKD]('{dateTime.ToString("yyyy-MM-dd")}')").ToList();
                     var Data = Mkd_.ToList();
                     #region
                     Parallel.ForEach(Data, Item =>
@@ -77,9 +77,9 @@ namespace BL.ApiT_
                         try
                         {
                             var obj = new Object();
-                            obj.system = Item.system.Replace("\v", "").Trim();
-                            obj.object_type = Item.object_type.Replace("\v", "").Trim();
-                            obj.object_id = $@"RBR{Item.object_id?.ToString().Replace("\v", "").Trim()}";
+                            obj.system = Item.system;
+                            obj.object_type = Item.objectType;
+                            obj.object_id = $@"RBR{Item.objectId}";
                             obj.object_disable = "false";
                             //obj.CadastralNumber = "";
                             //obj.fias = Item.fias;
@@ -88,9 +88,9 @@ namespace BL.ApiT_
                             //obj.floors = "";
                             //obj.vid_blgu = "";
                             //obj.wall = "";
-                            obj.square_all = Item.square_object_all?.ToString().Replace("\v", "").Replace(",", ".").Trim();
-                            obj.square_cold = Item.square_cold_all?.ToString().Replace("\v", "").Replace(",", ".").Trim();
-                            obj.square_mop_all = Item.square_mop_all?.ToString().Replace("\v", "").Replace(",", ".").Trim();
+                            obj.square_all = Item.squareObjectAll?.ToString().Replace("\v", "").Replace(",", ".").Trim();
+                            obj.square_cold = Item.squareColdAll?.ToString().Replace("\v", "").Replace(",", ".").Trim();
+                            obj.square_mop_all = Item.squareMopAll?.ToString().Replace("\v", "").Replace(",", ".").Trim();
                             //obj.id_dogovor_iku = "";
                             //obj.otopl_7_12 = "";
                             //obj.ist_tpls = "";
@@ -120,9 +120,9 @@ namespace BL.ApiT_
                             obj.ODPU_EE = new ODPU_EE();
                             obj.ODPU_EE.status = Item.gvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_HOT_W = new IPU_HOT_W();
-                            obj.IPU_HOT_W.status = Item.ipu_gvs.ToLower().Contains("да") ? "true" : "false";
+                            obj.IPU_HOT_W.status = Item.ipuGvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_OTOPL = new IPU_OTOPL();
-                            obj.IPU_OTOPL.status = Item.ipu_otp.ToLower().Contains("да") ? "true" : "false";
+                            obj.IPU_OTOPL.status = Item.ipuOtp.ToLower().Contains("да") ? "true" : "false";
                             lock (Mkd.Objects)
                             {
                                 Mkd.Objects.Add(obj);
@@ -152,7 +152,7 @@ namespace BL.ApiT_
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEBDAll));
                 using (var db = new DbTPlus())
                 {
-                    IQueryable<FLAT> flat_ = db.FLAT.Where(x => x.date_edit.Value >= dateTime && !x.giloe.ToLower().Contains("не"));
+                    List<FLAT> flat_ = db.Database.SqlQuery<FLAT>($"SELECT * FROM [dbo].[EBD_FLAT]('{dateTime.ToString("yyyy-MM-dd")}','1')").ToList();
                     var Data = flat_.ToList();
                     var ListError = new List<string>();
                     #region
@@ -161,20 +161,20 @@ namespace BL.ApiT_
                         try
                         {
                             var obj = new Object();
-                            obj.system = Item.system_.Replace("", "").Trim();
-                            obj.object_type = Item.object_t.Replace("", "").Trim();
-                            obj.object_id = $@"RBR{Item.object_id.Replace("", "").Trim()}";
-                            obj.parent_id = $@"RBR{Item.parent_id.ToString().Replace("", "").Trim()}";
+                            obj.system = Item.system.Replace("", "").Trim();
+                            obj.object_type = Item.objectT.Replace("", "").Trim();
+                            obj.object_id = $@"RBR{Item.objectId.Replace("", "").Trim()}";
+                            obj.parent_id = $@"RBR{Item.parentId.ToString().Replace("", "").Trim()}";
                             obj.object_disable = "false";
-                            obj.CadastralNumber = Item.cadastral_number?.ToString().Replace("", "").Trim();
-                            obj.fias = Item.fias.Replace("", "").Trim();
+                            obj.CadastralNumber = Item.CadstraNumber?.ToString().Replace("", "").Trim();
+                            obj.fias = Item.fias?.Replace("", "").Trim();
                             //obj.guid_enrgblng = "";
                             //obj.vid_blgu = "";
-                            obj.square_all = Item.square_all?.ToString().Replace("", "").Replace(",", ".").Trim();
-                            obj.square_cold = Item.s_notp.Replace("", "").Replace(",", ".").Trim();
+                            obj.square_all = Item.squareAll?.ToString().Replace("", "").Replace(",", ".").Trim();
+                            obj.square_cold = Item.sNotp?.Replace("", "").Replace(",", ".").Trim();
                             //obj.guid_tplu = " ";
-                            obj.subject = Item.fio.Replace("", "").Trim();
-                            obj.giloe = Item.giloe.ToLower().Contains("не") ? "false" : "true";
+                            obj.subject = Item.fio?.Replace("", "").Trim();
+                            obj.giloe = !string.IsNullOrEmpty(Item.giloe) ? Item.giloe.ToLower().Contains("не") ? "false" : "true" : "false";
                             obj.address = new Address();
                             //obj.address.OKATO = "";
                             //obj.address.KLADR = "";
@@ -203,9 +203,9 @@ namespace BL.ApiT_
                             obj.ODPU_EE = new ODPU_EE();
                             obj.ODPU_EE.status = Item.gvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_HOT_W = new IPU_HOT_W();
-                            obj.IPU_HOT_W.status = Item.ipu_gvs.ToLower().Contains("да") ? "true" : "false";
+                            obj.IPU_HOT_W.status = Item.ipuGvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_OTOPL = new IPU_OTOPL();
-                            obj.IPU_OTOPL.status = Item.ipu_otp.ToLower().Contains("да") ? "true" : "false";
+                            obj.IPU_OTOPL.status = Item.ipuOtp.ToLower().Contains("да") ? "true" : "false";
                             lock (Flat.Objects)
                             {
                                 Flat.Objects.Add(obj);
@@ -224,6 +224,7 @@ namespace BL.ApiT_
             }
             return new byte[0];
         }
+        #region Comment
         public byte[] CreateEbdFlatNotliving(DateTime dateTime)
         {
             if (!_cacheApp.isLock(KeyCasheLock))
@@ -234,7 +235,7 @@ namespace BL.ApiT_
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEBDAll));
                 using (var db = new DbTPlus())
                 {
-                    IQueryable<FLAT> flat_ = db.FLAT.Where(x => x.date_edit.Value >= dateTime && x.giloe.ToLower().Contains("не"));
+                    List<FLAT> flat_ = db.Database.SqlQuery<FLAT>($"SELECT * FROM [dbo].[EBD_FLAT]('{dateTime.ToString("yyyy-MM-dd")}','0')").ToList();
                     var Data = flat_.ToList();
                     var ListError = new List<string>();
                     #region
@@ -243,20 +244,20 @@ namespace BL.ApiT_
                         try
                         {
                             var obj = new Object();
-                            obj.system = Item.system_.Replace("", "").Trim();
-                            obj.object_type = Item.object_t.Replace("", "").Trim();
-                            obj.object_id = $@"RBR{Item.object_id.Replace("", "").Trim()}";
-                            obj.parent_id = $@"RBR{Item.parent_id.ToString().Replace("", "").Trim()}";
+                            obj.system = Item.system.Replace("", "").Trim();
+                            obj.object_type = Item.objectT.Replace("", "").Trim();
+                            obj.object_id = $@"RBR{Item.objectId.Replace("", "").Trim()}";
+                            obj.parent_id = $@"RBR{Item.parentId.ToString().Replace("", "").Trim()}";
                             obj.object_disable = "false";
-                            obj.CadastralNumber = Item.cadastral_number?.ToString().Replace("", "").Trim();
+                            obj.CadastralNumber = Item.CadstraNumber?.ToString().Replace("", "").Trim();
                             obj.fias = Item.fias.Replace("", "").Trim();
                             //obj.guid_enrgblng = "";
                             //obj.vid_blgu = "";
-                            obj.square_all = Item.square_all?.ToString().Replace("", "").Replace(",", ".").Trim();
-                            obj.square_cold = Item.s_notp.Replace("", "").Replace(",", ".").Trim();
+                            obj.square_all = Item.squareAll?.ToString().Replace("", "").Replace(",", ".").Trim();
+                            obj.square_cold = Item.sNotp.Replace("", "").Replace(",", ".").Trim();
                             //obj.guid_tplu = " ";
                             obj.subject = Item.fio.Replace("", "").Trim();
-                            obj.giloe = Item.giloe.ToLower().Contains("не") ? "false" : "true";
+                            obj.giloe = !string.IsNullOrEmpty(Item.giloe) ? Item.giloe.ToLower().Contains("не") ? "false" : "true" : "false";
                             obj.address = new Address();
                             //obj.address.OKATO = "";
                             //obj.address.KLADR = "";
@@ -285,9 +286,9 @@ namespace BL.ApiT_
                             obj.ODPU_EE = new ODPU_EE();
                             obj.ODPU_EE.status = Item.gvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_HOT_W = new IPU_HOT_W();
-                            obj.IPU_HOT_W.status = Item.ipu_gvs.ToLower().Contains("да") ? "true" : "false";
+                            obj.IPU_HOT_W.status = Item.ipuGvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_OTOPL = new IPU_OTOPL();
-                            obj.IPU_OTOPL.status = Item.ipu_otp.ToLower().Contains("да") ? "true" : "false";
+                            obj.IPU_OTOPL.status = Item.ipuOtp.ToLower().Contains("да") ? "true" : "false";
                             lock (Flat.Objects)
                             {
                                 Flat.Objects.Add(obj);
@@ -306,6 +307,7 @@ namespace BL.ApiT_
             }
             return new byte[0];
         }
+        #endregion
         private string Serialize(objects value)
         {
             if (value == null) return string.Empty;

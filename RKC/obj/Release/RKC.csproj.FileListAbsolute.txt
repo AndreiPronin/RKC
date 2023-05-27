@@ -553,12 +553,7 @@ D:\Programing\RKC\RKC\obj\Release\RKC.pdb
 D:\Programing\RKC\RKC\bin\NLog.dll
 D:\Programing\RKC\RKC\bin\NLog.xml
 D:\Programing\RKC\RKC\bin\NaturalSort.dll
-D:\Programing\RKC\RKC\bin\NaturalSort.xml
 D:\Programing\RKC\RKC\bin\AutoMapper.dll
-D:\Programing\RKC\RKC\bin\AutoMapper.xml
-D:\Programing\RKC\RKC\bin\itextsharp.dll
-D:\Programing\RKC\RKC\bin\BouncyCastle.Crypto.dll
-D:\Programing\RKC\RKC\bin\itextsharp.xml
 D:\Programing\RKC\RKC\bin\IdentityModel.dll
 D:\Programing\RKC\RKC\bin\IdentityServer3.AccessTokenValidation.dll
 D:\Programing\RKC\RKC\bin\IdentityServer3.dll
@@ -597,3 +592,5 @@ D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.OpenIdConnect.xml
 D:\Programing\RKC\RKC\bin\OpenAthens.Owin.Security.OpenIdConnect.xml
 D:\Programing\RKC\RKC\bin\System.IdentityModel.Tokens.Jwt.pdb
 D:\Programing\RKC\RKC\bin\System.IdentityModel.Tokens.Jwt.xml
+D:\Programing\RKC\RKC\bin\System.Net.Http.Json.dll
+D:\Programing\RKC\RKC\bin\System.Net.Http.Json.xml

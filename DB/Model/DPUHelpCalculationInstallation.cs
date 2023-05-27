@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DB.Model
 {
-    [Table(name: "DPUHelpCalculationInstallation", Schema = "dbo")]
-    public class DPUHelpCalculationInstallation
+    [Table(name: "DPUHelpCalcuLationInstallationView", Schema = "dbo")]
+    public class DPUHelpCalculationInstallationView
     {
         [Key]
         public int Id { get; set; }
-        public DateTime? Period { get; set; }
+        public DateTime Period { get; set; }
         public string Street { get; set; }
         public string Home { get; set; }
         public string Cadr { get; set; }
@@ -26,8 +23,8 @@ namespace DB.Model
         public string NewFullLic { get; set; }
         public double? TotalAreaOfResidentialPremises { get; set; }
         public double? ShareInCommonOwnership { get; set; }
-        public double? OneTimePayment { get; set; }
         public double? CostDpuResidentialPremises { get; set; }
+        public double? OneTimePayment { get; set; }
         public string Note { get; set; }
         public double? TotalCostOdpu { get; set; }
         public double? TotalCostOdpuResidentialPremises { get; set; }
@@ -48,7 +45,6 @@ namespace DB.Model
         public double? ToPay { get; set; }
         public double? SaldoEndPeriodDebt { get; set; }
         public double? SaldoEndPeriodPercentage { get; set; }
+        public string LicStatusName { get; set; }
     }
-
-
 }

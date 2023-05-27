@@ -1,6 +1,7 @@
 ﻿using BE.JobManager;
 using BL.ApiT_;
 using BL.Helper;
+using BL.http;
 using BL.Jobs;
 using System;
 using System.Collections.Generic;

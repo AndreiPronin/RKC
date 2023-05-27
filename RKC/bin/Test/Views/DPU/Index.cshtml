@@ -21,7 +21,7 @@
         <a class="nav-link active" data-toggle="tab" id="SearchButton" href="#Search">Поиск</a>
     </li>
 
-    @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+    @*@if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
     {
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#Payments">Расчет</a>
@@ -29,7 +29,7 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#AdminPanel">Админ Панель</a>
         </li>
-    }
+    }*@
 </ul>
 
 <div class="tab-content">
@@ -39,7 +39,7 @@
     <div class="tab-pane fade" id="Search">
         @Html.Partial("Search")
     </div>
-    @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+    @*@if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
     {
         <div class="tab-pane fade" id="Payments">
             @Html.Partial("Payments")
@@ -47,7 +47,7 @@
         <div class="tab-pane fade" id="AdminPanel">
             @Html.Partial("AdminPanel")
         </div>
-    }
+    }*@
 
 </div>
 <script>

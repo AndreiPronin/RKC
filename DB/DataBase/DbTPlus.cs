@@ -13,8 +13,8 @@ namespace DB.DataBase
     {
         public DbSet<IPU_COUNTERS> IPU_COUNTERS { get; set; }
         public DbSet<DIMENSION> DIMENSIONs { get; set; }
-        public DbSet<FLAT> FLAT { get; set; }
-        public DbSet<MKD> MKD { get; set; }
+        //public DbSet<FLAT> FLAT { get; set; }
+        //public DbSet<MKD> MKD { get; set; }
         public DbSet<IPU> IPU { get; set; }
         public DbSet<vw_TplusIPU_GVS> vw_TplusIPU_GVS { get; set; }
         public DbSet<vw_TplusIPU_OTP> vw_TplusIPU_OTP { get; set; }
@@ -25,9 +25,8 @@ namespace DB.DataBase
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("IPU");
-            modelBuilder.Entity<FLAT>().ToTable("FLAT","dbo");
-            modelBuilder.Entity<MKD>().ToTable("MKD", "dbo");
-            
+            //modelBuilder.Entity<FLAT>().ToTable("FLAT","dbo");
+            //modelBuilder.Entity<MKD>().ToTable("MKD", "dbo");
         }
     }
 }

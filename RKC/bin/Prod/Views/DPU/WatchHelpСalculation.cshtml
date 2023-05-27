@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DB.Model.DPUHelpCalculationInstallation>
+﻿@model IEnumerable<DB.Model.DPUHelpCalculationInstallationView>
 @{
     ViewBag.Title = "WatchHelpСalculation";
     var DPU = @Model.LastOrDefault();
@@ -85,9 +85,10 @@
                     }
                     @foreach (var Items in Model)
                     {
+                        if(Items != null) { 
                         <tr>
-                            <td style=" white-space: pre;">@Items.Period.Value.ToString("MM.yyyy")</td>
-                            <td>@Math.Round(Items.PercentageRate.Value,2)</td>
+                            <td style=" white-space: pre;">@Items.Period.ToString("MM.yyyy")</td>
+                            <td>@Math.Round(Items.PercentageRate.Value, 2)</td>
                             <td>@Math.Round(Items.AccruedMainPayment.Value, 2)</td>
                             @{AccruedMainPayment = Items.AccruedMainPayment + AccruedMainPayment;}
                             <td>@Math.Round(Items.AccruedPercentage.Value, 2)</td>
@@ -100,10 +101,10 @@
                             <td>@Math.Round(Items.Paid.Value, 2)</td>
                             @{Paid = Items.Paid + Paid;}
                             <td>@Math.Round(Items.ToPay.Value, 2)</td>
-                            <td>@Math.Round(Items.SaldoBeginningPeriod.Value, 2)</td>
+                            <td>@Math.Round(Items.SaldoEndPeriodDebt.Value, 2)</td>
                             <td>@Math.Round(Items.SaldoEndPeriodPercentage.Value, 2)</td>
-
                         </tr>
+                        }
                     }
                     <tr>
                         <td style=" white-space: pre;"><label>Итого:</label></td>
@@ -114,6 +115,7 @@
                         <td>@Math.Round(PaymentMainDebt.Value, 2)</td>
                         <td>@Math.Round(PercentagePayment.Value, 2)</td>
                         <td>@Math.Round(Paid.Value, 2)</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

@@ -145,7 +145,7 @@ namespace BL.Excel
                 }
             }
         }
-        public static byte[] Generate(List<DPUHelpCalculationInstallation> helpCalculations)
+        public static byte[] Generate(List<DPUHelpCalculationInstallationView> helpCalculations)
         {
             helpCalculations = helpCalculations.OrderBy(x => x.Period).ToList();
             using (XLWorkbook wb = new XLWorkbook())
@@ -202,7 +202,7 @@ namespace BL.Excel
                 //worksheet.Range(2, 17,2000,11).SetDataType(XLDataType.Number);
                 foreach (var Item in helpCalculations)
                 {
-                    worksheet.SetValue(i, 1, Item.Period.Value.ToString("MM-yyyy"));
+                    worksheet.SetValue(i, 1, Item.Period.ToString("MM-yyyy"));
                     worksheet.SetValue(i, 2, Math.Round(Item.PercentageRate.Value,2));
                     worksheet.SetValue(i, 3, Math.Round(Item.AccruedMainPayment.Value, 2));
                     worksheet.SetValue(i, 4, Math.Round(Item.AccruedPercentage.Value, 2));
@@ -211,7 +211,7 @@ namespace BL.Excel
                     worksheet.SetValue(i, 7, Math.Round(Item.PercentagePayment.Value, 2));
                     worksheet.SetValue(i, 8, Math.Round(Item.Paid.Value, 2));
                     worksheet.SetValue(i, 9, Math.Round(Item.ToPay.Value, 2));
-                    worksheet.SetValue(i, 10, Math.Round(Item.SaldoBeginningPeriod.Value, 2));
+                    worksheet.SetValue(i, 10, Math.Round(Item.SaldoEndPeriodDebt.Value, 2));
                     worksheet.SetValue(i, 11, Math.Round(Item.SaldoEndPeriodPercentage.Value, 2));
                     i++;
                 }

@@ -130,7 +130,7 @@ namespace AppCache
         public bool AddLock30Minute(string name, string Method)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            return memoryCache.Add(name, Method, DateTime.Now.AddMinutes(10));
+            return memoryCache.Add(name, Method, DateTime.Now.AddMinutes(30));
         }
         public bool Add(string name, string Url)
         {

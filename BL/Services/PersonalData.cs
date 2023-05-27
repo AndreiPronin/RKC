@@ -511,27 +511,27 @@ namespace BL.Services
         {
             using(var db = new DbTPlus())
             {
-                var flat = db.FLAT.Where(x => x.object_id == Lic).ToList();
-                foreach(var Items in flat)
-                {
-                    Items.square_all = Square;
-                    Items.date_edit = DateTime.Now.Date;
-                }
-                db.SaveChanges();
+                //var flat = db.FLAT.Where(x => x.object_id == Lic).ToList();
+                //foreach(var Items in flat)
+                //{
+                //    Items.square_all = Square;
+                //    Items.date_edit = DateTime.Now.Date;
+                //}
+                //db.SaveChanges();
             }
         }
         public void UpdateSquareCadastrFlat(double? Square,string Cadastr, string Lic)
         {
             using (var db = new DbTPlus())
             {
-                var flat = db.FLAT.Where(x => x.object_id == Lic).ToList();
-                foreach (var Items in flat)
-                {
-                    Items.square_all = Square;
-                    Items.date_edit = DateTime.Now.Date;
-                    Items.cadastral_number = !string.IsNullOrEmpty(Cadastr) ? Cadastr : Items.cadastral_number;
-                }
-                db.SaveChanges();
+                //var flat = db.FLAT.Where(x => x.object_id == Lic).ToList();
+                //foreach (var Items in flat)
+                //{
+                //    Items.square_all = Square;
+                //    Items.date_edit = DateTime.Now.Date;
+                //    Items.cadastral_number = !string.IsNullOrEmpty(Cadastr) ? Cadastr : Items.cadastral_number;
+                //}
+                //db.SaveChanges();
             }
         }
         private async Task ResetNumberOfPersonsAndSquarePers(string FullLic)

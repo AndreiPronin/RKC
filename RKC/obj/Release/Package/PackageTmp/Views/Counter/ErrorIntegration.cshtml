@@ -52,7 +52,7 @@
                     <td>
                         @if (User.IsInRole("Admin"))
                         {
-                            <a class="btn btn-success" href="/Counter/ErroIntegratinDelete?Lic=@Items.Lic&TypePU=@Items.TypePu">Убрать ошибку</a>
+                            <a class="btn btn-success" href="/Counter/ErroIntegratinDelete?Lic=@Items.Lic&TypePU=@Items.TypePu&Id=@Items.Id">Убрать ошибку</a>
                         }
                         <a class="btn btn-danger" target="_blank" href="/Counter/DetailedInformIPU?FULL_LIC=@Items.Lic">Показать</a>
                     </td>

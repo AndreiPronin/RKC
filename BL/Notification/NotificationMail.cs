@@ -48,6 +48,7 @@ namespace BL.Notification
             SmtpClient smtpClient = new SmtpClient();
             smtpClient.Host = ConfigurationManager.AppSettings["mail:host:T+"];
             smtpClient.EnableSsl = true;
+            //smtpClient.Credentials = CredentialCache.DefaultNetworkCredentials;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.UseDefaultCredentials = false;
             smtpClient.Port = 587;

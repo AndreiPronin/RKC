@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DB.Model.DPUSummaryHouses>
+﻿@model IEnumerable<DB.Model.DPUSummaryHousesView>
 <style>
     .fontWeight tr th {
         font-weight: 100;
@@ -27,14 +27,14 @@
                 <th>@Item.Cadr</th>
                 <th>@Item.Street</th>
                 <th>@Item.Home</th>
-                <th>@Item.TotalCostODPU</th>
+                <th>@Item.TotalCostOdpu</th>
                 <th>@Item.TotalCostOdpuResidentialPremises</th>
                 <th>@Item.TotalCostOdpuNonResidentialPremises</th>
                 <th>@Item.TotalAreaMKD</th>
                 <th>@Item.TotalAreaMKDResidentialPremises</th>
                 <th>@Item.TotalAreaMKDNonResidentialPremises</th>
                 <th>@Item.DateTransferRBR.Value.ToString("dd.MM.yyyy")</th>
-                <th>@Item.PeriodExhibit.Value.ToString("dd.MM.yyyy")</th>
+                <th>@Item.PeriodExhibid.Value.ToString("dd.MM.yyyy")</th>
             </tr>
         }
         

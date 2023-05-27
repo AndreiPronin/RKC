@@ -32,8 +32,8 @@ namespace BL.Helper
                 TYPEOFSEAL = model.TYPEOFSEAL,
                 SEALNUMBER2 = model.SEALNUMBER2,
                 TYPEOFSEAL2 = model.TYPEOFSEAL2,
-                FULL_LIC = model.FULL_LIC
-                
+                FULL_LIC = model.FULL_LIC,
+                DIMENSION_ID = model.DIMENSION?.Id
             };
         }
         public static IPU ModelAddpu_To_IPU(ModelAddPU model)

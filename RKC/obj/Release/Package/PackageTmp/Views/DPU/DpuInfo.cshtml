@@ -1,4 +1,4 @@
-﻿@model DB.Model.DPUHelpCalculationInstallation
+﻿@model DB.Model.DPUHelpCalculationInstallationView
 
 @using BL.Extention;
 @{
@@ -26,7 +26,7 @@
                 <div class="col-md-12 paddingTop">
                     <label class="col-sm-4 col-form-label">Фамилия:</label>
                     <div class="col-sm-8">
-                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames.TryGetValue(1)" />
+                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@FullNames.TryGetValue(0)" />
                     </div>
                 </div>
                 <div class="col-md-12 paddingTop">
@@ -122,7 +122,7 @@
                     @{var res =  Model.SaldoEndPeriodDebt + Model.SaldoEndPeriodPercentage;
                         if(res != null)
                         {
-                            res = Math.Round(res.Value, 2);
+                            //res = Math.Round(res, 2);
                         }
                     }
                     <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="LastName" class="form-control " value="@res" />
@@ -132,7 +132,9 @@
                 <div class="list-group">
                     <h5 class="mb-1">Примечание</h5>
                     <textarea style="height:350px;" id="NoteText" class="form-control">@Model.Note</textarea>
-                    <button id="saveNote" class="btn btn-success">Сохранить</button>
+                    <label class="col-sm-12 col-form-label">Статус: @Model.LicStatusName</label>
+
+                    @*<button id="saveNote" class="btn btn-success">Сохранить</button>*@
                 </div>
             </div>
         </div>
@@ -219,7 +221,7 @@
                     '</form>',
                 buttons: {
                     "Просмотреть": function () {
-                        window.open('/PersonalData/PaymentHistoryView?FullLic=' + @Model.NewFullLic,'_blank');
+                        window.open('/PersonalData/PaymentHistoryView?FullLic=@Model.NewFullLic','_blank');
                     },
                     "Отмена": function () {
 

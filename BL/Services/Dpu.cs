@@ -6,8 +6,10 @@ using BL.Excel;
 using BL.Extention;
 using DB.DataBase;
 using DB.Model;
+using DB.Query;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.ExtendedProperties;
+using DocumentFormat.OpenXml.Spreadsheet;
 using NaturalSort;
 using System;
 using System.Collections.Generic;
@@ -21,9 +23,9 @@ namespace BL.Services
     public interface IDpu
     {
         Task<List<SearchAutocompleteResultDPU>> SearchAutocompleteDPU(string Text);
-        Task<DPUHelpCalculationInstallation> GetDpu(int id);
-        Task<List<DPUSummaryHouses>> GetDPUSummaryHouses();
-        Task<List<DPUHelpCalculationInstallation>> GetWatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
+        Task<DPUHelpCalculationInstallationView> GetDpu(int id);
+        Task<List<DPUSummaryHousesView>> GetDPUSummaryHouses();
+        Task<List<DPUHelpCalculationInstallationView>> GetWatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
         Task<DpuDataDocumentLoad> DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
         Task DpuSaveNote(int id, string Text);   
     }
@@ -39,26 +41,27 @@ namespace BL.Services
         {
             List<SearchAutocompleteResultDPU> searchAutocompleteResultDPU = new List<SearchAutocompleteResultDPU>();
             var Words = Text.Split(' ');
-           
+            await Task.CompletedTask;
             using (var AppDb = new ApplicationDbContext())
             {
-                var datas = _cacheApp.GetValue<List<SerachAutoCompleteModel>>(nameof(DPUHelpCalculationInstallation));
+                var datas = _cacheApp.GetValue<List<SerachAutoCompleteModel>>(nameof(SerachAutoCompleteModel));
                 if (datas == null)
                 {
                     lock (LockObject) 
                     {
-                        datas = _cacheApp.GetValue<List<SerachAutoCompleteModel>>(nameof(DPUHelpCalculationInstallation));
+                        datas = _cacheApp.GetValue<List<SerachAutoCompleteModel>>(nameof(SerachAutoCompleteModel));
                         if (datas == null)
                         {
-                            var DataTable = AppDb.dPUHelpCalculationInstallations.Select(x => new SerachAutoCompleteModel
+                            var result = AppDb.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).ToList();
+                            var DataTable = result.Select(x => new SerachAutoCompleteModel
                             {
                                 Id = x.Id,
-                                Street = x.Street.Trim().ToLower(),
-                                Home = x.Home.Trim().ToLower(),
-                                Cadr = x.Cadr.Trim().ToLower(),
-                                Flat = x.Flat.Trim().ToLower(),
-                                FullName = x.FullName.Trim().ToLower(),
-                                NewFullLic = x.NewFullLic.Trim().ToLower(),
+                                Street = x.Street?.Trim().ToLower(),
+                                Home = x.Home?.Trim().ToLower(),
+                                Cadr = x.Cadr?.Trim().ToLower(),
+                                Flat = x.Flat?.Trim().ToLower(),
+                                FullName = x.FullName?.Trim().ToLower(),
+                                NewFullLic = x.NewFullLic?.Trim().ToLower(),
                                 Period = x.Period,
                             }).ToList();
                             var query = DataTable.GroupBy(d => new { d.Street, d.Home, d.Flat })
@@ -67,26 +70,49 @@ namespace BL.Services
                             var querys = DataTable.GroupBy(d => new { d.Street, d.Home, d.Flat })
                             .SelectMany(g => g.OrderByDescending(d => d.Period)
                                               .Take(1)).ToList();
-                            _cacheApp.SetValue<List<SerachAutoCompleteModel>>(nameof(DPUHelpCalculationInstallation), query);
-                            datas = _cacheApp.GetValue<List<SerachAutoCompleteModel>>(nameof(DPUHelpCalculationInstallation));
+                            foreach (var Item in query)
+                            {
+                                Item.Street = Item.Street is null ? "" : Item.Street;
+                                Item.Home = Item.Home is null ? "" : Item.Home;
+                                Item.Cadr = Item.Cadr is null ? "" : Item.Cadr;
+                                Item.Flat = Item.Flat is null ? "" : Item.Flat;
+                                Item.FullName = Item.FullName is null ? "" : Item.FullName;
+                                Item.NewFullLic = Item.NewFullLic is null ? "" : Item.NewFullLic;
+                            }
+                            _cacheApp.SetValue<List<SerachAutoCompleteModel>>(nameof(SerachAutoCompleteModel), query);
+                            datas = _cacheApp.GetValue<List<SerachAutoCompleteModel>>(nameof(SerachAutoCompleteModel));
                         }
                     }
                 }
-                var Dates = AppDb.dPUHelpCalculationInstallations.OrderByDescending(x=>x.Period).Select(x=>x.Period).FirstOrDefault();
+                var Datas = _cacheApp.GetValue<List<DPUHelpCalculationInstallationView>>(nameof(DPUHelpCalculationInstallationView));
+                if (Datas == null)
+                {
+                    lock (LockObject)
+                    {
+                        Datas = _cacheApp.GetValue<List<DPUHelpCalculationInstallationView>>(nameof(DPUHelpCalculationInstallationView));
+                        if (Datas == null)
+                        {
+                            var query = AppDb.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).ToList();
+                            foreach(var Item in query)
+                            {
+                                Item.Street = Item.Street is null ? "" : Item.Street;
+                                Item.Home = Item.Home is null ? "" : Item.Home;
+                                Item.Cadr = Item.Cadr is null ? "" : Item.Cadr;
+                                Item.Flat = Item.Flat is null ? "" : Item.Flat;
+                                Item.FullName = Item.FullName is null ? "" : Item.FullName;
+                                Item.NewFullLic = Item.NewFullLic is null ? "" : Item.NewFullLic;
+                            }
+                            _cacheApp.SetValue<List<DPUHelpCalculationInstallationView>>(nameof(DPUHelpCalculationInstallationView), query);
+                            Datas = _cacheApp.GetValue<List<DPUHelpCalculationInstallationView>>(nameof(DPUHelpCalculationInstallationView));
+                        }
+                    }
+                }
+                var Dates = Datas.FirstOrDefault();
                 List<SerachAutoCompleteModel> dPUHelps = datas ;
                 foreach (var Item in Words)
                 {
                     var Word = Item.Trim().ToLower();
                     var Date = DateTime.TryParse(Word, out var date);
-                    //if (Date)
-                    //{
-                    //    dPUHelps = dPUHelps.Where(x => x.Period.Value.Month == date.Month && x.Period.Value.Year == date.Year);
-                    //    continue;
-                    //}
-                    //else
-                    //{
-                    //    dPUHelps = dPUHelps.Where(x => x.Period.Value.Month >= Dates.Value.Month && x.Period.Value.Year >= Dates.Value.Year);
-                    //}
                     if (Word.Contains("кв."))
                     {
                         Word = Word.Replace("кв.", "");
@@ -123,18 +149,47 @@ namespace BL.Services
             }
             return searchAutocompleteResultDPU;
         }
-        public async Task<DPUHelpCalculationInstallation> GetDpu(int id)
+        public async Task<DPUHelpCalculationInstallationView> GetDpu(int id)
         {
             using (var AppDb = new ApplicationDbContext())
             {
-                return await AppDb.dPUHelpCalculationInstallations.FirstOrDefaultAsync(x => x.Id == id);
+                var Datas = _cacheApp.GetValue<List<DPUHelpCalculationInstallationView>>(nameof(DPUHelpCalculationInstallationView));
+                if (Datas == null)
+                {
+                    lock (LockObject)
+                    {
+                        Datas = _cacheApp.GetValue<List<DPUHelpCalculationInstallationView>>(nameof(DPUHelpCalculationInstallationView));
+                        if (Datas == null)
+                        {
+                            var query = AppDb.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).ToList();
+                            foreach (var Item in query)
+                            {
+                                Item.Street = Item.Street is null ? "" : Item.Street;
+                                Item.Home = Item.Home is null ? "" : Item.Home;
+                                Item.Cadr = Item.Cadr is null ? "" : Item.Cadr;
+                                Item.Flat = Item.Flat is null ? "" : Item.Flat;
+                                Item.FullName = Item.FullName is null ? "" : Item.FullName;
+                                Item.NewFullLic = Item.NewFullLic is null ? "" : Item.NewFullLic;
+                            }
+                            _cacheApp.SetValue<List<DPUHelpCalculationInstallationView>>(nameof(DPUHelpCalculationInstallationView), query);
+                            Datas = _cacheApp.GetValue<List<DPUHelpCalculationInstallationView>>(nameof(DPUHelpCalculationInstallationView));
+                        }
+                    }
+                }
+                await Task.CompletedTask;
+                var result = Datas.FirstOrDefault(x => x.Id == id);
+                var dPUSummaryHouses = await GetDPUSummaryHouses();
+                result.Period = dPUSummaryHouses.FirstOrDefault(x=>x.Cadr == result.Cadr).PeriodExhibid.Value;
+                return result;
             }
         }
-        public async Task<List<DPUSummaryHouses>> GetDPUSummaryHouses()
+        public async Task<List<DPUSummaryHousesView>> GetDPUSummaryHouses()
         {
             using (var AppDb = new ApplicationDbContext())
             {
-                return await AppDb.dPUSummaryHouses.OrderBy(x=>x.Street).ToListAsync();
+                var ttt = AppDb.Database.SqlQuery<DPUSummaryHousesView>(QueryDpu.SqlDPUSummaryHousesView).ToList();
+                await Task.CompletedTask;
+                return ttt.OrderBy(x=>x.Street).ToList();
             }
         }
 
@@ -142,17 +197,33 @@ namespace BL.Services
         {
             using (var dbApp = new ApplicationDbContext())
             {
-                var dpu = await dbApp.dPUHelpCalculationInstallations.FirstOrDefaultAsync(x => x.Id == id);
+                var dpu = await dbApp.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).FirstOrDefaultAsync(x => x.Id == id);
                 dpu.Note = Text;
                 await dbApp.SaveChangesAsync();
             }
         }
 
-        public async Task<List<DPUHelpCalculationInstallation>> GetWatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
+        public async Task<List<DPUHelpCalculationInstallationView>> GetWatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
             using (var dbApp = new ApplicationDbContext())
             {
-                return await dbApp.dPUHelpCalculationInstallations.Where(x=>x.Period.Value >= DateFrom && x.Period.Value<= DateTo && x.NewFullLic == FullLic).ToListAsync();
+                var result = dbApp.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).ToList();
+                await Task.CompletedTask;
+                var results = result.Where(x => x.Period >= DateFrom && x.Period <= DateTo && x.NewFullLic == FullLic).ToList();
+                foreach(var Item in results)
+                {
+                    Item.PercentageRate = Item.PercentageRate is null ? 0 : Item.PercentageRate.Value;
+                    Item.AccruedMainPayment = Item.AccruedMainPayment is null ? 0 : Item.AccruedMainPayment.Value;
+                    Item.AccruedPercentage = Item.AccruedPercentage is null ? 0 : Item.AccruedPercentage.Value;
+                    Item.TotalAccrued = Item.TotalAccrued is null ? 0 : Item.TotalAccrued.Value;
+                    Item.PaymentMainDebt = Item.PaymentMainDebt is null ? 0 : Item.PaymentMainDebt.Value;
+                    Item.PercentagePayment = Item.PercentagePayment is null ? 0 : Item.PercentagePayment.Value;
+                    Item.Paid = Item.Paid is null ? 0 : Item.Paid.Value;
+                    Item.ToPay = Item.ToPay is null ? 0 : Item.ToPay.Value;
+                    Item.SaldoEndPeriodDebt = Item.SaldoEndPeriodDebt is null ? 0 : Item.SaldoEndPeriodDebt.Value;
+                    Item.SaldoEndPeriodPercentage = Item.SaldoEndPeriodPercentage is null ? 0 : Item.SaldoEndPeriodPercentage.Value;
+                }
+                return results;
             }
         }
 
@@ -165,7 +236,22 @@ namespace BL.Services
             var dateTo = Convert.ToDateTime(DateTo.ToString("yyyy,MM")).AddMonths(1);
             using (var db = new ApplicationDbContext())
             {
-                var Result = await db.dPUHelpCalculationInstallations.Where(x => x.NewFullLic == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToListAsync();
+                var res = db.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).ToList();
+                await Task.CompletedTask;
+                var Result = res.Where(x => x.NewFullLic == FullLic && x.Period >= dateFrom && x.Period <= dateTo).ToList();
+                foreach (var Item in Result)
+                {
+                    Item.PercentageRate = Item.PercentageRate is null ? 0 : Item.PercentageRate.Value;
+                    Item.AccruedMainPayment = Item.AccruedMainPayment is null ? 0 : Item.AccruedMainPayment.Value;
+                    Item.AccruedPercentage = Item.AccruedPercentage is null ? 0 : Item.AccruedPercentage.Value;
+                    Item.TotalAccrued = Item.TotalAccrued is null ? 0 : Item.TotalAccrued.Value;
+                    Item.PaymentMainDebt = Item.PaymentMainDebt is null ? 0 : Item.PaymentMainDebt.Value;
+                    Item.PercentagePayment = Item.PercentagePayment is null ? 0 : Item.PercentagePayment.Value;
+                    Item.Paid = Item.Paid is null ? 0 : Item.Paid.Value;
+                    Item.ToPay = Item.ToPay is null ? 0 : Item.ToPay.Value;
+                    Item.SaldoEndPeriodDebt = Item.SaldoEndPeriodDebt is null ? 0 : Item.SaldoEndPeriodDebt.Value;
+                    Item.SaldoEndPeriodPercentage = Item.SaldoEndPeriodPercentage is null ? 0 : Item.SaldoEndPeriodPercentage.Value;
+                }
                 dpuDataDocument.FileBytes = ExcelHelpСalculation.Generate(Result);
             }
             return dpuDataDocument;

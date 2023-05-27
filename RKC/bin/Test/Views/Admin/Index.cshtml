@@ -17,6 +17,9 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#Examination">Проверка</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Block">Блокировка</a>
+        </li>
     }
 </ul>
 <div class="tab-content">
@@ -36,6 +39,9 @@
         </div>
         <div class="tab-pane fade" id="Examination">
             @Html.Partial("ParilaViewExamination")
+        </div>
+        <div class="tab-pane fade" id="Block">
+            @Html.Partial("ParilaViewBlock")
         </div>
     }
 </div>

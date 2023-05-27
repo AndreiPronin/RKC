@@ -456,7 +456,7 @@ namespace RKC.Controllers
                     Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.TypePu == TypePU && x.IsError == true).ToList();
                 if (TypePU == "")
                     Result = db.IntegrationReadings.Where(x => x.Lic == Lic && x.Description == "Не найден лицевой счет" && x.IsError == true).ToList();
-                if(string.IsNullOrEmpty(Lic) && string.IsNullOrEmpty(TypePU) && Id.HasValue)
+                if(string.IsNullOrEmpty(TypePU) && Id.HasValue)
                 {
                     var Integr = await db.IntegrationReadings.FirstOrDefaultAsync(x => x.Id == Id.Value );
                     Integr.IsError = false;

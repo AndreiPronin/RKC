@@ -80,6 +80,7 @@
     <Compile Include="Roles\RolesEnums.cs" />
     <Compile Include="Service\EnumFlags.cs" />
     <Compile Include="Service\ReadFilesModel.cs" />
+    <Compile Include="SocialHiring\SearchLic.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

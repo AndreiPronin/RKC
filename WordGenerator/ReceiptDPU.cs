@@ -1,6 +1,8 @@
 ﻿using AppCache;
 using BE.PersData;
 using DB.DataBase;
+using DB.Model;
+using DB.Query;
 using Microsoft.Office.Interop.Word;
 using NLog;
 using System;
@@ -28,7 +30,7 @@ namespace WordGenerator
             {
                 try
                 {
-                    var Lic = db.dPUHelpCalculationInstallations.FirstOrDefault(x => x.NewFullLic == LIC && x.Period.Value.Year == date.Year && x.Period.Value.Month == date.Month);
+                    var Lic = db.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).FirstOrDefault(x => x.NewFullLic == LIC && x.Period.Year == date.Year && x.Period.Month == date.Month);
                     if (Lic == null)
                     {
                         cacheApp.AddProgress(LIC, "Ничего не найдено за выбранный период");
@@ -57,7 +59,7 @@ namespace WordGenerator
    false, false, false, false);
                         doc.Content.Find.Execute("{NewFullLic}", false, true, false, false, false, true, 1, false, $@"{Lic.NewFullLic.Trim()}", 2,
    false, false, false, false);
-                        doc.Content.Find.Execute("{period}", false, true, false, false, false, true, 1, false, Lic.Period.Value.ToString("MMMM,yyyy").Replace(",", " ").ToUpper(), 2,
+                        doc.Content.Find.Execute("{period}", false, true, false, false, false, true, 1, false, Lic.Period.ToString("MMMM,yyyy").Replace(",", " ").ToUpper(), 2,
         false, false, false, false);
 
                         doc.Content.Find.Execute("{TotalAreaMKD}", false, true, false, false, false, true, 1, false, $@"{Lic.TotalAreaMKD}", 2,
@@ -82,7 +84,7 @@ namespace WordGenerator
   false, false, false, false);
                         doc.Content.Find.Execute("{Sobs}", false, true, false, false, false, true, 1, false, $@"{Lic.Sobs}", 2,
   false, false, false, false);
-                        doc.Content.Find.Execute("{OneTimePayment}", false, true, false, false, false, true, 1, false, $@"{Lic.OneTimePayment}", 2,
+                        doc.Content.Find.Execute("{OneTimePayment}", false, true, false, false, false, true, 1, false, $@"{Lic.ShareInCommonOwnership}", 2,
  false, false, false, false);
                         doc.Content.Find.Execute("{TotalCostOdpuResidentialPremises}", false, true, false, false, false, true, 1, false, $@"{Lic.TotalCostOdpuResidentialPremises}", 2,
  false, false, false, false);

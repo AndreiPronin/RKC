@@ -11,26 +11,29 @@ namespace DB.Model
     [Table(name: "MKD", Schema = "dbo")]
     public class MKD
     {
-        [Key]
-        public int id { get; set; }
+        public Int64 id { get; set; }
         public string system { get; set; }
-        public string object_type { get; set; }
-        public int? object_id { get; set; }
+        public int objectId { get; set; }
+        public string idCcb { get; set; }
+        public string objectType { get; set; }
+        //public decimal parentId { get; set; }
         public string fias { get; set; }
-        public double? square_object_all { get; set; }
-        public double? square_mop_all { get; set; }
-        public double? square_cold_all { get; set; }
         public int? postalCode { get; set; }
-        public int? region { get; set; }
-        public string type_ { get; set; }
         public string street { get; set; }
-        public string type_street { get; set; }
+        public string typeStreet { get; set; }
         public string home { get; set; }
         public string building { get; set; }
+        public string apartment { get; set; }
+        public string fio { get; set; }
+        public double? squareObjectAll { get; set; }
+        public double? squareMopAll { get; set; }
+        public double? squareColdAll { get; set; }
+        public string sNotp { get; set; }
+        public string giloe { get; set; }
         public string gvs { get; set; }
-        public string ipu_gvs { get; set; }
-        public string ipu_otp { get; set; }
-        public DateTime? date_edit { get; set; }
+        public string ipuGvs { get; set; }
+        public string ipuOtp { get; set; }
+        public string object_disable { get; set; }
     }
 
 

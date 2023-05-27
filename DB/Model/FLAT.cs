@@ -12,26 +12,27 @@ namespace DB.Model
     public class FLAT
     {
         [Key]
-        public int id { get; set; }
-        public string system_ { get; set; }
-        public string object_id { get; set; }
-        public string object_t { get; set; }
-        public int? parent_id { get; set; }
+        public Int64 id { get; set; }
+        public string system { get; set; }
+        public string objectId { get; set; }
+        public string idCcb { get; set; }
+        public string objectT { get; set; }
+        public decimal parentId { get; set; }
         public string fias { get; set; }
+        public string CadstraNumber { get; set; }
         public string street { get; set; }
-        public string type_street { get; set; }
+        public string typeStreet { get; set; }
         public string home { get; set; }
         public string building { get; set; }
         public string apartment { get; set; }
         public string fio { get; set; }
-        public double? square_all { get; set; }
-        public string s_notp { get; set; }
+        public double? squareAll { get; set; }
+        public string sNotp { get; set; }
         public string giloe { get; set; }
         public string gvs { get; set; }
-        public string ipu_gvs { get; set; }
-        public string ipu_otp { get; set; }
-        public string cadastral_number { get; set; }
-        public DateTime? date_edit { get; set; }
+        public string ipuGvs { get; set;}
+        public string ipuOtp { get; set;}
+        public string object_disable { get; set; }
     }
 
 
