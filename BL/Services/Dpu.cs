@@ -64,10 +64,10 @@ namespace BL.Services
                                 NewFullLic = x.NewFullLic?.Trim().ToLower(),
                                 Period = x.Period,
                             }).ToList();
-                            var query = DataTable.GroupBy(d => new { d.Street, d.Home, d.Flat })
+                            var query = DataTable.GroupBy(d => new { d.Street, d.Home, d.Flat, d.NewFullLic })
                             .SelectMany(g => g.OrderByDescending(d => d.Period)
                                               .Take(1)).ToList();
-                            var querys = DataTable.GroupBy(d => new { d.Street, d.Home, d.Flat })
+                            var querys = DataTable.GroupBy(d => new { d.Street, d.Home, d.Flat, d.NewFullLic })
                             .SelectMany(g => g.OrderByDescending(d => d.Period)
                                               .Take(1)).ToList();
                             foreach (var Item in query)

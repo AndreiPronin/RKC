@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "Main";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+
+<div class="loader">
+    <div class="inner one"></div>
+    <div class="inner two"></div>
+    <div class="inner three"></div>
+</div>
+<div class="progress hidden">
+    <div class="progress-bar  " id="LoadingProcent" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+</div>
+<h1 class="page-header"></h1>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-2 text-center">
+            <label for="">Код дома</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="AddressId" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+            <a id="ClearFilter" href="">Очистить фильтр</a>
+        </div>
+
+        <div class="col-md-2 text-center">
+            <label for="">Улица</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="street" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class=" col-md-2 text-center">
+            <label for="">Дом</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="home" placeholder="">
+                <span id="clear" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <label for="">Корпус</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="flat" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <input type="button" style="margin-top:25px;" class="btn btn-success btn-block" value="Найти" id="Search" placeholder="Password">
+        </div>
+    </div>
+</div>
+<h1 class="page-header">Результаты поиска</h1>
+<div id="ResultSearchMkd"></div>
+
+
+
+<script>
+    function SearchIPU() {
+        $(".loader").removeClass("hidden");
+        $.ajax({
+            url: '/Mkd/SearchMkd',
+            type: 'POST',
+            data: JSON.stringify({
+                searchModel: {//missing brackets
+                    AddressId: $("#AddressId").val(),
+                    Street: $("#street").val(),
+                    House: $("#home").val(),
+                    Building: $("#flat").val()
+                }
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#ResultSearchMkd").empty();
+                $("#ResultSearchMkd").append(data);
+                $(".loader").addClass("hidden");
+            },
+            error: function () {
+                $(".loader").addClass("hidden");
+                alert("Что то пошло не так. Обратитесь к администратору");
+            }
+        });
+    }
+    $(document).ready(function (e) {
+        $(".loader").addClass("hidden");
+        $("#LIC").keyup(function () {
+            if ($("#LIC").val().length > 4) {
+                SearchIPU();
+            }
+        })
+        $("#ClearFilter").click(function () {
+            $(this).find('input').val('');
+        })
+        $(".clear").click(function () {
+            $(this).parent().find('input').val('');
+        })
+        $("#street").keyup(function () {
+            if ($("#street").val().length > 4) {
+                SearchIPU();
+            }
+        })
+        $("#home").keyup(function () {
+            if ($("#street").val().length > 4) {
+                SearchIPU();
+            }
+        })
+        $("#flat").keyup(function () {
+            if ($("#street").val().length > 4) {
+                SearchIPU();
+            }
+        })
+        var i = 0;
+        $("#Search").click(function () {
+            SearchIPU();
+        });
+        $(document).on('keypress', function (e) {
+            if (e.which == 13) {
+                SearchIPU();
+            }
+        });
+    });
+</script>

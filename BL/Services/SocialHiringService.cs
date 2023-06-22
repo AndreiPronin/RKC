@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL.Services
 {
-    public class SocialHiringSerbice
+    public class SocialHiringService
     {
-        public void GetSocialHiringSerbice()
-        {
-
-        }
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="Excel\ExcelReport.cs" />
     <Compile Include="Excel\ExcelTemplate.cs" />
     <Compile Include="Excel\NotificationExcel.cs" />
+    <Compile Include="Extention\BooleanExtenstion.cs" />
     <Compile Include="Extention\ConvertToModelHelpCalculations.cs" />
     <Compile Include="Extention\GetTypePuOfDecimal.cs" />
     <Compile Include="Extention\StringWriterExtension.cs" />
@@ -83,9 +84,10 @@
     <Compile Include="Extention\GetDescriptionEnum.cs" />
     <Compile Include="Helper\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MkdInformationService.cs" />
     <Compile Include="Services\PersonalData.cs" />
     <Compile Include="Services\Report.cs" />
-    <Compile Include="Services\SocialHiringSerbice.cs" />
+    <Compile Include="Services\SocialHiringService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppCache\AppCache.csproj">

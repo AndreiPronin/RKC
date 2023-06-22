@@ -153,6 +153,18 @@
         $("#PassportSerial_").mask("9999");
         $("#PassportNumber_").mask("999999");
         $("#Save_").click(function (e) {
+            if ($('#LastName_').val().length >= 25) {
+                alert("Превышение количества символов. Длина фамилии не должна превышать 25 символов.");
+                return false;
+            }
+            if ($('#MiddleName_').val().length >= 31) {
+                alert("Превышение количества символов. Длина Отчества не должна превышать 30 символов.");
+                return false;
+            }
+            if ($('#FirstName_').val().length >= 31) {
+                alert("Превышение количества символов. Длина Имени не должна превышать 30 символов.");
+                return false;
+            }
             $("#Save_").addClass("hidden");
             $.ajax({
                 url: '/PersonalData/AddPersData',
@@ -194,6 +206,7 @@
                 },
                 error: function () {
                     alert("Что то пошло не так. Обратитесь к администратору");
+                    $("#Save_").removeClass("hidden");
                 }
             });
 

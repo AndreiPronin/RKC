@@ -44,6 +44,7 @@ namespace BL
             kernel.Bind<IReport>().To<Report>();
             kernel.Bind<IBaseService>().To<BaseService>();
             kernel.Bind<IDictionary>().To<Dictionarys>();
+            kernel.Bind<IMkdInformationService>().To<MkdInformationService>();
 
             kernel.Bind<IPdfGenerate>().To<ReceiptPersonal>().Named("Personal");
             kernel.Bind<IPdfGenerate>().To<ReceiptDPU>().Named("Dpu");

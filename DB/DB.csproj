@@ -62,6 +62,7 @@
       <DependentUpon>202305241709364_DbTplus.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Address.cs" />
     <Compile Include="Model\ALL_LICS.cs" />
     <Compile Include="Model\ALL_LICS_ARCHIVE.cs" />
     <Compile Include="Model\AspNetUserRoles.cs" />

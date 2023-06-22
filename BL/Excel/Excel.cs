@@ -123,12 +123,30 @@ namespace BL.Excel
                         var integrationReadings = new IntegrationReadings();
                         saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
                         saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
-                        if (dataRow.Cell(3).Value != "") { saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value); }
+                        if (dataRow.Cell(3).Value != "") { 
+                            saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value);
+                            if (saveModel?.INSTALLATIONDATE > DateTime.Now)
+                            {
+                                throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
+                            }
+                        }
                         saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
                         saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
                         saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
-                        if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value); }
-                        if (dataRow.Cell(8).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value); }
+                        if (dataRow.Cell(7).Value != "") { 
+                            saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value);
+                            if (saveModel?.DATE_CHECK > DateTime.Now)
+                            {
+                                throw new Exception("Дата поверки должна быть строго меньше текущей даты");
+                            }
+                        }
+                        if (dataRow.Cell(8).Value != "") { 
+                            saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);
+                            if (saveModel?.DATE_CHECK_NEXT > DateTime.Now.AddYears(6))
+                            {
+                                throw new Exception("Дата следующей поверки должна быть не больше текущей даты + 60 месяцев");
+                            }
+                        }
                         saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
                         saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
                         saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
@@ -191,12 +209,30 @@ namespace BL.Excel
                         var integrationReadings = new IntegrationReadings();
                         saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
                         saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
-                        if (dataRow.Cell(3).Value != "") { saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value); }
+                        if (dataRow.Cell(3).Value != "") { 
+                            saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value); 
+                            if(saveModel?.INSTALLATIONDATE > DateTime.Now) {
+                                throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
+                            }
+                        }
+                        
                         saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
                         saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
                         saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
-                        if (dataRow.Cell(7).Value != "") { saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value); }
-                        if (dataRow.Cell(8).Value != "") { saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value); }
+                        if (dataRow.Cell(7).Value != "") { 
+                            saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value); 
+                            if (saveModel?.DATE_CHECK > DateTime.Now)
+                            {
+                                throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
+                            }
+                        }
+                        if (dataRow.Cell(8).Value != "") { 
+                            saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value); 
+                            if (saveModel?.DATE_CHECK_NEXT > DateTime.Now)
+                            {
+                                throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
+                            }
+                        }
                         saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
                         saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
                         saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");

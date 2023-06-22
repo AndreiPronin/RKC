@@ -33,17 +33,6 @@ namespace BL.Helper
             changedValues.User = User;
             changedValues.DateChanged = DateTime.Now;
             return model;
-            //if (!courtGeneralInformation.Pensioner.Equals(courtGeneralInformation.Pensioner))
-            //{
-            //    _courtGeneralInformation.Pensioner = courtGeneralInformation.Pensioner;
-            //    changedValues.Values.Add(new Values
-            //    {
-            //        NameValue = "Пенсионер",
-            //        OldValue = _courtGeneralInformation.Pensioner,
-            //        NewValue = courtGeneralInformation.Pensioner,
-            //    });
-            //}
-            //return _courtGeneralInformation;
         }
     }
 }

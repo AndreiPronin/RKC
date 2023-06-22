@@ -70,6 +70,11 @@
     <Compile Include="DPU\SerachAutoCompleteModel.cs" />
     <Compile Include="JobManager\EnumJob.cs" />
     <Compile Include="JobManager\MailNotSend.cs" />
+    <Compile Include="MkdInformation\SearchModel.cs" />
+    <Compile Include="SocialHiringData\HelpCalculationsModel.cs" />
+    <Compile Include="SocialHiringData\PersDataDocumentLoad.cs" />
+    <Compile Include="SocialHiringData\PersDataModel.cs" />
+    <Compile Include="SocialHiringData\PersNotFoundInLic.cs" />
     <Compile Include="PersData\HelpCalculationsModel.cs" />
     <Compile Include="PersData\PersDataDocumentLoad.cs" />
     <Compile Include="PersData\PersDataModel.cs" />
@@ -80,7 +85,7 @@
     <Compile Include="Roles\RolesEnums.cs" />
     <Compile Include="Service\EnumFlags.cs" />
     <Compile Include="Service\ReadFilesModel.cs" />
-    <Compile Include="SocialHiring\SearchLic.cs" />
+    <Compile Include="SocialHiringData\SearchLic.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -359,6 +359,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogResultController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MKDController.cs" />
     <Compile Include="Controllers\PersonalDataController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SocialHiringController.cs" />
@@ -600,6 +601,9 @@
     <Content Include="Views\Court\PartialViewCourtWorkRequisites.cshtml" />
     <Content Include="Views\Court\PartialViewGetAllFilesInCourt.cshtml" />
     <Content Include="Views\Admin\ParilaViewBlock.cshtml" />
+    <Content Include="Views\MKD\Index.cshtml" />
+    <Content Include="Views\MKD\SearchMkd.cshtml" />
+    <Content Include="Views\MKD\MainInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
