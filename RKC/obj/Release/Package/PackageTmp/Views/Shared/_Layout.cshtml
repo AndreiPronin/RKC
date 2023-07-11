@@ -64,10 +64,18 @@
    {
 
 
-    <div id="wrapper2" class="toggled-2" >
+
+
+<div id="wrapper2" class="toggled-2" >
         <!-- Sidebar -->
         <div id="sidebar-wrapper2">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+                @if (User.IsInRole(RolesEnums.MkdReader) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                {
+                    <li id="Mkd" class="active">
+                        <a href="/MKD"><i class="glyphicon glyphicon-home icons" aria-hidden="true"></i> <i class="Padding">Информация по МКД</i></a>
+                    </li>
+                }
                 <li id="Billing" class="active">
                     <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">Биллинг Т+</i></a>
                 </li>
@@ -81,18 +89,21 @@
                         <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример2</a></li>
                     </ul>*@
                 </li>
-                <li id="Report">
-                    <a href="/Report"><i class="glyphicon glyphicon-list-alt icons" aria-hidden="true"></i> <i class="Padding">Отчеты</i></a>
-                </li>
+                @if (User.IsInRole(RolesEnums.Admin))
+                {
+                    <li id="Report">
+                        <a href="/Report"><i class="glyphicon glyphicon-list-alt icons" aria-hidden="true"></i> <i class="Padding">Отчеты</i></a>
+                    </li>
+                }
                 @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.CounterReader) || User.IsInRole(RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.CourtAdmin))
                 {
-                     <li id="Court">
+                    <li id="Court">
                         <a href="/Court/Serach"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
                     </li>
                 }
                 <hr />
-                <li style="bottom: 0px; position: absolute; bottom: 0px; " >
-                    <p style="color:white; margin-left:35px;" >Ссылки на другие системы</p>
+                <li style="bottom: 0px; position: absolute; bottom: 0px; ">
+                    <p style="color:white; margin-left:35px;">Ссылки на другие системы</p>
                 </li>
             </ul>
         </div>
@@ -153,6 +164,9 @@
             $("#Report").addClass("active");
         } else if (HREF.includes("Court")) {
             $("#Court").addClass("active");
+        }
+        else if (HREF.includes("MKD")) {
+            $("#Mkd").addClass("active");
         }
         console.log(HREF);
         initMenu();

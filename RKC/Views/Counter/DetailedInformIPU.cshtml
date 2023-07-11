@@ -719,7 +719,7 @@ else
                 return;
             }
             if (DATE_CHECK_NEXT != undefined && new Date(DATE_CHECK_NEXT) < new Date(DATE_CHECK)) {
-                alert("Дата следующей поверки не должна превышать дату поверки");
+                alert("Дата следующей поверки не должна быть меньше даты поверки");
                 $(".Save").removeClass("hidden");
                 return;
             }

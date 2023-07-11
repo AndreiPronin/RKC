@@ -81,7 +81,7 @@ namespace BL.Jobs
                         if (!string.IsNullOrEmpty(Lic[i].Trim()))
                         {
                             var lic = Lic[i].Trim();
-                            persData.Add(db.PersData.FirstOrDefault(x => x.Main == true && x.Lic == lic));
+                            persData.Add(db.PersData.FirstOrDefault(x => x.Main == true && x.Lic == lic && x.IsDelete == false));
                         }
                 }
                 var Recept = _pdfFactory.CreatePdf(PdfType.Personal);

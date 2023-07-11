@@ -604,6 +604,7 @@
     <Content Include="Views\MKD\Index.cshtml" />
     <Content Include="Views\MKD\SearchMkd.cshtml" />
     <Content Include="Views\MKD\MainInformation.cshtml" />
+    <Content Include="Views\MKD\HistoryOdpu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

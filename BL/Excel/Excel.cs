@@ -171,7 +171,7 @@ namespace BL.Excel
                     }
                     catch (Exception ex)
                     {
-                        COUNTERsNotAdded.Add(new SaveModelIPU { FULL_LIC = $"Ошибка на {i} строке" });
+                        COUNTERsNotAdded.Add(new SaveModelIPU { FULL_LIC = $"Ошибка на {i} строке", DESCRIPTION = ex.Message });
                     }
                 }
             }
@@ -228,7 +228,7 @@ namespace BL.Excel
                         }
                         if (dataRow.Cell(8).Value != "") { 
                             saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value); 
-                            if (saveModel?.DATE_CHECK_NEXT > DateTime.Now)
+                            if (saveModel?.DATE_CHECK_NEXT > DateTime.Now.AddYears(6))
                             {
                                 throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
@@ -246,7 +246,7 @@ namespace BL.Excel
                     }
                     catch (Exception ex)
                     {
-                        COUNTERsNotAdded.Add(new SaveModelIPU { FULL_LIC = $"Ошибка на {i} строке" });
+                        COUNTERsNotAdded.Add(new SaveModelIPU { FULL_LIC = $"Ошибка на {i} строке", DESCRIPTION = ex.Message });
                     }
                 }
             }

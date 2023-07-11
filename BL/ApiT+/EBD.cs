@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -59,6 +60,7 @@ namespace BL.ApiT_
         }
         public byte[] CreateEbdMkd(DateTime dateTime)
         {
+            var patern = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
             if (!_cacheApp.isLock(KeyCasheLock))
             {
                 objects Flat = new objects();
@@ -82,14 +84,14 @@ namespace BL.ApiT_
                             obj.object_id = $@"RBR{Item.objectId}";
                             obj.object_disable = "false";
                             //obj.CadastralNumber = "";
-                            //obj.fias = Item.fias;
-                            //obj.guid_enrgblng = " ";
+                            obj.fias = string.IsNullOrEmpty(Item.fias) ? "" : Regex.IsMatch(Item.fias, patern) ? Item.fias.Replace("", "").Trim() : "";
+                            //obj.guid_enrgblng = "";
                             //obj.buildYear = "";
                             //obj.floors = "";
                             //obj.vid_blgu = "";
                             //obj.wall = "";
-                            obj.square_all = Item.squareObjectAll?.ToString().Replace("\v", "").Replace(",", ".").Trim();
-                            obj.square_cold = Item.squareColdAll?.ToString().Replace("\v", "").Replace(",", ".").Trim();
+                            obj.square_object_all = Item.squareObjectAll is null || Item.squareObjectAll ==0 ? "0" : Item.squareObjectAll?.ToString().Replace("\v", "").Replace(",", ".").Trim();
+                            obj.square_cold_all = Item.squareColdAll is null || Item.squareColdAll ==0 ? "0" : Item.squareColdAll?.ToString().Replace("\v", "").Replace(",", ".").Trim();
                             obj.square_mop_all = Item.squareMopAll?.ToString().Replace("\v", "").Replace(",", ".").Trim();
                             //obj.id_dogovor_iku = "";
                             //obj.otopl_7_12 = "";
@@ -97,6 +99,8 @@ namespace BL.ApiT_
                             //obj.guid_tplu = "";
                             //obj.warning_house = "";
                             //obj.obgtie = "";
+                            obj.warning_house = "false";
+                            obj.obgtie = "false";
                             obj.address = new Address();
                             //obj.address.OKATO = "";
                             //obj.address.KLADR = "";
@@ -107,7 +111,6 @@ namespace BL.ApiT_
                             obj.address.District = new District();
                             obj.address.Street = new Street();
                             obj.address.Level1 = new Level1();
-                            obj.address.Apartment = new Apartment();
                             obj.address.City.Name = "Пенза";
                             obj.address.City.Type = "г";
                             //obj.address.District.Name = "";
@@ -119,10 +122,10 @@ namespace BL.ApiT_
                             obj.address.Note = $@"Российская Федерация, Пензенская область, г.Пенза, ул. {Item.street.Trim().Replace("\v", "")}, дом №{Item.home.Trim().Replace("\v", "")}";
                             obj.ODPU_EE = new ODPU_EE();
                             obj.ODPU_EE.status = Item.gvs.ToLower().Contains("да") ? "true" : "false";
-                            obj.IPU_HOT_W = new IPU_HOT_W();
-                            obj.IPU_HOT_W.status = Item.ipuGvs.ToLower().Contains("да") ? "true" : "false";
-                            obj.IPU_OTOPL = new IPU_OTOPL();
-                            obj.IPU_OTOPL.status = Item.ipuOtp.ToLower().Contains("да") ? "true" : "false";
+                            obj.ODPU_HOT_W = new ODPU_HOT_W();
+                            obj.ODPU_HOT_W.status = Item.ipuGvs.ToLower().Contains("да") ? "true" : "false";
+                            obj.ODPU_OTOPL = new ODPU_OTOPL();
+                            obj.ODPU_OTOPL.status = Item.ipuOtp.ToLower().Contains("да") ? "true" : "false";
                             lock (Mkd.Objects)
                             {
                                 Mkd.Objects.Add(obj);
@@ -155,6 +158,7 @@ namespace BL.ApiT_
                     List<FLAT> flat_ = db.Database.SqlQuery<FLAT>($"SELECT * FROM [dbo].[EBD_FLAT]('{dateTime.ToString("yyyy-MM-dd")}','1')").ToList();
                     var Data = flat_.ToList();
                     var ListError = new List<string>();
+                    var patern = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
                     #region
                     Parallel.ForEach(Data, Item =>
                     {
@@ -167,11 +171,11 @@ namespace BL.ApiT_
                             obj.parent_id = $@"RBR{Item.parentId.ToString().Replace("", "").Trim()}";
                             obj.object_disable = "false";
                             obj.CadastralNumber = Item.CadstraNumber?.ToString().Replace("", "").Trim();
-                            obj.fias = Item.fias?.Replace("", "").Trim();
+                            obj.fias = string.IsNullOrEmpty(Item.fias) ? "" : Regex.IsMatch(Item.fias, patern) ? Item.fias.Replace("", "").Trim() : "";
                             //obj.guid_enrgblng = "";
                             //obj.vid_blgu = "";
-                            obj.square_all = Item.squareAll?.ToString().Replace("", "").Replace(",", ".").Trim();
-                            obj.square_cold = Item.sNotp?.Replace("", "").Replace(",", ".").Trim();
+                            obj.square_all = Item.squareAll is null ? "0" : Item.squareAll?.ToString().Replace("", "").Replace(",", ".").Trim();
+                            obj.square_cold = "0";
                             //obj.guid_tplu = " ";
                             obj.subject = Item.fio?.Replace("", "").Trim();
                             obj.giloe = !string.IsNullOrEmpty(Item.giloe) ? Item.giloe.ToLower().Contains("не") ? "false" : "true" : "false";
@@ -200,8 +204,8 @@ namespace BL.ApiT_
                             obj.address.Apartment.Value = Item.apartment.Replace("", "").Trim();
                             obj.address.Apartment.Type = "кв";
                             obj.address.Note = $@"Российская Федерация, Пензенская область, г.Пенза, ул. {Item.street.Trim().Replace("", "").Trim()}, дом №{Item.home.Trim().Replace("", "").Trim()}, кв. {Item.apartment.Trim().Replace("", "").Trim()}";
-                            obj.ODPU_EE = new ODPU_EE();
-                            obj.ODPU_EE.status = Item.gvs.ToLower().Contains("да") ? "true" : "false";
+                            obj.IPU_EE = new IPU_EE();
+                            obj.IPU_EE.status = Item.gvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_HOT_W = new IPU_HOT_W();
                             obj.IPU_HOT_W.status = Item.ipuGvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_OTOPL = new IPU_OTOPL();
@@ -238,11 +242,13 @@ namespace BL.ApiT_
                     List<FLAT> flat_ = db.Database.SqlQuery<FLAT>($"SELECT * FROM [dbo].[EBD_FLAT]('{dateTime.ToString("yyyy-MM-dd")}','0')").ToList();
                     var Data = flat_.ToList();
                     var ListError = new List<string>();
+                    var patern = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
                     #region
                     Parallel.ForEach(Data, Item =>
                     {
                         try
                         {
+                            
                             var obj = new Object();
                             obj.system = Item.system.Replace("", "").Trim();
                             obj.object_type = Item.objectT.Replace("", "").Trim();
@@ -250,11 +256,11 @@ namespace BL.ApiT_
                             obj.parent_id = $@"RBR{Item.parentId.ToString().Replace("", "").Trim()}";
                             obj.object_disable = "false";
                             obj.CadastralNumber = Item.CadstraNumber?.ToString().Replace("", "").Trim();
-                            obj.fias = Item.fias.Replace("", "").Trim();
+                            obj.fias = string.IsNullOrEmpty(Item.fias) ? "" : Regex.IsMatch(Item.fias, patern) ? Item.fias.Replace("", "").Trim() : "";
                             //obj.guid_enrgblng = "";
                             //obj.vid_blgu = "";
-                            obj.square_all = Item.squareAll?.ToString().Replace("", "").Replace(",", ".").Trim();
-                            obj.square_cold = Item.sNotp.Replace("", "").Replace(",", ".").Trim();
+                            obj.square_all = Item.squareAll is null ? "0" : Item.squareAll?.ToString().Replace("", "").Replace(",", ".").Trim();
+                            obj.square_cold = "0";
                             //obj.guid_tplu = " ";
                             obj.subject = Item.fio.Replace("", "").Trim();
                             obj.giloe = !string.IsNullOrEmpty(Item.giloe) ? Item.giloe.ToLower().Contains("не") ? "false" : "true" : "false";
@@ -263,6 +269,7 @@ namespace BL.ApiT_
                             //obj.address.KLADR = "";
                             //obj.address.OKTMO = "";
                             //obj.address.PostalCode = "";
+
                             obj.address.Region = "58";
                             obj.address.City = new City();
                             obj.address.District = new District();
@@ -283,8 +290,8 @@ namespace BL.ApiT_
                             obj.address.Apartment.Value = Item.apartment.Replace("", "").Trim();
                             obj.address.Apartment.Type = "кв";
                             obj.address.Note = $@"Российская Федерация, Пензенская область, г.Пенза, ул. {Item.street.Trim().Replace("", "").Trim()}, дом №{Item.home.Trim().Replace("", "").Trim()}, кв. {Item.apartment.Trim().Replace("", "").Trim()}";
-                            obj.ODPU_EE = new ODPU_EE();
-                            obj.ODPU_EE.status = Item.gvs.ToLower().Contains("да") ? "true" : "false";
+                            obj.IPU_EE = new IPU_EE();
+                            obj.IPU_EE.status = Item.gvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_HOT_W = new IPU_HOT_W();
                             obj.IPU_HOT_W.status = Item.ipuGvs.ToLower().Contains("да") ? "true" : "false";
                             obj.IPU_OTOPL = new IPU_OTOPL();

@@ -31,5 +31,10 @@ namespace RKC.Controllers
             var result = _mkdInformationService.GetAddressMKD(Id);
             return View(result);
         }
+        public ActionResult HistoryOdpu(int Id, DateTime DateFrom, DateTime DateTo)
+        {
+            var result = _mkdInformationService.GetHistoryOdpu(Id,DateFrom,DateTo);
+            return View(result);
+        }
     }
 }

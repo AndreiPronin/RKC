@@ -20,6 +20,7 @@ namespace DB.DataBase
         public DbSet<vw_TplusIPU_OTP> vw_TplusIPU_OTP { get; set; }
         public DbSet<IPU_LIC> iPU_LICs { get; set; }
         public DbSet<AddressMKD> addresses { get; set; }
+        public DbSet<AddressReadings> addressReadings { get; set; }
         public DbTPlus() : base("T+")
         {
         }

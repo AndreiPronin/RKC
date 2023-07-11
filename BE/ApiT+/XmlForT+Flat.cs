@@ -67,15 +67,6 @@ namespace BE.ApiT_
         public Address address { get; set; }
         [XmlElement("ODPU_EE")]
         public ODPU_EE ODPU_EE { get; set; }
-        [XmlElement("ODPU_HOT_W")]
-        public ODPU_HOT_W ODPU_HOT_W { get; set; }
-        [XmlElement("ODPU_COLD_W")]
-        public ODPU_COLD_W ODPU_COLD_W { get; set; }
-        [XmlElement("ODPU_OTOPL")]
-        public ODPU_OTOPL ODPU_OTOPL { get; set; }
-        
-        //////////////////////////////////////    FLAT //////////////////
-        
         [XmlElement("parent_id")]
         public string parent_id { get; set; }
         [XmlElement("square_all")]
@@ -95,6 +86,12 @@ namespace BE.ApiT_
         public IPU_COLD_W IPU_COLD_W { get; set; }
         [XmlElement("IPU_OTOPL")]
         public IPU_OTOPL IPU_OTOPL { get; set; }
+        [XmlElement("ODPU_HOT_W")]
+        public ODPU_HOT_W ODPU_HOT_W { get; set; }
+        [XmlElement("ODPU_COLD_W")]
+        public ODPU_COLD_W ODPU_COLD_W { get; set; }
+        [XmlElement("ODPU_OTOPL")]
+        public ODPU_OTOPL ODPU_OTOPL { get; set; }
     }
     public class Address
     {

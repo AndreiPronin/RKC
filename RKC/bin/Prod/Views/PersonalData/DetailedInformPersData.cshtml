@@ -493,12 +493,18 @@ else
             } else {
                 Main = false;
             }
-            //var FIO = $(this).parent().find('#LastName').val() + ' ' + $(this).parent().find('#MiddleName').val() + ' ' +
-            //    $(this).parent().find('#FirstName').val();
-            //if (FIO.length >= 31) {
-            //    alert("Слишком большая длина ФИО должно быть 31 символ. Не я это придумал! Приносим извенения!");
-            //    return false;
-            //}
+            if ($(this).parent().find('#LastName').val().length >= 25) {
+                alert("Превышение количества символов. Длина фамилии не должна превышать 25 символов.");
+                return false;
+            }
+            if ($(this).parent().find('#MiddleName').val().length >= 31) {
+                alert("Превышение количества символов. Длина Отчества не должна превышать 30 символов.");
+                return false;
+            }
+            if ($(this).parent().find('#FirstName').val().length >= 31) {
+                alert("Превышение количества символов. Длина Имени не должна превышать 30 символов.");
+                return false;
+            }
 
             $.ajax({
                 url: '/PersonalData/SavePersonalData',

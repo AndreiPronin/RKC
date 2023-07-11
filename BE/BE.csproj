@@ -70,6 +70,10 @@
     <Compile Include="DPU\SerachAutoCompleteModel.cs" />
     <Compile Include="JobManager\EnumJob.cs" />
     <Compile Include="JobManager\MailNotSend.cs" />
+    <Compile Include="MkdInformation\AddressMKD.cs" />
+    <Compile Include="MkdInformation\AddressReadings.cs" />
+    <Compile Include="MkdInformation\HistoryOdpuModel.cs" />
+    <Compile Include="MkdInformation\MainInformationModel.cs" />
     <Compile Include="MkdInformation\SearchModel.cs" />
     <Compile Include="SocialHiringData\HelpCalculationsModel.cs" />
     <Compile Include="SocialHiringData\PersDataDocumentLoad.cs" />
