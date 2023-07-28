@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Admin\UserRoleInfo.cs" />
     <Compile Include="ApiT+\XmlForT+Flat.cs" />
+    <Compile Include="Counter\Dictionary.cs" />
     <Compile Include="Counter\DIMENSION.cs" />
     <Compile Include="Counter\Enum.cs" />
     <Compile Include="Counter\IpuNotFoundInLick.cs" />

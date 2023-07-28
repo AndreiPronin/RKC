@@ -1,4 +1,5 @@
-﻿using DB.DataBase;
+﻿using BE.Counter;
+using DB.DataBase;
 using DB.Model;
 using DB.Model.Court.DictiomaryModel;
 using System;
@@ -7,12 +8,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DIMENSION = DB.Model.DIMENSION;
 
 namespace BL.Services
 {
     public interface IDictionary
     {
         Task<List<DIMENSION>> GetDIMENSION();
+        Task<List<Dictionary>> GetDictionary(int? Id,string Text, string Type);
         Task<List<string>> GetCourtNameDictionaries(string Text, int Id);
         Task<List<CourtNameDictionary>> GetAllCourtNameDictionaries();
         Task<List<CourtValueDictionary>> GetCourtValueDictionaryId(int Id);
@@ -61,6 +64,19 @@ namespace BL.Services
             {
                 var Result = db.FlatTypes.ToList();
                 return Result;
+            }
+        }
+
+        public async Task<List<Dictionary>> GetDictionary(int? Id, string Text, string Type)
+        {
+            var dictionary = new List<Dictionary>();
+            using (var db = new DbTPlus())
+            {
+                var dictionaryBrand = await db.BRAND.Include(x => x.MODEL).Where(x => x.BRAND_NAME == Text).ToListAsync();
+                foreach (var Item in dictionaryBrand)
+                    foreach (var Items in Item.MODEL)
+                        dictionary.Add(new Dictionary { Id = Items.ID, Text = Items.MODEL_NAME, Type = Type });
+                return dictionary;
             }
         }
     }

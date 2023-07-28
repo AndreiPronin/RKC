@@ -109,6 +109,7 @@ namespace RKC.Controllers
                 }
             }
             catch (Exception ex) {
+                var ttt = ex.InnerException;
                 return Redirect("/Home/ResultEmpty?Message="+ex.Message);
             }
         }
@@ -483,6 +484,11 @@ namespace RKC.Controllers
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчет проверки приборов учета.xlsx");
                 }
             }
+        }
+        public async Task<ActionResult> GetDictionatyOption(int? Id, string Text, string Type)
+        {
+            var Result = await _dictionary.GetDictionary(Id, Text, Type);
+            return PartialView("DictionatyOption", Result);
         }
     }
 }

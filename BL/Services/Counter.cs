@@ -75,6 +75,7 @@ namespace BL.Counters
             using (var DbTPlus = new DbTPlus())
             {
                 IEnumerable<IPU_COUNTERS> iPU_COUNTERs = Enumerable.Empty<IPU_COUNTERS>();
+                var DictionatyBrand = DbTPlus.BRAND.Include(x=>x.MODEL).ToList();
                 if (Close == false)
                     iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == IPU_LIC && x.CLOSE_ != true).ToList();
                 else
@@ -83,6 +84,7 @@ namespace BL.Counters
                 {
                     Items.ALL_LICS = aLL_LICS;
                     Items.DIMENSION = DbTPlus.DIMENSIONs.Find(Items.DIMENSION_ID);
+                    Items.BrandDictionary = DictionatyBrand;
                 }
                 return iPU_COUNTERs.OrderBy(x => x.TYPE_PU).ToList();
             }

@@ -25,7 +25,8 @@
         width: 75% !important;
     }
 </style>
-<div class="row">
+
+<div style="padding-top:50px" class="row">
     <div class="col-md-4">
         <button id="ClosePage" class="btn btn-success">Закрыть страницу</button>
     </div>
@@ -39,62 +40,86 @@
     </div>
 </div>
 
-<div class='table-cont' style="margin-top:50px" id='table-cont'>
-    <table class="table table-bordered">
-        <tbody style="background-color:white">
-            <tr>
-                <td scope="col" class="font-weight-bold text-center" rowspan="2">Период</td>
-                <td scope="col" class="font-weight-bold text-center" rowspan="2">Услуга</td>
-                <td scope="col" class="font-weight-bold text-center" rowspan="2">Расход по домовому прибору учета </td>
-                <td scope="col" class="font-weight-bold text-center" colspan="3">Расходы в жилых и нежилых помещениях</td>
-                <td scope="col" class="font-weight-bold text-center" rowspan="2">Расход ОДН</td>
-            </tr>
-            <tr>
-                <td scope="col" class="font-weight-bold text-center" colspan="1">По ИПУ</td>
-                <td scope="col" class="font-weight-bold text-center" colspan="1">По нормативам</td>
-                <td scope="col" class="font-weight-bold text-center" rowspan="1">Нежилые помещения</td>
-            </tr>
-        </tbody>
-        <tbody>
-            @foreach (var Item in Model.addressReadings)
-            {
+<div id="print">
+    <div class='table-cont' style="" id='table-cont'>
+        <table class="table table-bordered">
+            <tbody style="background-color:white">
                 <tr>
-                    <td scope="col" style="text-align: center; vertical-align: middle;" class="font-weight-bold text-center" rowspan="4">@Item.Period.ToString("dd.MM.yyyy")</td>
+                    <td scope="col" class="font-weight-bold text-center" rowspan="2">Период</td>
+                    <td scope="col" class="font-weight-bold text-center" rowspan="2">Услуга</td>
+                    <td scope="col" class="font-weight-bold text-center" rowspan="2">Расход по домовому прибору учета </td>
+                    <td scope="col" class="font-weight-bold text-center" colspan="3">Расходы в жилых и нежилых помещениях</td>
+                    <td scope="col" class="font-weight-bold text-center" rowspan="2">Расход ОДН</td>
                 </tr>
                 <tr>
-                    <td scope="col">Отопление</td>
-                    <td scope="col">@Item.DpuHeating</td>
-                    <td scope="col">@Item.IpuHeating</td>
-                    <td scope="col">@Item.NormHeating</td>
-                    <td scope="col">@Item.NonResidentialPremisesHeating</td>
-                    <td scope="col">@Item.OdnHeating</td>
+                    <td scope="col" class="font-weight-bold text-center" colspan="1">По ИПУ</td>
+                    <td scope="col" class="font-weight-bold text-center" colspan="1">По нормативам</td>
+                    <td scope="col" class="font-weight-bold text-center" rowspan="1">Нежилые помещения</td>
                 </tr>
-                <tr>
-                    <td scope="col">ГВС компонент ТЭ</td>
-                    <td scope="col"></td>
-                    <td scope="col">@Item.IpuGvsThermalEnergy</td>
-                    <td scope="col">@Item.NormGvsThermalEnergy</td>
-                    <td scope="col">@Item.NonResidentialPremisesThermalEnergy</td>
-                    <td scope="col"></td>
-                </tr>
-                <tr>
-                    <td scope="col">ГВС компонент ХВ</td>
-                    <td scope="col">@Item.DpuGvsColdWater</td>
-                    <td scope="col">@Item.IpuGvsColdWater</td>
-                    <td scope="col">@Item.NormGvsColdWater</td>
-                    <td scope="col">@Item.NonResidentialPremisesColdWater</td>
-                    <td scope="col">@Item.OdnGvsColdWater</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            </tbody>
+            <tbody>
+                @foreach (var Item in Model.addressReadings)
+                {
+                    <tr>
+                        <td scope="col" style="text-align: center; vertical-align: middle;" class="font-weight-bold text-center" rowspan="4">@Item.Period.ToString("MMMM yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td scope="col">Отопление</td>
+                        <td scope="col">@Item.DpuHeating</td>
+                        <td scope="col">@Item.IpuHeating</td>
+                        <td scope="col">@Item.NormHeating</td>
+                        <td scope="col">@Item.NonResidentialPremisesHeating</td>
+                        <td scope="col">@Item.OdnHeating</td>
+                    </tr>
+                    <tr>
+                        <td scope="col">ГВС компонент ТЭ</td>
+                        <td scope="col"></td>
+                        <td scope="col">@Item.IpuGvsThermalEnergy</td>
+                        <td scope="col">@Item.NormGvsThermalEnergy</td>
+                        <td scope="col">@Item.NonResidentialPremisesThermalEnergy</td>
+                        <td scope="col"></td>
+                    </tr>
+                    <tr>
+                        <td scope="col">ГВС компонент ХВ</td>
+                        <td scope="col">@Item.DpuGvsColdWater</td>
+                        <td scope="col">@Item.IpuGvsColdWater</td>
+                        <td scope="col">@Item.NormGvsColdWater</td>
+                        <td scope="col">@Item.NonResidentialPremisesColdWater</td>
+                        <td scope="col">@Item.OdnGvsColdWater</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
+    </div>
 </div>
-<input type="button" class="btn btn-primary printDiv" id="" value="Печать справки" />
-<script>
-    $(document).ready(function (e) {
-        $("#ClosePage").click(function () {
-            window.close();
-        })
-    });
-</script>
+    <input type="button" class="btn btn-primary printDiv" id="" value="Печать справки" />
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+        $(document).ready(function (e) {
+            $("#ClosePage").click(function () {
+                window.close();
+            })
+            $(".printDiv").click(function () {
+                $('#table-cont').removeClass('table-cont');
+                $('#table-cont').children().find('tbody').removeAttr('style');
+                var printContents = document.getElementById('print').innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = printContents;
+
+                window.print();
+                window.location.reload();
+                document.body.innerHTML = originalContents;
+            })
+        });
+    </script>

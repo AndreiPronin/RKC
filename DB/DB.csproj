@@ -67,6 +67,7 @@
     <Compile Include="Model\ALL_LICS.cs" />
     <Compile Include="Model\ALL_LICS_ARCHIVE.cs" />
     <Compile Include="Model\AspNetUserRoles.cs" />
+    <Compile Include="Model\BRAND.cs" />
     <Compile Include="Model\Court\CourtWork.cs" />
     <Compile Include="Model\Court\CourtDocumentScans.cs" />
     <Compile Include="Model\Court\CourtExecutionFSSP.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Model\Court\CourtWorkRequisites.cs" />
     <Compile Include="Model\Court\CourtWriteOff.cs" />
     <Compile Include="Model\Court\DictiomaryModel\CourtNameDictionary.cs" />
+    <Compile Include="Model\MODEL.cs" />
     <Compile Include="Model\Court\ReasonsRevokingIDExecution.cs" />
     <Compile Include="Model\DIMENSION.cs" />
     <Compile Include="Model\DPUHelpCalculationInstallation.cs" />
