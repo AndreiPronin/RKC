@@ -13,10 +13,10 @@
     overflow: hidden;
 }
 
-    #wrapper2.toggled {
-        padding-right: 250px;
-        overflow: hidden;
-    }
+#wrapper2.toggled {
+    padding-right: 250px;
+    overflow: hidden;
+}
 
 #sidebar-wrapper2 {
     z-index: 1000;
@@ -46,7 +46,7 @@
 
 #page-content-wrapper2 {
     position: absolute;
-    padding: 15px;
+    padding: 115px;
     width: 100%;
     overflow-x: hidden;
 }

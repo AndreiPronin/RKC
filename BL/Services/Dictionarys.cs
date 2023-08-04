@@ -15,7 +15,7 @@ namespace BL.Services
     public interface IDictionary
     {
         Task<List<DIMENSION>> GetDIMENSION();
-        Task<List<Dictionary>> GetDictionary(int? Id,string Text, string Type);
+        Task<List<Dictionary>> GetDictionary(int? Id,string Text, string Type, string TypePU);
         Task<List<string>> GetCourtNameDictionaries(string Text, int Id);
         Task<List<CourtNameDictionary>> GetAllCourtNameDictionaries();
         Task<List<CourtValueDictionary>> GetCourtValueDictionaryId(int Id);
@@ -67,12 +67,14 @@ namespace BL.Services
             }
         }
 
-        public async Task<List<Dictionary>> GetDictionary(int? Id, string Text, string Type)
+        public async Task<List<Dictionary>> GetDictionary(int? Id, string Text, string Type, string TypePU)
         {
             var dictionary = new List<Dictionary>();
             using (var db = new DbTPlus())
             {
-                var dictionaryBrand = await db.BRAND.Include(x => x.MODEL).Where(x => x.BRAND_NAME == Text).ToListAsync();
+                var dictionaryBrand = await db.BRAND.Include(x => x.MODEL)
+                    .Where(x => x.BRAND_NAME == Text && x.TYPE_PU == TypePU)
+                    .ToListAsync();
                 foreach (var Item in dictionaryBrand)
                     foreach (var Items in Item.MODEL)
                         dictionary.Add(new Dictionary { Id = Items.ID, Text = Items.MODEL_NAME, Type = Type });

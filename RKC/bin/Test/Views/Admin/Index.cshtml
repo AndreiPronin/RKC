@@ -1,29 +1,29 @@
 ﻿<h1>Панель Администратора</h1>
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#report">Отчеты</a>
+<ul class="nav nav-tabs nav-tabs-Admins">
+    <li class="nav-item active" id="reportButton" >
+        <a class="nav-link " data-toggle="tab"  href="#report">Отчеты</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" id="roleButton">
         <a class="nav-link" data-toggle="tab" href="#role">Права</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" id="notificationsButton">
         <a class="nav-link" data-toggle="tab" href="#notifications">Уведомления</a>
     </li>
     @if (User.IsInRole("SuperAdmin"))
     {
-        <li class="nav-item">
+        <li class="nav-item" id="integrationButton">
             <a class="nav-link" data-toggle="tab" href="#integration">Интеграция</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="ExaminationButton">
             <a class="nav-link" data-toggle="tab" href="#Examination">Проверка</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="BlockButton">
             <a class="nav-link" data-toggle="tab" href="#Block">Блокировка</a>
         </li>
     }
 </ul>
-<div class="tab-content">
-    <div class="tab-pane fade" id="report">
+<div class="tab-content tabAdmins">
+    <div class="tab-pane fade active in" id="report">
         @Html.Partial("PartialViewReport")
     </div>
     <div class="tab-pane fade" id="role">
@@ -45,3 +45,30 @@
         </div>
     }
 </div>
+<script>
+    $(document).ready(function (e) {
+        $(".nav-tabs li").each(function () {
+            $(this).removeClass("active");
+        });
+        $(".tab-content div").each(function () {
+            $(this).removeClass("active in");
+        });
+        $('a[data-toggle="tab"]').on('click', function (e) {
+            localStorage.setItem('activeTabAdmin', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTabAdmin');
+        if (activeTab) {
+            $(".nav-tabs-Admins li").each(function () {
+                $(this).removeClass("active");
+            });
+            $(".tabAdmins div").each(function () {
+                $(this).removeClass("active in");
+            });
+            $(activeTab + 'Button').addClass("active");
+            $(activeTab).addClass("active in");
+        } else {
+            $("#reportButton").addClass("active");
+            $("#report").addClass("active in");
+        }
+    })
+</script>

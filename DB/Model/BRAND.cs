@@ -14,6 +14,7 @@ namespace DB.Model
         [Key]
         public int ID { get; set; }
         public string BRAND_NAME { get; set; }
+        public string TYPE_PU { get; set; }
         public List<MODEL> MODEL { get; set; }
     }
 }

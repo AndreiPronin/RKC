@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<DB.Model.IPU_COUNTERS>
+@using System.Text.RegularExpressions;
 @{
     ViewBag.Title = "DetailedInformIPU";
     string TypePU = "";
@@ -64,27 +65,26 @@
                 </div>
                 <hr />
                 <div class="card-body field">
+                    <input hidden="hidden" class="TypePU" value="@Items.TYPE_PU" />
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group row">
                                 @if (Items.INSTALLATIONDATE != null)
                                 {
-
                                     <label class="col-sm-4 col-form-label">Дата акта ввода:</label>
                                     <div class="col-sm-8">
                                         <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="INSTALLATIONDATE" max="@DateTime.Now.Date.AddDays(0).ToString("yyyy-MM-dd")" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
                                     </div>
-
-                                            }
-                                            else
-                                            {
+                                }
+                                else
+                                {
 
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Дата акта ввода:</label>
                                     <div class="col-sm-8">
                                         <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="INSTALLATIONDATE" max="@DateTime.Now.Date.AddDays(0).ToString("yyyy-MM-dd")" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.INSTALLATIONDATE)" />
                                     </div>
 
-                                            }
+                                }
                             </div>
                             <hr />
                             <div class="form-group row">
@@ -94,33 +94,55 @@
                                     <div class="col-sm-8">
                                         <input type="text" name="@Items.FULL_LIC" tabIndex="@Index@{Index++;}" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
                                     </div>
-                                            }
-                                            else
-                                            {
+                                }
+                                else
+                                {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Номер ПУ:</label>
                                     <div class="col-sm-8">
                                         <input type="text" name="@Items.FULL_LIC" tabIndex="@Index@{Index++;}" readonly="readonly" id="NumberPU" class="form-control" value="@Items.FACTORY_NUMBER_PU" />
                                     </div>
-                                            }
+                                }
                             </div>
                             <input hidden="hidden" class="IdPU" value="@Items.ID_PU" />
                             <hr />
                             <div class="form-group row">
-                                @if (!string.IsNullOrEmpty(Items.MODEL_PU))
+                                @{var BRAND_PU = Items.BRAND_PU != null ? Items.BRAND_PU : "";}
+                                @if (string.IsNullOrEmpty(Items.BRAND_PU))
                                 {
-                                    <label class="col-sm-4 col-form-label">Модель ПУ:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
-                                    </div>
-                                            }
-                                            else
-                                            {
-                                    <label class="col-sm-4 NullOrEmpty col-form-label">Модель ПУ:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="MODEL_PU" class="form-control" value="@Items.MODEL_PU" />
-                                    </div>
-                                            }
+                                    <label style="font-weight:inherit;" class="col-sm-4 NullOrEmpty col-form-label;">Бренд ПУ:</label>
+                                }
+                                else
+                                {
+                                    <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Бренд ПУ:</label>
+                                }
+                                <div class="col-sm-8">
+                                    <select disabled id="BRAND_PU" tabIndex="@Index@{Index++;}" class="form-control BRAND_PU">
+                                        <option value="@BRAND_PU">@BRAND_PU</option>
+                                        @{var TypePu = Regex.Replace(Items.TYPE_PU, "[0-9]", "");}
+                                        @foreach (var Item in Items.BrandDictionary.Where(x => x.TYPE_PU == TypePu))
+                                        {
+                                            <option value="@Item.ID">@Item.BRAND_NAME</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                @{var MODEL_PU = Items.MODEL_PU != null ? Items.MODEL_PU : "";}
+                                @if (string.IsNullOrEmpty(Items.MODEL_PU))
+                                {
+                                    <label style="font-weight:inherit;" class="col-sm-4 NullOrEmpty col-form-label;">Модель ПУ:</label>
+                                }
+                                else
+                                {
+                                    <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Модель ПУ:</label>
+                                }
+                                <div class="col-sm-8">
+                                    <select disabled id="MODEL_PU" tabIndex="@Index@{Index++;}" class="form-control MODEL_PU">
+                                        <option value="@MODEL_PU">@MODEL_PU</option>
+                                    </select>
 
+                                </div>
                             </div>
                             <hr />
                             <div class="form-group row">
@@ -166,14 +188,14 @@
                                     <div class="col-sm-8">
                                         <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="CHECKPOINT_DATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.CHECKPOINT_DATE)" />
                                     </div>
-                                            }
-                                            else
-                                            {
+                                }
+                                else
+                                {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Дата контрольного обхода:</label>
                                     <div class="col-sm-8">
                                         <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="CHECKPOINT_DATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.CHECKPOINT_DATE)" />
                                     </div>
-                                            }
+                                }
 
                             </div>
                             <hr />
@@ -184,14 +206,14 @@
                                     <div class="col-sm-8">
                                         <input type="text" step="0.001" id="CHECKPOINT_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control CHECKPOINT_READINGS" value="@Items.CHECKPOINT_READINGS" />
                                     </div>
-                                            }
-                                            else
-                                            {
+                                }
+                                else
+                                {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Показания контролера:</label>
                                     <div class="col-sm-8">
                                         <input type="text" step="0.001" id="CHECKPOINT_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control CHECKPOINT_READINGS" value="@Items.CHECKPOINT_READINGS" />
                                     </div>
-                                            }
+                                }
                             </div>
                             <hr />
                             <div class="form-group row">
@@ -201,14 +223,14 @@
                                     <div class="col-sm-8">
                                         <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="OPERATOR_CLOSE_DATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.OPERATOR_CLOSE_DATE)" />
                                     </div>
-                                            }
-                                            else
-                                            {
+                                }
+                                else
+                                {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Дата закрытия:</label>
                                     <div class="col-sm-8">
                                         <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="OPERATOR_CLOSE_DATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.OPERATOR_CLOSE_DATE)" />
                                     </div>
-                                            }
+                                }
                             </div>
                             <hr />
                             <div class="form-group row">
@@ -218,14 +240,14 @@
                                     <div class="col-sm-8">
                                         <input type="text" id="OPERATOR_CLOSE_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control OPERATOR_CLOSE_READINGS" value="@Items.OPERATOR_CLOSE_READINGS" />
                                     </div>
-                                            }
-                                            else
-                                            {
+                                }
+                                else
+                                {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">К.П. при закрытии:</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="OPERATOR_CLOSE_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control OPERATOR_CLOSE_READINGS" value="@Items.OPERATOR_CLOSE_READINGS" />
                                     </div>
-                                            }
+                                }
 
                             </div>
                             <hr />
@@ -266,14 +288,14 @@
                                     <div class="col-sm-8">
                                         <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
                                     </div>
-                                            }
-                                            else
-                                            {
+                                }
+                                else
+                                {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Номер пломбы1:</label>
                                     <div class="col-sm-8">
                                         <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="SEALNUMBER" class="form-control" value="@Items.SEALNUMBER" />
                                     </div>
-                                            }
+                                }
 
                             </div>
                             <hr />
@@ -314,14 +336,14 @@
                                     <div class="col-sm-8">
                                         <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="SEALNUMBER2" class="form-control" value="@Items.SEALNUMBER2" />
                                     </div>
-                                            }
-                                            else
-                                            {
+                                }
+                                else
+                                {
                                     <label class="col-sm-4 NullOrEmpty col-form-label">Номер пломбы2:</label>
                                     <div class="col-sm-8">
                                         <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="SEALNUMBER2" class="form-control" value="@Items.SEALNUMBER2" />
                                     </div>
-                                            }
+                                }
 
                             </div>
                             <hr />
@@ -344,8 +366,8 @@
                                         <input type="text" disabled="disabled" class="form-control obem" value="@obem" />
                                     </div>
                                 </div>
-                                                { TypePU = "FKUB1XVS"; }
-                                            }
+                                { TypePU = "FKUB1XVS"; }
+                            }
                             @{ I = Items.ALL_LICS.FKUBSXV_2 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSXV_2 == 1 ? "расчет по ИПУ" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ГВС2")
                             {
@@ -365,8 +387,8 @@
                                         <input type="text" disabled="disabled" class="form-control obem" value="@obem" />
                                     </div>
                                 </div>
-                                                { TypePU = "FKUB1XV_2"; }
-                                            }
+                                { TypePU = "FKUB1XV_2"; }
+                            }
                             @{ I = Items.ALL_LICS.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSXV_3 == 2 ? "расчет по среднему" : Items.ALL_LICS.FKUBSXV_3 == 3 ? "расчет по нормативу" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ГВС3")
                             {
@@ -386,8 +408,8 @@
                                         <input type="text" disabled="disabled" class="form-control obem" value="@obem" />
                                     </div>
                                 </div>
-                                                { TypePU = "FKUB1XV_3"; }
-                                            }
+                                { TypePU = "FKUB1XV_3"; }
+                            }
                             @{ I = Items.ALL_LICS.FKUBSXV_4 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSXV_4 == 1 ? "расчет по ИПУ" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ГВС4")
                             {
@@ -407,8 +429,8 @@
                                         <input type="text" disabled="disabled" class="form-control obem" value="@obem" />
                                     </div>
                                 </div>
-                                                { TypePU = "FKUB1XV_4"; }
-                                            }
+                                { TypePU = "FKUB1XV_4"; }
+                            }
 
                             @{ I = Items.ALL_LICS.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSOT_1 == 2 ? "расчет по среднему" : Items.ALL_LICS.FKUBSOT_1 == 3 ? "расчет по нормативу" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ОТП1")
@@ -429,8 +451,8 @@
                                         <input type="text" disabled="disabled" class="form-control obem" value="@obem" />
                                     </div>
                                 </div>
-                                                { TypePU = "FKUB1OT_1"; }
-                                            }
+                                { TypePU = "FKUB1OT_1"; }
+                            }
 
                             @{ I = Items.ALL_LICS.FKUBSOT_2 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSOT_2 == 1 ? "расчет по ИПУ" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ОТП2")
@@ -451,8 +473,8 @@
                                         <input type="text" disabled="disabled" class="form-control obem" value="@obem" />
                                     </div>
                                 </div>
-                                                { TypePU = "FKUB1OT_2"; }
-                                            }
+                                { TypePU = "FKUB1OT_2"; }
+                            }
 
                             @{ I = Items.ALL_LICS.FKUBSOT_3 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSOT_3 == 1 ? "расчет по ИПУ" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ОТП3")
@@ -473,8 +495,8 @@
                                         <input type="text" disabled="disabled" class="form-control obem" value="@obem" />
                                     </div>
                                 </div>
-                                                { TypePU = "FKUB1OT_3"; }
-                                            }
+                                { TypePU = "FKUB1OT_3"; }
+                            }
 
                             @{ I = Items.ALL_LICS.FKUBSOT_4 == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSOT_4 == 1 ? "расчет по ИПУ" : ""; }
                             @if (!string.IsNullOrEmpty(I) && Items.TYPE_PU == "ОТП4")
@@ -495,8 +517,8 @@
                                         <input type="text" disabled="disabled" class="form-control obem" value="@obem" />
                                     </div>
                                 </div>
-                                                { TypePU = "FKUB1OT_4"; }
-                                            }
+                                { TypePU = "FKUB1OT_4"; }
+                            }
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Записать показания:</label>
                                 <div class="col-sm-8">
@@ -517,7 +539,7 @@
                                 <div class="col-sm-8">
                                     <select disabled id="DIMENSION" class="form-control">
 
-                                        <option value="@DIMESSIONSID" >@DIMESSIONS</option>
+                                        <option value="@DIMESSIONSID">@DIMESSIONS</option>
                                         @foreach (var Item in ViewBag.DIMENSION)
                                         {
                                             <option value="@Item.ID">@Item.DIMENSION_NAME</option>
@@ -737,7 +759,8 @@ else
                         IdPU: $(this).parent().find('.IdPU').val(),
                         FULL_LIC: $('#FULL_LIC').val(),
                         NumberPU: $(this).parent().find('#NumberPU').val(),
-                        MODEL_PU: $(this).parent().find('#MODEL_PU').val(),
+                        MODEL_PU: $(this).parent().find('#MODEL_PU option:selected').text(),
+                        BRAND_PU: $(this).parent().find('#BRAND_PU option:selected').text(),
                         DATE_CHECK: $(this).parent().find('#DATE_CHECK').val(),
                         DATE_CHECK_NEXT: $(this).parent().find('#DATE_CHECK_NEXT').val(),
                         CHECKPOINT_DATE: $(this).parent().find('#CHECKPOINT_DATE').val(),
@@ -918,7 +941,29 @@ else
             var Result = Param1 - Param2;
             $(this).closest('.row').find('.obem')[0].value = Result.toFixed(3);
         })
-
+        $('.BRAND_PU').on('change', function (e) {
+            var modelPu = $(this).closest('.card-body').find('#MODEL_PU option:selected');
+            modelPu.empty().append(' ');
+        });
+        $('.MODEL_PU').on('focus', function (e) {
+            $(".loader").addClass("hidden");
+            var TypePu = $(this).closest('.card-body').find('.TypePU').val()?.replace(/[0-9]/i, '');
+            var brandPu = $(this).closest('.card-body').find('#BRAND_PU option:selected').text();
+            const ModelPu = $(this);
+            $.ajax({
+                url: `/Counter/GetDictionatyOption?Id=null&Text=${brandPu}&Type=MODEL_PU&TypePU=${TypePu}`,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    ModelPu.empty().append(data);
+                },
+                error: function () {
+                    $(".loader").addClass("hidden");
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
+        })
 
 
 
