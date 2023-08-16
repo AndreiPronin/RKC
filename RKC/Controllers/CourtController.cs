@@ -145,9 +145,24 @@ namespace RKC.Controllers
             await _court.RemoveCourtWorkRequisites(Id);
             return Content("Успешно удалено");
         }
+        public async Task<ActionResult> AddInstallmentPayRequisites(InstallmentPayRequisites installmentPayRequisites)
+        {
+            await _court.AddInstallmentPayRequisites(installmentPayRequisites);
+            return Content("Успешно добавлено");
+        }
+        public async Task<ActionResult> RemoveInstallmentPayRequisites(int Id)
+        {
+            await _court.RemoveInstallmentPayRequisites(Id);
+            return Content("Успешно удалено");
+        }
         public async Task<ActionResult> PartialViewCourtWorkRequisites(int Id)
         {
             var res = await _court.GetCourtWorkRequisites(Id);
+            return PartialView(res);
+        }
+        public async Task<ActionResult> PartialViewInstallmentPayRequisites(int Id)
+        {
+            var res = await _court.GetInstallmentPayRequisites(Id);
             return PartialView(res);
         }
         public async Task<ActionResult> PartialViewGetAllFilesInCourt(int Id)

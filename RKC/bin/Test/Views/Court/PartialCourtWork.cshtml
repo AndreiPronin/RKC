@@ -93,13 +93,13 @@
         </div>
         <label class="col-sm-12 col-sm-12 col-form-label">Дата СП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWork.PeriodDebtEnd, new
-            {
-                @type = "Date",
-                @readonly = "readonly",
-                @class = "form-control",
-         @Value = (Model.CourtWork.DateSP.HasValue ? Model.CourtWork.DateSP.Value.ToString("dd.MM.yyyy") : string.Empty)
-            })
+            @Html.TextBoxFor(m => m.CourtWork.DateSP, new
+           {
+               @type = "Date",
+               @readonly = "readonly",
+               @class = "form-control",
+               @Value = (Model.CourtWork.DateSP.HasValue ? Model.CourtWork.DateSP.Value.ToString("yyyy-MM-dd") : string.Empty)
+           })
         </div>
         <label class="col-sm-12 col-form-label">Сумма оплаты - всего (добровольно):</label>
         <div class="col-sm-8">
@@ -124,7 +124,7 @@
     </div>
     <div class="col-md-4">
         <div class="col-md-6">
-            <button class="btn-primary"> Вывести отчет по добровольной оплате </button>
+            <button class="btn-primary">Отчет по оплатам</button>
         </div>
         <div class="col-md-6">
             <button class="btn-primary"> Сформировать заявление о выдаче СП </button>
@@ -152,7 +152,7 @@
            @Value = (Model.CourtWork.DateReturnCourtSP.HasValue ? Model.CourtWork.DateReturnCourtSP.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
-        <label class="col-sm-12 col-form-label">Дата передачи определения на возврат излишне уплаченной ГП в бухгалтерию:</label>
+        <label class="col-sm-12 col-form-label">Дата передачи реестра СП в бухгалтерию:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.DateReturnCourtSP, new { @type = "Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.DateReturnCourtSP })
         </div>

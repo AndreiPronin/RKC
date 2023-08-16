@@ -64,6 +64,7 @@
     <Compile Include="Court\CourtWork.cs" />
     <Compile Include="Court\CourtWorkRequisites.cs" />
     <Compile Include="Court\CourtWriteOff.cs" />
+    <Compile Include="Court\InstallmentPayRequisites.cs" />
     <Compile Include="Court\SearchModel.cs" />
     <Compile Include="DPU\DpuDataDocumentLoad.cs" />
     <Compile Include="DPU\DpuNotAddDb.cs" />

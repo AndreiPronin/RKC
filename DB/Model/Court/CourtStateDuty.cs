@@ -26,10 +26,6 @@ namespace DB.Model.Court
         /// </summary>
         public string ReasonReturn { get; set; }
         /// <summary>
-        /// Дата направления реестра на г/п в бухгалтерию
-        /// </summary>
-        public DateTime? DateSendReestr { get; set; }
-        /// <summary>
         /// Примечание
         /// </summary>
         public string Comment { get; set; }

@@ -48,6 +48,7 @@ namespace DB.DataBase
         public DbSet<CourtNameDictionary> CourtNameDictionaries { get; set; }
         public DbSet<CourtValueDictionary> CourtValueDictionary { get; set; }
         public DbSet<CourtWorkRequisites> CourtWorkRequisites { get; set; }
+        public DbSet<InstallmentPayRequisites> InstallmentPayRequisites { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
@@ -68,6 +69,10 @@ namespace DB.DataBase
             .HasRequired<CourtGeneralInformation>(s => s.CourtGeneralInformation)
             .WithMany(g => g.CourtWorkRequisites)
             .HasForeignKey<int>(s => s.CourtGeneralInformId);
+            modelBuilder.Entity<InstallmentPayRequisites>()
+              .HasRequired<CourtGeneralInformation>(s => s.CourtGeneralInformation)
+              .WithMany(g => g.InstallmentPayRequisites)
+              .HasForeignKey<int>(s => s.CourtGeneralInformId);
 
             modelBuilder.Entity<CourtValueDictionary>()
           .HasRequired<CourtNameDictionary>(s => s.CourtNameDictionary)

@@ -26,7 +26,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Сумма списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtBankruptcy.SumWriteOff, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtBankruptcy.SumWriteOff })
+            @Html.TextBoxFor(m => m.CourtBankruptcy.SumWriteOff, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtBankruptcy.SumWriteOff })
         </div>
         <label class="col-sm-12 col-form-label">Начальный период списания:</label>
         <div class="col-sm-8">
@@ -42,7 +42,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Статус списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtBankruptcy.WriteOffStatus, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtBankruptcy.WriteOffStatus })
+            @Html.TextBoxFor(m => m.CourtBankruptcy.WriteOffStatus, new { @readonly = "readonly", @dicId = "11", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtBankruptcy.WriteOffStatus })
         </div>
         <label class="col-sm-12 col-form-label">Дата списания:</label>
         <div class="col-sm-8">

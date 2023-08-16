@@ -4,11 +4,11 @@
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Документы подготовлены к списанию (да/нет):</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWriteOff.DocumentsPreparedWriteOff, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWriteOff.DocumentsPreparedWriteOff })
+            @Html.TextBoxFor(m => m.CourtWriteOff.DocumentsPreparedWriteOff, new { @readonly = "readonly", @dicId = "12", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWriteOff.DocumentsPreparedWriteOff })
         </div>
         <label class="col-sm-12 col-form-label">Сумма списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWriteOff.SumWriteOff, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWriteOff.SumWriteOff })
+            @Html.TextBoxFor(m => m.CourtWriteOff.SumWriteOff, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtWriteOff.SumWriteOff })
         </div>
         <label class="col-sm-12 col-form-label">Начальный период списания:</label>
         <div class="col-sm-8">
@@ -24,7 +24,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Статус списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWriteOff.WriteOffStatus, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtWriteOff.WriteOffStatus })
+            @Html.TextBoxFor(m => m.CourtWriteOff.WriteOffStatus, new { @readonly = "readonly", @dicId = "11", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWriteOff.WriteOffStatus })
         </div>
         <label class="col-sm-12 col-form-label">Дата списания:</label>
         <div class="col-sm-8">

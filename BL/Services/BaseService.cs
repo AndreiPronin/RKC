@@ -182,7 +182,6 @@ namespace BL.Services
                 }
             }
         }
-
         public FlatTypeDto GetFlatTypeLic(string FullLic)
         {
             using (var DbLIC = new DbLIC())

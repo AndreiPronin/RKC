@@ -84,7 +84,7 @@ namespace BL.Helper
             if (File.Exists(FilePath))
             {
                 var Text = File.ReadAllText(FilePath);
-                return Text;
+                return Text.Replace("0:00:00","");
             }
             else
             {

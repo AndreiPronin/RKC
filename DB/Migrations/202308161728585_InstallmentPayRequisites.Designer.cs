@@ -7,13 +7,13 @@ namespace DB.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class DbTplus : IMigrationMetadata
+    public sealed partial class InstallmentPayRequisites : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DbTplus));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InstallmentPayRequisites));
         
         string IMigrationMetadata.Id
         {
-            get { return "202305241709364_DbTplus"; }
+            get { return "202308161728585_InstallmentPayRequisites"; }
         }
         
         string IMigrationMetadata.Source

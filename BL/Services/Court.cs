@@ -31,7 +31,10 @@ namespace BL.Services
         Task<List<CourtGeneralInformation>> GetAllCourtFullLic(string FullLic);
         Task AddCourtWorkRequisites (BE.Court.CourtWorkRequisites courtWorkRequisites);
         Task RemoveCourtWorkRequisites(int id);
+        Task AddInstallmentPayRequisites(BE.Court.InstallmentPayRequisites courtWorkRequisites);
+        Task RemoveInstallmentPayRequisites(int id);
         Task<List<DB.Model.Court.CourtWorkRequisites>> GetCourtWorkRequisites(int CourtGeneralInformationId);
+        Task<List<DB.Model.Court.InstallmentPayRequisites>> GetInstallmentPayRequisites(int CourtGeneralInformationId);
         Task DeleteCourt(int Id);
         Task<string> saveFile(byte[] file, int CourtGeneralId, string Lic, string TypeFile, string NameFile, string User);
         Task<string> DeleteFile(int Id, string User);
@@ -62,6 +65,7 @@ namespace BL.Services
                     .Include(x => x.CourtStateDuty)
                     .Include(x => x.CourtExecutionFSSP)
                     .Include(x=>x.CourtWorkRequisites)
+                    .Include(x => x.InstallmentPayRequisites)
                     .Include(c => c.CourtDocumentScans).FirstOrDefaultAsync();
                 return Result;
             }
@@ -192,16 +196,6 @@ namespace BL.Services
                 {
                     return null;
                 }
-                //var Result = await db.CourtGeneralInformation.Where(x => x.Lic == FULL_LIC).Include(x => x.CourtBankruptcy)
-                //    .Include(x => x.CourtInstallmentPlan)
-                //    .Include(x => x.CourtExecutionInPF)
-                //    .Include(x => x.CourtLitigationWork)
-                //    .Include(x => x.CourtWork)
-                //    .Include(x => x.CourtWriteOff)
-                //    .Include(x => x.CourtStateDuty)
-                //    .Include(x => x.CourtExecutionFSSP)
-                //    .Include(c => c.CourtDocumentScans).FirstOrDefaultAsync();
-                //return Result;
             }
         }
         public async Task AddCourtWorkRequisites(BE.Court.CourtWorkRequisites courtWorkRequisites)
@@ -218,6 +212,19 @@ namespace BL.Services
                 await dbApp.SaveChangesAsync();
             }
         }
+        public async Task AddInstallmentPayRequisites(BE.Court.InstallmentPayRequisites courtWorkRequisites)
+        {
+            using (var dbApp = new ApplicationDbContext())
+            {
+                dbApp.InstallmentPayRequisites.Add(new DB.Model.Court.InstallmentPayRequisites
+                {
+                    CourtGeneralInformId = courtWorkRequisites.CourtGeneralInformId,
+                    Date = courtWorkRequisites.Date,
+                    Suma = courtWorkRequisites.Suma
+                });
+                await dbApp.SaveChangesAsync();
+            }
+        }
         public async Task RemoveCourtWorkRequisites(int id)
         {
             using (var dbApp = new ApplicationDbContext())
@@ -227,12 +234,28 @@ namespace BL.Services
                 await dbApp.SaveChangesAsync();
             }
         }
+        public async Task RemoveInstallmentPayRequisites(int id)
+        {
+            using (var dbApp = new ApplicationDbContext())
+            {
+                var res = await dbApp.InstallmentPayRequisites.FindAsync(id);
+                dbApp.InstallmentPayRequisites.Remove(res);
+                await dbApp.SaveChangesAsync();
+            }
+        }
 
         public async Task<List<DB.Model.Court.CourtWorkRequisites>> GetCourtWorkRequisites(int CourtGeneralInformationId)
         {
             using (var dbApp = new ApplicationDbContext())
             {
                 return await dbApp.CourtWorkRequisites.Where(x=>x.CourtGeneralInformId == CourtGeneralInformationId).ToListAsync();
+            }
+        }
+        public async Task<List<DB.Model.Court.InstallmentPayRequisites>> GetInstallmentPayRequisites(int CourtGeneralInformationId)
+        {
+            using (var dbApp = new ApplicationDbContext())
+            {
+                return await dbApp.InstallmentPayRequisites.Where(x => x.CourtGeneralInformId == CourtGeneralInformationId).ToListAsync();
             }
         }
 
@@ -249,6 +272,7 @@ namespace BL.Services
                     .Include(x => x.CourtStateDuty)
                     .Include(x => x.CourtExecutionFSSP)
                     .Include(x => x.CourtWorkRequisites)
+                    .Include(x => x.InstallmentPayRequisites)
                     .Include(c => c.CourtDocumentScans).FirstOrDefaultAsync();
                 dbApp.CourtBankruptcy.Remove(Result.CourtBankruptcy);
                 dbApp.CourtInstallmentPlan.Remove(Result.CourtInstallmentPlan);
@@ -259,6 +283,7 @@ namespace BL.Services
                 dbApp.CourtStateDuty.Remove(Result.CourtStateDuty);
                 dbApp.CourtExecutionFSSP.Remove(Result.CourtExecutionFSSP);
                 dbApp.CourtWorkRequisites.RemoveRange(Result.CourtWorkRequisites);
+                dbApp.InstallmentPayRequisites.RemoveRange(Result.InstallmentPayRequisites);
                 dbApp.CourtCourtDocumentScans.RemoveRange(Result.CourtDocumentScans);
                 dbApp.CourtGeneralInformation.Remove(Result);
                 await dbApp.SaveChangesAsync();

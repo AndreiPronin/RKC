@@ -57,9 +57,13 @@
     <Compile Include="DataBase\DbTPlus.cs" />
     <Compile Include="DataBase\DbLIC.cs" />
     <Compile Include="Extention\DbLicExtention.cs" />
-    <Compile Include="Migrations\202305241709364_DbTplus.cs" />
-    <Compile Include="Migrations\202305241709364_DbTplus.designer.cs">
-      <DependentUpon>202305241709364_DbTplus.cs</DependentUpon>
+    <Compile Include="Migrations\202308161728585_InstallmentPayRequisites.cs" />
+    <Compile Include="Migrations\202308161728585_InstallmentPayRequisites.designer.cs">
+      <DependentUpon>202308161728585_InstallmentPayRequisites.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308161759122_Installment add start and End date.cs" />
+    <Compile Include="Migrations\202308161759122_Installment add start and End date.designer.cs">
+      <DependentUpon>202308161759122_Installment add start and End date.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
@@ -80,6 +84,7 @@
     <Compile Include="Model\Court\CourtWorkRequisites.cs" />
     <Compile Include="Model\Court\CourtWriteOff.cs" />
     <Compile Include="Model\Court\DictiomaryModel\CourtNameDictionary.cs" />
+    <Compile Include="Model\Court\InstallmentPayRequisites.cs" />
     <Compile Include="Model\MODEL.cs" />
     <Compile Include="Model\Court\ReasonsRevokingIDExecution.cs" />
     <Compile Include="Model\DIMENSION.cs" />
@@ -113,8 +118,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305241709364_DbTplus.resx">
-      <DependentUpon>202305241709364_DbTplus.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202308161728585_InstallmentPayRequisites.resx">
+      <DependentUpon>202308161728585_InstallmentPayRequisites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308161759122_Installment add start and End date.resx">
+      <DependentUpon>202308161759122_Installment add start and End date.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

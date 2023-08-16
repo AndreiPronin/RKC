@@ -39,6 +39,14 @@ namespace DB.Model.Court
         /// </summary>
         public DateTime? RestructuringPaymentDate { get; set; }
         /// <summary>
+        /// Дата начала платежей
+        /// </summary>
+        public DateTime? DateStartPayment { get; set; }
+        /// <summary>
+        /// Дата окончания платежей
+        /// </summary>
+        public DateTime? DateEndPayment { get; set; }
+        /// <summary>
         /// Сумма оплаты по реструктуризации
         /// </summary>
         public double? AmountPaymentRestructuring { get; set; }

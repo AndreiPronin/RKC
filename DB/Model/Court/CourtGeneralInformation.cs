@@ -108,6 +108,7 @@ namespace DB.Model.Court
         public virtual CourtWork CourtWork { get; set; }
         public ICollection<CourtDocumentScans> CourtDocumentScans { get; set; }
         public ICollection<CourtWorkRequisites> CourtWorkRequisites { get; set; }
+        public ICollection<InstallmentPayRequisites> InstallmentPayRequisites { get; set; }
         public CourtExecutionFSSP CourtExecutionFSSP { get; set; }
         public virtual CourtExecutionInPF CourtExecutionInPF { get; set; }
         public virtual CourtInstallmentPlan CourtInstallmentPlan { get; set; }

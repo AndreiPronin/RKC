@@ -606,6 +606,7 @@
     <Content Include="Views\MKD\MainInformation.cshtml" />
     <Content Include="Views\MKD\HistoryOdpu.cshtml" />
     <Content Include="Views\Counter\DictionatyOption.cshtml" />
+    <Content Include="Views\Court\PartialViewInstallmentPayRequisites.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

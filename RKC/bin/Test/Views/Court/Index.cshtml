@@ -51,7 +51,21 @@
                     alert("Что то пошло не так. Обратитесь к администратору");
                 }
             });
-        }
+    }
+    function UpdateInstallmentPayRequisites() {
+        $("#PartialInstallmentPayRequisites").empty();
+        $.ajax({
+            url: '/Court/PartialViewInstallmentPayRequisites?Id=' + @Model.Id,
+            type: 'Post',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#PartialInstallmentPayRequisites").append(data);
+            },
+            error: function () {
+                alert("Что то пошло не так. Обратитесь к администратору");
+            }
+        });
+    }
 </script>
 <style>
     .container {
@@ -246,10 +260,14 @@
             $("#Cancel").removeClass("hidden");
             $("#EditData").addClass("hidden");
             $("#AddCourtWorkRequisites").removeClass("hidden");
+            $("#AddInstallmentPayRequisites").removeClass("hidden");
             $('div input').each(function () {
                 $(this).prop('readonly', false);;
             });
             $('.removeCourtWorkRequisites').each(function () {
+                $(this).removeClass("hidden");
+            });
+            $('.removeInstallmentPayRequisites').each(function () {
                 $(this).removeClass("hidden");
             });
             $('div textarea').each(function () {

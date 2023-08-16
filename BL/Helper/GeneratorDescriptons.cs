@@ -252,7 +252,7 @@ namespace BL.Helper
         public string Generate(CourtGeneralInformation courtGeneralBe, DB.Model.Court.CourtGeneralInformation courtGeneralDb, string User)
         {
             StringBuilder Result = new StringBuilder();
-            Result.AppendLine($"{DateTime.Now} Пользователь {User} изменил:");
+            Result.AppendLine($"<b>{DateTime.Now} Пользователь {User} изменил:</b>");
             if (courtGeneralBe.Pensioner != courtGeneralDb.Pensioner)
                 Result.AppendLine($"Пенсионер: было {courtGeneralDb.Pensioner} стало {courtGeneralBe.Pensioner}");
             if (courtGeneralBe.Inn != courtGeneralDb.Inn)
@@ -527,6 +527,10 @@ namespace BL.Helper
                 Result.AppendLine($"Сумма ежемесячного платежа по реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.AmountMonthlyRestructuringPayment} стало {courtGeneralBe.CourtInstallmentPlan.AmountMonthlyRestructuringPayment}");
             if (courtGeneralBe.CourtInstallmentPlan.RestructuringPaymentDate != courtGeneralDb.CourtInstallmentPlan.RestructuringPaymentDate)
                 Result.AppendLine($"Дата оплаты по реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.RestructuringPaymentDate} стало {courtGeneralBe.CourtInstallmentPlan.RestructuringPaymentDate}");
+            if (courtGeneralBe.CourtInstallmentPlan.DateStartPayment != courtGeneralDb.CourtInstallmentPlan.DateStartPayment)
+                Result.AppendLine($"Дата начала платежей: было {courtGeneralDb.CourtInstallmentPlan.DateStartPayment} стало {courtGeneralBe.CourtInstallmentPlan.DateStartPayment}");
+            if (courtGeneralBe.CourtInstallmentPlan.DateEndPayment != courtGeneralDb.CourtInstallmentPlan.DateEndPayment)
+                Result.AppendLine($"Дата окончания платежей: было {courtGeneralDb.CourtInstallmentPlan.DateEndPayment} стало {courtGeneralBe.CourtInstallmentPlan.DateEndPayment}");
             if (courtGeneralBe.CourtInstallmentPlan.AmountPaymentRestructuring != courtGeneralDb.CourtInstallmentPlan.AmountPaymentRestructuring)
                 Result.AppendLine($"Сумма оплаты по реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.AmountPaymentRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.AmountPaymentRestructuring}");
             if (courtGeneralBe.CourtInstallmentPlan.Comment != courtGeneralDb.CourtInstallmentPlan.Comment)
@@ -614,8 +618,6 @@ namespace BL.Helper
                 Result.AppendLine($"Дата возврата заявления ФНС: было {courtGeneralDb.CourtStateDuty.DateReturnFNS} стало {courtGeneralBe.CourtStateDuty.DateReturnFNS}");
             if (courtGeneralBe.CourtStateDuty.ReasonReturn != courtGeneralDb.CourtStateDuty.ReasonReturn)
                 Result.AppendLine($"Причина возврата заявления ФНС: было {courtGeneralDb.CourtStateDuty.ReasonReturn} стало {courtGeneralBe.CourtStateDuty.ReasonReturn}");
-            if (courtGeneralBe.CourtStateDuty.DateSendReestr != courtGeneralDb.CourtStateDuty.DateSendReestr)
-                Result.AppendLine($"Дата направления реестра на г/п в бухгалтерию: было {courtGeneralDb.CourtStateDuty.DateSendReestr} стало {courtGeneralBe.CourtStateDuty.DateSendReestr}");
             if (courtGeneralBe.CourtStateDuty.Comment != courtGeneralDb.CourtStateDuty.Comment)
                 Result.AppendLine($"Примечание (ФНС): было {courtGeneralDb.CourtStateDuty.Comment} стало {courtGeneralBe.CourtStateDuty.Comment}");
             //CourtWriteOff
