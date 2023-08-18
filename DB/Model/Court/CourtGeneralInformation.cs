@@ -50,6 +50,10 @@ namespace DB.Model.Court
         /// </summary>
         public string ShareOfOwnership { get; set; }
         /// <summary>
+        /// Кадастровый номер
+        /// </summary>
+        public string CadastrNumber { get; set; }
+        /// <summary>
         /// Дата рождения
         /// </summary>
         public string DateBirthday { get; set; }
@@ -109,6 +113,7 @@ namespace DB.Model.Court
         public ICollection<CourtDocumentScans> CourtDocumentScans { get; set; }
         public ICollection<CourtWorkRequisites> CourtWorkRequisites { get; set; }
         public ICollection<InstallmentPayRequisites> InstallmentPayRequisites { get; set; }
+        public ICollection<LitigationWorkRequisites> LitigationWorkRequisites { get; set; }
         public CourtExecutionFSSP CourtExecutionFSSP { get; set; }
         public virtual CourtExecutionInPF CourtExecutionInPF { get; set; }
         public virtual CourtInstallmentPlan CourtInstallmentPlan { get; set; }

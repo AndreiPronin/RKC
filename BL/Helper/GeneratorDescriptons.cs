@@ -273,6 +273,8 @@ namespace BL.Helper
                 Result.AppendLine($"Пол: было {courtGeneralDb.Floor} стало {courtGeneralBe.Floor}");
             if (courtGeneralBe.ShareOfOwnership != courtGeneralDb.ShareOfOwnership)
                 Result.AppendLine($"Доля собственности: было {courtGeneralDb.ShareOfOwnership} стало {courtGeneralBe.ShareOfOwnership}");
+            if (courtGeneralBe.CadastrNumber != courtGeneralDb.CadastrNumber)
+                Result.AppendLine($"Доля собственности: было {courtGeneralDb.CadastrNumber} стало {courtGeneralBe.CadastrNumber}");
             if (courtGeneralBe.DateBirthday != courtGeneralDb.DateBirthday)
                 Result.AppendLine($"Дата рождения: было {courtGeneralDb.DateBirthday} стало {courtGeneralBe.DateBirthday}");
             if (courtGeneralBe.PasportDate != courtGeneralDb.PasportDate)
@@ -525,8 +527,6 @@ namespace BL.Helper
                 Result.AppendLine($"Конечный месяц реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.FinalMonthRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.FinalMonthRestructuring}");
             if (courtGeneralBe.CourtInstallmentPlan.AmountMonthlyRestructuringPayment != courtGeneralDb.CourtInstallmentPlan.AmountMonthlyRestructuringPayment)
                 Result.AppendLine($"Сумма ежемесячного платежа по реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.AmountMonthlyRestructuringPayment} стало {courtGeneralBe.CourtInstallmentPlan.AmountMonthlyRestructuringPayment}");
-            if (courtGeneralBe.CourtInstallmentPlan.RestructuringPaymentDate != courtGeneralDb.CourtInstallmentPlan.RestructuringPaymentDate)
-                Result.AppendLine($"Дата оплаты по реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.RestructuringPaymentDate} стало {courtGeneralBe.CourtInstallmentPlan.RestructuringPaymentDate}");
             if (courtGeneralBe.CourtInstallmentPlan.DateStartPayment != courtGeneralDb.CourtInstallmentPlan.DateStartPayment)
                 Result.AppendLine($"Дата начала платежей: было {courtGeneralDb.CourtInstallmentPlan.DateStartPayment} стало {courtGeneralBe.CourtInstallmentPlan.DateStartPayment}");
             if (courtGeneralBe.CourtInstallmentPlan.DateEndPayment != courtGeneralDb.CourtInstallmentPlan.DateEndPayment)
@@ -571,6 +571,8 @@ namespace BL.Helper
                 Result.AppendLine($"Взысканная сумма - ОД: было {courtGeneralDb.CourtLitigationWork.AmountWithdrawnOd} стало {courtGeneralBe.CourtLitigationWork.AmountWithdrawnOd}");
             if (courtGeneralBe.CourtLitigationWork.AmountWithdrawnPeny != courtGeneralDb.CourtLitigationWork.AmountWithdrawnPeny)
                 Result.AppendLine($"Взысканная сумма - пени: было {courtGeneralDb.CourtLitigationWork.AmountWithdrawnPeny} стало {courtGeneralBe.CourtLitigationWork.AmountWithdrawnPeny}");
+            if (courtGeneralBe.CourtLitigationWork.AmountRecoveredExpenses != courtGeneralDb.CourtLitigationWork.AmountRecoveredExpenses)
+                Result.AppendLine($"Взысканная сумма - расходов: было {courtGeneralDb.CourtLitigationWork.AmountRecoveredExpenses} стало {courtGeneralBe.CourtLitigationWork.AmountRecoveredExpenses}");
             if (courtGeneralBe.CourtLitigationWork.AmountWithdrawnGp != courtGeneralDb.CourtLitigationWork.AmountWithdrawnGp)
                 Result.AppendLine($"Взысканная сумма - ГП: было {courtGeneralDb.CourtLitigationWork.AmountWithdrawnGp} стало {courtGeneralBe.CourtLitigationWork.AmountWithdrawnGp}");
             if (courtGeneralBe.CourtLitigationWork.NameCourt != courtGeneralDb.CourtLitigationWork.NameCourt)
@@ -584,29 +586,31 @@ namespace BL.Helper
             if (courtGeneralBe.CourtLitigationWork.SumIskaAll != courtGeneralDb.CourtLitigationWork.SumIskaAll)
                 Result.AppendLine($"Cумма иска - всего: было {courtGeneralDb.CourtLitigationWork.SumIskaAll} стало {courtGeneralBe.CourtLitigationWork.SumIskaAll}");
             if (courtGeneralBe.CourtLitigationWork.SumOdSendCourt != courtGeneralDb.CourtLitigationWork.SumOdSendCourt)
-                Result.AppendLine($"Сумма ОД предъявленная в суд: было {courtGeneralDb.CourtLitigationWork.SumOdSendCourt} стало {courtGeneralBe.CourtLitigationWork.SumOdSendCourt}");
+                Result.AppendLine($"Сумма ОД, предъявленная в суд: было {courtGeneralDb.CourtLitigationWork.SumOdSendCourt} стало {courtGeneralBe.CourtLitigationWork.SumOdSendCourt}");
             if (courtGeneralBe.CourtLitigationWork.SumPenySendCourt != courtGeneralDb.CourtLitigationWork.SumPenySendCourt)
-                Result.AppendLine($"Сумма пени предъявленная в суд: было {courtGeneralDb.CourtLitigationWork.SumPenySendCourt} стало {courtGeneralBe.CourtLitigationWork.SumPenySendCourt}");
+                Result.AppendLine($"Сумма пени, предъявленная в суд: было {courtGeneralDb.CourtLitigationWork.SumPenySendCourt} стало {courtGeneralBe.CourtLitigationWork.SumPenySendCourt}");
+            if (courtGeneralBe.CourtLitigationWork.SumOtherCourt != courtGeneralDb.CourtLitigationWork.SumOtherCourt)
+                Result.AppendLine($"Сумма прочих расходов: было {courtGeneralDb.CourtLitigationWork.SumOtherCourt} стало {courtGeneralBe.CourtLitigationWork.SumOtherCourt}");
             if (courtGeneralBe.CourtLitigationWork.SumStateDuty != courtGeneralDb.CourtLitigationWork.SumStateDuty)
                 Result.AppendLine($"Сумма госпошлины (указанная в иске): было {courtGeneralDb.CourtLitigationWork.SumStateDuty} стало {courtGeneralBe.CourtLitigationWork.SumStateDuty}");
             if (courtGeneralBe.CourtLitigationWork.PeriodDebtBegin != courtGeneralDb.CourtLitigationWork.PeriodDebtBegin)
                 Result.AppendLine($"период задолженности начальный: было {courtGeneralDb.CourtLitigationWork.PeriodDebtBegin} стало {courtGeneralBe.CourtLitigationWork.PeriodDebtBegin}");
             if (courtGeneralBe.CourtLitigationWork.PeriodDebtEnd != courtGeneralDb.CourtLitigationWork.PeriodDebtEnd)
                 Result.AppendLine($"период задолженности конечный: было {courtGeneralDb.CourtLitigationWork.PeriodDebtEnd} стало {courtGeneralBe.CourtLitigationWork.PeriodDebtEnd}");
-            if (courtGeneralBe.CourtLitigationWork.GPDetailsAmount != courtGeneralDb.CourtLitigationWork.GPDetailsAmount)
-                Result.AppendLine($"Реквизиты ГП - сумма: было {courtGeneralDb.CourtLitigationWork.GPDetailsAmount} стало {courtGeneralBe.CourtLitigationWork.GPDetailsAmount}");
-            if (courtGeneralBe.CourtLitigationWork.GPDetailsDatePayment != courtGeneralDb.CourtLitigationWork.GPDetailsDatePayment)
-                Result.AppendLine($"Реквизиты ГП - дата платежного поручения: было {courtGeneralDb.CourtLitigationWork.GPDetailsDatePayment} стало {courtGeneralBe.CourtLitigationWork.GPDetailsDatePayment}");
-            if (courtGeneralBe.CourtLitigationWork.GPDetailsPaymentOrderNuumber != courtGeneralDb.CourtLitigationWork.GPDetailsPaymentOrderNuumber)
-                Result.AppendLine($"Реквизиты ГП - номер платежного поручения: было {courtGeneralDb.CourtLitigationWork.GPDetailsPaymentOrderNuumber} стало {courtGeneralBe.CourtLitigationWork.GPDetailsPaymentOrderNuumber}");
             if (courtGeneralBe.CourtLitigationWork.DateDecision != courtGeneralDb.CourtLitigationWork.DateDecision)
                 Result.AppendLine($"Дата решения: было {courtGeneralDb.CourtLitigationWork.DateDecision} стало {courtGeneralBe.CourtLitigationWork.DateDecision}");
+            if (courtGeneralBe.CourtLitigationWork.SumOverpaidGP != courtGeneralDb.CourtLitigationWork.SumOverpaidGP)
+                Result.AppendLine($"Сумма излишне уплаченной ГП {courtGeneralDb.CourtLitigationWork.SumOverpaidGP} стало {courtGeneralBe.CourtLitigationWork.SumOverpaidGP}");
+            if (courtGeneralBe.CourtLitigationWork.SumPayGP != courtGeneralDb.CourtLitigationWork.SumPayGP)
+                Result.AppendLine($"Сумма уплаченной ГП: было {courtGeneralDb.CourtLitigationWork.SumPayGP} стало {courtGeneralBe.CourtLitigationWork.SumPayGP}");
             if (courtGeneralBe.CourtLitigationWork.DateEntryDecision != courtGeneralDb.CourtLitigationWork.DateEntryDecision)
                 Result.AppendLine($"Дата вступления решения в з.с.: было {courtGeneralDb.CourtLitigationWork.DateEntryDecision} стало {courtGeneralBe.CourtLitigationWork.DateEntryDecision}");
             if (courtGeneralBe.CourtLitigationWork.RequestDateIl != courtGeneralDb.CourtLitigationWork.RequestDateIl)
                 Result.AppendLine($"Дата запроса ИЛ: было {courtGeneralDb.CourtLitigationWork.RequestDateIl} стало {courtGeneralBe.CourtLitigationWork.RequestDateIl}");
             if (courtGeneralBe.CourtLitigationWork.DateIssueIL != courtGeneralDb.CourtLitigationWork.DateIssueIL)
                 Result.AppendLine($"Дата выдачи ИЛ: было {courtGeneralDb.CourtLitigationWork.DateIssueIL} стало {courtGeneralBe.CourtLitigationWork.DateIssueIL}");
+            if (courtGeneralBe.CourtLitigationWork.DateFactGetIL != courtGeneralDb.CourtLitigationWork.DateFactGetIL)
+                Result.AppendLine($"Дата фактического получения ИЛ: было {courtGeneralDb.CourtLitigationWork.DateFactGetIL} стало {courtGeneralBe.CourtLitigationWork.DateFactGetIL}");
             if (courtGeneralBe.CourtLitigationWork.NumberIl != courtGeneralDb.CourtLitigationWork.NumberIl)
                 Result.AppendLine($"Номер ИЛ: было {courtGeneralDb.CourtLitigationWork.NumberIl} стало {courtGeneralBe.CourtLitigationWork.NumberIl}");
             if (courtGeneralBe.CourtLitigationWork.Comment != courtGeneralDb.CourtLitigationWork.Comment)

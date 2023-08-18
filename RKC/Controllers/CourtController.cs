@@ -140,6 +140,26 @@ namespace RKC.Controllers
             await _court.AddCourtWorkRequisites(courtWorkRequisites);
             return Content("Успешно добавлено");
         }
+        public async Task<ActionResult> PartialViewCourtWorkRequisites(int Id)
+        {
+            var res = await _court.GetCourtWorkRequisites(Id);
+            return PartialView(res);
+        }
+        public async Task<ActionResult> AddLitigationWorkRequisites(LitigationWorkRequisites litigationWorkRequisites)
+        {
+            await _court.AddLitigationWorkRequisites(litigationWorkRequisites);
+            return Content("Успешно добавлено");
+        }
+        public async Task<ActionResult> RemoveLitigationWorkRequisites(int Id)
+        {
+            await _court.RemoveLitigationWorkRequisites(Id);
+            return Content("Успешно удалено");
+        }
+        public async Task<ActionResult> PartialViewLitigationWorkRequisites(int Id)
+        {
+            var res = await _court.GetLitigationWorkRequisites(Id);
+            return PartialView(res);
+        }
         public async Task<ActionResult> RemoveCourtWorkRequisites(int Id)
         {
             await _court.RemoveCourtWorkRequisites(Id);
@@ -155,16 +175,13 @@ namespace RKC.Controllers
             await _court.RemoveInstallmentPayRequisites(Id);
             return Content("Успешно удалено");
         }
-        public async Task<ActionResult> PartialViewCourtWorkRequisites(int Id)
-        {
-            var res = await _court.GetCourtWorkRequisites(Id);
-            return PartialView(res);
-        }
+
         public async Task<ActionResult> PartialViewInstallmentPayRequisites(int Id)
         {
             var res = await _court.GetInstallmentPayRequisites(Id);
             return PartialView(res);
         }
+
         public async Task<ActionResult> PartialViewGetAllFilesInCourt(int Id)
         {
             var Res = await _court.GetDocumentScans(Id);

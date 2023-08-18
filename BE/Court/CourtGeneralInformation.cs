@@ -48,6 +48,10 @@ namespace BE.Court
         /// </summary>
         public string ShareOfOwnership { get; set; }
         /// <summary>
+        /// Кадастровый номер
+        /// </summary>
+        public string CadastrNumber { get; set; }
+        /// <summary>
         /// Дата рождения
         /// </summary>
         public string DateBirthday { get; set; }

@@ -31,10 +31,6 @@ namespace BE.Court
         /// </summary>
         public double? AmountMonthlyRestructuringPayment { get; set; }
         /// <summary>
-        /// Дата оплаты по реструктуризации
-        /// </summary>
-        public DateTime? RestructuringPaymentDate { get; set; }
-        /// <summary>
         /// Дата начала платежей
         /// </summary>
         public DateTime? DateStartPayment { get; set; }

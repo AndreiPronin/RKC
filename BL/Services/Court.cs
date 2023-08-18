@@ -33,8 +33,11 @@ namespace BL.Services
         Task RemoveCourtWorkRequisites(int id);
         Task AddInstallmentPayRequisites(BE.Court.InstallmentPayRequisites courtWorkRequisites);
         Task RemoveInstallmentPayRequisites(int id);
+        Task AddLitigationWorkRequisites(BE.Court.LitigationWorkRequisites litigationWorkRequisites);
+        Task RemoveLitigationWorkRequisites(int id);
         Task<List<DB.Model.Court.CourtWorkRequisites>> GetCourtWorkRequisites(int CourtGeneralInformationId);
         Task<List<DB.Model.Court.InstallmentPayRequisites>> GetInstallmentPayRequisites(int CourtGeneralInformationId);
+        Task<List<DB.Model.Court.LitigationWorkRequisites>> GetLitigationWorkRequisites(int CourtGeneralInformationId);
         Task DeleteCourt(int Id);
         Task<string> saveFile(byte[] file, int CourtGeneralId, string Lic, string TypeFile, string NameFile, string User);
         Task<string> DeleteFile(int Id, string User);
@@ -66,6 +69,7 @@ namespace BL.Services
                     .Include(x => x.CourtExecutionFSSP)
                     .Include(x=>x.CourtWorkRequisites)
                     .Include(x => x.InstallmentPayRequisites)
+                    .Include(x=>x.LitigationWorkRequisites)
                     .Include(c => c.CourtDocumentScans).FirstOrDefaultAsync();
                 return Result;
             }
@@ -225,6 +229,20 @@ namespace BL.Services
                 await dbApp.SaveChangesAsync();
             }
         }
+        public async Task AddLitigationWorkRequisites(BE.Court.LitigationWorkRequisites litigationWorkRequisites)
+        {
+            using (var dbApp = new ApplicationDbContext())
+            {
+                dbApp.LitigationWorkRequisites.Add(new DB.Model.Court.LitigationWorkRequisites
+                {
+                    CourtGeneralInformId = litigationWorkRequisites.CourtGeneralInformId,
+                    Date = litigationWorkRequisites.Date,
+                    Number = litigationWorkRequisites.Number,
+                    Suma = litigationWorkRequisites.Suma
+                });
+                await dbApp.SaveChangesAsync();
+            }
+        }
         public async Task RemoveCourtWorkRequisites(int id)
         {
             using (var dbApp = new ApplicationDbContext())
@@ -243,6 +261,15 @@ namespace BL.Services
                 await dbApp.SaveChangesAsync();
             }
         }
+        public async Task RemoveLitigationWorkRequisites(int id)
+        {
+            using (var dbApp = new ApplicationDbContext())
+            {
+                var res = await dbApp.LitigationWorkRequisites.FindAsync(id);
+                dbApp.LitigationWorkRequisites.Remove(res);
+                await dbApp.SaveChangesAsync();
+            }
+        }
 
         public async Task<List<DB.Model.Court.CourtWorkRequisites>> GetCourtWorkRequisites(int CourtGeneralInformationId)
         {
@@ -256,6 +283,13 @@ namespace BL.Services
             using (var dbApp = new ApplicationDbContext())
             {
                 return await dbApp.InstallmentPayRequisites.Where(x => x.CourtGeneralInformId == CourtGeneralInformationId).ToListAsync();
+            }
+        }
+        public async Task<List<DB.Model.Court.LitigationWorkRequisites>> GetLitigationWorkRequisites(int CourtGeneralInformationId)
+        {
+            using (var dbApp = new ApplicationDbContext())
+            {
+                return await dbApp.LitigationWorkRequisites.Where(x => x.CourtGeneralInformId == CourtGeneralInformationId).ToListAsync();
             }
         }
 
@@ -273,6 +307,7 @@ namespace BL.Services
                     .Include(x => x.CourtExecutionFSSP)
                     .Include(x => x.CourtWorkRequisites)
                     .Include(x => x.InstallmentPayRequisites)
+                    .Include(x => x.LitigationWorkRequisites)
                     .Include(c => c.CourtDocumentScans).FirstOrDefaultAsync();
                 dbApp.CourtBankruptcy.Remove(Result.CourtBankruptcy);
                 dbApp.CourtInstallmentPlan.Remove(Result.CourtInstallmentPlan);
@@ -284,6 +319,7 @@ namespace BL.Services
                 dbApp.CourtExecutionFSSP.Remove(Result.CourtExecutionFSSP);
                 dbApp.CourtWorkRequisites.RemoveRange(Result.CourtWorkRequisites);
                 dbApp.InstallmentPayRequisites.RemoveRange(Result.InstallmentPayRequisites);
+                dbApp.LitigationWorkRequisites.RemoveRange(Result.LitigationWorkRequisites);
                 dbApp.CourtCourtDocumentScans.RemoveRange(Result.CourtDocumentScans);
                 dbApp.CourtGeneralInformation.Remove(Result);
                 await dbApp.SaveChangesAsync();
@@ -297,7 +333,7 @@ namespace BL.Services
                 {
                     Directory.CreateDirectory($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}");
                 }
-                if (File.Exists($@"\\10.10.10.17\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{NameFile}.{TypeFile}")) return $@"Файл с название {NameFile} уже существует. Обратитесь к системному администратору!";
+                if (File.Exists($@"\\10.10.10.17\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{NameFile}.{TypeFile}")) return $@"Файл с названием {NameFile} уже существует. Обратитесь к системному администратору!";
                 File.WriteAllBytes($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{NameFile}.{TypeFile}", file);
                 using (var db = new ApplicationDbContext())
                 {

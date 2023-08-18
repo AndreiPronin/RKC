@@ -28,100 +28,155 @@
         </div>
         <label class="col-sm-12 col-form-label">Наименование суда:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.NameCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.NameCourt })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.NameCourt, new { @readonly = "readonly", @dicId = "1", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtLitigationWork.NameCourt })
         </div>
         <label class="col-sm-12 col-form-label">ФИО сотрудника (направившего дело в суд):</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.FioSendCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.FioSendCourt })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.FioSendCourt, new { @readonly = "readonly", @dicId = "20", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtLitigationWork.FioSendCourt })
         </div>
         <label class="col-sm-12 col-form-label">Способ отправки заявления в суд:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.HowSubmitApplicationCourt, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.HowSubmitApplicationCourt })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.HowSubmitApplicationCourt, new { @readonly = "readonly", @dicId = "17", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtLitigationWork.HowSubmitApplicationCourt })
         </div>
     </div>
     <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">Cумма иска - всего</label>
+        <label class="col-sm-12 col-form-label">Cумма иска - всего:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.SumIskaAll, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.SumIskaAll })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumIskaAll, new { @disabled = "disabled", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtLitigationWork.SumIskaAll })
         </div>
-        <label class="col-sm-12 col-form-label">Сумма ОД предъявленная в суд:</label>
+        <label class="col-sm-12 col-form-label">Сумма ОД, предъявленная в суд:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.SumOdSendCourt, new { @readonly = "readonly", @dicId = "13", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtLitigationWork.SumOdSendCourt })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumOdSendCourt, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtLitigationWork.SumOdSendCourt })
         </div>
-        <label class="col-sm-12 col-form-label">Сумма пени предъявленная в суд:</label>
+        <label class="col-sm-12 col-form-label">Сумма пени, предъявленная в суд:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.SumPenySendCourt, new { @type = "date", @readonly = "readonly", @class = "form-control", 
-           @Value = (Model.CourtLitigationWork.SumPenySendCourt.HasValue ? Model.CourtLitigationWork.SumPenySendCourt.Value.ToString("yyyy-MM-dd") : string.Empty)
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumPenySendCourt, new
+            {
+           @type = "number",
+           @step = "0.01",
+           @readonly = "readonly",
+                @class = "form-control",
+           @Value = Model.CourtLitigationWork.SumPenySendCourt
        })
         </div>
-        <label class="col-sm-12 col-form-label">Сумма госпошлины( указанная в иске):</label>
+        <label class="col-sm-12 col-form-label">Сумма прочих расходов:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.SumStateDuty, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.SumStateDuty })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumOtherCourt, new
+            {
+           @type = "number",
+           @step = "0.01",
+           @readonly = "readonly",
+                @class = "form-control",
+           @Value = Model.CourtLitigationWork.SumOtherCourt
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма госпошлины (указанная в иске):</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumStateDuty, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtLitigationWork.SumStateDuty })
         </div>
         <label class="col-sm-12 col-form-label">Период задолженности начальный:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.PeriodDebtBegin, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtLitigationWork.PeriodDebtBegin, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtLitigationWork.PeriodDebtBegin.HasValue ? Model.CourtLitigationWork.PeriodDebtBegin.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
-        <label class="col-sm-12 col-form-label">Период задолженности конечный</label>
+        <label class="col-sm-12 col-form-label">Период задолженности конечный:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.PeriodDebtEnd, new { @type = "date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtLitigationWork.PeriodDebtEnd, new
+            {
+                @type = "date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtLitigationWork.PeriodDebtEnd.HasValue ? Model.CourtLitigationWork.PeriodDebtEnd.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
-        <label class="col-sm-12 col-form-label">Реквизиты ГП - сумма:</label>
+        <label class="col-sm-12 col-form-label">Сумма излишне уплаченной ГП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.GPDetailsAmount, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.GPDetailsAmount })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumOverpaidGP, new { @disabled = "disabled ", @class = "form-control", @Value = Model.CourtLitigationWork.SumOverpaidGP })
         </div>
-        <label class="col-sm-12 col-form-label">Реквизиты ГП - дата платежного поручения:</label>
+        <label class="col-sm-12 col-form-label">Сумма уплаченной ГП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.GPDetailsDatePayment, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
-           @Value = (Model.CourtLitigationWork.GPDetailsDatePayment.HasValue ? Model.CourtLitigationWork.GPDetailsDatePayment.Value.ToString("yyyy-MM-dd") : string.Empty)
-       })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.SumPayGP, new { @disabled = "disabled ", @class = "form-control", @Value = Model.CourtLitigationWork.SumPayGP })
         </div>
-        <label class="col-sm-12 col-form-label">Реквизиты ГП - номер платежного поручения:</label>
-        <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.GPDetailsPaymentOrderNuumber, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.GPDetailsPaymentOrderNuumber })
+        <label style="padding-top: 25px;" class="col-sm-12 col-form-label"> <button type="button" id="AddLitigationWorkRequisites" class="btn btn-primary hidden">Добавить реквизиты ГП</button></label>
+        <div id="PartialViewLitigationWorkRequisites">
+            @Html.Partial("PartialViewLitigationWorkRequisites", Model.LitigationWorkRequisites)
         </div>
-       
     </div>
     <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">Дата решения</label>
+        <label class="col-sm-12 col-form-label">Дата решения:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.DateDecision, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateDecision, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtLitigationWork.DateDecision.HasValue ? Model.CourtLitigationWork.DateDecision.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Дата вступления решения в з.с.:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.DateEntryDecision, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateEntryDecision, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtLitigationWork.DateEntryDecision.HasValue ? Model.CourtLitigationWork.DateEntryDecision.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Взысканная сумма - всего:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnAll, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnAll })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnAll, new { @disabled = "disabled", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnAll })
         </div>
         <label class="col-sm-12 col-form-label">Взысканная сумма - ОД:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnOd, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnOd })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnOd, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnOd })
         </div>
         <label class="col-sm-12 col-form-label">Взысканная сумма - пени:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnPeny, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnPeny })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnPeny, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnPeny })
+        </div>
+        <label class="col-sm-12 col-form-label">Взысканная сумма - расходов:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountRecoveredExpenses, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtLitigationWork.AmountRecoveredExpenses })
         </div>
         <label class="col-sm-12 col-form-label">Взысканная сумма - ГП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnGp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnGp })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnGp, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnGp })
         </div>
         <label class="col-sm-12 col-form-label">Дата запроса ИЛ:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.RequestDateIl, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.RequestDateIl })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.RequestDateIl, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
+        @Value = (Model.CourtLitigationWork.RequestDateIl.HasValue ? Model.CourtLitigationWork.RequestDateIl.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
         </div>
         <label class="col-sm-12 col-form-label">Дата выдачи ИЛ:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.DateIssueIL, new { @type = "Date", @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.DateIssueIL })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateIssueIL, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
+            @Value = (Model.CourtLitigationWork.DateIssueIL.HasValue ? Model.CourtLitigationWork.DateIssueIL.Value.ToString("yyyy-MM-dd") : string.Empty)
+            })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата фактического получения ИЛ:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateFactGetIL, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
+            @Value = (Model.CourtLitigationWork.DateFactGetIL.HasValue ? Model.CourtLitigationWork.DateFactGetIL.Value.ToString("yyyy-MM-dd") : string.Empty)
+            })
         </div>
         <label class="col-sm-12 col-form-label">Номер ИЛ:</label>
         <div class="col-sm-8">
@@ -133,4 +188,90 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function (e) {
+        $("#CourtLitigationWork_SumOdSendCourt").keyup(function () {
+            let sum = +$("#CourtLitigationWork_SumOdSendCourt").val() + +$("#CourtLitigationWork_SumPenySendCourt").val() + +$("#CourtLitigationWork_SumOtherCourt").val() + +$("#CourtLitigationWork_SumStateDuty").val();
+            $("#CourtLitigationWork_SumIskaAll").val(sum.toFixed(2))
+        })
+        $("#CourtLitigationWork_SumPenySendCourt").keyup(function () {
+            let sum = +$("#CourtLitigationWork_SumOdSendCourt").val() + +$("#CourtLitigationWork_SumPenySendCourt").val() + +$("#CourtLitigationWork_SumOtherCourt").val() + +$("#CourtLitigationWork_SumStateDuty").val();
+            $("#CourtLitigationWork_SumIskaAll").val(sum.toFixed(2))
+        })
+        $("#CourtLitigationWork_SumOtherCourt").keyup(function () {
+            let sum = +$("#CourtLitigationWork_SumOdSendCourt").val() + +$("#CourtLitigationWork_SumPenySendCourt").val() + +$("#CourtLitigationWork_SumOtherCourt").val() + +$("#CourtLitigationWork_SumStateDuty").val();
+            $("#CourtLitigationWork_SumIskaAll").val(sum.toFixed(2))
+        })
+        $("#CourtLitigationWork_SumStateDuty").keyup(function () {
+            let sum = +$("#CourtLitigationWork_SumOdSendCourt").val() + +$("#CourtLitigationWork_SumPenySendCourt").val() + +$("#CourtLitigationWork_SumOtherCourt").val() + +$("#CourtLitigationWork_SumStateDuty").val();
+            $("#CourtLitigationWork_SumIskaAll").val(sum.toFixed(2));
+            let summCourtWork = +$("#CourtLitigationWork_SumPayGP").val() - $("#CourtLitigationWork_SumStateDuty").val();
+            $("#CourtLitigationWork_SumOverpaidGP").val(summCourtWork.toFixed(2));
+            $("#Save").removeClass("hidden");
+            removeErrorText($("#CourtLitigationWork_SumOverpaidGP"));
+            removeError($("#CourtLitigationWork_SumPayGP"));
+            removeError($("#CourtLitigationWork_SumStateDuty"));
+            if (summCourtWork < 0) {
+                $("#Save").addClass("hidden");
+                callErrorText($("#CourtLitigationWork_SumOverpaidGP"), "Проверьте введенные суммы ГП");
+                callError($("#CourtLitigationWork_SumPayGP"));
+                callError($("#CourtLitigationWork_SumStateDuty"))
+            }
+
+        })
+        $("#AddLitigationWorkRequisites").click(function (e) {
+            var Date = "@DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM")";
+            var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";
+            console.log(DateMax);
+            $.confirm({
+                title: 'Введите реквизиты ГП',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="col-md-4">' +
+                    '<label>Дата</label>' +
+                    '<input type="Date" id="DateLitigationWorkRequisites" class="form-control" />' +
+                    '</div>' +
+                    '<div class="col-md-4">' +
+                    '<label>Номер</label>' +
+                    '<input type="number" id="NumberLitigationWorkRequisites" class="form-control" />' +
+                    '</div>' +
+                    '<div class="col-md-4">' +
+                    '<label>Сумма</label>' +
+                    '<input type="number" id="SumLitigationWorkRequisites" oninput="func(this)" class="form-control" />' +
+                    '</div>' +
+                    '</form>',
+                buttons: {
+                    '<input type="button" class="btn btn-primary" value="Сохранить" data-toggle="modal" data-target="#ShowLogResultModal" />': function () {
+                        var summa = $("#SumLitigationWorkRequisites").val();
+                        summa = summa.replace(",", ".")
+                        $.ajax({
+                            url: '/Court/AddLitigationWorkRequisites',
+                            type: 'Post',
+                            async: false,
+                            data: JSON.stringify({
+                                litigationWorkRequisites: {
+                                    CourtGeneralInformId:@Model.Id,
+                                    Date: $("#DateLitigationWorkRequisites").val(),
+                                    Number: $("#NumberLitigationWorkRequisites").val(),
+                                    Suma: summa,
+                                }
+                            }),
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                UpdateLitigationWorkRequisites();
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+
+        });
+    })
+</script>
 

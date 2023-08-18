@@ -41,6 +41,10 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.ShareOfOwnership, new { @readonly = "readonly", @class = "form-control", @Value = Model.ShareOfOwnership })
         </div>
+        <label class="col-sm-12 col-form-label">Кадастровый номер:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CadastrNumber, new { @readonly = "readonly", @class = "form-control", @Value = Model.CadastrNumber })
+        </div>
     </div>
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">ФИО должника</label>

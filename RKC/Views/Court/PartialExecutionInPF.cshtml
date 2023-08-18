@@ -27,7 +27,7 @@
            @Value = (Model.CourtExecutionInPF.DateSendSpInIo.HasValue ? Model.CourtExecutionInPF.DateSendSpInIo.Value.ToString("yyyy-MM-dd") : string.Empty)
             })
         </div>*@
-        <label class="col-sm-12 col-form-label">Исполнительный орган (ФССП, ПФ, Банк):</label>
+        <label class="col-sm-12 col-form-label">Исполнительный орган (ПФ, Банк):</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionInPF.ExecutiveAgency, new { @readonly = "readonly", @dicId = "3", @class = "form-control DictionaryAutoCompletePf", @Value = Model.CourtExecutionInPF.ExecutiveAgency })
         </div>

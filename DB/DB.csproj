@@ -65,6 +65,10 @@
     <Compile Include="Migrations\202308161759122_Installment add start and End date.designer.cs">
       <DependentUpon>202308161759122_Installment add start and End date.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202308181714362_Add_new_table_in_Court.cs" />
+    <Compile Include="Migrations\202308181714362_Add_new_table_in_Court.designer.cs">
+      <DependentUpon>202308181714362_Add_new_table_in_Court.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="Model\Court\CourtBankruptcy.cs" />
     <Compile Include="Model\Court\CourtLitigationWork.cs" />
     <Compile Include="Model\Court\CourtStateDuty.cs" />
+    <Compile Include="Model\Court\LitigationWorkRequisites.cs" />
     <Compile Include="Model\Court\CourtWorkRequisites.cs" />
     <Compile Include="Model\Court\CourtWriteOff.cs" />
     <Compile Include="Model\Court\DictiomaryModel\CourtNameDictionary.cs" />
@@ -123,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202308161759122_Installment add start and End date.resx">
       <DependentUpon>202308161759122_Installment add start and End date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308181714362_Add_new_table_in_Court.resx">
+      <DependentUpon>202308181714362_Add_new_table_in_Court.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

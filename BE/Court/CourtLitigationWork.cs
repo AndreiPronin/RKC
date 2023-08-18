@@ -39,6 +39,10 @@ namespace BE.Court
         /// </summary>
         public double? AmountWithdrawnPeny { get; set; }
         /// <summary>
+        /// Взысканная сумма - расходов
+        /// </summary>
+        public double? AmountRecoveredExpenses { get; set; }
+        /// <summary>
         /// Взысканная сумма - ГП
         /// </summary>
         public double? AmountWithdrawnGp { get; set; }
@@ -71,6 +75,10 @@ namespace BE.Court
         /// </summary>
         public double? SumPenySendCourt { get; set; }
         /// <summary>
+        /// Сумма прочих расходов
+        /// </summary>
+        public double? SumOtherCourt { get; set; }
+        /// <summary>
         ///Сумма госпошлины( указанная в иске)
         /// </summary>
         public double? SumStateDuty { get; set; }
@@ -83,21 +91,17 @@ namespace BE.Court
         /// </summary>
         public DateTime? PeriodDebtEnd { get; set; }
         /// <summary>
-        ///Реквизиты ГП - сумма
-        /// </summary>
-        public double? GPDetailsAmount { get; set; }
-        /// <summary>
-        ///Реквизиты ГП - дата платежного поручения
-        /// </summary>
-        public DateTime? GPDetailsDatePayment { get; set; }
-        /// <summary>
-        ///Реквизиты ГП - номер платежного поручения
-        /// </summary>
-        public string GPDetailsPaymentOrderNuumber { get; set; }
-        /// <summary>
         ///Дата решения
         /// </summary>
         public DateTime? DateDecision { get; set; }
+        /// <summary>
+        /// Сумма излишне уплаченной ГП
+        /// </summary>
+        public double? SumOverpaidGP { get; set; }
+        /// <summary>
+        /// Сумма уплаченной ГП
+        /// </summary>
+        public double? SumPayGP { get; set; }
         /// <summary>
         ///Дата вступления решения в з.с.
         /// </summary>
@@ -110,6 +114,10 @@ namespace BE.Court
         ///Дата выдачи ИЛ
         /// </summary>
         public DateTime? DateIssueIL { get; set; }
+        /// <summary>
+        ///Дата фактического получения ИЛ
+        /// </summary>
+        public DateTime? DateFactGetIL { get; set; }
         /// <summary>
         ///Номер ИЛ
         /// </summary>
