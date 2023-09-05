@@ -42,7 +42,7 @@
                         <a href="/Court/Index?Id=@Items.Id" target="_blank" class="btn btn-primary">Показать подробную информацию</a>
                         @if (User.IsInRole(RolesEnums.SuperAdmin))
                     {
-                        <a href="/Court/DeleteCourt?Id=@Items.Id" class="btn btn-danger">Удалить</a>
+                        <a name="@Items.Id" id="@Items.CourtExecutionFSSP.NumberIP" class="btn btn-danger DeleteCoutr">Удалить</a>
                     }
                 </td>
             </tr>
@@ -51,3 +51,29 @@
         }
     </tbody>
 </table>
+<script>
+    $(document).ready(function (e) {
+        $(".DeleteCoutr").click(function (e) {
+            let numberCourt = $(this).attr('id') == undefined ? '' : $(this).attr('id');
+            var Id = $(this).attr('name');
+            $.confirm({
+                title: 'Удаление судебного дела',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="form-group">' +
+                    '<label>Вы точно хотите удалить судебное дело' + numberCourt + '?</label>' +
+                    '</form>',
+                buttons: {
+                    "Удалить": function () {
+                       
+                        window.location.href = `/Court/DeleteCourt?Id=${Id}`;
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+
+        });
+    });
+</script>

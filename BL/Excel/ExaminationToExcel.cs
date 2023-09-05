@@ -16,9 +16,9 @@ using System.Threading.Tasks;
 
 namespace BL.Excel
 {
-    public class ExaminationToExcel
+    public class CheckToExcel
     {
-        public DataTable ExaminationPersIsLic(string User, ICacheApp cacheApp)
+        public DataTable PersIsLic(string User, ICacheApp cacheApp)
         {
             cacheApp.AddProgress(User, "Получаю данные из бд");
             DataTable dt = new DataTable("Персы");
@@ -54,7 +54,7 @@ namespace BL.Excel
 
             return dt;
         }
-        public DataTable ExaminationPuIsLic(string User, ICacheApp cacheApp)
+        public DataTable PuIsLic(string User, ICacheApp cacheApp)
         {
             cacheApp.AddProgress(User, "Получаю данные из бд");
             DataTable dt = new DataTable("Персы");

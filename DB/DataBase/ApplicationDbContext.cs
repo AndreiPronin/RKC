@@ -1,4 +1,4 @@
-﻿using DB.Extention;
+﻿using DB.DataBase.Configuration;
 using DB.Model;
 using DB.Model.Court;
 using DB.Model.Court.DictiomaryModel;

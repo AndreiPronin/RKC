@@ -19,7 +19,7 @@ namespace BL.Services
         /// <returns></returns>
         bool GetStatusCloseOpenLic(string FullLic);
         /// <summary>
-        /// заркыт или открыт лицевой счет
+        /// заркыть лицевой счет
         /// </summary>
         /// <param name="FullLic"></param>
         /// <returns></returns>

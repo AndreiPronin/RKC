@@ -55,7 +55,7 @@ namespace WordGenerator
 
                     File.Copy(AppDomain.CurrentDomain.BaseDirectory + $@"Template\Образец квитанции.docx",
                         AppDomain.CurrentDomain.BaseDirectory + $@"Template\Kvit\{date:MMMM-yyyy}\Образец квитанции {LIC} {date.Month}.docx");
-                    cacheApp.Update(LIC, $"Начинаю формировать квитанцию за {date}");
+                    cacheApp.Update(LIC, $"Начинаю формировать квитанцию за {date.ToString("dd-MMMM-yyyy")}");
                     Application app = new Application();
                     var TempFile = $@"Образец квитанции {LIC} {date.Month}.docx";
                     _Document doc = app.Documents.Open(path + TempFile);

@@ -36,8 +36,13 @@
                 }
             });
             console.log(Int);
+
             $("#LogResult").text(i);
-            if (Int >= 30) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
+            if (i == "Что то пошло не так. Обратитесь к администратору!" || i == "Загрузка......." ) {
+                Int = 1501;
+            }
+
+            if (Int >= 1500) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
         }, 1000);
     })
 </script>

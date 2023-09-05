@@ -80,14 +80,14 @@
                     <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">Биллинг Т+</i></a>
                 </li>
                 <li id="DPU">
-                    @if (User.IsInRole(@RolesEnums.DPUReader) || User.IsInRole(@RolesEnums.DPUEdit) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
-                    {
-                        <a href="/DPU"><i class="glyphicon glyphicon-ruble icons" aria-hidden="true"></i> <i class="Padding">ДПУ</i></a>
-                    }
-                    @*<ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример1</a></li>
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример2</a></li>
-                    </ul>*@
+                @if (User.IsInRole(@RolesEnums.DPUReader) || User.IsInRole(@RolesEnums.DPUEdit) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                {
+                    <a href="/DPU"><i class="glyphicon glyphicon-ruble icons" aria-hidden="true"></i> <i class="Padding">ДПУ</i></a>
+                }
+                @*<ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                    <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример1</a></li>
+                    <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример2</a></li>
+                </ul>*@
                 </li>
                 @if (User.IsInRole(RolesEnums.Admin))
                 {
@@ -95,7 +95,7 @@
                         <a href="/Report"><i class="glyphicon glyphicon-list-alt icons" aria-hidden="true"></i> <i class="Padding">Отчеты</i></a>
                     </li>
                 }
-                @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.CounterReader) || User.IsInRole(RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.CourtAdmin))
+                @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.CourtReader) || User.IsInRole(RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.CourtAdmin))
                 {
                     <li id="Court">
                         <a href="/Court/Serach"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>

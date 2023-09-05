@@ -21,14 +21,14 @@ namespace BL.http
         public Reuqest() 
         {
         }
-        public async Task<string> PostRequest(T Model)
+        public async Task<string> PostRequest(T Model, string Url)
         {
             using (var httpClient = _httpClient ?? new HttpClient())
             {
                 var convertJson = new ConvertJson<T>(Model);
                 var Json = convertJson.ConverModelToJson();
                 var content = new StringContent(Json, Encoding.UTF8, "application/json");
-                var resultPostRequest = await httpClient.PostAsync("http://Test.ru", content);
+                var resultPostRequest = await httpClient.PostAsync(Url, content);
                 if(resultPostRequest != null && resultPostRequest.StatusCode == HttpStatusCode.OK) 
                 {
                     var result = await resultPostRequest.Content.ReadAsStringAsync();

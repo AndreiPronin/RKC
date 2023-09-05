@@ -21,6 +21,7 @@ using System.Web;
 using System.Web.Mvc;
 using WordGenerator;
 using WordGenerator.Enums;
+using BL.Helper;
 
 namespace RKC.Controllers
 {
@@ -37,11 +38,12 @@ namespace RKC.Controllers
         {
             var sss = User.Identity.IsAuthenticated;
             //_eBD.CreateEbdFlatliving(DateTime.Now);
+            var res = new GetConfigurationManager().GetAppSettings("").GetInt();
             return View();
         }
         public ActionResult ResultEmpty(string Message)
         {
-            
+           
             ViewBag.Message = Message;
             return View();
         }

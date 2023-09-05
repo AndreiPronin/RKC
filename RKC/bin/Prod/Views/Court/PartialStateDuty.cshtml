@@ -16,13 +16,9 @@
         </div>
         <label class="col-sm-12 col-form-label">Причина возврата заявления ФНС:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtStateDuty.ReasonReturn, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtStateDuty.ReasonReturn })
-        </div>
-        <label class="col-sm-12 col-form-label">Дата направления реестра на г/п в бухгалтерию:</label>
-        <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtStateDuty.DateSendReestr, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
-           @Value = (Model.CourtStateDuty.DateSendReestr.HasValue ? Model.CourtStateDuty.DateSendReestr.Value.ToString("yyyy-MM-dd") : string.Empty)
-       })
+            @Html.TextAreaFor(m => m.CourtStateDuty.ReasonReturn, new {
+           @style = "width: 300px !important; height: 80px !important;",
+           @readonly = "readonly", @dicId = "16", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtStateDuty.ReasonReturn })
         </div>
         <label class="col-sm-12 col-form-label">Примечание:</label>
         <div class="col-sm-8">

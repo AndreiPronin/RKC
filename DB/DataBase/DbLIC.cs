@@ -1,4 +1,4 @@
-﻿using DB.Extention;
+﻿using DB.DataBase.Configuration;
 using DB.Model;
 using System.Data.Entity;
 

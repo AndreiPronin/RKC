@@ -37,7 +37,7 @@ namespace System
                     return ((DescriptionAttribute)attrs[0]).Description;
             }
 
-            return $"{enumElement.ToString()} {Values.Value}";
+            return $"{enumElement.GetDescription()} {Values.Value}";
         }
     }
 }

@@ -13,11 +13,11 @@
             <input class="form-control" id="RequisitesSumDebtSendCourt" disabled="disabled" value="@resRequisitesSumDebtSendCourt" />
 
         </div>
-        <label class="col-sm-12 col-form-label">Сумма ОД предъявленная в суд:</label>
+        <label class="col-sm-12 col-form-label">Сумма ОД, предъявленная в суд:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.SumOdSendCourt, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtWork.SumOdSendCourt })
         </div>
-        <label class="col-sm-12 col-form-label">Сумма пени предъявленная в суд:</label>
+        <label class="col-sm-12 col-form-label">Сумма пени, предъявленная в суд:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.SumPenySendCourt, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtWork.SumPenySendCourt, })
         </div>

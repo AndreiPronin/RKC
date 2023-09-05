@@ -123,6 +123,13 @@ namespace BL.Service
                                     else
                                         integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
                                 }
+                                var DateCheckNext = Counters.Where(x => x.FULL_LIC == data.lic &&
+                               x.TYPE_PU.Contains(Item.name)).Select(x =>x.DATE_CHECK_NEXT).FirstOrDefault();
+                                if (DateCheckNext.HasValue && Item.Payment.payment_date_day >= DateCheckNext.Value) {
+                                    integrationReadings.Description += $@"{ErrorIntegration.DateCheckNext.GetDescription()} {Item.name}, 
+дата поверки {DateCheckNext.Value.ToString("dd-MM-yyyy")}, дата платежа {Item.Payment.payment_date_day.Value.ToString("dd-MM-yyyy")}";
+                                    Error = true;
+                                }
                                 if (IPU_COUNTERS.Count() > 1)
                                 {
                                     Error = true;

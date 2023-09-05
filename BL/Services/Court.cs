@@ -2,6 +2,7 @@
 using BE.Court;
 using BE.PersData;
 using BL.Helper;
+using BL.MapperProfile;
 using DB.DataBase;
 using DB.Model;
 using DB.Model.Court;
@@ -87,21 +88,9 @@ namespace BL.Services
                     .Include(x => x.CourtWriteOff)
                     .Include(x => x.CourtStateDuty)
                     .Include(x => x.CourtExecutionFSSP).AsNoTracking().FirstOrDefaultAsync();
-                var config = new MapperConfiguration(cfg =>
-                {
-                    cfg.CreateMap<BE.Court.CourtGeneralInformation, DB.Model.Court.CourtGeneralInformation>();
-                    cfg.CreateMap<BE.Court.CourtWork, DB.Model.Court.CourtWork>().ForMember(x => x.CourtGeneralInformationId, opt => opt.MapFrom(src => src.CourtGeneralInformationId));
-                    cfg.CreateMap<BE.Court.CourtBankruptcy, DB.Model.Court.CourtBankruptcy>().ForMember(x => x.CourtGeneralInformationId, opt => opt.MapFrom(src => src.CourtGeneralInformationId));
-                    cfg.CreateMap<BE.Court.CourtInstallmentPlan, DB.Model.Court.CourtInstallmentPlan>().ForMember(x => x.CourtGeneralInformationId, opt => opt.Ignore());
-                    cfg.CreateMap<BE.Court.CourtLitigationWork, DB.Model.Court.CourtLitigationWork>().ForMember(x => x.CourtGeneralInformationId, opt => opt.Ignore());
-                    cfg.CreateMap<BE.Court.CourtWriteOff, DB.Model.Court.CourtWriteOff>().ForMember(x => x.CourtGeneralInformationId, opt => opt.Ignore());
-                    cfg.CreateMap<BE.Court.CourtStateDuty, DB.Model.Court.CourtStateDuty>().BeforeMap((s, d) => s.CourtGeneralInformationId = d.CourtGeneralInformationId);
-                    cfg.CreateMap<BE.Court.CourtExecutionInPF, DB.Model.Court.CourtExecutionInPF>().BeforeMap((s, d) => s.CourtGeneralInformationId = d.CourtGeneralInformationId);
-                    cfg.CreateMap<BE.Court.CourtExecutionFSSP, DB.Model.Court.CourtExecutionFSSP>().ForMember(x => x.CourtGeneralInformationId, opt => opt.Ignore());
-                });
                 _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id,
                     _generatorDescriptons.Generate(courtGeneralInformation,courtGeneralInformationDb, User));
-                var mapper = new Mapper(config);
+                var mapper = new CourtProfile().GetMapper();
                 courtGeneralInformationDb = mapper.Map<BE.Court.CourtGeneralInformation, DB.Model.Court.CourtGeneralInformation>(courtGeneralInformation);
                 courtGeneralInformationDb.CourtBankruptcy.CourtGeneralInformationId = courtGeneralInformation.Id;
                 courtGeneralInformationDb.CourtInstallmentPlan.CourtGeneralInformationId = courtGeneralInformation.Id;
@@ -138,14 +127,14 @@ namespace BL.Services
                     Model.Home = PersGeneral.House;
                     Model.Flat = PersGeneral.Flat;
                     Model.Home = PersGeneral.House;
-                    Model.FioDuty = $"{PersMain.LastName} {PersMain.FirstName} {PersMain.MiddleName}";
-                    Model.DateBirthday = PersMain.DateOfBirth.HasValue ? PersMain.DateOfBirth.Value.ToString() : "";
-                    Model.PasportDate = PersMain.PassportDate.HasValue ? PersMain.PassportDate.Value.ToString() : "";
-                    Model.PasportSeria = PersMain.PassportSerial;
-                    Model.PasportNumber = PersMain.PassportNumber;
-                    Model.PasportIssue = PersMain.PassportIssued;
-                    Model.Inn = PersMain.Inn;
-                    Model.Snils = PersMain.SnilsNumber;
+                    Model.FioDuty = $"{PersMain?.LastName} {PersMain?.FirstName} {PersMain?.MiddleName}";
+                    Model.DateBirthday = PersMain != null && PersMain.DateOfBirth.HasValue ? PersMain.DateOfBirth.Value.ToString() : "";
+                    Model.PasportDate = PersMain != null && PersMain.PassportDate.HasValue ? PersMain.PassportDate.Value.ToString() : "";
+                    Model.PasportSeria = PersMain?.PassportSerial;
+                    Model.PasportNumber = PersMain?.PassportNumber;
+                    Model.PasportIssue = PersMain?.PassportIssued;
+                    Model.Inn = PersMain?.Inn;
+                    Model.Snils = PersMain?.SnilsNumber;
                 }
                 db.CourtGeneralInformation.Add(Model);
                 await db.SaveChangesAsync();

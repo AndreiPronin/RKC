@@ -64,10 +64,12 @@
     <Compile Include="Extention\StringWriterExtension.cs" />
     <Compile Include="Helper\ConvertToModelCourt.cs" />
     <Compile Include="Helper\ConvertJson.cs" />
+    <Compile Include="Helper\GetConfigurationManager.cs" />
     <Compile Include="http\Resposne.cs" />
     <Compile Include="Helper\ThrowHelper.cs" />
     <Compile Include="http\Reuqest.cs" />
     <Compile Include="Jobs\JobManager.cs" />
+    <Compile Include="MapperProfile\CourtProfile.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Notification\NotificationMail.cs" />
     <Compile Include="Services\BaseService.cs" />

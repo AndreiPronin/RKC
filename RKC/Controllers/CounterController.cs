@@ -477,7 +477,7 @@ namespace RKC.Controllers
             using (XLWorkbook wb = new XLWorkbook())
             {
                 var workbook = new XLWorkbook();
-                wb.Worksheets.Add(new ExaminationToExcel().ExaminationPuIsLic(User.Identity.Name, _cacheApp));
+                wb.Worksheets.Add(new CheckToExcel().PuIsLic(User.Identity.Name, _cacheApp));
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);

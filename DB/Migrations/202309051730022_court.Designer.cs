@@ -7,13 +7,13 @@ namespace DB.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Add_new_table_in_Court : IMigrationMetadata
+    public sealed partial class court : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Add_new_table_in_Court));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(court));
         
         string IMigrationMetadata.Id
         {
-            get { return "202308181714362_Add_new_table_in_Court"; }
+            get { return "202309051730022_court"; }
         }
         
         string IMigrationMetadata.Source

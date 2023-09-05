@@ -84,5 +84,7 @@ namespace BE.Counter
         IpuClose = 7,
         [Description("Лицевой счет закрыт")]
         LicClose = 8,
+        [Description("Закончился срок поверки")]
+        DateCheckNext = 9,
     }
 }

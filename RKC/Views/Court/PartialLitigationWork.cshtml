@@ -219,6 +219,23 @@
             }
 
         })
+        $("#CourtLitigationWork_AmountWithdrawnOd").keyup(function () {
+            let sum = +$("#CourtLitigationWork_AmountWithdrawnOd").val() + +$("#CourtLitigationWork_AmountWithdrawnPeny").val() + +$("#CourtLitigationWork_AmountRecoveredExpenses").val() + +$("#CourtLitigationWork_AmountWithdrawnGp").val();
+            $("#CourtLitigationWork_AmountWithdrawnAll").val(sum.toFixed(2))
+        })
+        $("#CourtLitigationWork_AmountWithdrawnPeny").keyup(function () {
+            let sum = +$("#CourtLitigationWork_AmountWithdrawnOd").val() + +$("#CourtLitigationWork_AmountWithdrawnPeny").val() + +$("#CourtLitigationWork_AmountRecoveredExpenses").val() + +$("#CourtLitigationWork_AmountWithdrawnGp").val();
+            $("#CourtLitigationWork_AmountWithdrawnAll").val(sum.toFixed(2))
+        })
+        $("#CourtLitigationWork_AmountRecoveredExpenses").keyup(function () {
+            let sum = +$("#CourtLitigationWork_AmountWithdrawnOd").val() + +$("#CourtLitigationWork_AmountWithdrawnPeny").val() + +$("#CourtLitigationWork_AmountRecoveredExpenses").val() + +$("#CourtLitigationWork_AmountWithdrawnGp").val();
+            $("#CourtLitigationWork_AmountWithdrawnAll").val(sum.toFixed(2))
+        })
+        $("#CourtLitigationWork_AmountWithdrawnGp").keyup(function () {
+            let sum = +$("#CourtLitigationWork_AmountWithdrawnOd").val() + +$("#CourtLitigationWork_AmountWithdrawnPeny").val() + +$("#CourtLitigationWork_AmountRecoveredExpenses").val() + +$("#CourtLitigationWork_AmountWithdrawnGp").val();
+            console.log(sum);
+            $("#CourtLitigationWork_AmountWithdrawnAll").val(sum.toFixed(2))
+        })
         $("#AddLitigationWorkRequisites").click(function (e) {
             var Date = "@DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM")";
             var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";

@@ -39,18 +39,32 @@
         object.removeClass("Required");
     }
     function UpdateCourtWordRequisites() {
-            $("#PartialViewCourtWorkRequisites").empty();
-            $.ajax({
-                url: '/Court/PartialViewCourtWorkRequisites?Id=' + @Model.Id,
-                type: 'Post',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#PartialViewCourtWorkRequisites").append(data);
-                },
-                error: function () {
-                    alert("Что то пошло не так. Обратитесь к администратору");
-                }
-            });
+        $("#PartialViewCourtWorkRequisites").empty();
+        $.ajax({
+            url: '/Court/PartialViewCourtWorkRequisites?Id=' + @Model.Id,
+            type: 'Post',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#PartialViewCourtWorkRequisites").append(data);
+            },
+            error: function () {
+                alert("Что то пошло не так. Обратитесь к администратору");
+            }
+        });
+    }
+    function UpdateLitigationWorkRequisites() {
+        $("#PartialViewLitigationWorkRequisites").empty();
+        $.ajax({
+            url: '/Court/PartialViewLitigationWorkRequisites?Id=' + @Model.Id,
+            type: 'Post',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#PartialViewLitigationWorkRequisites").append(data);
+            },
+            error: function () {
+                alert("Что то пошло не так. Обратитесь к администратору");
+            }
+        });
     }
     function UpdateInstallmentPayRequisites() {
         $("#PartialInstallmentPayRequisites").empty();
@@ -261,6 +275,7 @@
             $("#EditData").addClass("hidden");
             $("#AddCourtWorkRequisites").removeClass("hidden");
             $("#AddInstallmentPayRequisites").removeClass("hidden");
+            $("#AddLitigationWorkRequisites").removeClass("hidden");
             $('div input').each(function () {
                 $(this).prop('readonly', false);;
             });
@@ -268,6 +283,9 @@
                 $(this).removeClass("hidden");
             });
             $('.removeInstallmentPayRequisites').each(function () {
+                $(this).removeClass("hidden");
+            });
+            $('.removeLitigationWorkRequisites').each(function () {
                 $(this).removeClass("hidden");
             });
             $('div textarea').each(function () {

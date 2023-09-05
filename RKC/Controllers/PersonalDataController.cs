@@ -172,7 +172,14 @@ namespace RKC.Controllers
             {
                 foreach (var Items in persData)
                 {
-                    zip.AddEntry(Items.FileName,Items.FileBytes);
+                    try
+                    {
+                        zip.AddEntry(Items.FileName, Items.FileBytes);
+                    }
+                    catch
+                    {
+
+                    }
                 }
                 zip.Save(outputStream);
             }
@@ -270,7 +277,7 @@ namespace RKC.Controllers
             using (XLWorkbook wb = new XLWorkbook())
             {
                 var workbook = new XLWorkbook();
-                wb.Worksheets.Add(new ExaminationToExcel().ExaminationPersIsLic(User.Identity.Name,_cacheApp));
+                wb.Worksheets.Add(new CheckToExcel().PersIsLic(User.Identity.Name,_cacheApp));
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);

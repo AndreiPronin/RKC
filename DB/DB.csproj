@@ -53,21 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBase\ApplicationDbContext.cs" />
+    <Compile Include="DataBase\Configuration\DbLicConfiguration.cs" />
     <Compile Include="DataBase\DbPayment.cs" />
     <Compile Include="DataBase\DbTPlus.cs" />
     <Compile Include="DataBase\DbLIC.cs" />
-    <Compile Include="Extention\DbLicExtention.cs" />
-    <Compile Include="Migrations\202308161728585_InstallmentPayRequisites.cs" />
-    <Compile Include="Migrations\202308161728585_InstallmentPayRequisites.designer.cs">
-      <DependentUpon>202308161728585_InstallmentPayRequisites.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202308161759122_Installment add start and End date.cs" />
-    <Compile Include="Migrations\202308161759122_Installment add start and End date.designer.cs">
-      <DependentUpon>202308161759122_Installment add start and End date.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202308181714362_Add_new_table_in_Court.cs" />
-    <Compile Include="Migrations\202308181714362_Add_new_table_in_Court.designer.cs">
-      <DependentUpon>202308181714362_Add_new_table_in_Court.cs</DependentUpon>
+    <Compile Include="Migrations\202309051730022_court.cs" />
+    <Compile Include="Migrations\202309051730022_court.designer.cs">
+      <DependentUpon>202309051730022_court.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
@@ -123,14 +115,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202308161728585_InstallmentPayRequisites.resx">
-      <DependentUpon>202308161728585_InstallmentPayRequisites.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202308161759122_Installment add start and End date.resx">
-      <DependentUpon>202308161759122_Installment add start and End date.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202308181714362_Add_new_table_in_Court.resx">
-      <DependentUpon>202308181714362_Add_new_table_in_Court.cs</DependentUpon>
+    <Folder Include="Extention\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202309051730022_court.resx">
+      <DependentUpon>202309051730022_court.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

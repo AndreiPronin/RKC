@@ -17,7 +17,6 @@ namespace AppCache
         string GetValue(string Url);
         T GetValue<T>(string Key);
         void SetValue<T>(string Key, T value);
-        bool AddLock(string name, string Method);
         bool Add(string name, string Url);
         bool AddLock30Minute(string name, string Method);
         bool Lock(string name, string Url);
@@ -30,6 +29,12 @@ namespace AppCache
     }
     public class CacheApp: ICacheApp
     {
+        /// <summary>
+        /// Установить прогресс очистить автоматически через 10 минут
+        /// </summary>
+        /// <param name="name">Название ключа</param>
+        /// <param name="value">Значение</param>
+        /// <returns></returns>
         public bool AddProgress(string name, string value)
         {
             if (GetValue(name) == null)
@@ -44,6 +49,11 @@ namespace AppCache
             }
             
         }
+        /// <summary>
+        /// Получение информации о прогрессе по ключу
+        /// </summary>
+        /// <param name="Name">Название ключа</param>
+        /// <returns></returns>
         public string GetValueProgress(string Name)
         {
             MemoryCache memoryCache = MemoryCache.Default;
@@ -72,11 +82,22 @@ namespace AppCache
             MemoryCache memoryCache = MemoryCache.Default;
             memoryCache.Set(Key, value, DateTime.Now.AddMinutes(10));
         }
+        /// <summary>
+        /// Получить значение из кеша типа string
+        /// </summary>
+        /// <param name="Key">Название ключа</param>
+        /// <returns></returns>
         public string GetValue(string Key)
         {
             MemoryCache memoryCache = MemoryCache.Default;
             return memoryCache.Get(Key) as string;
         }
+        /// <summary>
+        /// Generic метод получение данных из кеша
+        /// </summary>
+        /// <typeparam name="T">Обьект</typeparam>
+        /// <param name="Key">Название ключа</param>
+        /// <returns></returns>
         public T GetValue<T>(string Key)
         {
             try
@@ -88,11 +109,22 @@ namespace AppCache
                 return default;
             }
         }
+        /// <summary>
+        /// Generic установки данных в кеше
+        /// </summary>
+        /// <typeparam name="T">Обьект</typeparam>
+        /// <param name="Key">Название ключа</param>
+        /// <param name="value">Значение</param>
         public void SetValue<T>(string Key, T value)
         {
             MemoryCache memoryCache = MemoryCache.Default;
             memoryCache.Set(Key, value, DateTime.Now.AddHours(10));
         }
+        /// <summary>
+        ///  Проверка блокировки страницы или обьекта c последующей блокировкой
+        /// </summary>
+        /// <param name="Key">Название ключа</param>
+        /// <returns></returns>
         public bool isLock(string Key)
         {
             MemoryCache memoryCache = MemoryCache.Default;
@@ -108,6 +140,12 @@ namespace AppCache
             }
             return false;
         }
+        /// <summary>
+        /// Заблокировать страницу или обьект
+        /// </summary>
+        /// <param name="userName">Пользователь</param>
+        /// <param name="Url">Url страницы или обьекта</param>
+        /// <returns></returns>
         public bool Lock(string userName, string Url)
         {
             MemoryCache memoryCache = MemoryCache.Default;
@@ -121,11 +159,6 @@ namespace AppCache
                 return false;
             }
             return true;
-        }
-        public bool AddLock(string name, string Method)
-        {
-            MemoryCache memoryCache = MemoryCache.Default;
-            return memoryCache.Add(name, Method, DateTime.Now.AddMinutes(10));
         }
         public bool AddLock30Minute(string name, string Method)
         {
