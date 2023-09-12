@@ -131,7 +131,9 @@ namespace BL.Services
         private void CheckSqlQuert(string SqlQuery)
         {
             var sqlQuery = SqlQuery.ToLower();
-            if (sqlQuery.Contains("update") || sqlQuery.Contains("delete") || sqlQuery.Contains("exec"))
+            var sql = sqlQuery.Split(' ');
+            foreach(var Item in sql)
+            if (Item.StartsWith("update") || Item.StartsWith("delete") || Item.StartsWith("exec"))
                 throw new Exception("Недопустимые слава в запросе");
         }
     }

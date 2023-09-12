@@ -100,6 +100,14 @@ namespace BE.Court
         /// </summary>
         public string ReasonsCourtWork { get; set; }
         /// <summary>
+        /// Адрес Регистрации
+        /// </summary>
+        public string AddressRegister { get; set; }
+        /// <summary>
+        /// Кадастровый номер
+        /// </summary>
+        public DateTime? DateDeath { get; set; }
+        /// <summary>
         /// Примечание
         /// </summary>
         public string Comment { get; set; }

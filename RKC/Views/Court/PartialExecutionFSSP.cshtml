@@ -1,5 +1,13 @@
 ﻿@model DB.Model.Court.CourtGeneralInformation
-<h2 class="">Исполнение в ФССП</h2>
+<div class="col-md-4">
+    <h2 class="">Исполнение в ФССП</h2>
+</div>
+<div class="col-md-4">
+    <h2 class="">Первичная подача</h2>
+</div>
+<div class="col-md-4">
+    <h2 class="">Повторная подача</h2>
+</div>
 <div class="row">
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">ФИО сотрудника (направившего СП в ИО):</label>
@@ -12,7 +20,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Адрес ИО</label>
         <div class="col-sm-8">
-            @Html.TextAreaFor(m => m.CourtExecutionFSSP.AddressIO, new { @style = "width: 300px !important; height: 50px !important;", @disabled ="disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.AddressIO })
+            @Html.TextAreaFor(m => m.CourtExecutionFSSP.AddressIO, new { @style = "width: 300px !important; height: 50px !important;", @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.AddressIO })
         </div>
         <label class="col-sm-12 col-form-label">Дата отправки заявления в ФССП:</label>
         <div class="col-sm-8">
@@ -44,8 +52,16 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.SumApplicationGp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.SumApplicationGp })
         </div>
+        <div class="col-sm-12" style="margin-top:12px" >
+            <div class="col-md-6">
+                <button type="button" class="btn-primary">Вывести отчет по оплатам от ФССП</button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn-primary">Сформировать заявление о направлении ИД в ФССП</button>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <label class="col-sm-12 col-form-label">Номер ИП:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.NumberIP, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.NumberIP })
@@ -128,12 +144,6 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="col-md-6">
-            <button type="button" class="btn-primary">Отчет по оплатам</button>
-        </div>
-        <div class="col-md-6">
-            <button type="button" class="btn-primary">Сформировать заявление о направлении ИД в ФССП</button>
-        </div>
         <label class="col-sm-12 col-form-label">Сумма оплаты всего от ФССП:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.SumPaymentAllFSSP, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.SumPaymentAllFSSP })
@@ -165,11 +175,11 @@
     </div>
 </div>
 <hr />
-<div class="row">    
-    <div class="col-md-4">
+<div class="row">
+    <div class="col-md-3">
         <label class="col-sm-12 col-form-label">ФИО должника в ИП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.FullNameDebtorIP, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.FullNameDebtorIP })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.FullNameDebtorIP, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.FullNameDebtorIP })
         </div>
         <label class="col-sm-12 col-form-label">Дата рождения в ИП:</label>
         <div class="col-sm-8">
@@ -183,23 +193,23 @@
         </div>
         <label class="col-sm-12 col-form-label">СНИЛС в ИП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.SnilsIp, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.SnilsIp })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.SnilsIp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.SnilsIp })
         </div>
         <label class="col-sm-12 col-form-label">ИНН в ИП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.InnIp, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.InnIp })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.InnIp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.InnIp })
         </div>
         <label class="col-sm-12 col-form-label">Паспорт в ИП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.PasportIp, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.PasportIp })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.PasportIp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.PasportIp })
         </div>
         <label class="col-sm-12 col-form-label">Адрес в ИП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.AddressIp, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.AddressIp })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.AddressIp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.AddressIp })
         </div>
         <label class="col-sm-12 col-form-label">Сведения о счетах:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.AccountInformation, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.AccountInformation })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.AccountInformation, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.AccountInformation })
         </div>
         <label class="col-sm-12 col-form-label">Дата принятой меры приставом по счетам:</label>
         <div class="col-sm-8">
@@ -212,12 +222,16 @@
            })
         </div>
         <label class="col-sm-12 col-form-label">Принятая мера приставом по счетам:</label>
-        <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionTakenBailiffAccounts, new {  @readonly = "readonly", @dicId = "7", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ActionTakenBailiffAccounts })
-        </div>
+
+            <div class="col-sm-8">
+                @Html.TextAreaFor(m => m.CourtExecutionFSSP.ActionTakenBailiffAccounts, new { @style = "width: 300px !important; height: 70px !important;", @readonly = "readonly", @class = "form-control DictionaryAutoComplete", @dicId = "16", @Value = Model.CourtExecutionFSSP.ActionTakenBailiffAccounts })
+            </div>
+
+    </div>
+    <div class="col-md-3">
         <label class="col-sm-12 col-form-label">Сведения о недвижимости:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionTakenBailiffAccounts, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.ActionTakenBailiffAccounts })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionTakenBailiffAccounts, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.ActionTakenBailiffAccounts })
         </div>
         <label class="col-sm-12 col-form-label">Дата принятой меры приставом по недвижимости:</label>
         <div class="col-sm-8">
@@ -231,11 +245,11 @@
         </div>
         <label class="col-sm-12 col-form-label">Принятая мера приставом по недвижимости:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionTakenBailiff, new {  @readonly = "readonly", @dicId = "8", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ActionTakenBailiff })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionTakenBailiff, new { @readonly = "readonly", @dicId = "8", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ActionTakenBailiff })
         </div>
         <label class="col-sm-12 col-form-label">Сведения о ТС:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.InformationAboutVehicle, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.InformationAboutVehicle })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.InformationAboutVehicle, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.InformationAboutVehicle })
         </div>
         <label class="col-sm-12 col-form-label">Дата принятой меры приставом по ТС:</label>
         <div class="col-sm-8">
@@ -249,15 +263,17 @@
         </div>
         <label class="col-sm-12 col-form-label">Принятая мера приставом по ТС:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionTakenBailiffVehicle, new {  @readonly = "readonly", @dicId = "9", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ActionTakenBailiffVehicle })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionTakenBailiffVehicle, new { @readonly = "readonly", @dicId = "9", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ActionTakenBailiffVehicle })
         </div>
         <label class="col-sm-12 col-form-label">Номера телефонов должника:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.PhoneNumbersDebtor, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.PhoneNumbersDebtor })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.PhoneNumbersDebtor, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.PhoneNumbersDebtor })
         </div>
+    </div>
+    <div class="col-md-3">
         <label class="col-sm-12 col-form-label">Доход/пенсия</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.IncomePension, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.IncomePension })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.IncomePension, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.IncomePension })
         </div>
         <label class="col-sm-12 col-form-label">Дата принятой меры приставом по доходам:</label>
         <div class="col-sm-8">
@@ -271,23 +287,23 @@
         </div>
         <label class="col-sm-12 col-form-label">Принятая мера приставом по доходам:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionTakenBailiffIncome, new {  @readonly = "readonly", @dicId = "10", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ActionTakenBailiffIncome })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionTakenBailiffIncome, new { @readonly = "readonly", @dicId = "10", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ActionTakenBailiffIncome })
         </div>
         <label class="col-sm-12 col-form-label">Смена ФИО:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.NameChange, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.NameChange })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.NameChange, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.NameChange })
         </div>
         <label class="col-sm-12 col-form-label">Данные загс о смерти:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.DeathRegistryOfficeData, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.DeathRegistryOfficeData })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.DeathRegistryOfficeData, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.DeathRegistryOfficeData })
         </div>
         <label class="col-sm-12 col-form-label">№ наследственного дела:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.NumberInheritanceCase, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.NumberInheritanceCase })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.NumberInheritanceCase, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.NumberInheritanceCase })
         </div>
         <label class="col-sm-12 col-form-label">ФИО нотариуса:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.FullNameNotary, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.FullNameNotary })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.FullNameNotary, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.FullNameNotary })
         </div>
         <label class="col-sm-12 col-form-label">Месяц проверки наследственного дела:</label>
         <div class="col-sm-8">
@@ -301,7 +317,7 @@
         </div>
         <label class="col-sm-12 col-form-label">ФИО наследника:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.FullNameHeir, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.FullNameHeir })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.FullNameHeir, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.FullNameHeir })
         </div>
         <label class="col-sm-12 col-form-label">Дата прочих действий пристава:</label>
         <div class="col-sm-8">
@@ -315,8 +331,10 @@
         </div>
         <label class="col-sm-12 col-form-label">Прочие действия пристава:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionsBailiff, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.ActionsBailiff })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ActionsBailiff, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.ActionsBailiff })
         </div>
+    </div>
+    <div class="col-md-3">
         <label class="col-sm-12 col-form-label">Дата обращения:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.MonthCheckInheritance, new
@@ -329,7 +347,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Краткая суть обращения:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.BriefAppeal, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.BriefAppeal })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.BriefAppeal, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.BriefAppeal })
         </div>
         <label class="col-sm-12 col-form-label">Дата подачи обращения:</label>
         <div class="col-sm-8">
@@ -343,7 +361,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Способ подачи обращения:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ApplicationSubmissionMethod, new {  @readonly = "readonly", @dicId = "17", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ApplicationSubmissionMethod })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.ApplicationSubmissionMethod, new { @readonly = "readonly", @dicId = "17", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ApplicationSubmissionMethod })
         </div>
         <label class="col-sm-12 col-form-label">Дата ответа на обращение (фактическая):</label>
         <div class="col-sm-8">
@@ -357,11 +375,11 @@
         </div>
         <label class="col-sm-12 col-form-label">Краткая суть ответа на обращение:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.BriefSummaryResponseAppeal, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.BriefSummaryResponseAppeal })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.BriefSummaryResponseAppeal, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.BriefSummaryResponseAppeal })
         </div>
         <label class="col-sm-12 col-form-label">Дополнительные сведения:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.AdditionalInformation, new {  @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.AdditionalInformation })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.AdditionalInformation, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.AdditionalInformation })
         </div>
     </div>
 </div>

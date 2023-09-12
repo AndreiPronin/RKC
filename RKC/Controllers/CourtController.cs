@@ -49,10 +49,7 @@ namespace RKC.Controllers
                 ViewBag.IsLock = true;
             }
             else ViewBag.IsLock = false;
-            if (ViewBag.IsLock == false)
-            {
-                //ViewBag.IsLock = _flagsAction.GetAction(nameof(CourtController) + nameof(Index));
-            }
+            
             var Model = await _court.DetailInfroms(Id); 
             return View(Model);
         }
@@ -220,6 +217,12 @@ namespace RKC.Controllers
                 fileData = binaryReader.ReadBytes(file.ContentLength);
             }
             return fileData;
+        }
+        [HttpGet]
+        public ActionResult clearCache(string Page)
+        {
+            _cacheApp.Delete(User.Identity.GetFIOFull(), Page);
+            return null;
         }
     }
 }

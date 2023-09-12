@@ -82,7 +82,7 @@ namespace BL.ApiT_
                             obj.system = Item.system;
                             obj.object_type = Item.objectType;
                             obj.object_id = $@"RBR{Item.objectId}";
-                            obj.object_disable = "false";
+                            obj.object_disable = Item.object_disable.ToLower().Contains("да") ? "true" : "false";
                             //obj.CadastralNumber = "";
                             obj.fias = string.IsNullOrEmpty(Item.fias) ? "" : Regex.IsMatch(Item.fias, patern) ? Item.fias.Replace("", "").Trim() : "";
                             //obj.guid_enrgblng = "";
@@ -169,7 +169,7 @@ namespace BL.ApiT_
                             obj.object_type = Item.objectT.Replace("", "").Trim();
                             obj.object_id = $@"RBR{Item.objectId.Replace("", "").Trim()}";
                             obj.parent_id = $@"RBR{Item.parentId.ToString().Replace("", "").Trim()}";
-                            obj.object_disable = "false";
+                            obj.object_disable = Item.object_disable.ToLower().Contains("да") ? "true" : "false";
                             obj.CadastralNumber = Item.CadstraNumber?.ToString().Replace("", "").Trim();
                             obj.fias = string.IsNullOrEmpty(Item.fias) ? "" : Regex.IsMatch(Item.fias, patern) ? Item.fias.Replace("", "").Trim() : "";
                             //obj.guid_enrgblng = "";
@@ -254,7 +254,7 @@ namespace BL.ApiT_
                             obj.object_type = Item.objectT.Replace("", "").Trim();
                             obj.object_id = $@"RBR{Item.objectId.Replace("", "").Trim()}";
                             obj.parent_id = $@"RBR{Item.parentId.ToString().Replace("", "").Trim()}";
-                            obj.object_disable = "false";
+                            obj.object_disable = Item.object_disable.ToLower().Contains("да") ? "true" : "false";
                             obj.CadastralNumber = Item.CadstraNumber?.ToString().Replace("", "").Trim();
                             obj.fias = string.IsNullOrEmpty(Item.fias) ? "" : Regex.IsMatch(Item.fias, patern) ? Item.fias.Replace("", "").Trim() : "";
                             //obj.guid_enrgblng = "";

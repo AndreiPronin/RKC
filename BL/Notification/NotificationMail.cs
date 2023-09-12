@@ -1,6 +1,8 @@
-﻿using BE.JobManager;
+﻿using BE.Counter;
+using BE.JobManager;
 using BL.Excel;
 using ClosedXML.Excel;
+using DB.DataBase;
 using DB.Model;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using System;
@@ -45,6 +47,14 @@ namespace BL.Notification
         }
         public void SendMailReceipt(string FullLic,string Mail)
         {
+            using (var db = new DbLIC())
+            {
+                var LicIsClose = db.ALL_LICS.Select(x=>new {x.ZAK, x.F4ENUMELS}).FirstOrDefault(x => x.F4ENUMELS == FullLic).ZAK;
+                if (LicIsClose != null)
+                {
+                    throw new Exception("Лицевой счет закрыт, отправка квитанции не возможна");
+                }
+            }
             SmtpClient smtpClient = new SmtpClient();
             smtpClient.Host = ConfigurationManager.AppSettings["mail:host:T+"];
             smtpClient.EnableSsl = true;

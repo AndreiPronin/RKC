@@ -275,6 +275,10 @@ namespace BL.Helper
                 Result.AppendLine($"Доля собственности: было {courtGeneralDb.ShareOfOwnership} стало {courtGeneralBe.ShareOfOwnership}");
             if (courtGeneralBe.CadastrNumber != courtGeneralDb.CadastrNumber)
                 Result.AppendLine($"Кадастровый номер: было {courtGeneralDb.CadastrNumber} стало {courtGeneralBe.CadastrNumber}");
+            if (courtGeneralBe.AddressRegister != courtGeneralDb.AddressRegister)
+                Result.AppendLine($"Адрес регистрации: было {courtGeneralDb.AddressRegister} стало {courtGeneralBe.AddressRegister}");
+            if (courtGeneralBe.DateDeath != courtGeneralDb.DateDeath)
+                Result.AppendLine($"Дата смерти: было {courtGeneralDb.DateDeath} стало {courtGeneralBe.DateDeath}");
             if (courtGeneralBe.DateBirthday != courtGeneralDb.DateBirthday)
                 Result.AppendLine($"Дата рождения: было {courtGeneralDb.DateBirthday} стало {courtGeneralBe.DateBirthday}");
             if (courtGeneralBe.PasportDate != courtGeneralDb.PasportDate)
