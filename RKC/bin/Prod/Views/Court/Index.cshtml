@@ -293,7 +293,19 @@
             });
         })
         $("#ClosePage").click(function (e) {
-            window.close();
+            var Page = "CourtControllerIndex" + @Model.Id;
+            $.ajax({
+                url: '/Court/clearCache?Page=' + Page,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    window.close();
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
         })
         $("#Cancel").click(function (e) {
             $("#Save").addClass("hidden");

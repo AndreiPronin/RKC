@@ -45,6 +45,10 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CadastrNumber, new { @readonly = "readonly", @class = "form-control", @Value = Model.CadastrNumber })
         </div>
+        <label class="col-sm-12 col-form-label">Адрес регистрации:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.AddressRegister, new { @readonly = "readonly", @class = "form-control", @Value = Model.AddressRegister })
+        </div>
     </div>
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">ФИО должника</label>
@@ -82,6 +86,16 @@
         <label class="col-sm-12 col-form-label">СНИЛС:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.Snils, new { @readonly = "readonly", @class = "form-control", @Value = Model.Snils })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата смерти:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.DateDeath, new
+         {
+             @type = "date",
+             @readonly = "readonly",
+             @class = "form-control",
+          @Value = (Model.DateDeath.HasValue ? Model.DateDeath.Value.ToString("yyyy-MM-dd") : string.Empty)
+          })
         </div>
         <label class="col-sm-12 col-form-label">Пенсионер:</label>
         <div class="col-sm-8">

@@ -124,8 +124,9 @@ namespace BL.Service
                                         integrationReadings.Description += $@"{ErrorIntegration.NoPU.GetDescription()} {Item.name} ";
                                 }
                                 var DateCheckNext = Counters.Where(x => x.FULL_LIC == data.lic &&
-                               x.TYPE_PU.Contains(Item.name)).Select(x =>x.DATE_CHECK_NEXT).FirstOrDefault();
-                                if (DateCheckNext.HasValue && Item.Payment.payment_date_day >= DateCheckNext.Value) {
+                               x.TYPE_PU.Contains(Item.name) && (x.CLOSE_ == null || x.CLOSE_ == false))
+                                    .Select(x =>x.DATE_CHECK_NEXT).FirstOrDefault();
+                                if (DateCheckNext.HasValue && Item.Payment.payment_date_day >= DateCheckNext.Value.GetDateWhitMaxDate()) {
                                     integrationReadings.Description += $@"{ErrorIntegration.DateCheckNext.GetDescription()} {Item.name}, 
 дата поверки {DateCheckNext.Value.ToString("dd-MM-yyyy")}, дата платежа {Item.Payment.payment_date_day.Value.ToString("dd-MM-yyyy")}";
                                     Error = true;

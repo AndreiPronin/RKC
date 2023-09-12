@@ -114,6 +114,50 @@ namespace DB.Model.Court
         /// </summary>
         public DateTime? DateReceiptOriginalIDcaseRefusalInitiateIP { get; set; }
         /// <summary>
+        /// Номер ИП
+        /// </summary>
+        public string NumberIP2 { get; set; }
+        /// <summary>
+        /// Дата возбуждения ИП
+        /// </summary>
+        public DateTime? IPInitiationDate2 { get; set; }
+        /// <summary>
+        /// Сумма в постановлении о возбуждении ИП - всего
+        /// </summary>
+        public double? SumDecisionInitateIP2 { get; set; }
+        /// <summary>
+        /// Дата окончания ИП
+        /// </summary>
+        public DateTime? IPEndDate2 { get; set; }
+        /// <summary>
+        /// Основание окончания ИП
+        /// </summary>
+        public string GroundsEndingIP2 { get; set; }
+        /// <summary>
+        /// Дата отзыва ИД с исполнения
+        /// </summary>
+        public DateTime? IPExecutionDate2 { get; set; }
+        /// <summary>
+        /// Причина отзыва ИД с исполнения
+        /// </summary>
+        public string ReasonExecutionIP2 { get; set; }
+        /// <summary>
+        /// Дата поступления оригиналов ИД при окончании ИП
+        /// </summary>
+        public DateTime? DateReceiptOriginalIDEndIP2 { get; set; }
+        /// <summary>
+        /// Дата отказа в возбуждении ИП
+        /// </summary>
+        public DateTime? DateRefusalInitiateIP2 { get; set; }
+        /// <summary>
+        /// Основание отказа в возбуждении ИП
+        /// </summary>
+        public string GroundsRefusalInitiateIP2 { get; set; }
+        /// <summary>
+        /// Дата поступления оригинала ИД при отказе в возбуждении ИП
+        /// </summary>
+        public DateTime? DateReceiptOriginalIDcaseRefusalInitiateIP2 { get; set; }
+        /// <summary>
         /// ФИО должника в ИП
         /// </summary>
         public string FullNameDebtorIP { get; set; }

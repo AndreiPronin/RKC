@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extenstion\DateTimesTest.cs" />
     <Compile Include="Helper\JsonConverterTest.cs" />
     <Compile Include="http\RequestTest.cs" />
     <Compile Include="Models\ModelCreator.cs" />

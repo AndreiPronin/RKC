@@ -403,6 +403,30 @@ namespace BL.Helper
                 Result.AppendLine($"Основание отказа в возбуждении ИП: было {courtGeneralDb.CourtExecutionFSSP.GroundsRefusalInitiateIP} стало {courtGeneralBe.CourtExecutionFSSP.GroundsRefusalInitiateIP}");
             if (courtGeneralBe.CourtExecutionFSSP.DateReceiptOriginalIDcaseRefusalInitiateIP != courtGeneralDb.CourtExecutionFSSP.DateReceiptOriginalIDcaseRefusalInitiateIP)
                 Result.AppendLine($"Дата поступления оригинала ИД при отказе в возбуждении ИП: было {courtGeneralDb.CourtExecutionFSSP.DateReceiptOriginalIDcaseRefusalInitiateIP} стало {courtGeneralBe.CourtExecutionFSSP.DateReceiptOriginalIDcaseRefusalInitiateIP}");
+
+            if (courtGeneralBe.CourtExecutionFSSP.NumberIP2 != courtGeneralDb.CourtExecutionFSSP.NumberIP2)
+                Result.AppendLine($"Номер ИП 2: было {courtGeneralDb.CourtExecutionFSSP.NumberIP2} стало {courtGeneralBe.CourtExecutionFSSP.NumberIP2}");
+            if (courtGeneralBe.CourtExecutionFSSP.IPInitiationDate2 != courtGeneralDb.CourtExecutionFSSP.IPInitiationDate2)
+                Result.AppendLine($"Дата возбуждения ИП 2: было {courtGeneralDb.CourtExecutionFSSP.IPInitiationDate2} стало {courtGeneralBe.CourtExecutionFSSP.IPInitiationDate2}");
+            if (courtGeneralBe.CourtExecutionFSSP.SumDecisionInitateIP2 != courtGeneralDb.CourtExecutionFSSP.SumDecisionInitateIP2)
+                Result.AppendLine($"Сумма в постановлении о возбуждении ИП - всего 2: было {courtGeneralDb.CourtExecutionFSSP.SumDecisionInitateIP2} стало {courtGeneralBe.CourtExecutionFSSP.SumDecisionInitateIP2}");
+            if (courtGeneralBe.CourtExecutionFSSP.IPEndDate2 != courtGeneralDb.CourtExecutionFSSP.IPEndDate2)
+                Result.AppendLine($"Дата окончания ИП 2: было {courtGeneralDb.CourtExecutionFSSP.IPEndDate2} стало {courtGeneralBe.CourtExecutionFSSP.IPEndDate2}");
+            if (courtGeneralBe.CourtExecutionFSSP.GroundsEndingIP2 != courtGeneralDb.CourtExecutionFSSP.GroundsEndingIP2)
+                Result.AppendLine($"Основание окончания ИП 2: было {courtGeneralDb.CourtExecutionFSSP.GroundsEndingIP2} стало {courtGeneralBe.CourtExecutionFSSP.GroundsEndingIP2}");
+            if (courtGeneralBe.CourtExecutionFSSP.IPExecutionDate2 != courtGeneralDb.CourtExecutionFSSP.IPExecutionDate2)
+                Result.AppendLine($"Дата отзыва ИД с исполнения 2: было {courtGeneralDb.CourtExecutionFSSP.IPExecutionDate2} стало {courtGeneralBe.CourtExecutionFSSP.IPExecutionDate2}");
+            if (courtGeneralBe.CourtExecutionFSSP.ReasonExecutionIP2 != courtGeneralDb.CourtExecutionFSSP.ReasonExecutionIP2)
+                Result.AppendLine($"Причина отзыва ИД с исполнения 2: было {courtGeneralDb.CourtExecutionFSSP.ReasonExecutionIP2} стало {courtGeneralBe.CourtExecutionFSSP.ReasonExecutionIP2}");
+            if (courtGeneralBe.CourtExecutionFSSP.DateReceiptOriginalIDEndIP2 != courtGeneralDb.CourtExecutionFSSP.DateReceiptOriginalIDEndIP2)
+                Result.AppendLine($"Дата поступления оригиналов ИД при окончании ИП 2: было {courtGeneralDb.CourtExecutionFSSP.DateReceiptOriginalIDEndIP2} стало {courtGeneralBe.CourtExecutionFSSP.DateReceiptOriginalIDEndIP2}");
+            if (courtGeneralBe.CourtExecutionFSSP.DateRefusalInitiateIP2 != courtGeneralDb.CourtExecutionFSSP.DateRefusalInitiateIP2)
+                Result.AppendLine($"Дата отказа в возбуждении ИП 2: было {courtGeneralDb.CourtExecutionFSSP.DateRefusalInitiateIP2} стало {courtGeneralBe.CourtExecutionFSSP.DateRefusalInitiateIP2}");
+            if (courtGeneralBe.CourtExecutionFSSP.GroundsRefusalInitiateIP2 != courtGeneralDb.CourtExecutionFSSP.GroundsRefusalInitiateIP2)
+                Result.AppendLine($"Основание отказа в возбуждении ИП 2: было {courtGeneralDb.CourtExecutionFSSP.GroundsRefusalInitiateIP2} стало {courtGeneralBe.CourtExecutionFSSP.GroundsRefusalInitiateIP2}");
+            if (courtGeneralBe.CourtExecutionFSSP.DateReceiptOriginalIDcaseRefusalInitiateIP2 != courtGeneralDb.CourtExecutionFSSP.DateReceiptOriginalIDcaseRefusalInitiateIP2)
+                Result.AppendLine($"Дата поступления оригинала ИД при отказе в возбуждении ИП 2: было {courtGeneralDb.CourtExecutionFSSP.DateReceiptOriginalIDcaseRefusalInitiateIP2} стало {courtGeneralBe.CourtExecutionFSSP.DateReceiptOriginalIDcaseRefusalInitiateIP2}");
+
             if (courtGeneralBe.CourtExecutionFSSP.FullNameDebtorIP != courtGeneralDb.CourtExecutionFSSP.FullNameDebtorIP)
                 Result.AppendLine($"ФИО должника в ИП: было {courtGeneralDb.CourtExecutionFSSP.FullNameDebtorIP} стало {courtGeneralBe.CourtExecutionFSSP.FullNameDebtorIP}");
             if (courtGeneralBe.CourtExecutionFSSP.IPDateBirth != courtGeneralDb.CourtExecutionFSSP.IPDateBirth)

@@ -61,6 +61,10 @@
     <Compile Include="Migrations\202309111418083_11-09-2023_Court.designer.cs">
       <DependentUpon>202309111418083_11-09-2023_Court.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309121632068_change-court.cs" />
+    <Compile Include="Migrations\202309121632068_change-court.designer.cs">
+      <DependentUpon>202309121632068_change-court.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -120,6 +124,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202309111418083_11-09-2023_Court.resx">
       <DependentUpon>202309111418083_11-09-2023_Court.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309121632068_change-court.resx">
+      <DependentUpon>202309121632068_change-court.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
