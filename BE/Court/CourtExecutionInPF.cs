@@ -77,6 +77,10 @@ namespace BE.Court
         /// Примечание
         /// </summary>
         public string Comment { get; set; }
+        /// <summary>
+        /// Дата задания
+        /// </summary>
+        public DateTime? DateTask { get; set; }
         public CourtGeneralInformation CourtGeneralInformation { get; set; }
     }
 }

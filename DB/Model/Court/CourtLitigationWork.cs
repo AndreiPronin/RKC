@@ -129,6 +129,10 @@ namespace DB.Model.Court
         ///Реквизиты ГП - дата платежного поручения
         /// </summary>
         public string Comment { get; set; }
+        /// <summary>
+        /// Дата задания
+        /// </summary>
+        public DateTime? DateTask { get; set; }
 
         public CourtGeneralInformation CourtGeneralInformation { get; set; }
     }

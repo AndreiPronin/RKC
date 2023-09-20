@@ -17,6 +17,16 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionInPF.FioSendSpInIo, new { @readonly = "readonly", @dicId = "20", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionInPF.FioSendSpInIo })
         </div>
+        <label class="col-sm-12 col-form-label">Дата задания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionInPF.DateTask, new
+            {
+                @type = "month",
+                @readonly = "readonly",
+                @class = "form-control",
+           @Value = (Model.CourtExecutionInPF.DateTask.HasValue ? Model.CourtExecutionInPF.DateTask.Value.ToString("yyyy-MM") : string.Empty)
+            })
+        </div>
         @*<label class="col-sm-12 col-form-label">Дата передачи СП в ИО:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionInPF.DateSendSpInIo, new
@@ -33,7 +43,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Адрес ИО:</label>
         <div class="col-sm-8">
-            @Html.TextAreaFor(m => m.CourtExecutionInPF.AdresIo, new {@style = "width: 300px !important; height: 50px !important;", @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.AdresIo })
+            @Html.TextAreaFor(m => m.CourtExecutionInPF.AdresIo, new { @style = "width: 300px !important; height: 50px !important;", @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionInPF.AdresIo })
         </div>
         <label class="col-sm-12 col-form-label">Дата отправки заявления+ИД в ПФ о взыскании:</label>
         <div class="col-sm-8">

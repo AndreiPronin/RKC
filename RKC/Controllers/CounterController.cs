@@ -27,7 +27,7 @@ using System.Data.Entity;
 
 namespace RKC.Controllers
 {
-    [Auth]
+    [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter + "," + RolesEnums.CounterReader)]
     public class CounterController : Controller
     {
         private readonly ICounter _counter;

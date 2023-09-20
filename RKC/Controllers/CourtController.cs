@@ -1,9 +1,11 @@
 ﻿using AppCache;
 using BE.Court;
 using BE.Roles;
+using BL.Excel;
 using BL.Helper;
 using BL.Security;
 using BL.Services;
+using ClosedXML.Excel;
 using DB.DataBase;
 using Microsoft.AspNet.Identity;
 using RKC.Extensions;
@@ -19,7 +21,7 @@ using DateTime = System.DateTime;
 
 namespace RKC.Controllers
 {
-    [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
+    [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
     public class CourtController : Controller
     {
         private readonly ICourt _court;
@@ -29,9 +31,10 @@ namespace RKC.Controllers
         private readonly ICacheApp _cacheApp;
         public readonly IFlagsAction _flagsAction;
         public readonly ISecurityProvider _securityProvider;
-        public CourtController(ICourt court, Ilogger logger, IGeneratorDescriptons generatorDescriptons,IDictionary dictionary,
+        private readonly IExcelCourt _excelCourt;
+        public CourtController(ICourt court, Ilogger logger, IGeneratorDescriptons generatorDescriptons, IDictionary dictionary,
             ICacheApp cacheApp, IFlagsAction flagsAction,
-            ISecurityProvider securityProvider)
+            ISecurityProvider securityProvider, IExcelCourt excelCourt)
         {
             _securityProvider = securityProvider;
             _logger = logger;
@@ -40,6 +43,7 @@ namespace RKC.Controllers
             _cacheApp = cacheApp;
             _flagsAction = flagsAction;
             _court = court;
+            _excelCourt = excelCourt;
         }
         public async Task<ActionResult> Index(int Id = 0)
         {
@@ -49,8 +53,8 @@ namespace RKC.Controllers
                 ViewBag.IsLock = true;
             }
             else ViewBag.IsLock = false;
-            
-            var Model = await _court.DetailInfroms(Id); 
+
+            var Model = await _court.DetailInfroms(Id);
             return View(Model);
         }
         public ActionResult Serach()
@@ -64,13 +68,13 @@ namespace RKC.Controllers
         }
         public async Task<ActionResult> SearchResult(SearchModel searchModel)
         {
-            var Result =  await _court.Serach(searchModel);
+            var Result = await _court.Serach(searchModel);
             return PartialView(Result);
         }
         [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> CreateCourt(string FullLic)
         {
-            if(string.IsNullOrEmpty(FullLic) || FullLic == "undefined")
+            if (string.IsNullOrEmpty(FullLic) || FullLic == "undefined")
                 return Redirect("/Home/ResultEmpty?Message=" + "Нельзя указать пустой лицевой счет!");
             var Result = await _court.CreateCourt(FullLic, DateTime.Now.ToString(), User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Result);
@@ -83,7 +87,7 @@ namespace RKC.Controllers
         [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> SaveCourt(CourtGeneralInformation courtGeneralInformation)
         {
-            var Id =  await _court.SaveCourt(courtGeneralInformation, User.Identity.GetFIOFull());
+            var Id = await _court.SaveCourt(courtGeneralInformation, User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Id);
         }
         [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
@@ -95,7 +99,7 @@ namespace RKC.Controllers
         }
         public async Task<JsonResult> AutocompleteDictionary(string Text, int Id)
         {
-            var result = await _dictionary.GetCourtNameDictionaries(Text,Id);
+            var result = await _dictionary.GetCourtNameDictionaries(Text, Id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         public async Task<ActionResult> GetPartialDictionaryId(int Id)
@@ -105,7 +109,7 @@ namespace RKC.Controllers
         }
         public string GetActionUser(string Lic, int IdCourt)
         {
-            return _logger.GetActionUserCourt(Lic,IdCourt);
+            return _logger.GetActionUserCourt(Lic, IdCourt);
         }
         public async Task<ActionResult> AddDicValue(int Id, string Value)
         {
@@ -199,7 +203,7 @@ namespace RKC.Controllers
         public async Task<ActionResult> DownLoadFile(int Id)
         {
             var Result = await _court.DownLoadFile(Id);
-          
+
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
         [HttpGet]
@@ -223,6 +227,26 @@ namespace RKC.Controllers
         {
             _cacheApp.Delete(User.Identity.GetFIOFull(), Page);
             return null;
+        }
+        [Auth(Roles = RolesEnums.CourtAdmin)]
+        public async Task<ActionResult> UploadFileCourtCase(HttpPostedFileBase file)
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                try
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(await _excelCourt.ExcelsLoadCourt(workbook));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }catch (Exception ex)
+                {
+                    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
+                }
+            }
         }
     }
 }

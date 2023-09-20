@@ -8,6 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using WordGenerator;
 using WordGenerator.Enums;
+using Quartz;
+using System.Net.Mail;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace BL.Jobs
 {
@@ -97,7 +101,7 @@ namespace BL.Jobs
                     }
                     catch(Exception ex)
                     {
-                        receiptNotSend.Add(new ReceiptNotSend { FullLic = Items.Lic, Comment = ex.Message });
+                        receiptNotSend.Add(new ReceiptNotSend { FullLic = Items.Lic, Comment = ex.Message, Email = Items.Email });
                     }
                 }
                 if (receiptNotSend.Count() > 0)

@@ -76,9 +76,12 @@
                         <a href="/MKD"><i class="glyphicon glyphicon-home icons" aria-hidden="true"></i> <i class="Padding">Информация по МКД</i></a>
                     </li>
                 }
+                 @if (User.IsInRole(@RolesEnums.CounterReader) || User.IsInRole(@RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                 {
                 <li id="Billing" class="active">
                     <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">Биллинг Т+</i></a>
                 </li>
+                 }
                 <li id="DPU">
                 @if (User.IsInRole(@RolesEnums.DPUReader) || User.IsInRole(@RolesEnums.DPUEdit) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
                 {

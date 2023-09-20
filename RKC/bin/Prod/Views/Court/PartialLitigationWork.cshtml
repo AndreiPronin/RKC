@@ -4,25 +4,41 @@
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Дата определения об отмене СП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.DateDecisionCansel, new { @type = "Date", @readonly = "readonly", @class = "form-control",
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateDecisionCansel, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtLitigationWork.DateDecisionCansel.HasValue ? Model.CourtLitigationWork.DateDecisionCansel.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Дата получения определения об отмене СП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.DateReceipt, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateReceipt, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtLitigationWork.DateReceipt.HasValue ? Model.CourtLitigationWork.DateReceipt.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Дата передачи документов в ПИР РЦПО:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.DateSendPirRCO, new { @type = "Date", @readonly = "readonly", @class = "form-control",
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateSendPirRCO, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtLitigationWork.DateSendPirRCO.HasValue ? Model.CourtLitigationWork.DateSendPirRCO.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Дата передачи искового заявления в суд:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.DateSubmission, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateSubmission, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtLitigationWork.DateSubmission.HasValue ? Model.CourtLitigationWork.DateSubmission.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
@@ -33,6 +49,16 @@
         <label class="col-sm-12 col-form-label">ФИО сотрудника (направившего дело в суд):</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtLitigationWork.FioSendCourt, new { @readonly = "readonly", @dicId = "20", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtLitigationWork.FioSendCourt })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата задания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.DateTask, new
+            {
+                @type = "month",
+                @readonly = "readonly",
+                @class = "form-control",
+           @Value = (Model.CourtLitigationWork.DateTask.HasValue ? Model.CourtLitigationWork.DateTask.Value.ToString("yyyy-MM") : string.Empty)
+            })
         </div>
         <label class="col-sm-12 col-form-label">Способ отправки заявления в суд:</label>
         <div class="col-sm-8">

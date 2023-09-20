@@ -14,6 +14,16 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.FioSendSpIo, new { @readonly = "readonly", @dicId = "20", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.FioSendSpIo })
         </div>
+        <label class="col-sm-12 col-form-label">Дата задания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.DateTask, new
+            {
+                @type = "month",
+                @readonly = "readonly",
+                @class = "form-control",
+           @Value = (Model.CourtExecutionFSSP.DateTask.HasValue ? Model.CourtExecutionFSSP.DateTask.Value.ToString("yyyy-MM") : string.Empty)
+            })
+        </div>
         <label class="col-sm-12 col-form-label">Исполнительный орган (ФССП):</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.ExecutiveBody, new { @readonly = "readonly", @dicId = "3", @class = "form-control DictionaryAutoCompleteFSSP", @Value = Model.CourtExecutionFSSP.ExecutiveBody })

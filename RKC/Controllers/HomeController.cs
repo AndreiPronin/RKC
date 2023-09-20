@@ -55,5 +55,9 @@ namespace RKC.Controllers
             var tt = User;
             return Content("Test");
         }
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

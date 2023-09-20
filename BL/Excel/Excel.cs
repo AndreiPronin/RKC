@@ -614,7 +614,7 @@ namespace BL.Excel
             ,new DataColumn("   РАЗМЕРНОСТЬ   ")
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
             var DB = new DbTPlus();
-            var Counters = DB.Database.SqlQuery<view_TplusIPU_GVS>("SELECT * FROM [T+].[dbo].[view_TplusIPU_GVS]").ToList();
+            var Counters = DB.Database.SqlQuery<view_TplusIPU_GVS>("SELECT * FROM [dbo].[view_TplusIPU_GVS]").ToList();
             cacheApp.Update(User, "Формирую Excel");
             Thread.Sleep(10000);
             foreach (var Items in Counters)
@@ -648,7 +648,7 @@ namespace BL.Excel
             ,new DataColumn("   РАЗМЕРНОСТЬ   ")
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
             var DB = new DbTPlus();
-            var Counters = DB.Database.SqlQuery<view_TplusIPU_OTP>("select * from [T+].[dbo].[view_TplusIPU_OTP]").ToList();
+            var Counters = DB.Database.SqlQuery<view_TplusIPU_OTP>("select * from [dbo].[view_TplusIPU_OTP]").ToList();
             cacheApp.Update(User, "Формирую Excel");
             foreach (var Items in Counters)
             {

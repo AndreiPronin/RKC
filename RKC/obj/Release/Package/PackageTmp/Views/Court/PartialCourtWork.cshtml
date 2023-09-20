@@ -49,6 +49,16 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.FioSendCourt, new { @readonly = "readonly", @dicId = "20", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWork.FioSendCourt })
         </div>
+        <label class="col-sm-12 col-form-label">Дата задания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DateTask, new
+            {
+                @type = "month",
+                @readonly = "readonly",
+                @class = "form-control",
+           @Value = (Model.CourtWork.DateTask.HasValue ? Model.CourtWork.DateTask.Value.ToString("yyyy-MM") : string.Empty)
+            })
+        </div>
         <label class="col-sm-12 col-form-label">Способ отправки заявления в суд:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.SubmitApplicationCourt, new { @readonly = "readonly", @dicId = "17", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWork.SubmitApplicationCourt })
@@ -59,7 +69,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Адрес суда:</label>
         <div class="col-sm-8">
-            @Html.TextAreaFor(m => m.CourtWork.AddressCourt, new { @style = "width: 300px !important; height: 50px !important;", @disabled="disabled" , @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.AddressCourt })
+            @Html.TextAreaFor(m => m.CourtWork.AddressCourt, new { @style = "width: 300px !important; height: 50px !important;", @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.AddressCourt })
         </div>
         <label class="col-sm-12 col-form-label">Дата принятия заявления судом:</label>
         <div class="col-sm-8">

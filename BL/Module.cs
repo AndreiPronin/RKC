@@ -15,8 +15,10 @@ using Ninject.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 using WordGenerator;
 using WordGenerator.interfaces;
 
@@ -49,7 +51,10 @@ namespace BL
             kernel.Bind<IPdfGenerate>().To<ReceiptPersonal>().Named("Personal");
             kernel.Bind<IPdfGenerate>().To<ReceiptDPU>().Named("Dpu");
             kernel.Bind<IPdfFactory>().To<ReceiptFactory>();
-    
+            kernel.Bind<IExcelCourt>().To<ExcelCourt>();
+            //kernel.Bind<IHttpClientFactory>().ToConstant(hostBuilder.Build().Services.GetService<IHttpClientFactory>());
+
+
 
         }
     }

@@ -37,6 +37,10 @@ namespace BE.Court
         public double? SumPayPeny { get; set; }
         public double? SumPayGP { get; set; }
         public string Comment { get; set; }
+        /// <summary>
+        /// Дата задания
+        /// </summary>
+        public DateTime? DateTask { get; set; }
         public CourtGeneralInformation CourtGeneralInformation { get; set; }
     }
 }

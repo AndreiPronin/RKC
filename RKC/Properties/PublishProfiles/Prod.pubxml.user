@@ -32,22 +32,22 @@
       <publishTime>05/09/2021 20:19:26</publishTime>
     </File>
     <File Include="bin/BE.dll">
-      <publishTime>09/12/2023 10:06:47</publishTime>
+      <publishTime>09/20/2023 20:33:22</publishTime>
     </File>
     <File Include="bin/BE.pdb">
-      <publishTime>09/12/2023 10:06:47</publishTime>
+      <publishTime>09/20/2023 20:33:22</publishTime>
     </File>
     <File Include="bin/BitMiracle.LibTiff.NET.dll">
       <publishTime>08/05/2021 15:42:12</publishTime>
     </File>
     <File Include="bin/BL.dll">
-      <publishTime>09/12/2023 10:06:47</publishTime>
+      <publishTime>09/20/2023 20:33:22</publishTime>
     </File>
     <File Include="bin/BL.dll.config">
       <publishTime>05/19/2023 19:04:09</publishTime>
     </File>
     <File Include="bin/BL.pdb">
-      <publishTime>09/12/2023 10:06:47</publishTime>
+      <publishTime>09/20/2023 20:33:22</publishTime>
     </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>12/08/2020 21:05:32</publishTime>
@@ -59,13 +59,13 @@
       <publishTime>12/16/2020 12:59:08</publishTime>
     </File>
     <File Include="bin/DB.dll">
-      <publishTime>09/12/2023 10:06:47</publishTime>
+      <publishTime>09/20/2023 20:33:22</publishTime>
     </File>
     <File Include="bin/DB.dll.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="bin/DB.pdb">
-      <publishTime>09/12/2023 10:06:47</publishTime>
+      <publishTime>09/20/2023 20:33:22</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>06/07/2017 01:59:22</publishTime>
@@ -122,10 +122,85 @@
       <publishTime>11/25/2019 13:57:50</publishTime>
     </File>
     <File Include="bin/Microsoft.Bcl.AsyncInterfaces.dll">
-      <publishTime>10/23/2021 02:42:08</publishTime>
+      <publishTime>10/18/2022 19:19:40</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>09/05/2018 19:10:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.Abstractions.dll">
+      <publishTime>10/18/2022 19:19:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.Binder.dll">
+      <publishTime>01/20/2023 03:07:02</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.CommandLine.dll">
+      <publishTime>10/18/2022 19:20:22</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.dll">
+      <publishTime>10/18/2022 19:20:12</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.EnvironmentVariables.dll">
+      <publishTime>10/18/2022 19:20:52</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.FileExtensions.dll">
+      <publishTime>10/18/2022 19:30:38</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.Json.dll">
+      <publishTime>10/18/2022 19:32:08</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Configuration.UserSecrets.dll">
+      <publishTime>10/18/2022 19:32:26</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.DependencyInjection.Abstractions.dll">
+      <publishTime>10/18/2022 19:19:54</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.DependencyInjection.dll">
+      <publishTime>10/18/2022 19:29:14</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.FileProviders.Abstractions.dll">
+      <publishTime>10/18/2022 19:19:48</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.FileProviders.Physical.dll">
+      <publishTime>10/18/2022 19:30:12</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.FileSystemGlobbing.dll">
+      <publishTime>10/18/2022 19:19:32</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Hosting.Abstractions.dll">
+      <publishTime>10/18/2022 19:31:08</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Hosting.dll">
+      <publishTime>01/20/2023 03:10:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Logging.Abstractions.dll">
+      <publishTime>10/18/2022 19:23:20</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Logging.Configuration.dll">
+      <publishTime>10/18/2022 19:31:20</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Logging.Console.dll">
+      <publishTime>10/18/2022 19:32:12</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Logging.Debug.dll">
+      <publishTime>10/18/2022 19:29:42</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Logging.dll">
+      <publishTime>10/18/2022 19:29:24</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Logging.EventLog.dll">
+      <publishTime>10/18/2022 19:29:44</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Logging.EventSource.dll">
+      <publishTime>10/18/2022 19:32:06</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Options.ConfigurationExtensions.dll">
+      <publishTime>10/18/2022 19:29:44</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Options.dll">
+      <publishTime>01/20/2023 03:00:32</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Extensions.Primitives.dll">
+      <publishTime>10/18/2022 19:19:38</publishTime>
     </File>
     <File Include="bin/Microsoft.IdentityModel.Clients.ActiveDirectory.dll">
       <publishTime>11/11/2022 17:44:38</publishTime>
@@ -238,11 +313,14 @@
     <File Include="bin/Owin.dll">
       <publishTime>11/13/2012 16:19:34</publishTime>
     </File>
+    <File Include="bin/Quartz.dll">
+      <publishTime>08/04/2023 19:26:26</publishTime>
+    </File>
     <File Include="bin/RKC.dll">
-      <publishTime>09/12/2023 10:06:48</publishTime>
+      <publishTime>09/20/2023 20:33:24</publishTime>
     </File>
     <File Include="bin/RKC.pdb">
-      <publishTime>09/12/2023 10:06:48</publishTime>
+      <publishTime>09/20/2023 20:33:24</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/08/2018 08:38:48</publishTime>
@@ -451,6 +529,9 @@
     <File Include="bin/System.Buffers.dll">
       <publishTime>02/19/2020 13:05:18</publishTime>
     </File>
+    <File Include="bin/System.Diagnostics.DiagnosticSource.dll">
+      <publishTime>01/20/2023 03:08:52</publishTime>
+    </File>
     <File Include="bin/System.Drawing.Common.dll">
       <publishTime>01/19/2021 23:29:18</publishTime>
     </File>
@@ -464,7 +545,7 @@
       <publishTime>06/12/2016 02:13:48</publishTime>
     </File>
     <File Include="bin/System.Memory.dll">
-      <publishTime>02/19/2020 13:05:18</publishTime>
+      <publishTime>05/08/2022 06:31:02</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>05/28/2022 02:41:34</publishTime>
@@ -479,10 +560,10 @@
       <publishTime>10/23/2021 02:40:18</publishTime>
     </File>
     <File Include="bin/System.Text.Encodings.Web.dll">
-      <publishTime>10/23/2021 02:41:14</publishTime>
+      <publishTime>10/18/2022 19:31:48</publishTime>
     </File>
     <File Include="bin/System.Text.Json.dll">
-      <publishTime>11/17/2021 21:03:58</publishTime>
+      <publishTime>10/18/2022 19:32:04</publishTime>
     </File>
     <File Include="bin/System.Threading.Tasks.Extensions.dll">
       <publishTime>02/19/2020 13:05:18</publishTime>
@@ -524,13 +605,13 @@
       <publishTime>01/23/2014 17:57:34</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll">
-      <publishTime>09/12/2023 10:06:47</publishTime>
+      <publishTime>09/20/2023 20:33:22</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll.config">
       <publishTime>08/12/2022 21:16:35</publishTime>
     </File>
     <File Include="bin/WordGenerator.pdb">
-      <publishTime>09/12/2023 10:06:47</publishTime>
+      <publishTime>09/20/2023 20:33:22</publishTime>
     </File>
     <File Include="bin/zxing.dll">
       <publishTime>02/03/2022 23:45:34</publishTime>
@@ -1043,7 +1124,7 @@
       <publishTime>05/29/2022 18:51:44</publishTime>
     </File>
     <File Include="Views/Court/AdminPanel.cshtml">
-      <publishTime>04/02/2023 19:15:06</publishTime>
+      <publishTime>09/13/2023 20:40:39</publishTime>
     </File>
     <File Include="Views/Court/DetailedСourtData.cshtml">
       <publishTime>12/05/2022 20:39:48</publishTime>
@@ -1058,16 +1139,16 @@
       <publishTime>08/16/2023 14:54:07</publishTime>
     </File>
     <File Include="Views/Court/PartialCourtWork.cshtml">
-      <publishTime>08/18/2023 19:42:09</publishTime>
+      <publishTime>09/18/2023 16:28:59</publishTime>
     </File>
     <File Include="Views/Court/PartialDocumentScans.cshtml">
       <publishTime>08/18/2023 19:54:34</publishTime>
     </File>
     <File Include="Views/Court/PartialExecutionFSSP.cshtml">
-      <publishTime>09/11/2023 17:26:19</publishTime>
+      <publishTime>09/18/2023 16:29:25</publishTime>
     </File>
     <File Include="Views/Court/PartialExecutionInPF.cshtml">
-      <publishTime>08/18/2023 19:42:48</publishTime>
+      <publishTime>09/18/2023 16:29:46</publishTime>
     </File>
     <File Include="Views/Court/PartialGeneralInformation.cshtml">
       <publishTime>09/11/2023 18:55:26</publishTime>
@@ -1076,7 +1157,7 @@
       <publishTime>08/18/2023 21:07:50</publishTime>
     </File>
     <File Include="Views/Court/PartialLitigationWork.cshtml">
-      <publishTime>08/19/2023 00:48:51</publishTime>
+      <publishTime>09/18/2023 16:30:29</publishTime>
     </File>
     <File Include="Views/Court/PartialStateDuty.cshtml">
       <publishTime>08/15/2023 20:15:21</publishTime>
@@ -1126,11 +1207,14 @@
     <File Include="Views/DPU/WatchHelpСalculation.cshtml">
       <publishTime>05/18/2023 09:52:35</publishTime>
     </File>
+    <File Include="Views/Home/AccessDenied.cshtml">
+      <publishTime>09/14/2023 19:26:04</publishTime>
+    </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>04/13/2023 22:25:27</publishTime>
     </File>
     <File Include="Views/Home/ResultEmpty.cshtml">
-      <publishTime>09/13/2022 22:08:36</publishTime>
+      <publishTime>09/13/2023 20:43:47</publishTime>
     </File>
     <File Include="Views/LogResult/ShowLogResult.cshtml">
       <publishTime>08/29/2023 21:03:11</publishTime>
@@ -1208,7 +1292,7 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>08/21/2023 21:26:54</publishTime>
+      <publishTime>09/14/2023 19:22:59</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>04/17/2023 12:21:42</publishTime>
@@ -1223,7 +1307,7 @@
       <publishTime>12/05/2022 20:39:48</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/12/2023 10:06:49</publishTime>
+      <publishTime>09/20/2023 20:33:24</publishTime>
     </File>
   </ItemGroup>
 </Project>

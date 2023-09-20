@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excels", "ExcelAddIns\Excel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RkcTest", "RkcTest\RkcTest.csproj", "{0C322E8D-37D2-4A1E-BA5A-1C4276FE036B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelsReader", "ExcelsReader\ExcelsReader.csproj", "{84A8AD99-A9DD-4792-9E6E-266740AFDC77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{0C322E8D-37D2-4A1E-BA5A-1C4276FE036B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C322E8D-37D2-4A1E-BA5A-1C4276FE036B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C322E8D-37D2-4A1E-BA5A-1C4276FE036B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84A8AD99-A9DD-4792-9E6E-266740AFDC77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84A8AD99-A9DD-4792-9E6E-266740AFDC77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84A8AD99-A9DD-4792-9E6E-266740AFDC77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84A8AD99-A9DD-4792-9E6E-266740AFDC77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{53AED92A-CB55-492C-B155-1A8F15EEB01A} = {D4CDA000-5AE9-453C-B435-5BDDFB4ED0B5}
 		{C20C939E-FF43-45FA-8A2B-98FF6E1A082A} = {D4CDA000-5AE9-453C-B435-5BDDFB4ED0B5}
+		{84A8AD99-A9DD-4792-9E6E-266740AFDC77} = {D4CDA000-5AE9-453C-B435-5BDDFB4ED0B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58A82ABA-CE7C-4C7F-894B-CC3ADC6F372F}

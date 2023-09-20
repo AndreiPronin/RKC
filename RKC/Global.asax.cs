@@ -1,3 +1,4 @@
+using BL.Jobs;
 using RKC.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.UI;
 
 
 namespace RKC
@@ -24,6 +26,9 @@ namespace RKC
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+
+            // запуск выполнения работы
+            EmailScheduler.Start();
         }
     }
 }

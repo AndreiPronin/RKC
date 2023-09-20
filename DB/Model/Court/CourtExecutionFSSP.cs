@@ -321,6 +321,10 @@ namespace DB.Model.Court
         /// Дополнительные сведения
         /// </summary>
         public string AdditionalInformation { get; set; }
+        /// <summary>
+        /// Дата задания
+        /// </summary>
+        public DateTime? DateTask { get; set; }
         public CourtGeneralInformation CourtGeneralInformation { get; set; }
     }
 }

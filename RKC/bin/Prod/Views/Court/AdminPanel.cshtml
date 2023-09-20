@@ -38,13 +38,30 @@
             </div>
         </div>
     </div>
-        <div class="col-md-4">
-            <label class="col-sm-12 col-form-label">Значения справочника:</label>
-            <div class="col-sm-8">
-                <div id="resultSearchDic"></div>
-            </div>
+    <div class="col-md-4">
+        @using (Html.BeginForm("UploadFileCourtCase", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
+            {
+                <div style="margin-top:30px;" class="row">
+                    <div class="col-md-8">
+                        @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Значения справочника:</label>
+        <div class="col-sm-8">
+            <div id="resultSearchDic"></div>
         </div>
     </div>
+</div>
+
 <script>
     $(document).ready(function () {
         $("#Dictionary").change(function (e) {

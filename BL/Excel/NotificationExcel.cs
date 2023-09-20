@@ -42,12 +42,12 @@ namespace BL.Excel
         {
 
             DataTable dt = new DataTable("Receipt");
-            dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Лицевой счет"), new DataColumn("Коментарий") });
+            dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Лицевой счет"), new DataColumn("Коментарий"), new DataColumn("Электронная почта") });
 
 
             foreach (var Items in ReceiptNotSend)
             {
-                dt.Rows.Add(Items.FullLic,Items.Comment);
+                dt.Rows.Add(Items.FullLic,Items.Comment,Items.Email);
             }
             return dt;
         }

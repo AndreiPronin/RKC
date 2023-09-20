@@ -71,7 +71,7 @@ namespace BL.ApiT_
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEbdMkd));
                 using (var db = new DbTPlus())
                 {
-                    List<MKD> Mkd_ = db.Database.SqlQuery<MKD>($"SELECT * FROM [T+].[dbo].[EBD_MKD]('{dateTime.ToString("yyyy-MM-dd")}')").ToList();
+                    List<MKD> Mkd_ = db.Database.SqlQuery<MKD>($"SELECT * FROM [dbo].[EBD_MKD]('{dateTime.ToString("yyyy-MM-dd")}')").ToList();
                     var Data = Mkd_.ToList();
                     #region
                     Parallel.ForEach(Data, Item =>
