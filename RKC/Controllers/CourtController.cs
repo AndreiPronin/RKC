@@ -229,18 +229,24 @@ namespace RKC.Controllers
             return null;
         }
         [Auth(Roles = RolesEnums.CourtAdmin)]
-        public async Task<ActionResult> UploadFileCourtCase(HttpPostedFileBase file)
+        public async Task<ActionResult> UploadFileCourtCase(HttpPostedFileBase file, int TypeLoad)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
                 try
                 {
                     var workbook = new XLWorkbook(file.InputStream);
-                    wb.Worksheets.Add(await _excelCourt.ExcelsLoadCourt(workbook));
-                    using (MemoryStream stream = new MemoryStream())
+                    switch ((CourtTypeLoadFiles)TypeLoad)
                     {
-                        wb.SaveAs(stream);
-                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                        case CourtTypeLoadFiles.OpenNewCourt:
+                            wb.Worksheets.Add(await _excelCourt.ExcelsLoadCourt(workbook,$"{User.Identity.GetFIOFull()} {file.FileName}"));
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                wb.SaveAs(stream);
+                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат загрузки.xlsx");
+                            }
+                        default: 
+                            throw new Exception("Не указан тип загружаемого файла!");
                     }
                 }catch (Exception ex)
                 {

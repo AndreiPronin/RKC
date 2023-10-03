@@ -4,6 +4,9 @@ using BE.Roles;
 using BL.Excel;
 using BL.Services;
 using ClosedXML.Excel;
+using DB.DataBase;
+using DB.Model;
+using DB.Query;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using Ionic.Zip;
 using RKC.Extensions;
@@ -134,22 +137,44 @@ namespace RKC.Controllers
         {
             if (DateStart == DateEnd)
             {
-                //try
-                //{
-
-                var result = _pdfFactory.CreatePdf(PdfType.Dpu).Generate(FullLic, DateEnd);
-                return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
-                //}catch(Exception ex)
-                //{
-                //    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
-                //}
+                try
+                {
+                    using (var db = new ApplicationDbContext())
+                    {
+                        var Dpu = db.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationViewPeriodExhibid).FirstOrDefault(x => x.NewFullLic == FullLic && x.Period.Year == DateEnd.Year && x.Period.Month == DateEnd.Month);
+                        if(Dpu == null || Dpu?.Period == Dpu?.PeriodExhibid) { 
+                            var result = _pdfFactory.CreatePdf(PdfType.Dpu).Generate(FullLic, DateEnd);
+                            return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
+                        }
+                        else
+                        {
+                            var result = _pdfFactory.CreatePdf(PdfType.NewDpu).Generate(FullLic, DateEnd);
+                            return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
+                }
             }
             List<PersDataDocumentLoad> persData = new List<PersDataDocumentLoad>();
             while (DateStart >= DateEnd)
             {
                 try
                 {
-                    persData.Add(_pdfFactory.CreatePdf(PdfType.Dpu).Generate(FullLic, DateEnd));
+                    using (var db = new ApplicationDbContext())
+                    {
+                        var Dpu = db.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationViewPeriodExhibid).FirstOrDefault(x => x.NewFullLic == FullLic && x.Period.Year == DateEnd.Year && x.Period.Month == DateEnd.Month);
+                        if (Dpu == null || Dpu?.Period == Dpu?.PeriodExhibid)
+                        {
+                            persData.Add(_pdfFactory.CreatePdf(PdfType.Dpu).Generate(FullLic, DateEnd));
+                        }
+                        else
+                        {
+                            persData.Add(_pdfFactory.CreatePdf(PdfType.NewDpu).Generate(FullLic, DateEnd));
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

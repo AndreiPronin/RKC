@@ -57,7 +57,7 @@ namespace BL.Security
             {
                 List<UserRoleInfo> userRoleInfo = new List<UserRoleInfo>();
                 var User = db.AspNetUserRoles.Where(x=>x.UserId == UserId).ToList();
-                var UserFio = db.AspNetUsers.FirstOrDefault(x => x.Id == UserId).FIO;
+                var UserFio = db.AspNetUsers.FirstOrDefault(x => x.Id == UserId)?.FIO;
                 foreach (var Items in User)
                 {
                     var Role = db.AspNetRoles.FirstOrDefault(x => x.Id == Items.RoleId);

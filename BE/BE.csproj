@@ -62,6 +62,8 @@
     <Compile Include="Court\CourtLitigationWork.cs" />
     <Compile Include="Court\CourtStateDuty.cs" />
     <Compile Include="Court\CourtWork.cs" />
+    <Compile Include="Court\Enums\Enums.cs" />
+    <Compile Include="Court\ErrorLoadExcel.cs" />
     <Compile Include="Court\LitigationWorkRequisites.cs" />
     <Compile Include="Court\CourtWorkRequisites.cs" />
     <Compile Include="Court\CourtWriteOff.cs" />

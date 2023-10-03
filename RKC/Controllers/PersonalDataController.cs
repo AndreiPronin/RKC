@@ -104,7 +104,7 @@ namespace RKC.Controllers
         [Auth(Roles = "PersWriter,Admin")]
         public ActionResult SaveFile(HttpPostedFileBase FileLoad, string NameFile,string Lic,int idPersData,string Fio)
         {
-            return Json(new { result = _personalData.saveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.').LastOrDefault(), NameFile, User.Identity.GetFIOFull()),
+            return Json(new { result = _personalData.SaveFile(ConverToBytes(FileLoad), idPersData, Fio, Lic, FileLoad.FileName.Split('.').LastOrDefault(), NameFile, User.Identity.GetFIOFull()),
                 JsonRequestBehavior.AllowGet });
         }
         [HttpGet]
@@ -138,21 +138,22 @@ namespace RKC.Controllers
                 return null;
             }
         }
-        [Auth(Roles = "Admin,DownLoadReceipt")]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.DownLoadReceipt)]
         [HttpGet]
         public ActionResult DownLoadReceipt(string FullLic, DateTime DateStart, DateTime DateEnd)
         {
             if(DateStart == DateEnd)
             {
-                //try
-                //{
+                try
+                {
 
-                var result = _pdfFactory.CreatePdf(PdfType.Personal).Generate(FullLic, DateEnd);
-                return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
-                //}catch(Exception ex)
-                //{
-                //    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
-                //}
+                    var result = _pdfFactory.CreatePdf(PdfType.Personal).Generate(FullLic, DateEnd);
+                    return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
+                }
+                catch (Exception ex)
+                {
+                    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
+                }
             }
             List<PersDataDocumentLoad> persData = new List<PersDataDocumentLoad>();
             while (DateStart >= DateEnd)
@@ -276,7 +277,7 @@ namespace RKC.Controllers
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
-                var workbook = new XLWorkbook();
+               // var workbook = new XLWorkbook();
                 wb.Worksheets.Add(new CheckToExcel().PersIsLic(User.Identity.Name,_cacheApp));
                 using (MemoryStream stream = new MemoryStream())
                 {

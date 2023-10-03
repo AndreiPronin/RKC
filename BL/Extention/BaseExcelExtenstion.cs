@@ -45,5 +45,18 @@ namespace BL.Excel
 
             return char.ToUpper(s[0]) + s.Substring(1).ToLower();
         }
+        public static string TryGetLic(this object row)
+        {
+            try
+            {
+                var result = row.ToString();
+                if (!string.IsNullOrEmpty(result))
+                    return result;
+                throw new Exception("Пустой лицевой счет");
+            }catch (Exception e)
+            {
+                throw e; 
+            }
+        }
     }
 }

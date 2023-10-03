@@ -27,7 +27,8 @@ namespace BL.Services
     {
         Task<CourtGeneralInformation> DetailInfroms(int Id);
         Task<List<CourtGeneralInformation>> Serach(SearchModel searchModel);
-        Task<int> CreateCourt(string FullLic, string NumberIP, string User);
+        Task<int> CreateCourt(string FullLic, string DateCreate, string User);
+        Task<CourtGeneralInformation> CreateCourtExcel(string FullLic, string DateCreate, string User);
         Task<int> SaveCourt(BE.Court.CourtGeneralInformation courtGeneralInformation, string User);
         Task<List<CourtGeneralInformation>> GetAllCourtFullLic(string FullLic);
         Task AddCourtWorkRequisites (BE.Court.CourtWorkRequisites courtWorkRequisites);
@@ -111,6 +112,28 @@ namespace BL.Services
                 dbApp.Entry(courtGeneralInformationDb.CourtExecutionFSSP).State = EntityState.Modified;
                 dbApp.SaveChanges();
                 return courtGeneralInformation.Id;
+            }
+        }
+        public async Task<CourtGeneralInformation> CreateCourtExcel(string FullLic, string DateCreate, string User)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var Model = new CourtGeneralInformation { DateCreate = DateCreate };
+                Model.Lic = FullLic;
+                db.CourtGeneralInformation.Add(Model);
+                await db.SaveChangesAsync();
+                var Id = Model.Id;
+                db.CourtBankruptcy.Add(new DB.Model.Court.CourtBankruptcy { CourtGeneralInformationId = Id });
+                db.CourtInstallmentPlan.Add(new DB.Model.Court.CourtInstallmentPlan { CourtGeneralInformationId = Id });
+                db.CourtExecutionInPF.Add(new DB.Model.Court.CourtExecutionInPF { CourtGeneralInformationId = Id });
+                db.CourtLitigationWork.Add(new DB.Model.Court.CourtLitigationWork { CourtGeneralInformationId = Id });
+                db.CourtWork.Add(new DB.Model.Court.CourtWork { CourtGeneralInformationId = Id });
+                db.CourtWriteOff.Add(new DB.Model.Court.CourtWriteOff { CourtGeneralInformationId = Id });
+                db.CourtStateDuty.Add(new DB.Model.Court.CourtStateDuty { CourtGeneralInformationId = Id });
+                db.CourtExecutionFSSP.Add(new DB.Model.Court.CourtExecutionFSSP { CourtGeneralInformationId = Id });
+                await db.SaveChangesAsync();
+                _ilogger.ActionUserCourt(Model.Lic, Model.Id, $"Пользователь {User} создал дело");
+                return Model;
             }
         }
         public async Task<int> CreateCourt(string FullLic,string DateCreate, string User)

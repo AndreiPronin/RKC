@@ -691,6 +691,7 @@
     <Content Include="Views\Court\PartialViewInstallmentPayRequisites.cshtml" />
     <Content Include="Views\Court\PartialViewLitigationWorkRequisites.cshtml" />
     <Content Include="Views\Home\AccessDenied.cshtml" />
+    <Content Include="Template\Образец квитанции DPUNew.docx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,7 +17,7 @@ using ZXing;
 
 namespace WordGenerator
 {
-    public class ReceiptDPU : IPdfGenerate
+    public class ReceiptNewDPU : IPdfGenerate
     {
         public PersDataDocumentLoad Generate(string LIC, DateTime date)
         {
@@ -36,17 +36,16 @@ namespace WordGenerator
                         cacheApp.AddProgress(LIC, "Ничего не найдено за выбранный период");
                         throw new Exception("Ничего не найдено за выбранный период");
                     }
-                   
                     if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + $@"\Template\KvitDPU\{date:MMMM-yyyy}"))
                         Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + $@"\Template\KvitDPU\{date:MMMM-yyyy}");
                     string path = AppDomain.CurrentDomain.BaseDirectory + $@"Template\KvitDPU\{date:MMMM-yyyy}\";
-                    if (File.Exists(path + $@"Образец квитанции DPU {LIC} {date.Month}.docx")) File.Delete(path + $@"Образец квитанции DPU {LIC} {date.Month}.docx");
+                    if (File.Exists(path + $@"Образец квитанции DPUNew {LIC} {date.Month}.docx")) File.Delete(path + $@"Образец квитанции DPUNew {LIC} {date.Month}.docx");
 
-                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + $@"Template\Образец квитанции DPU.docx",
-                        AppDomain.CurrentDomain.BaseDirectory + $@"Template\KvitDPU\{date:MMMM-yyyy}\Образец квитанции DPU {LIC} {date.Month}.docx");
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + $@"Template\Образец квитанции DPUNew.docx",
+                        AppDomain.CurrentDomain.BaseDirectory + $@"Template\KvitDPU\{date:MMMM-yyyy}\Образец квитанции DPUNew {LIC} {date.Month}.docx");
                     cacheApp.Update(LIC, $"Начинаю формировать квитанцию за {date.ToString("dd-MMMM-yyyy")}");
                     Application app = new Application();
-                    var TempFile = $@"Образец квитанции DPU {LIC} {date.Month}.docx";
+                    var TempFile = $@"Образец квитанции DPUNew {LIC} {date.Month}.docx";
                     _Document doc = app.Documents.Open(path + TempFile);
                     try
                     {
@@ -91,6 +90,10 @@ namespace WordGenerator
  false, false, false, false);
                         doc.Content.Find.Execute("{TotalAccrued}", false, true, false, false, false, true, 1, false, $@"{Lic.TotalAccrued}", 2,
  false, false, false, false);
+                        doc.Content.Find.Execute("{ShareInCommonOwnership}", false, true, false, false, false, true, 1, false, $@"{Lic.ShareInCommonOwnership}", 2,
+false, false, false, false);
+                        doc.Content.Find.Execute("{Premises}", false, true, false, false, false, true, 1, false, $@"{Lic.TotalCostOdpuNonResidentialPremises}", 2,
+false, false, false, false);
                         var SaldoSumm = Lic.SaldoEndPeriodDebt + Lic.SaldoEndPeriodPercentage;
                         SaldoSumm = SaldoSumm.HasValue ? Math.Round(SaldoSumm.Value,2) : SaldoSumm;
                         doc.Content.Find.Execute("{SaldoEndPeriodDebt}+{SaldoEndPeriodPercentage}", false, true, false, false, false, true, 1, false, $@"{SaldoSumm}", 2,
@@ -99,8 +102,8 @@ namespace WordGenerator
                         BarcodeWriter generator = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
                         generator.Options = new ZXing.Common.EncodingOptions
                         {
-                            Width = 140,
-                            Height = 140,
+                            Width = 250,
+                            Height = 250,
                             Margin = 2
                         };
                         var FIO = Lic.FullName.Trim().Split(' ');
@@ -118,6 +121,33 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
         false, false, false, false);
                             Range rangeImgQr = doc.Range(qr.Start, qr.End);
                             var ImgQr = doc.InlineShapes.AddPicture(path + $@"{LIC}_QR.png", false, true, rangeImgQr).ConvertToShape();
+                            ImgQr.WrapFormat.Type = Microsoft.Office.Interop.Word.WdWrapType.wdWrapFront;
+
+                        }
+                        catch (Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); }
+
+                        BarcodeWriter generator1 = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
+                        generator.Options = new ZXing.Common.EncodingOptions
+                        {
+                            Width = 500,
+                            Height = 500,
+                            Margin = 2
+                        };
+                        var FIO1 = Lic.FullName.Trim().Split(' ');
+                        var sum1 = Convert.ToDouble(Lic.OneTimePayment.ToString().Trim().Replace(".", ",")) * 100;
+                        var STR1 = $@"ST00011|Name=Мордовский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|
+BankName=Пензенское отделение № 8624 ПАО 'Сбербанк России' г. Пенза|BIC=045655635|CorrespAcc=30101810000000000635|PayeeINN=6315376946|
+Category=7|PersAcc={LIC}|LastName={FIO1.TryGetValue(0)}|FitstName={FIO1.TryGetValue(1)}|MiddleName={FIO1.TryGetValue(2)}
+|PayerAddress={Lic.Street.Trim()}, дом {Lic.Home.Trim()}, кв. {Lic.Flat.Trim()}|Sum={sum1}";
+                        generator.Write(STR1).Save(path + $@"{LIC}_QRNew.png");
+                        try
+                        {
+                            Microsoft.Office.Interop.Word.Range qr = doc.Range(0, 0);
+                            qr.Find.Execute("{qr1}");
+                            doc.Content.Find.Execute("{qr1}", false, true, false, false, false, true, 1, false, "", 2,
+        false, false, false, false);
+                            Range rangeImgQr = doc.Range(qr.Start, qr.End);
+                            var ImgQr = doc.InlineShapes.AddPicture(path + $@"{LIC}_QRNew.png", false, true, rangeImgQr).ConvertToShape();
                             ImgQr.WrapFormat.Type = Microsoft.Office.Interop.Word.WdWrapType.wdWrapFront;
 
                         }
@@ -149,10 +179,11 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
                         app.Quit();
                     }
                     cacheApp.Update(LIC, $"Очищаю временные файлы квитанции");
-                    if (File.Exists(path + $@"Образец квитанции DPU {LIC} {date.Month}.docx"))
-                        File.Delete(path + $@"Образец квитанции DPU {LIC} {date.Month}.docx");
+                    if (File.Exists(path + $@"Образец квитанции DPUNew {LIC} {date.Month}.docx"))
+                        File.Delete(path + $@"Образец квитанции DPUNew {LIC} {date.Month}.docx");
                     if (File.Exists(path + $@"{LIC}.png")) File.Delete(path + $@"{LIC}.png");
                     if (File.Exists(path + $@"{LIC}_QR.png")) File.Delete(path + $@"{LIC}_QR.png");
+                    if (File.Exists(path + $@"{LIC}_QRNew.png")) File.Delete(path + $@"{LIC}_QRNew.png");
                     cacheApp.Delete(LIC);
 
                     return new PersDataDocumentLoad()

@@ -26,6 +26,9 @@ namespace WordGenerator
                 case PdfType.Dpu:
                     pdf = new ReceiptDPU();
                     break;
+                case PdfType.NewDpu:
+                    pdf = new ReceiptNewDPU();
+                    break;
             }
             return pdf;
         }

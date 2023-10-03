@@ -46,5 +46,6 @@ namespace DB.Model
         public double? SaldoEndPeriodDebt { get; set; }
         public double? SaldoEndPeriodPercentage { get; set; }
         public string LicStatusName { get; set; }
+        public DateTime? PeriodExhibid { get; set; }
     }
 }

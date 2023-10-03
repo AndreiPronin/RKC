@@ -23,7 +23,7 @@ namespace BL.Services
         StateCalculation GetStateCalculation(string FullLic);
         List<PersData> GetInfoPersData(string FullLic);
         List<PersData> GetInfoPersDataDelete(string FullLic);
-        string saveFile(byte[] file, int idPersData, string Fio, string Lic, string TypeFile, string NameFile, string User);
+        string SaveFile(byte[] file, int idPersData, string Fio, string Lic, string TypeFile, string NameFile, string User);
         PersDataDocumentLoad DownLoadFile(int Id);
         Task<List<HelpCalculationsModel>> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
         Task<PersDataDocumentLoad> DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
@@ -165,10 +165,9 @@ namespace BL.Services
                 }
             }
         }
-        public string saveFile(byte[] file, int idPersData, string Fio, string Lic, string TypeFile, string NameFile, string User)
+        public string SaveFile(byte[] file, int idPersData, string Fio, string Lic, string TypeFile, string NameFile, string User)
         {
-            /* string[] dirs = Directory.GetDirectories("10.10.10.6\\doc_tplus\\")*/
-            ;
+            Fio.Replace("\"", "");
             if (file != null)
             {
                 if (!Directory.Exists($@"\\10.10.10.17\\doc_tplus\\{Lic}\\{Fio}"))
