@@ -17,18 +17,24 @@ using ApplicationContext = RKC.Models.ApplicationDbContext;
 using Microsoft.AspNet.Identity.Owin;
 using RKC.Extensions;
 using BL.Helper;
+using System.Data.Entity;
+using System.Threading.Tasks;
+using BE.Roles;
+using AppCache;
 
 namespace RKC.Controllers
 {
-    
+    [Auth(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ISecurityProvider _securityProvider;
         private readonly IFlagsAction _flagsAction;
-        public AdminController(ISecurityProvider securityProvider, IFlagsAction flagsAction)
+        private readonly ICacheApp _cacheApp;
+        public AdminController(ISecurityProvider securityProvider, IFlagsAction flagsAction, ICacheApp cacheApp)
         {
             _securityProvider = securityProvider;
             _flagsAction = flagsAction;
+            _cacheApp = cacheApp;
         }
         [Auth(Roles = "Admin")]
         public ActionResult Index()
@@ -50,6 +56,14 @@ namespace RKC.Controllers
                 
             return View();
         }
+        public async Task<JsonResult> GetEmployee(string FullName)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var result  =  await db.AspNetUsers.Where(x => x.FIO.StartsWith(FullName)).ToListAsync();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
         [Auth(Roles = "Admin")]
         public ActionResult GetUserRoleInfo(string UserId)
         {
@@ -65,12 +79,42 @@ namespace RKC.Controllers
                     var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
                     var roleName = new ApplicationDbContext().AspNetRoles.FirstOrDefault(x => x.Id == UserRoleId);
                     userManager.RemoveFromRoles(UserId, roleName.Name);
+                   
                 }
-            }catch(Exception ex)
+                using (var db = new ApplicationDbContext())
+                {
+                    var LockUser = db.AspNetUsers.Find(UserId);
+                    _cacheApp.AddInfinity(LockUser.UserName, UserRoleId);
+                }
+            }
+            catch(Exception ex)
             {
                 throw ex;
             }
             return Content("Роль успешно удалена");
+        }
+        [Auth(Roles = RolesEnums.SuperAdmin)]
+        public ActionResult DeleteUser(string UserId)
+        {
+            try
+            {
+                using (var context = new ApplicationContext())
+                {
+                    var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+                    var user = userManager.FindById(UserId);
+                    userManager.Delete(user);
+                }
+                using (var db = new ApplicationDbContext())
+                {
+                    var LockUser = db.AspNetUsers.Find(UserId);
+                    _cacheApp.AddInfinity(LockUser.UserName, UserId);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Content("Пользователь успешно удален!");
         }
         [Auth(Roles = "Admin")]
         public ActionResult AddRole(string UserId, string UserRoleId)
@@ -79,6 +123,8 @@ namespace RKC.Controllers
             {
                 db.AspNetUserRoles.Add(new DB.Model.AspNetUserRoles { UserId = UserId, RoleId = UserRoleId });
                 db.SaveChanges();
+                var LockUser =  db.AspNetUsers.Find(UserId);
+               _cacheApp.AddInfinity(LockUser.UserName, UserRoleId);
             }
             return Content("Роль успешно добавлена");
         }

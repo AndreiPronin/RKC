@@ -42,10 +42,10 @@ namespace RKC.Controllers
             return Resposne.CreateResponse200();
         }
         [Route("api/SendReceiptLic")]
-        [HttpGet]
-        public HttpResponseMessage SendReceiptLic(string FullLic)
+        [HttpPost]
+        public HttpResponseMessage SendReceiptLic(SendReceiptLic sendReceiptLic)
         {
-            _job.SendReceipt(FullLic);
+            _job.SendReceipt(sendReceiptLic.FullLic);
             return Resposne.CreateResponse200();
         }
     }

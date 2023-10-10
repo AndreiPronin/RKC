@@ -45,6 +45,7 @@ namespace RKC.Controllers
             _court = court;
             _excelCourt = excelCourt;
         }
+        [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
         public async Task<ActionResult> Index(int Id = 0)
         {
             if (_cacheApp.Lock(User.Identity.GetFIOFull(), nameof(CourtController) + nameof(Index) + Id))
@@ -79,6 +80,7 @@ namespace RKC.Controllers
             var Result = await _court.CreateCourt(FullLic, DateTime.Now.ToString(), User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Result);
         }
+        [Auth(Roles = RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> DeleteCourt(int Id)
         {
             await _court.DeleteCourt(Id);

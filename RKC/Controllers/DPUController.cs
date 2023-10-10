@@ -143,12 +143,12 @@ namespace RKC.Controllers
                     {
                         var Dpu = db.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationViewPeriodExhibid).FirstOrDefault(x => x.NewFullLic == FullLic && x.Period.Year == DateEnd.Year && x.Period.Month == DateEnd.Month);
                         if(Dpu == null || Dpu?.Period == Dpu?.PeriodExhibid) { 
-                            var result = _pdfFactory.CreatePdf(PdfType.Dpu).Generate(FullLic, DateEnd);
+                            var result = _pdfFactory.CreatePdf(PdfType.NewDpu).Generate(FullLic, DateEnd);
                             return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
                         }
                         else
                         {
-                            var result = _pdfFactory.CreatePdf(PdfType.NewDpu).Generate(FullLic, DateEnd);
+                            var result = _pdfFactory.CreatePdf(PdfType.Dpu).Generate(FullLic, DateEnd);
                             return File(result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, result.FileName);
                         }
                     }
@@ -168,11 +168,11 @@ namespace RKC.Controllers
                         var Dpu = db.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationViewPeriodExhibid).FirstOrDefault(x => x.NewFullLic == FullLic && x.Period.Year == DateEnd.Year && x.Period.Month == DateEnd.Month);
                         if (Dpu == null || Dpu?.Period == Dpu?.PeriodExhibid)
                         {
-                            persData.Add(_pdfFactory.CreatePdf(PdfType.Dpu).Generate(FullLic, DateEnd));
+                            persData.Add(_pdfFactory.CreatePdf(PdfType.NewDpu).Generate(FullLic, DateEnd));
                         }
                         else
                         {
-                            persData.Add(_pdfFactory.CreatePdf(PdfType.NewDpu).Generate(FullLic, DateEnd));
+                            persData.Add(_pdfFactory.CreatePdf(PdfType.Dpu).Generate(FullLic, DateEnd));
                         }
                     }
                 }

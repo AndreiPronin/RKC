@@ -39,7 +39,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Доля собственности:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.ShareOfOwnership, new { @readonly = "readonly", @class = "form-control", @Value = Model.ShareOfOwnership })
+            @Html.TextBoxFor(m => m.ShareOfOwnership, new { @readonly = "readonly", @dicId = "21", @class = "form-control DictionaryAutoComplete", @Value = Model.ShareOfOwnership })
         </div>
         <label class="col-sm-12 col-form-label">Кадастровый номер:</label>
         <div class="col-sm-8">

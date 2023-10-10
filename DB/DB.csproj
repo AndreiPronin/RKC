@@ -82,6 +82,7 @@
     <Compile Include="Model\Court\CourtWriteOff.cs" />
     <Compile Include="Model\Court\DictiomaryModel\CourtNameDictionary.cs" />
     <Compile Include="Model\Court\InstallmentPayRequisites.cs" />
+    <Compile Include="Model\DirectMkd.cs" />
     <Compile Include="Model\MODEL.cs" />
     <Compile Include="Model\Court\ReasonsRevokingIDExecution.cs" />
     <Compile Include="Model\DIMENSION.cs" />

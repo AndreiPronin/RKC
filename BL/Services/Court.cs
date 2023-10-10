@@ -28,7 +28,7 @@ namespace BL.Services
         Task<CourtGeneralInformation> DetailInfroms(int Id);
         Task<List<CourtGeneralInformation>> Serach(SearchModel searchModel);
         Task<int> CreateCourt(string FullLic, string DateCreate, string User);
-        Task<CourtGeneralInformation> CreateCourtExcel(string FullLic, string DateCreate, string User);
+        Task<CourtGeneralInformation> CreateCourtExcel(CourtGeneralInformation courtGeneralInformation, string User);
         Task<int> SaveCourt(BE.Court.CourtGeneralInformation courtGeneralInformation, string User);
         Task<List<CourtGeneralInformation>> GetAllCourtFullLic(string FullLic);
         Task AddCourtWorkRequisites (BE.Court.CourtWorkRequisites courtWorkRequisites);
@@ -114,26 +114,25 @@ namespace BL.Services
                 return courtGeneralInformation.Id;
             }
         }
-        public async Task<CourtGeneralInformation> CreateCourtExcel(string FullLic, string DateCreate, string User)
+        public async Task<CourtGeneralInformation> CreateCourtExcel(CourtGeneralInformation courtGeneralInformation, string User)
         {
             using (var db = new ApplicationDbContext())
             {
-                var Model = new CourtGeneralInformation { DateCreate = DateCreate };
-                Model.Lic = FullLic;
-                db.CourtGeneralInformation.Add(Model);
+                var courtGeneralInformationDb = await db.CourtGeneralInformation.Include(x=>x.CourtWork)
+                    .FirstOrDefaultAsync(x => 
+                        x.Lic == courtGeneralInformation.Lic &&
+                        x.FioDuty == courtGeneralInformation.FioDuty &&
+                        x.Street == courtGeneralInformation.Street &&
+                        x.Flat == courtGeneralInformation.Flat &&
+                        x.Home == courtGeneralInformation.Home &&
+                        x.CourtWork.SumOdSendCourt == courtGeneralInformation.CourtWork.SumOdSendCourt 
+                    );
+                if (courtGeneralInformationDb != null)
+                    throw new Exception("Такое дело уже существует");
+                db.CourtGeneralInformation.Add(courtGeneralInformation);
                 await db.SaveChangesAsync();
-                var Id = Model.Id;
-                db.CourtBankruptcy.Add(new DB.Model.Court.CourtBankruptcy { CourtGeneralInformationId = Id });
-                db.CourtInstallmentPlan.Add(new DB.Model.Court.CourtInstallmentPlan { CourtGeneralInformationId = Id });
-                db.CourtExecutionInPF.Add(new DB.Model.Court.CourtExecutionInPF { CourtGeneralInformationId = Id });
-                db.CourtLitigationWork.Add(new DB.Model.Court.CourtLitigationWork { CourtGeneralInformationId = Id });
-                db.CourtWork.Add(new DB.Model.Court.CourtWork { CourtGeneralInformationId = Id });
-                db.CourtWriteOff.Add(new DB.Model.Court.CourtWriteOff { CourtGeneralInformationId = Id });
-                db.CourtStateDuty.Add(new DB.Model.Court.CourtStateDuty { CourtGeneralInformationId = Id });
-                db.CourtExecutionFSSP.Add(new DB.Model.Court.CourtExecutionFSSP { CourtGeneralInformationId = Id });
-                await db.SaveChangesAsync();
-                _ilogger.ActionUserCourt(Model.Lic, Model.Id, $"Пользователь {User} создал дело");
-                return Model;
+                _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id, $"Пользователь {User} создал дело");
+                return courtGeneralInformation;
             }
         }
         public async Task<int> CreateCourt(string FullLic,string DateCreate, string User)

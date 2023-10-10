@@ -75,7 +75,7 @@ namespace BL.Jobs
                 List<PersData> persData;
                 if(string.IsNullOrEmpty(FullLic))
                 { 
-                    persData = db.PersData.Where(x => x.Main == true && x.SendingElectronicReceipt.Contains("Да")).ToList();
+                    persData = db.PersData.Where(x => x.Main == true && x.IsDelete != true && x.SendingElectronicReceipt.Contains("Да")).ToList();
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace BL.Jobs
                         if (!string.IsNullOrEmpty(Lic[i].Trim()))
                         {
                             var lic = Lic[i].Trim();
-                            persData.Add(db.PersData.FirstOrDefault(x => x.Main == true && x.Lic == lic && x.IsDelete == false));
+                            persData.Add(db.PersData.FirstOrDefault(x => x.Main == true && x.Lic == lic && x.IsDelete != true && x.SendingElectronicReceipt.Contains("Да")));
                         }
                 }
                 var Recept = _pdfFactory.CreatePdf(PdfType.Personal);
@@ -97,7 +97,7 @@ namespace BL.Jobs
                         if (string.IsNullOrEmpty(Items.Email))
                             throw new Exception("Пустой Email");
                         _notificationMail.SendMailReceipt(Items.Lic, Items.Email);
-                        receiptNotSend.Add(new ReceiptNotSend { FullLic = Items.Lic, Comment = "Отправлена квитанция" });
+                        receiptNotSend.Add(new ReceiptNotSend { FullLic = Items.Lic, Comment = "Отправлена квитанция", Email = Items.Email });
                     }
                     catch(Exception ex)
                     {

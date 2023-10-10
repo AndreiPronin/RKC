@@ -75,6 +75,7 @@
     <Compile Include="DPU\SerachAutoCompleteModel.cs" />
     <Compile Include="JobManager\EnumJob.cs" />
     <Compile Include="JobManager\MailNotSend.cs" />
+    <Compile Include="JobManager\SendReceiptLic.cs" />
     <Compile Include="MkdInformation\AddressMKD.cs" />
     <Compile Include="MkdInformation\AddressReadings.cs" />
     <Compile Include="MkdInformation\HistoryOdpuModel.cs" />

@@ -25,6 +25,7 @@
         $('#Text').autocomplete({
             delay: 500,
             source: function (request, response) {
+                $(".loader").removeClass("hidden");
                 $.ajax({
                     url: "/DPU/SearchAutocompleteDpu?Text=" + $('#Text').val(), type: "Get", dataType: "json",
                     //original code
@@ -34,6 +35,7 @@
                     data: { id: request.term },
 
                     success: function (data) {
+                        $(".loader").addClass("hidden");
                         response($.map(data, function (item) {
                             //original code
                             //return { label: item.FullName, value: item.FullName, id: item.TagId };
@@ -45,6 +47,7 @@
                         }));
                     },
                 });
+                
             },
             select: function (event, ui) {
                 $(".loader").removeClass("hidden");

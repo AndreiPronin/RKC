@@ -2,10 +2,32 @@
 @{
     ViewBag.Title = "AdminPanel";
 }
-
+<input type="button" class="btn btn-primary" onclick="history.back();" value="Назад" />
 <h2>Панель Администратор</h2>
 
 <div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("UploadFileCourtCase", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
+            {
+                <div style="margin-top:30px;" class="row">
+                    <div class="col-md-4">
+                        <select name="TypeLoad" id="TypeLoad" class="form-control">
+                            <option value="1">Откртие испольнительного производства</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Выберите справочник:</label>
         <div class="col-sm-12">
@@ -17,15 +39,15 @@
                 }
             </select>
         </div>
-        <label class="col-sm-12 col-form-label">Добавление справочника:</label>
-        <div class="col-sm-12">
-            <div class="input-group">
-                <input class="form-control" id="NewDic" value="" placeholder="Введите значение..." />
-                <span class="input-group-btn">
-                    <button id="AddNewDic" class="btn btn-success">Добавить</button>
-                </span>
-            </div>
-        </div>
+        @*<label class="col-sm-12 col-form-label">Добавление справочника:</label>
+            <div class="col-sm-12">
+                <div class="input-group">
+                    <input class="form-control" id="NewDic" value="" placeholder="Введите значение..." />
+                    <span class="input-group-btn">
+                        <button id="AddNewDic" class="btn btn-success">Добавить</button>
+                    </span>
+                </div>
+            </div>*@
     </div>
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Добавление к выбранному справочнику:</label>
@@ -37,22 +59,6 @@
                 </span>
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        @using (Html.BeginForm("UploadFileCourtCase", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
-            {
-                <div style="margin-top:30px;" class="row">
-                    <div class="col-md-8">
-                        @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
-                    </div>
-                </div>
-            }
-        }
     </div>
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Значения справочника:</label>

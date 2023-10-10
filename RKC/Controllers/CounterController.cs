@@ -91,6 +91,7 @@ namespace RKC.Controllers
                 var Result = _counter.DetailInfroms(FULL_LIC);
                 ViewBag.ZAK = _baseService.GetStatusCloseOpenLic(FULL_LIC);
                 ViewBag.DIMENSION = await _dictionary.GetDIMENSION();
+                ViewBag.LockAddPu = ViewBag.IsLock;
                 if (ViewBag.IsLock == true && ViewBag.User == null) 
                     ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
                 if (Result.Count() > 0)
@@ -145,6 +146,8 @@ namespace RKC.Controllers
         {
             try
             {
+                if(_flagsAction.GetAction(nameof(DetailedInformIPU)))
+                    return Redirect("home/ResultEmpty?Message=Невозможно добавить ИПУ программа заблокирована");
                 if (string.IsNullOrEmpty(modelAddPU.FULL_LIC) || modelAddPU.FULL_LIC == "undefined")
                 {
                     throw new Exception("Не найден лицевой счет, обратитесь к администратору");
@@ -359,6 +362,14 @@ namespace RKC.Controllers
                 if (typeFile.Equals(TypeFile.EbdFlatNotliving))
                 {
                     return File(_ebd.CreateEbdFlatNotliving(dateTime.Value), "application/octet-stream", $"{TypeFile.EbdFlatNotliving.GetDescription()}.xml");
+                }
+                if (typeFile.Equals(TypeFile.DirectFlat))
+                {
+                    return File(_ebd.CreateDirectFlat(), "application/octet-stream", $"{TypeFile.DirectFlat.GetDescription()}.xml");
+                }
+                if (typeFile.Equals(TypeFile.DirectMkd))
+                {
+                    return File(_ebd.CreateDirectMkd(), "application/octet-stream", $"{TypeFile.DirectMkd.GetDescription()}.xml");
                 }
                 if (typeFile.Equals(TypeFile.Counters))
                 {

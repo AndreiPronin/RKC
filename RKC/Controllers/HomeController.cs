@@ -22,6 +22,11 @@ using System.Web.Mvc;
 using WordGenerator;
 using WordGenerator.Enums;
 using BL.Helper;
+using Microsoft.AspNet.Identity;
+using RKC.Extensions;
+using System.Security.Principal;
+using System.Net.Http;
+using System.Web.Http.Results;
 
 namespace RKC.Controllers
 {
@@ -29,17 +34,31 @@ namespace RKC.Controllers
     public class HomeController : Controller
     {
         private readonly IEBD _eBD;
-        public HomeController(IEBD eBD)
+        private readonly ICacheApp _cacheApp;
+        public HomeController(IEBD eBD, ICacheApp cacheApp)
         {
             _eBD = eBD;
+            _cacheApp = cacheApp;
             //var rrr = Parser.PdfParser();
         }
         public ActionResult Index()
         {
             var sss = User.Identity.IsAuthenticated;
+           
             //_eBD.CreateEbdFlatliving(DateTime.Now);
             var res = new GetConfigurationManager().GetAppSettings("").GetInt();
             return View();
+        }
+        [Auth]
+        public ActionResult IndexUnLock()
+        {
+            if (User != null)
+            {
+                var userName = User.Identity.Name;
+                if (!string.IsNullOrEmpty(userName))
+                    _cacheApp.Delete(userName);
+            }
+            return Redirect("Index");
         }
         public ActionResult ResultEmpty(string Message)
         {
@@ -58,6 +77,15 @@ namespace RKC.Controllers
         public ActionResult AccessDenied()
         {
             return View();
+        }
+        public bool CheckNewRole(string UserName)
+        {
+            var user = _cacheApp.GetValue(UserName);
+            if (!string.IsNullOrEmpty(user))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

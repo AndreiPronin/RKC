@@ -49,6 +49,9 @@
     <div class="progress-bar" id="ResultRunReadingIntegration" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 </div>
 <script>
+    set_onbeforeunload = function () {
+        return true;
+    };
     $(document).ready(function (e) {
         $("#RunReadingIntegration").click(function () {
             $("#RunReadingIntegration").addClass("disabled");
@@ -56,6 +59,7 @@
                 url: '/Counter/RunIntegration?Date=' + $("#DateRunReadingIntegration").val(),
                 success: function (data) {
                     alert('Интеграция завершена');
+                    window.onbeforeunload = null;
                     window.location.reload();
                 },
                 error: function () {
@@ -68,6 +72,7 @@
         ///Обновление показаний
         $("#RunReadingIntegration").click(function (e) {
             $("#ResultRunReadingIntegration").parent().removeClass("hidden");
+            window.onbeforeunload = set_onbeforeunload;
             var intervalID = setInterval(function () {
                 $.ajax({
                     url: '/Counter/GetProgress?Name=Integration',
@@ -81,11 +86,12 @@
                 // Добавляем ноль в начало цифры, которые до 10
                 $("#ResultRunReadingIntegration").css('width', i + '%');
                 $("#ResultRunReadingIntegration").text(i + '%');
-                if (i >= 99) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
+                if (i >= 99) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); window.onbeforeunload = null; }
             }, 3000);
         })
         $("#UploadFilePU").click(function (e) {
             $("#ResultRunReadingIntegration").parent().removeClass("hidden");
+            window.onbeforeunload = set_onbeforeunload;
             var Cashe = $('#User').val();
             var intervalID = setInterval(function () {
                 $.ajax({
@@ -100,7 +106,7 @@
                 // Добавляем ноль в начало цифры, которые до 10
                 $("#ResultRunReadingIntegration").css('width', i + '%');
                 $("#ResultRunReadingIntegration").text(i + '%');
-                if (i === 100) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); }
+                if (i === 100) { clearInterval(intervalID); $("#ResultRunReadingIntegration").parent().addClass("hidden"); window.onbeforeunload = null; }
             }, 3000);
         })
     });

@@ -242,6 +242,26 @@
             // Добавляем ноль в начало цифры, которые до 10
             $("#hours").html((hours < 10 ? "0" : "") + hours);
         }, 1000);
+        @{var UserName = User?.Identity?.Name;}
+        setInterval(function () {
+            $.ajax({
+                url: '/Home/CheckNewRole?UserName=@UserName',
+                success: function (data) {
+                    console.log(data)
+                    if (data == 'True') {
+                        $.ajax({
+                            type:'POST',
+                            url: '/Account/LogOff',
+                            success: function (datas) {
+                            }
+                          });
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }, 5000);
     });
 </script>
 </html>

@@ -6,39 +6,7 @@
 <h2>Панель Администратор</h2>
 
 <div class="row">
-    <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">Выберите справочник:</label>
-        <div class="col-sm-12">
-            <select id="Dictionary" class="form-control">
-                <option value="" selected disabled hidden>Справочник</option>
-                @foreach (var Item in ViewBag.Dic)
-                {
-                    <option value="@Item.Id">@Item.Name</option>
-                }
-            </select>
-        </div>
-        <label class="col-sm-12 col-form-label">Добавление справочника:</label>
-        <div class="col-sm-12">
-            <div class="input-group">
-                <input class="form-control" id="NewDic" value="" placeholder="Введите значение..." />
-                <span class="input-group-btn">
-                    <button id="AddNewDic" class="btn btn-success">Добавить</button>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">Добавление к выбранному справочнику:</label>
-        <div class="col-sm-12">
-            <div class="input-group">
-                <input class="form-control" id="DicValue" value="" placeholder="Введите значение..." />
-                <span class="input-group-btn">
-                    <button id="AddDicValue" class="btn btn-success">Добавить</button>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-12">
         @using (Html.BeginForm("UploadFileCourtCase", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
@@ -58,6 +26,39 @@
                 </div>
             }
         }
+    </div>
+
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Выберите справочник:</label>
+        <div class="col-sm-12">
+            <select id="Dictionary" class="form-control">
+                <option value="" selected disabled hidden>Справочник</option>
+                @foreach (var Item in ViewBag.Dic)
+                {
+                    <option value="@Item.Id">@Item.Name</option>
+                }
+            </select>
+        </div>
+        @*<label class="col-sm-12 col-form-label">Добавление справочника:</label>
+            <div class="col-sm-12">
+                <div class="input-group">
+                    <input class="form-control" id="NewDic" value="" placeholder="Введите значение..." />
+                    <span class="input-group-btn">
+                        <button id="AddNewDic" class="btn btn-success">Добавить</button>
+                    </span>
+                </div>
+            </div>*@
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Добавление к выбранному справочнику:</label>
+        <div class="col-sm-12">
+            <div class="input-group">
+                <input class="form-control" id="DicValue" value="" placeholder="Введите значение..." />
+                <span class="input-group-btn">
+                    <button id="AddDicValue" class="btn btn-success">Добавить</button>
+                </span>
+            </div>
+        </div>
     </div>
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Значения справочника:</label>

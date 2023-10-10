@@ -18,7 +18,7 @@
             <button id="CloseLock" name="@Model.FirstOrDefault().FULL_LIC" class="btn btn-success">Закрыть страницу</button>
             @if (!ViewBag.isLock)
             {
-                if (ViewBag.ZAK != true)
+                if (ViewBag.ZAK != true && ViewBag.LockAddPu != true)
                 {
                     <input type="button" name="@Model.FirstOrDefault().FULL_LIC"  class="btn btn-primary AddPU"
                            value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />

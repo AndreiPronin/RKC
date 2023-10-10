@@ -14,10 +14,11 @@ namespace AppCache
         bool AddProgress(string name, string value);
         void UpdateProgress(string name, string value);
         string GetValueProgress(string Name);
-        string GetValue(string Url);
+        string GetValue(string Key);
         T GetValue<T>(string Key);
         void SetValue<T>(string Key, T value);
         bool Add(string name, string Url);
+        bool AddInfinity(string Key, string value);
         bool AddLock30Minute(string name, string Method);
         bool Lock(string name, string Url);
         void Update(string name, string Url);
@@ -169,6 +170,11 @@ namespace AppCache
         {
             MemoryCache memoryCache = MemoryCache.Default;
             return memoryCache.Add(Url, name, DateTime.Now.AddMinutes(10));
+        }
+        public bool AddInfinity(string Key, string value)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            return memoryCache.Add(Key, value, DateTime.Now.AddDays(365));
         }
 
         public void Update(string key,string value)

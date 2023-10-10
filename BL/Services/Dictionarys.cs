@@ -19,6 +19,7 @@ namespace BL.Services
         Task<List<string>> GetCourtNameDictionaries(string Text, int Id);
         Task<List<CourtNameDictionary>> GetAllCourtNameDictionaries();
         Task<List<CourtValueDictionary>> GetCourtValueDictionaryId(int Id);
+        Task<List<CourtNameDictionary>> GetCourtDictionaries();
         List<FlatTypeDto> GetFlatType();
     }
     public class Dictionarys : IDictionary
@@ -55,6 +56,14 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var Result = await db.CourtNameDictionaries.ToListAsync();
+                return Result;
+            }
+        }
+        public async Task<List<CourtNameDictionary>> GetCourtDictionaries()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var Result = await db.CourtNameDictionaries.Include(x=>x.CourtValueDictionaries).ToListAsync();
                 return Result;
             }
         }

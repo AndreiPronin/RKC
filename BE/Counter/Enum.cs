@@ -65,6 +65,10 @@ namespace BE.Counter
         EbdFlatliving = 9,
         [Description("EBD FLAT нжп")]
         EbdFlatNotliving = 10,
+        [Description("EBD FLAT")]
+        DirectFlat = 11,
+        [Description("EBD MKD")]
+        DirectMkd = 12,
     }
     public enum ErrorIntegration
     {

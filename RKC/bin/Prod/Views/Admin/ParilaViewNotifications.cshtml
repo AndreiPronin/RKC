@@ -52,8 +52,14 @@
             });
         })
         $("#SendReceiptLicSend").click(function (e) {
+            console.log($("#SendReceiptLic").val());
             $.ajax({
-                url: '/api/SendReceiptLic?FullLic=' + $("#SendReceiptLic").val(),
+                url: '/api/SendReceiptLic',
+                type: 'POST',
+                data: JSON.stringify({
+                        FullLic: $("#SendReceiptLic").val()
+                }),
+                contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     alert("Все отправлено");
                 },

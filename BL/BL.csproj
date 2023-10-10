@@ -74,6 +74,7 @@
     <Compile Include="Jobs\EmailScheduler.cs" />
     <Compile Include="Jobs\EmailSender.cs" />
     <Compile Include="Jobs\JobManager.cs" />
+    <Compile Include="Jobs\JobSendReceipt.cs" />
     <Compile Include="MapperProfile\CourtProfile.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Notification\NotificationMail.cs" />

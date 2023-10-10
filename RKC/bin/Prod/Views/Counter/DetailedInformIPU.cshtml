@@ -18,7 +18,7 @@
             <button id="CloseLock" name="@Model.FirstOrDefault().FULL_LIC" class="btn btn-success">Закрыть страницу</button>
             @if (!ViewBag.isLock)
             {
-                if (ViewBag.ZAK != true)
+                if (ViewBag.ZAK != true && ViewBag.LockAddPu != true)
                 {
                     <input type="button" name="@Model.FirstOrDefault().FULL_LIC"  class="btn btn-primary AddPU"
                            value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
@@ -58,7 +58,8 @@
                     {
                         if (Item.TypePu == Items.TYPE_PU)
                         {
-                            <p class="NullOrEmpty">Ошибка интеграции начальный @Item.InitialReadings конечные @Item.EndReadings текущие @Item.NowReadings </p>
+                            <p class="NullOrEmpty">Ошибка интеграции начальный @Item.InitialReadings конечные @Item.EndReadings текущие @Item.NowReadings <br />
+                                    @Item.Description</p>
                         }
                     }
 
@@ -569,7 +570,7 @@
 
                     @if (!ViewBag.isLock)
                     {
-                        <input type="button" name="@Items.FULL_LIC-@TypePU" class="btn btn-primary Archive" value="История показания" data-toggle="modal" data-target="#ArchiveModal" />
+                        <input type="button" name="@Items.FULL_LIC-@TypePU" class="btn btn-primary Archive" value="История расчётов ИПУ" data-toggle="modal" data-target="#ArchiveModal" />
                         <input type="button" value="Сохранить" class="btn btn-danger hidden  Save" />
                         <input type="button" name="@Items.ID_PU" value="Редактировать" class="btn btn-success Edit" />
                         <input type="button" name="@Items.ID_PU" value="Убрать ошибку" class="btn btn-success DeleteError hidden" />
@@ -579,7 +580,7 @@
                     }
                     else
                     {
-                        <input type="button" name="@Items.FULL_LIC-@TypePU" class="btn btn-primary Archive" value="История показания" data-toggle="modal" data-target="#ArchiveModal" />
+                        <input type="button" name="@Items.FULL_LIC-@TypePU" class="btn btn-primary Archive" value="История расчётов ИПУ" data-toggle="modal" data-target="#ArchiveModal" />
                         <input type="button" name="@Items.ID_PU" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
                         if (!string.IsNullOrEmpty(ViewBag.User))
                         {

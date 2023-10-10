@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AppCache;
 using BL.Helper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -21,10 +22,13 @@ namespace RKC.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IFlagsAction flagsAction;
+        private readonly ICacheApp _cacheApp;
 
-        public AccountController(IFlagsAction _flagsAction)
+        public AccountController(IFlagsAction _flagsAction, ICacheApp cacheApp)
         {
             flagsAction = _flagsAction;
+            _cacheApp = cacheApp;
+            
         }
         
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -440,6 +444,12 @@ namespace RKC.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            if (User != null)
+            {
+                var userName = User.Identity.Name;
+                if (!string.IsNullOrEmpty(userName))
+                    _cacheApp.Delete(userName);
+            }
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
          
             return RedirectToAction("Index", "Home");
@@ -499,7 +509,7 @@ namespace RKC.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("index", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

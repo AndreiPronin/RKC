@@ -17,6 +17,7 @@ using System.Web.Mvc;
 
 namespace RKC.Controllers
 {
+    [Auth]
     public class ReportController : Controller
     {
         private readonly IReport _report;

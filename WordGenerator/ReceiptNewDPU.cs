@@ -84,7 +84,7 @@ namespace WordGenerator
   false, false, false, false);
                         doc.Content.Find.Execute("{Sobs}", false, true, false, false, false, true, 1, false, $@"{Lic.Sobs}", 2,
   false, false, false, false);
-                        doc.Content.Find.Execute("{OneTimePayment}", false, true, false, false, false, true, 1, false, $@"{Lic.ShareInCommonOwnership}", 2,
+                        doc.Content.Find.Execute("{OneTimePayment}", false, true, false, false, false, true, 1, false, $@"{Lic.OneTimePayment}", 2,
  false, false, false, false);
                         doc.Content.Find.Execute("{TotalCostOdpuResidentialPremises}", false, true, false, false, false, true, 1, false, $@"{Lic.TotalCostOdpuResidentialPremises}", 2,
  false, false, false, false);
@@ -92,7 +92,7 @@ namespace WordGenerator
  false, false, false, false);
                         doc.Content.Find.Execute("{ShareInCommonOwnership}", false, true, false, false, false, true, 1, false, $@"{Lic.ShareInCommonOwnership}", 2,
 false, false, false, false);
-                        doc.Content.Find.Execute("{Premises}", false, true, false, false, false, true, 1, false, $@"{Lic.TotalCostOdpuNonResidentialPremises}", 2,
+                        doc.Content.Find.Execute("{Premises}", false, true, false, false, false, true, 1, false, $@"{Lic.TotalCostOdpuResidentialPremises}", 2,
 false, false, false, false);
                         var SaldoSumm = Lic.SaldoEndPeriodDebt + Lic.SaldoEndPeriodPercentage;
                         SaldoSumm = SaldoSumm.HasValue ? Math.Round(SaldoSumm.Value,2) : SaldoSumm;
