@@ -43,5 +43,22 @@ namespace BL.Excel
                 }
             }
         }
+        public static int Generate(List<List<object>> lists, IXLWorksheet worksheet)
+        {
+            var lasObj = lists.FirstOrDefault();
+            int i = 2;
+            int z = 1;
+            foreach (var Items in lists)
+            {
+                z = 1;
+                foreach (var Item in Items)
+                {
+                    worksheet.SetValue(i, z, Item);
+                    z++;
+                }
+                i++;
+            }
+            return i;
+        }
     }
 }

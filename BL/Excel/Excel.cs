@@ -11,8 +11,10 @@ using DB.ViewModel;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -37,6 +39,8 @@ namespace BL.Excel
         DataTable TIpuGvs(string User, ICacheApp cacheApp);
         DataTable TIpuOtp(string User, ICacheApp cacheApp);
         DataTable LoadExcelUpdatePersonalDataMainFio(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        XLWorkbook SummaryReportGVS(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        XLWorkbook SummaryReportOTP(XLWorkbook Excels, string User, ICacheApp cacheApp);
     }
     public class Excel:IExcel
     {
@@ -44,12 +48,14 @@ namespace BL.Excel
         private readonly IGeneratorDescriptons _generatorDescriptons;
         private readonly Ilogger _logger;
         private readonly IDictionary _dictionary;
-        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, IDictionary dictionary)
+        private readonly IReport _report;
+        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, IDictionary dictionary,IReport report)
         {
             _cacheApp = cacheApp;
             _generatorDescriptons = generatorDescriptons;
             _logger = logger;
             _dictionary = dictionary;
+            _report = report;
         }
         public DataTable CreateExcelCounters()
         {
@@ -723,6 +729,118 @@ namespace BL.Excel
                 }
             }
             return dt;
+        }
+
+        public XLWorkbook SummaryReportGVS(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            var worksheet = Excels.Worksheets.Add("Лист1");
+            worksheet.MergeAndValue(1, 2, 1, 4, $"Адрес");
+            worksheet.MergeAndValue(1, 14, 1, 20, $"ИПУ1");
+            worksheet.MergeAndValue(1, 21, 1, 27, $"ИПУ2");
+            worksheet.MergeAndValue(1, 28, 1, 29, $"Величина начисления");
+            worksheet.Row(2).Height = 42.5;
+            worksheet.Cell(2, 32).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            worksheet.Cell(1, 32).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            List<List<object>> lists = new List<List<object>>();
+            var ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(BL.Excel.SqlQuery.Report.GVSReport, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    bool trigger = true;
+                    var listObg = new List<object>();
+                    while (reader.Read())
+                    {
+                        if (trigger)
+                        {
+                            for (int i = 0; i <= reader.FieldCount - 1; i++)
+                            {
+                                listObg.Add(reader.GetName(i));
+                            }
+                            lists.Add(listObg);
+                        }
+                        listObg = new List<object>();
+                        for (int i = 0; i <= reader.FieldCount - 1; i++)
+                        {
+                            listObg.Add(reader[i]);
+                        }
+                        lists.Add(listObg);
+                        trigger = false;
+                    }
+                    reader.Close();
+                    var rowUse =  ExcelReport.Generate(lists,worksheet);
+                    var rngTable = worksheet.Range("A1:AF" + rowUse);
+                    rngTable.Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                    rngTable.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            
+            worksheet.Columns().AdjustToContents();
+            return Excels;
+        }
+
+        public XLWorkbook SummaryReportOTP(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            var worksheet = Excels.Worksheets.Add("Лист1");
+            worksheet.MergeAndValue(1, 2, 1, 4, $"Адрес");
+            worksheet.MergeAndValue(1, 14, 1, 20, $"ИПУ1");
+            worksheet.MergeAndValue(1, 21, 1, 27, $"ИПУ2");
+            worksheet.MergeAndValue(1, 28, 1, 29, $"Величина начисления");
+            worksheet.Row(2).Height = 42.5;
+            worksheet.Cell(2, 32).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            worksheet.Cell(1, 32).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            List<List<object>> lists = new List<List<object>>();
+            var ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(BL.Excel.SqlQuery.Report.OTPReport, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    bool trigger = true;
+                    var listObg = new List<object>();
+                    while (reader.Read())
+                    {
+                        if (trigger)
+                        {
+                            for (int i = 0; i <= reader.FieldCount - 1; i++)
+                            {
+                                listObg.Add(reader.GetName(i));
+                            }
+                            lists.Add(listObg);
+                        }
+                        listObg = new List<object>();
+                        for (int i = 0; i <= reader.FieldCount - 1; i++)
+                        {
+                            listObg.Add(reader[i]);
+                        }
+                        lists.Add(listObg);
+                        trigger = false;
+                    }
+                    reader.Close();
+                    var rowUse = ExcelReport.Generate(lists, worksheet);
+                    var rngTable = worksheet.Range("A1:AF" + rowUse);
+                    rngTable.Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                    rngTable.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+
+            worksheet.Columns().AdjustToContents();
+            return Excels;
         }
     }
 }

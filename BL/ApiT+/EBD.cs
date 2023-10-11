@@ -160,7 +160,7 @@ namespace BL.ApiT_
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEbdMkd));
                 using (var db = new DbTPlus())
                 {
-                    List<MKD> Mkd_ = db.Database.SqlQuery<MKD>($"SELECT * FROM [dbo].[DirectMkd]").ToList();
+                    List<DirectMkd> Mkd_ = db.Database.SqlQuery<DirectMkd>($"SELECT * FROM [dbo].[DirectMkd]").ToList();
                     var Data = Mkd_.ToList();
                     #region
                     Parallel.ForEach(Data, Item =>
@@ -244,7 +244,7 @@ namespace BL.ApiT_
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEBDAll));
                 using (var db = new DbTPlus())
                 {
-                    List<FLAT> flat_ = db.Database.SqlQuery<FLAT>($"SELECT * FROM [dbo].[EBD_FLAT]").ToList();
+                    List<DirectFlat> flat_ = db.Database.SqlQuery<DirectFlat>($"SELECT * FROM [dbo].[DirectFlat]").ToList();
                     var Data = flat_.ToList();
                     var ListError = new List<string>();
                     var patern = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
@@ -259,7 +259,7 @@ namespace BL.ApiT_
                             obj.object_id = $@"RBR{Item.objectId.Replace("", "").Trim()}";
                             obj.parent_id = $@"RBR{Item.parentId.ToString().Replace("", "").Trim()}";
                             obj.object_disable = Item.object_disable.ToLower().Contains("да") ? "true" : "false";
-                            obj.CadastralNumber = Item.CadstraNumber?.ToString().Replace("", "").Trim();
+                            obj.CadastralNumber = Item.cadastralNumber?.ToString().Replace("", "").Trim();
                             obj.fias = string.IsNullOrEmpty(Item.fias) ? "" : Regex.IsMatch(Item.fias, patern) ? Item.fias.Replace("", "").Trim() : "";
                             //obj.guid_enrgblng = "";
                             //obj.vid_blgu = "";

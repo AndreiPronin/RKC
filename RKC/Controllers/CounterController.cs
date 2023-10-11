@@ -395,6 +395,24 @@ namespace RKC.Controllers
                 {
                     wb.Worksheets.Add(_excel.TIpuGvs(User.Identity.Name, _cacheApp));
                 }
+                if (typeFile.Equals(TypeFile.SummaryReportOTP))
+                {
+                    var result = _excel.SummaryReportOTP(wb, User.Identity.Name, _cacheApp);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        result.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", GetDescriptionEnum.GetDescription(typeFile) + ".xlsx");
+                    }
+                }
+                if (typeFile.Equals(TypeFile.SummaryReportGVS))
+                {
+                    var result = _excel.SummaryReportGVS(wb, User.Identity.Name, _cacheApp);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        result.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", GetDescriptionEnum.GetDescription(typeFile) + ".xlsx");
+                    }
+                }
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);

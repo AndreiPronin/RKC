@@ -91,7 +91,7 @@
         })
         $("#UploadFilePU").click(function (e) {
             $("#ResultRunReadingIntegration").parent().removeClass("hidden");
-            window.onbeforeunload = set_onbeforeunload;
+            //window.onbeforeunload = set_onbeforeunload;
             var Cashe = $('#User').val();
             var intervalID = setInterval(function () {
                 $.ajax({

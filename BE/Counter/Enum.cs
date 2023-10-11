@@ -69,6 +69,10 @@ namespace BE.Counter
         DirectFlat = 11,
         [Description("EBD MKD")]
         DirectMkd = 12,
+        [Description("Сводный отчёт ОТП")]
+        SummaryReportOTP = 13,
+        [Description("Сводный отчёт ГВС")]
+        SummaryReportGVS = 14,
     }
     public enum ErrorIntegration
     {

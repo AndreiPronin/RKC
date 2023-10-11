@@ -24,7 +24,6 @@ using AppCache;
 
 namespace RKC.Controllers
 {
-    [Auth(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ISecurityProvider _securityProvider;

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ApiT+\EBD.cs" />
     <Compile Include="Excel\ExcelCourt.cs" />
+    <Compile Include="Excel\SqlQuery\Report.cs" />
     <Compile Include="Extention\ArrayExtention.cs" />
     <Compile Include="Extention\BaseExcelExtenstion.cs" />
     <Compile Include="Excel\ExaminationToExcel.cs" />
