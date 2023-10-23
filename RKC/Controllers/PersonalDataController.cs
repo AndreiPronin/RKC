@@ -119,6 +119,13 @@ namespace RKC.Controllers
             var Result = _personalData.GetInfoPersData(FullLic);
             return PartialView(Result);
         }
+        [Auth(Roles = RolesEnums.ShowNoteLic)]
+        [HttpGet]
+        public ActionResult GetNoteAllLic(string FullLic)
+        {
+            var Result = _personalData.GetNoteAllLic(FullLic);
+            return PartialView(Result);
+        }
         [HttpGet]
         public async Task<ActionResult> WatchHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {

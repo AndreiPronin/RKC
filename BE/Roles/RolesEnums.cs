@@ -43,5 +43,7 @@ namespace BE.Roles
         public const string CourtAdmin = "CourtAdmin";
         [Description("MkdReader")]
         public const string MkdReader = "MkdReader";
+        [Description("ShowNoteLic")]
+        public const string ShowNoteLic = "ShowNoteLic";
     }
 }

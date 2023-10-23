@@ -692,6 +692,7 @@
     <Content Include="Views\Court\PartialViewLitigationWorkRequisites.cshtml" />
     <Content Include="Views\Home\AccessDenied.cshtml" />
     <Content Include="Template\Образец квитанции DPUNew.docx" />
+    <Content Include="Views\PersonalData\GetNoteAllLic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

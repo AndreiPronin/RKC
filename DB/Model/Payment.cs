@@ -27,7 +27,6 @@ namespace DB.Model
         public int? bank_id { get; set; }
         public string elic { get; set; }
         public string igku { get; set; }
-        public DateTime? dt_create { get; set; }
         public DateTime? payment_date_day { get; set; }
         public int? log_upload_file_id { get; set; }
         public int? period_id { get; set; }

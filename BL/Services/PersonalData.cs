@@ -23,6 +23,7 @@ namespace BL.Services
         StateCalculation GetStateCalculation(string FullLic);
         List<PersData> GetInfoPersData(string FullLic);
         List<PersData> GetInfoPersDataDelete(string FullLic);
+        ALL_LICS GetNoteAllLic(string FullLic);
         string SaveFile(byte[] file, int idPersData, string Fio, string Lic, string TypeFile, string NameFile, string User);
         PersDataDocumentLoad DownLoadFile(int Id);
         Task<List<HelpCalculationsModel>> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo);
@@ -131,6 +132,23 @@ namespace BL.Services
                 try
                 {
                     var Res = db.PersData.Where(x => x.Lic == FullLic && (x.IsDelete == false || x.IsDelete == null)).Include("PersDataDocument").OrderByDescending(x => x.Main).ToList();
+                    return Res;
+                }
+                catch (Exception ex)
+                {
+                    var res = ex.InnerException.Message;
+                    return null;
+                }
+
+            }
+        }
+        public ALL_LICS GetNoteAllLic(string FullLic)
+        {
+            using (var db = new DbLIC())
+            {
+                try
+                {
+                    var Res = db.ALL_LICS.FirstOrDefault(x => x.F4ENUMELS == FullLic);
                     return Res;
                 }
                 catch (Exception ex)
