@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using BE.Roles;
 using BL.Counters;
 using WordGenerator.Enums;
+using DB.Model;
 
 namespace RKC.Controllers
 {
@@ -193,6 +194,37 @@ namespace RKC.Controllers
             }
             outputStream.Position = 0;
             return File(outputStream, "application/zip", "Квитанция.zip");
+        }
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.DownLoadReceipt)]
+        [HttpGet]
+        public ActionResult ShwoReceipt(string FullLic, DateTime DateStart, DateTime DateEnd)
+        {
+            List<string> Content = new List<string>();
+            if (DateStart == DateEnd)
+            {
+                try
+                {
+
+                    Content.Add(_pdfFactory.CreatePdf(PdfType.Personal).GenerateHtml(FullLic, DateEnd));
+                }
+                catch (Exception ex)
+                {
+                    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
+                }
+            }
+            while (DateStart >= DateEnd)
+            {
+                try
+                {
+                    Content.Add(_pdfFactory.CreatePdf(PdfType.Personal).GenerateHtml(FullLic, DateEnd));
+                }
+                catch (Exception ex)
+                {
+
+                }
+                DateEnd = DateEnd.AddMonths(1);
+            }
+            return View(Content);
         }
         [HttpGet]
         [Auth(Roles = RolesEnums.Admin + ","+ RolesEnums.SuperAdmin)]

@@ -408,7 +408,10 @@ namespace BL.Service
         {
             using (var db = new ApplicationDbContext())
             {
-                return db.IntegrationReadings.Where(x=>x.IsError == true).ToList();
+                return db.IntegrationReadings.Where(x=>x.IsError == true
+                 && !x.Description.Contains("Показания ИПУ меньше предыдущего")
+                && !x.Description.Contains("Закончился срок поверки")
+                && !x.Description.Contains("Прибор учета закрыт")).ToList();
             }
         }
         public List<IntegrationReadings> GetErrorIntegrationReadings(string FullLic)

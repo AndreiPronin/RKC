@@ -127,7 +127,6 @@ namespace BL.Services
             {
                 using (var DbLIC = new DbLIC())
                 {
-
                     ALL_LICS aLL_LICS = await DbLIC.ALL_LICS.Where(x => x.F4ENUMELS == saveModelIPU.FULL_LIC).FirstOrDefaultAsync();
                     if (saveModelIPU.OVERWRITE_SEAL)
                     {

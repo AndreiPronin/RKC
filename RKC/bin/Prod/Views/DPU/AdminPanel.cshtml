@@ -1,23 +1,26 @@
 ﻿<div style="margin-top:15px">
-    @using (Html.BeginForm("UploadFilePU", "DPU", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @if (User.IsInRole(BE.Roles.RolesEnums.DPUAdmin))
     {
-        if (User.IsInRole("Admin"))
-        {
-            <div style="margin-top:30px;" class="row">
-                <div class="col-md-4">
-                    @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
-                </div>
-                <div class="col-md-6">
-                    <select name="TypeLoad" id="TypeLoad" class="form-control">
-                        <option value="1">Установка ДПУ установка</option>
-                        <option value="2">Сумма ДПУ </option>
-                    </select>
-                    @*<input name="Type" id="Type" class="form-control" />*@
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" id="" class="btn btn-success" value="Загрузить" />
-                </div>
+        <div style="margin-top:30px;" class="row">
+            <div class="col-md-12">
+                <button id="SendReceiptAllSend" class="btn btn-success">Запустить массовую рассылку</button>
             </div>
-        }
+        </div>
     }
 </div>
+<script>
+    $(document).ready(function () {
+        $("#SendReceiptAllSend").click(function (e) {
+            $.ajax({
+                url: '/api/ApiJob/4',
+                success: function (data) {
+                    alert("Все отправлено");
+                    window.location.reload();
+                },
+                error: function () {
+                    $("#NotificationsRsult").append("Что то пошло не так. Обратитесь к администратору!");
+                }
+            });
+        })
+    })
+</script>

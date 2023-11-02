@@ -10,5 +10,6 @@ namespace WordGenerator.interfaces
     public interface IPdfGenerate
     {
         PersDataDocumentLoad Generate(string LIC, DateTime date);
+        string GenerateHtml(string LIC, DateTime date);
     }
 }

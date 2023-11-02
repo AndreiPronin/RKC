@@ -12,6 +12,7 @@ using Quartz;
 using System.Net.Mail;
 using System.Net;
 using System.Threading.Tasks;
+using WordGenerator.interfaces;
 
 namespace BL.Jobs
 {
@@ -20,6 +21,7 @@ namespace BL.Jobs
         void CheckDublicatePu();
         void CheckDublicatePers();
         void SendReceipt(string FullLic = "");
+        void SendReceiptDpu(string FullLic = "");
     }
     public class JobManager : IJobManager
     {
@@ -106,6 +108,66 @@ namespace BL.Jobs
                 }
                 if (receiptNotSend.Count() > 0)
                     _notificationMail.SendEmailReceiptNotSend(receiptNotSend);
+            }
+        }
+
+        public void SendReceiptDpu(string FullLic = "")
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                List<ReceiptNotSend> receiptNotSend = new List<ReceiptNotSend>();
+                List<DpuSendByEmailL> persData;
+                if (string.IsNullOrEmpty(FullLic))
+                {
+#if DEBUG
+                    persData = db.Database.SqlQuery<DpuSendByEmailL>($"select * from WEB_APP_Test.dbo.DpuSendByEmailLics('{DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")}')").ToList();
+#else
+                    persData = db.Database.SqlQuery<DpuSendByEmailL>($"select * from WEB_APP.dbo.DpuSendByEmailLics('{DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")}')").ToList();
+#endif
+
+                }
+                else
+                {
+#if DEBUG
+                    var allLic = db.Database.SqlQuery<DpuSendByEmailL>($"select * from WEB_APP_Test.dbo.DpuSendByEmailLics('{DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")}')").ToList();
+#else
+                    var allLic = db.Database.SqlQuery<DpuSendByEmailL>($"select * from WEB_APP.dbo.DpuSendByEmailLics('{DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")}')").ToList();
+#endif
+                    persData = new List<DpuSendByEmailL>();
+                    var Lic = FullLic.Split(';');
+                    for (int i = 0; i < Lic.Length; i++)
+                        if (!string.IsNullOrEmpty(Lic[i].Trim()))
+                        {
+                            var lic = Lic[i].Trim();
+                            persData.Add(allLic.FirstOrDefault(x=>x.NewFullLic == lic));
+                        }
+                }
+              
+                foreach (var Items in persData)
+                {
+                    try
+                    {
+                        IPdfGenerate Recept = null;
+                        if(Items.IsFirstReceipt == false) { 
+                            Recept = _pdfFactory.CreatePdf(PdfType.Dpu);
+                        }
+                        else
+                        {
+                            Recept = _pdfFactory.CreatePdf(PdfType.NewDpu);
+                        }
+                        Recept.Generate(Items.NewFullLic, DateTime.Now.AddMonths(-1));
+                        if (string.IsNullOrEmpty(Items.Email))
+                            throw new Exception("Пустой Email");
+                        _notificationMail.SendMailReceiptDpu(Items.NewFullLic, Items.Email);
+                        receiptNotSend.Add(new ReceiptNotSend { FullLic = Items.NewFullLic, Comment = "Отправлена квитанция", Email = Items.Email });
+                    }
+                    catch (Exception ex)
+                    {
+                        receiptNotSend.Add(new ReceiptNotSend { FullLic = Items.NewFullLic, Comment = ex.Message, Email = Items.Email });
+                    }
+                }
+                if (receiptNotSend.Count() > 0)
+                    _notificationMail.SendEmailReceiptNotSendDpu(receiptNotSend);
             }
         }
     }

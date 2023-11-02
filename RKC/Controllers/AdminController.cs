@@ -21,6 +21,7 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using BE.Roles;
 using AppCache;
+using BE.Counter;
 
 namespace RKC.Controllers
 {
@@ -143,7 +144,12 @@ namespace RKC.Controllers
             using (var db = new ApplicationDbContext())
             {
                 var notification = db.Notifications.Where(x => x.IsDelete == false).ToList();
-                var ErrorIntegration = db.IntegrationReadings.Where(x => x.IsError == true).Select(x => x.IsError).Count();
+                var xxx = BE.Counter.ErrorIntegration.Low.ToString();
+                var ErrorIntegration = db.IntegrationReadings.Where(x => x.IsError == true
+                && !x.Description.Contains("Показания ИПУ меньше предыдущего")
+                && !x.Description.Contains("Закончился срок поверки")
+                && !x.Description.Contains("Прибор учета закрыт")
+                ).Select(x => x.IsError).Count();
                 if (ErrorIntegration > 0)
                 {
                     notification.Add(new Notifications { Description = $"Ошибка показаний {ErrorIntegration} ошибки", Title = "Ошибка показаний ИПУ" });

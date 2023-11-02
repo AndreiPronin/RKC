@@ -206,13 +206,16 @@
                             <button class="btn btn-primary DownLoadHelpСalculation">Справка расчет</button>
                         </div>
                         <div class="col-md-2">
-                            <input type="button" class="btn btn-primary Note" value="Примечания" data-toggle="modal" data-target="#ShowNoteAllicModal" />
+                            @if (User.IsInRole(BE.Roles.RolesEnums.ShowNoteLic))
+                            {
+                                <input type="button" class="btn btn-primary Note" value="Примечания" data-toggle="modal" data-target="#ShowNoteAllicModal" />
+                            }
                         </div>
                         <div class="col-md-2">
                             <button class="btn btn-primary PaymentHistory">История оплат</button>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-primary PaymentHistory">История показаний</button>
+                            <button class="btn btn-primary ReadingsHistory">История показаний</button>
                         </div>
                         <div class="col-md-2">
                             <input type="button" class="btn btn-primary ShowAllDocument" value="Документы" data-toggle="modal" data-target="#ShowAllDocumentModal" />

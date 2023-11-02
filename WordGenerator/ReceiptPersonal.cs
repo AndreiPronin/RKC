@@ -384,6 +384,150 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
 
             }
         }
+        public string GenerateHtml(string LIC, DateTime date)
+        {
+            var Content = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + $@"Template\Образец квитанции.html");
+            using (var db = new DbLIC())
+            {
+                var SubLic = LIC.Substring(3, 6);
+                if (SubLic.StartsWith("0"))
+                {
+                    SubLic = SubLic.Substring(1, 5);
+                    if (SubLic.StartsWith("0"))
+                    {
+                        SubLic = SubLic.Substring(1, 4);
+                        if (SubLic.StartsWith("0"))
+                        {
+                            SubLic = SubLic.Substring(1, 3);
+                        }
+                    }
+                }
+                var Lic = db.KVIT.FirstOrDefault(x => x.lic == SubLic && x.period.Value.Year == date.Year && x.period.Value.Month == date.Month);
+                if (Lic != null)
+                {
+                    Content = Content.Replace("{address}", $@"{Lic.ul.Trim()},дом {Lic.dom.Trim()},кв. {Lic.kw.Trim()}");
+
+                    Content = Content.Replace("{lic}", $"{LIC}");
+                    Content = Content.Replace("{month}", Lic.period.Value.ToString("MMMM,yyyy").Replace(",", " ").ToUpper());
+                    Content = Content.Replace("{fio}", Lic.fio.Trim());
+                    Content = Content.Replace("{sobs}", Lic.sobs?.Trim());
+                    Content = Content.Replace("{kl}", Lic.kl?.Trim());
+                    Content = Content.Replace("{els}", Lic.els?.Trim());
+                    Content = Content.Replace("{igku}", Lic.igku?.Trim());
+                    Content = Content.Replace("{month2}", Lic.period.Value.AddMonths(1).ToString("MMMM,yyyy").Replace(",", " ").ToUpper());
+                    Content = Content.Replace("{sted2}", Lic.sted2?.Trim());
+                    Content = Content.Replace("{sted5}", Lic.sted5?.Trim());
+                    Content = Content.Replace("{sted3}", Lic.sted3?.Trim());
+                    Content = Content.Replace("{koled2}", Lic.koled2?.Trim());
+                    Content = Content.Replace("{koled5}", Lic.koled5?.Trim());
+                    Content = Content.Replace("{koled3}", Lic.koled3?.Trim());
+                    Content = Content.Replace("{koled6}", Lic.koled6?.Trim());
+                    Content = Content.Replace("{koled4}", Lic.koled4?.Trim());
+                    Content = Content.Replace("{sn2}", Lic.sn2?.Trim());
+                    Content = Content.Replace("{sn5}", Lic.sn5?.Trim());
+                    Content = Content.Replace("{sn3}", Lic.sn3?.Trim());
+                    Content = Content.Replace("{sn6}", Lic.sn6?.Trim());
+                    Content = Content.Replace("{sn4}", Lic.sn4?.Trim());
+                    Content = Content.Replace("{sr2}", Lic.sr2?.Trim());
+                    Content = Content.Replace("{sr5}", Lic.sr5?.Trim());
+                    Content = Content.Replace("{sr3}", Lic.sr3?.Trim());
+                    Content = Content.Replace("{sr15}", Lic.sr15?.Trim());
+                    Content = Content.Replace("{sr6}", Lic.sr6?.Trim());
+                    Content = Content.Replace("{sr4}", Lic.sr4?.Trim());
+                    Content = Content.Replace("{it2}", Lic.it2?.Trim());
+                    Content = Content.Replace("{it5}", Lic.it5?.Trim());
+                    Content = Content.Replace("{it3}", Lic.it3?.Trim());
+                    Content = Content.Replace("{it15}", Lic.it15?.Trim());
+                    Content = Content.Replace("{it6}", Lic.it6?.Trim());
+                    Content = Content.Replace("{it4}", Lic.it4?.Trim());
+                    Content = Content.Replace("{u1oplzku}", Lic.u1oplzku?.Trim());
+                    Content = Content.Replace("{u1oplpeny}", Lic.u1oplpeny?.Trim());
+                    Content = Content.Replace("{u1nachzku}", Lic.u1nachzku?.Trim());
+                    Content = Content.Replace("{u1nachpeny}", Lic.u1nachpeny?.Trim());
+                    Content = Content.Replace("{kopl}", Lic.kopl?.Trim());
+                    Content = Content.Replace("{ipuxv1_1}", Lic.ipuxv1_1?.Trim());
+                    Content = Content.Replace("{ipuxv2_1}", Lic.ipuxv2_1?.Trim());
+                    Content = Content.Replace("{ipuxv3_1}", Lic.ipuxv3_1?.Trim());
+                    Content = Content.Replace("{ipuxv4_1}", Lic.ipuxv4_1?.Trim());
+                    var Comment = Substring(Lic.komment?.Trim());
+                    Content = Content.Replace("{komment1}", Comment[0]);
+                    Content = Content.Replace("{komment2}", Comment[1]);
+                    Content = Content.Replace("{komment3}", Comment[2]);
+                    Content = Content.Replace("{komment4}", Comment[3]);
+                    Content = Content.Replace("{ipuxv1_2}", Lic.ipuxv1_2?.Trim());
+                    Content = Content.Replace("{ipuxv2_2}", Lic.ipuxv2_2?.Trim());
+                    Content = Content.Replace("{ipuxv3_2}", Lic.ipuxv3_2?.Trim());
+                    Content = Content.Replace("{ipuxv4_2}", Lic.ipuxv4_2?.Trim());
+                    Content = Content.Replace("{ipuot1_1}", Lic.ipuot1_1?.Trim());
+                    Content = Content.Replace("{ipuot2_1}", Lic.ipuot2_1?.Trim());
+                    Content = Content.Replace("{ipuot3_1}", Lic.ipuot3_1?.Trim());
+                    Content = Content.Replace("{ipuot1_2}", Lic.ipuot1_2?.Trim());
+                    Content = Content.Replace("{ipuot2_2}", Lic.ipuot2_2?.Trim());
+                    Content = Content.Replace("{ipuot3_2}", Lic.ipuot3_2?.Trim());
+                    Content = Content.Replace("{dpuotrasx}", Lic.dpuotrasx?.Trim());
+                    Content = Content.Replace("{dpuXVrasx}", Lic.dpuxvrasx?.Trim());
+                    Content = Content.Replace("{dpuOTsum}", Lic.dpuotsum?.Trim());
+                    Content = Content.Replace("{dpugvsum}", Lic.dpugvsum?.Trim());
+                    Content = Content.Replace("{dpuXVsum}", Lic.dpuxvsum?.Trim());
+                    Content = Content.Replace("{dpuOTnach}", Lic.dpuotnach?.Trim());
+                    Content = Content.Replace("{dpugvnach}", Lic.dpugvnach?.Trim());
+                    Content = Content.Replace("{dpuXVnach}", Lic.dpuxvnach?.Trim());
+                    Content = Content.Replace("{dpuOTnez}", Lic.dpuotnez?.Trim());
+                    Content = Content.Replace("{dpugvnez}", Lic.dpugvnez?.Trim());
+                    Content = Content.Replace("{dpuXVnez}", Lic.dpuxvnez?.Trim());
+                    Content = Content.Replace("{dpuELRASX}", Lic.dpuelrasx?.Trim());
+                    Content = Content.Replace("{dpuELNEZ}", Lic.dpuelnez?.Trim());
+                    Content = Content.Replace("{formula1}", !string.IsNullOrEmpty(Lic.sr15?.Replace(" ", "")) ? "Перерасчет сальдо" : "");
+                    Content = Content.Replace("{formula2}", !string.IsNullOrEmpty(Lic.sr6?.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn6?.Replace(" ", "")) ? "ОДН компонент ХВ" : "");
+                    Content = Content.Replace("{formula3}", !string.IsNullOrEmpty(Lic.sr4?.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn4?.Replace(" ", "")) ? "ОДН компонент ТЭ" : "");
+                    Content = Content.Replace("{formula4}", !string.IsNullOrEmpty(Lic.sr6?.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn6?.Replace(" ", "")) ? "Куб.м." : "");
+                    Content = Content.Replace("{formula5}", !string.IsNullOrEmpty(Lic.sr4?.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn4?.Replace(" ", "")) ? "Гкал" : "");
+                    Content = Content.Replace("{formula6}", !string.IsNullOrEmpty(Lic.sr6?.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn6?.Replace(" ", "")) ? Lic.sted5.Trim() : "");
+                    Content = Content.Replace("{formula7}", !string.IsNullOrEmpty(Lic.sr4?.Replace(" ", "")) || !string.IsNullOrEmpty(Lic.sn4?.Replace(" ", "")) ? Lic.sted3.Trim() : "");
+                    var formula = Math.Round(Convert.ToDouble(Lic.u1dolgzku?.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1oplzku?.Trim().Replace(".", ",")), 2);
+                    Content = Content.Replace("{formula8}", formula.ToString() != "" ? formula.ToString() : "");
+                    formula = Math.Round(Convert.ToDouble(Lic.u1dolgpeny?.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1oplpeny?.Trim().Replace(".", ",")), 2);
+                    Content = Content.Replace("{formula9}", formula.ToString() != "" ? formula.ToString() : "");
+                    formula = Math.Round(Convert.ToDouble(Lic.u1dolgzku?.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1dolgpeny?.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1nachzku?.Trim().Replace(".", ",")) + Convert.ToDouble(Lic.u1nachpeny?.Trim().Replace(".", ",")), 2);
+                    Content = Content.Replace("{formula10}",
+                   formula.ToString() != "" ? formula.ToString() : "");
+                    Content = Content.Replace("{formula11}", !string.IsNullOrEmpty(Lic.ipuxv1_1?.Replace(" ", "")) ? "ГВС1" : "");
+                    Content = Content.Replace("{formula12}", !string.IsNullOrEmpty(Lic.ipuxv2_1?.Replace(" ", "")) ? "ГВС2" : "");
+                    Content = Content.Replace("{formula13}", !string.IsNullOrEmpty(Lic.ipuxv3_1?.Replace(" ", "")) ? "ГВС3" : "");
+                    Content = Content.Replace("{formula14}", !string.IsNullOrEmpty(Lic.ipuxv4_1?.Replace(" ", "")) ? "ГВС4" : "");
+                    Content = Content.Replace("{formula15}", !string.IsNullOrEmpty(Lic.ipuot1_1?.Replace(" ", "")) ? "Отопление1" : "");
+                    Content = Content.Replace("{formula16}", !string.IsNullOrEmpty(Lic.ipuot2_1?.Replace(" ", "")) ? "Отопление2" : "");
+                    Content = Content.Replace("{formula17}",
+                     !string.IsNullOrEmpty(Lic.ipuot3_1?.Replace(" ", "")) ? "Отопление3" : "");
+                    Content = Content.Replace("{formula18}", !string.IsNullOrEmpty(Lic.ipuxv1_1?.Replace(" ", "")) ? Lic.ngvs1?.Trim().Replace(" ", "") : "");
+                    Content = Content.Replace("{formula19}", !string.IsNullOrEmpty(Lic.ipuxv2_1?.Replace(" ", "")) ? Lic.ngvs2?.Trim().Replace(" ", "") : "");
+                    Content = Content.Replace("{formula20}", !string.IsNullOrEmpty(Lic.ipuxv3_1?.Replace(" ", "")) ? Lic.ngvs3?.Trim().Replace(" ", "") : "");
+                    Content = Content.Replace("{formula21}", !string.IsNullOrEmpty(Lic.ipuxv4_1?.Replace(" ", "")) ? Lic.ngvs4?.Trim().Replace(" ", "") : "");
+                    Content = Content.Replace("{formula22}", !string.IsNullOrEmpty(Lic.ipuot1_1?.Replace(" ", "")) ? Lic.notp1?.Trim().Replace(" ", "") : "");
+                    Content = Content.Replace("{formula23}", !string.IsNullOrEmpty(Lic.ipuot2_1?.Replace(" ", "")) ? Lic.notp2?.Trim().Replace(" ", "") : "");
+                    Content = Content.Replace("{formula24}",
+                    !string.IsNullOrEmpty(Lic.ipuot3_1?.Replace(" ", "")) ? Lic.notp3?.Trim().Replace(" ", "") : "");
+                    Content = Content.Replace("{formula25}", !string.IsNullOrEmpty(Lic.ipuxv1_1?.Replace(" ", "")) ? Lic.dgvs1?.Trim() : "");
+                    Content = Content.Replace("{formula26}", !string.IsNullOrEmpty(Lic.ipuxv2_1?.Replace(" ", "")) ? Lic.dgvs2?.Trim() : "");
+                    Content = Content.Replace("{formula27}",
+                    !string.IsNullOrEmpty(Lic.ipuxv3_1?.Replace(" ", "")) ? Lic.dgvs3?.Trim() : "");
+                    Content = Content.Replace("{formula28}", !string.IsNullOrEmpty(Lic.ipuxv4_1?.Replace(" ", "")) ? Lic.dgvs4?.Trim() : "");
+                    Content = Content.Replace("{formula29}", !string.IsNullOrEmpty(Lic.ipuot1_1?.Replace(" ", "")) ? Lic.dotp1?.Trim() : "");
+                    Content = Content.Replace("{formula30}", !string.IsNullOrEmpty(Lic.ipuot2_1?.Replace(" ", "")) ? Lic.dotp2?.Trim() : "");
+                    Content = Content.Replace("{formula31}",
+                    !string.IsNullOrEmpty(Lic.ipuot3_1?.Replace(" ", "")) ? Lic.dotp3?.Trim() : "");
+                    Content = Content.Replace("{s_gil}", Lic.dpukasobs?.Trim());
+                    Content = Content.Replace("{s_nez}", Lic.dpukanach?.Trim());
+                    Content = Content.Replace("{s_oi}", Lic.s_oi?.Trim());
+                    Content = Content.Replace("{s_notp}", Lic.s_notp?.Trim());
+                }
+                else
+                {
+                    Content = string.Empty;
+                }
+            }
+            return Content;
+        }
         public string[] Substring(string T)
         {
             int z = 0;

@@ -34,6 +34,18 @@ namespace ExcelsReader
                             court.Lic = row.Cell(1).Value.ToString();
                             court.Ip = row.Cell(2).Value.ToString().GetIp();
                             court.CourtWork = row.Cell(2).Value.ToString().GetCourtWork();
+                            if (string.IsNullOrEmpty(court.CourtWork))
+                            {
+                                court.CourtWork = row.Cell(2).Value.ToString().GetPerfomanceList();
+                            }
+                            if (string.IsNullOrEmpty(court.CourtWork))
+                            {
+                                court.CourtWork = row.Cell(2).Value.ToString().GetID();
+                            }
+                            if (string.IsNullOrEmpty(court.CourtWork))
+                            {
+                                court.CourtWork = row.Cell(2).Value.ToString().GetPerfomanceDocument();
+                            }
                             court.Fio = row.Cell(2).Value.ToString().GetFio();
                             court.FileName = file.Replace("D:\\Programing\\RKC\\ExcelsReader\\FilesFolder\\","");
                             courts.Add(court);

@@ -173,6 +173,12 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
 
             }
         }
+
+        public string GenerateHtml(string LIC, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
         public string[] Substring(string T)
         {
             int z = 0;

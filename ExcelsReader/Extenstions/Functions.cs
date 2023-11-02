@@ -17,7 +17,7 @@ namespace ExcelsReader.Extenstions
                 var r2 = Value.Split(' ').TryGetValue(3);
                 var r3 = Value.Split(' ').TryGetValue(4);
                 result = r1 + r2;
-                return result;
+                return result.Replace("и/п", "");
             }
             else return "";
         }
@@ -36,6 +36,67 @@ namespace ExcelsReader.Extenstions
 
                     if (probell == 5)
                         break;
+                    result += Value[i];
+                }
+                return result.Replace("и/п", "");
+            }
+            return "";
+        }
+        public static string GetPerfomanceList(this string Value)
+        {
+            if (!string.IsNullOrEmpty(Value))
+            {
+                var result = "";
+                var index = Value.IndexOf("Исполнительный лист ");
+                if (index == -1)
+                    return "";
+                var probell = 0;
+                for (int i = index; i <= Value.Length - 1; i++)
+                {
+                    if (Value[i] == ' ')
+                        probell++;
+
+                    if (probell == 6)
+                        break;
+                    result += Value[i];
+                }
+                return result;
+            }
+            return "";
+        }
+        public static string GetPerfomanceDocument(this string Value)
+        {
+            if (!string.IsNullOrEmpty(Value))
+            {
+                var result = "";
+                var index = Value.IndexOf("Исполнительный документ ");
+                if (index == -1)
+                    return "";
+                var probell = 0;
+                for (int i = index; i <= Value.Length - 1; i++)
+                {
+                    if (Value[i] == ' ')
+                        probell++;
+
+                    if (probell == 3)
+                        break;
+                    result += Value[i];
+                }
+                return result;
+            }
+            return "";
+        }
+        public static string GetID(this string Value)
+        {
+            if (!string.IsNullOrEmpty(Value))
+            {
+                var result = "";
+                var index = Value.IndexOf("ИД ");
+                if (index == -1)
+                    return "";
+ 
+                for (int i = index; i <= Value.Length - 1; i++)
+                {
                     result += Value[i];
                 }
                 return result;

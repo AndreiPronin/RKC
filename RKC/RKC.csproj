@@ -578,6 +578,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Template\Образец квитанции.html" />
     <Content Include="Utility_Prod\RunJobDublicatePers.vbs" />
     <Content Include="Utility_Prod\RunJobDublicatePU.vbs" />
     <Content Include="Web.config" />
@@ -693,6 +694,7 @@
     <Content Include="Views\Home\AccessDenied.cshtml" />
     <Content Include="Template\Образец квитанции DPUNew.docx" />
     <Content Include="Views\PersonalData\GetNoteAllLic.cshtml" />
+    <Content Include="Views\PersonalData\ShwoReceipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

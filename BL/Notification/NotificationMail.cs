@@ -23,7 +23,9 @@ namespace BL.Notification
         void SendEmailAsyncDublicatePu(List<DuplicatePu> DuplicatePu);
         void SendEmailAsyncDublicatePers(List<DuplicatePers> DuplicatePu);
         void SendMailReceipt(string FullLic, string Mail);
+        void SendMailReceiptDpu(string FullLic, string Mail);
         void SendEmailReceiptNotSend(List<ReceiptNotSend> ReceiptNotSend);
+        void SendEmailReceiptNotSendDpu(List<ReceiptNotSend> ReceiptNotSend);
         void Error(Exception ex, string message = "");
     }
     public class NotificationMail : INotificationMail
@@ -70,6 +72,23 @@ namespace BL.Notification
             mailMessage.Subject = "Автоматическое отправление эл.квитанций";
             smtpClient.Send(mailMessage);
         }
+        public void SendMailReceiptDpu(string FullLic, string Mail)
+        {
+            SmtpClient smtpClient = new SmtpClient();
+            smtpClient.Host = ConfigurationManager.AppSettings["mail:host:T+"];
+            smtpClient.EnableSsl = true;
+            //smtpClient.Credentials = CredentialCache.DefaultNetworkCredentials;
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Port = 587;
+            smtpClient.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mail:login:T+"], ConfigurationManager.AppSettings["mail:pass:T+"]);
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:T+"]);
+            mailMessage.Attachments.Add(new System.Net.Mail.Attachment($@"{AppDomain.CurrentDomain.BaseDirectory}Template\KvitDPU\{DateTime.Now.AddMonths(-1):MMMM-yyyy}\Квитанция ДПУ {FullLic} {DateTime.Now.AddMonths(-1).Month}.pdf"));
+            mailMessage.To.Add(new MailAddress(Mail));
+            mailMessage.Subject = "Автоматическое отправление эл.квитанций";
+            smtpClient.Send(mailMessage);
+        }
         public void SendEmailAsyncDublicatePers(List<DuplicatePers> DuplicatePers)
         {
             using (XLWorkbook wb = new XLWorkbook())
@@ -98,6 +117,22 @@ namespace BL.Notification
                     writer.Flush();
                     stream.Position = 0;
                     var File = new System.Net.Mail.Attachment(stream, "Отчет отправки почты.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                    SendMail(File);
+                }
+            }
+        }
+        public void SendEmailReceiptNotSendDpu(List<ReceiptNotSend> ReceiptNotSend)
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(NotificationExcel.CreateExcelReceiptNotSend(ReceiptNotSend));
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    var writer = new StreamWriter(stream);
+                    writer.Flush();
+                    stream.Position = 0;
+                    var File = new System.Net.Mail.Attachment(stream, "Отчет отправки почты ДПУ.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                     SendMail(File);
                 }
             }

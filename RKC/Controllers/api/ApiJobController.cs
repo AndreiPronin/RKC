@@ -1,4 +1,5 @@
 ﻿using BE.JobManager;
+using BE.Roles;
 using BL.ApiT_;
 using BL.Helper;
 using BL.http;
@@ -33,8 +34,12 @@ namespace RKC.Controllers
                     _job.CheckDublicatePers();
                     break;
                 case (int)EnumJob.SendReceipt:
-                    if(User.IsInRole("SuperAdmin"))
+                    if(User.IsInRole(RolesEnums.SuperAdmin))
                         _job.SendReceipt();
+                    break;
+                case (int)EnumJob.SendReceiptDpu:
+                    if (User.IsInRole(RolesEnums.DPUAdmin) || User.IsInRole(RolesEnums.SuperAdmin))
+                        _job.SendReceiptDpu();
                     break;
                 default:
                     break;
@@ -46,6 +51,13 @@ namespace RKC.Controllers
         public HttpResponseMessage SendReceiptLic(SendReceiptLic sendReceiptLic)
         {
             _job.SendReceipt(sendReceiptLic.FullLic);
+            return Resposne.CreateResponse200();
+        }
+        [Route("api/SendReceiptLicDpu")]
+        [HttpPost]
+        public HttpResponseMessage SendReceiptLicDpu(SendReceiptLic sendReceiptLic)
+        {
+            _job.SendReceiptDpu(sendReceiptLic.FullLic);
             return Resposne.CreateResponse200();
         }
     }
