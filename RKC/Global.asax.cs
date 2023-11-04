@@ -28,7 +28,7 @@ namespace RKC
             //AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
 
             // запуск выполнения работы
-            EmailScheduler.Start();
+            Scheduler.Start();
         }
     }
 }

@@ -19,7 +19,6 @@ namespace DB.Model
         public string bank_document_number { get; set; }
         public string full_name { get; set; }
         public string lic { get; set; }
-        public int? payment_instrument_id { get; set; }
         public DateTime? payment_period { get; set; }
         public double transaction_amount { get; set; }
         public string transaction_number_inique { get; set; }

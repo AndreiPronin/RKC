@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace BL.Jobs
 {
 
-    public class EmailScheduler
+    public class Scheduler
     {
         public static async Task Start()
         {
@@ -20,6 +20,7 @@ namespace BL.Jobs
             IJobDetail job = JobBuilder.Create<JobEmailSender>().Build();
 
             IJobDetail jobSendReceipt = JobBuilder.Create<JobEmailSender>().Build();
+            IJobDetail jobSimple = JobBuilder.Create<SimpleJob>().Build();
 
             ITrigger trigger = TriggerBuilder.Create()  // создаем триггер
                 .WithIdentity("JobSender", "JobManagerGroup")     // идентифицируем триггер с именем и группой
@@ -36,8 +37,18 @@ namespace BL.Jobs
                    .RepeatForever())                   // бесконечное повторение
                .Build();                               // создаем триггер
 
+            ITrigger triggerRemoveOldIntegration = TriggerBuilder.Create()  // создаем триггер
+               .WithIdentity("jobSimple", "jobSimpleGroup")     // идентифицируем триггер с именем и группой
+               .StartNow()                            // запуск сразу после начала выполнения
+               .WithSimpleSchedule(x => x            // настраиваем выполнение действия
+                   .WithIntervalInHours(12)          // через 12 часов
+                   .RepeatForever())                   // бесконечное повторение
+               .Build();                               // создаем триггер
+
             await scheduler.ScheduleJob(job, trigger);        // начинаем выполнение работы
             await scheduler.ScheduleJob(jobSendReceipt, triggerSendReceipt);        // начинаем выполнение работы
+
+            await scheduler.ScheduleJob(jobSimple, triggerRemoveOldIntegration);        // начинаем выполнение работы
         }
     }
 }

@@ -349,6 +349,25 @@
                         //window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val();
                         //window.open('/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val());
                     },
+                    '<input type="button" class="btn btn-primary" value="Просмотр" data-toggle="modal" data-target="#ShowLogResultModal" />': function () {
+                        $.ajax({
+                            url: '/LogResult/ShowLogResult?Objects=@ViewBag.FULL_LIC',
+                            type: 'Get',
+                            async: false,
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                console.log(data);
+                                $("#ShowLogs").empty();
+                                $("#ShowLogs").append(data);
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                        window.open('/PersonalData/ShwoReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val(), "_self");
+                        //window.location = '/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val();
+                        //window.open('/PersonalData/DownLoadReceipt?FullLic=' + @ViewBag.FULL_LIC + '&DateStart=' + $("#DateReceiptStart1").val() + '&DateEnd=' + $("#DateReceiptEnd1").val());
+                    },
                     "Отмена": function () {
 
                     }
