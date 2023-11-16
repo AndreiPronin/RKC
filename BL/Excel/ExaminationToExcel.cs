@@ -20,7 +20,7 @@ namespace BL.Excel
     {
         public DataTable PersIsLic(string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "Получаю данные из бд");
+            cacheApp.AddProgress(User + "_", "Получаю данные из бд");
             DataTable dt = new DataTable("Персы");
             List<PersNotFoundInLic> persNotFoundInLics = new List<PersNotFoundInLic>();
             dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Лицевой счет"), new DataColumn("Ссылка")});
@@ -45,18 +45,18 @@ namespace BL.Excel
                     }
                 }
             }
-            cacheApp.Update(User, "Формирую Excel");
+            cacheApp.Update(User + "_", "Формирую Excel");
             foreach (var Items in persNotFoundInLics)
             {
                 dt.Rows.Add(Items.Lic, Items.Href);
             }
-            cacheApp.Update(User, "Скачиваю Excel");
+            cacheApp.Update(User + "_", "Скачиваю Excel");
 
             return dt;
         }
         public DataTable PuIsLic(string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "Получаю данные из бд");
+            cacheApp.AddProgress(User + "_", "Получаю данные из бд");
             DataTable dt = new DataTable("Персы");
             List<IpuNotFoundInLick> ipuNotFoundInLick = new List<IpuNotFoundInLick>();
             dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Лицевой счет"), new DataColumn("Тип ПУ"), new DataColumn("Описание"), new DataColumn("Ссылка") });
@@ -170,12 +170,12 @@ namespace BL.Excel
                     }
                 }
             }
-            cacheApp.Update(User, "Формирую Excel");
+            cacheApp.Update(User + "_", "Формирую Excel");
             foreach (var Items in ipuNotFoundInLick)
             {
                 dt.Rows.Add(Items.Lic, Items.Href, Items.Description, Items.Description);
             }
-            cacheApp.Update(User, "Скачиваю Excel");
+            cacheApp.Update(User + "_", "Скачиваю Excel");
 
             return dt;
         }

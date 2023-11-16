@@ -50,6 +50,7 @@ namespace DB.DataBase
         public DbSet<CourtWorkRequisites> CourtWorkRequisites { get; set; }
         public DbSet<InstallmentPayRequisites> InstallmentPayRequisites { get; set; }
         public DbSet<LitigationWorkRequisites> LitigationWorkRequisites { get; set; }
+        public DbSet<NotSendReceipt> NotSendReceipts { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

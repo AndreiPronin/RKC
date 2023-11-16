@@ -560,6 +560,7 @@ namespace BL.Services
                 {
                     Item.Square = 0;
                     Item.NumberOfPersons = 0;
+                    Item.SendingElectronicReceipt = null;
                 }
                 await appDb.SaveChangesAsync();
             }

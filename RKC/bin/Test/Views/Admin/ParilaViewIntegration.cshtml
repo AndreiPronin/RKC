@@ -95,7 +95,7 @@
             var Cashe = $('#User').val();
             var intervalID = setInterval(function () {
                 $.ajax({
-                    url: '/Counter/GetProgress?Name=' + Cashe,
+                    url: '/Counter/GetProgress?Name=' + Cashe + '_',
                     success: function (data) {
                         i = data;
                     },

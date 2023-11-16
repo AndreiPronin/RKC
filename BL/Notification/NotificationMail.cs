@@ -24,8 +24,8 @@ namespace BL.Notification
         void SendEmailAsyncDublicatePers(List<DuplicatePers> DuplicatePu);
         void SendMailReceipt(string FullLic, string Mail);
         void SendMailReceiptDpu(string FullLic, string Mail);
-        void SendEmailReceiptNotSend(List<ReceiptNotSend> ReceiptNotSend);
-        void SendEmailReceiptNotSendDpu(List<ReceiptNotSend> ReceiptNotSend);
+        void SendEmailReceiptNotSend(List<ReceiptSend> ReceiptNotSend);
+        void SendEmailReceiptNotSendDpu(List<ReceiptSend> ReceiptNotSend);
         void Error(Exception ex, string message = "");
     }
     public class NotificationMail : INotificationMail
@@ -105,7 +105,7 @@ namespace BL.Notification
                 }
             }
         }
-        public void SendEmailReceiptNotSend(List<ReceiptNotSend> ReceiptNotSend)
+        public void SendEmailReceiptNotSend(List<ReceiptSend> ReceiptNotSend)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
@@ -121,7 +121,7 @@ namespace BL.Notification
                 }
             }
         }
-        public void SendEmailReceiptNotSendDpu(List<ReceiptNotSend> ReceiptNotSend)
+        public void SendEmailReceiptNotSendDpu(List<ReceiptSend> ReceiptNotSend)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {

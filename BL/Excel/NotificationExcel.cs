@@ -38,7 +38,7 @@ namespace BL.Excel
             }
             return dt;
         }
-        public static DataTable CreateExcelReceiptNotSend(List<ReceiptNotSend> ReceiptNotSend)
+        public static DataTable CreateExcelReceiptNotSend(List<ReceiptSend> ReceiptNotSend)
         {
 
             DataTable dt = new DataTable("Receipt");

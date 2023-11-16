@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\FlagActions.cs" />
     <Compile Include="Admin\UserRoleInfo.cs" />
     <Compile Include="ApiT+\XmlForT+Flat.cs" />
     <Compile Include="Counter\Dictionary.cs" />
@@ -74,8 +75,9 @@
     <Compile Include="DPU\SearchAutocompleteResultDPU.cs" />
     <Compile Include="DPU\SerachAutoCompleteModel.cs" />
     <Compile Include="JobManager\EnumJob.cs" />
-    <Compile Include="JobManager\MailNotSend.cs" />
+    <Compile Include="JobManager\MailSend.cs" />
     <Compile Include="JobManager\SendReceiptLic.cs" />
+    <Compile Include="JobManager\TypeReceipt.cs" />
     <Compile Include="MkdInformation\AddressMKD.cs" />
     <Compile Include="MkdInformation\AddressReadings.cs" />
     <Compile Include="MkdInformation\HistoryOdpuModel.cs" />

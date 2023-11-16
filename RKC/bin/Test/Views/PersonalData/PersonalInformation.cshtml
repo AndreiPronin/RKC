@@ -3,37 +3,44 @@
     ViewBag.Title = "PersonalInformation";
     var Index = 0;
 }
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<style>
+    .nav > li > a:hover,
+    .nav > li > a:focus {
+        text-decoration: none;
+        background-color: #043e6e !important;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-    @if (Model.Count() > 0)
-    {
-<div class="container">
-    <h3 class="text-center">Детальная информация по лицевому счету  @Model.FirstOrDefault().full_lic</h3>
-    @if (Model.FirstOrDefault().ZAK != null)
-    {
-        <p class="text-center NullOrEmpty" > Лицевой счет закрыт </p>
-    }
-<div class="col-md-12">
-    <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
-    @if (User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
-    {
-        if (Model.FirstOrDefault().ZAK == null)
+@if (Model.Count() > 0)
+{
+    <div class="container">
+        <h3 class="text-center">Детальная информация по лицевому счету  @Model.FirstOrDefault().full_lic</h3>
+        @if (Model.FirstOrDefault().ZAK != null)
         {
-            <a>
-                <input type="button" class="btn btn-danger CloseLick" style="float:right" value="Закрыть лицевой счет" />
-            </a>
+            <p class="text-center NullOrEmpty"> Лицевой счет закрыт </p>
         }
-        else
-        {
-            <a>
-                <input type="button" class="btn btn-success OpenLick" style="float: right" value="Открыть лицевой счет" />
-            </a>
-        }
-    }
-</div>
-    <div id="ResultSearchSave"></div>
-</div>
+        <div class="col-md-12">
+            <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
+            @if (User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+            {
+                if (Model.FirstOrDefault().ZAK == null)
+                {
+                    <a>
+                        <input type="button" class="btn btn-danger CloseLick" style="float:right" value="Закрыть лицевой счет" />
+                    </a>
+                }
+                else
+                {
+                    <a>
+                        <input type="button" class="btn btn-success OpenLick" style="float: right" value="Открыть лицевой счет" />
+                    </a>
+                }
+            }
+        </div>
+        <div id="ResultSearchSave"></div>
+    </div>
     <div class="loader">
         <div class="inner one"></div>
         <div class="inner two"></div>
@@ -54,7 +61,7 @@
                     <a>
                         @if (User.IsInRole(BE.Roles.RolesEnums.CounterReader) || User.IsInRole(BE.Roles.RolesEnums.CourtWhriter) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
                         {
-                        <input type="button" class="btn btn-primary ShowAllCourt" value="Судебные дела" data-toggle="modal" data-target="#ShowAllCourtModal" />
+                            <input type="button" class="btn btn-primary ShowAllCourt" value="Судебные дела" data-toggle="modal" data-target="#ShowAllCourtModal" />
                         }
                     </a>
                 </div>
@@ -175,12 +182,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="text-center" >
+                            <tr class="text-center">
                                 <th scope="row">ЖКУ:</th>
                                 <td>@ViewBag.StateCalc.Dk</td>
                                 <td>@ViewBag.StateCalc.Sp</td>
                                 <td>@ViewBag.StateCalc.Sn</td>
-                               
+
                                 <td>@ViewBag.StateCalc.Tdk</td>
                             </tr>
                             <tr class="text-center">
@@ -195,69 +202,70 @@
                                 <td>@ViewBag.StateCalc.DkPeny_dk</td>
                                 <td>@ViewBag.StateCalc.SpPeny</td>
                                 <td>@ViewBag.StateCalc.SnPeny_SN</td>
-                                
+
                                 <td>@ViewBag.StateCalc.TdkPeny_tdk</td>
                             </tr>
                         </tbody>
                     </table>
-                   
-                    <div style="margin-top:20px;" class="col-md-12">
-                        <div class="col-md-2">
-                            <button class="btn btn-primary DownLoadHelpСalculation">Справка расчет</button>
+                    <div class="col-md-1">
+                        <div id="mySidenavPersonalData" class="sidenav">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a style="cursor:pointer" class="DownLoadHelpСalculation">Справка расчет</a>
+                                </li>
+                                @if (User.IsInRole(BE.Roles.RolesEnums.ShowNoteLic))
+                                {
+                                    <li class="nav-item">
+                                        <a  style="cursor:pointer" class="nav-link Note" data-toggle="modal" data-target="#ShowNoteAllicModal">Примечания</a>
+                                    </li>
+                                }
+                                <li class="nav-item">
+                                    <a  style="cursor:pointer" class=" PaymentHistory">История оплат</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a  style="cursor:pointer" class=" ReadingsHistory">История показаний</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a  style="cursor:pointer" class="nav-link ShowAllDocument" data-toggle="modal" data-target="#ShowAllDocumentModal">Документы</a>
+                                </li>
+                                @if (User.IsInRole("DownLoadReceipt") || User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                         <a  style="cursor:pointer" class=" DownLoadReceipt">Квитанция</a>
+                                    </li>
+                                }
+                            </ul>
                         </div>
-                        <div class="col-md-2">
-                            @if (User.IsInRole(BE.Roles.RolesEnums.ShowNoteLic))
-                            {
-                                <input type="button" class="btn btn-primary Note" value="Примечания" data-toggle="modal" data-target="#ShowNoteAllicModal" />
-                            }
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary PaymentHistory">История оплат</button>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary ReadingsHistory">История показаний</button>
-                        </div>
-                        <div class="col-md-2">
-                            <input type="button" class="btn btn-primary ShowAllDocument" value="Документы" data-toggle="modal" data-target="#ShowAllDocumentModal" />
-                        </div>
-                        <div class="col-md-2">
-                            @if (User.IsInRole("DownLoadReceipt") || User.IsInRole("Admin"))
-                            {
-                                <button class="btn btn-primary DownLoadReceipt">Квитанция</button>
-                            }
-                        </div>
-
                     </div>
-                    
                 </div>
-                
-            </div>
-        break;
-        }
-    </div>
-    }
-    else
-    {
-        <div class="container">
-            <h3 class="text-center"></h3>
-            <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC ничего не найдено</h1>
-            <div class="col-md-12 text-center">
-                 <div class="col-md-12 text-center">
-            <a href="/Counter/DetailedInformIPU?FULL_LIC=@ViewBag.FULL_LIC" target="_blank">
-                <input type="button" class="btn btn-primary" value="Приборы учета" />
-            </a>
-            <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@ViewBag.FULL_LIC.Trim()" target="_blank">
-                <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
-            </a>
-                     </div>
-        </div>
-            <div class="col-md-12">
-                <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
-            </div>
-            <div id="ResultSearchSave"></div>
-        </div>
 
-    }
+            </div>
+                                            break;
+                                        }
+    </div>
+}
+else
+{
+    <div class="container">
+        <h3 class="text-center"></h3>
+        <h1 class="text-center NullOrEmpty">По лицевому счету @ViewBag.FULL_LIC ничего не найдено</h1>
+        <div class="col-md-12 text-center">
+            <div class="col-md-12 text-center">
+                <a href="/Counter/DetailedInformIPU?FULL_LIC=@ViewBag.FULL_LIC" target="_blank">
+                    <input type="button" class="btn btn-primary" value="Приборы учета" />
+                </a>
+                <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@ViewBag.FULL_LIC.Trim()" target="_blank">
+                    <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button id="CloseLock" name="@ViewBag.FULL_LIC" class="btn btn-success">Закрыть страницу</button>
+        </div>
+        <div id="ResultSearchSave"></div>
+    </div>
+
+}
 <div id="ShowAllDocument"></div>
 <div id="ShowAllCourt"></div>
 <div id="ShowLogs"></div>

@@ -149,10 +149,15 @@ namespace RKC.Controllers
                 && !x.Description.Contains("Показания ИПУ меньше предыдущего")
                 && !x.Description.Contains("Закончился срок поверки")
                 && !x.Description.Contains("Прибор учета закрыт")
-                ).Select(x => x.IsError).Count();
+                ).Select(x => x.IsError)?.Count();
+                var notSendElectonicalReceipt = db.NotSendReceipts.Where(x => x.IsSend == false).Select(x=>x.IsSend).Count();
                 if (ErrorIntegration > 0)
                 {
                     notification.Add(new Notifications { Description = $"Ошибка показаний {ErrorIntegration} ошибки", Title = "Ошибка показаний ИПУ" });
+                }
+                if (notSendElectonicalReceipt > 0)
+                {
+                    notification.Add(new Notifications { Description = $"Ошибка отправки почты {notSendElectonicalReceipt} ошибки", Title = "Ошибка отправки почты" });
                 }
                 return PartialView(notification);
             }

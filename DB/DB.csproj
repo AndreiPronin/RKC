@@ -61,6 +61,14 @@
     <Compile Include="Migrations\202309201727131_init.designer.cs">
       <DependentUpon>202309201727131_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311161158041_notification.cs" />
+    <Compile Include="Migrations\202311161158041_notification.designer.cs">
+      <DependentUpon>202311161158041_notification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311161612236_notificationFix1.cs" />
+    <Compile Include="Migrations\202311161612236_notificationFix1.designer.cs">
+      <DependentUpon>202311161612236_notificationFix1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -103,6 +111,7 @@
     <Compile Include="Model\Payment.cs" />
     <Compile Include="Model\PersData.cs" />
     <Compile Include="Model\PersonalInformation.cs" />
+    <Compile Include="Model\ReceiptNotSend.cs" />
     <Compile Include="Model\Reports.cs" />
     <Compile Include="Model\StateCalculation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +132,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202309201727131_init.resx">
       <DependentUpon>202309201727131_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311161158041_notification.resx">
+      <DependentUpon>202311161158041_notification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311161612236_notificationFix1.resx">
+      <DependentUpon>202311161612236_notificationFix1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

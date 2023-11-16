@@ -76,7 +76,7 @@ namespace BL.Excel
         }
         public async Task<DataTable> CreateExcelLic(string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "0");
+            cacheApp.AddProgress(User + "_", "0");
             DataTable dt = new DataTable("Counter");
             dt.Columns.AddRange(new DataColumn[32] { new DataColumn("Улица         "),
                                         new DataColumn("Дом "),
@@ -94,7 +94,7 @@ namespace BL.Excel
             cacheApp.UpdateProgress(User, "Получаю данные из бд");
             var DbLIC = new DbLIC();
             List<ALL_LICS> AllLic = await DbLIC.ALL_LICS.ToListAsync();
-            cacheApp.Update(User, $@"Получил {AllLic.Count()} записей");
+            cacheApp.Update(User + "_", $@"Получил {AllLic.Count()} записей");
             foreach (var Items in AllLic)
             {
                 dt.Rows.Add(Items.UL, Items.DOM, Items.CADR, Items.KW, Items.LIC, Items.F4ENUMELS, Items.ZAK, Items.FIO,
@@ -103,12 +103,12 @@ namespace BL.Excel
                     Items.FKUBSOT_1, Items.FKUB1OT_1, Items.FKUB2OT_1, Items.FKUBSOT_2, Items.FKUB1OT_2, Items.FKUB2OT_2,
                     Items.FKUBSOT_3, Items.FKUB1OT_3, Items.FKUB2OT_3, Items.FKUBSOT_4, Items.FKUB1OT_4, Items.FKUB2OT_4);
             }
-            cacheApp.Update(User, "Ожидайте... Идет скачивание файла.");
+            cacheApp.Update(User + "_", "Ожидайте... Идет скачивание файла.");
             return dt;
         }
         public DataTable LoadExcelPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "0");
+            cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
@@ -194,7 +194,7 @@ namespace BL.Excel
         }
         public DataTable LoadExcelNewPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "0");
+            cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
@@ -269,7 +269,7 @@ namespace BL.Excel
         }
         public DataTable LoadExcelUpdatePersonalDataMain(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "0");
+            cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons());
             List<PersDataModel> PersNotAdded = new List<PersDataModel>();
@@ -359,7 +359,7 @@ namespace BL.Excel
         }
         public DataTable LoadExcelUpdatePersonalDataMainFio(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "0");
+            cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons());
             List<PersDataModel> PersNotAdded = new List<PersDataModel>();
@@ -403,7 +403,7 @@ namespace BL.Excel
         }
         public DataTable LoadExcelNewPersonalData(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "0");
+            cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons());
             List<PersDataModel> PersNotAdded = new List<PersDataModel>();
@@ -485,7 +485,7 @@ namespace BL.Excel
         }
         public async Task<DataTable> MassClosePU(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "0");
+            cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             Counter _counter = new Counter(new Logger(), new GeneratorDescriptons());
             List<IPU_COUNTERS> CounterNotClose = new List<IPU_COUNTERS>();
@@ -537,7 +537,7 @@ namespace BL.Excel
         }
         public DataTable LoadExcelSquarePersProperty(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "0");
+            cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons());
             List<PersDataModel> PersDataModelNotAdded = new List<PersDataModel>();
@@ -604,7 +604,7 @@ namespace BL.Excel
         }
         public DataTable TIpuGvs(string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "Получаю данные из бд");
+            cacheApp.AddProgress(User + "_", "Получаю данные из бд");
             DataTable dt = new DataTable("Counter");
             dt.Columns.AddRange(new DataColumn[21] { new DataColumn("КОД ДОМА"),
                                         new DataColumn("   УЛИЦА   "),
@@ -621,7 +621,7 @@ namespace BL.Excel
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
             var DB = new DbTPlus();
             var Counters = DB.Database.SqlQuery<view_TplusIPU_GVS>("SELECT * FROM [dbo].[view_TplusIPU_GVS]").ToList();
-            cacheApp.Update(User, "Формирую Excel");
+            cacheApp.Update(User + "_", "Формирую Excel");
             Thread.Sleep(10000);
             foreach (var Items in Counters)
             {
@@ -632,13 +632,13 @@ namespace BL.Excel
                     Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
                     Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.DIMENSION_NAME, Items.END_READINGS, Items.NOW_READINGS);
             }
-            cacheApp.Update(User, "Скачиваю Excel");
+            cacheApp.Update(User + "_", "Скачиваю Excel");
             Thread.Sleep(10000);
             return dt;
         }
         public DataTable TIpuOtp(string User, ICacheApp cacheApp)
         {
-            cacheApp.AddProgress(User, "Получаю данные из бд");
+            cacheApp.AddProgress(User + "_", "Получаю данные из бд");
             DataTable dt = new DataTable("Counter");
             dt.Columns.AddRange(new DataColumn[21] { new DataColumn("КОД ДОМА"),
                                         new DataColumn("   УЛИЦА   "),
@@ -655,7 +655,7 @@ namespace BL.Excel
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
             var DB = new DbTPlus();
             var Counters = DB.Database.SqlQuery<view_TplusIPU_OTP>("select * from [dbo].[view_TplusIPU_OTP]").ToList();
-            cacheApp.Update(User, "Формирую Excel");
+            cacheApp.Update(User + "_", "Формирую Excel");
             foreach (var Items in Counters)
             {
                 dt.Rows.Add(Items.CODE_HOUSE, Items.STREET, Items.HOME, Items.FLAT,
@@ -665,7 +665,7 @@ namespace BL.Excel
                     Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
                     Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.DIMENSION_NAME, Items.END_READINGS, Items.NOW_READINGS);
             }
-            cacheApp.Update(User, "Скачиваю Excel");
+            cacheApp.Update(User + "_", "Скачиваю Excel");
 
             return dt;
         }

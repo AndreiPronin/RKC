@@ -27,7 +27,7 @@
     </dl>
     @if (User.IsInRole("Admin"))
     {
-<dl class="dl-horizontal">
+@*<dl class="dl-horizontal">
     <dt>Установить/Снять блокировку для:</dt>
     <dd>
         <a href="/Account/LockAction?Page=DetailedInformIPU">Страница детальной информации</a>
@@ -52,6 +52,6 @@
         else
         { <p class="">Не заблокирована</p>}
     </dd>
-</dl>
+</dl>*@
     }
 </div>

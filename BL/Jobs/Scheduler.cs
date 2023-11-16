@@ -17,7 +17,7 @@ namespace BL.Jobs
             IScheduler scheduler = await StdSchedulerFactory.GetDefaultScheduler();
             await scheduler.Start();
 
-            IJobDetail job = JobBuilder.Create<JobEmailSender>().Build();
+            IJobDetail personalReceiptTrySend = JobBuilder.Create<JobSendReceipt>().Build();
 
             IJobDetail jobSendReceipt = JobBuilder.Create<JobEmailSender>().Build();
             IJobDetail jobSimple = JobBuilder.Create<SimpleJob>().Build();
@@ -26,7 +26,7 @@ namespace BL.Jobs
                 .WithIdentity("JobSender", "JobManagerGroup")     // идентифицируем триггер с именем и группой
                 .StartNow()                            // запуск сразу после начала выполнения
                 .WithSimpleSchedule(x => x            // настраиваем выполнение действия
-                    .WithIntervalInHours(6)          // через 6 часов
+                    .WithIntervalInMinutes(10)         // через 6 часов
                     .RepeatForever())                   // бесконечное повторение
                 .Build();                               // создаем триггер
             ITrigger triggerSendReceipt = TriggerBuilder.Create()  // создаем триггер
@@ -45,7 +45,7 @@ namespace BL.Jobs
                    .RepeatForever())                   // бесконечное повторение
                .Build();                               // создаем триггер
 
-            await scheduler.ScheduleJob(job, trigger);        // начинаем выполнение работы
+            await scheduler.ScheduleJob(personalReceiptTrySend, trigger);        // начинаем выполнение работы
             await scheduler.ScheduleJob(jobSendReceipt, triggerSendReceipt);        // начинаем выполнение работы
 
             await scheduler.ScheduleJob(jobSimple, triggerRemoveOldIntegration);        // начинаем выполнение работы

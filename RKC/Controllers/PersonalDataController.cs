@@ -20,6 +20,7 @@ using BE.Roles;
 using BL.Counters;
 using WordGenerator.Enums;
 using DB.Model;
+using DB.DataBase;
 
 namespace RKC.Controllers
 {
@@ -212,17 +213,20 @@ namespace RKC.Controllers
                     return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
                 }
             }
-            while (DateStart >= DateEnd)
+            else
             {
-                try
+                while (DateStart >= DateEnd)
                 {
-                    Content.Add(_pdfFactory.CreatePdf(PdfType.Personal).GenerateHtml(FullLic, DateEnd));
-                }
-                catch (Exception ex)
-                {
+                    try
+                    {
+                        Content.Add(_pdfFactory.CreatePdf(PdfType.Personal).GenerateHtml(FullLic, DateEnd));
+                    }
+                    catch (Exception ex)
+                    {
 
+                    }
+                    DateEnd = DateEnd.AddMonths(1);
                 }
-                DateEnd = DateEnd.AddMonths(1);
             }
             return View(Content);
         }
@@ -324,6 +328,13 @@ namespace RKC.Controllers
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Отчет проверки персов.xlsx");
                 }
             }
+        }
+        public ActionResult NotSendReceipt()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                return View(context.NotSendReceipts.Where(x=>x.IsSend == false).ToList());
+            }    
         }
     }
 }

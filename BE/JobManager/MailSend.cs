@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace BE.JobManager
 {
-    public class ReceiptNotSend
+    public class ReceiptSend
     {
         public string FullLic {get;set;}
         public string Comment { get; set; }
         public string Email { get; set; }
+        public bool IsSend { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

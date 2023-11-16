@@ -19,8 +19,12 @@ namespace BL.Jobs
             {
                 var date = DateTime.Now.AddMonths(-2);
                 var res = await db.IntegrationReadings.Where(x => x.DateTime <= date).ToListAsync();
-                db.IntegrationReadings.RemoveRange(res);
-                await db.SaveChangesAsync();
+                foreach(var Item in res)
+                {
+                    db.IntegrationReadings.Remove(Item);
+                    await db.SaveChangesAsync();
+                }
+               
             }
             await Task.CompletedTask;
         }

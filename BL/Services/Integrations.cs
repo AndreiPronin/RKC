@@ -28,7 +28,7 @@ namespace BL.Service
         public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period, INotificationMail _notificationMail, ICounter _counter)
         {
             object Lock = new object();
-            cacheApp.AddProgress(User, "0");
+            cacheApp.AddProgress(User + "_", "0");
             Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
             var dbs = new DbPayment();
