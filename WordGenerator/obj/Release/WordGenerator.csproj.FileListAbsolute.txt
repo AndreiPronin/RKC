@@ -44,8 +44,6 @@ D:\Programing\RKC\WordGenerator\obj\Release\WordGenerator.csproj.CoreCompileInpu
 D:\Programing\RKC\WordGenerator\obj\Release\WordGenerator.csproj.CopyComplete
 D:\Programing\RKC\WordGenerator\obj\Release\WordGenerator.dll
 D:\Programing\RKC\WordGenerator\obj\Release\WordGenerator.pdb
-D:\Programing\RKC\WordGenerator\bin\Release\NLog.dll
-D:\Programing\RKC\WordGenerator\bin\Release\NLog.xml
 D:\Programing\RKC\WordGenerator\bin\Release\AppCache.dll
 D:\Programing\RKC\WordGenerator\bin\Release\AppCache.pdb
 D:\Programing\RKC\WordGenerator\bin\Release\Ninject.dll

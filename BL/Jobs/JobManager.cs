@@ -14,6 +14,7 @@ using System.Net;
 using System.Threading.Tasks;
 using WordGenerator.interfaces;
 using BE.Actions;
+using BL.Loggers;
 
 namespace BL.Jobs
 {
@@ -75,6 +76,7 @@ namespace BL.Jobs
         {
             lock(LockSendingPersonalReceipt)
             {
+                ShedulerLogger.WhriteToFile("Отправка кваитанций");
                 using (var db = new ApplicationDbContext())
                 {
                     try
@@ -232,6 +234,7 @@ namespace BL.Jobs
                         foreach (var item in receiptsends)
                         {
                             item.ErrorDescription = Item.Comment;
+                            item.Email = Item.Email;
                             item.IsSend = Item.IsSend;
                             item.NumberAttempts = item.NumberAttempts + 1;
                             item.DateTimeSend = Item.DateTime;

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DB.Model.NotSendReceipt>
+@{
+    ViewBag.Title = "ErrorIntegration";
+}
+<h2>Ошибка отправки почты</h2>
+<a class="btn btn-success" href="/counter/ErroIntegratinLoadExcel"> Скачать в Excel </a>
+<a class="btn btn-danger" href="/counter/ErroIntegratinLoadExcel"> Очистить список отправки </a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Лицевой счет</th>
+            <th scope="col">Email</th>
+            <th scope="col">Месяц</th>
+            <th scope="col">Описание ошибки</th>
+            <th scope="col">Тип квитанции</th>
+            <th scope="col">Время отправки</th>
+            <th scope="col">Количество попыток</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Items in Model)
+        {
+           
+                <tr>
+                    <td>@Items.Lic</td>
+                    <td>@Items.Email</td>
+                    <td>@Items.Month</td>
+                    <td>@Items.ErrorDescription</td>
+                    <td>@Items.TypeReceipt.GetDescriptionReceipt()</td>
+                    <td>@Items.DateTimeSend</td>
+                    <td>@Items.NumberAttempts</td>
+                </tr>
+        }
+    </tbody>
+</table>
+

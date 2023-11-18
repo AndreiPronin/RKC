@@ -1,4 +1,5 @@
 ﻿using BE.JobManager;
+using BL.Loggers;
 using BL.Notification;
 using DB.DataBase;
 using Quartz;
@@ -13,18 +14,17 @@ namespace BL.Jobs
 {
     internal class JobSendReceipt : IJob
     {
-        public async Task Execute(IJobExecutionContext context)
+        public void Execute(IJobExecutionContext context)
         {
             IJobManager _jobmanager = new JobManager(new NotificationMail(), new ReceiptFactory());
             using(var dbContext = new ApplicationDbContext())
             {
-                var FullLics = dbContext.NotSendReceipts.Where(x=>x.IsSend == false && x.TypeReceipt <= 7 && x.TypeReceipt == (int)TypeReceipt.PersonalReceipt).Select(x=>x.Lic).ToList();
-                if(FullLics.Any())
+                ShedulerLogger.WhriteToFile("Начало Отправки квитанций");
+                var FullLics = dbContext.NotSendReceipts.Where(x=>x.IsSend == false && x.NumberAttempts <= 7 && x.TypeReceipt == (int)TypeReceipt.PersonalReceipt).Select(x=>x.Lic).ToList();
+                ShedulerLogger.WhriteToFile($"Готово к отправке {FullLics.Count()}");
+                if (FullLics.Any())
                     _jobmanager.SendReceipt(String.Join(";", FullLics));
             }
-
-           
-            await Task.CompletedTask;
         }
     }
 }

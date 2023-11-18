@@ -27,6 +27,7 @@ using RKC.Extensions;
 using System.Security.Principal;
 using System.Net.Http;
 using System.Web.Http.Results;
+using NLog;
 
 namespace RKC.Controllers
 {
@@ -35,6 +36,7 @@ namespace RKC.Controllers
     {
         private readonly IEBD _eBD;
         private readonly ICacheApp _cacheApp;
+        public NLog.Logger logger = LogManager.GetCurrentClassLogger();
         public HomeController(IEBD eBD, ICacheApp cacheApp)
         {
             _eBD = eBD;
@@ -43,6 +45,7 @@ namespace RKC.Controllers
         }
         public ActionResult Index()
         {
+            logger.Info("App start");
             var sss = User.Identity.IsAuthenticated;
            
             //_eBD.CreateEbdFlatliving(DateTime.Now);

@@ -6,16 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using BL.Loggers;
+//using NLog;
 
 namespace BL.Jobs
 {
 
-    public class Scheduler
+    public static class Scheduler
     {
+        //static Logger logger = LogManager.GetCurrentClassLogger();
         public static async Task Start()
         {
-            IScheduler scheduler = await StdSchedulerFactory.GetDefaultScheduler();
-            await scheduler.Start();
+            ShedulerLogger.WhriteToFile("Начало работы шедулера");
+            IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
+            scheduler.Start();
 
             IJobDetail personalReceiptTrySend = JobBuilder.Create<JobSendReceipt>().Build();
 
@@ -45,10 +50,13 @@ namespace BL.Jobs
                    .RepeatForever())                   // бесконечное повторение
                .Build();                               // создаем триггер
 
-            await scheduler.ScheduleJob(personalReceiptTrySend, trigger);        // начинаем выполнение работы
-            await scheduler.ScheduleJob(jobSendReceipt, triggerSendReceipt);        // начинаем выполнение работы
+            scheduler.ScheduleJob(personalReceiptTrySend, trigger);        // начинаем выполнение работы
+            scheduler.ScheduleJob(jobSendReceipt, triggerSendReceipt);        // начинаем выполнение работы
 
-            await scheduler.ScheduleJob(jobSimple, triggerRemoveOldIntegration);        // начинаем выполнение работы
+            scheduler.ScheduleJob(jobSimple, triggerRemoveOldIntegration);        // начинаем выполнение работы
+
+            ShedulerLogger.WhriteToFile("Конец работы шедулера");
         }
+        
     }
 }

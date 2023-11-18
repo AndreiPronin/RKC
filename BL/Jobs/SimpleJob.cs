@@ -13,20 +13,19 @@ namespace BL.Jobs
 {
     public class SimpleJob : IJob
     {
-        public async Task Execute(IJobExecutionContext context)
+        public void Execute(IJobExecutionContext context)
         {
             using(var db = new ApplicationDbContext())
             {
                 var date = DateTime.Now.AddMonths(-2);
-                var res = await db.IntegrationReadings.Where(x => x.DateTime <= date).ToListAsync();
+                var res = db.IntegrationReadings.Where(x => x.DateTime <= date).ToList();
                 foreach(var Item in res)
                 {
                     db.IntegrationReadings.Remove(Item);
-                    await db.SaveChangesAsync();
+                     db.SaveChangesAsync();
                 }
                
             }
-            await Task.CompletedTask;
         }
     }
 }

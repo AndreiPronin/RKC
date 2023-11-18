@@ -291,3 +291,11 @@ D:\Programing\RKC\RKC\bin\Microsoft.Extensions.Options.ConfigurationExtensions.x
 D:\Programing\RKC\RKC\bin\Microsoft.Extensions.Primitives.xml
 D:\Programing\RKC\RKC\bin\System.Diagnostics.DiagnosticSource.xml
 D:\Programing\RKC\RKC\bin\Quartz.dll
+D:\Programing\RKC\RKC\bin\NLog.Web.dll
+D:\Programing\RKC\RKC\bin\NLog.Web.xml
+D:\Programing\RKC\RKC\bin\NLog.config
+D:\Programing\RKC\RKC\bin\Common.Logging.Core.dll
+D:\Programing\RKC\RKC\bin\Common.Logging.dll
+D:\Programing\RKC\RKC\bin\Quartz.pdb
+D:\Programing\RKC\RKC\bin\Common.Logging.Core.pdb
+D:\Programing\RKC\RKC\bin\Common.Logging.pdb

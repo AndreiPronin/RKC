@@ -13,12 +13,12 @@ namespace BL.Jobs
 {
     public class JobEmailSender : IJob
     {
-        public async Task Execute(IJobExecutionContext context)
+        public void Execute(IJobExecutionContext context)
         {
             IJobManager _jobmanager = new JobManager(new NotificationMail(), new ReceiptFactory());
             _jobmanager.CheckDublicatePu();
             _jobmanager.CheckDublicatePers();
-            await Task.CompletedTask;
+            //await Task.CompletedTask;
         }
     }
 }

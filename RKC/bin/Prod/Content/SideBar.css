@@ -229,6 +229,28 @@
         display: none !important;
     }
 }
+
+#mySidenavPersonalData {
+    width: 150px;
+}
+
+@media screen and (max-width: 1300px) {
+    #mySidenavPersonalData {
+        width: 50px;
+    }
+
+        #mySidenavPersonalData:hover {
+            width: 150px;
+        }
+
+    .navbar-brand {
+        display: none;
+    }
+
+    .TimeAndDate {
+        display: none !important;
+    }
+}
 @media screen and (max-width: 1200px) {
 
     .navbar-brand {

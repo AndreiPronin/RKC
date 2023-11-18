@@ -4,7 +4,6 @@ using DB.DataBase;
 using DB.Model;
 using DB.Query;
 using Microsoft.Office.Interop.Word;
-using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +20,6 @@ namespace WordGenerator
     {
         public PersDataDocumentLoad Generate(string LIC, DateTime date)
         {
-            Logger logger = LogManager.GetCurrentClassLogger();
             ICacheApp cacheApp = new CacheApp();
             if (cacheApp.GetValueProgress(LIC) != null)
                 cacheApp.Delete(LIC);
@@ -124,7 +122,7 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
                             ImgQr.WrapFormat.Type = Microsoft.Office.Interop.Word.WdWrapType.wdWrapFront;
 
                         }
-                        catch (Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); }
+                        catch (Exception ex) { }
 
                         BarcodeWriter generator1 = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
                         generator.Options = new ZXing.Common.EncodingOptions
@@ -151,11 +149,10 @@ Category=7|PersAcc={LIC}|LastName={FIO1.TryGetValue(0)}|FitstName={FIO1.TryGetVa
                             ImgQr.WrapFormat.Type = Microsoft.Office.Interop.Word.WdWrapType.wdWrapFront;
 
                         }
-                        catch (Exception ex) { logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}"); }
+                        catch (Exception ex) { }
                     }
                     catch (Exception ex)
                     {
-                        logger.Error(ex.Message); cacheApp.Update(LIC, $"Ошибка {ex.Message}");
                         doc.Close(Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
                            Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat,
                            false);

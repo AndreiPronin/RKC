@@ -1,9 +1,11 @@
 using BL.Jobs;
+using NLog;
 using RKC.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Claims;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Http;
@@ -17,6 +19,7 @@ namespace RKC
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+       
         protected void Application_Start()
         {
             CustomModelBindersConfig.RegisterCustomModelBinders();
@@ -28,7 +31,10 @@ namespace RKC
             //AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
 
             // запуск выполнения работы
-            Scheduler.Start();
+            new Thread(()=>
+             Scheduler.Start().GetAwaiter().GetResult()
+            ).Start();
+           
         }
     }
 }

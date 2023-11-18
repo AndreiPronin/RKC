@@ -8,7 +8,6 @@ D:\Programing\RKC\WordGenerator\bin\Debug\DB.dll
 D:\Programing\RKC\WordGenerator\bin\Debug\EntityFramework.dll
 D:\Programing\RKC\WordGenerator\bin\Debug\EntityFramework.SqlServer.dll
 D:\Programing\RKC\WordGenerator\bin\Debug\Ninject.dll
-D:\Programing\RKC\WordGenerator\bin\Debug\NLog.dll
 D:\Programing\RKC\WordGenerator\bin\Debug\zxing.dll
 D:\Programing\RKC\WordGenerator\bin\Debug\zxing.presentation.dll
 D:\Programing\RKC\WordGenerator\bin\Debug\AppCache.pdb
@@ -19,7 +18,6 @@ D:\Programing\RKC\WordGenerator\bin\Debug\Aspose.BarCode.xml
 D:\Programing\RKC\WordGenerator\bin\Debug\EntityFramework.xml
 D:\Programing\RKC\WordGenerator\bin\Debug\EntityFramework.SqlServer.xml
 D:\Programing\RKC\WordGenerator\bin\Debug\Ninject.xml
-D:\Programing\RKC\WordGenerator\bin\Debug\NLog.xml
 D:\Programing\RKC\WordGenerator\bin\Debug\zxing.xml
 D:\Programing\RKC\WordGenerator\bin\Debug\zxing.presentation.xml
 D:\Programing\RKC\WordGenerator\obj\Debug\WordGenerator.csproj.AssemblyReference.cache

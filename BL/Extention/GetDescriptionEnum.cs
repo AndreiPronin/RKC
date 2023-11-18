@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BE.JobManager;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -38,6 +39,16 @@ namespace System
             }
 
             return $"{enumElement.GetDescription()} {Values.Value}";
+        }
+        public static string GetDescriptionReceipt(this int value)
+        {
+            switch ((TypeReceipt)value)
+            {
+                case TypeReceipt.PersonalReceipt:
+                    return TypeReceipt.PersonalReceipt.GetDescription();
+                default:
+                    return "";
+            }
         }
     }
 }
