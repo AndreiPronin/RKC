@@ -25,7 +25,7 @@ namespace BL.Jobs
             IJobDetail personalReceiptTrySend = JobBuilder.Create<JobSendReceipt>().Build();
 
             IJobDetail jobSendReceipt = JobBuilder.Create<JobEmailSender>().Build();
-            IJobDetail jobSimple = JobBuilder.Create<SimpleJob>().Build();
+            IJobDetail jobClearIntegration = JobBuilder.Create<ClearIntegration>().Build();
 
             ITrigger trigger = TriggerBuilder.Create()  // создаем триггер
                 .WithIdentity("JobSender", "JobManagerGroup")     // идентифицируем триггер с именем и группой
@@ -43,7 +43,7 @@ namespace BL.Jobs
                .Build();                               // создаем триггер
 
             ITrigger triggerRemoveOldIntegration = TriggerBuilder.Create()  // создаем триггер
-               .WithIdentity("jobSimple", "jobSimpleGroup")     // идентифицируем триггер с именем и группой
+               .WithIdentity("jobClearIntegration", "jobClearIntegrationGroup")     // идентифицируем триггер с именем и группой
                .StartNow()                            // запуск сразу после начала выполнения
                .WithSimpleSchedule(x => x            // настраиваем выполнение действия
                    .WithIntervalInHours(12)          // через 12 часов
@@ -53,7 +53,7 @@ namespace BL.Jobs
             scheduler.ScheduleJob(personalReceiptTrySend, trigger);        // начинаем выполнение работы
             scheduler.ScheduleJob(jobSendReceipt, triggerSendReceipt);        // начинаем выполнение работы
 
-            scheduler.ScheduleJob(jobSimple, triggerRemoveOldIntegration);        // начинаем выполнение работы
+            scheduler.ScheduleJob(jobClearIntegration, triggerRemoveOldIntegration);        // начинаем выполнение работы
 
             ShedulerLogger.WhriteToFile("Конец работы шедулера");
         }

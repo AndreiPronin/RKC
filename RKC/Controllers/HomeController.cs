@@ -45,7 +45,6 @@ namespace RKC.Controllers
         }
         public ActionResult Index()
         {
-            logger.Info("App start");
             var sss = User.Identity.IsAuthenticated;
            
             //_eBD.CreateEbdFlatliving(DateTime.Now);

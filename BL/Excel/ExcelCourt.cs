@@ -25,28 +25,21 @@ namespace BL.Excel
     public class ExcelCourt : IExcelCourt
     {
         private readonly ICourt _court;
-        private readonly ConcurrentBag<ReportCourtLoadExcel> reportCourtLoadExcels;
+        private readonly List<ReportCourtLoadExcel> reportCourtLoadExcels;
         private readonly Mapper _mapper = new CourtProfile().GetMapperBe();
         private readonly IDictionary _dictionary;
         public ExcelCourt(ICourt court, IDictionary dictionary) 
         {
             _court = court;
             _dictionary = dictionary;
-            reportCourtLoadExcels = new ConcurrentBag<ReportCourtLoadExcel>();
+            reportCourtLoadExcels = new List<ReportCourtLoadExcel>();
         }
         public async Task<DataTable> ExcelsLoadCourt(XLWorkbook Excels, string User)
         {
             var dictionaryCourt = await _dictionary.GetCourtDictionaries();
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             var Count = nonEmptyDataRows.Count();
-            using(var db = new ApplicationDbContext())
-            {
-                var AllCourt = db.CourtGeneralInformation.ToList();
-                foreach(var item in AllCourt)
-                {
-                    await _court.DeleteCourt(item.Id);
-                }
-            }
+
             foreach (var dataRow in nonEmptyDataRows)
             {
                 if (dataRow.RowNumber() > 1)
@@ -55,8 +48,6 @@ namespace BL.Excel
                     {
                         StringBuilder exceptions = new StringBuilder();
                         var CourtGeneral = new DB.Model.Court.CourtGeneralInformation();
-                        //CourtGeneral.CourtDocumentScans =  new List<DB.Model.Court.CourtDocumentScans>();
-                        //CourtGeneral.CourtWorkRequisites = new List<DB.Model.Court.CourtWorkRequisites>();
                         CourtGeneral.CourtExecutionFSSP = new DB.Model.Court.CourtExecutionFSSP();
                         CourtGeneral.CourtExecutionInPF = new DB.Model.Court.CourtExecutionInPF();
                         CourtGeneral.CourtInstallmentPlan = new DB.Model.Court.CourtInstallmentPlan();
@@ -95,11 +86,16 @@ namespace BL.Excel
                     }
                 }
             }
+            return CreateResultCourtLoader(reportCourtLoadExcels);
+        }
+        private DataTable CreateResultCourtLoader(List<ReportCourtLoadExcel> reportCourtLoadExcels)
+        {
             DataTable dt = new DataTable("Counter");
             dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Индификатор судебного дела"),new DataColumn("Строка"),
                                         new DataColumn("Описание")});
-            foreach(var Item in reportCourtLoadExcels)
-                dt.Rows.Add(Item.Id,Item.Line, Item.Description);
+            foreach (var Item in reportCourtLoadExcels)
+                dt.Rows.Add(Item.Id, Item.Line, Item.Description);
+
             return dt;
         }
     }

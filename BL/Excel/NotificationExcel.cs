@@ -1,4 +1,5 @@
 ﻿using BE.JobManager;
+using DB.DataBase;
 using DB.Model;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,24 @@ namespace BL.Excel
                 dt.Rows.Add(Items.FullLic,Items.Comment,Items.Email);
             }
             return dt;
+        }
+        public static DataTable CreateExcelReceiptNotSend()
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+               var NotSendReceipts = dbContext.NotSendReceipts.ToList();
+                DataTable dt = new DataTable("Receipt");
+                dt.Columns.AddRange(new DataColumn[6] { new DataColumn("Лицевой счет"), new DataColumn("Электронная почта"), new DataColumn("Месяц")
+                , new DataColumn("Дата отправки"), new DataColumn("Количество попыток"), new DataColumn("Комментарий")});
+
+
+                foreach (var Items in NotSendReceipts)
+                {
+                    dt.Rows.Add(Items.Lic, Items.Email, Items.Month, Items.DateTimeSend, Items.NumberAttempts, Items.ErrorDescription);
+                }
+                return dt;
+            }
+            
         }
     }
 }

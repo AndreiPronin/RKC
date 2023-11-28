@@ -14,6 +14,7 @@ using BL.Extention;
 using BL.Notification;
 using System.Threading;
 using DocumentFormat.OpenXml.Drawing.Charts;
+using DB.Extention;
 
 namespace BL.Service
 {
@@ -408,10 +409,7 @@ namespace BL.Service
         {
             using (var db = new ApplicationDbContext())
             {
-                return db.IntegrationReadings.Where(x=>x.IsError == true
-                 && !x.Description.Contains("Показания ИПУ меньше предыдущего")
-                && !x.Description.Contains("Закончился срок поверки")
-                && !x.Description.Contains("Прибор учета закрыт")).ToList();
+                return db.IntegrationReadings.Filter().ToList();
             }
         }
         public List<IntegrationReadings> GetErrorIntegrationReadings(string FullLic)

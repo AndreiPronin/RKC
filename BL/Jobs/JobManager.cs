@@ -76,7 +76,6 @@ namespace BL.Jobs
         {
             lock(LockSendingPersonalReceipt)
             {
-                ShedulerLogger.WhriteToFile("Отправка кваитанций");
                 using (var db = new ApplicationDbContext())
                 {
                     try

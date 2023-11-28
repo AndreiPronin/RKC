@@ -14,7 +14,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace BL.Counters
 {
-    public interface ICounter
+    public interface ICounter : IBaseService
     {
         List<ALL_LICS> SearchIPU_LIC(SearchIPU_LICModel searchModel);
         List<IPU_COUNTERS> DetailInfroms(string IPU_LIC, bool Close = false);
@@ -141,7 +141,7 @@ namespace BL.Counters
                 IPU_COUNTERS.GIS_ID_PU = string.IsNullOrEmpty(saveModelIPU.GIS_ID_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.GIS_ID_PU;
                 IPU_COUNTERS.BRAND_PU = string.IsNullOrEmpty(saveModelIPU.BRAND_PU) ? IPU_COUNTERS.BRAND_PU : saveModelIPU.BRAND_PU;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
-                IPU_COUNTERS.DIMENSION_ID = saveModelIPU.DIMENSION != null ? saveModelIPU.DIMENSION.Id : IPU_COUNTERS.DIMENSION_ID;
+                IPU_COUNTERS.DIMENSION_ID = saveModelIPU.DIMENSION != null && saveModelIPU.DIMENSION.Id != 0 ? saveModelIPU.DIMENSION.Id : IPU_COUNTERS.DIMENSION_ID;
                 DbTPlus.SaveChanges();
             }
             await UpdateLicReadings(saveModelIPU);

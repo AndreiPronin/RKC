@@ -76,22 +76,24 @@
                         <a href="/MKD"><i class="glyphicon glyphicon-home icons" aria-hidden="true"></i> <i class="Padding">Информация по МКД</i></a>
                     </li>
                 }
-                 @if (User.IsInRole(@RolesEnums.CounterReader) || User.IsInRole(@RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
-                 {
-                <li id="Billing" class="active">
-                    <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">Биллинг Т+</i></a>
-                </li>
-                 }
-                <li id="DPU">
+                @if (User.IsInRole(@RolesEnums.CounterReader) || User.IsInRole(@RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                {
+                    <li id="Billing" class="active">
+                        <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">Биллинг Т+</i></a>
+                    </li>
+                }
+
                 @if (User.IsInRole(@RolesEnums.DPUReader) || User.IsInRole(@RolesEnums.DPUEdit) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
                 {
-                    <a href="/DPU"><i class="glyphicon glyphicon-ruble icons" aria-hidden="true"></i> <i class="Padding">ДПУ</i></a>
+                    <li id="DPU">
+                        <a href="/DPU"><i class="glyphicon glyphicon-ruble icons" aria-hidden="true"></i> <i class="Padding">ДПУ</i></a>
+                    </li>
                 }
                 @*<ul class="nav-pills nav-stacked" style="list-style-type:none;">
                     <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример1</a></li>
                     <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример2</a></li>
                 </ul>*@
-                </li>
+
                 @if (User.IsInRole(RolesEnums.Admin))
                 {
                     <li id="Report">
@@ -102,6 +104,18 @@
                 {
                     <li id="Court">
                         <a href="/Court/Serach"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
+                    </li>
+                }
+                @if (User.IsInRole(RolesEnums.SuperAdmin))
+                {
+                    <li id="Error" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-wrench icons" aria-hidden="true"></i> <i class="Padding">Ошибки</i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" style="color: #043e6e;" href="/Counter/ErrorIntegration">Интеграция</a>
+                            <a class="dropdown-item" style="color: #043e6e;" href="/PersonalData/NotSendReceipt">Отправка почты</a>
+                        </div>
                     </li>
                 }
                 <hr />
@@ -137,7 +151,6 @@
     function initMenu() {
         $('#menu ul').hide();
         $('#menu ul').children('.current').parent().show();
-        //$('#menu ul:first').show();
         $('#menu li a').click(
             function () {
                 var checkElement = $(this).next();
@@ -154,10 +167,6 @@
     }
     $(document).ready(function () {
         let HREF = window.location.href;
-        //if (!HREF.includes(":80")) {
-        //    console.log("setStyle")
-        //    $("#navBars").css("background-color:", "#f1058c !important;");
-        //}
         $("#menu li.active").removeClass("active");
         if (HREF.includes("DPU")) {
             $("#DPU").addClass("active");

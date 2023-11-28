@@ -32,6 +32,7 @@ namespace RKC.Controllers
         public readonly IFlagsAction _flagsAction;
         public readonly ISecurityProvider _securityProvider;
         private readonly IExcelCourt _excelCourt;
+        private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
         public CourtController(ICourt court, Ilogger logger, IGeneratorDescriptons generatorDescriptons, IDictionary dictionary,
             ICacheApp cacheApp, IFlagsAction flagsAction,
             ISecurityProvider securityProvider, IExcelCourt excelCourt)
@@ -89,6 +90,7 @@ namespace RKC.Controllers
         [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> SaveCourt(CourtGeneralInformation courtGeneralInformation)
         {
+            _Nlogger.Info(new ConvertJson<CourtGeneralInformation>(courtGeneralInformation).ConverModelToJson());
             var Id = await _court.SaveCourt(courtGeneralInformation, User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Id);
         }

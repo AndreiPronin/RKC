@@ -42,6 +42,7 @@ namespace RKC.Controllers
         public readonly IEBD _ebd;
         public readonly INotificationMail _notificationMail;
         private readonly IBaseService _baseService;
+        private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
         public CounterController(ICounter counter, Ilogger logger, IGeneratorDescriptons generatorDescriptons, 
             ICacheApp cacheApp, IFlagsAction flagsAction, IDictionary dictionary, IIntegrations integration
             , ISecurityProvider securityProvider,IEBD ebd,INotificationMail notificationMail, IExcel excel, IBaseService baseService)
@@ -187,12 +188,14 @@ namespace RKC.Controllers
         {
             try
             {
+                _Nlogger.Info(new ConvertJson<SaveModelIPU>(saveModelIPU).ConverModelToJson());
                 _logger.ActionUsers(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User.Identity.GetFIOFull());
                 await _counter.UpdateReadings(saveModelIPU);
                 return Content("");
             }
             catch (Exception ex)
             {
+                _Nlogger.Error(ex.Message);
                 return Content($"Во время обновления произошла ошибка {ex.Message}");
             }
         }

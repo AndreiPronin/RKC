@@ -20,7 +20,7 @@
             {
                 if (ViewBag.ZAK != true && ViewBag.LockAddPu != true)
                 {
-                    <input type="button" name="@Model.FirstOrDefault().FULL_LIC"  class="btn btn-primary AddPU"
+                    <input type="button" name="@Model.FirstOrDefault().FULL_LIC" class="btn btn-primary AddPU"
                            value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
                 }
             }
@@ -28,6 +28,7 @@
             <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank" data-tooltip="Закройте редактирование при переходе...">
                 <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
             </a>
+            <a href="/PersonalData/PersonalInformation?FullLic=@Model.FirstOrDefault().FULL_LIC"><input type="button" class="btn btn-primary" value="Страница детальной информации" /></a>
         </div>
         <div id="ResultSearchSave"></div>
     </div>

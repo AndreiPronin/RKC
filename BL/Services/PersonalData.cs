@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace BL.Services
 {
-    public interface IPersonalData
+    public interface IPersonalData : IBaseService
     {
         List<PersonalInformations> GetPersonalInformation(string FullLic);
         StateCalculation GetStateCalculation(string FullLic);

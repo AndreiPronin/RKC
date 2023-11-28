@@ -734,10 +734,10 @@ namespace BL.Excel
         public XLWorkbook SummaryReportGVS(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
             var worksheet = Excels.Worksheets.Add("Лист1");
-            worksheet.MergeAndValue(1, 2, 1, 4, $"Адрес");
-            worksheet.MergeAndValue(1, 14, 1, 20, $"ИПУ1");
-            worksheet.MergeAndValue(1, 21, 1, 27, $"ИПУ2");
-            worksheet.MergeAndValue(1, 28, 1, 29, $"Величина начисления");
+            //worksheet.MergeAndValue(1, 2, 1, 4, $"Адрес");
+            //worksheet.MergeAndValue(1, 14, 1, 20, $"ИПУ1");
+            //worksheet.MergeAndValue(1, 21, 1, 27, $"ИПУ2");
+            //worksheet.MergeAndValue(1, 28, 1, 29, $"Величина начисления");
             worksheet.Row(2).Height = 42.5;
             worksheet.Cell(2, 32).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             worksheet.Cell(1, 32).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
@@ -772,7 +772,7 @@ namespace BL.Excel
                     }
                     reader.Close();
                     var rowUse =  ExcelReport.Generate(lists,worksheet);
-                    var rngTable = worksheet.Range("A1:AF" + rowUse);
+                    var rngTable = worksheet.Range("A1:AU" + rowUse);
                     rngTable.Style.Border.RightBorder = XLBorderStyleValues.Thin;
                     rngTable.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
                 }
@@ -790,10 +790,10 @@ namespace BL.Excel
         public XLWorkbook SummaryReportOTP(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
             var worksheet = Excels.Worksheets.Add("Лист1");
-            worksheet.MergeAndValue(1, 2, 1, 4, $"Адрес");
-            worksheet.MergeAndValue(1, 14, 1, 20, $"ИПУ1");
-            worksheet.MergeAndValue(1, 21, 1, 27, $"ИПУ2");
-            worksheet.MergeAndValue(1, 28, 1, 29, $"Величина начисления");
+            //worksheet.MergeAndValue(1, 2, 1, 4, $"Адрес");
+            //worksheet.MergeAndValue(1, 14, 1, 20, $"ИПУ1");
+            //worksheet.MergeAndValue(1, 21, 1, 27, $"ИПУ2");
+            //worksheet.MergeAndValue(1, 28, 1, 29, $"Величина начисления");
             worksheet.Row(2).Height = 42.5;
             worksheet.Cell(2, 32).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             worksheet.Cell(1, 32).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
@@ -828,7 +828,7 @@ namespace BL.Excel
                     }
                     reader.Close();
                     var rowUse = ExcelReport.Generate(lists, worksheet);
-                    var rngTable = worksheet.Range("A1:AF" + rowUse);
+                    var rngTable = worksheet.Range("A1:AU" + rowUse);
                     rngTable.Style.Border.RightBorder = XLBorderStyleValues.Thin;
                     rngTable.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
                 }

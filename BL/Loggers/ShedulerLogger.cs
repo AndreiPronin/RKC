@@ -9,9 +9,10 @@ namespace BL.Loggers
 {
     public class ShedulerLogger
     {
-        public static void WhriteToFile(string s)
+        public static void WhriteToFile(string Text)
         {
-            if (string.IsNullOrEmpty(s))
+            Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " - " + Text;
+            if (string.IsNullOrEmpty(Text))
                 return;
             var FilePath = AppDomain.CurrentDomain.BaseDirectory + $@"Logs\{DateTime.Now.ToString("yyyy-MM-dd")} Sheduler.log";
             if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + $@"Logs"))
@@ -21,15 +22,15 @@ namespace BL.Loggers
             if (File.Exists(FilePath))
             {
                 var OldText = File.ReadAllText(FilePath);
-                s += Environment.NewLine;
-                s += OldText;
-                File.WriteAllText(FilePath, s);
+                Text += Environment.NewLine;
+                Text += OldText;
+                File.WriteAllText(FilePath, Text);
             }
             else
             {
                 File.Create(FilePath).Close();
 
-                File.WriteAllText(FilePath, s + Environment.NewLine);
+                File.WriteAllText(FilePath, Text + Environment.NewLine);
             }
         }
     }

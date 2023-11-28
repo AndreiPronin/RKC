@@ -1,4 +1,5 @@
-﻿using BL.Notification;
+﻿using BL.Loggers;
+using BL.Notification;
 using DB.DataBase;
 using Quartz;
 using System;
@@ -11,7 +12,7 @@ using WordGenerator;
 
 namespace BL.Jobs
 {
-    public class SimpleJob : IJob
+    public class ClearIntegration : IJob
     {
         public void Execute(IJobExecutionContext context)
         {
@@ -19,10 +20,11 @@ namespace BL.Jobs
             {
                 var date = DateTime.Now.AddMonths(-2);
                 var res = db.IntegrationReadings.Where(x => x.DateTime <= date).ToList();
-                foreach(var Item in res)
+                ShedulerLogger.WhriteToFile($"Начало очистки интеграции {res.Count()}");
+                foreach (var Item in res)
                 {
                     db.IntegrationReadings.Remove(Item);
-                     db.SaveChangesAsync();
+                    db.SaveChanges();
                 }
                
             }

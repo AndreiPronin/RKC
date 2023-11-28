@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using BE.Roles;
 using AppCache;
 using BE.Counter;
+using DB.Extention;
 
 namespace RKC.Controllers
 {
@@ -141,16 +142,11 @@ namespace RKC.Controllers
         [Auth(Roles = "Admin,Notifications")]
         public ActionResult GetNotification()
         {
-            using (var db = new ApplicationDbContext())
+            using (var db = new ApplicationDbContext()) 
             {
                 var notification = db.Notifications.Where(x => x.IsDelete == false).ToList();
-                var xxx = BE.Counter.ErrorIntegration.Low.ToString();
-                var ErrorIntegration = db.IntegrationReadings.Where(x => x.IsError == true
-                && !x.Description.Contains("Показания ИПУ меньше предыдущего")
-                && !x.Description.Contains("Закончился срок поверки")
-                && !x.Description.Contains("Прибор учета закрыт")
-                ).Select(x => x.IsError)?.Count();
-                var notSendElectonicalReceipt = db.NotSendReceipts.Where(x => x.IsSend == false).Select(x=>x.IsSend).Count();
+                var ErrorIntegration = db.IntegrationReadings.Filter().Select(x => x.IsError)?.Count();
+                var notSendElectonicalReceipt = db.NotSendReceipts.Filter().Select(x=>x.IsSend).Count();
                 if (ErrorIntegration > 0)
                 {
                     notification.Add(new Notifications { Description = $"Ошибка показаний {ErrorIntegration} ошибки", Title = "Ошибка показаний ИПУ" });

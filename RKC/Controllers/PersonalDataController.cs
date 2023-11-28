@@ -21,6 +21,7 @@ using BL.Counters;
 using WordGenerator.Enums;
 using DB.Model;
 using DB.DataBase;
+using DB.Extention;
 
 namespace RKC.Controllers
 {
@@ -333,8 +334,20 @@ namespace RKC.Controllers
         {
             using (var context = new ApplicationDbContext())
             {
-                return View(context.NotSendReceipts.Where(x=>x.IsSend == false).ToList());
+                return View(context.NotSendReceipts.Filter().ToList());
             }    
+        }
+        public ActionResult DownloadNotSendReceiptExcels()
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(NotificationExcel.CreateExcelReceiptNotSend());
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибка отправки почты.xlsx");
+                }
+            }
         }
     }
 }
