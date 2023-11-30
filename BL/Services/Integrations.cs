@@ -416,7 +416,8 @@ namespace BL.Service
         {
             using (var db = new ApplicationDbContext())
             {
-                return db.IntegrationReadings.Where(x => x.IsError == true && x.Lic == FullLic).ToList();
+                var query = db.IntegrationReadings.Filter();
+                return query.Where(x => x.Lic == FullLic).ToList();
             }
         }
     }

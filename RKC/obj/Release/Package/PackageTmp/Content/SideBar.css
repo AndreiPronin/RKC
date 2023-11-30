@@ -13,6 +13,13 @@
     overflow: hidden;
 }
 
+
+
+.dropdown {
+    color: red;
+}
+
+
 #wrapper2.toggled {
     padding-right: 250px;
     overflow: hidden;

@@ -2,9 +2,14 @@
 @{
     ViewBag.Title = "ErrorIntegration";
 }
+<style>
+    
+
+</style>
 <h2>Ошибка отправки почты</h2>
-<a class="btn btn-success" href="/PersonalData/DownloadNotSendReceiptExcels"> Скачать в Excel </a>
-@*<a class="btn btn-danger" href="/counter/ErroIntegratinLoadExcel"> Очистить список отправки </a>*@
+<span class="loaders hidden"><div style="margin-top:-25px; color:black" >Загрузка</div></span>
+<a class="btn btn-success DownloadNotSendReceiptExcels" href="/PersonalData/DownloadNotSendReceiptExcels"> Скачать в Excel </a>
+<a class="btn btn-danger clearErroIntegratinLoadExcel"> Очистить список отправки </a>
 <table class="table">
     <thead>
         <tr>
@@ -33,4 +38,22 @@
         }
     </tbody>
 </table>
+<script>
+    document.addEventListener("DOMContentLoaded", ready);
+    $(document).ready(function (e) {
+        $('.clearErroIntegratinLoadExcel').click(function () {
+            $('.loaders').removeClass('hidden');
+            $.ajax({
+                url: '/PersonalData/CleareNotSendReceiptExcels',
+                success: function (data) {
+                    window.location.reload();
+                   
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору!");
+                }
+            })
+        })
+    })
+</script>
 

@@ -11,6 +11,7 @@ using BL.Helper;
 using System.Threading;
 using BL.Services;
 using DocumentFormat.OpenXml.Spreadsheet;
+using DB.Extention;
 
 namespace BL.Counters
 {
@@ -259,22 +260,23 @@ namespace BL.Counters
             using(var db = new DbTPlus())
             {
                 var Pu = db.IPU_COUNTERS.Find(IdPU);
-                var AppDb = new ApplicationDbContext();
-                var Integr = AppDb.IntegrationReadings.Where(x => x.TypePu == Pu.TYPE_PU && x.Lic == Lic).ToList();
-                if (Integr?.Count() > 0)
-                {
-                    string Description = "";
-                    foreach (var Item in Integr)
+                using (var AppDb = new ApplicationDbContext()) { 
+                    var Integr = AppDb.IntegrationReadings.Filter().Where(x => x.TypePu == Pu.TYPE_PU && x.Lic == Lic).ToList();
+                    if (Integr?.Count() > 0)
                     {
-                        Description += $@"{Item.Description} нач. {Item.InitialReadings} конч. {Item.EndReadings} 
+                        string Description = "";
+                        foreach (var Item in Integr)
+                        {
+                            Description += $@"{Item.Description} нач. {Item.InitialReadings} конч. {Item.EndReadings} 
 поступившие {Item.NowReadings}" + Environment.NewLine;
+                        }
+                        logger.ActionUsers(IdPU, "Убрал ошибку " + Description, User);
+                        foreach (var Item in Integr)
+                        {
+                            Item.IsError = false;
+                        }
+                        AppDb.SaveChanges();
                     }
-                    logger.ActionUsers(IdPU,"Убрал ошибку " + Description, User);
-                    foreach (var Item in Integr)
-                    {
-                        Item.IsError = false;
-                    }
-                    AppDb.SaveChanges();
                 }
             }
         }

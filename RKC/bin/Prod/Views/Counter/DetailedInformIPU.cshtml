@@ -20,7 +20,7 @@
             {
                 if (ViewBag.ZAK != true && ViewBag.LockAddPu != true)
                 {
-                    <input type="button" name="@Model.FirstOrDefault().FULL_LIC"  class="btn btn-primary AddPU"
+                    <input type="button" name="@Model.FirstOrDefault().FULL_LIC" class="btn btn-primary AddPU"
                            value="Добавить ПУ" data-toggle="modal" data-target="#AddPUModal" />
                 }
             }
@@ -28,6 +28,7 @@
             <a href="/PersonalData/DetailedInformPersData?FULL_LIC=@Model.FirstOrDefault().FULL_LIC" target="_blank" data-tooltip="Закройте редактирование при переходе...">
                 <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
             </a>
+            <a href="/PersonalData/PersonalInformation?FullLic=@Model.FirstOrDefault().FULL_LIC"><input type="button" class="btn btn-primary" value="Страница детальной информации" /></a>
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -573,7 +574,10 @@
                         <input type="button" name="@Items.FULL_LIC-@TypePU" class="btn btn-primary Archive" value="История расчётов ИПУ" data-toggle="modal" data-target="#ArchiveModal" />
                         <input type="button" value="Сохранить" class="btn btn-danger hidden  Save" />
                         <input type="button" name="@Items.ID_PU" value="Редактировать" class="btn btn-success Edit" />
-                        <input type="button" name="@Items.ID_PU" value="Убрать ошибку" class="btn btn-success DeleteError hidden" />
+                         if (ViewBag.ErrorIntegration.Count > 0)
+                         {
+                            <input type="button" name="@Items.ID_PU" value="Убрать ошибку" class="btn btn-success DeleteError hidden" />
+                         }
                         <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
                         <input style="float:right;" name="@Items.TYPE_PU" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
                         <input type="button" name="@Items.ID_PU" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />

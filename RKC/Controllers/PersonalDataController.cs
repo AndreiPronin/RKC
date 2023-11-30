@@ -22,6 +22,8 @@ using WordGenerator.Enums;
 using DB.Model;
 using DB.DataBase;
 using DB.Extention;
+using BL.http;
+using System.Net.Http;
 
 namespace RKC.Controllers
 {
@@ -348,6 +350,16 @@ namespace RKC.Controllers
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибка отправки почты.xlsx");
                 }
             }
+        }
+        [Auth(Roles = RolesEnums.SuperAdmin)]
+        public HttpResponseMessage CleareNotSendReceiptExcels()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                context.NotSendReceipts.RemoveRange(context.NotSendReceipts.ToList());
+                context.SaveChanges();
+            }
+            return Resposne.CreateResponse200();
         }
     }
 }
