@@ -3,7 +3,34 @@
 @{ 
     var Style = "";
 }
+<style>
+    #gir {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background-image: url('http://lh5.googleusercontent.com/-obNunPiVVd4/VJOuk2f29_I/AAAAAAAAE3Y/SOoFIrFTTkk/s800/gerljanda1.png');
+        height: 36px;
+        width: 100%;
+        overflow: hidden;
+        z-index: 99
+    }
 
+    #nums_1 {
+        padding: 100px
+    }
+
+    .gir_1 {
+        background-position: 0 0
+    }
+
+    .gir_2 {
+        background-position: 0 -36px
+    }
+
+    .gir_3 {
+        background-position: 0 -72px
+    } 
+</style>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -24,12 +51,27 @@
         Style = "red!important";
     }
 </head>
+
 <body>
-   
-    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: @Style" >
+    @if (User.Identity.IsAuthenticated && !Request.Url.AbsoluteUri.Contains("Court/Index"))
+    {
+        if ((DateTime.Now.Month == 12 && DateTime.Now.Day > 21) || (DateTime.Now.Month == 1 && DateTime.Now.Day < 14))
+        {
+            <div id="gir2" class="gir_3">
+                <img style="width:236px;height:236px; z-index:-999999"  src="~/Content/img/Moroz1.gif" />
+            </div>
+            <div id="gir3" class="gir_3">
+                <img style="width:236px;height:236px; z-index:-999999" src="~/Content/img/Moroz2.gif" />
+            </div>
+        }
+        <div id="gir"  class="gir_3">
+            <div id="nums_1">1</div>
+        </div>
+    }
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: @Style">
         <div id="wrapper">
             <div id="sidebar-wrapper">
-                <div class="TimeAndDate"  style="background-color: @Style">
+                <div class="TimeAndDate" style="background-color: @Style">
                     <div id="Date"></div>
                     <div style="display: inline-flex;">
                         <div id="hours">:</div>
@@ -60,84 +102,84 @@
             </div>
         </div>
     </div>
-   @if (User.Identity.IsAuthenticated)
-   {
+    @if (User.Identity.IsAuthenticated)
+    {
 
 
 
 
-<div id="wrapper2" class="toggled-2" >
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper2">
-            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-                @if (User.IsInRole(RolesEnums.MkdReader) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
-                {
-                    <li id="Mkd" class="active">
-                        <a href="/MKD"><i class="glyphicon glyphicon-home icons" aria-hidden="true"></i> <i class="Padding">Информация по МКД</i></a>
-                    </li>
-                }
-                @if (User.IsInRole(@RolesEnums.CounterReader) || User.IsInRole(@RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
-                {
-                    <li id="Billing" class="active">
-                        <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">Биллинг Т+</i></a>
-                    </li>
-                }
+        <div id="wrapper2" class="toggled-2">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper2">
+                <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+                    @if (User.IsInRole(RolesEnums.MkdReader) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <li id="Mkd" class="active">
+                            <a href="/MKD"><i class="glyphicon glyphicon-home icons" aria-hidden="true"></i> <i class="Padding">Информация по МКД</i></a>
+                        </li>
+                    }
+                    @if (User.IsInRole(@RolesEnums.CounterReader) || User.IsInRole(@RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <li id="Billing" class="active">
+                            <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">Биллинг Т+</i></a>
+                        </li>
+                    }
 
-                @if (User.IsInRole(@RolesEnums.DPUReader) || User.IsInRole(@RolesEnums.DPUEdit) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
-                {
-                    <li id="DPU">
-                        <a href="/DPU"><i class="glyphicon glyphicon-ruble icons" aria-hidden="true"></i> <i class="Padding">ДПУ</i></a>
-                    </li>
-                }
-                @*<ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                    <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример1</a></li>
-                    <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример2</a></li>
-                </ul>*@
+                    @if (User.IsInRole(@RolesEnums.DPUReader) || User.IsInRole(@RolesEnums.DPUEdit) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <li id="DPU">
+                            <a href="/DPU"><i class="glyphicon glyphicon-ruble icons" aria-hidden="true"></i> <i class="Padding">ДПУ</i></a>
+                        </li>
+                    }
+                    @*<ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                            <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример1</a></li>
+                            <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример2</a></li>
+                        </ul>*@
 
-                @if (User.IsInRole(RolesEnums.Admin))
-                {
-                    <li id="Report">
-                        <a href="/Report"><i class="glyphicon glyphicon-list-alt icons" aria-hidden="true"></i> <i class="Padding">Отчеты</i></a>
+                    @if (User.IsInRole(RolesEnums.Admin))
+                    {
+                        <li id="Report">
+                            <a href="/Report"><i class="glyphicon glyphicon-list-alt icons" aria-hidden="true"></i> <i class="Padding">Отчеты</i></a>
+                        </li>
+                    }
+                    @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.CourtReader) || User.IsInRole(RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.CourtAdmin))
+                    {
+                        <li id="Court">
+                            <a href="/Court/Serach"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
+                        </li>
+                    }
+                    @if (User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <li id="Error" class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="glyphicon glyphicon-wrench icons" aria-hidden="true"></i> <i class="Padding">Ошибки</i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" style="color: #043e6e;" href="/Counter/ErrorIntegration">Интеграция</a>
+                                <a class="dropdown-item" style="color: #043e6e;" href="/PersonalData/NotSendReceipt">Отправка почты</a>
+                            </div>
+                        </li>
+                    }
+                    <hr />
+                    <li style="bottom: 0px; position: absolute; bottom: 0px; ">
+                        <p style="color:white; margin-left:35px;">Ссылки на другие системы</p>
                     </li>
-                }
-                @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.CourtReader) || User.IsInRole(RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.CourtAdmin))
-                {
-                    <li id="Court">
-                        <a href="/Court/Serach"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
-                    </li>
-                }
-                @if (User.IsInRole(RolesEnums.SuperAdmin))
-                {
-                    <li id="Error" class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="glyphicon glyphicon-wrench icons" aria-hidden="true"></i> <i class="Padding">Ошибки</i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" style="color: #043e6e;" href="/Counter/ErrorIntegration">Интеграция</a>
-                            <a class="dropdown-item" style="color: #043e6e;" href="/PersonalData/NotSendReceipt">Отправка почты</a>
-                        </div>
-                    </li>
-                }
-                <hr />
-                <li style="bottom: 0px; position: absolute; bottom: 0px; ">
-                    <p style="color:white; margin-left:35px;">Ссылки на другие системы</p>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-        <!-- Page Content -->
-        @*<div id="page-content-wrapper">
-            <div class="container-fluid xyz">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Simple Admin Sidebar With Bootstrap by <a href="http://http://codepen.io/hughbalboa/">hughbalboa</a></h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident laudantium nobis cum dignissimos ex inventore, velit blanditiis. Quod laborum soluta quidem culpa officia eligendi, quam, recusandae iste aliquid amet odit! </p>
-                    </div>
-                </div>
+                </ul>
             </div>
-        </div>*@
-    </div>
-   }
+            <!-- /#sidebar-wrapper -->
+            <!-- Page Content -->
+            @*<div id="page-content-wrapper">
+                    <div class="container-fluid xyz">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1>Simple Admin Sidebar With Bootstrap by <a href="http://http://codepen.io/hughbalboa/">hughbalboa</a></h1>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident laudantium nobis cum dignissimos ex inventore, velit blanditiis. Quod laborum soluta quidem culpa officia eligendi, quam, recusandae iste aliquid amet odit! </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    }
     <!-- /#page-content-wrapper -->
     @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Notifications")))
     {
@@ -148,6 +190,17 @@
     </div>
 </body>
 <script>
+    ///Новый год
+    function gir() {
+        try {
+            nums = document.getElementById('nums_1').innerHTML
+            if (nums == 1) { document.getElementById('gir').className = 'gir_1'; document.getElementById('nums_1').innerHTML = '2' }
+            if (nums == 2) { document.getElementById('gir').className = 'gir_2'; document.getElementById('nums_1').innerHTML = '3' }
+            if (nums == 3) { document.getElementById('gir').className = 'gir_3'; document.getElementById('nums_1').innerHTML = '1' }
+        } catch { }
+    }
+    setInterval(function () { gir() }, 500)
+    ///Новый год
     function initMenu() {
         $('#menu ul').hide();
         $('#menu ul').children('.current').parent().show();

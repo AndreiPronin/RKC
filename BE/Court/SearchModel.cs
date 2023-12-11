@@ -8,6 +8,7 @@ namespace BE.Court
 {
     public class SearchModel
     {
+        public int? Id { get; set; }
         public string Lic { get; set; }
         public string Street { get; set; }
         public string Home { get; set; }

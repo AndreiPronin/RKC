@@ -20,9 +20,9 @@ namespace BL.Jobs
             using(var dbContext = new ApplicationDbContext())
             {
                 ShedulerLogger.WhriteToFile("Начало Отправки квитанций");
-                var FullLics = dbContext.NotSendReceipts.Where(x=>x.IsSend == false && x.NumberAttempts <= 7 && x.TypeReceipt == (int)TypeReceipt.PersonalReceipt).Select(x=>x.Lic).ToList();
+                var FullLics = dbContext.NotSendReceipts.Where(x=>x.IsSend == false && x.NumberAttempts <= 9 && x.TypeReceipt == (int)TypeReceipt.PersonalReceipt).Select(x=>x.Lic).ToList();
                 ShedulerLogger.WhriteToFile($"Готово к отправке {FullLics.Count()}");
-                if (FullLics.Any())
+                if (FullLics.Any() && ((DateTime.Now.Hour > 4 && DateTime.Now.Hour > 8) || DateTime.Now.Hour < 4))
                     _jobmanager.SendReceipt(String.Join(";", FullLics));
             }
         }

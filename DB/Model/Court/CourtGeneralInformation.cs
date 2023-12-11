@@ -46,7 +46,7 @@ namespace DB.Model.Court
         /// </summary>
         public string Floor { get; set; }
         /// <summary>
-        /// Доля собственности
+        /// Вид собственности
         /// </summary>
         public string ShareOfOwnership { get; set; }
         /// <summary>
@@ -117,6 +117,22 @@ namespace DB.Model.Court
         /// Дата создания
         /// </summary>
         public string DateCreate { get; set; }
+        /// <summary>
+        /// Статус карточки
+        /// </summary>
+        public string StatusCard { get; set; }
+        /// <summary>
+        /// Доля в праве
+        /// </summary>
+        public string ShareInRight { get; set; }
+        /// <summary>
+        /// Солидарно с
+        /// </summary>
+        public string InSolidarityWith { get; set; }
+        /// <summary>
+        /// Место рождения
+        /// </summary>
+        public string PlaceBirth { get; set; }
         public virtual CourtWork CourtWork { get; set; }
         public ICollection<CourtDocumentScans> CourtDocumentScans { get; set; }
         public ICollection<CourtWorkRequisites> CourtWorkRequisites { get; set; }

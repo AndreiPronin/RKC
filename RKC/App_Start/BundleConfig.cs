@@ -25,6 +25,7 @@ namespace RKC
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/Site.css",
+                      "~/Content/NewYear.css",
                       "~/Content/SideBar.css"));
         }
     }

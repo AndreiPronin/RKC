@@ -292,7 +292,10 @@ namespace BL.Excel
 
                         if (dataRow.Cell(5).Value != "") {
                             DateTime.TryParse(Convert.ToString(dataRow.Cell(2).Value).Replace(".", ","), out DateTime date);
-                            saveModel.DateOfBirth = date;
+                            if(date == DateTime.MinValue) 
+                                saveModel.DateOfBirth = null;
+                            else
+                                saveModel.DateOfBirth = date;
                         }
                         saveModel.PlaceOfBirth = dataRow.Cell(3).Value == "" ? null : Convert.ToString(dataRow.Cell(3).Value).Trim();
                         saveModel.PassportSerial = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Trim();
@@ -302,7 +305,11 @@ namespace BL.Excel
                         if (dataRow.Cell(7).Value != "")
                         {
                             DateTime.TryParse(Convert.ToString(dataRow.Cell(7).Value).Replace(".", ","), out DateTime date);
-                            saveModel.PassportDate = date;
+                            if (date == DateTime.MinValue)
+                                saveModel.PassportDate = null;
+                            else
+                                saveModel.PassportDate = date;
+
                         }
                            
                         if (dataRow.Cell(8).Value != "")

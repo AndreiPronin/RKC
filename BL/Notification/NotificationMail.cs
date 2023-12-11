@@ -63,7 +63,7 @@ namespace BL.Notification
             //smtpClient.Credentials = CredentialCache.DefaultNetworkCredentials;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Port = 587;
+            smtpClient.Port = 25;
             smtpClient.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mail:login:T+"], ConfigurationManager.AppSettings["mail:pass:T+"]);
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:T+"]);
@@ -80,7 +80,7 @@ namespace BL.Notification
             //smtpClient.Credentials = CredentialCache.DefaultNetworkCredentials;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Port = 587;
+            smtpClient.Port = 25;
             smtpClient.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mail:login:T+"], ConfigurationManager.AppSettings["mail:pass:T+"]);
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:T+"]);

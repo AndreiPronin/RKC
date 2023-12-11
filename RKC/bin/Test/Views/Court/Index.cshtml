@@ -142,7 +142,16 @@
     </div>
 </div>
 <div class="col-md-11">
-    <h2 class="text-center">@Model.FioDuty СП № @Model.CourtWork.NumberSP </h2>
+    <div class="col-md-4 text-left">
+        @{
+            var NumberSP = $"П{Model.Id}";
+        }
+        <h2 class="">Номер карточки дела @NumberSP </h2>
+    </div>
+    <div class="col-md-8 text-left">
+        <h2 class="">@Model.FioDuty СП № @Model.CourtWork.NumberSP </h2>
+    </div>
+
     <div id="ResultSearchCourt"></div>
     @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post,
     new { onsubmit = "this.querySelectorAll('input').forEach(i => i.disabled = false);this.querySelectorAll('textarea').forEach(i => i.disabled = false)" }))
@@ -156,8 +165,10 @@
         }
         else
         {
+            <input type="button" class="btn btn-danger" id="ClosePage" value="Закрыть страницу" />
             <p>В данный момент страницу редактирует @ViewBag.User</p>
         }
+        <span style="font-size:18px" >Статус карточки:</span>  @Html.TextBoxFor(m => m.StatusCard, new { @readonly = "readonly", @dicId = "23", @class = "form-control DictionaryAutoComplete", @Value = Model.StatusCard })
         <div class="tab-content">
             <div class="tab-pane fade active in" id="GeneralInformation">
                 @Html.Partial("PartialGeneralInformation", Model)
@@ -210,6 +221,21 @@
                 return false;
             }
         });
+        $("#ShareOfOwnership").change(function () {
+            var value = $("#ShareOfOwnership").val();
+            $("#ShareInRight").attr("disabled", true);
+            $("#InSolidarityWith").attr("disabled", true);
+            if (value == 'долевая (доля на 1 чел)') {
+                $("#ShareInRight").attr("disabled", false);
+                return;
+            }
+            if (value == 'общая долевая (доля на неск-ко человек)' || value == 'общая долевая (доля на неск-ко человек)' ) {
+                $("#InSolidarityWith").attr("disabled", false);
+                $("#ShareInRight").attr("disabled", false);
+                return;
+            }
+        })
+
         $("#UserHistoryActionButton").click(function () {
             $.ajax({
                 url: "/Court/GetActionUser?Lic=" + @Model.Lic + '&IdCourt=' + @Model.Id,

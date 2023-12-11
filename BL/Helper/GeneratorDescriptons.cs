@@ -272,7 +272,7 @@ namespace BL.Helper
             if (courtGeneralBe.Floor != courtGeneralDb.Floor)
                 Result.AppendLine($"Пол: было {courtGeneralDb.Floor} стало {courtGeneralBe.Floor}");
             if (courtGeneralBe.ShareOfOwnership != courtGeneralDb.ShareOfOwnership)
-                Result.AppendLine($"Доля собственности: было {courtGeneralDb.ShareOfOwnership} стало {courtGeneralBe.ShareOfOwnership}");
+                Result.AppendLine($"Вид собственности: было {courtGeneralDb.ShareOfOwnership} стало {courtGeneralBe.ShareOfOwnership}");
             if (courtGeneralBe.CadastrNumber != courtGeneralDb.CadastrNumber)
                 Result.AppendLine($"Кадастровый номер: было {courtGeneralDb.CadastrNumber} стало {courtGeneralBe.CadastrNumber}");
             if (courtGeneralBe.AddressRegister != courtGeneralDb.AddressRegister)
@@ -303,6 +303,12 @@ namespace BL.Helper
                 Result.AppendLine($"Примечание: было {courtGeneralDb.Comment} стало {courtGeneralBe.Comment}");
             if (courtGeneralBe.DateCreate != courtGeneralDb.DateCreate)
                 Result.AppendLine($"Дата создания: было {courtGeneralDb.DateCreate} стало {courtGeneralBe.DateCreate}");
+            if (courtGeneralBe.StatusCard != courtGeneralDb.StatusCard)
+                Result.AppendLine($"Статус карточки: было {courtGeneralDb.StatusCard} стало {courtGeneralBe.StatusCard}");
+            if (courtGeneralBe.ShareInRight != courtGeneralDb.ShareInRight)
+                Result.AppendLine($"Доля в праве: было {courtGeneralDb.ShareInRight} стало {courtGeneralBe.ShareInRight}");
+            if (courtGeneralBe.InSolidarityWith != courtGeneralDb.InSolidarityWith)
+                Result.AppendLine($"Солидарно с: было {courtGeneralDb.InSolidarityWith} стало {courtGeneralBe.InSolidarityWith}");
             //.CourtWork
             if (courtGeneralBe.CourtWork.SumDebtNowDate != courtGeneralDb.CourtWork.SumDebtNowDate)
                 Result.AppendLine($"Текущая сумма задолженности: было {courtGeneralDb.CourtWork.SumDebtNowDate} стало {courtGeneralBe.CourtWork.SumDebtNowDate}");
@@ -628,7 +634,7 @@ namespace BL.Helper
             if (courtGeneralBe.CourtLitigationWork.DateDecision != courtGeneralDb.CourtLitigationWork.DateDecision)
                 Result.AppendLine($"Дата решения: было {courtGeneralDb.CourtLitigationWork.DateDecision} стало {courtGeneralBe.CourtLitigationWork.DateDecision}");
             if (courtGeneralBe.CourtLitigationWork.SumOverpaidGP != courtGeneralDb.CourtLitigationWork.SumOverpaidGP)
-                Result.AppendLine($"Сумма излишне уплаченной ГП {courtGeneralDb.CourtLitigationWork.SumOverpaidGP} стало {courtGeneralBe.CourtLitigationWork.SumOverpaidGP}");
+                Result.AppendLine($"Сумма излишне уплаченной ГП: было {courtGeneralDb.CourtLitigationWork.SumOverpaidGP} стало {courtGeneralBe.CourtLitigationWork.SumOverpaidGP}");
             if (courtGeneralBe.CourtLitigationWork.SumPayGP != courtGeneralDb.CourtLitigationWork.SumPayGP)
                 Result.AppendLine($"Сумма уплаченной ГП: было {courtGeneralDb.CourtLitigationWork.SumPayGP} стало {courtGeneralBe.CourtLitigationWork.SumPayGP}");
             if (courtGeneralBe.CourtLitigationWork.DateEntryDecision != courtGeneralDb.CourtLitigationWork.DateEntryDecision)

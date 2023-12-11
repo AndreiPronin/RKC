@@ -58,5 +58,21 @@ namespace BL.Excel
                 throw e; 
             }
         }
+        public static int TryGetCardNumber(this object row)
+        {
+            try
+            {
+                var result = row.ToString();
+                if (!string.IsNullOrEmpty(result))
+                {
+                    return Convert.ToInt32(result.Replace("П-", ""));
+                }
+                throw new Exception("Пустой номер карточки");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

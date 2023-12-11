@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 using WordGenerator.interfaces;
 using BE.Actions;
 using BL.Loggers;
+using BE.Service;
+using System.IO;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace BL.Jobs
 {
@@ -74,75 +77,109 @@ namespace BL.Jobs
         }
         public void SendReceipt(string FullLic = "")
         {
-            lock(LockSendingPersonalReceipt)
+            using (var db = new ApplicationDbContext())
             {
-                using (var db = new ApplicationDbContext())
+                try
                 {
-                    try
+                    //блокировка от двойного нажатия кнопки
+                    var locks = db.Flags.FirstOrDefault(x => x.Id == (int)EnumFlags.SendingPersonalReceipt);
+                    if (locks != null && locks.Flag != true)
                     {
-                        //блокировка от двойного нажатия кнопки
-                        var locks = db.Flags.FirstOrDefault(x => x.NameAction == FlagActions.SendingPersonalReceipt);
-                        if (locks != null && locks.Flag != true)
+                        locks.Flag = true;
+                        db.SaveChanges();
+                        List<ReceiptSend> receiptSend = new List<ReceiptSend>();
+                        List<PersData> persData;
+                        if (string.IsNullOrEmpty(FullLic))
                         {
-                            locks.Flag = true;
-                            db.SaveChanges();
-                            List<ReceiptSend> receiptSend = new List<ReceiptSend>();
-                            List<PersData> persData;
-                            if (string.IsNullOrEmpty(FullLic))
-                            {
-                                persData = db.PersData.Where(x => x.Main == true && x.IsDelete != true && x.SendingElectronicReceipt.Contains("Да")).ToList();
-                            }
-                            else
-                            {
-                                persData = new List<PersData>();
-                                var Lic = FullLic.Split(';');
-                                for (int i = 0; i < Lic.Length; i++)
-                                    if (!string.IsNullOrEmpty(Lic[i].Trim()))
-                                    {
-                                        var lic = Lic[i].Trim();
-                                        persData.Add(db.PersData.FirstOrDefault(x => x.Main == true && x.Lic == lic && x.IsDelete != true && x.SendingElectronicReceipt.Contains("Да")));
-                                    }
-                            }
-                            var Recept = _pdfFactory.CreatePdf(PdfType.Personal);
-                            foreach (var Items in persData)
-                            {
-                                try
+                            persData = db.PersData.Where(x => x.Main == true && x.IsDelete != true && x.SendingElectronicReceipt.Contains("Да")).ToList();
+                        }
+                        else
+                        {
+                            persData = new List<PersData>();
+                            var Lic = FullLic.Split(';');
+                            for (int i = 0; i < Lic.Length; i++)
+                                if (!string.IsNullOrEmpty(Lic[i].Trim()))
                                 {
-                                    Recept.Generate(Items.Lic, DateTime.Now.AddMonths(-1));
-                                    if (string.IsNullOrEmpty(Items.Email))
-                                        throw new Exception("Пустой Email");
+                                    var lic = Lic[i].Trim();
+                                    persData.Add(db.PersData.FirstOrDefault(x => x.Main == true && x.Lic == lic && x.IsDelete != true && x.SendingElectronicReceipt.Contains("Да")));
+                                }
+                        }
+                        var Recept = _pdfFactory.CreatePdf(PdfType.Personal);
+                        foreach (var Items in persData)
+                        {
+                            try
+                            {
+                                if (Items != null)
+                                {
+                                    if (!File.Exists($@"{AppDomain.CurrentDomain.BaseDirectory}Template\Kvit\{DateTime.Now.AddMonths(-1):MMMM-yyyy}\Квитанция {FullLic} {DateTime.Now.AddMonths(-1).Month}.pdf"))
+                                    {
+                                        Recept.Generate(Items.Lic, DateTime.Now.AddMonths(-1));
+                                        if (string.IsNullOrEmpty(Items.Email))
+                                            throw new Exception("Пустой Email");
+                                    }
                                     _notificationMail.SendMailReceipt(Items.Lic, Items.Email);
                                     receiptSend.Add(new ReceiptSend { FullLic = Items.Lic, Comment = "Отправлена квитанция", Email = Items.Email, DateTime = DateTime.Now, IsSend = true });
-                                }
-                                catch (Exception ex)
-                                {
-                                    if (Items != null)
-                                        receiptSend.Add(new ReceiptSend { FullLic = Items.Lic, Comment = ex.Message, Email = Items.Email, DateTime = DateTime.Now, IsSend = false });
+                                    try
+                                    {
+                                        saveReceiptSens(new List<ReceiptSend> { new ReceiptSend { FullLic = Items.Lic, Comment = "Отправлена квитанция", Email = Items.Email, DateTime = DateTime.Now, IsSend = true } }
+                                        , (int)TypeReceipt.PersonalReceipt);
+                                    }
+                                    catch { }
                                 }
                             }
-                            if (receiptSend.Count() > 0)
+                            catch (Exception ex)
                             {
-                                try
+                                if (Items != null)
                                 {
-                                    saveReceiptSens(receiptSend, (int)TypeReceipt.PersonalReceipt);
+                                    receiptSend.Add(new ReceiptSend { FullLic = Items.Lic, Comment = ex.Message, Email = Items.Email, DateTime = DateTime.Now, IsSend = false });
+                                    try
+                                    {
+                                        saveReceiptSens(new List<ReceiptSend> { new ReceiptSend { FullLic = Items.Lic, Comment = ex.Message, Email = Items.Email, DateTime = DateTime.Now, IsSend = false } }
+                                        , (int)TypeReceipt.PersonalReceipt);
+                                    }
+                                    catch { }
                                 }
-                                catch { }
-                                _notificationMail.SendEmailReceiptNotSend(receiptSend);
                             }
-                            //Разблокировка
-                            locks = db.Flags.FirstOrDefault(x => x.NameAction == FlagActions.SendingPersonalReceipt);
-                            locks.Flag = false;
-                            db.SaveChanges();
+                            if (Items != null)
+                                ShedulerLogger.WhriteToFile($"Идет работа сервиса. Отправка квитанции на лицевой счет {Items.Lic}");
                         }
-                    }
-                    catch(Exception ex)
-                    {
-                        var locks = db.Flags.FirstOrDefault(x => x.NameAction == FlagActions.SendingPersonalReceipt);
+                        if (receiptSend.Count() > 0)
+                        {
+                            _notificationMail.SendEmailReceiptNotSend(receiptSend);
+                        }
+                        //Разблокировка
+                        locks = db.Flags.FirstOrDefault(x => x.Id == (int)EnumFlags.SendingPersonalReceipt);
                         locks.Flag = false;
                         db.SaveChanges();
-                        _notificationMail.Error(ex);
                     }
-                   
+                    else
+                    {
+                        List<ReceiptSend> receiptSend = new List<ReceiptSend>();
+                        List<PersData> persData;
+                        if (string.IsNullOrEmpty(FullLic))
+                        {
+                            persData = db.PersData.Where(x => x.Main == true && x.IsDelete != true && x.SendingElectronicReceipt.Contains("Да")).ToList();
+                        }
+                        else
+                        {
+                            persData = new List<PersData>();
+                            var Lic = FullLic.Split(';');
+                            for (int i = 0; i < Lic.Length; i++)
+                                if (!string.IsNullOrEmpty(Lic[i].Trim()))
+                                {
+                                    var lic = Lic[i].Trim();
+                                    persData.Add(db.PersData.FirstOrDefault(x => x.Main == true && x.Lic == lic && x.IsDelete != true && x.SendingElectronicReceipt.Contains("Да")));
+                                }
+                        }
+                        addOrUpdateSendReceipt(persData, (int)TypeReceipt.PersonalReceipt);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    var locks = db.Flags.FirstOrDefault(x => x.Id == (int)EnumFlags.SendingPersonalReceipt);
+                    locks.Flag = false;
+                    db.SaveChanges();
+                    _notificationMail.Error(ex);
                 }
             }
         }
@@ -242,6 +279,41 @@ namespace BL.Jobs
                     }
 
                     context.SaveChanges();
+                }
+            }
+        }
+        private void addOrUpdateSendReceipt(List<PersData> persDatas, int TypeReceipt)
+        {
+            if (persDatas.Count() > 0)
+            {
+                using (var dbContext = new ApplicationDbContext())
+                {
+                    var month = DateTime.Now.Month;
+                    foreach (var item in persDatas)
+                    {
+                        if (item == null) continue;
+
+                        var receipt = dbContext.NotSendReceipts.Where(x => x.Lic == item.Lic).FirstOrDefault();
+                        if (receipt != null)
+                        {
+                            receipt.IsSend = false;
+                        }
+                        else
+                        {
+                            dbContext.NotSendReceipts.Add(new NotSendReceipt
+                            {
+                                Lic = item.Lic,
+                                Email = item.Email,
+                                DateTimeSend = DateTime.Now,
+                                IsSend = false,
+                                ErrorDescription = "",
+                                Month = month,
+                                NumberAttempts = 1,
+                                TypeReceipt = TypeReceipt
+                            });
+                        }
+                        dbContext.SaveChanges();
+                    }
                 }
             }
         }

@@ -74,6 +74,10 @@
     <Compile Include="Migrations\202311281301215_Settings.designer.cs">
       <DependentUpon>202311281301215_Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312080908022_courtaddField-08-12-2023.cs" />
+    <Compile Include="Migrations\202312080908022_courtaddField-08-12-2023.designer.cs">
+      <DependentUpon>202312080908022_courtaddField-08-12-2023.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -145,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311281301215_Settings.resx">
       <DependentUpon>202311281301215_Settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312080908022_courtaddField-08-12-2023.resx">
+      <DependentUpon>202312080908022_courtaddField-08-12-2023.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

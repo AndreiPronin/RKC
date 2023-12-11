@@ -9,6 +9,7 @@ namespace BE.Court
     public enum CourtTypeLoadFiles
     {
         OpenNewCourt = 1,
-        
+        EditGp = 2,
+        EditPersData = 3,
     }
 }

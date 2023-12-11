@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Programing\RKC\RKC\bin\Test</_PublishTargetUrl>
-    <History>True|2023-11-30T15:49:13.1713390Z;True|2023-11-28T16:47:13.6789093+03:00;True|2023-11-18T18:17:21.9860423+03:00;True|2023-11-18T18:11:53.5468153+03:00;True|2023-11-17T20:05:30.1146008+03:00;True|2023-11-17T20:05:22.2647457+03:00;True|2023-11-17T17:29:48.5017597+03:00;True|2023-11-16T20:55:07.8857335+03:00;True|2023-11-06T17:51:29.3434766+03:00;True|2023-11-02T20:57:01.8216112+03:00;False|2023-11-02T20:56:21.8505749+03:00;False|2023-11-02T20:56:12.5310005+03:00;True|2023-10-23T21:06:07.6930089+03:00;True|2023-10-23T20:59:02.9385811+03:00;True|2023-10-10T19:25:52.6011962+03:00;True|2023-10-09T21:33:08.8735461+03:00;True|2023-10-04T09:23:02.2009085+03:00;True|2023-10-03T20:40:37.5966096+03:00;True|2023-09-29T09:28:04.1137624+03:00;True|2023-09-20T15:57:28.1668981+03:00;True|2023-09-12T19:46:08.7859463+03:00;True|2023-09-04T20:17:22.4180983+03:00;True|2023-08-20T16:50:54.4443108+03:00;True|2023-08-20T16:30:59.9437909+03:00;True|2023-08-16T21:16:33.0974630+03:00;True|2023-08-16T21:08:46.2708941+03:00;True|2023-08-01T21:30:23.0344130+03:00;True|2023-07-27T10:18:24.1992792+03:00;True|2023-07-11T16:05:24.0927664+03:00;True|2023-07-11T15:49:35.6976637+03:00;True|2023-06-30T09:21:57.8083523+03:00;True|2023-06-30T09:20:09.4134608+03:00;True|2023-06-30T09:19:47.6458531+03:00;True|2023-06-30T09:12:31.7738678+03:00;True|2023-06-30T09:10:01.7659141+03:00;True|2023-06-30T08:55:40.8213216+03:00;True|2023-06-29T20:02:04.9060250+03:00;True|2023-06-28T20:10:54.7730639+03:00;True|2023-06-26T18:47:16.1704376+03:00;True|2023-06-22T19:39:52.0265012+03:00;True|2023-06-22T09:15:32.4183862+03:00;True|2023-06-22T09:13:50.5155023+03:00;True|2023-06-22T09:04:05.6111611+03:00;True|2023-06-21T19:58:13.9277473+03:00;True|2023-06-20T19:00:13.6542664+03:00;True|2023-05-19T09:16:16.0517721+03:00;True|2023-05-18T09:53:40.2188918+03:00;True|2023-05-16T15:20:57.0082506+03:00;True|2023-04-24T23:18:43.7525993+03:00;True|2023-04-17T21:13:12.3536043+03:00;True|2023-04-17T21:06:50.1768509+03:00;True|2023-04-17T21:02:13.3359464+03:00;True|2023-04-13T19:34:57.9349243+03:00;True|2023-04-12T20:53:20.2213401+03:00;True|2023-04-05T20:34:21.8467145+03:00;True|2023-04-03T20:34:26.8606224+03:00;True|2023-04-02T20:50:33.4260216+03:00;True|2023-03-26T19:38:54.0687941+03:00;True|2023-03-20T14:06:31.6590489+03:00;True|2023-03-20T14:05:12.5476340+03:00;True|2023-03-20T09:49:17.4527984+03:00;True|2023-03-20T09:20:35.8938562+03:00;True|2023-03-19T16:11:02.6662396+03:00;True|2023-03-19T16:10:45.8482158+03:00;True|2023-03-16T21:30:07.0345763+03:00;True|2023-03-16T12:21:16.4744924+03:00;True|2023-03-16T11:44:17.2344448+03:00;True|2023-03-15T21:56:43.7455538+03:00;True|2023-03-15T21:56:30.3060896+03:00;True|2023-03-15T21:21:12.5926987+03:00;True|2023-03-15T21:18:14.5396491+03:00;True|2023-03-13T21:10:28.7674015+03:00;True|2023-03-13T21:04:00.4547062+03:00;True|2023-03-04T16:03:09.5064430+03:00;True|2023-03-04T16:03:02.8834411+03:00;True|2023-03-04T15:53:49.7002868+03:00;True|2023-02-17T17:23:16.9495858+03:00;True|2023-02-16T21:42:20.7976942+03:00;True|2023-02-16T17:44:03.9730885+03:00;True|2023-02-16T15:23:32.5979150+03:00;True|2023-02-12T17:13:36.3008652+03:00;True|2023-02-07T21:33:31.9622436+03:00;True|2023-02-07T21:33:20.1633007+03:00;True|2023-02-06T17:04:42.5093660+03:00;True|2023-01-31T20:57:25.3545415+03:00;True|2023-01-31T20:57:02.8650172+03:00;True|2023-01-22T17:01:41.9017779+03:00;True|2023-01-10T19:56:37.9939512+03:00;True|2023-01-07T15:10:02.5772426+03:00;True|2023-01-07T14:35:56.2583967+03:00;True|2022-12-27T20:23:44.8340821+03:00;True|2022-12-05T23:56:26.0135929+03:00;True|2022-12-05T20:52:54.6629653+03:00;True|2022-12-04T12:23:10.5803780+03:00;True|2022-11-27T16:40:30.2070234+03:00;True|2022-11-26T16:33:24.0823360+03:00;True|2022-11-07T19:20:26.6850516+03:00;True|2022-11-06T19:29:49.6837189+03:00;True|2022-11-06T18:54:07.3324429+03:00;True|2022-11-05T18:31:53.1708935+03:00;</History>
+    <History>True|2023-12-11T19:19:04.0148300Z;True|2023-12-11T22:18:55.9370418+03:00;True|2023-12-11T20:12:20.4486675+03:00;True|2023-11-30T18:49:13.1713390+03:00;True|2023-11-28T16:47:13.6789093+03:00;True|2023-11-18T18:17:21.9860423+03:00;True|2023-11-18T18:11:53.5468153+03:00;True|2023-11-17T20:05:30.1146008+03:00;True|2023-11-17T20:05:22.2647457+03:00;True|2023-11-17T17:29:48.5017597+03:00;True|2023-11-16T20:55:07.8857335+03:00;True|2023-11-06T17:51:29.3434766+03:00;True|2023-11-02T20:57:01.8216112+03:00;False|2023-11-02T20:56:21.8505749+03:00;False|2023-11-02T20:56:12.5310005+03:00;True|2023-10-23T21:06:07.6930089+03:00;True|2023-10-23T20:59:02.9385811+03:00;True|2023-10-10T19:25:52.6011962+03:00;True|2023-10-09T21:33:08.8735461+03:00;True|2023-10-04T09:23:02.2009085+03:00;True|2023-10-03T20:40:37.5966096+03:00;True|2023-09-29T09:28:04.1137624+03:00;True|2023-09-20T15:57:28.1668981+03:00;True|2023-09-12T19:46:08.7859463+03:00;True|2023-09-04T20:17:22.4180983+03:00;True|2023-08-20T16:50:54.4443108+03:00;True|2023-08-20T16:30:59.9437909+03:00;True|2023-08-16T21:16:33.0974630+03:00;True|2023-08-16T21:08:46.2708941+03:00;True|2023-08-01T21:30:23.0344130+03:00;True|2023-07-27T10:18:24.1992792+03:00;True|2023-07-11T16:05:24.0927664+03:00;True|2023-07-11T15:49:35.6976637+03:00;True|2023-06-30T09:21:57.8083523+03:00;True|2023-06-30T09:20:09.4134608+03:00;True|2023-06-30T09:19:47.6458531+03:00;True|2023-06-30T09:12:31.7738678+03:00;True|2023-06-30T09:10:01.7659141+03:00;True|2023-06-30T08:55:40.8213216+03:00;True|2023-06-29T20:02:04.9060250+03:00;True|2023-06-28T20:10:54.7730639+03:00;True|2023-06-26T18:47:16.1704376+03:00;True|2023-06-22T19:39:52.0265012+03:00;True|2023-06-22T09:15:32.4183862+03:00;True|2023-06-22T09:13:50.5155023+03:00;True|2023-06-22T09:04:05.6111611+03:00;True|2023-06-21T19:58:13.9277473+03:00;True|2023-06-20T19:00:13.6542664+03:00;True|2023-05-19T09:16:16.0517721+03:00;True|2023-05-18T09:53:40.2188918+03:00;True|2023-05-16T15:20:57.0082506+03:00;True|2023-04-24T23:18:43.7525993+03:00;True|2023-04-17T21:13:12.3536043+03:00;True|2023-04-17T21:06:50.1768509+03:00;True|2023-04-17T21:02:13.3359464+03:00;True|2023-04-13T19:34:57.9349243+03:00;True|2023-04-12T20:53:20.2213401+03:00;True|2023-04-05T20:34:21.8467145+03:00;True|2023-04-03T20:34:26.8606224+03:00;True|2023-04-02T20:50:33.4260216+03:00;True|2023-03-26T19:38:54.0687941+03:00;True|2023-03-20T14:06:31.6590489+03:00;True|2023-03-20T14:05:12.5476340+03:00;True|2023-03-20T09:49:17.4527984+03:00;True|2023-03-20T09:20:35.8938562+03:00;True|2023-03-19T16:11:02.6662396+03:00;True|2023-03-19T16:10:45.8482158+03:00;True|2023-03-16T21:30:07.0345763+03:00;True|2023-03-16T12:21:16.4744924+03:00;True|2023-03-16T11:44:17.2344448+03:00;True|2023-03-15T21:56:43.7455538+03:00;True|2023-03-15T21:56:30.3060896+03:00;True|2023-03-15T21:21:12.5926987+03:00;True|2023-03-15T21:18:14.5396491+03:00;True|2023-03-13T21:10:28.7674015+03:00;True|2023-03-13T21:04:00.4547062+03:00;True|2023-03-04T16:03:09.5064430+03:00;True|2023-03-04T16:03:02.8834411+03:00;True|2023-03-04T15:53:49.7002868+03:00;True|2023-02-17T17:23:16.9495858+03:00;True|2023-02-16T21:42:20.7976942+03:00;True|2023-02-16T17:44:03.9730885+03:00;True|2023-02-16T15:23:32.5979150+03:00;True|2023-02-12T17:13:36.3008652+03:00;True|2023-02-07T21:33:31.9622436+03:00;True|2023-02-07T21:33:20.1633007+03:00;True|2023-02-06T17:04:42.5093660+03:00;True|2023-01-31T20:57:25.3545415+03:00;True|2023-01-31T20:57:02.8650172+03:00;True|2023-01-22T17:01:41.9017779+03:00;True|2023-01-10T19:56:37.9939512+03:00;True|2023-01-07T15:10:02.5772426+03:00;True|2023-01-07T14:35:56.2583967+03:00;True|2022-12-27T20:23:44.8340821+03:00;True|2022-12-05T23:56:26.0135929+03:00;True|2022-12-05T20:52:54.6629653+03:00;True|2022-12-04T12:23:10.5803780+03:00;True|2022-11-27T16:40:30.2070234+03:00;True|2022-11-26T16:33:24.0823360+03:00;True|2022-11-07T19:20:26.6850516+03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -32,19 +32,19 @@
       <publishTime>05/09/2021 20:19:26</publishTime>
     </File>
     <File Include="bin/BE.dll">
-      <publishTime>11/18/2023 18:17:09</publishTime>
+      <publishTime>12/11/2023 20:32:50</publishTime>
     </File>
     <File Include="bin/BE.pdb">
-      <publishTime>11/18/2023 18:17:09</publishTime>
+      <publishTime>12/11/2023 20:32:50</publishTime>
     </File>
     <File Include="bin/BL.dll">
-      <publishTime>11/30/2023 18:49:08</publishTime>
+      <publishTime>12/11/2023 20:38:00</publishTime>
     </File>
     <File Include="bin/BL.dll.config">
       <publishTime>05/19/2023 19:04:09</publishTime>
     </File>
     <File Include="bin/BL.pdb">
-      <publishTime>11/30/2023 18:49:08</publishTime>
+      <publishTime>12/11/2023 20:38:00</publishTime>
     </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>12/08/2020 21:05:32</publishTime>
@@ -68,13 +68,13 @@
       <publishTime>11/14/2015 16:35:30</publishTime>
     </File>
     <File Include="bin/DB.dll">
-      <publishTime>11/30/2023 18:49:07</publishTime>
+      <publishTime>12/08/2023 12:08:18</publishTime>
     </File>
     <File Include="bin/DB.dll.config">
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="bin/DB.pdb">
-      <publishTime>11/30/2023 18:49:07</publishTime>
+      <publishTime>12/08/2023 12:08:18</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>06/07/2017 01:59:22</publishTime>
@@ -332,10 +332,10 @@
       <publishTime>08/24/2016 08:42:28</publishTime>
     </File>
     <File Include="bin/RKC.dll">
-      <publishTime>11/30/2023 18:49:09</publishTime>
+      <publishTime>12/11/2023 22:19:02</publishTime>
     </File>
     <File Include="bin/RKC.pdb">
-      <publishTime>11/30/2023 18:49:09</publishTime>
+      <publishTime>12/11/2023 22:19:02</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/08/2018 08:38:48</publishTime>
@@ -620,13 +620,13 @@
       <publishTime>01/23/2014 17:57:34</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll">
-      <publishTime>11/30/2023 18:49:08</publishTime>
+      <publishTime>12/11/2023 20:32:50</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll.config">
       <publishTime>08/12/2022 21:16:35</publishTime>
     </File>
     <File Include="bin/WordGenerator.pdb">
-      <publishTime>11/30/2023 18:49:08</publishTime>
+      <publishTime>12/11/2023 20:32:50</publishTime>
     </File>
     <File Include="bin/zxing.dll">
       <publishTime>02/03/2022 23:45:34</publishTime>
@@ -673,11 +673,20 @@
     <File Include="Content/img/main/БРБ_лого.png">
       <publishTime>06/01/2022 19:59:52</publishTime>
     </File>
+    <File Include="Content/img/Moroz1.gif">
+      <publishTime>12/04/2023 19:38:49</publishTime>
+    </File>
+    <File Include="Content/img/Moroz2.gif">
+      <publishTime>12/04/2023 16:41:12</publishTime>
+    </File>
+    <File Include="Content/NewYear.css">
+      <publishTime>12/04/2023 19:24:30</publishTime>
+    </File>
     <File Include="Content/SideBar.css">
       <publishTime>11/28/2023 16:24:29</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>11/30/2023 16:41:06</publishTime>
+      <publishTime>11/30/2023 18:58:37</publishTime>
     </File>
     <File Include="Content/toastr.css">
       <publishTime>08/18/2022 18:42:54</publishTime>
@@ -1148,7 +1157,7 @@
       <publishTime>05/29/2022 18:51:44</publishTime>
     </File>
     <File Include="Views/Court/AdminPanel.cshtml">
-      <publishTime>10/04/2023 21:10:12</publishTime>
+      <publishTime>12/11/2023 20:32:23</publishTime>
     </File>
     <File Include="Views/Court/DetailedСourtData.cshtml">
       <publishTime>12/05/2022 20:39:48</publishTime>
@@ -1157,7 +1166,7 @@
       <publishTime>03/16/2023 10:24:42</publishTime>
     </File>
     <File Include="Views/Court/Index.cshtml">
-      <publishTime>09/11/2023 19:10:29</publishTime>
+      <publishTime>12/10/2023 20:28:13</publishTime>
     </File>
     <File Include="Views/Court/PartialBankruptcy.cshtml">
       <publishTime>08/16/2023 14:54:07</publishTime>
@@ -1175,7 +1184,7 @@
       <publishTime>09/18/2023 16:29:46</publishTime>
     </File>
     <File Include="Views/Court/PartialGeneralInformation.cshtml">
-      <publishTime>10/04/2023 21:08:29</publishTime>
+      <publishTime>12/10/2023 20:19:49</publishTime>
     </File>
     <File Include="Views/Court/PartialInstallmentPlan.cshtml">
       <publishTime>08/18/2023 21:07:50</publishTime>
@@ -1202,10 +1211,10 @@
       <publishTime>08/16/2023 14:51:41</publishTime>
     </File>
     <File Include="Views/Court/SearchResult.cshtml">
-      <publishTime>08/24/2023 10:33:33</publishTime>
+      <publishTime>12/08/2023 11:28:02</publishTime>
     </File>
     <File Include="Views/Court/Serach.cshtml">
-      <publishTime>08/24/2023 10:12:34</publishTime>
+      <publishTime>12/08/2023 11:18:51</publishTime>
     </File>
     <File Include="Views/Court/ShowAllCourtModal.cshtml">
       <publishTime>03/16/2023 10:57:01</publishTime>
@@ -1289,7 +1298,7 @@
       <publishTime>06/08/2022 21:40:53</publishTime>
     </File>
     <File Include="Views/PersonalData/NotSendReceipt.cshtml">
-      <publishTime>11/30/2023 18:40:38</publishTime>
+      <publishTime>12/08/2023 09:08:23</publishTime>
     </File>
     <File Include="Views/PersonalData/PaymentHistoryView.cshtml">
       <publishTime>10/08/2022 19:11:29</publishTime>
@@ -1325,7 +1334,7 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/28/2023 16:31:37</publishTime>
+      <publishTime>12/08/2023 12:34:55</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>04/17/2023 12:21:42</publishTime>
@@ -1340,7 +1349,7 @@
       <publishTime>12/05/2022 20:39:48</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/30/2023 18:49:09</publishTime>
+      <publishTime>12/11/2023 20:12:16</publishTime>
     </File>
   </ItemGroup>
 </Project>

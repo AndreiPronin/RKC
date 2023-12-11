@@ -476,6 +476,9 @@
     <Content Include="Content\img\main\sky.jpg" />
     <Content Include="Content\img\main\T_Plus_Group_Logo.png" />
     <Content Include="Content\img\main\БРБ_лого.png" />
+    <Content Include="Content\img\Moroz1.gif" />
+    <Content Include="Content\img\Moroz2.gif" />
+    <Content Include="Content\NewYear.css" />
     <Content Include="Content\SideBar.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="favicon.ico" />

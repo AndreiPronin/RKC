@@ -16,6 +16,7 @@ using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static ClosedXML.Excel.XLPredefinedFormat;
 using CourtGeneralInformation = DB.Model.Court.CourtGeneralInformation;
@@ -89,8 +90,8 @@ namespace BL.Services
                     .Include(x => x.CourtWriteOff)
                     .Include(x => x.CourtStateDuty)
                     .Include(x => x.CourtExecutionFSSP).AsNoTracking().FirstOrDefaultAsync();
-                _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id,
-                    _generatorDescriptons.Generate(courtGeneralInformation,courtGeneralInformationDb, User));
+                new Thread(()=>  _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id,
+                    _generatorDescriptons.Generate(courtGeneralInformation,courtGeneralInformationDb, User))).Start();
                 var mapper = new CourtProfile().GetMapper();
                 courtGeneralInformationDb = mapper.Map<BE.Court.CourtGeneralInformation, DB.Model.Court.CourtGeneralInformation>(courtGeneralInformation);
                 courtGeneralInformationDb.CourtBankruptcy.CourtGeneralInformationId = courtGeneralInformation.Id;
@@ -131,7 +132,7 @@ namespace BL.Services
                     throw new Exception("Такое дело уже существует");
                 db.CourtGeneralInformation.Add(courtGeneralInformation);
                 await db.SaveChangesAsync();
-                _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id, $"Пользователь {User} создал дело");
+                new Thread(()=> _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id, $"Пользователь {User} создал дело")).Start();
                 return courtGeneralInformation;
             }
         }
@@ -190,6 +191,8 @@ namespace BL.Services
                 try
                 {
                     IQueryable<CourtGeneralInformation> query = db.CourtGeneralInformation.Include(x=>x.CourtWork).Include(x=>x.CourtLitigationWork).Include(x=>x.CourtExecutionFSSP);
+                    if (searchModel.Id.HasValue)
+                        query = query.Where(x => x.Id == searchModel.Id);
                     if (!string.IsNullOrEmpty(searchModel.Lic))
                         query = query.Where(x => x.Lic.Contains(searchModel.Lic));
                     if (!string.IsNullOrEmpty(searchModel.Street))
@@ -348,7 +351,7 @@ namespace BL.Services
                 File.WriteAllBytes($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{NameFile}.{TypeFile}", file);
                 using (var db = new ApplicationDbContext())
                 {
-                    _ilogger.ActionUserCourt(Lic, CourtGeneralId, $"{DateTime.Now} Пользователь {User} добавил файл: {NameFile}.{TypeFile}");
+                    _ilogger.ActionUserCourt(Lic, CourtGeneralId, $"<b>{DateTime.Now} Пользователь {User} добавил файл:</b> {NameFile}.{TypeFile}");
                     db.CourtCourtDocumentScans.Add(new DB.Model.Court.CourtDocumentScans
                     {
                         DocumentPath = $@"{Lic}\\{CourtGeneralId}",
@@ -371,7 +374,7 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var Res = db.CourtCourtDocumentScans.Where(x => x.Id == Id).Include(x=>x.CourtGeneralInformation).FirstOrDefault();
-                _ilogger.ActionUserCourt(Res.CourtGeneralInformation.Lic, Res.CourtGeneralInformation.Id, $"{DateTime.Now} Пользователь {User} удалил файл: {Res.CourtDocumentScansName}");
+                _ilogger.ActionUserCourt(Res.CourtGeneralInformation.Lic, Res.CourtGeneralInformation.Id, $"<b>{DateTime.Now} Пользователь {User} удалил файл:</b> {Res.CourtDocumentScansName}");
                 db.CourtCourtDocumentScans.Remove(Res);
                 await db.SaveChangesAsync();
                 File.Delete($@"\\10.10.10.17\\doc_tplus_court\\{Res.DocumentPath}\\{Res.CourtDocumentScansName}");

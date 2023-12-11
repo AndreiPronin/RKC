@@ -15,6 +15,7 @@ namespace RkcTest.Extenstion
         [TestMethod]
         public void GetDateWhitMaxDate_Test()
         {
+            var ttt = DateTime.Now.AddMonths(1);
             var res = DateTime.Now.GetDateWhitMaxDate();
         }
     }

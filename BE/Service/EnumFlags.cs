@@ -12,5 +12,6 @@ namespace BE.Service
         DetailedInformPersData = 2,
         LastIntegration = 3,
         LastLoadEbd = 4,
+        SendingPersonalReceipt = 5,
     }
 }

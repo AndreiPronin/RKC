@@ -18,7 +18,7 @@
 <h1 class="page-header"></h1>
 <div class="container">
     <div class="row">
-        <div class="col-md-3 text-center">
+        <div class="col-md-2 text-center">
             <label for="">номер лицевого счета</label>
             <div class="input-group">
                 <input type="number" class="form-control" id="Lic" placeholder="">
@@ -26,21 +26,21 @@
             </div>
         </div>
 
-        <div class="col-md-3 text-center">
+        <div class="col-md-2 text-center">
             <label for="">Улица</label>
             <div class="input-group">
                 <input type="text" class="form-control" id="Street" placeholder="">
                 <span id="" class="input-group-addon clear">X</span>
             </div>
         </div>
-        <div class=" col-md-3 text-center">
+        <div class=" col-md-2 text-center">
             <label for="">Дом</label>
             <div class="input-group">
                 <input type="text" class="form-control" id="Home" placeholder="">
                 <span id="clear" class="input-group-addon clear">X</span>
             </div>
         </div>
-        <div class="col-md-3 text-center">
+        <div class="col-md-2 text-center">
             <label for="">Квартира</label>
             <div class="input-group">
                 <input type="text" class="form-control" id="Flat" placeholder="">
@@ -55,21 +55,6 @@
             </div>
         </div>
         <div class="col-md-2 text-center">
-            <label for="">Номер ИП</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="NumberIp" placeholder="">
-                <span id="" class="input-group-addon clear">X</span>
-            </div>
-        </div>
-        <div class="col-md-2 text-center">
-            <label for="">Номер ИЛ</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="NumberIl" placeholder="">
-                <span id="" class="input-group-addon clear">X</span>
-            </div>
-        </div>
-
-        <div class="col-md-2 text-center">
             <label for="">Номер СП</label>
             <div class="input-group">
                 <input type="text" class="form-control" id="NumberSp" placeholder="">
@@ -77,12 +62,35 @@
             </div>
             <a id="ClearFilter" href="">Очистить фильтр</a>
         </div>
+
+        <div class="col-md-2 text-center">
+            <label for="">Номер ИЛ</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="NumberIl" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <label for="">Номер ИП</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="NumberIp" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+        <div class="col-md-2 text-center">
+            <label for="">Номер карточки дела</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="NumberCard" placeholder="">
+                <span id="" class="input-group-addon clear">X</span>
+            </div>
+        </div>
+
         @*<a id="ClearFilter" href="">Очистить фильтр</a>*@
         <div class="col-md-1">
             <input type="button" style="margin-top:25px;" class="btn btn-success btn-block" value="Найти" id="Search" placeholder="Password">
         </div>
         <div class="col-md-1">
-            <button  style="margin-top:25px;" id="AddCourt" class="btn btn-primary">Создать судебное дело</button>
+            <button style="margin-top:25px;" id="AddCourt" class="btn btn-primary">Создать судебное дело</button>
         </div>
     </div>
 </div>
@@ -99,6 +107,7 @@
             type: 'POST',
             data: JSON.stringify({
                 searchModel: {//missing brackets
+                    Id: $("#NumberCard").val(),
                     Lic: $("#Lic").val(),
                     FullName: $("#FullName").val(),
                     Street: $("#Street").val(),
@@ -195,6 +204,11 @@
         })
         $("#Flat").keyup(function () {
             if ($("#Flat").val().length > 0) {
+                SearchCourt();
+            }
+        })
+        $("#NumberCard").keyup(function () {
+            if ($("#NumberCard").val().length > 0) {
                 SearchCourt();
             }
         })

@@ -21,6 +21,8 @@ namespace BL.Excel
     public interface IExcelCourt
     {
         Task<DataTable> ExcelsLoadCourt(XLWorkbook Excels, string User);
+        Task<DataTable> ExcelsEditGpCourt(XLWorkbook Excels, string User);
+        Task<DataTable> ExcelsEditPersDataCourt(XLWorkbook Excels, string User);
     }
     public class ExcelCourt : IExcelCourt
     {
@@ -66,9 +68,10 @@ namespace BL.Excel
                         CourtGeneral.CourtWork.PeriodDebtBegin = Convert.ToDateTime(dataRow.Cell(11).Value.ToString());
                         CourtGeneral.CourtWork.PeriodDebtEnd = Convert.ToDateTime(dataRow.Cell(12).Value.ToString());
                         CourtGeneral.CourtWork.SumOdSendCourt = Convert.ToDouble(dataRow.Cell(13).Value.ToString());
-                        CourtGeneral.ShareOfOwnership = dataRow.Cell(14).Value.ToString();
-                        if (dictionaryCourt.FirstOrDefault(x => x.Id == 21).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.ShareOfOwnership) == null)
-                            exceptions.Append("Доля собственности не найдена в справочнике");
+                        CourtGeneral.CourtWork.SumPenySendCourt = Convert.ToDouble(dataRow.Cell(14).Value.ToString());
+
+                        if (dictionaryCourt.FirstOrDefault(x => x.Id == 20).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtWork.FioSendCourt) == null)
+                            exceptions.Append("ФИО сотрудника не найдена в справочнике");
                         var ex = exceptions.ToString();
                         if (ex != "")
                         {
@@ -77,7 +80,123 @@ namespace BL.Excel
 
                         var result = await _court.CreateCourtExcel(CourtGeneral, User);
 
-                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Id = $"СДПФ-{result.Id}", Description = "Успешно создано дело" });
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Id = $"П-{result.Id}", Description = "Успешно создано дело" });
+
+                    }
+                    catch (Exception ex)
+                    {
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Line = dataRow.RowNumber().ToString(), Description = ex.Message });
+                    }
+                }
+            }
+            return CreateResultCourtLoader(reportCourtLoadExcels);
+        }
+        public async Task<DataTable> ExcelsEditGpCourt(XLWorkbook Excels, string User)
+        {
+            var dictionaryCourt = await _dictionary.GetCourtDictionaries();
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            var Count = nonEmptyDataRows.Count();
+            var mapper = new CourtProfile().GetMapperBe();
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    try
+                    {
+                        StringBuilder exceptions = new StringBuilder();
+                        var CourtGeneral = await _court.DetailInfroms(dataRow.Cell(1).Value.TryGetCardNumber());
+                        var CourtWorkRequisites = new BE.Court.CourtWorkRequisites
+                            {
+                                CourtGeneralInformId = CourtGeneral.Id,
+                                Suma = dataRow.Cell(2).Value.ToString(),
+                                Number = dataRow.Cell(3).Value.ToString(),
+                                Date = Convert.ToDateTime(dataRow.Cell(4).Value)
+                            };
+                        if(dataRow.Cell(5).Value != "" && CourtGeneral.CourtStateDuty.DateSendOnReturnFNS != Convert.ToDateTime(dataRow.Cell(5).Value))
+                            CourtGeneral.CourtStateDuty.DateSendOnReturnFNS = Convert.ToDateTime(dataRow.Cell(5).Value);
+                        if (dataRow.Cell(6).Value != "" && CourtGeneral.CourtStateDuty.DateReturnFNS != Convert.ToDateTime(dataRow.Cell(6).Value))
+                            CourtGeneral.CourtStateDuty.DateReturnFNS = Convert.ToDateTime(dataRow.Cell(6).Value);
+                        if (dataRow.Cell(7).Value != "" && CourtGeneral.CourtStateDuty.ReasonReturn != dataRow.Cell(7).Value.ToString())
+                            CourtGeneral.CourtStateDuty.ReasonReturn = dataRow.Cell(7).Value.ToString();
+                        if (dataRow.Cell(7).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 16).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtStateDuty.ReasonReturn) == null)
+                            exceptions.Append("Причина возврата заявления ФНС не найдена в справочнике");
+                        var ex = exceptions.ToString();
+                        if (ex != "")
+                        {
+                            throw new Exception(ex);
+                        }
+                      
+                        var result = await _court.SaveCourt(mapper.Map<DB.Model.Court.CourtGeneralInformation, BE.Court.CourtGeneralInformation>(CourtGeneral), User);
+                        await _court.AddCourtWorkRequisites(CourtWorkRequisites);
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Id = $"П-{result}", Description = "Успешно обновлено дело" });
+
+                    }
+                    catch (Exception ex)
+                    {
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Line = dataRow.RowNumber().ToString(), Description = ex.Message });
+                    }
+                }
+            }
+            return CreateResultCourtLoader(reportCourtLoadExcels);
+        }
+        public async Task<DataTable> ExcelsEditPersDataCourt(XLWorkbook Excels, string User)
+        {
+            var dictionaryCourt = await _dictionary.GetCourtDictionaries();
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            var Count = nonEmptyDataRows.Count();
+            var mapper = new CourtProfile().GetMapperBe();
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    try
+                    {
+                        StringBuilder exceptions = new StringBuilder();
+                        var CourtGeneral = await _court.DetailInfroms(dataRow.Cell(1).Value.TryGetCardNumber());
+                        if (dataRow.Cell(2).Value != "" && CourtGeneral.Floor != dataRow.Cell(2).Value.ToString())
+                            CourtGeneral.Floor = dataRow.Cell(2).Value.ToString();
+                        if (dataRow.Cell(2).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 13).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.Floor) == null)
+                            exceptions.Append("Пол не найдена в справочнике" + Environment.NewLine);
+
+                        if (dataRow.Cell(3).Value != "" && CourtGeneral.DateBirthday != dataRow.Cell(3).Value.ToString())
+                            CourtGeneral.DateBirthday = dataRow.Cell(3).Value.ToString();
+                        if (dataRow.Cell(4).Value != "" && CourtGeneral.PlaceBirth != dataRow.Cell(4).Value.ToString())
+                            CourtGeneral.PlaceBirth = dataRow.Cell(4).Value.ToString();
+                        if (dataRow.Cell(5).Value != "" && CourtGeneral.PasportSeria != dataRow.Cell(5).Value.ToString())
+                            CourtGeneral.PasportSeria = dataRow.Cell(5).Value.ToString();
+                        if (dataRow.Cell(6).Value != "" && CourtGeneral.PasportDate != dataRow.Cell(6).Value.ToString())
+                            CourtGeneral.PasportDate = dataRow.Cell(6).Value.ToString();
+                        if (dataRow.Cell(7).Value != "" && CourtGeneral.PasportIssue != dataRow.Cell(7).Value.ToString())
+                            CourtGeneral.PasportIssue = dataRow.Cell(7).Value.ToString();
+                        if (dataRow.Cell(8).Value != "" && CourtGeneral.Inn != dataRow.Cell(8).Value.ToString())
+                            CourtGeneral.PasportNumber = dataRow.Cell(8).Value.ToString();
+                        if (dataRow.Cell(9).Value != "" && CourtGeneral.Inn != dataRow.Cell(9).Value.ToString())
+                            CourtGeneral.PasportNumber = dataRow.Cell(9).Value.ToString();
+                        if (dataRow.Cell(10).Value != "" && CourtGeneral.Snils != dataRow.Cell(10).Value.ToString())
+                            CourtGeneral.Snils = dataRow.Cell(10).Value.ToString();
+                        if (dataRow.Cell(11).Value != "" && CourtGeneral.ShareOfOwnership != dataRow.Cell(11).Value.ToString())
+                            CourtGeneral.ShareOfOwnership = dataRow.Cell(11).Value.ToString();
+                        if (dataRow.Cell(11).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 21).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.ShareOfOwnership) == null)
+                            exceptions.Append("Вид собственности не найдена в справочнике" + Environment.NewLine);
+                        if (dataRow.Cell(12).Value != "" && CourtGeneral.ShareInRight != dataRow.Cell(12).Value.ToString())
+                            CourtGeneral.ShareInRight = dataRow.Cell(12).Value.ToString();
+                        if (dataRow.Cell(12).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 22).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.ShareInRight) == null)
+                            exceptions.Append("Доля в праве не найдена в справочнике" + Environment.NewLine);
+
+                        if (dataRow.Cell(13).Value != "" && CourtGeneral.InSolidarityWith != dataRow.Cell(13).Value.ToString())
+                            CourtGeneral.InSolidarityWith = dataRow.Cell(13).Value.ToString();
+                        
+                        if (dataRow.Cell(14).Value != "" && CourtGeneral.AddressRegister != dataRow.Cell(14).Value.ToString())
+                            CourtGeneral.AddressRegister = dataRow.Cell(14).Value.ToString();
+
+                        var ex = exceptions.ToString();
+                        if (ex != "")
+                        {
+                            throw new Exception(ex);
+                        }
+
+                        var result = await _court.SaveCourt(mapper.Map<DB.Model.Court.CourtGeneralInformation, BE.Court.CourtGeneralInformation>(CourtGeneral), User);
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Id = $"П-{result}", Description = "Успешно обновлено дело" });
 
                     }
                     catch (Exception ex)

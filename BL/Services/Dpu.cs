@@ -209,7 +209,7 @@ namespace BL.Services
             {
                 var result = dbApp.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).ToList();
                 await Task.CompletedTask;
-                var results = result.Where(x => x.Period >= DateFrom && x.Period <= DateTo && x.NewFullLic == FullLic).ToList();
+                var results = result.Where(x => x.Period >= DateFrom && x.Period <= DateTo && x.NewFullLic == FullLic).OrderBy(x=>x.Period).ToList();
                 foreach(var Item in results)
                 {
                     Item.PercentageRate = Item.PercentageRate is null ? 0 : Item.PercentageRate.Value;

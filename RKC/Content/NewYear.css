@@ -1,0 +1,203 @@
+﻿#gir2 {
+    position: fixed;
+    bottom: 36px;
+    left: 0;
+    height: 236px;
+    width: 236px;
+    overflow: hidden;
+    z-index: 0
+}
+#gir3 {
+    position: fixed;
+    bottom: 36px;
+    right: 0;
+    height: 236px;
+    width: 236px;
+    overflow: hidden;
+    z-index: 0
+}
+@media (max-width: 1500px) {
+    #gir3 {
+        display:none;
+    }
+    #gir2 {
+        display: none;
+    }
+}
+
+.containerss {
+    background: red;
+    position: fixed;
+    height: 50%;
+    left: 265px;
+    z-index: 1;
+    width: 414px;
+    left: -245px;
+}
+.ded {
+    margin-top: -9vh;
+    position: relative;
+}
+
+.ded_body {
+    width: 20vh;
+    height: 40vh;
+    position: absolute;
+    top: 30vh;
+    left: 40vh;
+    background-color: #c11;
+}
+
+.ded_head {
+    width: 30vh;
+    height: 30vh;
+    position: absolute;
+    top: 20vh;
+    left: 35vh;
+    border-radius: 100%;
+    background-color: #ebba9a;
+}
+
+    .ded_head:before {
+        content: "";
+        display: block;
+        width: 12vh;
+        height: 12vh;
+        position: absolute;
+        top: -12vh;
+        left: 9vh;
+        border-radius: 100%;
+        background-color: #fff;
+    }
+
+    .ded_head:after {
+        content: "";
+        display: block;
+        width: 30vh;
+        height: 15vh;
+        position: absolute;
+        top: -5vh;
+        left: 0vh;
+        background-color: #c11;
+        -webkit-clip-path: polygon(50% 0%, 75% 25%, 100% 90%, 100% 100%, 75% 90%, 25% 90%, 0% 100%, 0% 90%, 25% 25%);
+        clip-path: polygon(50% 0%, 75% 25%, 100% 90%, 100% 100%, 75% 90%, 25% 90%, 0% 100%, 0% 90%, 25% 25%);
+    }
+
+.ded_beard {
+    width: 30vh;
+    height: 30vh;
+    position: absolute;
+    top: 10vh;
+    left: 0vh;
+    background-color: #fff;
+    -webkit-clip-path: polygon(0% 0%, 12% 15%, 50% 40%, 88% 15%, 100% 0%, 100% 30%, 90% 70%, 50% 100%, 10% 70%, 0% 30%);
+    clip-path: polygon(0% 0%, 12% 15%, 50% 40%, 88% 15%, 100% 0%, 100% 30%, 90% 70%, 50% 100%, 10% 70%, 0% 30%);
+}
+
+.ded_eyes {
+    width: 8vh;
+    height: 11vh;
+    position: absolute;
+    top: 9vh;
+    left: 7vh;
+    border-radius: 100%;
+    background-color: #123;
+}
+
+    .ded_eyes:before {
+        content: "";
+        display: block;
+        width: 8vh;
+        height: 11vh;
+        position: absolute;
+        top: 0vh;
+        left: 8.5vh;
+        border-radius: 100%;
+        background-color: #123;
+    }
+
+.ded_nose {
+    width: 12vh;
+    height: 8vh;
+    position: absolute;
+    top: 17vh;
+    left: 9.5vh;
+    border-radius: 100%;
+    background-color: #a00;
+}
+
+.ded_hand_right {
+    width: 14vh;
+    height: 32vh;
+    position: absolute;
+    top: 38vh;
+    left: 26vh;
+    background-color: #c11;
+    -webkit-clip-path: polygon(100% 0%, 100% 40%, 60% 55%, 100% 80%, 75% 100%, 0% 50%);
+    clip-path: polygon(100% 0%, 100% 40%, 60% 55%, 100% 80%, 75% 100%, 0% 50%);
+}
+
+.ded_hand_left {
+    width: 14vh;
+    height: 32vh;
+    position: absolute;
+    top: 38vh;
+    left: 60vh;
+    background-color: #c11;
+    -webkit-clip-path: polygon(0% 0%, 100% 50%, 25% 100%, 0% 80%, 40% 55%, 0% 40%);
+    clip-path: polygon(0% 0%, 100% 50%, 25% 100%, 0% 80%, 40% 55%, 0% 40%);
+}
+
+.ded_leg_right {
+    width: 14vh;
+    height: 30vh;
+    position: absolute;
+    top: 70vh;
+    left: 36vh;
+    background-color: #c11;
+    animation: 0.5s infinite linear ded_leg_right;
+}
+
+.ded_leg_left {
+    width: 14vh;
+    height: 30vh;
+    position: absolute;
+    top: 70vh;
+    left: 50vh;
+    background-color: #c11;
+    animation: 0.5s infinite linear ded_leg_left;
+}
+
+@keyframes ded_leg_right {
+    0% {
+        -webkit-clip-path: polygon(4vh 0%, 85% 0%, 50% 50%, 100% 100%, 0% 100%, 0% 50%);
+        clip-path: polygon(4vh 0%, 85% 0%, 50% 50%, 100% 100%, 0% 100%, 0% 50%);
+    }
+
+    40% {
+        -webkit-clip-path: polygon(4vh 0%, 85% 0%, 100% 50%, 100% 100%, 0% 100%, 50% 50%);
+        clip-path: polygon(4vh 0%, 85% 0%, 100% 50%, 100% 100%, 0% 100%, 50% 50%);
+    }
+
+    100% {
+        -webkit-clip-path: polygon(4vh 0%, 85% 0%, 50% 50%, 100% 100%, 0% 100%, 0% 50%);
+        clip-path: polygon(4vh 0%, 85% 0%, 50% 50%, 100% 100%, 0% 100%, 0% 50%);
+    }
+}
+
+@keyframes ded_leg_left {
+    0% {
+        -webkit-clip-path: polygon(15% 0, calc(100% - 4vh) 0%, 100% 50%, 100% 100%, 0% 100%, 50% 50%);
+        clip-path: polygon(15% 0, calc(100% - 4vh) 0%, 100% 50%, 100% 100%, 0% 100%, 50% 50%);
+    }
+
+    40% {
+        -webkit-clip-path: polygon(15% 0, calc(100% - 4vh) 0%, 50% 50%, 100% 100%, 0% 100%, 0% 50%);
+        clip-path: polygon(15% 0, calc(100% - 4vh) 0%, 50% 50%, 100% 100%, 0% 100%, 0% 50%);
+    }
+
+    100% {
+        -webkit-clip-path: polygon(15% 0, calc(100% - 4vh) 0%, 100% 50%, 100% 100%, 0% 100%, 50% 50%);
+        clip-path: polygon(15% 0, calc(100% - 4vh) 0%, 100% 50%, 100% 100%, 0% 100%, 50% 50%);
+    }
+}
