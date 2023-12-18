@@ -47,7 +47,7 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                var Result = await db.CourtValueDictionary.Where(x => x.CourtNameDictionaryId == Id).ToListAsync();
+                var Result = await db.CourtValueDictionary.Where(x => x.CourtNameDictionaryId == Id).Include(x=>x.CourtNameDictionary).ToListAsync();
                 return Result;
             }
         }

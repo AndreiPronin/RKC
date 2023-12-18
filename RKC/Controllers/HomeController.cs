@@ -28,6 +28,7 @@ using System.Security.Principal;
 using System.Net.Http;
 using System.Web.Http.Results;
 using NLog;
+using BL.Security;
 
 namespace RKC.Controllers
 {
@@ -36,17 +37,21 @@ namespace RKC.Controllers
     {
         private readonly IEBD _eBD;
         private readonly ICacheApp _cacheApp;
+        private readonly ITokenCreator _tokenCreator;
         public NLog.Logger logger = LogManager.GetCurrentClassLogger();
-        public HomeController(IEBD eBD, ICacheApp cacheApp)
+        public HomeController(IEBD eBD, ICacheApp cacheApp, ITokenCreator tokenCreator)
         {
             _eBD = eBD;
             _cacheApp = cacheApp;
+            _tokenCreator = tokenCreator;
             //var rrr = Parser.PdfParser();
         }
         public ActionResult Index()
         {
+           //var xxx = _tokenCreator.CreateTokenReportService();
+
             var sss = User.Identity.IsAuthenticated;
-           
+            
             //_eBD.CreateEbdFlatliving(DateTime.Now);
             var res = new GetConfigurationManager().GetAppSettings("").GetInt();
             return View();

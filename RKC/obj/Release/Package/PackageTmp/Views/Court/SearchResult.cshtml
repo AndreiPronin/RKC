@@ -5,18 +5,18 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">Карточка</th>
             <th scope="col">Номер лицевого счета</th>
             <th scope="col">Адрес</th>
             <th scope="col">ФИО</th>
-            <th scope="col">Номер ИП</th>
+            <th scope="col">Номер СП</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var Items in Model)
         {
             <tr>
-                <th scope="row">@i</th>
+                <th scope="row">@Items.Id</th>
                 <td>@Items.Lic</td>
                 <td>
                     @{if (Items.Street?.Length > 0)
@@ -32,7 +32,7 @@
                 <td>@Items.FioDuty</td>
                     @if (Items.CourtWork!= null)
                     {
-                        <td>@Items.CourtExecutionFSSP.NumberIP</td>
+                        <td>@Items.CourtWork.NumberSP</td>
                     }
                     else
                     {

@@ -4,17 +4,34 @@
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-
+<style>
+    .nav > li > a:hover,
+    .nav > li > a:focus {
+        text-decoration: none;
+        background-color: #043e6e !important;
+    }
+</style>
 
 <div class="loader">
     <div class="inner one"></div>
     <div class="inner two"></div>
     <div class="inner three"></div>
 </div>
-@if (User.IsInRole(BE.Roles.RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
-{
-    <a href="/Court/AdminPanel"><button class="btn btn-primary">Админ панель</button></a>
-}
+
+<div class="col-md-1">
+    <div id="mySidenavPersonalData" class="sidenav">
+        <ul class="nav nav-tabs">
+            @if (User.IsInRole(BE.Roles.RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
+            {
+                <li class="nav-item">
+                    <a style="cursor:pointer" class="nav-link Note" href="/Court/AdminPanel">Админ панель</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+
 <h1 class="page-header"></h1>
 <div class="container">
     <div class="row">
@@ -157,9 +174,9 @@
                     }
                 }
             })
-           
+
         });
-       
+
 
         $("#Lic").keyup(function () {
             if ($("#Lic").val().length > 4) {

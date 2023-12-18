@@ -306,19 +306,21 @@ namespace WordGenerator
         false, false, false, false);
                         cacheApp.Update(LIC, $"Сформировал квитацнию за {date}");
                         BarcodeWriter generator = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
-                        generator.Options = new ZXing.Common.EncodingOptions
+                        ZXing.QrCode.QrCodeEncodingOptions opt = new ZXing.QrCode.QrCodeEncodingOptions
                         {
+                            CharacterSet = "windows-1251",
                             Width = 140,
                             Height = 140,
                             Margin = 2
                         };
+                        generator.Options = opt;
                         var FIO = Lic.fio.Trim().Split(' ');
                         var sum = Convert.ToDouble(Lic.kopl.Trim().Replace(".", ",")) * 100;
                         var STR = $@"ST00011|Name=Мордовский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|
 BankName=Пензенское отделение № 8624 ПАО 'Сбербанк России' г. Пенза|BIC=045655635|CorrespAcc=30101810000000000635|PayeeINN=6315376946|
 Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValue(1)}|MiddleName={FIO.TryGetValue(2)}
 |PayerAddress={Lic.ul.Trim()}, дом {Lic.dom.Trim()}, кв. {Lic.kw.Trim()}|Sum={sum}";
-                        generator.Write(STR).Save(path + $@"{LIC}_QR.png");
+                        generator.Write(UTF8ToWin1251(STR)).Save(path + $@"{LIC}_QR.png");
                         try
                         {
                             Microsoft.Office.Interop.Word.Range qr = doc.Range(0, 0);
@@ -538,6 +540,15 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
                 arr[z] += T[i];
             }
             return arr;
+        }
+        private static string UTF8ToWin1251(string sourceStr)
+        {
+            Encoding utf8 = Encoding.UTF8;
+            Encoding win1251 = Encoding.GetEncoding(1251);
+            byte[] utf8Bytes = utf8.GetBytes(sourceStr);
+            byte[] win1251Bytes = Encoding.Convert(utf8, win1251, utf8Bytes);
+            var result = win1251.GetString(win1251Bytes);
+            return win1251.GetString(win1251Bytes);
         }
     }
     

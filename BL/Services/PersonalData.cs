@@ -499,6 +499,7 @@ namespace BL.Services
             {
                 var Pers = db.PersData.Find(IdPersData);
                 Pers.IsDelete = true;
+                Pers.SendingElectronicReceipt = "Нет";
                 db.SaveChanges();
             }
         }

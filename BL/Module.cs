@@ -54,6 +54,8 @@ namespace BL
             kernel.Bind<IExcelCourt>().To<ExcelCourt>();
             //kernel.Bind<IHttpClientFactory>().ToConstant(hostBuilder.Build().Services.GetService<IHttpClientFactory>());
 
+            kernel.Bind<ITokenCreator>().To<TokenCreator>();
+
 
 
         }

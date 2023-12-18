@@ -95,12 +95,14 @@ namespace WordGenerator
  false, false, false, false);
                         cacheApp.Update(LIC, $"Сформировал квитацнию за {date}");
                         BarcodeWriter generator = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
-                        generator.Options = new ZXing.Common.EncodingOptions
+                        ZXing.QrCode.QrCodeEncodingOptions opt = new ZXing.QrCode.QrCodeEncodingOptions
                         {
+                            CharacterSet = "windows-1251",
                             Width = 140,
                             Height = 140,
                             Margin = 2
                         };
+                        generator.Options = opt;
                         var FIO = Lic.FullName.Trim().Split(' ');
                         var sum = Convert.ToDouble(Lic.ToPay.ToString().Trim().Replace(".", ",")) * 100;
                         var STR = $@"ST00011|Name=Мордовский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|

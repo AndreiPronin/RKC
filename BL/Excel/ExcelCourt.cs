@@ -23,6 +23,7 @@ namespace BL.Excel
         Task<DataTable> ExcelsLoadCourt(XLWorkbook Excels, string User);
         Task<DataTable> ExcelsEditGpCourt(XLWorkbook Excels, string User);
         Task<DataTable> ExcelsEditPersDataCourt(XLWorkbook Excels, string User);
+        Task<DataTable> ExcelsEditSpAndIpCourt(XLWorkbook Excels, string User);
     }
     public class ExcelCourt : IExcelCourt
     {
@@ -80,7 +81,7 @@ namespace BL.Excel
 
                         var result = await _court.CreateCourtExcel(CourtGeneral, User);
 
-                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Id = $"П-{result.Id}", Description = "Успешно создано дело" });
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Id = $"П-{result.Id}", Description = "Успешно создано дело" });
 
                     }
                     catch (Exception ex)
@@ -128,7 +129,7 @@ namespace BL.Excel
                       
                         var result = await _court.SaveCourt(mapper.Map<DB.Model.Court.CourtGeneralInformation, BE.Court.CourtGeneralInformation>(CourtGeneral), User);
                         await _court.AddCourtWorkRequisites(CourtWorkRequisites);
-                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Id = $"П-{result}", Description = "Успешно обновлено дело" });
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Id = $"П-{result}", Description = "Успешно обновлено дело" });
 
                     }
                     catch (Exception ex)
@@ -196,7 +197,75 @@ namespace BL.Excel
                         }
 
                         var result = await _court.SaveCourt(mapper.Map<DB.Model.Court.CourtGeneralInformation, BE.Court.CourtGeneralInformation>(CourtGeneral), User);
-                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Id = $"П-{result}", Description = "Успешно обновлено дело" });
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Id = $"П-{result}", Description = "Успешно обновлено дело" });
+
+                    }
+                    catch (Exception ex)
+                    {
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { Line = dataRow.RowNumber().ToString(), Description = ex.Message });
+                    }
+                }
+            }
+            return CreateResultCourtLoader(reportCourtLoadExcels);
+        }
+        public async Task<DataTable> ExcelsEditSpAndIpCourt(XLWorkbook Excels, string User)
+        {
+            var dictionaryCourt = await _dictionary.GetCourtDictionaries();
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            var Count = nonEmptyDataRows.Count();
+            var mapper = new CourtProfile().GetMapperBe();
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    try
+                    {
+                        StringBuilder exceptions = new StringBuilder();
+                        var CourtGeneral = await _court.DetailInfroms(dataRow.Cell(1).Value.TryGetCardNumber());
+                        if (dataRow.Cell(2).Value != "" && CourtGeneral.CourtWork.NameCourt != dataRow.Cell(2).Value.ToString())
+                            CourtGeneral.CourtWork.NameCourt = dataRow.Cell(2).Value.ToString();
+                        if (dataRow.Cell(2).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 1).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtWork.NameCourt) == null)
+                            exceptions.Append("Наименование суда не найдена в справочнике" + Environment.NewLine);
+                        if (dataRow.Cell(3).Value != "" && CourtGeneral.CourtWork.DateReceptionCourt != Convert.ToDateTime(dataRow.Cell(3).Value))
+                            CourtGeneral.CourtWork.DateReceptionCourt = Convert.ToDateTime(dataRow.Cell(3).Value);
+                        if (dataRow.Cell(4).Value != "" && CourtGeneral.CourtWork.NumberSP != dataRow.Cell(4).Value.ToString())
+                            CourtGeneral.CourtWork.NumberSP = dataRow.Cell(4).Value.ToString();
+                        if (dataRow.Cell(5).Value != "" && CourtGeneral.CourtWork.DateSP != Convert.ToDateTime(dataRow.Cell(5).Value))
+                            CourtGeneral.CourtWork.DateSP = Convert.ToDateTime(dataRow.Cell(5).Value);
+                        if (dataRow.Cell(6).Value != "" && CourtGeneral.CourtWork.FioSendCourt != dataRow.Cell(6).Value.ToString())
+                            CourtGeneral.CourtWork.FioSendCourt = dataRow.Cell(6).Value.ToString();
+                        if (dataRow.Cell(6).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 20).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtWork.FioSendCourt) == null)
+                            exceptions.Append("ФИО сотрудника не найдена в справочнике" + Environment.NewLine);
+                        if (dataRow.Cell(7).Value != "" && CourtGeneral.CourtWork.DateTask != Convert.ToDateTime(dataRow.Cell(7).Value))
+                            CourtGeneral.CourtWork.DateTask = Convert.ToDateTime(dataRow.Cell(7).Value);
+                        if (dataRow.Cell(8).Value != "" && CourtGeneral.CourtExecutionFSSP.DateSendingApplicationFSSP != Convert.ToDateTime(dataRow.Cell(8).Value))
+                            CourtGeneral.CourtExecutionFSSP.DateSendingApplicationFSSP = Convert.ToDateTime(dataRow.Cell(8).Value);
+                        if (dataRow.Cell(9).Value != "" && CourtGeneral.CourtExecutionFSSP.NumberIP != dataRow.Cell(9).Value.ToString())
+                            CourtGeneral.CourtExecutionFSSP.NumberIP = dataRow.Cell(9).Value.ToString();
+                        if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtExecutionFSSP.IPInitiationDate != Convert.ToDateTime(dataRow.Cell(10).Value))
+                            CourtGeneral.CourtExecutionFSSP.IPInitiationDate = Convert.ToDateTime(dataRow.Cell(10).Value);
+                        if (dataRow.Cell(11).Value != "" && CourtGeneral.CourtExecutionFSSP.IPEndDate != Convert.ToDateTime(dataRow.Cell(11).Value))
+                            CourtGeneral.CourtExecutionFSSP.IPEndDate = Convert.ToDateTime(dataRow.Cell(11).Value);
+                        if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtExecutionFSSP.GroundsEndingIP != dataRow.Cell(12).Value.ToString())
+                            CourtGeneral.CourtExecutionFSSP.GroundsEndingIP = dataRow.Cell(12).Value.ToString();
+                        if (dataRow.Cell(13).Value != "" && CourtGeneral.CourtExecutionFSSP.NumberIP2 != dataRow.Cell(13).Value.ToString())
+                            CourtGeneral.CourtExecutionFSSP.NumberIP2 = dataRow.Cell(13).Value.ToString();
+                        if (dataRow.Cell(14).Value != "" && CourtGeneral.CourtExecutionFSSP.IPInitiationDate2 != Convert.ToDateTime(dataRow.Cell(14).Value))
+                            CourtGeneral.CourtExecutionFSSP.IPInitiationDate2 = Convert.ToDateTime(dataRow.Cell(14).Value);
+                        if (dataRow.Cell(15).Value != "" && CourtGeneral.CourtExecutionFSSP.IPEndDate2 != Convert.ToDateTime(dataRow.Cell(15).Value))
+                            CourtGeneral.CourtExecutionFSSP.IPEndDate2 = Convert.ToDateTime(dataRow.Cell(15).Value);
+                        if (dataRow.Cell(16).Value != "" && CourtGeneral.CourtExecutionFSSP.GroundsEndingIP2 != dataRow.Cell(16).Value.ToString())
+                            CourtGeneral.CourtExecutionFSSP.GroundsEndingIP2 = dataRow.Cell(16).Value.ToString();
+
+
+                        var ex = exceptions.ToString();
+                        if (ex != "")
+                        {
+                            throw new Exception(ex);
+                        }
+
+                        var result = await _court.SaveCourt(mapper.Map<DB.Model.Court.CourtGeneralInformation, BE.Court.CourtGeneralInformation>(CourtGeneral), User);
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Id = $"П-{result}", Description = "Успешно обновлено дело" });
 
                     }
                     catch (Exception ex)
@@ -210,10 +279,10 @@ namespace BL.Excel
         private DataTable CreateResultCourtLoader(List<ReportCourtLoadExcel> reportCourtLoadExcels)
         {
             DataTable dt = new DataTable("Counter");
-            dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Индификатор судебного дела"),new DataColumn("Строка"),
+            dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Уникальный переданный номер из загрузочного файла"), new DataColumn("Индификатор судебного дела"),new DataColumn("Строка"),
                                         new DataColumn("Описание")});
             foreach (var Item in reportCourtLoadExcels)
-                dt.Rows.Add(Item.Id, Item.Line, Item.Description);
+                dt.Rows.Add(Item.IdCourt,Item.Id, Item.Line, Item.Description);
 
             return dt;
         }

@@ -125,12 +125,15 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
                         catch (Exception ex) { }
 
                         BarcodeWriter generator1 = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
-                        generator.Options = new ZXing.Common.EncodingOptions
+                        ZXing.QrCode.QrCodeEncodingOptions opt = new ZXing.QrCode.QrCodeEncodingOptions
                         {
+                            CharacterSet = "windows-1251",
                             Width = 500,
                             Height = 500,
                             Margin = 2
                         };
+                        generator.Options = opt;
+                       
                         var FIO1 = Lic.FullName.Trim().Split(' ');
                         var sum1 = Convert.ToDouble(Lic.OneTimePayment.ToString().Trim().Replace(".", ",")) * 100;
                         var STR1 = $@"ST00011|Name=Мордовский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|

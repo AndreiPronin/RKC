@@ -37,9 +37,18 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.Flat, new { @readonly = "readonly", @class = "form-control", @Value = Model.Flat })
         </div>
-        <label class="col-sm-12 col-form-label">Доля собственности:</label>
+        <label class="col-sm-12 col-form-label">Вид собственности:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.ShareOfOwnership, new { @readonly = "readonly", @dicId = "21", @class = "form-control DictionaryAutoComplete", @Value = Model.ShareOfOwnership })
+        </div>
+        <label class="col-sm-12 col-form-label">Доля в праве:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.ShareInRight, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.ShareInRight })
+        </div>
+
+        <label class="col-sm-12 col-form-label">Солидарно с:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.InSolidarityWith, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.InSolidarityWith })
         </div>
         <label class="col-sm-12 col-form-label">Кадастровый номер:</label>
         <div class="col-sm-8">
@@ -62,6 +71,10 @@
         <label class="col-sm-12 col-form-label">Дата рождения:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.DateBirthday, new { @type = "date", @readonly = "readonly", @class = "form-control", @Value = Model.DateBirthday })
+        </div>
+        <label class="col-sm-12 col-form-label">Место рождения:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.PlaceBirth, new { @readonly = "readonly", @class = "form-control", @Value = Model.PlaceBirth })
         </div>
         <label class="col-sm-12 col-form-label">Паспорт серия:</label>
         <div class="col-sm-8">

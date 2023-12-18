@@ -3,43 +3,29 @@
     ViewBag.Title = "AdminPanel";
 }
 <input type="button" class="btn btn-primary" onclick="history.back();" value="Назад" />
-<h2>Панель Администратор</h2>
-
-<div class="row">
-    <div class="col-md-12">
-        @using (Html.BeginForm("UploadFileCourtCase", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
-            {
-                <div style="margin-top:30px;" class="row">
-                    <div class="col-md-4">
-                        <select name="TypeLoad" id="TypeLoad" class="form-control">
-                            <option value="1">Откртие испольнительного производства</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
-                    </div>
-                </div>
-            }
-        }
-    </div>
-
-    <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">Выберите справочник:</label>
-        <div class="col-sm-12">
-            <select id="Dictionary" class="form-control">
-                <option value="" selected disabled hidden>Справочник</option>
-                @foreach (var Item in ViewBag.Dic)
-                {
-                    <option value="@Item.Id">@Item.Name</option>
-                }
-            </select>
-        </div>
-        @*<label class="col-sm-12 col-form-label">Добавление справочника:</label>
+<h1>Панель Администратора</h1>
+<ul class="nav nav-tabs nav-tabs-Admins">
+    <li class="nav-item active" id="reportButton">
+        <a class="nav-link " data-toggle="tab" href="#Dictionarys">Справочники</a>
+    </li>
+    <li class="nav-item" id="roleButton">
+        <a class="nav-link" data-toggle="tab" href="#DownLoad">Загрузка/Обновление дел</a>
+    </li>
+</ul>
+<div class="tab-content tabAdmins">
+    <div class="tab-pane fade active in" id="Dictionarys">
+        <div class="col-md-6">
+            <label class="col-sm-12 col-form-label">Выберите справочник:</label>
+            <div class="col-sm-12">
+                <select id="Dictionary" class="form-control">
+                    <option value="" selected disabled hidden>Справочник</option>
+                    @foreach (var Item in ViewBag.Dic)
+                    {
+                        <option value="@Item.Id">@Item.Name</option>
+                    }
+                </select>
+            </div>
+            @*<label class="col-sm-12 col-form-label">Добавление справочника:</label>
             <div class="col-sm-12">
                 <div class="input-group">
                     <input class="form-control" id="NewDic" value="" placeholder="Введите значение..." />
@@ -48,25 +34,53 @@
                     </span>
                 </div>
             </div>*@
-    </div>
-    <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">Добавление к выбранному справочнику:</label>
-        <div class="col-sm-12">
-            <div class="input-group">
-                <input class="form-control" id="DicValue" value="" placeholder="Введите значение..." />
-                <span class="input-group-btn">
-                    <button id="AddDicValue" class="btn btn-success">Добавить</button>
-                </span>
+        </div>
+        <div class="col-md-6">
+            <label class="col-sm-12 col-form-label">Добавление к выбранному справочнику:</label>
+            <div class="col-sm-12">
+                <div class="input-group">
+                    <input class="form-control" id="DicValue" value="" placeholder="Введите значение..." />
+                    <span class="input-group-btn">
+                        <button id="AddDicValue" class="btn btn-success">Добавить</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label class="col-sm-12 col-form-label">Значения справочника:</label>
+            <div class="col-sm-8">
+                <div id="resultSearchDic"></div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">Значения справочника:</label>
-        <div class="col-sm-8">
-            <div id="resultSearchDic"></div>
+    <div class="tab-pane fade" id="DownLoad">
+        <div class="col-md-12">
+            @using (Html.BeginForm("UploadFileCourtCase", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
+                {
+                    <div style="margin-top:30px;" class="row">
+                        <div class="col-md-4">
+                            <select name="TypeLoad" id="TypeLoad" class="form-control">
+                                <option value="1">Откртие испольнительного производства</option>
+                                <option value="2">Изменение ГП</option>
+                                <option value="3">Изменение перс данных</option>
+                                <option value="4">Изменение СП и ИП</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 </div>
+
 
 <script>
     $(document).ready(function () {

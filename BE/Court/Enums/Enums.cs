@@ -11,5 +11,6 @@ namespace BE.Court
         OpenNewCourt = 1,
         EditGp = 2,
         EditPersData = 3,
+        EditSpAndIp = 4,
     }
 }
