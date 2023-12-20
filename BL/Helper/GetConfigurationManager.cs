@@ -12,7 +12,7 @@ namespace BL.Helper
     {
         public const string AppOpenId = "App:OpenId";
         public const string MailHostMonitor = "mail:host:monitor";
-        public const string ReportServiceToken = "Report:Service:Token";
+        public const string ReportServiceKey = "Report:Service:Key";
         public const string ReportServiceUrl = "Report:Service:Url";
     }
     public class GetConfigurationManager

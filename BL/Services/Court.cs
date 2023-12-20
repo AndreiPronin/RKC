@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BE.Court;
 using BE.PersData;
+using BL.Extention;
 using BL.Helper;
 using BL.MapperProfile;
 using DB.DataBase;
@@ -122,7 +123,7 @@ namespace BL.Services
                 var courtGeneralInformationDb = await db.CourtGeneralInformation.Include(x=>x.CourtWork)
                     .FirstOrDefaultAsync(x => 
                         x.Lic == courtGeneralInformation.Lic &&
-                        x.FioDuty == courtGeneralInformation.FioDuty &&
+                        x.FirstName == courtGeneralInformation.FirstName &&
                         x.Street == courtGeneralInformation.Street &&
                         x.Flat == courtGeneralInformation.Flat &&
                         x.Home == courtGeneralInformation.Home &&
@@ -150,7 +151,9 @@ namespace BL.Services
                     Model.Home = PersGeneral.House;
                     Model.Flat = PersGeneral.Flat;
                     Model.Home = PersGeneral.House;
-                    Model.FioDuty = $"{PersMain?.LastName} {PersMain?.FirstName} {PersMain?.MiddleName}";
+                    Model.FirstName = $"{PersMain?.FirstName}";
+                    Model.LastName = $"{PersMain?.LastName}";
+                    Model.Surname = $"{PersMain?.MiddleName}";
                     Model.DateBirthday = PersMain != null && PersMain.DateOfBirth.HasValue ? PersMain.DateOfBirth.Value.ToString() : "";
                     Model.PasportDate = PersMain != null && PersMain.PassportDate.HasValue ? PersMain.PassportDate.Value.ToString() : "";
                     Model.PasportSeria = PersMain?.PassportSerial;
@@ -207,6 +210,18 @@ namespace BL.Services
                         query = query.Where(x => x.CourtLitigationWork.NumberIl.Contains(searchModel.NumberIl));
                     if (!string.IsNullOrEmpty(searchModel.NumberIp))
                         query = query.Where(x => x.CourtExecutionFSSP.NumberIP.Contains(searchModel.NumberIp));
+                    if (!string.IsNullOrEmpty(searchModel.FullName)) {
+                        var FIO = searchModel.FullName.GetFioByString();
+                        var firstName = FIO.TryGetValue(1);
+                        var lastName = FIO.TryGetValue(0);
+                        var surName = FIO.TryGetValue(2);
+                        if (!string.IsNullOrEmpty(firstName))
+                            query = query.Where(x => x.FirstName ==firstName);
+                        if (!string.IsNullOrEmpty(lastName))
+                            query = query.Where(x => x.LastName == lastName);
+                        if (!string.IsNullOrEmpty(surName))
+                            query = query.Where(x => x.Surname == surName);
+                    }
 
                     return await query.Take(30).ToListAsync();
                 }

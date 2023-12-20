@@ -79,6 +79,13 @@
                 alert("Что то пошло не так. Обратитесь к администратору");
             }
         });
+        function CheckRequeredError() {
+            var elements = document.getElementsByClassName("Required");
+            if (elements.length !== 0) {
+                $("#Save").removeClass("hidden");
+                $("#Save").addClass("hidden");
+            }
+        }
     }
 </script>
 <style>
@@ -149,7 +156,7 @@
         <h2 class="">Номер карточки дела @NumberSP </h2>
     </div>
     <div class="col-md-8 text-left">
-        <h2 class="">@Model.FioDuty СП № @Model.CourtWork.NumberSP </h2>
+        <h2 class="">@Model.LastName @Model.FirstName @Model.Surname СП № @Model.CourtWork.NumberSP </h2>
     </div>
 
     <div id="ResultSearchCourt"></div>
@@ -221,7 +228,7 @@
                 return false;
             }
         });
-        $("#ShareOfOwnership").change(function () {
+        $("#ShareOfOwnership").on('click keyup change focus focusout ', function (e) {
             var value = $("#ShareOfOwnership").val();
             $("#ShareInRight").attr("disabled", true);
             $("#InSolidarityWith").attr("disabled", true);
@@ -248,7 +255,7 @@
                 }
             });
         })
-        $("input").on('click keyup change focus', function (e) {
+        $("input").on('click keyup change focus focusout', function (e) {
             let equalDate = @DateTimeOffset.Now.ToUnixTimeSeconds();
             console.log($(this).attr('NotMaxDAte'))
             if (($(this).attr('type').toLowerCase() == "date" || $(this).attr('type').toLowerCase() == "month") && $(this).attr('NotMaxDAte') != "true") {
@@ -266,6 +273,7 @@
                 }
             }
         })
+        
         ///Clear
         $(".nav-tabs li").each(function () {
             $(this).removeClass("active");

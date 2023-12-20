@@ -64,6 +64,7 @@
     <Compile Include="Extention\ConvertToModelHelpCalculations.cs" />
     <Compile Include="Extention\DateTimes.cs" />
     <Compile Include="Extention\GetTypePuOfDecimal.cs" />
+    <Compile Include="Extention\StringExtenstions.cs" />
     <Compile Include="Extention\StringWriterExtension.cs" />
     <Compile Include="Helper\ConvertToModelCourt.cs" />
     <Compile Include="Helper\ConvertJson.cs" />

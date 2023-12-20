@@ -63,7 +63,9 @@ namespace BL.Excel
                         CourtGeneral.Street = dataRow.Cell(3).Value.ToString();
                         CourtGeneral.Home = dataRow.Cell(4).Value.ToString();
                         CourtGeneral.Flat = dataRow.Cell(5).Value.ToString();
-                        CourtGeneral.FioDuty = $"{dataRow.Cell(6).Value.ToString()} {dataRow.Cell(7).Value.ToString()} {dataRow.Cell(8).Value.ToString()}";
+                        CourtGeneral.FirstName = $"{dataRow.Cell(7).Value.ToString()}".Trim();
+                        CourtGeneral.LastName = $"{dataRow.Cell(6).Value.ToString()}".Trim();
+                        CourtGeneral.Surname = $"{dataRow.Cell(8).Value.ToString()}".Trim();
                         CourtGeneral.CourtWork.FioSendCourt = dataRow.Cell(9).Value.ToString();
                         CourtGeneral.CourtWork.DateTask = Convert.ToDateTime(dataRow.Cell(10).Value.ToString());
                         CourtGeneral.CourtWork.PeriodDebtBegin = Convert.ToDateTime(dataRow.Cell(11).Value.ToString());

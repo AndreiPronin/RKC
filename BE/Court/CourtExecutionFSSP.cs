@@ -82,6 +82,10 @@ namespace BE.Court
         /// </summary>
         public string GroundsEndingIP { get; set; }
         /// <summary>
+        /// Статья окончания ИП
+        /// </summary>
+        public string SatyaEndingIP { get; set; }
+        /// <summary>
         /// Дата отзыва ИД с исполнения
         /// </summary>
         public DateTime? IPExecutionDate { get; set; }
@@ -101,6 +105,10 @@ namespace BE.Court
         /// Основание отказа в возбуждении ИП
         /// </summary>
         public string GroundsRefusalInitiateIP { get; set; }
+        /// <summary>
+        /// Статья отказа в возбуждении ИП
+        /// </summary>
+        public string SatayGroundsRefusalInitiateIP { get; set; }
         /// <summary>
         /// Дата поступления оригинала ИД при отказе в возбуждении ИП
         /// </summary>
@@ -126,6 +134,10 @@ namespace BE.Court
         /// </summary>
         public string GroundsEndingIP2 { get; set; }
         /// <summary>
+        /// Статья окончания ИП
+        /// </summary>
+        public string SatyaEndingIP2 { get; set; }
+        /// <summary>
         /// Дата отзыва ИД с исполнения
         /// </summary>
         public DateTime? IPExecutionDate2 { get; set; }
@@ -145,6 +157,10 @@ namespace BE.Court
         /// Основание отказа в возбуждении ИП
         /// </summary>
         public string GroundsRefusalInitiateIP2 { get; set; }
+        /// <summary>
+        /// Статья отказа в возбуждении ИП2
+        /// </summary>
+        public string SatayGroundsRefusalInitiateIP2 { get; set; }
         /// <summary>
         /// Дата поступления оригинала ИД при отказе в возбуждении ИП
         /// </summary>

@@ -29,6 +29,9 @@ using System.Net.Http;
 using System.Web.Http.Results;
 using NLog;
 using BL.Security;
+using BL.http;
+using BE.Counter;
+using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace RKC.Controllers
 {
@@ -46,15 +49,22 @@ namespace RKC.Controllers
             _tokenCreator = tokenCreator;
             //var rrr = Parser.PdfParser();
         }
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-           //var xxx = _tokenCreator.CreateTokenReportService();
-
             var sss = User.Identity.IsAuthenticated;
             
             //_eBD.CreateEbdFlatliving(DateTime.Now);
             var res = new GetConfigurationManager().GetAppSettings("").GetInt();
             return View();
+        }
+        public async Task<ActionResult> GetFile()
+        {
+            var token = _tokenCreator.CreateTokenReportService();
+            var Reuqests = new Reuqest<object, object>();
+            var url = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.ReportServiceUrl).GetString();
+            var reult = await Reuqests.GetRequestWithTockenAsync($"{url}/api/v1/TextReports/GetSberbankSevens?period=2023-10-31", token);
+
+            return File(reult, "application/octet-stream", $"{TypeFile.EbdMkd.GetDescription()}.txt");
         }
         [Auth]
         public ActionResult IndexUnLock()

@@ -38,9 +38,17 @@ namespace DB.Model.Court
         /// </summary>
         public string Flat { get; set; }
         /// <summary>
-        /// ФИО должника
+        /// Имя должника
         /// </summary>
-        public string FioDuty { get; set; }
+        public string FirstName { get; set; }
+        /// <summary>
+        /// Фамилия должника
+        /// </summary>
+        public string LastName { get; set; }
+        /// <summary>
+        /// Отчество должника
+        /// </summary>
+        public string Surname { get; set; }
         /// <summary>
         /// пол
         /// </summary>

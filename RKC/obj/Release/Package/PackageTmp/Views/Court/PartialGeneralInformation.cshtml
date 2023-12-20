@@ -43,7 +43,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Доля в праве:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.ShareInRight, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.ShareInRight })
+            @Html.TextBoxFor(m => m.ShareInRight, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.ShareInRight, type = "number", min = "0", max = "999.999", step = "0.001" })
         </div>
 
         <label class="col-sm-12 col-form-label">Солидарно с:</label>
@@ -60,9 +60,17 @@
         </div>
     </div>
     <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">ФИО должника</label>
+        <label class="col-sm-12 col-form-label">Фамилия должника</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.FioDuty, new { @readonly = "readonly", @class = "form-control", @Value = Model.FioDuty })
+            @Html.TextBoxFor(m => m.LastName, new { @readonly = "readonly", @class = "form-control", @Value = Model.LastName })
+        </div>
+        <label class="col-sm-12 col-form-label">Имя должника</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.FirstName, new { @readonly = "readonly", @class = "form-control", @Value = Model.FirstName })
+        </div>
+        <label class="col-sm-12 col-form-label">Отчество должника</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.Surname, new { @readonly = "readonly", @class = "form-control", @Value = Model.Surname })
         </div>
         <label class="col-sm-12 col-form-label">Пол:</label>
         <div class="col-sm-8">

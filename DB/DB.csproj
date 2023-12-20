@@ -78,6 +78,14 @@
     <Compile Include="Migrations\202312080908022_courtaddField-08-12-2023.designer.cs">
       <DependentUpon>202312080908022_courtaddField-08-12-2023.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312200923465_editCourt20122023.cs" />
+    <Compile Include="Migrations\202312200923465_editCourt20122023.designer.cs">
+      <DependentUpon>202312200923465_editCourt20122023.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202312201430579_editCourt20122023-2.cs" />
+    <Compile Include="Migrations\202312201430579_editCourt20122023-2.designer.cs">
+      <DependentUpon>202312201430579_editCourt20122023-2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -152,6 +160,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312080908022_courtaddField-08-12-2023.resx">
       <DependentUpon>202312080908022_courtaddField-08-12-2023.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312200923465_editCourt20122023.resx">
+      <DependentUpon>202312200923465_editCourt20122023.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312201430579_editCourt20122023-2.resx">
+      <DependentUpon>202312201430579_editCourt20122023-2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

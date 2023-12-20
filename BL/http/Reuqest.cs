@@ -1,5 +1,6 @@
 ﻿using BE.Counter;
 using BL.Helper;
+using DB.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,23 @@ namespace BL.http
                 {
                     var result = await resultPostRequest.Content.ReadAsStringAsync();
                     return result;
+                }
+                throw new Exception();
+
+            }
+        }
+        public async Task<byte[]> GetRequestWithTockenAsync(string Url, string Token)
+        {
+            using (var httpClient = _httpClient ?? new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                await Task.CompletedTask;
+                var resultPostRequest = await httpClient.GetAsync(Url);
+                if (resultPostRequest != null && resultPostRequest.StatusCode == HttpStatusCode.OK)
+                {
+                    var result = await resultPostRequest.Content.ReadAsStringAsync();
+                    byte[] buffer = Encoding.GetEncoding("windows-1251").GetBytes(result);
+                    return buffer;
                 }
                 throw new Exception();
 
