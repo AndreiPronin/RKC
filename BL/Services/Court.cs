@@ -124,6 +124,8 @@ namespace BL.Services
                     .FirstOrDefaultAsync(x => 
                         x.Lic == courtGeneralInformation.Lic &&
                         x.FirstName == courtGeneralInformation.FirstName &&
+                         x.Surname == courtGeneralInformation.Surname &&
+                          x.LastName == courtGeneralInformation.LastName &&
                         x.Street == courtGeneralInformation.Street &&
                         x.Flat == courtGeneralInformation.Flat &&
                         x.Home == courtGeneralInformation.Home &&

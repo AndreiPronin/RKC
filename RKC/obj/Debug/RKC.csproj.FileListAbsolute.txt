@@ -299,3 +299,4 @@ D:\Programing\RKC\RKC\bin\Common.Logging.dll
 D:\Programing\RKC\RKC\bin\Quartz.pdb
 D:\Programing\RKC\RKC\bin\Common.Logging.Core.pdb
 D:\Programing\RKC\RKC\bin\Common.Logging.pdb
+D:\Programing\RKC\RKC\bin\Swashbuckle.Core.dll

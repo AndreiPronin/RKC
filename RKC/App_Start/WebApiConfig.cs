@@ -9,6 +9,7 @@ namespace RKC
     {
         public static void Register(HttpConfiguration config)
         {
+            // Маршруты Web API
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

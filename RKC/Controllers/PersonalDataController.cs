@@ -24,6 +24,7 @@ using DB.DataBase;
 using DB.Extention;
 using BL.http;
 using System.Net.Http;
+using BE.Counter;
 
 namespace RKC.Controllers
 {
@@ -41,6 +42,7 @@ namespace RKC.Controllers
         private readonly IPdfFactory _pdfFactory;
         private readonly ICourt _court;
         private readonly IDictionary _dictionary;
+        private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
         public PersonalDataController(IPersonalData personalData, Ilogger logger, IGeneratorDescriptons generatorDescriptons,
             ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory, ICourt court, IDictionary dictionary)
         {
@@ -266,6 +268,7 @@ namespace RKC.Controllers
         [Auth(Roles = "PersWriter,Admin")]
         public ActionResult SavePersonalData(PersDataModel persDataModel)
         {
+            _Nlogger.Info(new ConvertJson<PersDataModel>(persDataModel).ConverModelToJson());
             _personalData.SavePersonalData(persDataModel, User.Identity.GetFIOFull());
             return null;
         }

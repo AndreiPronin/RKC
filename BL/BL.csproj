@@ -70,6 +70,7 @@
     <Compile Include="Helper\ConvertJson.cs" />
     <Compile Include="Helper\Excels.cs" />
     <Compile Include="Helper\GetConfigurationManager.cs" />
+    <Compile Include="Helper\QueueSynchronizationContext .cs" />
     <Compile Include="http\Resposne.cs" />
     <Compile Include="Helper\ThrowHelper.cs" />
     <Compile Include="http\Reuqest.cs" />

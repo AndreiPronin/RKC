@@ -655,3 +655,4 @@ D:\Programing\RKC\RKC\bin\NLog.Web.xml
 D:\Programing\RKC\RKC\bin\Quartz.pdb
 D:\Programing\RKC\RKC\bin\Common.Logging.Core.pdb
 D:\Programing\RKC\RKC\bin\Common.Logging.pdb
+D:\Programing\RKC\RKC\bin\Swashbuckle.Core.dll

@@ -35,7 +35,19 @@ using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace RKC.Controllers
 {
+    public sealed class MyClass
+    {
+        private async Task<int> GetMyProperty()
+        {
+            await Task.Delay(10000);
+            return 13;
+        }
 
+        public Task<int> MyProperty
+        {
+            get { return GetMyProperty(); }
+        }
+    }
     public class HomeController : Controller
     {
         private readonly IEBD _eBD;
@@ -47,20 +59,17 @@ namespace RKC.Controllers
             _eBD = eBD;
             _cacheApp = cacheApp;
             _tokenCreator = tokenCreator;
-            //var rrr = Parser.PdfParser();
         }
         public async Task<ActionResult> Index()
         {
-            var sss = User.Identity.IsAuthenticated;
-            
-            //_eBD.CreateEbdFlatliving(DateTime.Now);
-            var res = new GetConfigurationManager().GetAppSettings("").GetInt();
+            await Task.CompletedTask;
             return View();
         }
         public async Task<ActionResult> GetFile()
         {
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
             var token = _tokenCreator.CreateTokenReportService();
-            var Reuqests = new Reuqest<object, object>();
+            var Reuqests = new Reuqest<object>();
             var url = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.ReportServiceUrl).GetString();
             var reult = await Reuqests.GetRequestWithTockenAsync($"{url}/api/v1/TextReports/GetSberbankSevens?period=2023-10-31", token);
 

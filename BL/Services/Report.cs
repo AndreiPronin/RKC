@@ -74,7 +74,7 @@ namespace BL.Services
 
         public async Task SaveSqlQueryAsync(string SqlQuery, string SqlName)
         {
-            CheckSqlQuert(SqlQuery);
+            CheckSqlQuery(SqlQuery);
             using (var AppDb = new ApplicationDbContext())
             {
                 if (AppDb.Reports.FirstOrDefault(x => x.NameReport == SqlName) is null)
@@ -119,7 +119,7 @@ namespace BL.Services
 
         public async Task RefreshSqlQuery(string SqlQuery, string SqlName, int Id)
         {
-            CheckSqlQuert(SqlQuery);
+            CheckSqlQuery(SqlQuery);
             using (var appDb = new ApplicationDbContext())
             {
                 var res = appDb.Reports.FirstOrDefault(x=>x.Id == Id);
@@ -128,7 +128,7 @@ namespace BL.Services
                 await appDb.SaveChangesAsync();
             }
         }
-        private void CheckSqlQuert(string SqlQuery)
+        private void CheckSqlQuery(string SqlQuery)
         {
             var sqlQuery = SqlQuery.ToLower();
             var sql = sqlQuery.Split(' ');

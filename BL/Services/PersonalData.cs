@@ -293,7 +293,7 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var PersData = db.PersData.Find(persDataModel.idPersData);
-                _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel), User);
+                _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel,true), User);
                 if (PersData.Main == true)
                 {
                     using (var dbAllLic = new DbLIC())

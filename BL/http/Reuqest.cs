@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BL.http
 {
-    public class Reuqest<T,T1> where T : class,new() where T1 : class,new()
+    public class Reuqest<T> where T : class,new()
     {
         private T Value { get; set; }
         protected virtual HttpClient _httpClient { get; set; }

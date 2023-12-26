@@ -73,6 +73,15 @@ namespace DB.Model
         public DateTime? OPERATOR_CLOSE_DATE { get; set; }
         public double? OPERATOR_CLOSE_READINGS { get; set; }
         public int? DIMENSION_ID { get;set;}
+        public Guid? MeteringDeviceVersionGUID { get; set; }
+        /// <summary>
+        /// Номер прибора учета в ГИС ЖКХ
+        /// </summary>
+        public string MeteringDeviceGISGKHNumber { get; set; }
+        /// <summary>
+        /// Идентификатор ПУ в ГИС ЖКХ
+        /// </summary>
+        public Guid? MeteringDeviceRootGUID { get; set; }
         public DIMENSION DIMENSION { get; set; }
         public ALL_LICS ALL_LICS = new ALL_LICS();
         public List<BRAND> BrandDictionary = new List<BRAND>();

@@ -12,6 +12,7 @@ using System.Threading;
 using BL.Services;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DB.Extention;
+using System.Security.Policy;
 
 namespace BL.Counters
 {
@@ -31,6 +32,7 @@ namespace BL.Counters
         void RecoveryIPU(int IdPU);
         Task UpdatePUIntegrations(SaveModelIPU saveModelIPU, string User, int ID_PU);
         List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC);
+        IEnumerable<ConnectPuWithGisResponse> UpdateGuidPuWithGis(IEnumerable<ConnectPuWithGis> connectPuWithGis);
     }
     public class Counter :BaseService, ICounter
     {
@@ -398,9 +400,16 @@ namespace BL.Counters
                 {
                     saveModelIPU.IdPU = IPU_COUNTERS.ID_PU;
                     saveModelIPU.OVERWRITE_SEAL = false;
-                    _ = Task.Run(async () => await logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User));
-                    //logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
-                    _ = Task.Run(() => UpdateReadings(saveModelIPU));
+                   
+                    //
+                    using (var ctx = new QueueSynchronizationContext())
+                    {
+                        var tasklogger =  logger.ActionUsersAsync(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User);
+                        ctx.WaitFor(tasklogger);
+                        var task = UpdateReadings(saveModelIPU);
+                        ctx.WaitFor(task);
+                    }
+                    //_ = Task.Run(() => UpdateReadings(saveModelIPU));
                     //new Thread(x=> UpdateReadings(saveModelIPU)).Start();
                     return true;
                 }
@@ -439,6 +448,50 @@ namespace BL.Counters
                 }
                 return model;
             }
+        }
+
+        public IEnumerable<ConnectPuWithGisResponse> UpdateGuidPuWithGis(IEnumerable<ConnectPuWithGis> connectPuWithGis)
+        {
+            var connectPuWithGisResponses = new List<ConnectPuWithGisResponse>();
+            using(var context = new DbTPlus()) 
+            {
+                foreach (var Item in connectPuWithGis)
+                {
+                    var ConnectPuWithGisResponse = new ConnectPuWithGisResponse();
+                    ConnectPuWithGisResponse.MeteringDeviceGISGKHNumber = Item.MeteringDeviceNumber;
+                    ConnectPuWithGisResponse.MeteringDeviceNumber = Item.MeteringDeviceNumber;
+                    ConnectPuWithGisResponse.MeteringDeviceRootGUID = Item.MeteringDeviceRootGUID;
+                    ConnectPuWithGisResponse.MeteringDeviceVersionGUID = Item.MeteringDeviceVersionGUID;
+                    var counters = context.IPU_COUNTERS.Where(x => x.CLOSE_ != true && x.FACTORY_NUMBER_PU == Item.MeteringDeviceNumber).ToList();
+                    if (counters.Any())
+                    {
+                        if (counters.Count() > 1)
+                        {
+                            ConnectPuWithGisResponse.Description = "Найдено более одного ПУ";
+                            ConnectPuWithGisResponse.Error = true;
+                            connectPuWithGisResponses.Add(ConnectPuWithGisResponse);
+                        }
+                        else
+                        {
+                            var counter = counters.FirstOrDefault();
+                            counter.MeteringDeviceGISGKHNumber = Item.MeteringDeviceGISGKHNumber;
+                            counter.MeteringDeviceRootGUID = Item.MeteringDeviceRootGUID;
+                            counter.MeteringDeviceVersionGUID = Item.MeteringDeviceVersionGUID;
+                            context.SaveChanges();
+                            ConnectPuWithGisResponse.Description = "Информация обновлена";
+                            ConnectPuWithGisResponse.Error = false;
+                            connectPuWithGisResponses.Add(ConnectPuWithGisResponse);
+                        }
+                    }
+                    else
+                    {
+                        ConnectPuWithGisResponse.Description = "Не найден ПУ";
+                        ConnectPuWithGisResponse.Error = true;
+                        connectPuWithGisResponses.Add(ConnectPuWithGisResponse); 
+                    }
+                }
+            }
+            return connectPuWithGisResponses;
         }
     }
 }

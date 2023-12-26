@@ -50,14 +50,16 @@ namespace RKC.Controllers
         [HttpPost]
         public HttpResponseMessage SendReceiptLic(SendReceiptLic sendReceiptLic)
         {
-            _job.SendReceipt(sendReceiptLic.FullLic);
+            if (User.IsInRole(RolesEnums.DownLoadReceipt) || User.IsInRole(RolesEnums.SuperAdmin) || User.IsInRole(RolesEnums.Admin))
+                _job.SendReceipt(sendReceiptLic.FullLic);
             return Resposne.CreateResponse200();
         }
         [Route("api/SendReceiptLicDpu")]
         [HttpPost]
         public HttpResponseMessage SendReceiptLicDpu(SendReceiptLic sendReceiptLic)
         {
-            _job.SendReceiptDpu(sendReceiptLic.FullLic);
+            if (User.IsInRole(RolesEnums.DownLoadReceipt) || User.IsInRole(RolesEnums.SuperAdmin) || User.IsInRole(RolesEnums.Admin))
+                _job.SendReceiptDpu(sendReceiptLic.FullLic);
             return Resposne.CreateResponse200();
         }
     }

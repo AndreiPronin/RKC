@@ -13,6 +13,7 @@ namespace BL.Security
 {
     public interface ITokenCreator
     {
+        string Key { get; set; }
         bool IsAuthorize(string token);
         string CreateTokenReportService();
     }
@@ -20,6 +21,7 @@ namespace BL.Security
     {
         public WindowsIdentity WindowsIdentity { get; set; }
         public string Name = "";
+        public string Key { get; set; }
         public Exception ex;
         bool IsValid { get; set; }
         public TokenCreator()
@@ -53,7 +55,7 @@ namespace BL.Security
         public string CreateTokenReportService()
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.ReportServiceToken).GetString());
+            var key = Encoding.ASCII.GetBytes(Key);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
@@ -95,7 +97,7 @@ namespace BL.Security
                 ValidateIssuer = false,   // Because there is no issuer in the generated token
                                           //ValidIssuer = "Sample",
                                           //ValidAudience = "Sample",
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.ReportServiceToken).GetString())) // Установить секретный ключ
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key)) // Установить секретный ключ
             };
         }
     }

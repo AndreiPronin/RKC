@@ -89,11 +89,11 @@
         </div>
     </div>
     <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">Номер ИП:</label>
+        <label class="col-sm-12 col-form-label">Номер ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.NumberIP, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.NumberIP })
         </div>
-        <label class="col-sm-12 col-form-label">Дата возбуждения ИП:</label>
+        <label class="col-sm-12 col-form-label">Дата возбуждения ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.IPInitiationDate, new
           {
@@ -107,7 +107,7 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.SumDecisionInitateIP, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtExecutionFSSP.SumDecisionInitateIP })
         </div>
-        <label style="margin-top:20px;" class="col-sm-12 col-form-label">Дата окончания ИП:</label>
+        <label style="margin-top:20px;" class="col-sm-12 col-form-label">Дата окончания ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.IPEndDate, new
           {
@@ -117,9 +117,13 @@
            @Value = (Model.CourtExecutionFSSP.IPEndDate.HasValue ? Model.CourtExecutionFSSP.IPEndDate.Value.ToString("yyyy-MM-dd") : string.Empty)
            })
         </div>
-        <label class="col-sm-12 col-form-label">Основание окончания ИП:</label>
+        <label class="col-sm-12 col-form-label">Основание окончания ИП1:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.GroundsEndingIP, new { @readonly = "readonly", @dicId = "4", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.GroundsEndingIP })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.GroundsEndingIP, new { @readonly = "readonly", @dicId = "4", @class = "form-control DictionaryAutoCompleteGroundsEndingIP", @Value = Model.CourtExecutionFSSP.GroundsEndingIP })
+        </div>
+        <label class="col-sm-12 col-form-label">Статья окончания ИП1:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.SatyaEndingIP, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.SatyaEndingIP })
         </div>
         <label style="margin-top:20px;" class="col-sm-12 col-form-label">Дата отзыва ИД с исполнения:</label>
         <div class="col-sm-8">
@@ -135,7 +139,7 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.ReasonExecutionIP, new { @readonly = "readonly", @dicId = "5", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.ReasonExecutionIP })
         </div>
-        <label class="col-sm-12 col-form-label">Дата поступления оригиналов ИД при окончании ИП:</label>
+        <label class="col-sm-12 col-form-label">Дата поступления оригиналов ИД при окончании ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.DateReceiptOriginalIDEndIP, new
           {
@@ -145,7 +149,7 @@
            @Value = (Model.CourtExecutionFSSP.DateReceiptOriginalIDEndIP.HasValue ? Model.CourtExecutionFSSP.DateReceiptOriginalIDEndIP.Value.ToString("yyyy-MM-dd") : string.Empty)
            })
         </div>
-        <label style="margin-top:20px;" class="col-sm-12 col-form-label">Дата отказа в возбуждении ИП:</label>
+        <label style="margin-top:20px;" class="col-sm-12 col-form-label">Дата отказа в возбуждении ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.DateRefusalInitiateIP, new
           {
@@ -155,11 +159,15 @@
            @Value = (Model.CourtExecutionFSSP.DateRefusalInitiateIP.HasValue ? Model.CourtExecutionFSSP.DateRefusalInitiateIP.Value.ToString("yyyy-MM-dd") : string.Empty)
            })
         </div>
-        <label class="col-sm-12 col-form-label">Основание отказа в возбуждении ИП:</label>
+        <label class="col-sm-12 col-form-label">Основание отказа в возбуждении ИП1:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.GroundsRefusalInitiateIP, new { @readonly = "readonly", @dicId = "6", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.GroundsRefusalInitiateIP })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.GroundsRefusalInitiateIP, new { @readonly = "readonly", @dicId = "6", @class = "form-control DictionaryAutoCompleteGroundsRefusalInitiateIP", @Value = Model.CourtExecutionFSSP.GroundsRefusalInitiateIP })
         </div>
-        <label class="col-sm-12 col-form-label">Дата поступления оригинала ИД при отказе в возбуждении ИП:</label>
+        <label class="col-sm-12 col-form-label">Статья отказа ИП1:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.SatayGroundsRefusalInitiateIP, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.SatayGroundsRefusalInitiateIP })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата поступления оригинала ИД при отказе в возбуждении ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.DateReceiptOriginalIDcaseRefusalInitiateIP, new
           {
@@ -201,7 +209,11 @@
         </div>
         <label class="col-sm-12 col-form-label">Основание окончания ИП 2:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.GroundsEndingIP2, new { @readonly = "readonly", @dicId = "4", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.GroundsEndingIP2 })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.GroundsEndingIP2, new { @readonly = "readonly", @dicId = "4", @class = "form-control DictionaryAutoCompleteGroundsEndingIP2", @Value = Model.CourtExecutionFSSP.GroundsEndingIP2 })
+        </div>
+        <label class="col-sm-12 col-form-label">Статья окончания ИП2:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.SatyaEndingIP2, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.SatyaEndingIP2 })
         </div>
         <label style="margin-top:20px;" class="col-sm-12 col-form-label">Дата отзыва ИД с исполнения 2:</label>
         <div class="col-sm-8">
@@ -239,7 +251,11 @@
         </div>
         <label class="col-sm-12 col-form-label">Основание отказа в возбуждении ИП 2:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtExecutionFSSP.GroundsRefusalInitiateIP2, new { @readonly = "readonly", @dicId = "6", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtExecutionFSSP.GroundsRefusalInitiateIP2 })
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.GroundsRefusalInitiateIP2, new { @readonly = "readonly", @dicId = "6", @class = "form-control DictionaryAutoCompleteGroundsRefusalInitiateIP2", @Value = Model.CourtExecutionFSSP.GroundsRefusalInitiateIP2 })
+        </div>
+        <label class="col-sm-12 col-form-label">Статья отказа ИП2:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtExecutionFSSP.SatayGroundsRefusalInitiateIP2, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.SatayGroundsRefusalInitiateIP2 })
         </div>
         <label class="col-sm-12 col-form-label">Дата поступления оригинала ИД при отказе в возбуждении ИП 2:</label>
         <div class="col-sm-8">
@@ -256,11 +272,11 @@
 <hr />
 <div class="row">
     <div class="col-md-3">
-        <label class="col-sm-12 col-form-label">ФИО должника в ИП:</label>
+        <label class="col-sm-12 col-form-label">ФИО должника в ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.FullNameDebtorIP, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.FullNameDebtorIP })
         </div>
-        <label class="col-sm-12 col-form-label">Дата рождения в ИП:</label>
+        <label class="col-sm-12 col-form-label">Дата рождения в ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.IPDateBirth, new
           {
@@ -270,19 +286,19 @@
            @Value = (Model.CourtExecutionFSSP.IPDateBirth.HasValue ? Model.CourtExecutionFSSP.IPDateBirth.Value.ToString("yyyy-MM-dd") : string.Empty)
            })
         </div>
-        <label class="col-sm-12 col-form-label">СНИЛС в ИП:</label>
+        <label class="col-sm-12 col-form-label">СНИЛС в ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.SnilsIp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.SnilsIp })
         </div>
-        <label class="col-sm-12 col-form-label">ИНН в ИП:</label>
+        <label class="col-sm-12 col-form-label">ИНН в ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.InnIp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.InnIp })
         </div>
-        <label class="col-sm-12 col-form-label">Паспорт в ИП:</label>
+        <label class="col-sm-12 col-form-label">Паспорт в ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.PasportIp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.PasportIp })
         </div>
-        <label class="col-sm-12 col-form-label">Адрес в ИП:</label>
+        <label class="col-sm-12 col-form-label">Адрес в ИП1:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.AddressIp, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtExecutionFSSP.AddressIp })
         </div>
@@ -499,6 +515,236 @@
         var selectDicFSSP = true;
         var valFSSP = '';
         var atrPfFSSP = '';
+
+
+        $('.DictionaryAutoCompleteGroundsRefusalInitiateIP').keyup(function () {
+            valPf = $(this).val();
+            atrPf = $(this).attr("dicId");
+            console.log(selectDicPf);
+            return;
+        }).autocomplete({
+            delay: 500,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Court/AutocompleteDictionary?Text=" + valPf + '&id=' + atrPf, type: "Get", dataType: "json",
+                    data: { id: request.term },
+
+                    success: function (data) {
+                        if (data.length == 1) {
+                            if (String(data[0]).includes(valPf)) {
+                                selectDicPf = false;
+                                response($.map(data, function (item) {
+                                    return { label: item, value: item };
+                                }));
+                            }
+                        }
+                        if (data.length > 1) {
+                            response($.map(data, function (item) {
+                                selectDicPf = true;
+                                return { label: item, value: item };
+                            }));
+                        } else if (data.length == 0) {
+                            selectDicPf = true;
+                            response([{ label: 'Не найдено.', val: -1 }]);
+                        }
+
+                    },
+                });
+            },
+            minLength: 0,
+            select: function (event, ui) {
+                var value = ui.item.value.split("|");
+                ui.item.value = value[0];
+                $("#CourtExecutionFSSP_SatayGroundsRefusalInitiateIP").val(value[1]?.trim());
+                selectDicPf = false;
+            }
+        }).focus(function () {
+            if ($(this).attr("readonly") == undefined) {
+                console.log($(this).attr("dicId"));
+                valPf = $(this).val();
+                atrPf = $(this).attr("dicId");
+                $(this).autocomplete("search");
+            }
+        }).focusout(function (e) {
+            if ($(this).attr("readonly") == undefined) {
+                if (selectDicPf == true) {
+                    $(this).val("");
+                    selectDicPf = false;
+                }
+            }
+        })
+
+        $('.DictionaryAutoCompleteGroundsRefusalInitiateIP2').keyup(function () {
+            valPf = $(this).val();
+            atrPf = $(this).attr("dicId");
+            console.log(selectDicPf);
+            return;
+        }).autocomplete({
+            delay: 500,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Court/AutocompleteDictionary?Text=" + valPf + '&id=' + atrPf, type: "Get", dataType: "json",
+                    data: { id: request.term },
+
+                    success: function (data) {
+                        if (data.length == 1) {
+                            if (String(data[0]).includes(valPf)) {
+                                selectDicPf = false;
+                                response($.map(data, function (item) {
+                                    return { label: item, value: item };
+                                }));
+                            }
+                        }
+                        if (data.length > 1) {
+                            response($.map(data, function (item) {
+                                selectDicPf = true;
+                                return { label: item, value: item };
+                            }));
+                        } else if (data.length == 0) {
+                            selectDicPf = true;
+                            response([{ label: 'Не найдено.', val: -1 }]);
+                        }
+
+                    },
+                });
+            },
+            minLength: 0,
+            select: function (event, ui) {
+                var value = ui.item.value.split("|");
+                ui.item.value = value[0];
+                $("#CourtExecutionFSSP_SatayGroundsRefusalInitiateIP2").val(value[1]?.trim());
+                selectDicPf = false;
+            }
+        }).focus(function () {
+            if ($(this).attr("readonly") == undefined) {
+                console.log($(this).attr("dicId"));
+                valPf = $(this).val();
+                atrPf = $(this).attr("dicId");
+                $(this).autocomplete("search");
+            }
+        }).focusout(function (e) {
+            if ($(this).attr("readonly") == undefined) {
+                if (selectDicPf == true) {
+                    $(this).val("");
+                    selectDicPf = false;
+                }
+            }
+        })
+
+
+        $('.DictionaryAutoCompleteGroundsEndingIP2').keyup(function () {
+            valPf = $(this).val();
+            atrPf = $(this).attr("dicId");
+            console.log(selectDicPf);
+            return;
+        }).autocomplete({
+            delay: 500,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Court/AutocompleteDictionary?Text=" + valPf + '&id=' + atrPf, type: "Get", dataType: "json",
+                    data: { id: request.term },
+
+                    success: function (data) {
+                        if (data.length == 1) {
+                            if (String(data[0]).includes(valPf)) {
+                                selectDicPf = false;
+                                response($.map(data, function (item) {
+                                    return { label: item, value: item };
+                                }));
+                            }
+                        }
+                        if (data.length > 1) {
+                            response($.map(data, function (item) {
+                                selectDicPf = true;
+                                return { label: item, value: item };
+                            }));
+                        } else if (data.length == 0) {
+                            selectDicPf = true;
+                            response([{ label: 'Не найдено.', val: -1 }]);
+                        }
+
+                    },
+                });
+            },
+            minLength: 0,
+            select: function (event, ui) {
+                var value = ui.item.value.split("|");
+                ui.item.value = value[0];
+                $("#CourtExecutionFSSP_SatyaEndingIP2").val(value[1].trim());
+                selectDicPf = false;
+            }
+        }).focus(function () {
+            if ($(this).attr("readonly") == undefined) {
+                console.log($(this).attr("dicId"));
+                valPf = $(this).val();
+                atrPf = $(this).attr("dicId");
+                $(this).autocomplete("search");
+            }
+        }).focusout(function (e) {
+            if ($(this).attr("readonly") == undefined) {
+                if (selectDicPf == true) {
+                    $(this).val("");
+                    selectDicPf = false;
+                }
+            }
+        })
+
+        $('.DictionaryAutoCompleteGroundsEndingIP').keyup(function () {
+            valPf = $(this).val();
+            atrPf = $(this).attr("dicId");
+            console.log(selectDicPf);
+            return;
+        }).autocomplete({
+            delay: 500,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Court/AutocompleteDictionary?Text=" + valPf + '&id=' + atrPf, type: "Get", dataType: "json",
+                    data: { id: request.term },
+
+                    success: function (data) {
+                        if (data.length == 1) {
+                            if (String(data[0]).includes(valPf)) {
+                                selectDicPf = false;
+                                response($.map(data, function (item) {
+                                    return { label: item, value: item };
+                                }));
+                            }
+                        }
+                        if (data.length > 1) {
+                            response($.map(data, function (item) {
+                                selectDicPf = true;
+                                return { label: item, value: item };
+                            }));
+                        } else if (data.length == 0) {
+                            selectDicPf = true;
+                            response([{ label: 'Не найдено.', val: -1 }]);
+                        }
+
+                    },
+                });
+            },
+            minLength: 0,
+            select: function (event, ui) {
+                var value = ui.item.value.split("|");
+                ui.item.value = value[0];
+                $("#CourtExecutionFSSP_SatyaEndingIP").val(value[1].trim());
+                selectDicPf = false;
+            }
+        }).focus(function () {
+            if ($(this).attr("readonly") == undefined) {
+                console.log($(this).attr("dicId"));
+                valPf = $(this).val();
+                atrPf = $(this).attr("dicId");
+                $(this).autocomplete("search");
+            }
+        }).focusout(function (e) {
+            if ($(this).attr("readonly") == undefined) {
+                if (selectDicPf == true) {
+                    $(this).val("");
+                    selectDicPf = false;
+                }
+            }
+        })
 
         $('.DictionaryAutoCompleteFSSP').keyup(function () {
             valFSSP = $(this).val();

@@ -268,7 +268,7 @@ namespace RKC.Controllers
                             using (MemoryStream stream = new MemoryStream())
                             {
                                 wb.SaveAs(stream);
-                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления перс данных.xlsx");
+                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение СП и ИП.xlsx");
                             }
                         default: 
                             throw new Exception("Не указан тип загружаемого файла!");
