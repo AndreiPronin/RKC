@@ -59,12 +59,13 @@ namespace BL.Excel
                var NotSendReceipts = dbContext.NotSendReceipts.ToList();
                 DataTable dt = new DataTable("Receipt");
                 dt.Columns.AddRange(new DataColumn[6] { new DataColumn("Лицевой счет"), new DataColumn("Электронная почта"), new DataColumn("Месяц")
-                , new DataColumn("Дата отправки"), new DataColumn("Количество попыток"), new DataColumn("Комментарий")});
+                , new DataColumn("Дата отправки"), new DataColumn("Комментарий"), new DataColumn("Примечание")});
 
 
                 foreach (var Items in NotSendReceipts)
                 {
-                    dt.Rows.Add(Items.Lic, Items.Email, Items.Month, Items.DateTimeSend, Items.NumberAttempts, Items.ErrorDescription);
+                    var Dates = new DateTime(DateTime.Now.AddMonths(-1).Year, Items.Month, 1);
+                    dt.Rows.Add(Items.Lic, Items.Email, Dates.ToString("MMMM yyyy"), Items.DateTimeSend, Items.ErrorDescription, "");
                 }
                 return dt;
             }

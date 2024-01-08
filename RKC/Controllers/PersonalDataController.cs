@@ -350,7 +350,7 @@ namespace RKC.Controllers
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибка отправки почты.xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Отчет по отправлению ЭПД_{DateTime.Now.AddMonths(-1).ToString("MM yyyy")}.xlsx");
                 }
             }
         }

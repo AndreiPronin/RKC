@@ -167,14 +167,14 @@ namespace BL.Excel
                             CourtGeneral.PlaceBirth = dataRow.Cell(4).Value.ToString();
                         if (dataRow.Cell(5).Value != "" && CourtGeneral.PasportSeria != dataRow.Cell(5).Value.ToString())
                             CourtGeneral.PasportSeria = dataRow.Cell(5).Value.ToString();
-                        if (dataRow.Cell(6).Value != "" && CourtGeneral.PasportDate != dataRow.Cell(6).Value.ToString())
-                            CourtGeneral.PasportDate = dataRow.Cell(6).Value.ToString();
-                        if (dataRow.Cell(7).Value != "" && CourtGeneral.PasportIssue != dataRow.Cell(7).Value.ToString())
-                            CourtGeneral.PasportIssue = dataRow.Cell(7).Value.ToString();
-                        if (dataRow.Cell(8).Value != "" && CourtGeneral.Inn != dataRow.Cell(8).Value.ToString())
-                            CourtGeneral.PasportNumber = dataRow.Cell(8).Value.ToString();
+                        if (dataRow.Cell(6).Value != "" && CourtGeneral.PasportNumber != dataRow.Cell(6).Value.ToString())
+                            CourtGeneral.PasportNumber = dataRow.Cell(6).Value.ToString();
+                        if (dataRow.Cell(7).Value != "" && CourtGeneral.PasportDate != dataRow.Cell(7).Value.ToString())
+                            CourtGeneral.PasportDate = dataRow.Cell(7).Value.ToString();
+                        if (dataRow.Cell(8).Value != "" && CourtGeneral.PasportIssue != dataRow.Cell(8).Value.ToString())
+                            CourtGeneral.PasportIssue = dataRow.Cell(8).Value.ToString();
                         if (dataRow.Cell(9).Value != "" && CourtGeneral.Inn != dataRow.Cell(9).Value.ToString())
-                            CourtGeneral.PasportNumber = dataRow.Cell(9).Value.ToString();
+                            CourtGeneral.Inn = dataRow.Cell(9).Value.ToString();
                         if (dataRow.Cell(10).Value != "" && CourtGeneral.Snils != dataRow.Cell(10).Value.ToString())
                             CourtGeneral.Snils = dataRow.Cell(10).Value.ToString();
                         if (dataRow.Cell(11).Value != "" && CourtGeneral.ShareOfOwnership != dataRow.Cell(11).Value.ToString())
@@ -182,9 +182,9 @@ namespace BL.Excel
                         if (dataRow.Cell(11).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 21).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.ShareOfOwnership) == null)
                             exceptions.Append("Вид собственности не найдена в справочнике" + Environment.NewLine);
                         if (dataRow.Cell(12).Value != "" && CourtGeneral.ShareInRight != dataRow.Cell(12).Value.ToString())
-                            CourtGeneral.ShareInRight = dataRow.Cell(12).Value.ToString();
-                        if (dataRow.Cell(12).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 22).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.ShareInRight) == null)
-                            exceptions.Append("Доля в праве не найдена в справочнике" + Environment.NewLine);
+                            CourtGeneral.ShareInRight = dataRow.Cell(12).Value.ToString().Replace("/",".").Replace(",", ".");
+                        //if (dataRow.Cell(12).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 22).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.ShareInRight) == null)
+                        //    exceptions.Append("Доля в праве не найдена в справочнике" + Environment.NewLine);
 
                         if (dataRow.Cell(13).Value != "" && CourtGeneral.InSolidarityWith != dataRow.Cell(13).Value.ToString())
                             CourtGeneral.InSolidarityWith = dataRow.Cell(13).Value.ToString();
@@ -264,7 +264,8 @@ namespace BL.Excel
                         //    CourtGeneral.CourtExecutionFSSP.GroundsEndingIP = dataRow.Cell(12).Value.ToString();
                         if (dataRow.Cell(12).Value != "")
                         {
-                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 6).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(12).Value.ToString());
+                            var xxx = dataRow.Cell(12).Value.ToString();
+                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 4).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(12).Value.ToString());
                             if (dataRow.Cell(12).Value != "" && CourtName?.Name?.Split('|')[1] == CourtGeneral.CourtExecutionFSSP.SatyaEndingIP)
                                 exceptions.Append("Статья окончания ИП1 не найдена в справочнике" + Environment.NewLine);
                             else
@@ -287,7 +288,7 @@ namespace BL.Excel
                         //    CourtGeneral.CourtExecutionFSSP.GroundsEndingIP2 = dataRow.Cell(16).Value.ToString();
                         if (dataRow.Cell(16).Value != "")
                         {
-                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 4).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(16).Value.ToString());
+                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 6).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(16).Value.ToString());
                             if (dataRow.Cell(16).Value != "" && CourtName?.Name?.Split('|')[1] == CourtGeneral.CourtExecutionFSSP.SatyaEndingIP2)
                                 exceptions.Append("Статья окончания ИП1 не найдена в справочнике" + Environment.NewLine);
                             else
@@ -317,7 +318,7 @@ namespace BL.Excel
                     }
                 }
             }
-            return CreateResultCourtLoader(reportCourtLoadExcels);
+            return CreateResultCourtLoaderDataColumn3(reportCourtLoadExcels);
         }
         private DataTable CreateResultCourtLoader(List<ReportCourtLoadExcel> reportCourtLoadExcels)
         {
@@ -326,6 +327,16 @@ namespace BL.Excel
                                         new DataColumn("Описание")});
             foreach (var Item in reportCourtLoadExcels)
                 dt.Rows.Add(Item.IdCourt,Item.Id, Item.Line, Item.Description);
+
+            return dt;
+        }
+        private DataTable CreateResultCourtLoaderDataColumn3(List<ReportCourtLoadExcel> reportCourtLoadExcels)
+        {
+            DataTable dt = new DataTable("Counter");
+            dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Индификатор судебного дела"),new DataColumn("Строка"),
+                                        new DataColumn("Описание")});
+            foreach (var Item in reportCourtLoadExcels)
+                dt.Rows.Add(Item.Id, Item.Line, Item.Description);
 
             return dt;
         }

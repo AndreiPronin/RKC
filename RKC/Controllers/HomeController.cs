@@ -35,19 +35,6 @@ using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace RKC.Controllers
 {
-    public sealed class MyClass
-    {
-        private async Task<int> GetMyProperty()
-        {
-            await Task.Delay(10000);
-            return 13;
-        }
-
-        public Task<int> MyProperty
-        {
-            get { return GetMyProperty(); }
-        }
-    }
     public class HomeController : Controller
     {
         private readonly IEBD _eBD;
