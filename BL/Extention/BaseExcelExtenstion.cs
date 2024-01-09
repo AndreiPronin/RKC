@@ -15,12 +15,12 @@ namespace BL.Excel
         }
         public static void SetValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, object value)
         {
-            var IsDate = DateTime.TryParse(value.ToString(), out DateTime outDateTime);
-            if(IsDate == true)
-            {
-                value = $"'{value}";
-                //var xxx = Convert.ToDateTime(value);
-            }
+            //var IsDate = DateTime.TryParse(value.ToString(), out DateTime outDateTime);
+            //if(IsDate == true)
+            //{
+            //    value = $"'{value}";
+            //    //var xxx = Convert.ToDateTime(value);
+            //}
             xLWorksheet.Cell(rowFirst, columnFirst).SetDataType(XLDataType.Text);
             xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
         }
