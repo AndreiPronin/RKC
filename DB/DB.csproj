@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="DataBase\ApplicationDbContext.cs" />
     <Compile Include="DataBase\Configuration\DbLicConfiguration.cs" />
+    <Compile Include="DataBase\Configuration\MkdConfiguration.cs" />
     <Compile Include="DataBase\DbPayment.cs" />
     <Compile Include="DataBase\DbTPlus.cs" />
     <Compile Include="DataBase\DbLIC.cs" />

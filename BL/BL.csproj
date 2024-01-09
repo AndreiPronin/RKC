@@ -84,6 +84,7 @@
     <Compile Include="Module.cs" />
     <Compile Include="Notification\NotificationMail.cs" />
     <Compile Include="Security\TokenCreator.cs" />
+    <Compile Include="Services\ApiReportService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\Court.cs" />
     <Compile Include="Services\Dictionarys.cs" />

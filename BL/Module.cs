@@ -45,6 +45,7 @@ namespace BL
             kernel.Bind<IDpu>().To<Dpu>();
             kernel.Bind<IReport>().To<Report>();
             kernel.Bind<IBaseService>().To<BaseService>();
+            kernel.Bind<IApiReportService>().To<ApiReportService>();
             kernel.Bind<IDictionary>().To<Dictionarys>();
             kernel.Bind<IMkdInformationService>().To<MkdInformationService>();
 
@@ -55,6 +56,7 @@ namespace BL
             //kernel.Bind<IHttpClientFactory>().ToConstant(hostBuilder.Build().Services.GetService<IHttpClientFactory>());
 
             kernel.Bind<ITokenCreator>().To<TokenCreator>();
+            
 
 
 

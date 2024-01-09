@@ -46,6 +46,9 @@ namespace DB.Model
         public bool? IpuOtp { get; set; }
         public DateTime? GvsBeginningPeriod { get; set; }
         public DateTime? OtpBeginningPeriod { get; set; }
+        public decimal? NormOtp { get; set; }
+        public decimal? NormGvs { get;set; }
+        public decimal? NormHvs { get; set; }
     }
 
 

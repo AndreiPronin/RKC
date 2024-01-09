@@ -23,6 +23,7 @@ using BE.Roles;
 using AppCache;
 using BE.Counter;
 using DB.Extention;
+using BL.Services;
 
 namespace RKC.Controllers
 {
@@ -31,11 +32,13 @@ namespace RKC.Controllers
         private readonly ISecurityProvider _securityProvider;
         private readonly IFlagsAction _flagsAction;
         private readonly ICacheApp _cacheApp;
-        public AdminController(ISecurityProvider securityProvider, IFlagsAction flagsAction, ICacheApp cacheApp)
+        private readonly IApiReportService _apiReportService;
+        public AdminController(ISecurityProvider securityProvider, IFlagsAction flagsAction, ICacheApp cacheApp, IApiReportService apiReportService)
         {
             _securityProvider = securityProvider;
             _flagsAction = flagsAction;
             _cacheApp = cacheApp;
+            _apiReportService = apiReportService;
         }
         [Auth(Roles = "Admin")]
         public ActionResult Index()
@@ -167,6 +170,11 @@ namespace RKC.Controllers
                 db.SaveChanges();
             }
             return Redirect("/Admin");
+        }
+        public async Task<ActionResult> GetApiReport()
+        {
+
+            return View();
         }
     }
 }
