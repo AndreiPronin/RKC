@@ -4,6 +4,7 @@ using DB.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -72,6 +73,27 @@ namespace BL.http
                 }
                 throw new Exception();
 
+            }
+        }
+        public async Task<byte[]> UploadFile(string Url, string Token, byte[] fules, string FileName)
+        {
+            using (var httpClient = _httpClient ?? new HttpClient())
+            {
+                using (var form = new MultipartFormDataContent())
+                {
+                    var imageContent = new ByteArrayContent(fules);
+                    imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
+
+                    form.Add(imageContent, "Test", FileName);
+                    var response = httpClient.PostAsync(Url, form).Result;
+                    if (response != null && response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var result = await response.Content.ReadAsStringAsync();
+                        byte[] buffer = Encoding.GetEncoding("windows-1251").GetBytes(result);
+                        return buffer;
+                    }
+                    throw new Exception();
+                }
             }
         }
     }

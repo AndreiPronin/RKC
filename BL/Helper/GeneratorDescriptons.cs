@@ -702,11 +702,43 @@ namespace BL.Helper
                 Result.AppendLine($"Дата списания: было {courtGeneralDb.CourtWriteOff.DateWriteOff} стало {courtGeneralBe.CourtWriteOff.DateWriteOff}");
             if (courtGeneralBe.CourtWriteOff.Comment != courtGeneralDb.CourtWriteOff.Comment)
                 Result.AppendLine($"Примечание (списания): было {courtGeneralDb.CourtWriteOff.Comment} стало {courtGeneralBe.CourtWriteOff.Comment}");
+
+            //CourtOwnerInformation
+            if (courtGeneralBe.CourtOwnerInformation.OwnerLastName != courtGeneralDb.CourtOwnerInformation.OwnerLastName)
+                Result.AppendLine($"Фамилия собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerLastName} стало {courtGeneralBe.CourtOwnerInformation.OwnerLastName}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerFirstName != courtGeneralDb.CourtOwnerInformation.OwnerFirstName)
+                Result.AppendLine($"Имя собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerFirstName} стало {courtGeneralBe.CourtOwnerInformation.OwnerFirstName}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerSurname != courtGeneralDb.CourtOwnerInformation.OwnerSurname)
+                Result.AppendLine($"Отчество собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerSurname} стало {courtGeneralBe.CourtOwnerInformation.OwnerSurname}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerFloor != courtGeneralDb.CourtOwnerInformation.OwnerFloor)
+                Result.AppendLine($"Пол собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerFloor} стало {courtGeneralBe.CourtOwnerInformation.OwnerFloor}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerDateBirthday != courtGeneralDb.CourtOwnerInformation.OwnerDateBirthday)
+                Result.AppendLine($"Дата рождения собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerDateBirthday} стало {courtGeneralBe.CourtOwnerInformation.OwnerDateBirthday}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerPlaceBirth != courtGeneralDb.CourtOwnerInformation.OwnerPlaceBirth)
+                Result.AppendLine($"Место рождения собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerPlaceBirth} стало {courtGeneralBe.CourtOwnerInformation.OwnerPlaceBirth}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerTypeDocuments != courtGeneralDb.CourtOwnerInformation.OwnerTypeDocuments)
+                Result.AppendLine($"Вид документа, удостоверяющего личность собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerTypeDocuments} стало {courtGeneralBe.CourtOwnerInformation.OwnerTypeDocuments}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerPasportSeria != courtGeneralDb.CourtOwnerInformation.OwnerPasportSeria)
+                Result.AppendLine($"Серия документа собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerPasportSeria} стало {courtGeneralBe.CourtOwnerInformation.OwnerPasportSeria}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerPasportNumber != courtGeneralDb.CourtOwnerInformation.OwnerPasportNumber)
+                Result.AppendLine($"Номер документа собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerPasportNumber} стало {courtGeneralBe.CourtOwnerInformation.OwnerPasportNumber}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerPasportDate != courtGeneralDb.CourtOwnerInformation.OwnerPasportDate)
+                Result.AppendLine($"Дата выдачи документа собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerPasportDate} стало {courtGeneralBe.CourtOwnerInformation.OwnerPasportDate}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerPasportIssue != courtGeneralDb.CourtOwnerInformation.OwnerPasportIssue)
+                Result.AppendLine($"Орган выдавший документ собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerSurname} стало {courtGeneralBe.CourtOwnerInformation.OwnerSurname}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerInn != courtGeneralDb.CourtOwnerInformation.OwnerInn)
+                Result.AppendLine($"ИНН собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerInn} стало {courtGeneralBe.CourtOwnerInformation.OwnerInn}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerSnils != courtGeneralDb.CourtOwnerInformation.OwnerSnils)
+                Result.AppendLine($"СНИЛС собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerSnils} стало {courtGeneralBe.CourtOwnerInformation.OwnerSnils}");
+            if (courtGeneralBe.CourtOwnerInformation.OwnerAddressRegister != courtGeneralDb.CourtOwnerInformation.OwnerAddressRegister)
+                Result.AppendLine($"Адрес регистрации собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerAddressRegister} стало {courtGeneralBe.CourtOwnerInformation.OwnerAddressRegister}");
+
             var res = Result.ToString();
-            if(res.Contains("было"))
+            if (res.Contains("было"))
                 return Result.ToString();
             else
                 return string.Empty;
+            
         }
         private string SerializerToXML<T>(T model)
         {

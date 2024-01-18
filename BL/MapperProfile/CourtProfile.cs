@@ -24,6 +24,7 @@ namespace BL.MapperProfile
                 cfg.CreateMap<BE.Court.CourtStateDuty, DB.Model.Court.CourtStateDuty>().BeforeMap((s, d) => s.CourtGeneralInformationId = d.CourtGeneralInformationId);
                 cfg.CreateMap<BE.Court.CourtExecutionInPF, DB.Model.Court.CourtExecutionInPF>().BeforeMap((s, d) => s.CourtGeneralInformationId = d.CourtGeneralInformationId);
                 cfg.CreateMap<BE.Court.CourtExecutionFSSP, DB.Model.Court.CourtExecutionFSSP>().ForMember(x => x.CourtGeneralInformationId, opt => opt.Ignore());
+                cfg.CreateMap<BE.Court.CourtOwnerInformation, DB.Model.Court.CourtOwnerInformation>().ForMember(x => x.CourtGeneralInformationId, opt => opt.Ignore());
             });
             mapperConfigurationBe = new MapperConfiguration(cfg =>
             {
@@ -36,6 +37,7 @@ namespace BL.MapperProfile
                 cfg.CreateMap<DB.Model.Court.CourtStateDuty, BE.Court.CourtStateDuty>().BeforeMap((s, d) => s.CourtGeneralInformationId = d.CourtGeneralInformationId);
                 cfg.CreateMap<DB.Model.Court.CourtExecutionInPF, BE.Court.CourtExecutionInPF>().BeforeMap((s, d) => s.CourtGeneralInformationId = d.CourtGeneralInformationId);
                 cfg.CreateMap<DB.Model.Court.CourtExecutionFSSP, BE.Court.CourtExecutionFSSP>().ForMember(x => x.CourtGeneralInformationId, opt => opt.Ignore());
+                cfg.CreateMap<DB.Model.Court.CourtOwnerInformation, BE.Court.CourtOwnerInformation>().ForMember(x => x.CourtGeneralInformationId, opt => opt.Ignore());
             });
         }
         public Mapper GetMapper()

@@ -9,13 +9,11 @@ namespace BE.Admin.Enums
 {
     public enum ApiReportEnums
     {
-        [Description(nameof(TextReportsGetSberbankSevens))]
-        TextReportsGetSberbankSevens = 0,
-        [Description(nameof(TextReportsGetOldTypeSberbankSevens))]
-        TextReportsGetOldTypeSberbankSevens = 1,
-        [Description(nameof(TextReportsGetSberbankSevensWithEights))]
-        TextReportsGetSberbankSevensWithEights = 2,
-        [Description(nameof(TextReportsGetSberbankSevensCounters))]
-        TextReportsGetSberbankSevensCounters = 3,
+        [Description("6315376946_40702810748000001123_7_001_.txt")]
+        GetSberbankInvoicesOldFormat = 0,
+        [Description("6315376946_40702810748000001123_7_001_.txt")]
+        GetSberbankInvoices = 1,
+        [Description("COUNTERS_6315376946_40702810748000001123_7_001_.txt")]
+        GetSberbankCounters = 2,
     }
 }

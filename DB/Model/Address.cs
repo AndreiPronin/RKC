@@ -25,6 +25,7 @@ namespace DB.Model
         public string House { get; set; }
         public string Building { get; set; }
         public string Fias { get; set; }
+        public string FiasCadastr { get; set; }
         public short? BuildYear { get; set; }
         public byte? Floors { get; set; }
         public decimal? Soifl { get; set; }

@@ -24,6 +24,7 @@ using AppCache;
 using BE.Counter;
 using DB.Extention;
 using BL.Services;
+using BE.Admin.Enums;
 
 namespace RKC.Controllers
 {
@@ -171,10 +172,25 @@ namespace RKC.Controllers
             }
             return Redirect("/Admin");
         }
-        public async Task<ActionResult> GetApiReport()
+        [HttpPost]
+        [Auth]
+        public async Task<ActionResult> DownloadReport(ApiReportEnums TypeReport, DateTime? ReportDate, HttpPostedFileBase file)
         {
-
-            return View();
+            byte[] result;
+            switch (TypeReport)
+            {
+                case ApiReportEnums.GetSberbankInvoicesOldFormat:
+                    result =  await _apiReportService.GetSberbankInvoicesOldFormat(ReportDate.HasValue ? ReportDate.Value :DateTime.Now);
+                    return File(result, ApiReportEnums.GetSberbankInvoicesOldFormat.GetDescription());
+                case ApiReportEnums.GetSberbankInvoices:
+                    result = await _apiReportService.GetSberbankInvoices(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                    return File(result, ApiReportEnums.GetSberbankInvoices.GetDescription());
+                case ApiReportEnums.GetSberbankCounters:
+                    result = await _apiReportService.GetSberbankCounters(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                    return File(result, ApiReportEnums.GetSberbankCounters.GetDescription());
+                default:
+                    return File(new byte[0],"Ошибка отчет не найде.txt");
+            }
         }
     }
 }

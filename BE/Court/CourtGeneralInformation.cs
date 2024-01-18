@@ -146,7 +146,9 @@ namespace BE.Court
         public virtual CourtInstallmentPlan CourtInstallmentPlan { get; set; }
         public virtual CourtBankruptcy CourtBankruptcy { get; set; }
         public virtual CourtLitigationWork CourtLitigationWork { get; set; }
+        public virtual CourtOwnerInformation CourtOwnerInformation { get; set; }
         public CourtStateDuty CourtStateDuty { get; set; }
         public CourtWriteOff CourtWriteOff { get; set; }
+        
     }
 }

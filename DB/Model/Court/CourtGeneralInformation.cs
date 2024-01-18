@@ -100,7 +100,7 @@ namespace DB.Model.Court
         /// <summary>
         /// Причины исключения из рассылки
         /// </summary>
-        public string ReasonsExclusionMailing  { get; set; }
+        public string ReasonsExclusionMailing { get; set; }
         /// <summary>
         /// Исключение из судебной работы
         /// </summary>
@@ -151,6 +151,7 @@ namespace DB.Model.Court
         public virtual CourtInstallmentPlan CourtInstallmentPlan { get; set; }
         public virtual CourtBankruptcy CourtBankruptcy { get; set; }
         public virtual CourtLitigationWork CourtLitigationWork { get; set; }
+        public virtual CourtOwnerInformation CourtOwnerInformation { get; set; }
         public CourtStateDuty CourtStateDuty { get; set; }
         public CourtWriteOff CourtWriteOff { get; set; }
     }

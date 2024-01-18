@@ -74,7 +74,8 @@ namespace BL.Services
                     .Include(x=>x.CourtWorkRequisites)
                     .Include(x => x.InstallmentPayRequisites)
                     .Include(x=>x.LitigationWorkRequisites)
-                    .Include(c => c.CourtDocumentScans).FirstOrDefaultAsync();
+                    .Include(c => c.CourtDocumentScans)
+                    .Include(x=>x.CourtOwnerInformation).FirstOrDefaultAsync();
                 return Result;
             }
         }
@@ -90,7 +91,8 @@ namespace BL.Services
                     .Include(x => x.CourtWork)
                     .Include(x => x.CourtWriteOff)
                     .Include(x => x.CourtStateDuty)
-                    .Include(x => x.CourtExecutionFSSP).AsNoTracking().FirstOrDefaultAsync();
+                    .Include(x => x.CourtExecutionFSSP)
+                    .Include(x => x.CourtOwnerInformation).AsNoTracking().FirstOrDefaultAsync();
                 new Thread(()=>  _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id,
                     _generatorDescriptons.Generate(courtGeneralInformation,courtGeneralInformationDb, User))).Start();
                 var mapper = new CourtProfile().GetMapper();
@@ -103,6 +105,7 @@ namespace BL.Services
                 courtGeneralInformationDb.CourtWriteOff.CourtGeneralInformationId = courtGeneralInformation.Id;
                 courtGeneralInformationDb.CourtStateDuty.CourtGeneralInformationId = courtGeneralInformation.Id;
                 courtGeneralInformationDb.CourtExecutionFSSP.CourtGeneralInformationId = courtGeneralInformation.Id;
+                courtGeneralInformationDb.CourtOwnerInformation.CourtGeneralInformationId = courtGeneralInformation.Id;
                 dbApp.Entry(courtGeneralInformationDb).State = EntityState.Modified;
                 dbApp.Entry(courtGeneralInformationDb.CourtBankruptcy).State = EntityState.Modified;
                 dbApp.Entry(courtGeneralInformationDb.CourtInstallmentPlan).State = EntityState.Modified;
@@ -112,6 +115,7 @@ namespace BL.Services
                 dbApp.Entry(courtGeneralInformationDb.CourtWriteOff).State = EntityState.Modified;
                 dbApp.Entry(courtGeneralInformationDb.CourtStateDuty).State = EntityState.Modified;
                 dbApp.Entry(courtGeneralInformationDb.CourtExecutionFSSP).State = EntityState.Modified;
+                dbApp.Entry(courtGeneralInformationDb.CourtOwnerInformation).State = EntityState.Modified;
                 dbApp.SaveChanges();
                 return courtGeneralInformation.Id;
             }
@@ -175,6 +179,7 @@ namespace BL.Services
                 db.CourtWriteOff.Add(new DB.Model.Court.CourtWriteOff { CourtGeneralInformationId = Id });
                 db.CourtStateDuty.Add(new DB.Model.Court.CourtStateDuty { CourtGeneralInformationId = Id });
                 db.CourtExecutionFSSP.Add(new DB.Model.Court.CourtExecutionFSSP { CourtGeneralInformationId = Id });
+                db.CourtOwnerInformation.Add(new DB.Model.Court.CourtOwnerInformation { CourtGeneralInformationId = Id });
                 await db.SaveChangesAsync();
                 _ilogger.ActionUserCourt(Model.Lic, Model.Id, $"Пользователь {User} создал дело");
                 return Model.Id;
@@ -339,7 +344,8 @@ namespace BL.Services
                     .Include(x => x.CourtWorkRequisites)
                     .Include(x => x.InstallmentPayRequisites)
                     .Include(x => x.LitigationWorkRequisites)
-                    .Include(c => c.CourtDocumentScans).FirstOrDefaultAsync();
+                    .Include(c => c.CourtDocumentScans)
+                    .Include(x => x.CourtOwnerInformation).FirstOrDefaultAsync();
                 dbApp.CourtBankruptcy.Remove(Result.CourtBankruptcy);
                 dbApp.CourtInstallmentPlan.Remove(Result.CourtInstallmentPlan);
                 dbApp.CourtExecutionInPF.Remove(Result.CourtExecutionInPF);
@@ -348,6 +354,7 @@ namespace BL.Services
                 dbApp.CourtWriteOff.Remove(Result.CourtWriteOff);
                 dbApp.CourtStateDuty.Remove(Result.CourtStateDuty);
                 dbApp.CourtExecutionFSSP.Remove(Result.CourtExecutionFSSP);
+                dbApp.CourtOwnerInformation.Remove(Result.CourtOwnerInformation);
                 dbApp.CourtWorkRequisites.RemoveRange(Result.CourtWorkRequisites);
                 dbApp.InstallmentPayRequisites.RemoveRange(Result.InstallmentPayRequisites);
                 dbApp.LitigationWorkRequisites.RemoveRange(Result.LitigationWorkRequisites);

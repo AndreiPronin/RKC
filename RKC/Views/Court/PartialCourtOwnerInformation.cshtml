@@ -1,0 +1,86 @@
+﻿@model DB.Model.Court.CourtGeneralInformation
+
+<div class="row">
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Фамилия собственника</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerLastName, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerLastName })
+        </div>
+        <label class="col-sm-12 col-form-label">Имя должника</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerFirstName, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerFirstName })
+        </div>
+        <label class="col-sm-12 col-form-label">Отчество должника</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerSurname, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerSurname })
+        </div>
+        <label class="col-sm-12 col-form-label">Пол:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerFloor, new { @readonly = "readonly", @dicId = "13", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtOwnerInformation.OwnerFloor })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата рождения:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerDateBirthday, new
+            {
+                @type = "date",
+                @readonly = "readonly",
+                @class = "form-control",
+           @Value = (DateTime.TryParse(Model.CourtOwnerInformation.OwnerDateBirthday, out DateTime DateBirthday) ? DateBirthday.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Место рождения:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerPlaceBirth, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerPlaceBirth })
+        </div>
+        <label class="col-sm-12 col-form-label">Вид документа, удостоверяющего личность:</label>
+        <div class="col-sm-8">
+
+            @Html.DropDownListFor(model => model.CourtOwnerInformation.OwnerTypeDocuments,
+                  new List<SelectListItem> {
+                       new SelectListItem { Value = "паспорт гр-на РФ" , Text = "паспорт гр-на РФ" },
+                       new SelectListItem { Value = "св-во о рождении" , Text = "св-во о рождении" },
+                       new SelectListItem { Value = "загранпаспорт" , Text = "загранпаспорт" },
+                       new SelectListItem { Value = "В/у" , Text = "В/у" }
+                    },
+                  new { @disabled = "disabled", @class = "form-control" })
+        </div>
+        
+    </div>
+    <div class="col-md-4">
+        <label class="col-sm-12 col-form-label">Паспорт серия:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerPasportSeria, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerPasportSeria })
+        </div>
+        <label class="col-sm-12 col-form-label">Паспорт Номер:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerPasportNumber, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerPasportNumber })
+        </div>
+        <label class="col-sm-12 col-form-label">Паспорт дата выдачи</label>
+        <div class="col-sm-8">
+
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerPasportDate, new
+            {
+                @type = "date",
+                @readonly = "readonly",
+                @class = "form-control",
+           @Value = (DateTime.TryParse(Model.CourtOwnerInformation.OwnerPasportDate, out DateTime PasportDate) ? PasportDate.ToString("yyyy-MM-dd") : string.Empty)
+            })
+        </div>
+        <label class="col-sm-12 col-form-label">Паспорт кем выдан:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerPasportIssue, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerPasportIssue })
+        </div>
+        <label class="col-sm-12 col-form-label">ИНН:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerInn, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerInn })
+        </div>
+        <label class="col-sm-12 col-form-label">СНИЛС:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerSnils, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerSnils })
+        </div>
+        <label class="col-sm-12 col-form-label">Адрес регистрации собственника:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerAddressRegister, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerAddressRegister })
+        </div>
+    </div>
+</div>

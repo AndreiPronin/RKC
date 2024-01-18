@@ -15,14 +15,32 @@ namespace BL.Excel
         }
         public static void SetValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, object value)
         {
-            //var IsDate = DateTime.TryParse(value.ToString(), out DateTime outDateTime);
-            //if(IsDate == true)
-            //{
-            //    value = $"'{value}";
-            //    //var xxx = Convert.ToDateTime(value);
-            //}
             xLWorksheet.Cell(rowFirst, columnFirst).SetDataType(XLDataType.Text);
-            xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
+            xLWorksheet.Cell(rowFirst, columnFirst).DataType = XLDataType.Text;
+            if(double.TryParse(value.ToString(), out double resultDouble))
+            {
+                xLWorksheet.Cell(rowFirst, columnFirst).Value = resultDouble;
+                return;
+            }
+            if (int.TryParse(value.ToString(),out int resultInt))
+            {
+                xLWorksheet.Cell(rowFirst, columnFirst).Value = resultInt;
+                return;
+            }
+          
+
+            var IsDate = DateTime.TryParse(value.ToString(), out DateTime outDateTime);
+            if (IsDate == true)
+            {
+                if (value.ToString().Split('.').Count() < 3)
+                {
+                    value = $"'{value}";
+                }
+                xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
+            }
+            var res = Convert.ToString(value);
+            xLWorksheet.Cell(rowFirst, columnFirst).Value = res;
+
         }
         public static void SetValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, decimal? value)
         {
