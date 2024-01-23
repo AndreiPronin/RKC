@@ -139,19 +139,27 @@ namespace BL.Excel
                         saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
                         saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
                         saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
-                        if (dataRow.Cell(7).Value != "") { 
-                            saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value);
+                        if (dataRow.Cell(7).Value != "") {
+                            var DateCheck = Convert.ToDateTime(dataRow.Cell(7).Value);
                             if (saveModel?.DATE_CHECK > DateTime.Now)
                             {
-                                throw new Exception("Дата поверки должна быть строго меньше текущей даты");
+                                throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
+                            if (DateCheck < saveModel?.DATE_CHECK)
+                                throw new Exception("Дата поверки меньше даты в базе");
+
+                            saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value);
                         }
-                        if (dataRow.Cell(8).Value != "") { 
-                            saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);
+                        if (dataRow.Cell(8).Value != "") {
+                            var DateCheckNext = Convert.ToDateTime(dataRow.Cell(8).Value);
                             if (saveModel?.DATE_CHECK_NEXT > DateTime.Now.AddYears(6))
                             {
-                                throw new Exception("Дата следующей поверки должна быть не больше текущей даты + 60 месяцев");
+                                throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
+                            if (DateCheckNext < saveModel?.DATE_CHECK)
+                                throw new Exception("Дата слудющей поверки меньше даты в базе");
+
+                            saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);
                         }
                         saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
                         saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
@@ -226,18 +234,26 @@ namespace BL.Excel
                         saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
                         saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
                         if (dataRow.Cell(7).Value != "") { 
-                            saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value); 
+                            var DateCheck = Convert.ToDateTime(dataRow.Cell(7).Value); 
                             if (saveModel?.DATE_CHECK > DateTime.Now)
                             {
                                 throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
+                            if(DateCheck < saveModel?.DATE_CHECK)
+                                throw new Exception("Дата поверки меньше даты в базе");
+
+                            saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value);
                         }
                         if (dataRow.Cell(8).Value != "") { 
-                            saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value); 
+                            var DateCheckNext = Convert.ToDateTime(dataRow.Cell(8).Value); 
                             if (saveModel?.DATE_CHECK_NEXT > DateTime.Now.AddYears(6))
                             {
                                 throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
+                            if (DateCheckNext < saveModel?.DATE_CHECK)
+                                throw new Exception("Дата слудющей поверки меньше даты в базе");
+
+                            saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);
                         }
                         saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
                         saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");

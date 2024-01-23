@@ -37,6 +37,7 @@
 
             @Html.DropDownListFor(model => model.CourtOwnerInformation.OwnerTypeDocuments,
                   new List<SelectListItem> {
+                       new SelectListItem { Value = "" , Text = "" },
                        new SelectListItem { Value = "паспорт гр-на РФ" , Text = "паспорт гр-на РФ" },
                        new SelectListItem { Value = "св-во о рождении" , Text = "св-во о рождении" },
                        new SelectListItem { Value = "загранпаспорт" , Text = "загранпаспорт" },

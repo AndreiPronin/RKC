@@ -12,5 +12,6 @@ namespace BE.Court
         EditGp = 2,
         EditPersData = 3,
         EditSpAndIp = 4,
+        EditOwner = 5,
     }
 }

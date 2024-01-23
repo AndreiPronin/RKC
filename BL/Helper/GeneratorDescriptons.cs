@@ -725,7 +725,7 @@ namespace BL.Helper
             if (courtGeneralBe.CourtOwnerInformation.OwnerPasportDate != courtGeneralDb.CourtOwnerInformation.OwnerPasportDate)
                 Result.AppendLine($"Дата выдачи документа собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerPasportDate} стало {courtGeneralBe.CourtOwnerInformation.OwnerPasportDate}");
             if (courtGeneralBe.CourtOwnerInformation.OwnerPasportIssue != courtGeneralDb.CourtOwnerInformation.OwnerPasportIssue)
-                Result.AppendLine($"Орган выдавший документ собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerSurname} стало {courtGeneralBe.CourtOwnerInformation.OwnerSurname}");
+                Result.AppendLine($"Орган выдавший документ собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerPasportIssue} стало {courtGeneralBe.CourtOwnerInformation.OwnerPasportIssue}");
             if (courtGeneralBe.CourtOwnerInformation.OwnerInn != courtGeneralDb.CourtOwnerInformation.OwnerInn)
                 Result.AppendLine($"ИНН собственника: было {courtGeneralDb.CourtOwnerInformation.OwnerInn} стало {courtGeneralBe.CourtOwnerInformation.OwnerInn}");
             if (courtGeneralBe.CourtOwnerInformation.OwnerSnils != courtGeneralDb.CourtOwnerInformation.OwnerSnils)

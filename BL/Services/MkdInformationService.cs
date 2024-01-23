@@ -62,6 +62,8 @@ namespace BL.Services
 
                 MainInform.AddressMKD = mapper.Map<AddressMKDBe>(resultAdress);
                 MainInform.AddressReadings = mapper.Map<AddressReadingsBe>(resultAdressReadings);
+                if(MainInform.AddressReadings == null)
+                    MainInform.AddressReadings = new AddressReadingsBe();
                 return MainInform;
             }
         }

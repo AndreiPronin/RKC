@@ -57,12 +57,13 @@ namespace BL.Helper
         }
         public void ActionUserCourt(string Lic,int CourtGeneralId, string Text)
         {
+            string _logPath = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.CourtLogPath).GetString();
             if(string.IsNullOrEmpty(Text))
                 return;
-            var FilePath = $@"\\10.10.10.17\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{CourtGeneralId}.log";
-            if (!Directory.Exists($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}"))
+            var FilePath = $@"\\10.10.10.17\{_logPath}\\{Lic}\\{CourtGeneralId}\\{CourtGeneralId}.log";
+            if (!Directory.Exists($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{CourtGeneralId}"))
             {
-                Directory.CreateDirectory($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}");
+                Directory.CreateDirectory($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{CourtGeneralId}");
             }
             if (File.Exists(FilePath))
             {
@@ -80,7 +81,8 @@ namespace BL.Helper
         }
         public string GetActionUserCourt(string Lic, int CourtGeneralId)
         {
-            var FilePath = $@"\\10.10.10.17\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{CourtGeneralId}.log";
+            string _logPath = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.CourtLogPath).GetString();
+            var FilePath = $@"\\10.10.10.17\{_logPath}\\{Lic}\\{CourtGeneralId}\\{CourtGeneralId}.log";
             if (File.Exists(FilePath))
             {
                 var Text = File.ReadAllText(FilePath);

@@ -9,11 +9,27 @@ namespace BE.Admin.Enums
 {
     public enum ApiReportEnums
     {
-        [Description("6315376946_40702810748000001123_7_001_.txt")]
+        [Description("6315376946_40702810748000001123_7_001_.rar")]
         GetSberbankInvoicesOldFormat = 0,
-        [Description("6315376946_40702810748000001123_7_001_.txt")]
+        [Description("6315376946_40702810748000001123_7_001_.rar")]
         GetSberbankInvoices = 1,
-        [Description("COUNTERS_6315376946_40702810748000001123_7_001_.txt")]
+        [Description("COUNTERS_6315376946_40702810748000001123_7_001_.rar")]
         GetSberbankCounters = 2,
+        [Description("Отчёт по перерасчётам.xlsx")]
+        GetRecalculation = 3,
+        [Description("Отчёт НСС РКС Пенза.xlsx")]
+        GetNss = 4 ,
+        [Description("Отчёт субагента.xlsx")]
+        GetSubagent = 5,
+        [Description("Свёрнутая сальдовая ведомость.xlsx")]
+        GetShortSaldo = 6,
+        [Description("Оборотно-сальдовая ведомость.xlsx")]
+        GetFullSaldo = 7,
+        [Description("Отчёт по начислениям.xlsx")]
+        GetInvoices = 8,
+        [Description("Данные потребителей.xlsx")]
+        GetConsumerData = 9,
+        [Description("Отчёт об ошибках НСС.xlsx")]
+        GetNssErrors = 10,
     }
 }

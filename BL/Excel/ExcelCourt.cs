@@ -24,6 +24,7 @@ namespace BL.Excel
         Task<DataTable> ExcelsEditGpCourt(XLWorkbook Excels, string User);
         Task<DataTable> ExcelsEditPersDataCourt(XLWorkbook Excels, string User);
         Task<DataTable> ExcelsEditSpAndIpCourt(XLWorkbook Excels, string User);
+        Task<DataTable> ExcelsEditOwnerCourt(XLWorkbook Excels, string User);
     }
     public class ExcelCourt : IExcelCourt
     {
@@ -123,6 +124,8 @@ namespace BL.Excel
                             CourtGeneral.CourtStateDuty.ReasonReturn = dataRow.Cell(7).Value.ToString();
                         if (dataRow.Cell(7).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 16).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtStateDuty.ReasonReturn) == null)
                             exceptions.Append("Причина возврата заявления ФНС не найдена в справочнике");
+                        if (dataRow.Cell(8).Value != "" && CourtGeneral.CourtWork.SumGP != Convert.ToDouble(dataRow.Cell(8).Value.ToString()))
+                            CourtGeneral.CourtWork.SumGP = Convert.ToDouble(dataRow.Cell(8).Value.ToString());
                         var ex = exceptions.ToString();
                         if (ex != "")
                         {
@@ -320,6 +323,82 @@ namespace BL.Excel
             }
             return CreateResultCourtLoaderDataColumn3(reportCourtLoadExcels);
         }
+
+        public async Task<DataTable> ExcelsEditOwnerCourt(XLWorkbook Excels, string User)
+        {
+            var dictionaryCourt = await _dictionary.GetCourtDictionaries();
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            var Count = nonEmptyDataRows.Count();
+            var mapper = new CourtProfile().GetMapperBe();
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    try
+                    {
+                        StringBuilder exceptions = new StringBuilder();
+                        var CourtGeneral = await _court.DetailInfroms(dataRow.Cell(1).Value.TryGetCardNumber());
+                
+                        if (dataRow.Cell(2).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerLastName != dataRow.Cell(2).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerLastName =dataRow.Cell(2).Value.ToString();
+                        if (dataRow.Cell(3).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerFirstName != dataRow.Cell(3).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerFirstName = dataRow.Cell(3).Value.ToString();
+
+                        if (dataRow.Cell(4).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerSurname != dataRow.Cell(4).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerSurname = dataRow.Cell(4).Value.ToString();
+                         if (dataRow.Cell(5).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerFloor != dataRow.Cell(5).Value.ToString())
+                            CourtGeneral.Floor = dataRow.Cell(5).Value.ToString();
+                        if (dataRow.Cell(5).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 13).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtOwnerInformation.OwnerFloor) == null)
+                            exceptions.Append("Пол не найдена в справочнике" + Environment.NewLine);
+                        if (dataRow.Cell(6).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerDateBirthday != dataRow.Cell(6).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerDateBirthday = dataRow.Cell(6).Value.ToString();
+                        if (dataRow.Cell(7).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerPlaceBirth != dataRow.Cell(7).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerPlaceBirth = dataRow.Cell(7).Value.ToString();
+                        if (dataRow.Cell(8).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerTypeDocuments != dataRow.Cell(8).Value.ToString())
+                        {
+                            var OwnerTypeDocuments = dataRow.Cell(8).Value.ToString();
+                            var dictionaryTypeDocuments = new List<string> { "паспорт гр-на РФ", "св-во о рождении", "загранпаспорт", "В/у" };
+                            if (dictionaryTypeDocuments.Where(x => x == OwnerTypeDocuments).Count() > 0)
+                                CourtGeneral.CourtOwnerInformation.OwnerTypeDocuments = dataRow.Cell(8).Value.ToString();
+                            else
+                                exceptions.Append("Вид документа, удостоверяющего личность не найден в справочнике" + Environment.NewLine);
+                        }
+
+                        if (dataRow.Cell(9).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerPasportSeria != dataRow.Cell(9).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerPasportSeria = dataRow.Cell(9).Value.ToString();
+                        if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerPasportNumber != dataRow.Cell(10).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerPasportNumber = dataRow.Cell(10).Value.ToString();
+                        if (dataRow.Cell(11).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerPasportDate != dataRow.Cell(11).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerPasportDate = dataRow.Cell(11).Value.ToString();
+                        if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerPasportIssue != dataRow.Cell(12).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerPasportIssue = dataRow.Cell(12).Value.ToString();
+                        if (dataRow.Cell(13).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerInn != dataRow.Cell(13).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerInn = dataRow.Cell(13).Value.ToString();
+                        if (dataRow.Cell(14).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerSnils != dataRow.Cell(14).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerSnils = dataRow.Cell(14).Value.ToString();
+                        if (dataRow.Cell(15).Value != "" && CourtGeneral.CourtOwnerInformation.OwnerAddressRegister != dataRow.Cell(15).Value.ToString())
+                            CourtGeneral.CourtOwnerInformation.OwnerAddressRegister = dataRow.Cell(15).Value.ToString();
+
+
+                        var ex = exceptions.ToString();
+                        if (ex != "")
+                        {
+                            throw new Exception(ex);
+                        }
+
+                        var result = await _court.SaveCourt(mapper.Map<DB.Model.Court.CourtGeneralInformation, BE.Court.CourtGeneralInformation>(CourtGeneral), User);
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Id = $"П-{result}", Description = "Успешно обновлено дело" });
+
+                    }
+                    catch (Exception ex)
+                    {
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Line = dataRow.RowNumber().ToString(), Description = ex.Message });
+                    }
+                }
+            }
+            return CreateResultCourtLoader(reportCourtLoadExcels);
+        }
+
         private DataTable CreateResultCourtLoader(List<ReportCourtLoadExcel> reportCourtLoadExcels)
         {
             DataTable dt = new DataTable("Counter");
@@ -340,5 +419,7 @@ namespace BL.Excel
 
             return dt;
         }
+
+       
     }
 }

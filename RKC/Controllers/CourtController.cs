@@ -270,6 +270,13 @@ namespace RKC.Controllers
                                 wb.SaveAs(stream);
                                 return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение СП и ИП.xlsx");
                             }
+                        case CourtTypeLoadFiles.EditOwner:
+                            wb.Worksheets.Add(await _excelCourt.ExcelsEditOwnerCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                wb.SaveAs(stream);
+                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение Собственника.xlsx");
+                            }
                         default: 
                             throw new Exception("Не указан тип загружаемого файла!");
                     }

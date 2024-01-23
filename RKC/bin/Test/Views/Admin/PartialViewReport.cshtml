@@ -1,31 +1,10 @@
-﻿
+﻿@using BE.Admin.Enums
 @{
     ViewBag.Title = "PartialViewReport";
 }
 
 <div class="container">
-    @using (Html.BeginForm("UploadFile", "Counter", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @*if (User.IsInRole("Admin"))
-            {
-                <div style="margin-top:30px;" class="row">
-                    <div class="col-md-4">
-                        @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
-                    </div>
-                    <div class="col-md-4">
-                        <select id="Bank" name="Bank" class="form-control" aria-label="Default select">
-                            <option selected>Выберите банк</option>
-                            <option value="1">Какой то банк</option>
-                            <option value="2">Почта</option>
-                            <option value="3">ВТБ</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" class="btn btn-success" value="Загрузить" />
-                    </div>
-                </div>
-            }*@
-    }
+
     @if (User.IsInRole("Admin"))
     {
         <div style="margin-top:30px;" class="row">
@@ -36,7 +15,7 @@
                     <option value="2">Шаблон загрузки персов</option>
                 </select>
             </div>
-           
+
             <div class="col-md-4">
                 <input type="submit" id="CreateTemplateFile" class="btn btn-success" value="Скачать" />
             </div>
@@ -75,17 +54,67 @@
             </div>
         </div>
     }
+    <hr />
+    @using (Html.BeginForm("DownloadReport", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (User.IsInRole("Admin"))
+        {
+            <div style="margin-top:30px;" class="row">
+
+                <div class="col-md-4">
+                    <select id="TypeReport" name="TypeReport" class="form-control" aria-label="Default select">
+                        <option selected>Выбор отчета</option>
+                        <option value="@((int)ApiReportEnums.GetSberbankInvoicesOldFormat)" data-toggle="tooltip" title="Укажите период">Выгрузка в Сбербанк старый формат</option>
+                        <option value="@((int)ApiReportEnums.GetSberbankInvoices)" data-toggle="tooltip" title="Укажите период">Выгрузка в Сбербанк</option>
+                        <option value="@((int)ApiReportEnums.GetSberbankCounters)" data-toggle="tooltip" title="Укажите период">Выгрузка в Сбербанк счётчики</option>
+                        <option value="@((int)ApiReportEnums.GetRecalculation)" data-toggle="tooltip" title="Укажите период">Отчёт по перерасчётам</option>
+                        <option value="@((int)ApiReportEnums.GetNss)" data-toggle="tooltip" title="Укажите период и добавьте файл">Отчёт НСС РКС Пенза</option>
+                        <option value="@((int)ApiReportEnums.GetSubagent)" data-toggle="tooltip" title="Укажите период">Отчёт субагента</option>
+                        <option value="@((int)ApiReportEnums.GetShortSaldo)" data-toggle="tooltip" title="Укажите период">Свёрнутая сальдовая ведомость</option>
+                        <option value="@((int)ApiReportEnums.GetFullSaldo)" data-toggle="tooltip" title="Укажите период">Оборотно-сальдовая ведомость</option>
+                        <option value="@((int)ApiReportEnums.GetInvoices)" data-toggle="tooltip" title="Укажите период">Отчёт по начислениям</option>
+                        <option value="@((int)ApiReportEnums.GetConsumerData)" data-toggle="tooltip" title="Укажите период">Данные потребителей</option>
+                        <option value="@((int)ApiReportEnums.GetNssErrors)" data-toggle="tooltip" title="Добавьте файл" >Отчёт об ошибках НСС</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="date" id="ReportDate" name="ReportDate" class="form-control" value="" />
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" class="btn btn-success" value="Загрузить" />
+                </div>
+            </div>
+        }
+    }
 </div>
 <br />
 <div class="progress hidden">
     <div class="progress-bar  " id="LoadingProcent" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 </div>
-<div id="ResultCreateReportlFile" class="hidden" >
-    <textarea id="msgCreateReportlFile" style="width: 100%;" class="form-control" ></textarea>
+<div id="ResultCreateReportlFile" class="hidden">
+    <textarea id="msgCreateReportlFile" style="width: 100%;" class="form-control"></textarea>
 </div>
 
 <script>
     $(document).ready(function (e) {
+        $("#TypeReport").change(function (event) {
+            $.each($(this).find('option'), function (key, value) {
+                $(value).removeClass('active');
+            })
+            $('option:selected').addClass('active');
+
+        });
+        $("#TypeReport").tooltip({
+            placement: 'right',
+            trigger: 'hover',
+            container: 'body',
+            title: function (e) {
+                return $(this).find('.active').attr('title');
+            }
+        });
         $("#CreateReportlFile").click(function () {
             location.href = '/Counter/Export?typeFile=' + $("#FileType").val() + '&dateTime=' + $("#DateReportFile").val();
         })

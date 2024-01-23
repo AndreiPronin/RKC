@@ -53,11 +53,13 @@ namespace BL.Services
         private readonly IPersonalData _personalData;
         private readonly Ilogger _ilogger;
         private readonly IGeneratorDescriptons _generatorDescriptons;
+        private readonly string _logPath;
         public Court(IPersonalData personalData, Ilogger ilogger, IGeneratorDescriptons generatorDescriptons)
         {
             _personalData = personalData;
             _ilogger = ilogger;
             _generatorDescriptons = generatorDescriptons;
+            _logPath = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.CourtLogPath).GetString();
         }
         public async Task<CourtGeneralInformation> DetailInfroms(int Id)
         {
@@ -93,6 +95,7 @@ namespace BL.Services
                     .Include(x => x.CourtStateDuty)
                     .Include(x => x.CourtExecutionFSSP)
                     .Include(x => x.CourtOwnerInformation).AsNoTracking().FirstOrDefaultAsync();
+                /// Опасно конечно но зато быстро используем только при парсинге excel файлов
                 new Thread(()=>  _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id,
                     _generatorDescriptons.Generate(courtGeneralInformation,courtGeneralInformationDb, User))).Start();
                 var mapper = new CourtProfile().GetMapper();
@@ -149,6 +152,7 @@ namespace BL.Services
             {
                 var PersGeneral = _personalData.GetPersonalInformation(FullLic).FirstOrDefault();
                 var PersMain = _personalData.GetInfoPersData(FullLic).Where(x=>x.Main == true).FirstOrDefault();
+                var OwnerInformation = new DB.Model.Court.CourtOwnerInformation();
                 var Model = new CourtGeneralInformation { DateCreate = DateCreate };
                 Model.Lic = FullLic;
                 if (PersGeneral != null)
@@ -157,20 +161,21 @@ namespace BL.Services
                     Model.Home = PersGeneral.House;
                     Model.Flat = PersGeneral.Flat;
                     Model.Home = PersGeneral.House;
-                    Model.FirstName = $"{PersMain?.FirstName}";
-                    Model.LastName = $"{PersMain?.LastName}";
-                    Model.Surname = $"{PersMain?.MiddleName}";
-                    Model.DateBirthday = PersMain != null && PersMain.DateOfBirth.HasValue ? PersMain.DateOfBirth.Value.ToString() : "";
-                    Model.PasportDate = PersMain != null && PersMain.PassportDate.HasValue ? PersMain.PassportDate.Value.ToString() : "";
-                    Model.PasportSeria = PersMain?.PassportSerial;
-                    Model.PasportNumber = PersMain?.PassportNumber;
-                    Model.PasportIssue = PersMain?.PassportIssued;
-                    Model.Inn = PersMain?.Inn;
-                    Model.Snils = PersMain?.SnilsNumber;
+                    OwnerInformation.OwnerFirstName = $"{PersMain?.FirstName}";
+                    OwnerInformation.OwnerLastName = $"{PersMain?.LastName}";
+                    OwnerInformation.OwnerSurname = $"{PersMain?.MiddleName}";
+                    OwnerInformation.OwnerDateBirthday = PersMain != null && PersMain.DateOfBirth.HasValue ? PersMain.DateOfBirth.Value.ToString() : "";
+                    OwnerInformation.OwnerPasportDate = PersMain != null && PersMain.PassportDate.HasValue ? PersMain.PassportDate.Value.ToString() : "";
+                    OwnerInformation.OwnerPasportSeria = PersMain?.PassportSerial;
+                    OwnerInformation.OwnerPasportNumber = PersMain?.PassportNumber;
+                    OwnerInformation.OwnerPasportIssue = PersMain?.PassportIssued;
+                    OwnerInformation.OwnerInn = PersMain?.Inn;
+                    OwnerInformation.OwnerSnils = PersMain?.SnilsNumber;
                 }
                 db.CourtGeneralInformation.Add(Model);
                 await db.SaveChangesAsync();
                 var Id = Model.Id;
+                OwnerInformation.CourtGeneralInformationId = Id;
                 db.CourtBankruptcy.Add(new DB.Model.Court.CourtBankruptcy { CourtGeneralInformationId = Id });
                 db.CourtInstallmentPlan.Add(new DB.Model.Court.CourtInstallmentPlan { CourtGeneralInformationId = Id });
                 db.CourtExecutionInPF.Add(new DB.Model.Court.CourtExecutionInPF { CourtGeneralInformationId = Id });
@@ -179,7 +184,7 @@ namespace BL.Services
                 db.CourtWriteOff.Add(new DB.Model.Court.CourtWriteOff { CourtGeneralInformationId = Id });
                 db.CourtStateDuty.Add(new DB.Model.Court.CourtStateDuty { CourtGeneralInformationId = Id });
                 db.CourtExecutionFSSP.Add(new DB.Model.Court.CourtExecutionFSSP { CourtGeneralInformationId = Id });
-                db.CourtOwnerInformation.Add(new DB.Model.Court.CourtOwnerInformation { CourtGeneralInformationId = Id });
+                db.CourtOwnerInformation.Add(OwnerInformation);
                 await db.SaveChangesAsync();
                 _ilogger.ActionUserCourt(Model.Lic, Model.Id, $"Пользователь {User} создал дело");
                 return Model.Id;
@@ -365,14 +370,15 @@ namespace BL.Services
         }
         public async Task<string> saveFile(byte[] file, int CourtGeneralId, string Lic, string TypeFile, string NameFile, string User)
         {
+            
             if (file != null)
             {
-                if (!Directory.Exists($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}"))
+                if (!Directory.Exists($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{CourtGeneralId}"))
                 {
-                    Directory.CreateDirectory($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}");
+                    Directory.CreateDirectory($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{CourtGeneralId}");
                 }
-                if (File.Exists($@"\\10.10.10.17\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{NameFile}.{TypeFile}")) return $@"Файл с названием {NameFile} уже существует. Обратитесь к системному администратору!";
-                File.WriteAllBytes($@"\\10.10.10.17\\doc_tplus_court\\{Lic}\\{CourtGeneralId}\\{NameFile}.{TypeFile}", file);
+                if (File.Exists($@"\\10.10.10.17\{_logPath}\\{Lic}\\{CourtGeneralId}\\{NameFile}.{TypeFile}")) return $@"Файл с названием {NameFile} уже существует. Обратитесь к системному администратору!";
+                File.WriteAllBytes($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{CourtGeneralId}\\{NameFile}.{TypeFile}", file);
                 using (var db = new ApplicationDbContext())
                 {
                     _ilogger.ActionUserCourt(Lic, CourtGeneralId, $"<b>{DateTime.Now} Пользователь {User} добавил файл:</b> {NameFile}.{TypeFile}");
@@ -401,7 +407,7 @@ namespace BL.Services
                 _ilogger.ActionUserCourt(Res.CourtGeneralInformation.Lic, Res.CourtGeneralInformation.Id, $"<b>{DateTime.Now} Пользователь {User} удалил файл:</b> {Res.CourtDocumentScansName}");
                 db.CourtCourtDocumentScans.Remove(Res);
                 await db.SaveChangesAsync();
-                File.Delete($@"\\10.10.10.17\\doc_tplus_court\\{Res.DocumentPath}\\{Res.CourtDocumentScansName}");
+                File.Delete($@"\\10.10.10.17\\{_logPath}\\{Res.DocumentPath}\\{Res.CourtDocumentScansName}");
                 return $"Файл {Res.CourtDocumentScansName} успешно удален";
             }
         }
@@ -418,7 +424,7 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
                 var Res = await db.CourtCourtDocumentScans.Where(x => x.Id == Id).FirstOrDefaultAsync();
-                courtDataDocument.FileBytes = File.ReadAllBytes($@"\\10.10.10.17\\doc_tplus_court\\{Res.DocumentPath}\\{Res.CourtDocumentScansName}");
+                courtDataDocument.FileBytes = File.ReadAllBytes($@"\\10.10.10.17\\{_logPath}\\{Res.DocumentPath}\\{Res.CourtDocumentScansName}");
                 courtDataDocument.FileName = Res.CourtDocumentScansName;
             }
             return courtDataDocument;
