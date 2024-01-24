@@ -18,7 +18,7 @@ namespace DB.Model.Court
         /// </summary>
         public DateTime? DateDecisionCansel { get; set; }
         /// <summary>
-        /// Дата получения определения об отмене СП
+        /// Дата определения на возврат ГП
         /// </summary>
         public DateTime? DateReceipt { get; set; }
         /// <summary>

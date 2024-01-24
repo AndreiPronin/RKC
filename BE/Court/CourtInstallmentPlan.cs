@@ -43,6 +43,10 @@ namespace BE.Court
         /// </summary>
         public double? AmountPaymentRestructuring { get; set; }
         /// <summary>
+        /// Остаток суммы по реструктуризации
+        /// </summary>
+        public double? RemainderAmountPaymentRestructuring { get; set; }
+        /// <summary>
         /// Примечание
         /// </summary>
         public string Comment { get; set; }

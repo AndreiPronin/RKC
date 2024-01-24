@@ -33,6 +33,7 @@ namespace BL.Counters
         Task UpdatePUIntegrations(SaveModelIPU saveModelIPU, string User, int ID_PU);
         List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC);
         IEnumerable<ConnectPuWithGisResponse> UpdateGuidPuWithGis(IEnumerable<ConnectPuWithGis> connectPuWithGis);
+        IPU_COUNTERS GetInfoPU(string FULL_LIC, string TYPE_PU, bool Close = false);
     }
     public class Counter :BaseService, ICounter
     {
@@ -365,6 +366,14 @@ namespace BL.Counters
             {
                 DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП4", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой" });
                 DbTPlus.SaveChanges();
+            }
+        }
+        public IPU_COUNTERS GetInfoPU(string FULL_LIC, string TYPE_PU,bool Close = false)
+        {
+            using (var DbTPlus = new DbTPlus())
+            {
+                var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == FULL_LIC && x.TYPE_PU == TYPE_PU && x.CLOSE_ != true).FirstOrDefault();
+                return IPU_COUNTERS;
             }
         }
         public bool UpdatePU(SaveModelIPU saveModelIPU,string User)

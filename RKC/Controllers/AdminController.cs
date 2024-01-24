@@ -25,6 +25,9 @@ using BE.Counter;
 using DB.Extention;
 using BL.Services;
 using BE.Admin.Enums;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.EMMA;
+using System.IO;
 
 namespace RKC.Controllers
 {
@@ -176,45 +179,51 @@ namespace RKC.Controllers
         [Auth]
         public async Task<ActionResult> DownloadReport(ApiReportEnums TypeReport, DateTime? ReportDate, HttpPostedFileBase file)
         {
-            byte[] result;
-            switch (TypeReport)
+            try
             {
-                case ApiReportEnums.GetSberbankInvoicesOldFormat:
-                    result =  await _apiReportService.GetSberbankInvoicesOldFormat(ReportDate.HasValue ? ReportDate.Value :DateTime.Now);
-                    return File(result, "application/octet-stream", ApiReportEnums.GetSberbankInvoicesOldFormat.GetDescription());
-                case ApiReportEnums.GetSberbankInvoices:
-                    result = await _apiReportService.GetSberbankInvoices(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
-                    return File(result, "application/octet-stream", ApiReportEnums.GetSberbankInvoices.GetDescription());
-                case ApiReportEnums.GetSberbankCounters:
-                    result = await _apiReportService.GetSberbankCounters(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
-                    return File(result, "application/octet-stream", ApiReportEnums.GetSberbankCounters.GetDescription());
-                case ApiReportEnums.GetRecalculation:
-                    result = await _apiReportService.GetRecalculation();
-                    return File(result, "application/octet-stream", ApiReportEnums.GetRecalculation.GetDescription());
-                case ApiReportEnums.GetNss:
-                    result = await _apiReportService.GetNss(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
-                    return File(result, "application/octet-stream", ApiReportEnums.GetNss.GetDescription());
-                case ApiReportEnums.GetSubagent:
-                    result = await _apiReportService.GetSubagent(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
-                    return File(result, "application/octet-stream", ApiReportEnums.GetSubagent.GetDescription());
-                case ApiReportEnums.GetShortSaldo:
-                    result = await _apiReportService.GetShortSaldo(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
-                    return File(result, "application/octet-stream", ApiReportEnums.GetShortSaldo.GetDescription());
-                case ApiReportEnums.GetFullSaldo:
-                    result = await _apiReportService.GetFullSaldo(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
-                    return File(result, "application/octet-stream", ApiReportEnums.GetFullSaldo.GetDescription());
-                case ApiReportEnums.GetInvoices:
-                    result = await _apiReportService.GetInvoices(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
-                    return File(result, "application/octet-stream", ApiReportEnums.GetInvoices.GetDescription());
-                case ApiReportEnums.GetConsumerData:
-                    result = await _apiReportService.GetConsumerData(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
-                    return File(result, "application/octet-stream", ApiReportEnums.GetConsumerData.GetDescription());
-                case ApiReportEnums.GetNssErrors:
-                    result = await _apiReportService.GetNssErrors();
-                    return File(result, "application/octet-stream", ApiReportEnums.GetNssErrors.GetDescription());
+                byte[] result;
+                switch (TypeReport)
+                {
+                    case ApiReportEnums.GetSberbankInvoicesOldFormat:
+                        result = await _apiReportService.GetSberbankInvoicesOldFormat(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/zip", ApiReportEnums.GetSberbankInvoicesOldFormat.GetDescription());
+                    case ApiReportEnums.GetSberbankInvoices:
+                        result = await _apiReportService.GetSberbankInvoices(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/zip", ApiReportEnums.GetSberbankInvoices.GetDescription());
+                    case ApiReportEnums.GetSberbankCounters:
+                        result = await _apiReportService.GetSberbankCounters(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/zip", ApiReportEnums.GetSberbankCounters.GetDescription());
+                    case ApiReportEnums.GetRecalculation:
+                        result = await _apiReportService.GetRecalculation();
+                        return File(result, "application/octet-stream", ApiReportEnums.GetRecalculation.GetDescription());
+                    case ApiReportEnums.GetNss:
+                        result = await _apiReportService.GetNss(ReportDate.HasValue ? ReportDate.Value : DateTime.Now, file.InputStream, file.FileName);
+                        return File(result, "application/zip", ApiReportEnums.GetNss.GetDescription());
+                    case ApiReportEnums.GetSubagent:
+                        result = await _apiReportService.GetSubagent(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/octet-stream", ApiReportEnums.GetSubagent.GetDescription());
+                    case ApiReportEnums.GetShortSaldo:
+                        result = await _apiReportService.GetShortSaldo(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/octet-stream", ApiReportEnums.GetShortSaldo.GetDescription());
+                    case ApiReportEnums.GetFullSaldo:
+                        result = await _apiReportService.GetFullSaldo(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/octet-stream", ApiReportEnums.GetFullSaldo.GetDescription());
+                    case ApiReportEnums.GetInvoices:
+                        result = await _apiReportService.GetInvoices(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/octet-stream", ApiReportEnums.GetInvoices.GetDescription());
+                    case ApiReportEnums.GetConsumerData:
+                        result = await _apiReportService.GetConsumerData(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/octet-stream", ApiReportEnums.GetConsumerData.GetDescription());
+                    case ApiReportEnums.GetNssErrors:
+                        result = await _apiReportService.GetNssErrors(ReportDate.HasValue ? ReportDate.Value : DateTime.Now, file.InputStream, file.FileName);
+                        return File(result, "application/octet-stream", ApiReportEnums.GetNssErrors.GetDescription());
 
-                default:
-                    return File(new byte[0],"Ошибка отчет не найде.txt");
+                    default:
+                        return File(new byte[0], "Ошибка отчет не найде.txt");
+                }
+            }catch(Exception ex)
+            {
+                return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
             }
         }
     }

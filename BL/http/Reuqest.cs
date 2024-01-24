@@ -3,6 +3,7 @@ using BL.Helper;
 using DB.Model;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -64,35 +65,62 @@ namespace BL.http
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
                 await Task.CompletedTask;
-                var resultPostRequest = await httpClient.GetAsync(Url);
-                if (resultPostRequest != null && resultPostRequest.StatusCode == HttpStatusCode.OK)
+                var resultRequest = await httpClient.GetAsync(Url);
+                if (resultRequest != null && resultRequest.StatusCode == HttpStatusCode.OK)
                 {
-                    var result = await resultPostRequest.Content.ReadAsStringAsync();
-                    byte[] buffer = Encoding.GetEncoding("windows-1251").GetBytes(result);
+                    var result = await resultRequest.Content.ReadAsStringAsync();
+                    byte[] buffer = Encoding.UTF8.GetBytes(result);
                     return buffer;
                 }
                 throw new Exception();
 
             }
         }
-        public async Task<byte[]> UploadFile(string Url, string Token, byte[] fules, string FileName)
+        public async Task<byte[]> GetFileRequestWithTockenAsync(string Url, string Token)
         {
             using (var httpClient = _httpClient ?? new HttpClient())
             {
-                using (var form = new MultipartFormDataContent())
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                await Task.CompletedTask;
+                var resultRequest = await httpClient.GetAsync(Url);
+                if (resultRequest != null && resultRequest.StatusCode == HttpStatusCode.OK)
                 {
-                    var imageContent = new ByteArrayContent(fules);
-                    imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
-
-                    form.Add(imageContent, "Test", FileName);
-                    var response = httpClient.PostAsync(Url, form).Result;
-                    if (response != null && response.StatusCode == HttpStatusCode.OK)
+                    var result = await resultRequest.Content.ReadAsStreamAsync();
+                    using (MemoryStream ms = new MemoryStream())
                     {
-                        var result = await response.Content.ReadAsStringAsync();
-                        byte[] buffer = Encoding.GetEncoding("windows-1251").GetBytes(result);
-                        return buffer;
+                        result.CopyTo(ms);
+                        return ms.ToArray();
                     }
-                    throw new Exception();
+                }
+                throw new Exception();
+
+            }
+        }
+        public async Task<byte[]> UploadFileAndGetFile(string Url, string Token, Stream Stream, string FileName)
+        {
+            using (var httpClient = _httpClient ?? new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                using (var multipartFormContent = new MultipartFormDataContent())
+                {
+                    //Load the file and set the file's Content-Type header
+                    var fileStreamContent = new StreamContent(Stream);
+                    fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
+
+                    //Add the file
+                    multipartFormContent.Add(fileStreamContent, name: "formFile", fileName: FileName);
+
+                    //Send it
+                    var response = await httpClient.PostAsync(Url, multipartFormContent);
+                    response.EnsureSuccessStatusCode();
+
+                    var result = await response.Content.ReadAsStreamAsync();
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        result.CopyTo(ms);
+                        return ms.ToArray();
+                    }
+
                 }
             }
         }

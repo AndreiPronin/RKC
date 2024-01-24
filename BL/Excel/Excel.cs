@@ -139,24 +139,25 @@ namespace BL.Excel
                         saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
                         saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
                         saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
+                        var Counter = counter.GetInfoPU(saveModel.FULL_LIC, saveModel.TypePU);
                         if (dataRow.Cell(7).Value != "") {
                             var DateCheck = Convert.ToDateTime(dataRow.Cell(7).Value);
-                            if (saveModel?.DATE_CHECK > DateTime.Now)
+                            if (DateCheck > DateTime.Now)
                             {
                                 throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
-                            if (DateCheck < saveModel?.DATE_CHECK)
+                            if (DateCheck < Counter?.DATE_CHECK)
                                 throw new Exception("Дата поверки меньше даты в базе");
 
                             saveModel.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value);
                         }
                         if (dataRow.Cell(8).Value != "") {
                             var DateCheckNext = Convert.ToDateTime(dataRow.Cell(8).Value);
-                            if (saveModel?.DATE_CHECK_NEXT > DateTime.Now.AddYears(6))
+                            if (DateCheckNext > DateTime.Now.AddYears(6))
                             {
                                 throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
-                            if (DateCheckNext < saveModel?.DATE_CHECK)
+                            if (DateCheckNext < Counter?.DATE_CHECK_NEXT)
                                 throw new Exception("Дата слудющей поверки меньше даты в базе");
 
                             saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);

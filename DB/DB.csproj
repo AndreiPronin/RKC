@@ -91,6 +91,10 @@
     <Compile Include="Migrations\202401161615385_AddTableCourtOwnerInformation.designer.cs">
       <DependentUpon>202401161615385_AddTableCourtOwnerInformation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401241557265_addFieldRemainderAmountPaymentRestructuring.cs" />
+    <Compile Include="Migrations\202401241557265_addFieldRemainderAmountPaymentRestructuring.designer.cs">
+      <DependentUpon>202401241557265_addFieldRemainderAmountPaymentRestructuring.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -175,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401161615385_AddTableCourtOwnerInformation.resx">
       <DependentUpon>202401161615385_AddTableCourtOwnerInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401241557265_addFieldRemainderAmountPaymentRestructuring.resx">
+      <DependentUpon>202401241557265_addFieldRemainderAmountPaymentRestructuring.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

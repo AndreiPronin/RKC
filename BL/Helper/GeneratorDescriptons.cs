@@ -623,7 +623,7 @@ namespace BL.Helper
             if (courtGeneralBe.CourtLitigationWork.DateDecisionCansel != courtGeneralDb.CourtLitigationWork.DateDecisionCansel)
                 Result.AppendLine($"Дата определения об отмене СП: было {courtGeneralDb.CourtLitigationWork.DateDecisionCansel} стало {courtGeneralBe.CourtLitigationWork.DateDecisionCansel}");
             if (courtGeneralBe.CourtLitigationWork.DateReceipt != courtGeneralDb.CourtLitigationWork.DateReceipt)
-                Result.AppendLine($"Дата получения определения об отмене СП: было {courtGeneralDb.CourtLitigationWork.DateReceipt} стало {courtGeneralBe.CourtLitigationWork.DateReceipt}");
+                Result.AppendLine($"Дата определения на возврат ГП: было {courtGeneralDb.CourtLitigationWork.DateReceipt} стало {courtGeneralBe.CourtLitigationWork.DateReceipt}");
             if (courtGeneralBe.CourtLitigationWork.DateSubmission != courtGeneralDb.CourtLitigationWork.DateSubmission)
                 Result.AppendLine($"Дата передачи искового заявления в суд: было {courtGeneralDb.CourtLitigationWork.DateSubmission} стало {courtGeneralBe.CourtLitigationWork.DateSubmission}");
             if (courtGeneralBe.CourtLitigationWork.DateSendPirRCO != courtGeneralDb.CourtLitigationWork.DateSendPirRCO)
