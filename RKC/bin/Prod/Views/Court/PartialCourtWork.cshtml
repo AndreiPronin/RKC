@@ -29,20 +29,20 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.PeriodDebtBegin, new
             {
-                @type = "month",
+                @type = "date",
                 @readonly = "readonly",
                 @class = "form-control",
-           @Value = (Model.CourtWork.PeriodDebtBegin.HasValue ? Model.CourtWork.PeriodDebtBegin.Value.ToString("yyyy-MM") : string.Empty)
+           @Value = (Model.CourtWork.PeriodDebtBegin.HasValue ? Model.CourtWork.PeriodDebtBegin.Value.ToString("yyyy-MM-dd") : string.Empty)
             })
         </div>
         <label class="col-sm-12 col-form-label">Период задолженности конечный:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.PeriodDebtEnd, "{0:MM-yyyy}", new
             {
-                @type = "month",
+                @type = "date",
                 @readonly = "readonly",
                 @class = "form-control",
-           @Value = (Model.CourtWork.PeriodDebtEnd.HasValue ? Model.CourtWork.PeriodDebtEnd.Value.ToString("yyyy-MM") : string.Empty)
+           @Value = (Model.CourtWork.PeriodDebtEnd.HasValue ? Model.CourtWork.PeriodDebtEnd.Value.ToString("yyyy-MM-dd") : string.Empty)
             })
         </div>
         <label class="col-sm-12 col-form-label">ФИО сотрудника (направившего дело в суд):</label>

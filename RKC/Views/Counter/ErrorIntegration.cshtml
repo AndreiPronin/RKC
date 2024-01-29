@@ -2,8 +2,13 @@
 @{
     ViewBag.Title = "ErrorIntegration";
 }
+<div class="loader">
+    <div class="inner one"></div>
+    <div class="inner two"></div>
+    <div class="inner three"></div>
+</div>
 <h2>Ошибка интеграции</h2>
-<a class="btn btn-success" href="/counter/ErroIntegratinLoadExcel" > Скачать в Excel </a>
+<a class="btn btn-success" href="/counter/ErroIntegratinLoadExcel"> Скачать в Excel </a>
 <table class="table">
     <thead>
         <tr>
@@ -28,21 +33,30 @@
                     <td>@Items.DateTime</td>
                     <td>@Items.Description</td>
                     <td>@Items.InitialReadings</td>
-                <td>@Items.EndReadings</td>
-                <td>@Items.NowReadings</td>
-                <td>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a class="btn btn-success" href="/Counter/ErroIntegratinDelete?Lic=@Items.Lic&TypePU=@Items.TypePu&Id=@Items.Id">Убрать ошибку</a>
-                    }
-                    <a class="btn btn-success" target="_blank" href="/Counter/DetailedInformIPU?FULL_LIC=@Items.Lic">Показать</a>
-                </td>
+                    <td>@Items.EndReadings</td>
+                    <td>@Items.NowReadings</td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-success" href="/Counter/ErroIntegratinDelete?Lic=@Items.Lic&TypePU=@Items.TypePu&Id=@Items.Id">Убрать ошибку</a>
+                        }
+                        <a class="btn btn-success" target="_blank" href="/Counter/DetailedInformIPU?FULL_LIC=@Items.Lic">Показать</a>
+                    </td>
                 </tr>
             }
             else
             {
-                <tr >
-                    <td>@Items.Lic</td>
+                <tr>
+                    <td>
+                        @Items.Lic
+                        @if (User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                        {
+                            <a class="btn btn-primary RunIntegrationRepeat" id="" 
+                               valDate="@Items.DateTime.Value.ToString("yyyy-MM.ddTHH:mm:ss")"
+                               valLic="@Items.Lic"
+                               >Повтор интеграции</a>
+                        }
+                    </td>
                     <td>@Items.TypePu</td>
                     <td>@Items.DateTime</td>
                     <td>@Items.Description</td>
@@ -55,10 +69,32 @@
                             <a class="btn btn-success" href="/Counter/ErroIntegratinDelete?Lic=@Items.Lic&TypePU=@Items.TypePu&Id=@Items.Id">Убрать ошибку</a>
                         }
                         <a class="btn btn-danger" target="_blank" href="/Counter/DetailedInformIPU?FULL_LIC=@Items.Lic">Показать</a>
+
                     </td>
                 </tr>
             }
         }
     </tbody>
 </table>
+<script>
+    $(document).ready(function (e) {
+        $('.loader').addClass('hidden');
+        $(".RunIntegrationRepeat").click(function (e) {
+            $('.loader').removeClass('hidden');
+            var date = $(this).attr('valDate');
+            var lic = $(this).attr('valLic');
+            $.ajax({
+                url: `/Counter/RunIntegrationRepeat?Date=${date}&lic=${lic}`,
+                success: function (data) {
+                    alert('Интеграция завершена');
+                    window.onbeforeunload = null;
+                    window.location.reload();
+                },
+                error: function () {
+                    alert('Ошибка интеграции');
+                }
+            });
+        });
+    })
+</script>
 

@@ -462,6 +462,20 @@ namespace RKC.Controllers
             }
             return null;
         }
+        [HttpGet]
+        [Auth(Roles = RolesEnums.SuperAdmin)]
+        public async Task<ActionResult> RunIntegrationRepeat(DateTime date,string lic)
+        {
+            try
+            {
+                await _integration.LoadReadings("Integration", _cacheApp, date, _notificationMail, _counter,lic, date);
+            }
+            catch (Exception ex)
+            {
+                return Redirect("/home/ResultEmpty?Message=" + ex.Message);
+            }
+            return null;
+        }
         public ActionResult ErrorIntegration()
         {
             return View(_integration.GetErrorIntegrationReadings().OrderByDescending(x => x.IsError));

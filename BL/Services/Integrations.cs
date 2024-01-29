@@ -20,13 +20,13 @@ namespace BL.Service
 {
     public interface IIntegrations
     {
-        Task LoadReadings(string User, ICacheApp cacheApp, DateTime period, INotificationMail _notificationMail, ICounter _counter);
+        Task LoadReadings(string User, ICacheApp cacheApp, DateTime period, INotificationMail _notificationMail, ICounter _counter, string Lic = "", DateTime? paymentDate = null);
         List<IntegrationReadings> GetErrorIntegrationReadings();
         List<IntegrationReadings> GetErrorIntegrationReadings(string FullLic);
     }
     public class Integrations : IIntegrations
     {
-        public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period, INotificationMail _notificationMail, ICounter _counter)
+        public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period, INotificationMail _notificationMail, ICounter _counter, string Lic = "", DateTime? paymentDate = null)
         {
             object Lock = new object();
             cacheApp.AddProgress(User + "_", "0");
@@ -70,6 +70,15 @@ namespace BL.Service
                     .Include(x => x.Organization)
                     .Where(x => x.payment_date_day.Value == period)
                     .ToListAsync();
+                if (!string.IsNullOrEmpty(Lic))
+                {
+                    payment = await dbs.Payment.AsNoTracking()
+                    .Include(x => x.Counter)
+                    .Include(x => x.Organization)
+                    .Where(x => x.payment_date.Value == paymentDate.Value)
+                    .ToListAsync();
+                    payment = payment.Where(x=>x.lic == Lic).ToList();
+                }
                 var Count = payment.Count();
                 int i = 0;
                 foreach (var data in payment)
@@ -83,7 +92,7 @@ namespace BL.Service
                         foreach (var Item in data.Counter)
                         {
                             var Integr = IntegrsList.Where(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id).Select(x => x.Lic).ToList();
-                            if (Integr.Count() == 0)
+                            if (Integr.Count() == 0 || !string.IsNullOrEmpty(Lic))
                             {
                                 bool Error = false;
                                 try
@@ -345,7 +354,23 @@ namespace BL.Service
                                     "Показания от " + data.Organization.name + " дата платежа " + data.payment_date_day.Value.ToString(),
                                     IPU_COUNTERS.FirstOrDefault().ID_PU);
                                     else integrationReadings.IsError = Error;
-                                    dbApp.IntegrationReadings.Add(integrationReadings);
+
+                                    if(string.IsNullOrEmpty(Lic))
+                                        dbApp.IntegrationReadings.Add(integrationReadings);
+                                    else
+                                    {
+                                       var integerationList = IntegrsList.FirstOrDefault(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id);
+                                        if (integerationList == null)
+                                            dbApp.IntegrationReadings.Add(integrationReadings);
+                                        else
+                                        {
+                                            integerationList.IsError = integrationReadings.IsError;
+                                            integerationList.Description = integrationReadings.Description;
+                                            integerationList.EndReadings = integrationReadings.EndReadings;
+                                            integerationList.NowReadings = integrationReadings.NowReadings;
+                                            integerationList.InitialReadings = integrationReadings.InitialReadings;
+                                        }
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
@@ -357,7 +382,26 @@ namespace BL.Service
                                     integrationReadings.IsError = true;
                                     integrationReadings.NowReadings = Item.value.ToString();
                                     integrationReadings.Description = "Ошибка при интеграции";
-                                    dbApp.IntegrationReadings.Add(integrationReadings);
+                                    if (string.IsNullOrEmpty(Lic))
+                                        dbApp.IntegrationReadings.Add(integrationReadings);
+                                    else
+                                    {
+                                        try
+                                        {
+                                            var integerationList = IntegrsList.FirstOrDefault(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id);
+                                            if (integerationList == null)
+                                                dbApp.IntegrationReadings.Add(integrationReadings);
+                                            else
+                                            {
+                                                integerationList.IsError = integrationReadings.IsError;
+                                                integerationList.Description = integrationReadings.Description;
+                                            }
+                                        }
+                                        catch
+                                        {
+                                            dbApp.IntegrationReadings.Add(integrationReadings);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -382,7 +426,26 @@ namespace BL.Service
                                     integrationReadings.IsError = true;
                                 }
                                 integrationReadings.Description = ErrorIntegration.NoLic.GetDescription();
-                                dbApp.IntegrationReadings.Add(integrationReadings);
+                                if (string.IsNullOrEmpty(Lic))
+                                    dbApp.IntegrationReadings.Add(integrationReadings);
+                                else
+                                {
+                                    try
+                                    {
+                                        var integerationList = IntegrsList.FirstOrDefault(x => x.Lic == data.lic && x.DateTime == data.payment_date_day);
+                                        if (integerationList == null)
+                                            dbApp.IntegrationReadings.Add(integrationReadings);
+                                        else
+                                        {
+                                            integerationList.IsError = integrationReadings.IsError;
+                                            integerationList.Description = integrationReadings.Description;
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        dbApp.IntegrationReadings.Add(integrationReadings);
+                                    }
+                                }
                             }
                         }
                         catch (Exception ex)
@@ -392,15 +455,20 @@ namespace BL.Service
                     }
                 }
                 dbApp.SaveChanges();
-                var LastIntegration = dbApp.Flags.Find(((int)EnumFlags.LastIntegration));
-                LastIntegration.DateTime = period;
+                if (string.IsNullOrEmpty(Lic))
+                {
+                    var LastIntegration = dbApp.Flags.Find(((int)EnumFlags.LastIntegration));
+                    LastIntegration.DateTime = period;
+                }
                 cacheApp.UpdateProgress(User, "100");
                 dbApp.SaveChanges();
                 dbApp.Dispose();
                 dbs.Dispose();
                 DbLIC.Dispose();
                 DbTPlus.Dispose();
-            }catch(Exception ex)
+                GC.Collect();
+            }
+            catch(Exception ex)
             {
 
             }
