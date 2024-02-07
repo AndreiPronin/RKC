@@ -81,8 +81,10 @@
   <ItemGroup>
     <Compile Include="Extenstion\DateTimesTest.cs" />
     <Compile Include="Helper\JsonConverterTest.cs" />
+    <Compile Include="Helper\ObjectCopierTest.cs" />
     <Compile Include="http\RequestTest.cs" />
     <Compile Include="Jobs\ClearIntegrationTest.cs" />
+    <Compile Include="JustTest\Tests.cs" />
     <Compile Include="Models\ModelCreator.cs" />
     <Compile Include="Service\ApiReportServiceTest.cs" />
     <Compile Include="Service\CounterServiceTest.cs" />

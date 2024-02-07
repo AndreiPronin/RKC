@@ -66,10 +66,10 @@
     <Compile Include="Extention\GetTypePuOfDecimal.cs" />
     <Compile Include="Extention\StringExtenstions.cs" />
     <Compile Include="Extention\StringWriterExtension.cs" />
-    <Compile Include="Helper\ConvertToModelCourt.cs" />
     <Compile Include="Helper\ConvertJson.cs" />
     <Compile Include="Helper\Excels.cs" />
     <Compile Include="Helper\GetConfigurationManager.cs" />
+    <Compile Include="Helper\ObjectCopier.cs" />
     <Compile Include="Helper\QueueSynchronizationContext .cs" />
     <Compile Include="http\Resposne.cs" />
     <Compile Include="Helper\ThrowHelper.cs" />

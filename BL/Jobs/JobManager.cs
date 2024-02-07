@@ -24,6 +24,7 @@ namespace BL.Jobs
     public interface IJobManager
     {
         void CheckDublicatePu();
+        void  CheckDublicatePuNumber();
         void CheckDublicatePers();
         void SendReceipt(string FullLic = "");
         void SendReceiptDpu(string FullLic = "");
@@ -44,17 +45,42 @@ namespace BL.Jobs
             {
                 try
                 {
-                    var Result = db.Database.SqlQuery<DuplicatePu>(QueryCheckDublicate.GVS1).ToList();
-                    Result.AddRange(db.Database.SqlQuery<DuplicatePu>(QueryCheckDublicate.GVS2).ToList());
-                    Result.AddRange(db.Database.SqlQuery<DuplicatePu>(QueryCheckDublicate.GVS3).ToList());
-                    Result.AddRange(db.Database.SqlQuery<DuplicatePu>(QueryCheckDublicate.GVS4).ToList());
-                    Result.AddRange(db.Database.SqlQuery<DuplicatePu>(QueryCheckDublicate.OTP1).ToList());
-                    Result.AddRange(db.Database.SqlQuery<DuplicatePu>(QueryCheckDublicate.OTP2).ToList());
-                    Result.AddRange(db.Database.SqlQuery<DuplicatePu>(QueryCheckDublicate.OTP3).ToList());
-                    Result.AddRange(db.Database.SqlQuery<DuplicatePu>(QueryCheckDublicate.OTP4).ToList());
+                    var Result = db.Database.SqlQuery<Duplicate>(QueryCheckDublicate.GVS1).ToList();
+                    Result.AddRange(db.Database.SqlQuery<Duplicate>(QueryCheckDublicate.GVS2).ToList());
+                    Result.AddRange(db.Database.SqlQuery<Duplicate>(QueryCheckDublicate.GVS3).ToList());
+                    Result.AddRange(db.Database.SqlQuery<Duplicate>(QueryCheckDublicate.GVS4).ToList());
+                    Result.AddRange(db.Database.SqlQuery<Duplicate>(QueryCheckDublicate.OTP1).ToList());
+                    Result.AddRange(db.Database.SqlQuery<Duplicate>(QueryCheckDublicate.OTP2).ToList());
+                    Result.AddRange(db.Database.SqlQuery<Duplicate>(QueryCheckDublicate.OTP3).ToList());
+                    Result.AddRange(db.Database.SqlQuery<Duplicate>(QueryCheckDublicate.OTP4).ToList());
                     if (Result.Count() > 0)
                         _notificationMail.SendEmailAsyncDublicatePu(Result);
                 }catch(Exception ex)
+                {
+                    _notificationMail.Error(ex);
+                }
+            }
+        }
+        public void CheckDublicatePuNumber()
+        {
+            using (var db = new DbTPlus())
+            {
+                try
+                {
+                    var dublicate = new List<Duplicate>();
+                    var result = db.IPU_COUNTERS.Where(x=>x.CLOSE_ != true).ToList();
+                    var groupResult = result.GroupBy(x => x.FACTORY_NUMBER_PU).ToList();
+                    foreach (var group in groupResult)
+                    {
+                        if(group.Count()>1)
+                            foreach (var item in group)  
+                                dublicate.Add(new Duplicate { FULL_LIC = item.FULL_LIC, TYPE_PU = item.TYPE_PU, FACTORY_NUMBER_PU = item.FACTORY_NUMBER_PU });
+                    }
+                    
+                    if (dublicate.Count() > 0)
+                        _notificationMail.SendEmailAsyncDublicatePu(dublicate);
+                }
+                catch (Exception ex)
                 {
                     _notificationMail.Error(ex);
                 }

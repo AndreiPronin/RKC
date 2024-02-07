@@ -196,7 +196,7 @@ namespace RKC.Controllers
             catch (Exception ex)
             {
                 _Nlogger.Error(ex.Message);
-                return Content($"Во время обновления произошла ошибка {ex.Message}");
+                return Content($"Во время обновления произошла ошибка: {ex.Message}");
             }
         }
         [HttpPost]

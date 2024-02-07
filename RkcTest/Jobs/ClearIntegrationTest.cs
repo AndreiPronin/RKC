@@ -19,5 +19,11 @@ namespace RkcTest.Jobs
             var clearIntegration = new ClearIntegration();
             clearIntegration.Execute(new Mock<IJobExecutionContext>().Object);
         }
+        [TestMethod]
+        public void EmailSenderMethodTest()
+        {
+            var JobEmailSender = new JobEmailSender();
+            JobEmailSender.Execute(new Mock<IJobExecutionContext>().Object);
+        }
     }
 }

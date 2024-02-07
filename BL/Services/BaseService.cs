@@ -36,6 +36,11 @@ namespace BL.Services
         /// <param name="FullLic">Id типа помещения</param>
         /// <returns></returns>
         FlatTypeDto GetFlatTypeById(string Id);
+        /// <summary>
+        /// Проверяет есть ли в базе ПУ с таким номером прибора учета
+        /// </summary>
+        /// <param name="Number">Номер прибора учета</param>
+        void CheckDublicatePuNumber(string Number);
     }
     public class BaseService : IBaseService
     {
@@ -200,6 +205,17 @@ namespace BL.Services
                 return FlatType == null ? new FlatTypeDto() : FlatType;
             }
 
+        }
+        public void CheckDublicatePuNumber(string Number)
+        {
+            if (string.IsNullOrEmpty(Number))
+                return;
+            using(var context = new DbTPlus())
+            {
+                var result = context.IPU_COUNTERS.Where(x=>x.FACTORY_NUMBER_PU == Number && x.CLOSE_ != true).ToList();
+                if(result != null && result.Count()>1)
+                    throw new Exception($"Такой номер уже существует на лицевом счете {result.FirstOrDefault().FULL_LIC} тип прибора учета {result.FirstOrDefault().TYPE_PU}");
+            }
         }
     }
 }

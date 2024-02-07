@@ -31,5 +31,7 @@ namespace BE.Admin.Enums
         GetConsumerData = 9,
         [Description("Отчёт об ошибках НСС.xlsx")]
         GetNssErrors = 10,
+        [Description("Отчёт НСС РКС Пенза (с перерасчётами).zip")]
+        GetNssWithRecalculations = 11,
     }
 }

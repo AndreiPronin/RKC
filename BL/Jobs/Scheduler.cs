@@ -38,7 +38,7 @@ namespace BL.Jobs
                .WithIdentity("jobSendReceipt", "jobSendReceiptGroup")     // идентифицируем триггер с именем и группой
                .StartNow()                            // запуск сразу после начала выполнения
                .WithSimpleSchedule(x => x            // настраиваем выполнение действия
-                   .WithIntervalInHours(3)          // через 6 часов
+                   .WithIntervalInHours(3)          // через 3 часов
                    .RepeatForever())                   // бесконечное повторение
                .Build();                               // создаем триггер
 

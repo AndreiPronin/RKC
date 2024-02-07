@@ -808,12 +808,11 @@ else
                         window.location.reload();
                     } else { alert(data); }
                 },
-                error: function () {
-                    alert("Что то пошло не так. Обратитесь к администратору");
-                    $(".Save").removeClass("hidden");
+                error: function (data) {
+                    alert(data);
                 }
             });
-
+            $(".Save").removeClass("hidden");
         })
         $(".Delete").click(function (e) {
             $(".Delete").addClass("hidden");

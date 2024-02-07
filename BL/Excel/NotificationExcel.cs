@@ -12,17 +12,17 @@ namespace BL.Excel
 {
     public static class  NotificationExcel
     {
-        public static DataTable CreateExcelDuplicatePu(List<DuplicatePu> duplicatePu)
+        public static DataTable CreateExcelDuplicatePu(List<Duplicate> duplicatePu)
         {
 
             DataTable dt = new DataTable("Counter");
-            dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Лицевой счет"),
-                                        new DataColumn("Тип ПУ") });
+            dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Лицевой счет"),
+                                        new DataColumn("Тип ПУ"),new DataColumn("Номер ПУ") });
 
 
             foreach (var Items in duplicatePu)
             {
-                dt.Rows.Add(Items.FULL_LIC, Items.TYPE_PU);
+                dt.Rows.Add(Items.FULL_LIC, Items.TYPE_PU,Items.FACTORY_NUMBER_PU);
             }
             return dt;
         }
@@ -64,7 +64,7 @@ namespace BL.Excel
 
                 foreach (var Items in NotSendReceipts)
                 {
-                    var Dates = new DateTime(DateTime.Now.AddMonths(-1).Year, Items.Month, 1);
+                    var Dates = new DateTime(DateTime.Now.AddMonths(-2).Year, Items.Month, 1);
                     dt.Rows.Add(Items.Lic, Items.Email, Dates.ToString("MMMM yyyy"), Items.DateTimeSend, Items.ErrorDescription, "");
                 }
                 return dt;

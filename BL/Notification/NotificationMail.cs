@@ -20,7 +20,7 @@ namespace BL.Notification
 {
     public interface INotificationMail
     {
-        void SendEmailAsyncDublicatePu(List<DuplicatePu> DuplicatePu);
+        void SendEmailAsyncDublicatePu(List<Duplicate> DuplicatePu);
         void SendEmailAsyncDublicatePers(List<DuplicatePers> DuplicatePu);
         void SendMailReceipt(string FullLic, string Mail);
         void SendMailReceiptDpu(string FullLic, string Mail);
@@ -30,7 +30,7 @@ namespace BL.Notification
     }
     public class NotificationMail : INotificationMail
     {
-        public void SendEmailAsyncDublicatePu(List<DuplicatePu> DuplicatePu)
+        public void SendEmailAsyncDublicatePu(List<Duplicate> DuplicatePu)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {

@@ -34,7 +34,7 @@ namespace RKC.Controllers.api
         [Route("UpdateGuidPuWithGis")]
         public IEnumerable<ConnectPuWithGisResponse> UpdateGuidPuWithGis(IEnumerable<ConnectPuWithGis> model)
         {
-            _Nlogger.Info($"Обновление гуилов ПУ: {new ConvertJson<List<ConnectPuWithGis>>(model.ToList()).ConverModelToJson()}");
+            _Nlogger.Info($"Обновление гуидов ПУ: {new ConvertJson<List<ConnectPuWithGis>>(model.ToList()).ConverModelToJson()}");
             return  _counter.UpdateGuidPuWithGis(model);
          
         }

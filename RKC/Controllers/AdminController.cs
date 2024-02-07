@@ -217,7 +217,9 @@ namespace RKC.Controllers
                     case ApiReportEnums.GetNssErrors:
                         result = await _apiReportService.GetNssErrors(ReportDate.HasValue ? ReportDate.Value : DateTime.Now, file.InputStream, file.FileName);
                         return File(result, "application/octet-stream", ApiReportEnums.GetNssErrors.GetDescription());
-
+                    case ApiReportEnums.GetNssWithRecalculations:
+                        result = await _apiReportService.GetNssWithRecalculations(ReportDate.HasValue ? ReportDate.Value : DateTime.Now, file.InputStream, file.FileName);
+                        return File(result, "application/zip", ApiReportEnums.GetNssWithRecalculations.GetDescription());
                     default:
                         return File(new byte[0], "Ошибка отчет не найде.txt");
                 }

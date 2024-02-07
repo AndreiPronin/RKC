@@ -1,15 +1,18 @@
-﻿
+﻿@using BE.JobManager;
 @{
     ViewBag.Title = "ParilaViewIntegration";
 }
 
 <br />
 <div style="margin-top:30px;" class="row">
-    <div class="col-md-6">
-        <button id="ExaminationPuIsLic" class="btn btn-primary" >Проверка ПУ наличие в лик</button>
+    <div class="col-md-4">
+        <button id="ExaminationPuIsLic" class="btn btn-primary">Проверка ПУ наличие в лик</button>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <button id="ExaminationPersIsLic" class="btn btn-primary">Проверка Перс наличие в лик</button>
+    </div>
+    <div class="col-md-4">
+        <button id="ExaminationDublicateNumberPu" class="btn btn-primary">Проверка дубликатов номеров ПУ</button>
     </div>
 </div>
 <div id="ExaminationResult"></div>
@@ -25,6 +28,17 @@
             $("#ExaminationPersIsLic").addClass("disabled");
             window.location.href = "/PersonalData/ExaminationPersIsLic";
             $("#ExaminationPersIsLic").removeClass("disabled");
+        })
+        $("#ExaminationDublicateNumberPu").click(function (e) {
+            $.ajax({
+                url:  `/api/ApiJob/${@((int)EnumJob.CheckDublicatePuNumberPu)}`,
+                success: function (data) {
+                    alert("Отчет отправлен на почту");
+                    window.location.reload();
+                },
+                error: function () {
+                }
+            });
         })
     });
 </script>

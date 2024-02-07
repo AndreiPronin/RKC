@@ -125,6 +125,7 @@ namespace BL.Counters
         }
         public async Task UpdateReadings(SaveModelIPU saveModelIPU)
         {
+            CheckDublicatePuNumber(saveModelIPU.NumberPU);
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();

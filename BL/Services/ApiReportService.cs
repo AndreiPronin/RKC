@@ -25,6 +25,7 @@ namespace BL.Services
         Task<byte[]> GetInvoices(DateTime period);
         Task<byte[]> GetConsumerData(DateTime period);
         Task<byte[]> GetNssErrors(DateTime period, Stream stream, string fileName);
+        Task<byte[]> GetNssWithRecalculations(DateTime period, Stream stream, string fileName);
     }
     public class ApiReportService : IApiReportService
     {
@@ -139,6 +140,14 @@ namespace BL.Services
             var token = _tokenCreator.CreateTokenReportService();
             var Reuqests = new Reuqest<object>();
             var reult = await Reuqests.UploadFileAndGetFile($"{Url}/api/v1/ExcelReports/GetNssErrors", token, stream, fileName);
+            return reult;
+        }
+        public async Task<byte[]> GetNssWithRecalculations(DateTime period, Stream stream, string fileName)
+        {
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
+            var token = _tokenCreator.CreateTokenReportService();
+            var Reuqests = new Reuqest<object>();
+            var reult = await Reuqests.UploadFileAndGetFile($"{Url}/api/v1/ExcelReports/GetNssWithRecalculations?period={period.ToString("yyyy-MM-dd")}", token, stream, fileName);
             return reult;
         }
     }

@@ -106,7 +106,7 @@ false, false, false, false);
                         };
                         var FIO = Lic.FullName.Trim().Split(' ');
                         var sum = Convert.ToDouble(Lic.ToPay.ToString().Trim().Replace(".", ",")) * 100;
-                        var STR = $@"ST00011|Name=Мордовский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|
+                        var STR = $@"ST00011|Name=Пензенский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|
 BankName=Пензенское отделение № 8624 ПАО 'Сбербанк России' г. Пенза|BIC=045655635|CorrespAcc=30101810000000000635|PayeeINN=6315376946|
 Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValue(1)}|MiddleName={FIO.TryGetValue(2)}
 |PayerAddress={Lic.Street.Trim()}, дом {Lic.Home.Trim()}, кв. {Lic.Flat.Trim()}|Sum={sum}";
@@ -136,7 +136,7 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
                        
                         var FIO1 = Lic.FullName.Trim().Split(' ');
                         var sum1 = Convert.ToDouble(Lic.OneTimePayment.ToString().Trim().Replace(".", ",")) * 100;
-                        var STR1 = $@"ST00011|Name=Мордовский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|
+                        var STR1 = $@"ST00011|Name=Пензенский филиал ПАО 'Т Плюс'|PersonalAcc=40702810748000001123|
 BankName=Пензенское отделение № 8624 ПАО 'Сбербанк России' г. Пенза|BIC=045655635|CorrespAcc=30101810000000000635|PayeeINN=6315376946|
 Category=7|PersAcc={LIC}|LastName={FIO1.TryGetValue(0)}|FitstName={FIO1.TryGetValue(1)}|MiddleName={FIO1.TryGetValue(2)}
 |PayerAddress={Lic.Street.Trim()}, дом {Lic.Home.Trim()}, кв. {Lic.Flat.Trim()}|Sum={sum1}";

@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace DB.Model
 {
-    public class DuplicatePu
+    public class Duplicate
     {
         public string FULL_LIC { get; set; }
         public string TYPE_PU { get; set; }
+        public string FACTORY_NUMBER_PU { get; set; }
     }
+
     public class DuplicatePers
     {
         public string FULL_LIC { get; set; }

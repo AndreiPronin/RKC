@@ -92,10 +92,16 @@
             console.log(e.value.toString().replace(",", "."));
         }
     }
-    let summCourtWork = $("#CourtInstallmentPlan_AmountRestructuring").val() - $("#CourtInstallmentPlan_AmountPaymentRestructuring").val();
-    $("#CourtInstallmentPlan_RemainderAmountPaymentRestructuring").val(summCourtWork);
+   
     $(document).ready(function (e) {
+        let summCourtWork = $("#CourtInstallmentPlan_AmountRestructuring").val() - $("#CourtInstallmentPlan_AmountPaymentRestructuring").val();
+        $("#CourtInstallmentPlan_RemainderAmountPaymentRestructuring").val(summCourtWork);
 
+        $("#CourtInstallmentPlan_AmountRestructuring").on("click keyup change focus " ,function () {
+            let summCourtWork = $("#CourtInstallmentPlan_AmountRestructuring").val() - $("#CourtInstallmentPlan_AmountPaymentRestructuring").val();
+            $("#CourtInstallmentPlan_RemainderAmountPaymentRestructuring").val(summCourtWork);
+        })
+       
         $("#AddInstallmentPayRequisites").click(function (e) {
             var Date = "@DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM")";
             var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";
@@ -131,7 +137,8 @@
                             contentType: 'application/json; charset=utf-8',
                             success: function (data) {
                                 UpdateInstallmentPayRequisites();
-                               
+                                let summCourtWork = $("#CourtInstallmentPlan_RemainderAmountPaymentRestructuring").val() - summa;
+                                $("#CourtInstallmentPlan_RemainderAmountPaymentRestructuring").val(summCourtWork);
                             },
                             error: function () {
                                 alert("Что то пошло не так. Обратитесь к администратору");

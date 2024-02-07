@@ -37,8 +37,8 @@ namespace BL.http
                     var result = await resultPostRequest.Content.ReadAsStringAsync();
                     return result;
                 }
-                throw new Exception();
-                
+                throw new Exception($"Ошибка загруки код ошибки:{resultPostRequest.StatusCode}");
+
             }
         }
         public async Task<string> PostRequestWithTocken(T Model, string Url, string Token)
@@ -55,7 +55,7 @@ namespace BL.http
                     var result = await resultPostRequest.Content.ReadAsStringAsync();
                     return result;
                 }
-                throw new Exception();
+                throw new Exception($"Ошибка загруки код ошибки:{resultPostRequest.StatusCode}");
 
             }
         }
@@ -72,7 +72,7 @@ namespace BL.http
                     byte[] buffer = Encoding.UTF8.GetBytes(result);
                     return buffer;
                 }
-                throw new Exception();
+                throw new Exception($"Ошибка загруки код ошибки:{resultRequest.StatusCode}");
 
             }
         }
@@ -92,7 +92,7 @@ namespace BL.http
                         return ms.ToArray();
                     }
                 }
-                throw new Exception();
+                throw new Exception($"Ошибка загруки код ошибки:{resultRequest.StatusCode}");
 
             }
         }

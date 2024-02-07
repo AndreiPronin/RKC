@@ -12,5 +12,6 @@ namespace BE.JobManager
         CheckDublicatePers = 2,
         SendReceipt = 3,
         SendReceiptDpu = 4,
+        CheckDublicatePuNumberPu = 5,
     }
 }

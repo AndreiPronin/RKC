@@ -124,7 +124,6 @@ D:\Programing\RKC\RKC\bin\System.Web.WebPages.Razor.dll
 D:\Programing\RKC\RKC\bin\WebActivatorEx.dll
 D:\Programing\RKC\RKC\bin\WebGrease.dll
 D:\Programing\RKC\RKC\bin\WordGenerator.dll
-D:\Programing\RKC\RKC\bin\AutoMapper.dll
 D:\Programing\RKC\RKC\bin\NaturalSort.dll
 D:\Programing\RKC\RKC\bin\NLog.dll
 D:\Programing\RKC\RKC\bin\zxing.dll

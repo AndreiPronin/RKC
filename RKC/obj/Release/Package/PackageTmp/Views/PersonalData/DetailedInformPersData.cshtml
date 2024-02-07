@@ -506,7 +506,7 @@ else
                 alert("Превышение количества символов. Длина Имени не должна превышать 30 символов.");
                 return false;
             }
-            if (!$(this).parent().find('#Email').val().includes("@@")) {
+            if (!$(this).parent().find('#Email').val().includes("@@") && $(this).parent().find('#Email').val() != '') {
                 alert('Адрес электронной почты должен содеражть ' + "@@");
                 return false;
             }

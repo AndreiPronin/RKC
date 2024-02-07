@@ -553,7 +553,6 @@ D:\Programing\RKC\RKC\obj\Release\RKC.pdb
 D:\Programing\RKC\RKC\bin\NLog.dll
 D:\Programing\RKC\RKC\bin\NLog.xml
 D:\Programing\RKC\RKC\bin\NaturalSort.dll
-D:\Programing\RKC\RKC\bin\AutoMapper.dll
 D:\Programing\RKC\RKC\bin\IdentityModel.dll
 D:\Programing\RKC\RKC\bin\IdentityServer3.AccessTokenValidation.dll
 D:\Programing\RKC\RKC\bin\IdentityServer3.dll
