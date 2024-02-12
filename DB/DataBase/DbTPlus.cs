@@ -22,6 +22,7 @@ namespace DB.DataBase
         public DbSet<BRAND> BRAND { get; set; }
         public DbSet<MODEL> MODEL { get; set; }
         public DbSet<AddressMKD> addresses { get; set; }
+        public DbSet<FlatMkd> flats { get; set; }
         public DbSet<AddressReadings> addressReadings { get; set; }
         public DbTPlus() : base("T+")
         {

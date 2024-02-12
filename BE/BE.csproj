@@ -49,6 +49,7 @@
     <Compile Include="Counter\Dictionary.cs" />
     <Compile Include="Counter\DIMENSION.cs" />
     <Compile Include="Counter\Enum.cs" />
+    <Compile Include="Counter\IpuGisReading.cs" />
     <Compile Include="Counter\IpuNotFoundInLick.cs" />
     <Compile Include="Counter\ModelAddPU.cs" />
     <Compile Include="Counter\modelUpdatePU.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="DPU\DpuNotAddDb.cs" />
     <Compile Include="DPU\SearchAutocompleteResultDPU.cs" />
     <Compile Include="DPU\SerachAutoCompleteModel.cs" />
+    <Compile Include="http\ResultResponse.cs" />
     <Compile Include="JobManager\EnumJob.cs" />
     <Compile Include="JobManager\MailSend.cs" />
     <Compile Include="JobManager\SendReceiptLic.cs" />

@@ -120,6 +120,7 @@
     <Compile Include="Model\DirectFlat.cs" />
     <Compile Include="Model\DirectMkd.cs" />
     <Compile Include="Model\DpuSendByEmailL.cs" />
+    <Compile Include="Model\FlatMkd.cs" />
     <Compile Include="Model\MODEL.cs" />
     <Compile Include="Model\Court\ReasonsRevokingIDExecution.cs" />
     <Compile Include="Model\DIMENSION.cs" />

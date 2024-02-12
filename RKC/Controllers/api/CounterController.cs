@@ -1,5 +1,7 @@
 ﻿using BE.Counter;
+using BE.http;
 using BL.ApiServices;
+using BL.ApiServices.Counters;
 using BL.Counters;
 using BL.Helper;
 using BL.http;
@@ -42,14 +44,12 @@ namespace RKC.Controllers.api
          
         }
         [JwtAuthentication]
-        [HttpPost]
+        [HttpGet]
         [Route("GetIpuReadingsForGis")]
-        public async Task<IEnumerable<ConnectPuWithGisResponse>> GetIpuReadingsForGis(DateTime period)
+        public async Task<ResultResponse<string, List<IpuGisReading>>> GetIpuReadingsForGis(DateTime period, string lastId = "")
         {
-
-            await _apiCounters.GetIpuReadingsForGis();
-
-            return null;
+            var result = await _apiCounters.GetIpuReadingsForGis(period, lastId);
+            return result;
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using AppCache;
 using BL.ApiT_;
+using BL.ApiServices.Counters;
 using BL.Counters;
 using BL.Excel;
 using BL.Helper;
@@ -8,17 +9,7 @@ using BL.Notification;
 using BL.Security;
 using BL.Service;
 using BL.Services;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Ninject;
-using Ninject.Extensions.Factory;
-using Ninject.Modules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
 using WordGenerator;
 using WordGenerator.interfaces;
 
@@ -59,7 +50,7 @@ namespace BL
 
 
             //API
-            kernel.Bind<IApiReportService>().To<ApiReportService>();
+            kernel.Bind<IApiCounters>().To<ApiCounters>();
 
         }
     }
