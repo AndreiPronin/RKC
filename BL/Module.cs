@@ -56,9 +56,10 @@ namespace BL
             //kernel.Bind<IHttpClientFactory>().ToConstant(hostBuilder.Build().Services.GetService<IHttpClientFactory>());
 
             kernel.Bind<ITokenCreator>().To<TokenCreator>();
-            
 
 
+            //API
+            kernel.Bind<IApiReportService>().To<ApiReportService>();
 
         }
     }

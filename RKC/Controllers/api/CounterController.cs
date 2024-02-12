@@ -1,4 +1,5 @@
 ﻿using BE.Counter;
+using BL.ApiServices;
 using BL.Counters;
 using BL.Helper;
 using BL.http;
@@ -25,9 +26,11 @@ namespace RKC.Controllers.api
     {
         public NLog.Logger _Nlogger = LogManager.GetCurrentClassLogger();
         private readonly ICounter _counter;
-        public CounterController(ICounter counter) 
+        private readonly IApiCounters _apiCounters;
+        public CounterController(ICounter counter, IApiCounters apiCounters) 
         { 
             _counter = counter;
+            _apiCounters = apiCounters;
         }
         [JwtAuthentication]
         [HttpPost]
@@ -35,8 +38,18 @@ namespace RKC.Controllers.api
         public IEnumerable<ConnectPuWithGisResponse> UpdateGuidPuWithGis(IEnumerable<ConnectPuWithGis> model)
         {
             _Nlogger.Info($"Обновление гуидов ПУ: {new ConvertJson<List<ConnectPuWithGis>>(model.ToList()).ConverModelToJson()}");
-            return  _counter.UpdateGuidPuWithGis(model);
+            return _counter.UpdateGuidPuWithGis(model);
          
+        }
+        [JwtAuthentication]
+        [HttpPost]
+        [Route("GetIpuReadingsForGis")]
+        public async Task<IEnumerable<ConnectPuWithGisResponse>> GetIpuReadingsForGis(DateTime period)
+        {
+
+            await _apiCounters.GetIpuReadingsForGis();
+
+            return null;
         }
 
     }

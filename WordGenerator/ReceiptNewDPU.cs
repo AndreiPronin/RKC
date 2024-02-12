@@ -132,7 +132,7 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
                             Height = 500,
                             Margin = 2
                         };
-                        generator.Options = opt;
+                        generator1.Options = opt;
                        
                         var FIO1 = Lic.FullName.Trim().Split(' ');
                         var sum1 = Convert.ToDouble(Lic.OneTimePayment.ToString().Trim().Replace(".", ",")) * 100;
@@ -140,7 +140,7 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
 BankName=Пензенское отделение № 8624 ПАО 'Сбербанк России' г. Пенза|BIC=045655635|CorrespAcc=30101810000000000635|PayeeINN=6315376946|
 Category=7|PersAcc={LIC}|LastName={FIO1.TryGetValue(0)}|FitstName={FIO1.TryGetValue(1)}|MiddleName={FIO1.TryGetValue(2)}
 |PayerAddress={Lic.Street.Trim()}, дом {Lic.Home.Trim()}, кв. {Lic.Flat.Trim()}|Sum={sum1}";
-                        generator.Write(STR1).Save(path + $@"{LIC}_QRNew.png");
+                        generator1.Write(STR1).Save(path + $@"{LIC}_QRNew.png");
                         try
                         {
                             Microsoft.Office.Interop.Word.Range qr = doc.Range(0, 0);

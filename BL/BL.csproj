@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiServices\ApiCounters.cs" />
     <Compile Include="ApiT+\EBD.cs" />
     <Compile Include="Excel\ExcelCourt.cs" />
     <Compile Include="Excel\SqlQuery\Report.cs" />

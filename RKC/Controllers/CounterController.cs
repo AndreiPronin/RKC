@@ -36,11 +36,11 @@ namespace RKC.Controllers
         private readonly ICacheApp _cacheApp;
         private readonly IIntegrations _integration;
         private readonly IExcel _excel;
-        public readonly IFlagsAction _flagsAction;
-        public readonly IDictionary _dictionary;
-        public readonly ISecurityProvider _securityProvider;
-        public readonly IEBD _ebd;
-        public readonly INotificationMail _notificationMail;
+        private readonly IFlagsAction _flagsAction;
+        private readonly IDictionary _dictionary;
+        private readonly ISecurityProvider _securityProvider;
+        private readonly IEBD _ebd;
+        private readonly INotificationMail _notificationMail;
         private readonly IBaseService _baseService;
         private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
         public CounterController(ICounter counter, Ilogger logger, IGeneratorDescriptons generatorDescriptons, 
