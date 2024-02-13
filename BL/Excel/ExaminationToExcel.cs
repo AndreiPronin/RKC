@@ -63,7 +63,7 @@ namespace BL.Excel
             var DB = new DbTPlus();
             using (var DbLIC = new DbLIC())
             {
-                var AllLic = DbLIC.ALL_LICS.Select(x => new {
+                var AllLic = DbLIC.ALL_LICS.Where(x => !x.KW.StartsWith("Н")).Select(x => new {
                     F4ENUMELS = x.F4ENUMELS,
                     FKUB2XVS = x.FKUB2XVS,
                     FKUBSXVS = x.FKUBSXVS,

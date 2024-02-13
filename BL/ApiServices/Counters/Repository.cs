@@ -12,11 +12,11 @@ namespace BL.ApiServices.Counters
 {
     public class Repository
     {
-        protected async Task<List<ALL_LICS_ARCHIVE>> GetALL_LICS_ARCHIVE(DateTime period, string lastLic = "")
+        protected async Task<List<ALL_LICS_ARCHIVE>> GetALL_LICS_ARCHIVE(DateTime period,int? take, string lastLic = "")
         {
             using (var contextAllic = new DbLIC())
             {
-                var Allic = await contextAllic.ALL_LICS_ARCHIVE.Where(x => x.period == period && x.F4ENUMELS.CompareTo(lastLic ?? "") > 0).Take(500).ToListAsync();
+                var Allic = await contextAllic.ALL_LICS_ARCHIVE.Where(x => x.period == period && x.F4ENUMELS.CompareTo(lastLic ?? "") > 0).Take(take ?? 500).ToListAsync();
                 return Allic;
             }
         }
@@ -39,8 +39,8 @@ namespace BL.ApiServices.Counters
             using (var contextTPlus = new DbTPlus())
             {
                 return await contextTPlus.IPU_COUNTERS.Where(x => x.CLOSE_ != true
-                && !x.FACTORY_NUMBER_PU.IsNullOrEmpty()
-                && !x.BRAND_PU.IsNullOrEmpty()
+                && (x.FACTORY_NUMBER_PU != null || x.FACTORY_NUMBER_PU != "")
+                && (x.BRAND_PU != null || x.BRAND_PU != "")
                 && Allic.Contains(x.FULL_LIC)).ToListAsync(); ;
             }
         }

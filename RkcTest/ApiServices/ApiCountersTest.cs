@@ -27,7 +27,7 @@ namespace RkcTest.ApiServices
         public async Task GetIpuReadingsForGisTest()
         {
 
-            var result =   await _apiCounters.GetIpuReadingsForGis(new DateTime(2023, 12, 31), "");
+            var result =   await _apiCounters.GetIpuReadingsForGis(new DateTime(2023, 12, 31),1000, "");
             Assert.IsNotNull(result);
         }
     }

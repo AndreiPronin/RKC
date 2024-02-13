@@ -60,6 +60,7 @@ namespace BL.Excel
                         CourtGeneral.CourtStateDuty = new DB.Model.Court.CourtStateDuty();
                         CourtGeneral.CourtWriteOff = new DB.Model.Court.CourtWriteOff();
                         CourtGeneral.CourtWork = new DB.Model.Court.CourtWork();
+                        CourtGeneral.CourtOwnerInformation = new DB.Model.Court.CourtOwnerInformation();
                         CourtGeneral.Lic = dataRow.Cell(2).Value.TryGetLic();
                         CourtGeneral.Street = dataRow.Cell(3).Value.ToString();
                         CourtGeneral.Home = dataRow.Cell(4).Value.ToString();
