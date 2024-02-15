@@ -1,4 +1,5 @@
 ﻿using AppCache;
+using AutoMapper;
 using BE.Counter;
 using BE.PersData;
 using BL.Counters;
@@ -49,13 +50,15 @@ namespace BL.Excel
         private readonly Ilogger _logger;
         private readonly IDictionary _dictionary;
         private readonly IReport _report;
-        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, IDictionary dictionary,IReport report)
+        private readonly IMapper _mapper;
+        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, IDictionary dictionary,IReport report, IMapper mapper)
         {
             _cacheApp = cacheApp;
             _generatorDescriptons = generatorDescriptons;
             _logger = logger;
             _dictionary = dictionary;
             _report = report;
+            _mapper = mapper;
         }
         public DataTable CreateExcelCounters()
         {
@@ -110,7 +113,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
+            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper);
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
             var dbApp = new ApplicationDbContext();
             var Count = nonEmptyDataRows.Count();
@@ -205,7 +208,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            Counter counter = new Counter(new Logger(), new GeneratorDescriptons());
+            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper);
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
             var dbApp = new ApplicationDbContext();
             var Count = nonEmptyDataRows.Count();
@@ -511,7 +514,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            Counter _counter = new Counter(new Logger(), new GeneratorDescriptons());
+            Counter _counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper);
             List<IPU_COUNTERS> CounterNotClose = new List<IPU_COUNTERS>();
             var DbTPlus = new DbTPlus();
             var Count = nonEmptyDataRows.Count();

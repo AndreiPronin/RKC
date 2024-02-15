@@ -21,6 +21,7 @@ namespace BL.Extention
             result.Fias = address.Fias;
             result.DateCheck = ipuSource.DATE_CHECK;
             result.DateCheckNext = ipuSource.DATE_CHECK_NEXT;
+            result.InstallationDate = ipuSource.INSTALLATIONDATE;
             result.Address = address.CityType + " " + address.City + ", " + address.Street + " "
                 + address.StreetType + ", " + address.HouseType + " " + address.House + address.Building;
 

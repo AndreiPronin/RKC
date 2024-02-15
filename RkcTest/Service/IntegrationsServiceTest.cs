@@ -1,10 +1,12 @@
 ﻿using AppCache;
+using AutoMapper;
 using BL;
 using BL.Counters;
 using BL.Notification;
 using BL.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
+using RKC.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +21,20 @@ namespace RkcTest.Service
         private readonly ICacheApp _cacheApp;
         private readonly INotificationMail _notificationMail;
         private readonly ICounter _counter;
+        private readonly IMapper _mapper;
         public IntegrationsServiceTest() {
             var Kernel = new StandardKernel();
             Module.RegistrationService(Kernel);
+            new AutoMapperModule().RegisterServices(Kernel);
             _cacheApp = Kernel.Get<ICacheApp>();
             _notificationMail = Kernel.Get<INotificationMail>();
             _counter = Kernel.Get<ICounter>();
+            _mapper = Kernel.Get<IMapper>();
         }
         [TestMethod]
         public async Task LoadReadingsTestAsync()
         {
-            var integrationsTest = new Integrations();
+            var integrationsTest = new Integrations(_mapper);
             await integrationsTest.LoadReadings("NunitTest", _cacheApp, new DateTime(2024, 1, 15), _notificationMail, _counter, "", new DateTime(2024, 1, 15));
         }
     }

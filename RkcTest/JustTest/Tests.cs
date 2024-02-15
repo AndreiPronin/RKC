@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RkcTest.JustTest
@@ -15,7 +16,15 @@ namespace RkcTest.JustTest
         [TestMethod]
         public void HashSetTest()
         {
-            using(var context = new DbTPlus())
+            var tasks = Task.Run(() =>
+            {
+                Console.WriteLine("11111");
+                Thread.Sleep(1000);
+                Console.WriteLine("22222");
+            });
+            tasks.Wait();
+            Console.WriteLine("00000");
+            using (var context = new DbTPlus())
             {
                 var counters = context.IPU_COUNTERS.ToList();
                 var watcher1 = new Stopwatch();

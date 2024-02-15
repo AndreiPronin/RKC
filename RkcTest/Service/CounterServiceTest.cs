@@ -9,6 +9,8 @@ using RKC.App_Start;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using Moq;
+using AutoMapper;
+using BL;
 
 namespace RkcTest.Service
 {
@@ -18,8 +20,10 @@ namespace RkcTest.Service
         Counter Counter { get; set; }
         public CounterServiceTest()
         {
-            var kernel = NinjectWebCommon.CreateKernel();
-            Counter = new Counter(kernel.Get<Ilogger>(), kernel.Get<IGeneratorDescriptons>());
+            var kernel = new StandardKernel(); ;
+            Module.RegistrationService(kernel);
+            new AutoMapperModule().RegisterServices(kernel);
+            Counter = new Counter(kernel.Get<Ilogger>(), kernel.Get<IGeneratorDescriptons>(), kernel.Get<IMapper>());
         }
         [TestMethod]
         public async Task DetailInfromsAllAsync()
@@ -46,6 +50,18 @@ namespace RkcTest.Service
             await Task.CompletedTask;
             var res = Counter.GetStatusCloseOpenLic("702019511");
             Assert.IsFalse(res);
+        }
+        [TestMethod]
+        public async Task GetRecalculations_Test()
+        {
+            try
+            {
+                var res = await Counter.GetRecalculations("719059628");
+                Assert.IsNotNull(res);
+            }catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+            }
         }
     }
 }

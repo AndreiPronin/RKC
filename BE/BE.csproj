@@ -53,6 +53,7 @@
     <Compile Include="Counter\IpuNotFoundInLick.cs" />
     <Compile Include="Counter\ModelAddPU.cs" />
     <Compile Include="Counter\modelUpdatePU.cs" />
+    <Compile Include="Counter\Recalculations.cs" />
     <Compile Include="Counter\SaveModelIPU.cs" />
     <Compile Include="Counter\SearchIPU_LICModel.cs" />
     <Compile Include="Court\ChangedValues.cs" />

@@ -364,5 +364,12 @@ namespace RKC.Controllers
             }
             return Resposne.CreateResponse200();
         }
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.ShowNoteLic)]
+        public async Task<ActionResult> HistoryRecalculationView(string FullLic)
+        {
+            ViewBag.LIC = FullLic;
+            var result = await _counter.GetRecalculations(FullLic);
+            return View(result);
+        }
     }
 }

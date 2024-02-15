@@ -232,11 +232,11 @@ namespace BL.Excel
                         if (dataRow.Cell(2).Value != "")
                         {
                             var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 1).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[0]?.Trim() == dataRow.Cell(2).Value.ToString());
-                            if (dataRow.Cell(2).Value != "" && CourtName?.Name?.Split('|')[0] == CourtGeneral.CourtWork.NameCourt)
+                            if (dataRow.Cell(2).Value != "" && CourtName is null)
                                 exceptions.Append("Наименование суда не найдена в справочнике" + Environment.NewLine);
                             else
                             {
-                                if (dataRow.Cell(2).Value != "" && CourtGeneral.CourtWork.NameCourt != dataRow.Cell(2).Value.ToString())
+                                if (dataRow.Cell(2).Value != "" && CourtGeneral.CourtWork.NameCourt != CourtName.Name.Split('|')[0])
                                 {
                                     CourtGeneral.CourtWork.NameCourt = CourtName.Name.Split('|')[0];
                                     CourtGeneral.CourtWork.AddressCourt = CourtName.Name.Split('|')[1];
@@ -270,11 +270,11 @@ namespace BL.Excel
                         {
                             var xxx = dataRow.Cell(12).Value.ToString();
                             var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 4).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(12).Value.ToString());
-                            if (dataRow.Cell(12).Value != "" && CourtName?.Name?.Split('|')[1] == CourtGeneral.CourtExecutionFSSP.SatyaEndingIP)
+                            if (dataRow.Cell(12).Value != "" && CourtName is null)
                                 exceptions.Append("Статья окончания ИП1 не найдена в справочнике" + Environment.NewLine);
                             else
                             {
-                                if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtExecutionFSSP.SatyaEndingIP != dataRow.Cell(12).Value.ToString())
+                                if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtExecutionFSSP.SatyaEndingIP != CourtName.Name.Split('|')[1])
                                 {
                                     CourtGeneral.CourtExecutionFSSP.GroundsEndingIP = CourtName.Name.Split('|')[0];
                                     CourtGeneral.CourtExecutionFSSP.SatyaEndingIP = CourtName.Name.Split('|')[1];

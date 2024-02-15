@@ -139,6 +139,7 @@
     <Compile Include="Model\Payment.cs" />
     <Compile Include="Model\PersData.cs" />
     <Compile Include="Model\PersonalInformation.cs" />
+    <Compile Include="Model\Recalculations.cs" />
     <Compile Include="Model\ReceiptNotSend.cs" />
     <Compile Include="Model\Reports.cs" />
     <Compile Include="Model\Settings.cs" />

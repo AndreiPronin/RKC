@@ -531,6 +531,7 @@ namespace RKC.Controllers
                 }
             }
         }
+       
         public async Task<ActionResult> GetDictionatyOption(int? Id, string Text, string Type, string TypePU)
         {
             var Result = await _dictionary.GetDictionary(Id, Text, Type, TypePU);

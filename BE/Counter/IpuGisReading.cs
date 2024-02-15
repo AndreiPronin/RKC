@@ -24,6 +24,7 @@ namespace BE.Counter
         public string ServiceType { get; set; }
         public decimal? FinalReadings { get; set; }
         public string Dimension { get; set; }
+        public DateTime? InstallationDate { get; set; }
 
         public IpuGisReading()
         {

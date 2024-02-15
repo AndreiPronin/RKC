@@ -16,7 +16,11 @@ namespace BL.ApiServices.Counters
         {
             using (var contextAllic = new DbLIC())
             {
-                var Allic = await contextAllic.ALL_LICS_ARCHIVE.Where(x => x.period == period && x.F4ENUMELS.CompareTo(lastLic ?? "") > 0).Take(take ?? 500).ToListAsync();
+                var Allic = await contextAllic.ALL_LICS_ARCHIVE
+                    .Where(x => x.period == period && x.F4ENUMELS.CompareTo(lastLic ?? "") > 0)
+                    .OrderBy(x=>x.F4ENUMELS)
+                    .Take(take ?? 500)
+                    .ToListAsync();
                 return Allic;
             }
         }

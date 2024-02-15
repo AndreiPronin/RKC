@@ -11,6 +11,9 @@ namespace DB.DataBase
         public DbSet<ALL_LICS> ALL_LICS { get; set; }
         public DbSet<KVIT> KVIT { get; set; }
         public DbSet<FlatTypeDto> FlatTypes { get; set; }
+        public DbSet<Recalculations> Recalculations { get; set; }
+        public DbSet<RecalculationReason> RecalculationReason { get; set; }
+        public DbSet<Service> Service { get; set; }
         public DbLIC() : base("DBF_SQL")
         {
         }

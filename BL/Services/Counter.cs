@@ -13,6 +13,7 @@ using BL.Services;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DB.Extention;
 using System.Security.Policy;
+using AutoMapper;
 
 namespace BL.Counters
 {
@@ -34,15 +35,18 @@ namespace BL.Counters
         List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC);
         IEnumerable<ConnectPuWithGisResponse> UpdateGuidPuWithGis(IEnumerable<ConnectPuWithGis> connectPuWithGis);
         IPU_COUNTERS GetInfoPU(string FULL_LIC, string TYPE_PU, bool Close = false);
+        Task<List<BE.Counter.Recalculations>> GetRecalculations(string FullLic);
     }
     public class Counter :BaseService, ICounter
     {
         private readonly Ilogger logger;
         private readonly IGeneratorDescriptons _generatorDescriptons;
-        public Counter(Ilogger loggers, IGeneratorDescriptons generatorDescriptons)
+        private readonly IMapper _mapper;
+        public Counter(Ilogger loggers, IGeneratorDescriptons generatorDescriptons, IMapper mapper)
         {
             logger = loggers;
             _generatorDescriptons = generatorDescriptons;
+            _mapper = mapper;
         }
         public List<ALL_LICS> SearchIPU_LIC(SearchIPU_LICModel searchModel)
         {
@@ -502,6 +506,16 @@ namespace BL.Counters
                 }
             }
             return connectPuWithGisResponses;
+        }
+        public async Task<List<BE.Counter.Recalculations>> GetRecalculations(string FullLic)
+        {
+            using(var dbContext = new DbLIC())
+            {
+                var result = await dbContext.Recalculations.Where(x=>x.FullLic == FullLic)
+                    .Include(x=>x.RecalculationReason)
+                    .Include(x=>x.Service).OrderByDescending(x=>x.Period).ToListAsync();
+                return _mapper.Map<List<BE.Counter.Recalculations>>(result);
+            }
         }
     }
 }

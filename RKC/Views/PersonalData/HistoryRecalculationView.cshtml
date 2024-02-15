@@ -1,0 +1,111 @@
+﻿@model IEnumerable<BE.Counter.Recalculations>
+@{
+    ViewBag.Title = "История перерасчетов";
+}
+<script>
+    'use strict'
+    window.onload = function () {
+        var tableCont = document.querySelector('#table-cont')
+
+        function scrollHandle(e) {
+            var scrollTop = this.scrollTop;
+            this.querySelector('tbody').style.transform = 'translateY(' + scrollTop + 'px)';
+        }
+
+        tableCont.addEventListener('scroll', scrollHandle)
+    }
+</script>
+<style>
+    .container {
+        width: 95% !important;
+    }
+    .table-cont {
+        max-height: 1200px;
+        overflow-x: auto;
+    }
+</style>
+<button id="ClosePage" class="btn btn-success">Закрыть страницу</button>
+<h2>История перерасчетов</h2>
+@if (Model.Count() > 0)
+{
+    <div class="row">
+        <div class="col-md-12 text-center font-weight-bold">История перерасчетов по лицевому счету № @ViewBag.LIC</div>
+        <br />
+
+    </div>
+    <div class='table-cont' id='table-cont'>
+        <table class="table table-bordered">
+            <tbody style="background-color:white">
+                <tr>
+                    <td class="text-center font-weight-bold" scope="col">Период перерасчета</td>
+                    <td class="text-center font-weight-bold" scope="col">Интервал перерасчета</td>
+                    <td class="text-center font-weight-bold" scope="col">Услуга</td>
+                    <td class="text-center font-weight-bold" scope="col">Причина</td>
+                    <td class="text-center font-weight-bold" scope="col">Сумма</td>
+                    <td class="text-center font-weight-bold" scope="col">Примечание</td>
+                </tr>
+            </tbody>
+            <tbody>
+                @foreach (var Items in Model.GroupBy(x => x.Period).ToList())
+                {
+
+                    <tr class="text-center">
+                        <td rowspan="@Items.Count()" style=" white-space: pre;">@Items.FirstOrDefault().Period.ToString("MM.yyyy")</td>
+                        <td style=" white-space: pre;">с @Items.FirstOrDefault().RecalculationBeginPeriod.ToString("dd.MM.yyyy") по @Items.FirstOrDefault().RecalculationEndPeriod.ToString("dd.MM.yyyy")</td>
+                        <td style=" white-space: pre;">@Items.FirstOrDefault().Service.Name</td>
+                        <td style=" white-space: pre;">@Items.FirstOrDefault().RecalculationReason.Description</td>
+                        <td style=" white-space: pre;">@Items.FirstOrDefault().RecalculationValue</td>
+                        <td style=" white-space: pre;">@Items.FirstOrDefault().Comment</td>
+                    </tr>
+                    if (Items.Count() > 1)
+                    {
+                        <tr class="text-center">
+                            @foreach (var item in Items.Skip(1))
+                            {
+                                <td style=" white-space: pre;">с @item.RecalculationBeginPeriod.ToString("dd.MM.yyyy") по @item.RecalculationEndPeriod.ToString("dd.MM.yyyy")</td>
+                                <td style=" white-space: pre;">@item.Service.Name</td>
+                                <td style=" white-space: pre;">@item.RecalculationReason.Description</td>
+                                <td style=" white-space: pre;">@item.RecalculationValue</td>
+                                <td style=" white-space: pre;">@item.Comment</td>
+                            }
+                        </tr>
+                    }
+
+                }
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <br />
+}
+else
+{ <h1>Ничего не найдено по лицевому счету № @ViewBag.LIC </h1>}
+
+<script>
+
+    function Loader() {
+        $(".loader").addClass("hidden");
+    }
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+    $(document).ready(function (e) {
+        setTimeout(Loader, 1000);
+        $("#ClosePage").click(function () {
+            window.close();
+        })
+    });
+</script>
+

@@ -207,7 +207,7 @@ namespace BL.Services
         {
             using (var dbApp = new ApplicationDbContext())
             {
-                var result = dbApp.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView).ToList();
+                var result = dbApp.Database.SqlQuery<DPUHelpCalculationInstallationView>(QueryDpu.SqlDPUHelpCalcuLationInstallationView + $@" where NewFullLic = '{FullLic}'").ToList();
                 await Task.CompletedTask;
                 var results = result.Where(x => x.Period >= DateFrom && x.Period <= DateTo && x.NewFullLic == FullLic).OrderBy(x=>x.Period).ToList();
                 foreach(var Item in results)
