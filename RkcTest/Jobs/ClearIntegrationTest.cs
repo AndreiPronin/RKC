@@ -22,7 +22,7 @@ namespace RkcTest.Jobs
         [TestMethod]
         public void EmailSenderMethodTest()
         {
-            var JobEmailSender = new JobEmailSender();
+            var JobEmailSender = new JobCheckEmailSender();
             JobEmailSender.Execute(new Mock<IJobExecutionContext>().Object);
         }
     }

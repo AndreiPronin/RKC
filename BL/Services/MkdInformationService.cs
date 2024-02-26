@@ -2,6 +2,7 @@
 using BE.Counter;
 using BE.MkdInformation;
 using DB.DataBase;
+using DB.FunctionModel;
 using DB.Model;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,15 @@ namespace BL.Services
         List<AddressMKD> SearchMkd(SearchModel searchModel);
         MainInformationModel GetAddressMKD(int Id);
         HistoryOdpuModel GetHistoryOdpu(int Id, DateTime DateFrom, DateTime DateTo);
+        List<RecalculationsForMKDByCadrBe> HistoryRecalculation(int AddressId);
     }
     public class MkdInformationService : IMkdInformationService
     {
+        private readonly IMapper _mapper;
+        public MkdInformationService(IMapper mapper) 
+        {
+            _mapper = mapper;
+        }
         public List<AddressMKD> SearchMkd(SearchModel searchModel)
         {
             using (var db = new DbTPlus())
@@ -87,6 +94,15 @@ namespace BL.Services
                 history.addressReadings = mapper.Map<List<AddressReadingsBe>>(resultAdressReadings);
               
                 return history;
+            }
+        }
+
+        public List<RecalculationsForMKDByCadrBe> HistoryRecalculation(int AddressId)
+        {
+            using(var db = new DbTPlus())
+            {
+                var result = db.Database.SqlQuery<RecalculationsForMKDByCadr>($"select * from [dbo].[GetRecalculationsForMKDByCadr]('{AddressId}')").ToList();
+                return _mapper.Map<List<RecalculationsForMKDByCadrBe>>(result);
             }
         }
     }

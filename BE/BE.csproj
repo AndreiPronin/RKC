@@ -88,6 +88,7 @@
     <Compile Include="MkdInformation\AddressReadings.cs" />
     <Compile Include="MkdInformation\HistoryOdpuModel.cs" />
     <Compile Include="MkdInformation\MainInformationModel.cs" />
+    <Compile Include="MkdInformation\RecalculationsForMKDByCadrBe.cs" />
     <Compile Include="MkdInformation\SearchModel.cs" />
     <Compile Include="Report\EnumsReport.cs" />
     <Compile Include="SocialHiringData\HelpCalculationsModel.cs" />

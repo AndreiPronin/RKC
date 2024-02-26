@@ -727,6 +727,7 @@
     <Content Include="Views\PersonalData\NotSendReceipt.cshtml" />
     <Content Include="Views\Court\PartialCourtOwnerInformation.cshtml" />
     <Content Include="Views\PersonalData\HistoryRecalculationView.cshtml" />
+    <Content Include="Views\MKD\HistoryRecalculationView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

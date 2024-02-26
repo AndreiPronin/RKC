@@ -15,6 +15,8 @@ namespace BL.Jobs
 
     public static class Scheduler
     {
+        // Run every 2 minutes
+        const string cronCheck = @"0 0 * ? * *";
         //static Logger logger = LogManager.GetCurrentClassLogger();
         public static async Task Start()
         {
@@ -24,7 +26,7 @@ namespace BL.Jobs
 
             IJobDetail personalReceiptTrySend = JobBuilder.Create<JobSendReceipt>().Build();
 
-            IJobDetail jobSendReceipt = JobBuilder.Create<JobEmailSender>().Build();
+            IJobDetail jobCheckSendReceipt = JobBuilder.Create<JobCheckEmailSender>().Build();
             IJobDetail jobClearIntegration = JobBuilder.Create<ClearIntegration>().Build();
 
             ITrigger trigger = TriggerBuilder.Create()  // создаем триггер
@@ -34,12 +36,9 @@ namespace BL.Jobs
                     .WithIntervalInMinutes(10)         // через 6 часов
                     .RepeatForever())                   // бесконечное повторение
                 .Build();                               // создаем триггер
-            ITrigger triggerSendReceipt = TriggerBuilder.Create()  // создаем триггер
+            ITrigger triggerCheckSendReceipt = TriggerBuilder.Create()  // создаем триггер
                .WithIdentity("jobSendReceipt", "jobSendReceiptGroup")     // идентифицируем триггер с именем и группой
-               .StartNow()                            // запуск сразу после начала выполнения
-               .WithSimpleSchedule(x => x            // настраиваем выполнение действия
-                   .WithIntervalInHours(3)          // через 3 часов
-                   .RepeatForever())                   // бесконечное повторение
+               .WithCronSchedule(cronCheck)
                .Build();                               // создаем триггер
 
             ITrigger triggerRemoveOldIntegration = TriggerBuilder.Create()  // создаем триггер
@@ -51,7 +50,7 @@ namespace BL.Jobs
                .Build();                               // создаем триггер
 
             scheduler.ScheduleJob(personalReceiptTrySend, trigger);        // начинаем выполнение работы
-            scheduler.ScheduleJob(jobSendReceipt, triggerSendReceipt);        // начинаем выполнение работы
+            scheduler.ScheduleJob(jobCheckSendReceipt, triggerCheckSendReceipt);        // начинаем выполнение работы
 
             scheduler.ScheduleJob(jobClearIntegration, triggerRemoveOldIntegration);        // начинаем выполнение работы
 

@@ -84,6 +84,7 @@
     <Compile Include="Jobs\ClearIntegration.cs" />
     <Compile Include="Loggers\ShedulerLogger.cs" />
     <Compile Include="MapperProfile\CourtProfile.cs" />
+    <Compile Include="MapperProfile\MkdProfile.cs" />
     <Compile Include="MapperProfile\RecalculationsProfile.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Notification\NotificationMail.cs" />

@@ -24,6 +24,18 @@ namespace BL.ApiServices.Counters
                 return Allic;
             }
         }
+        protected async Task<List<ALL_LICS>> GetALL_LICS( int? take, string lastLic = "")
+        {
+            using (var contextAllic = new DbLIC())
+            {
+                var Allic = await contextAllic.ALL_LICS
+                    .Where(x => x.F4ENUMELS.CompareTo(lastLic ?? "") > 0)
+                    .OrderBy(x => x.F4ENUMELS)
+                    .Take(take ?? 500)
+                    .ToListAsync();
+                return Allic;
+            }
+        }
         protected async Task<List<AddressMKD>> getAddressMKD(List<int> cadr)
         {
             using (var contextTPlus = new DbTPlus())

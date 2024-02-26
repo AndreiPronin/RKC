@@ -36,5 +36,11 @@ namespace RKC.Controllers
             var result = _mkdInformationService.GetHistoryOdpu(Id,DateFrom,DateTo);
             return View(result);
         }
+        public ActionResult HistoryRecalculationView(int AddressId, string Address)
+        {
+            ViewBag.Address = Address;
+            var result = _mkdInformationService.HistoryRecalculation(AddressId);
+            return View(result);
+        }
     }
 }

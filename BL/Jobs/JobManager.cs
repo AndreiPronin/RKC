@@ -26,7 +26,7 @@ namespace BL.Jobs
         void CheckDublicatePu();
         void  CheckDublicatePuNumber();
         void CheckDublicatePers();
-        void SendReceipt(string FullLic = "");
+        void SendReceipt(string FullLic = "", DateTime? date = null);
         void SendReceiptDpu(string FullLic = "");
     }
     public class JobManager : IJobManager
@@ -101,7 +101,7 @@ namespace BL.Jobs
                 }
             }
         }
-        public void SendReceipt(string FullLic = "")
+        public void SendReceipt(string FullLic = "", DateTime? date = null)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -137,7 +137,7 @@ namespace BL.Jobs
                             {
                                 if (Items != null)
                                 {
-                                    if (!File.Exists($@"{AppDomain.CurrentDomain.BaseDirectory}Template\Kvit\{DateTime.Now.AddMonths(-1):MMMM-yyyy}\Квитанция {FullLic} {DateTime.Now.AddMonths(-1).Month}.pdf"))
+                                    if (!File.Exists($@"{AppDomain.CurrentDomain.BaseDirectory}Template\Kvit\{ DateTime.Now.AddMonths(-1):MMMM-yyyy}\Квитанция {FullLic} {DateTime.Now.AddMonths(-1).Month}.pdf"))
                                     {
                                         Recept.Generate(Items.Lic, DateTime.Now.AddMonths(-1));
                                         if (string.IsNullOrEmpty(Items.Email))

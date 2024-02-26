@@ -59,6 +59,7 @@
     <Compile Include="DataBase\DbTPlus.cs" />
     <Compile Include="DataBase\DbLIC.cs" />
     <Compile Include="Extention\FilterExtenstions.cs" />
+    <Compile Include="FunctionModel\RecalculationsForMKDByCadr.cs" />
     <Compile Include="Migrations\202309201727131_init.cs" />
     <Compile Include="Migrations\202309201727131_init.designer.cs">
       <DependentUpon>202309201727131_init.cs</DependentUpon>

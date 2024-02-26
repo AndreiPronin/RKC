@@ -11,7 +11,7 @@ using WordGenerator;
 
 namespace BL.Jobs
 {
-    public class JobEmailSender : IJob
+    public class JobCheckEmailSender : IJob
     {
         public void Execute(IJobExecutionContext context)
         {

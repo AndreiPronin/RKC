@@ -216,22 +216,28 @@
                                 @if (User.IsInRole(BE.Roles.RolesEnums.ShowNoteLic))
                                 {
                                     <li class="nav-item">
-                                        <a  style="cursor:pointer" class="nav-link Note" data-toggle="modal" data-target="#ShowNoteAllicModal">Примечания</a>
+                                        <a style="cursor:pointer" class="nav-link Note" data-toggle="modal" data-target="#ShowNoteAllicModal">Примечания</a>
                                     </li>
                                 }
+                                @if (User.IsInRole(BE.Roles.RolesEnums.ShowNoteLic))
+                                {
                                 <li class="nav-item">
-                                    <a  style="cursor:pointer" class=" PaymentHistory">История оплат</a>
+                                    <a style="cursor:pointer" class=" HistoryRecalculation">История перерасчетов</a>
+                                </li>
+                                }
+                                <li class="nav-item">
+                                    <a style="cursor:pointer" class=" PaymentHistory">История оплат</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a  style="cursor:pointer" class=" ReadingsHistory">История показаний</a>
+                                    <a style="cursor:pointer" class=" ReadingsHistory">История показаний</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a  style="cursor:pointer" class="nav-link ShowAllDocument" data-toggle="modal" data-target="#ShowAllDocumentModal">Документы</a>
+                                    <a style="cursor:pointer" class="nav-link ShowAllDocument" data-toggle="modal" data-target="#ShowAllDocumentModal">Документы</a>
                                 </li>
                                 @if (User.IsInRole("DownLoadReceipt") || User.IsInRole("Admin"))
                                 {
                                     <li class="nav-item">
-                                         <a  style="cursor:pointer" class=" DownLoadReceipt">Квитанция</a>
+                                        <a style="cursor:pointer" class=" DownLoadReceipt">Квитанция</a>
                                     </li>
                                 }
                             </ul>
@@ -459,6 +465,22 @@ else
                 buttons: {
                     "Просмотреть": function () {
                         window.open('/PersonalData/PaymentHistoryView?FullLic=' + @ViewBag.FULL_LIC,'_blank');
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+        });
+        $(".HistoryRecalculation").click(function (e) {
+            $.confirm({
+                title: 'История перерасчетов',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '</form>',
+                buttons: {
+                    "Просмотреть": function () {
+                        window.open('/PersonalData/HistoryRecalculationView?FullLic=' + @ViewBag.FULL_LIC,'_blank');
                     },
                     "Отмена": function () {
 
