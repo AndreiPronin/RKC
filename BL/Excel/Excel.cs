@@ -34,6 +34,7 @@ namespace BL.Excel
         DataTable LoadExcelNewPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelNewPersonalData(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelUpdatePersonalDataMain(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        Task<DataTable> LoadExcelArrayCloseLicAsync(XLWorkbook Excels, string User, ICacheApp cacheApp);
         Task<DataTable> MassClosePU(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelSquarePersProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable ErroIntegratin();
@@ -42,6 +43,7 @@ namespace BL.Excel
         DataTable LoadExcelUpdatePersonalDataMainFio(XLWorkbook Excels, string User, ICacheApp cacheApp);
         XLWorkbook SummaryReportGVS(XLWorkbook Excels, string User, ICacheApp cacheApp);
         XLWorkbook SummaryReportOTP(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        
     }
     public class Excel:IExcel
     {
@@ -51,7 +53,10 @@ namespace BL.Excel
         private readonly IDictionary _dictionary;
         private readonly IReport _report;
         private readonly IMapper _mapper;
-        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, IDictionary dictionary,IReport report, IMapper mapper)
+        private readonly ICounter _counter;
+        private readonly IPersonalData _personalData;
+        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, IDictionary dictionary,IReport report, 
+            IMapper mapper, ICounter counter, IPersonalData personalData)
         {
             _cacheApp = cacheApp;
             _generatorDescriptons = generatorDescriptons;
@@ -59,6 +64,8 @@ namespace BL.Excel
             _dictionary = dictionary;
             _report = report;
             _mapper = mapper;
+            _counter = counter;
+            _personalData = personalData;
         }
         public DataTable CreateExcelCounters()
         {
@@ -425,6 +432,46 @@ namespace BL.Excel
             foreach (var Items in PersNotAdded)
             {
                 dt.Rows.Add(Items.Lic, Items.Comment);
+            }
+            return dt;
+        }
+        public async Task<DataTable> LoadExcelArrayCloseLicAsync(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User + "_", "0");
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+          
+            List<MassCloseLicReport> massCloseLicReports = new List<MassCloseLicReport>();
+            var Count = nonEmptyDataRows.Count();
+            int i = 1;
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    i++;
+                    try
+                    {
+                        var Procent = Math.Round((float)i / Count * 100, 0);
+                        cacheApp.UpdateProgress(User, Procent.ToString());
+
+                        var Lic = dataRow.Cell(1).Value == "" ? null : Convert.ToString(dataRow.Cell(1).Value).Trim();
+                        await _personalData.CloseLicAsync(Lic, "", _counter, User);
+                        massCloseLicReports.Add(new MassCloseLicReport { Id = $"{Lic}", Description = "Закрыт успешно" });
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.InnerException != null)
+                            massCloseLicReports.Add(new MassCloseLicReport { Id = $"Ошибка на {i} строке", Description = ex.InnerException?.Message });
+                        else
+                            massCloseLicReports.Add(new MassCloseLicReport { Id = $"Ошибка на {i} строке", Description = ex.Message });
+                    }
+                }
+            }
+            DataTable dt = new DataTable("ClosLic");
+            dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Лицевой счет"),
+                                        new DataColumn("Примечание")});
+            foreach (var Items in massCloseLicReports)
+            {
+                dt.Rows.Add(Items.Id, Items.Description);
             }
             return dt;
         }

@@ -26,8 +26,13 @@ namespace RkcTest.ApiServices
         [TestMethod]
         public async Task GetIpuReadingsForGisTest()
         {
-
             var result =   await _apiCounters.GetIpuReadingsForGis(new DateTime(2023, 12, 31),1000, "");
+            Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        public async Task GetIpuReadingsForGisActiveTest()
+        {
+            var result = await _apiCounters.GetIpuReadingsForGisActive( 1000, "");
             Assert.IsNotNull(result);
         }
     }

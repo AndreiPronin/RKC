@@ -51,6 +51,7 @@
     <Compile Include="Counter\Enum.cs" />
     <Compile Include="Counter\IpuGisReading.cs" />
     <Compile Include="Counter\IpuNotFoundInLick.cs" />
+    <Compile Include="Counter\MassCloseLicReport.cs" />
     <Compile Include="Counter\ModelAddPU.cs" />
     <Compile Include="Counter\modelUpdatePU.cs" />
     <Compile Include="Counter\Recalculations.cs" />

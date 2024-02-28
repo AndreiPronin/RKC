@@ -73,6 +73,7 @@ namespace DB.Model
         public DateTime? OPERATOR_CLOSE_DATE { get; set; }
         public double? OPERATOR_CLOSE_READINGS { get; set; }
         public int? DIMENSION_ID { get;set;}
+        public DateTime? LastReadingDate { get; set; }
         public Guid? MeteringDeviceVersionGUID { get; set; }
         /// <summary>
         /// Номер прибора учета в ГИС ЖКХ

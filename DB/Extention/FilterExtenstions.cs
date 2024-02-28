@@ -19,8 +19,9 @@ namespace DB.Extention
                 var setting = context.Settings.Where(x => x.Key == "IntegrationReadings").FirstOrDefault();
                 foreach(var Item in setting?.Value.Split(';'))
                 {
-                    if (!string.IsNullOrEmpty(Item))
-                        query = query.Where(x=>!x.Description.Contains(Item));
+                    var value = Item.Trim();
+                    if (!string.IsNullOrEmpty(value))
+                        query = query.Where(x=>!x.Description.Trim().Contains(value));
                 }
                 return query;
             }

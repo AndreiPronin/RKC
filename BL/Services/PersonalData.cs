@@ -1,4 +1,5 @@
-﻿using BE.PersData;
+﻿using BE.Counter;
+using BE.PersData;
 using BL.Counters;
 using BL.Excel;
 using BL.Extention;
@@ -38,12 +39,13 @@ namespace BL.Services
         string GetRoomTypeMain(string Full_Lic);
         List<Payment> GetPaymentHistory(string Full_Lic);
         List<Payment> GetReadingsHistory(string Full_Lic);
-        void CloseLic(string FullLic, ICounter _counter);
+        void CloseLic(string FullLic, ICounter _counter, string User);
         void OpenLic(string FullLic);
         List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr,string Full_Lic);
         void UpdateSquareFlat(double? Square, string Lic);
         void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User);
         void SavePersonalDataFioLic(PersDataModel persDataModel);
+        Task CloseLicAsync(string FullLic, string Description, ICounter _counter, string User);
     }
     public class PersonalData : BaseService, IPersonalData
     {
@@ -404,8 +406,8 @@ namespace BL.Services
                 PersData.MiddleName = persDataModel.MiddleName == null ? PersData.MiddleName : persDataModel.MiddleName;
                 PersData.NumberOfPersons = persDataModel.NumberOfPersons == null ? PersData.NumberOfPersons : persDataModel.NumberOfPersons;
                 PersData.PassportDate = persDataModel.PassportDate == null ? PersData.PassportDate : persDataModel.PassportDate;
-                PersData.PassportIssued = persDataModel.PassportIssued == null ? PersData.PassportIssued : persDataModel.PassportIssued;
-                PersData.PassportNumber = persDataModel.PassportNumber == null ? PersData.PassportNumber : persDataModel.PassportNumber;
+                PersData.PassportIssued = string.IsNullOrEmpty(persDataModel.PassportIssued) ? PersData.PassportIssued : persDataModel.PassportIssued;
+                PersData.PassportNumber = string.IsNullOrEmpty(persDataModel.PassportNumber) ? PersData.PassportNumber : persDataModel.PassportNumber;
                 PersData.PassportSerial = string.IsNullOrEmpty(persDataModel.PassportSerial) ? PersData.PassportSerial : persDataModel.PassportSerial;
                 PersData.PlaceOfBirth = string.IsNullOrEmpty(persDataModel.PlaceOfBirth) ? PersData.PlaceOfBirth : persDataModel.PlaceOfBirth;
                 PersData.RoomType = string.IsNullOrEmpty(persDataModel.RoomType) ? PersData.RoomType : persDataModel.RoomType;
@@ -552,7 +554,7 @@ namespace BL.Services
                 //db.SaveChanges();
             }
         }
-        private async Task ResetNumberOfPersonsAndSquarePers(string FullLic)
+        private async Task ResetNumberOfPersonsAndSquarePers(string FullLic, string User = "")
         {
             using (var appDb = new ApplicationDbContext())
             {
@@ -562,11 +564,13 @@ namespace BL.Services
                     Item.Square = 0;
                     Item.NumberOfPersons = 0;
                     Item.SendingElectronicReceipt = null;
+                    if(!string.IsNullOrEmpty(User))
+                        _ilogger.ActionUsersPersData(Item.idPersData, $"Закрыл", User);
                 }
                 await appDb.SaveChangesAsync();
             }
         }
-        public void CloseLic(string FullLic, ICounter _counter)
+        public void CloseLic(string FullLic, ICounter _counter, string User)
         {
             using (var dbLic = new DbLIC())
             {
@@ -577,9 +581,27 @@ namespace BL.Services
                 foreach(var Item in Ipu)
                 {
                     _counter.DeleteIPU(Item.ID_PU);
+                    _ilogger.ActionUsers(Item.ID_PU, "Закрыл", User);
                 }
-                Task.Run(() => ResetNumberOfPersonsAndSquarePers(FullLic));
+                Task.Run(() => ResetNumberOfPersonsAndSquarePers(FullLic,User));
                 Task.Run(() => ClosePersInLic(FullLic));
+            }
+        }
+        public async Task CloseLicAsync(string FullLic,string Description, ICounter _counter, string User)
+        {
+            using (var dbLic = new DbLIC())
+            {
+                var lic = dbLic.ALL_LICS.FirstOrDefault(x => x.F4ENUMELS == FullLic);
+                lic.ZAK = "0";
+                dbLic.SaveChanges();
+                var Ipu = _counter.DetailInfroms(FullLic);
+                foreach (var Item in Ipu)
+                {
+                    _counter.DeleteIPU(Item.ID_PU);
+                    _ilogger.ActionUsers(Item.ID_PU, "Закрыл", User);
+                }
+                await ResetNumberOfPersonsAndSquarePers(FullLic,User);
+                await ClosePersInLic(FullLic);
             }
         }
         public void OpenLic(string FullLic)

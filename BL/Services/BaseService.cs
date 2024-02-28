@@ -214,7 +214,8 @@ namespace BL.Services
             {
                 var result = context.IPU_COUNTERS.Where(x=>x.FACTORY_NUMBER_PU == Number && x.CLOSE_ != true).ToList();
                 if(result != null && result.Count()>1)
-                    throw new Exception($"Такой номер уже существует на лицевом счете {result.FirstOrDefault().FULL_LIC} тип прибора учета {result.FirstOrDefault().TYPE_PU}");
+                    throw new Exception($@"Такой номер уже существует на лицевом счете {result.FirstOrDefault().FULL_LIC}, {result.LastOrDefault().FULL_LIC} 
+тип прибора учета {result.FirstOrDefault().TYPE_PU}, {result.LastOrDefault().TYPE_PU}");
             }
         }
     }

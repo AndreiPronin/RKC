@@ -239,7 +239,7 @@ namespace RKC.Controllers
         [Auth(Roles = RolesEnums.Admin + ","+ RolesEnums.SuperAdmin)]
         public ActionResult CloseLic(string FullLic)
         {
-            _personalData.CloseLic(FullLic, _counter);
+            _personalData.CloseLic(FullLic, _counter, User.Identity.GetFIO());
             return null;
         }
         [HttpGet]

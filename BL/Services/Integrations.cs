@@ -355,6 +355,7 @@ namespace BL.Service
                                             }
                                         }
                                     }
+                                    saveModel.DateTimeIntegraton = data.payment_date_day.Value;
                                     if (Error == false) await counter.UpdatePUIntegrations(saveModel,
                                     "Показания от " + data.Organization.name + " дата платежа " + data.payment_date_day.Value.ToString(),
                                     IPU_COUNTERS.FirstOrDefault().ID_PU);
@@ -364,16 +365,17 @@ namespace BL.Service
                                         dbApp.IntegrationReadings.Add(integrationReadings);
                                     else
                                     {
-                                       var integerationList = IntegrsList.FirstOrDefault(x => x.Lic == data.lic && x.TypePu.Contains(Item.name) && x.IdCounterReadings == Item.id);
+                                       var integerationList = dbApp.IntegrationReadings.FirstOrDefault(x => x.IdCounterReadings == Item.id);
                                         if (integerationList == null)
                                             dbApp.IntegrationReadings.Add(integrationReadings);
                                         else
                                         {
-                                            integerationList.IsError = integrationReadings.IsError;
+                                            integerationList.IsError = Error;
                                             integerationList.Description = integrationReadings.Description;
                                             integerationList.EndReadings = integrationReadings.EndReadings;
                                             integerationList.NowReadings = integrationReadings.NowReadings;
                                             integerationList.InitialReadings = integrationReadings.InitialReadings;
+
                                         }
                                     }
                                 }
@@ -482,7 +484,8 @@ namespace BL.Service
         {
             using (var db = new ApplicationDbContext())
             {
-                return db.IntegrationReadings.Filter().ToList();
+                var result = db.IntegrationReadings.Filter().ToList();
+                return result;
             }
         }
         public List<IntegrationReadings> GetErrorIntegrationReadings(string FullLic)

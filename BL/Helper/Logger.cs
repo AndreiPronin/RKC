@@ -14,10 +14,41 @@ namespace BL.Helper
 {
     public interface Ilogger
     {
+        /// <summary>
+        /// Лог ПУ
+        /// </summary>
+        /// <param name="IdPU"></param>
+        /// <param name="Description"></param>
+        /// <param name="User"></param>
         void ActionUsers(int IdPU, string Description, string User);
+        /// <summary>
+        /// Лог персов
+        /// </summary>
+        /// <param name="idPersData"></param>
+        /// <param name="Description"></param>
+        /// <param name="User"></param>
         void ActionUsersPersData(int idPersData, string Description, string User);
+        /// <summary>
+        /// Лог ПУ асинхронный
+        /// </summary>
+        /// <param name="IdPU"></param>
+        /// <param name="Description"></param>
+        /// <param name="User"></param>
+        /// <returns></returns>
         Task ActionUsersAsync(int IdPU, string Description, string User);
+        /// <summary>
+        /// Лог судебные дела
+        /// </summary>
+        /// <param name="Lic"></param>
+        /// <param name="CourtGeneralId"></param>
+        /// <param name="Text"></param>
         void ActionUserCourt(string Lic, int CourtGeneralId, string Text);
+        /// <summary>
+        /// Получение инфы по логу судебных дел
+        /// </summary>
+        /// <param name="Lic"></param>
+        /// <param name="CourtGeneralId"></param>
+        /// <returns></returns>
         string GetActionUserCourt(string Lic, int CourtGeneralId);
     }
     public class Logger:Ilogger
