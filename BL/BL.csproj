@@ -88,6 +88,7 @@
     <Compile Include="MapperProfile\RecalculationsProfile.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Notification\NotificationMail.cs" />
+    <Compile Include="Rules\SaveModelIPURules.cs" />
     <Compile Include="Security\TokenCreator.cs" />
     <Compile Include="Services\ApiReportService.cs" />
     <Compile Include="Services\BaseService.cs" />

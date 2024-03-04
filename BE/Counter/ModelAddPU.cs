@@ -33,6 +33,7 @@ namespace BE.Counter
         public string TYPEOFSEAL { get; set; }
         public string SEALNUMBER2 { get; set; }
         public string TYPEOFSEAL2 { get; set; }
+        public int? InterVerificationInterval { get; set; }
         public DIMENSION DIMENSION { get; set; }
     }
 }

@@ -184,6 +184,18 @@
                             </div>
                             <hr />
                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Межповерочный интервал:</label>
+                                <div class="col-sm-8">
+                                    <select disabled id="InterVerificationInterval" class="form-control">
+                                        <option>@Items.InterVerificationInterval</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
                                 @if (Items.CHECKPOINT_DATE != null)
                                 {
                                     <label class="col-sm-4 col-form-label">Дата контрольного обхода:</label>
@@ -522,6 +534,12 @@
                                 { TypePU = "FKUB1OT_4"; }
                             }
                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Дата последних показаний:</label>
+                                <div class="col-sm-8">
+                                    <input type="date" disabled="disabled" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.LastReadingDate)" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Записать показания:</label>
                                 <div class="col-sm-8">
                                     <input type="checkbox" disabled class="OVERWRITE" />
@@ -773,6 +791,7 @@ else
                         INSTALLATIONDATE: $(this).parent().find('#INSTALLATIONDATE').val(),
                         SEALNUMBER: $(this).parent().find('#SEALNUMBER').val(),
                         TYPEOFSEAL: $(this).parent().find('#TYPEOFSEAL').val().trim(),
+                        InterVerificationInterval: $(this).parent().find('#InterVerificationInterval').val().trim(),
                         SEALNUMBER2: $(this).parent().find('#SEALNUMBER2').val(),
                         TYPEOFSEAL2: $(this).parent().find('#TYPEOFSEAL2').val().trim(),
                         DESCRIPTION: $(this).parent().find('.DESCRIPTION').val(),

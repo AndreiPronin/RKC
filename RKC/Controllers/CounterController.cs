@@ -24,6 +24,7 @@ using static System.Net.WebRequestMethods;
 using BL.Services;
 using BE.Roles;
 using System.Data.Entity;
+using BL.Rules;
 
 namespace RKC.Controllers
 {
@@ -147,7 +148,8 @@ namespace RKC.Controllers
         {
             try
             {
-                if(_flagsAction.GetAction(nameof(DetailedInformIPU)))
+                SaveModelIPURules.Validation(modelAddPU);
+                if (_flagsAction.GetAction(nameof(DetailedInformIPU)))
                     return Redirect("home/ResultEmpty?Message=Невозможно добавить ИПУ программа заблокирована");
                 if (string.IsNullOrEmpty(modelAddPU.FULL_LIC) || modelAddPU.FULL_LIC == "undefined")
                 {
@@ -188,6 +190,7 @@ namespace RKC.Controllers
         {
             try
             {
+                SaveModelIPURules.Validation(saveModelIPU);
                 _Nlogger.Info(new ConvertJson<SaveModelIPU>(saveModelIPU).ConverModelToJson());
                 _logger.ActionUsers(saveModelIPU.IdPU, _generatorDescriptons.Generate(saveModelIPU), User.Identity.GetFIOFull());
                 await _counter.UpdateReadings(saveModelIPU);

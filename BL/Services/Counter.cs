@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using DB.Extention;
 using System.Security.Policy;
 using AutoMapper;
+using BL.Rules;
 
 namespace BL.Counters
 {
@@ -130,6 +131,7 @@ namespace BL.Counters
         public async Task UpdateReadings(SaveModelIPU saveModelIPU)
         {
             CheckDublicatePuNumber(saveModelIPU.NumberPU);
+            SaveModelIPURules.Validation(saveModelIPU);
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
@@ -151,6 +153,7 @@ namespace BL.Counters
                 IPU_COUNTERS.BRAND_PU = string.IsNullOrEmpty(saveModelIPU.BRAND_PU) ? IPU_COUNTERS.BRAND_PU : saveModelIPU.BRAND_PU;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                 IPU_COUNTERS.DIMENSION_ID = saveModelIPU.DIMENSION != null && saveModelIPU.DIMENSION.Id != 0 ? saveModelIPU.DIMENSION.Id : IPU_COUNTERS.DIMENSION_ID;
+                IPU_COUNTERS.InterVerificationInterval = saveModelIPU.InterVerificationInterval != null && saveModelIPU.InterVerificationInterval != 0 ? saveModelIPU.InterVerificationInterval : IPU_COUNTERS.InterVerificationInterval;
                 if (saveModelIPU.OVERWRITE_SEAL) {
                     IPU_COUNTERS.LastReadingDate = DateTime.Now;
                 }
@@ -160,7 +163,8 @@ namespace BL.Counters
         }
         public async Task UpdateReadingsAsync(SaveModelIPU saveModelIPU)
         {
-
+            CheckDublicatePuNumber(saveModelIPU.NumberPU);
+            SaveModelIPURules.Validation(saveModelIPU);
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
@@ -179,6 +183,7 @@ namespace BL.Counters
                 IPU_COUNTERS.GIS_ID_PU = string.IsNullOrEmpty(saveModelIPU.GIS_ID_PU) ? IPU_COUNTERS.GIS_ID_PU : saveModelIPU.GIS_ID_PU;
                 IPU_COUNTERS.BRAND_PU = string.IsNullOrEmpty(saveModelIPU.BRAND_PU) ? IPU_COUNTERS.BRAND_PU : saveModelIPU.BRAND_PU;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
+                IPU_COUNTERS.InterVerificationInterval = saveModelIPU.InterVerificationInterval != null && saveModelIPU.InterVerificationInterval != 0 ? saveModelIPU.InterVerificationInterval : IPU_COUNTERS.InterVerificationInterval;
                 if (saveModelIPU.DateTimeIntegraton.HasValue)
                 {
                     IPU_COUNTERS.LastReadingDate = saveModelIPU.DateTimeIntegraton.Value;
@@ -306,6 +311,8 @@ namespace BL.Counters
         }
         public void AddPU(ModelAddPU modelAddPU, string FIO)
         {
+            CheckDublicatePuNumber(modelAddPU.FACTORY_NUMBER_PU);
+            SaveModelIPURules.Validation(modelAddPU);
             using (var DbTPlus = new DbTPlus())
             {
                 IPU_COUNTERS iPU_COUNTERS = ConvertToModel.ModelAddpu_To_IPU_COUNTERS(modelAddPU);
@@ -411,6 +418,8 @@ namespace BL.Counters
         }
         public bool UpdateNewPU(SaveModelIPU saveModelIPU, string User)
         {
+            CheckDublicatePuNumber(saveModelIPU.NumberPU);
+            SaveModelIPURules.Validation(saveModelIPU);
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == saveModelIPU.FULL_LIC && x.TYPE_PU == saveModelIPU.TypePU && x.CLOSE_ != true).FirstOrDefault();
@@ -452,15 +461,17 @@ namespace BL.Counters
         }
         public List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC)
         {
-            List<IPU_COUNTERS> model = new List<IPU_COUNTERS>();
-            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.GVS1.GetDescription(), ID_PU = ((int)TypePU.GVS1) });
-            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.GVS2.GetDescription(), ID_PU = ((int)TypePU.GVS2) });
-            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.GVS3.GetDescription(), ID_PU = ((int)TypePU.GVS3) });
-            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.GVS4.GetDescription(), ID_PU = ((int)TypePU.GVS4) });
-            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.ITP1.GetDescription(), ID_PU = ((int)TypePU.ITP1) });
-            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.ITP2.GetDescription(), ID_PU = ((int)TypePU.ITP2) });
-            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.ITP3.GetDescription(), ID_PU = ((int)TypePU.ITP3) });
-            model.Add(new IPU_COUNTERS { TYPE_PU = TypePU.ITP4.GetDescription(), ID_PU = ((int)TypePU.ITP4) });
+            List<IPU_COUNTERS> model = new List<IPU_COUNTERS>
+            {
+                new IPU_COUNTERS { TYPE_PU = TypePU.GVS1.GetDescription(), ID_PU = ((int)TypePU.GVS1) },
+                new IPU_COUNTERS { TYPE_PU = TypePU.GVS2.GetDescription(), ID_PU = ((int)TypePU.GVS2) },
+                new IPU_COUNTERS { TYPE_PU = TypePU.GVS3.GetDescription(), ID_PU = ((int)TypePU.GVS3) },
+                new IPU_COUNTERS { TYPE_PU = TypePU.GVS4.GetDescription(), ID_PU = ((int)TypePU.GVS4) },
+                new IPU_COUNTERS { TYPE_PU = TypePU.ITP1.GetDescription(), ID_PU = ((int)TypePU.ITP1) },
+                new IPU_COUNTERS { TYPE_PU = TypePU.ITP2.GetDescription(), ID_PU = ((int)TypePU.ITP2) },
+                new IPU_COUNTERS { TYPE_PU = TypePU.ITP3.GetDescription(), ID_PU = ((int)TypePU.ITP3) },
+                new IPU_COUNTERS { TYPE_PU = TypePU.ITP4.GetDescription(), ID_PU = ((int)TypePU.ITP4) }
+            };
             using (var db = new DbTPlus())
             {
                 var Result = db.IPU_COUNTERS.Where(x => x.FULL_LIC == FullLIC && (x.CLOSE_ == null || x.CLOSE_ == false)).ToList();

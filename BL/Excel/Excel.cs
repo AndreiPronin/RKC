@@ -188,6 +188,10 @@ namespace BL.Excel
                             saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(15).Value).Replace(".", ","));
                         }
                         saveModel.DIMENSION.Id = dataRow.Cell(16).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(16).Value);
+                        if (dataRow.Cell(17).Value != "")
+                        {
+                            saveModel.InterVerificationInterval = Convert.ToInt32(Convert.ToString(dataRow.Cell(17).Value));
+                        }
                         if (!counter.UpdatePU(saveModel, User))
                         {
                             saveModel.DESCRIPTION = $"Нет такого ПУ {saveModel.TypePU}";
@@ -271,6 +275,10 @@ namespace BL.Excel
                         saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
                         saveModel.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
                         saveModel.DIMENSION.Id = dataRow.Cell(13).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(13).Value);
+                        if (dataRow.Cell(14).Value != "")
+                        {
+                            saveModel.InterVerificationInterval = Convert.ToInt32(Convert.ToString(dataRow.Cell(14).Value));
+                        }
                         if (!counter.UpdateNewPU(saveModel, User))
                         {
                             saveModel.DESCRIPTION = $"Нет такого ПУ {saveModel.TypePU}";

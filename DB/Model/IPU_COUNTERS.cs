@@ -75,6 +75,7 @@ namespace DB.Model
         public int? DIMENSION_ID { get;set;}
         public DateTime? LastReadingDate { get; set; }
         public Guid? MeteringDeviceVersionGUID { get; set; }
+        public int? InterVerificationInterval { get; set; }
         /// <summary>
         /// Номер прибора учета в ГИС ЖКХ
         /// </summary>

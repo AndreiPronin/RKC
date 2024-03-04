@@ -130,14 +130,14 @@ namespace BL.Extention
             result.Brand = ipuSource.BRAND_PU;
             result.Model = ipuSource.MODEL_PU;
             result.GisId = ipuSource.GIS_ID_PU;
-            result.IdGku = flat.IdGku;
-            result.UniqueApartmentNumber = flat.UniqueApartmentNumber;
-            result.Fias = address.Fias;
+            result.IdGku = flat?.IdGku;
+            result.UniqueApartmentNumber = flat?.UniqueApartmentNumber;
+            result.Fias = address?.Fias;
             result.DateCheck = ipuSource.DATE_CHECK;
             result.DateCheckNext = ipuSource.DATE_CHECK_NEXT;
             result.InstallationDate = ipuSource.INSTALLATIONDATE;
-            result.Address = address.CityType + " " + address.City + ", " + address.Street + " "
-                + address.StreetType + ", " + address.HouseType + " " + address.House + address.Building;
+            result.Address = address?.CityType + " " + address?.City + ", " + address?.Street + " "
+                + address?.StreetType + ", " + address?.HouseType + " " + address?.House + address?.Building;
 
             switch (result.Type)
             {

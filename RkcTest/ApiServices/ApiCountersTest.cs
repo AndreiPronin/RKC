@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BL.ApiServices;
 using System.Diagnostics;
 using BL.ApiServices.Counters;
+using BE.Counter;
 
 namespace RkcTest.ApiServices
 {
@@ -32,8 +33,22 @@ namespace RkcTest.ApiServices
         [TestMethod]
         public async Task GetIpuReadingsForGisActiveTest()
         {
-            var result = await _apiCounters.GetIpuReadingsForGisActive( 1000, "");
-            Assert.IsNotNull(result);
+            var ipuGisReadingActives = new List<IpuGisReadingActive>();
+            var lastLic = "";
+            while (true) 
+            { 
+                var result = await _apiCounters.GetIpuReadingsForGisActive(1000, lastLic);
+                ipuGisReadingActives.AddRange(result.value);
+                lastLic = result.lastId;
+                if (ipuGisReadingActives.Where(x => x.FulLic == "720128131").Count() > 1)
+                {
+                    var zzz = ipuGisReadingActives.Where(x => x.FulLic == "720128131").ToList();
+                }
+               
+                    break;
+                
+            }
+            Assert.IsNotNull(ipuGisReadingActives);
         }
     }
 }

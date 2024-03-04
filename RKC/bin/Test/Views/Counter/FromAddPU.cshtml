@@ -81,6 +81,17 @@
                     </div>
                     <hr />
                     <div class="form-group row">
+                        <label  style="font-weight:inherit;" class="col-sm-4 col-form-label;">Межповерочный интервал:</label>
+                        <div class="col-sm-8">
+                            <select id="InterVerificationInterval_" class="form-control">
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Тип пломбы1:</label>
                         <div class="col-sm-8">
                             <select id="TYPEOFSEAL_" class="form-control">
@@ -211,6 +222,7 @@
                             DATE_CHECK_NEXT: $('#DATE_CHECK_NEXT_').val(),
                             SEALNUMBER: $('#SEALNUMBER_').val(),
                             TYPEOFSEAL: $('#TYPEOFSEAL_').val(),
+                            InterVerificationInterval: $('#InterVerificationInterval_').val().trim(),
                             SEALNUMBER2: $('#SEALNUMBER_2').val(),
                             TYPEOFSEAL2: $('#TYPEOFSEAL_2').val(),
                             DIMENSION: {
