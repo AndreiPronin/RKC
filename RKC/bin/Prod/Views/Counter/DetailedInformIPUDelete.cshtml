@@ -156,6 +156,18 @@
                             </div>
                             <hr />
                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Межповерочный интервал:</label>
+                                <div class="col-sm-8">
+                                    <select disabled id="InterVerificationInterval" class="form-control">
+                                        <option>@Items.InterVerificationInterval</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
                                 @if (Items.CHECKPOINT_DATE != null)
                                 {
                                     <label class="col-sm-4 col-form-label">Дата контрольного обхода:</label>

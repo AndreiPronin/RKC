@@ -13,7 +13,7 @@
            @Value = (Model.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring.HasValue ? Model.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
-        <label class="col-sm-12 col-form-label">Сумма Реструктуризации (рассрочки):</label>
+        <label class="col-sm-12 col-form-label">Сумма рассрочки всего:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtInstallmentPlan.AmountRestructuring, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtInstallmentPlan.AmountRestructuring })
         </div>

@@ -25,6 +25,8 @@ namespace BE.Counter
         public decimal? FinalReadings { get; set; }
         public string Dimension { get; set; }
         public DateTime? InstallationDate { get; set; }
+        public DateTime? LastReadingDate { get; set; }
+        public int? InterVerificationInterval { get; set; }
 
         public IpuGisReading()
         {

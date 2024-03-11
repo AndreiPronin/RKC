@@ -355,7 +355,7 @@ namespace BL.Service
                                             }
                                         }
                                     }
-                                    saveModel.DateTimeIntegraton = data.payment_date_day.Value;
+                                    saveModel.DateTimeIntegraton = data.payment_date.Value;
                                     if (Error == false) await counter.UpdatePUIntegrations(saveModel,
                                     "Показания от " + data.Organization.name + " дата платежа " + data.payment_date_day.Value.ToString(),
                                     IPU_COUNTERS.FirstOrDefault().ID_PU);

@@ -13,16 +13,18 @@ namespace RkcTest.JustTest
     [TestClass]
     public class Tests
     {
+        List<int> lists = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         [TestMethod]
         public void HashSetTest()
         {
-            var tasks = Task.Run(() =>
+            for (int l=0;l<10; l++)
             {
-                Console.WriteLine("11111");
-                Thread.Sleep(1000);
-                Console.WriteLine("22222");
-            });
-            tasks.Wait();
+                 Task.Run(() =>
+                {
+                    Console.WriteLine(lists[l]);
+                });
+            }
+            
             Console.WriteLine("00000");
             using (var context = new DbTPlus())
             {

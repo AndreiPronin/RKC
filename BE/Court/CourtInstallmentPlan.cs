@@ -15,7 +15,7 @@ namespace BE.Court
         /// </summary>
         public DateTime? DateAcceptanceApplicationRestructuring { get; set; }
         /// <summary>
-        /// Сумма Реструктуризации (рассрочки)
+        /// Сумма рассрочки всего
         /// </summary>
         public double? AmountRestructuring { get; set; }
         /// <summary>

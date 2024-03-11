@@ -71,9 +71,21 @@ namespace BL.Excel
                         CourtGeneral.CourtWork.FioSendCourt = dataRow.Cell(9).Value.ToString();
                         CourtGeneral.CourtWork.DateTask = Convert.ToDateTime(dataRow.Cell(10).Value.ToString());
                         CourtGeneral.CourtWork.PeriodDebtBegin = Convert.ToDateTime(dataRow.Cell(11).Value.ToString());
+                        if (CourtGeneral.CourtWork.PeriodDebtBegin.HasValue && CourtGeneral.CourtWork.PeriodDebtBegin > DateTime.Now)
+                        {
+                            exceptions.Append("Дата период задолженности начальный не может быть больше текущей даты");
+                        }
                         CourtGeneral.CourtWork.PeriodDebtEnd = Convert.ToDateTime(dataRow.Cell(12).Value.ToString());
+                        if (CourtGeneral.CourtWork.PeriodDebtEnd.HasValue && CourtGeneral.CourtWork.PeriodDebtEnd > DateTime.Now)
+                        {
+                            exceptions.Append("Дата период задолженности конечный не может быть больше текущей даты");
+                        }
                         CourtGeneral.CourtWork.SumOdSendCourt = Convert.ToDouble(dataRow.Cell(13).Value.ToString());
                         CourtGeneral.CourtWork.SumPenySendCourt = Convert.ToDouble(dataRow.Cell(14).Value.ToString());
+                        if(CourtGeneral.CourtWork.DateTask.HasValue && CourtGeneral.CourtWork.DateTask > DateTime.Now)
+                        {
+                            exceptions.Append("Дата задания не может быть больше текущей даты");
+                        }
 
                         if (dictionaryCourt.FirstOrDefault(x => x.Id == 20).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtWork.FioSendCourt) == null)
                             exceptions.Append("ФИО сотрудника не найдена в справочнике");
@@ -117,6 +129,14 @@ namespace BL.Excel
                                 Number = dataRow.Cell(3).Value.ToString(),
                                 Date = Convert.ToDateTime(dataRow.Cell(4).Value)
                             };
+                        if(CourtWorkRequisites.Suma != "")
+                        {
+                            CourtWorkRequisites.Suma = Math.Round(Convert.ToDouble(CourtWorkRequisites.Suma),2).ToString();
+                        }
+                        if(CourtWorkRequisites.Date > DateTime.Now)
+                        {
+                            exceptions.Append("Дата в реквизитах ГП больше текущей");
+                        }
                         if(dataRow.Cell(5).Value != "" && CourtGeneral.CourtStateDuty.DateSendOnReturnFNS != Convert.ToDateTime(dataRow.Cell(5).Value))
                             CourtGeneral.CourtStateDuty.DateSendOnReturnFNS = Convert.ToDateTime(dataRow.Cell(5).Value);
                         if (dataRow.Cell(6).Value != "" && CourtGeneral.CourtStateDuty.DateReturnFNS != Convert.ToDateTime(dataRow.Cell(6).Value))
@@ -166,7 +186,13 @@ namespace BL.Excel
                             exceptions.Append("Пол не найдена в справочнике" + Environment.NewLine);
 
                         if (dataRow.Cell(3).Value != "" && CourtGeneral.DateBirthday != dataRow.Cell(3).Value.ToString())
+                        {
                             CourtGeneral.DateBirthday = dataRow.Cell(3).Value.ToString();
+                            if (Convert.ToDateTime(CourtGeneral.DateBirthday) > DateTime.Now)
+                            {
+                                exceptions.Append("Дата рождения не может быть больше текущей даты");
+                            }
+                        }
                         if (dataRow.Cell(4).Value != "" && CourtGeneral.PlaceBirth != dataRow.Cell(4).Value.ToString())
                             CourtGeneral.PlaceBirth = dataRow.Cell(4).Value.ToString();
                         if (dataRow.Cell(5).Value != "" && CourtGeneral.PasportSeria != dataRow.Cell(5).Value.ToString())
@@ -174,7 +200,13 @@ namespace BL.Excel
                         if (dataRow.Cell(6).Value != "" && CourtGeneral.PasportNumber != dataRow.Cell(6).Value.ToString())
                             CourtGeneral.PasportNumber = dataRow.Cell(6).Value.ToString();
                         if (dataRow.Cell(7).Value != "" && CourtGeneral.PasportDate != dataRow.Cell(7).Value.ToString())
+                        {
                             CourtGeneral.PasportDate = dataRow.Cell(7).Value.ToString();
+                            if (Convert.ToDateTime(CourtGeneral.PasportDate) > DateTime.Now)
+                            {
+                                exceptions.Append("Дата рождения не может быть больше текущей даты");
+                            }
+                        }
                         if (dataRow.Cell(8).Value != "" && CourtGeneral.PasportIssue != dataRow.Cell(8).Value.ToString())
                             CourtGeneral.PasportIssue = dataRow.Cell(8).Value.ToString();
                         if (dataRow.Cell(9).Value != "" && CourtGeneral.Inn != dataRow.Cell(9).Value.ToString())
@@ -259,8 +291,23 @@ namespace BL.Excel
                             CourtGeneral.CourtExecutionFSSP.DateTask = Convert.ToDateTime(dataRow.Cell(8).Value);
                         if (dataRow.Cell(9).Value != "" && CourtGeneral.CourtExecutionFSSP.DateSendingApplicationFSSP != Convert.ToDateTime(dataRow.Cell(9).Value))
                             CourtGeneral.CourtExecutionFSSP.DateSendingApplicationFSSP = Convert.ToDateTime(dataRow.Cell(9).Value);
-                        if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtExecutionFSSP.ExecutiveBody != dataRow.Cell(10).Value.ToString())
-                            CourtGeneral.CourtExecutionFSSP.ExecutiveBody = dataRow.Cell(10).Value.ToString();
+                        //if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtExecutionFSSP.ExecutiveBody != dataRow.Cell(10).Value.ToString())
+                        //    CourtGeneral.CourtExecutionFSSP.ExecutiveBody = dataRow.Cell(10).Value.ToString();
+                        if (dataRow.Cell(10).Value != "")
+                        {
+                            var xxx = dataRow.Cell(10).Value.ToString();
+                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 3).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[0]?.Trim() == dataRow.Cell(10).Value.ToString());
+                            if (dataRow.Cell(10).Value != "" && CourtName is null)
+                                exceptions.Append("Исполнительный орган (ФССП) не найдена в справочнике" + Environment.NewLine);
+                            else
+                            {
+                                if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtExecutionFSSP.ExecutiveBody != CourtName.Name.Split('|')[0])
+                                {
+                                    CourtGeneral.CourtExecutionFSSP.ExecutiveBody = CourtName.Name.Split('|')[0];
+                                    CourtGeneral.CourtExecutionFSSP.AddressIO = CourtName.Name.Split('|')[1];
+                                }
+                            }
+                        }
                         if (dataRow.Cell(11).Value != "" && CourtGeneral.CourtExecutionFSSP.NumberIP != dataRow.Cell(11).Value.ToString())
                             CourtGeneral.CourtExecutionFSSP.NumberIP = dataRow.Cell(11).Value.ToString();
                         if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtExecutionFSSP.IPInitiationDate != Convert.ToDateTime(dataRow.Cell(12).Value))

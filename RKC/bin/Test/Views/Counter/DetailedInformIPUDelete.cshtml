@@ -31,7 +31,14 @@
                     <p class="text-center NullOrEmpty">Удален @Items.DATE_CLOSE</p>
                     <input id="FULL_LIC" value="@Items.FULL_LIC" hidden="hidden" />
                     @if (!string.IsNullOrEmpty(Items.TYPE_PU))
-                    {<p>Тип ПУ:  <input type="text" disabled="disabled" id="TYPE_PU" name="@Items.ID_PU" class="form-control" value="@Items.TYPE_PU" /> </p>}
+                    {
+                         <div class="col-md-6">
+                             <p>Тип ПУ:  <input type="text" disabled="disabled" id="TYPE_PU" name="@Items.ID_PU" class="form-control" value="@Items.TYPE_PU" /> </p>
+                         </div>
+                        <div class="col-md-6">
+                            <p>ID ПУ в ГИС:<input type="text" disabled="disabled" id="GIS_ID" name="@Items.GIS_ID_PU" class="form-control" value="@Items.GIS_ID_PU" /> </p>
+                        </div>
+                    }
                     else
                     {<p class="NullOrEmpty">Тип ПУ:</p>}
                 </div>

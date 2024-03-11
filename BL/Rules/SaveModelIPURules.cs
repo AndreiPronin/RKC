@@ -14,11 +14,18 @@ namespace BL.Rules
         public static void Validation(SaveModelIPU saveModelIPU)
         {
             _exceptionString.Clear();
+            if (saveModelIPU.InterVerificationInterval.HasValue)
+            {
+                var error = saveModelIPU.InterVerificationInterval == 4 || saveModelIPU.InterVerificationInterval == 5 || saveModelIPU.InterVerificationInterval == 6;
+                if (!error) {
+                    _exceptionString.Append($"Не верно указан МПИ. МПИ должен иметь занчение 4 5 6");
+                }
+            }
             if (saveModelIPU.InterVerificationInterval.HasValue && saveModelIPU.DATE_CHECK.HasValue && saveModelIPU.DATE_CHECK_NEXT.HasValue) {
                 var validDATE_CHECK = saveModelIPU.DATE_CHECK.Value.AddYears(saveModelIPU.InterVerificationInterval.Value);
-                if(validDATE_CHECK.Year != saveModelIPU.DATE_CHECK_NEXT.Value.Year)
+                if(validDATE_CHECK != saveModelIPU.DATE_CHECK_NEXT.Value)
                 {
-                    _exceptionString.Append($"Не верно указан МПИ год поверки {validDATE_CHECK.Year} - {saveModelIPU.DATE_CHECK_NEXT.Value.Year}");
+                    _exceptionString.Append($"Не верно указан МПИ {validDATE_CHECK} - {saveModelIPU.DATE_CHECK_NEXT.Value}");
                 }
             }
             if (_exceptionString.ToString() != "") {
@@ -28,12 +35,20 @@ namespace BL.Rules
         }
         public static void Validation(ModelAddPU modelAddPU)
         {
+            if (modelAddPU.InterVerificationInterval.HasValue)
+            {
+                var error = modelAddPU.InterVerificationInterval == 4 || modelAddPU.InterVerificationInterval == 5 || modelAddPU.InterVerificationInterval == 6;
+                if (!error)
+                {
+                    _exceptionString.Append($"Не верно указан МПИ. МПИ должен иметь занчение 4 5 6");
+                }
+            }
             if (modelAddPU.InterVerificationInterval.HasValue && modelAddPU.DATE_CHECK.HasValue && modelAddPU.DATE_CHECK_NEXT.HasValue)
             {
                 var validDATE_CHECK = modelAddPU.DATE_CHECK.Value.AddYears(modelAddPU.InterVerificationInterval.Value);
-                if (validDATE_CHECK.Year != modelAddPU.DATE_CHECK_NEXT.Value.Year)
+                if (validDATE_CHECK != modelAddPU.DATE_CHECK_NEXT.Value)
                 {
-                    _exceptionString.Append($"Не верно указан МПИ год поверки {validDATE_CHECK.Year} - {modelAddPU.DATE_CHECK_NEXT.Value.Year}");
+                    _exceptionString.Append($"Не верно указан МПИ {validDATE_CHECK} - {modelAddPU.DATE_CHECK_NEXT.Value}");
                 }
             }
             if (_exceptionString.ToString() != "")

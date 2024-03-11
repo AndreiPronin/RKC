@@ -79,16 +79,32 @@ namespace BL.Services
         public async Task<List<Dictionary>> GetDictionary(int? Id, string Text, string Type, string TypePU)
         {
             var dictionary = new List<Dictionary>();
-            using (var db = new DbTPlus())
+            if (Type == "BRAND_PU")
             {
-                var dictionaryBrand = await db.BRAND.Include(x => x.MODEL)
-                    .Where(x => x.BRAND_NAME == Text && x.TYPE_PU == TypePU)
-                    .ToListAsync();
-                foreach (var Item in dictionaryBrand)
-                    foreach (var Items in Item.MODEL)
-                        dictionary.Add(new Dictionary { Id = Items.ID, Text = Items.MODEL_NAME, Type = Type });
-                return dictionary;
+                using (var db = new DbTPlus())
+                {
+                    var dictionaryBrand = await db.BRAND
+                        .Where(x => x.TYPE_PU == TypePU)
+                        .ToListAsync();
+                    foreach (var Item in dictionaryBrand)
+                        dictionary.Add(new Dictionary { Id = Item.ID, Text = Item.BRAND_NAME, Type = Type });
+                    return dictionary;
+                }
             }
+            if (Type == "MODEL_PU")
+            { 
+                using (var db = new DbTPlus())
+                {
+                    var dictionaryBrand = await db.BRAND.Include(x => x.MODEL)
+                        .Where(x => x.BRAND_NAME == Text && x.TYPE_PU == TypePU)
+                        .ToListAsync();
+                    foreach (var Item in dictionaryBrand)
+                        foreach (var Items in Item.MODEL)
+                            dictionary.Add(new Dictionary { Id = Items.ID, Text = Items.MODEL_NAME, Type = Type });
+                    return dictionary;
+                }
+            }
+            return dictionary;
         }
     }
 }

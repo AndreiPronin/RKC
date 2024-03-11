@@ -32,19 +32,23 @@
                             </select>
                         </div>
                     </div>
-                    @*<hr />
+                    <hr />
                     <div class="form-group row">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Бренд ПУ:</label>
                         <div class="col-sm-8">
-                            <input id="BRAND_PU_" class="form-control" />
-
+                            <select id="BRAND_PU_" class="form-control BRAND_PU_">
+                                <option value=""></option>
+                            </select>
                         </div>
-                    </div>*@
+                    </div>
                     <hr />
                     <div class="form-group row">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Модель ПУ:</label>
                         <div class="col-sm-8">
-                            <input id="MODEL_PU_" class="form-control" />
+                            <select id="MODEL_PU_" class="form-control MODEL_PU_">
+                                <option value=""></option>
+                            </select>
+
                         </div>
                     </div>
                     <hr />
@@ -174,6 +178,57 @@
     }
 
     $(document).ready(function (e) {
+        $('#TYPE_PU_Select').on('focus', function (e) {
+            var brandPu = $('#BRAND_PU_ option:selected');
+            brandPu.empty().append(' ');
+            var modelPu = $('#MODEL_PU_ option:selected');
+            modelPu.empty().append(' ');
+        });
+        $('.BRAND_PU_').on('focus', function (e) {
+            var brandPu = $('#BRAND_PU_ option:selected');
+            brandPu.empty().append(' ');
+            var modelPu = $('#MODEL_PU_ option:selected');
+            modelPu.empty().append(' ');
+
+            $(".loader").addClass("hidden");
+            var TypePu = $("#TYPE_PU_Select option:selected").text()?.replace(/[0-9]/i, '');
+            var brandPu = "";
+            const BrandPU = $(this);
+            $.ajax({
+                url: `/Counter/GetDictionatyOption?Id=null&Text=${brandPu}&Type=BRAND_PU&TypePU=${TypePu}`,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    BrandPU.empty().append(data);
+                },
+                error: function () {
+                    $(".loader").addClass("hidden");
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
+        });
+        $('.MODEL_PU_').on('focus', function (e) {
+            $(".loader").addClass("hidden");
+            var TypePu = $("#TYPE_PU_Select option:selected").text()?.replace(/[0-9]/i, '');
+            console.log($("#TYPE_PU_Select option:selected").text());
+            var brandPu = $('#BRAND_PU_ option:selected').text();
+            console.log(brandPu);
+            const ModelPu = $(this);
+            $.ajax({
+                url: `/Counter/GetDictionatyOption?Id=null&Text=${brandPu}&Type=MODEL_PU&TypePU=${TypePu}`,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    ModelPu.empty().append(data);
+                },
+                error: function () {
+                    $(".loader").addClass("hidden");
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
+        })
         /*setTimeout(Reload, 480000);*/
         $("#Save").click(function (e) {
             if (Requared()) {
@@ -212,10 +267,10 @@
                             InitialReadings: $("#InitialReadings").val()?.replace('.', ','),
                             EndReadings: $("#EndReadings").val()?.replace('.', ','),
                             FULL_LIC: $("#FULL_LIC_").val(),
+                            MODEL_PU: $('#MODEL_PU_ option:selected').text(),
+                            BRAND_PU: $('#BRAND_PU_ option:selected').text(),
                             FACTORY_NUMBER_PU: $('#FACTORY_NUMBER_PU_').val(),
                             TYPE_PU: $("#TYPE_PU_Select").val(),
-                            BRAND_PU: $('#BRAND_PU_').val(),
-                            MODEL_PU: $('#MODEL_PU_').val(),
                             DESCRIPTION: $('#DESCRIPTION_').val(),
                             INSTALLATIONDATE: $('#INSTALLATIONDATE_').val(),
                             DATE_CHECK: $('#DATE_CHECK_').val(),

@@ -742,6 +742,28 @@ else
         })
         $(".Save").click(function (e) {
             $(".Save").addClass("hidden");
+
+            var Param1 = parseFloat($(this).parent().find('.SaledConfirm1').val().replace(',','.'));
+            var Param2 = parseFloat($(this).parent().find('.SaledConfirm2').val().replace(',', '.'));
+            var Res = Param2 - Param1;
+            console.log(Res);
+            if (Res < 0) {
+                $(this).addClass("Required");
+                $(this).parent().find('.SaledConfirm1').addClass("Required");
+                $(this).parent().find('.SaledConfirm2').addClass("Required");
+                $.confirm({
+                    title: 'Предупрждение!',
+                    content: 'Внимание объем меньше нуля !!!',
+                    buttons: {
+                        "Ok": function () {
+
+                        },
+                    }
+                });
+                $(".Save").removeClass("hidden");
+                return;
+            }
+
             var NumberPU = $(this).parent().find('#NumberPU').val();
             var INSTALLATIONDATE = $(this).parent().find('#INSTALLATIONDATE').val();
             var DATE_CHECK = $(this).parent().find('#DATE_CHECK').val();

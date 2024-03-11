@@ -8,35 +8,57 @@
         </div>
         <label class="col-sm-12 col-form-label">Дата  определения о принятии  заявления о банкротстве судом :</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtBankruptcy.DateDeterminationAcceptance, new { @type = "Date", @readonly = "readonly", @class = "form-control",
+            @Html.TextBoxFor(m => m.CourtBankruptcy.DateDeterminationAcceptance, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtBankruptcy.DateDeterminationAcceptance.HasValue ? Model.CourtBankruptcy.DateDeterminationAcceptance.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Дата определения о завершении реализации имущества:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtBankruptcy.DateDeterminationCompletion, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtBankruptcy.DateDeterminationCompletion, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtBankruptcy.DateDeterminationCompletion.HasValue ? Model.CourtBankruptcy.DateDeterminationCompletion.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Дата принятия заявления нами:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtBankruptcy.DateDeterminationApplication, new { @type = "Date", @readonly = "readonly", @class = "form-control",
+            @Html.TextBoxFor(m => m.CourtBankruptcy.DateDeterminationApplication, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtBankruptcy.DateDeterminationApplication.HasValue ? Model.CourtBankruptcy.DateDeterminationApplication.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
-        <label class="col-sm-12 col-form-label">Сумма списания:</label>
+        <label class="col-sm-12 col-form-label">Сумма списания всего:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtBankruptcy.SumWriteOff, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtBankruptcy.SumWriteOff })
         </div>
+    </div>
+    <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Начальный период списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtBankruptcy.DateWriteOffBegin, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtBankruptcy.DateWriteOffBegin, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtBankruptcy.DateWriteOffBegin.HasValue ? Model.CourtBankruptcy.DateWriteOffBegin.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Конечный период списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtBankruptcy.DateWriteOffEnd, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtBankruptcy.DateWriteOffEnd, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtBankruptcy.DateWriteOffEnd.HasValue ? Model.CourtBankruptcy.DateWriteOffEnd.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
@@ -46,7 +68,11 @@
         </div>
         <label class="col-sm-12 col-form-label">Дата списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtBankruptcy.DateWrite, new { @type = "Date", @readonly = "readonly", @class = "form-control",
+            @Html.TextBoxFor(m => m.CourtBankruptcy.DateWrite, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtBankruptcy.DateWrite.HasValue ? Model.CourtBankruptcy.DateWrite.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>

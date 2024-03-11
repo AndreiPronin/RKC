@@ -64,7 +64,7 @@ namespace BL.Excel
 
                 foreach (var Items in NotSendReceipts)
                 {
-                    var Dates = new DateTime(DateTime.Now.AddMonths(-2).Year, Items.Month, 1);
+                    var Dates = new DateTime(DateTime.Now.AddMonths(-1).Year, Items.Month - 1, 1);
                     dt.Rows.Add(Items.Lic, Items.Email, Dates.ToString("MMMM yyyy"), Items.DateTimeSend, Items.ErrorDescription, "");
                 }
                 return dt;

@@ -20,6 +20,8 @@ namespace BL.Extention
             result.UniqueApartmentNumber = flat.UniqueApartmentNumber;
             result.Fias = address.Fias;
             result.DateCheck = ipuSource.DATE_CHECK;
+            result.LastReadingDate = ipuSource.LastReadingDate;
+            result.InterVerificationInterval = ipuSource.InterVerificationInterval;
             result.DateCheckNext = ipuSource.DATE_CHECK_NEXT;
             result.InstallationDate = ipuSource.INSTALLATIONDATE;
             result.Address = address.CityType + " " + address.City + ", " + address.Street + " "
@@ -131,6 +133,8 @@ namespace BL.Extention
             result.Model = ipuSource.MODEL_PU;
             result.GisId = ipuSource.GIS_ID_PU;
             result.IdGku = flat?.IdGku;
+            result.LastReadingDate = ipuSource.LastReadingDate;
+            result.InterVerificationInterval = ipuSource.InterVerificationInterval;
             result.UniqueApartmentNumber = flat?.UniqueApartmentNumber;
             result.Fias = address?.Fias;
             result.DateCheck = ipuSource.DATE_CHECK;

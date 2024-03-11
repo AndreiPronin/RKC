@@ -582,7 +582,7 @@ namespace BL.Helper
             if (courtGeneralBe.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring != courtGeneralDb.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring)
                 Result.AppendLine($"Дата  принятия заявления на  реструктуризацию (рассрочку): было {courtGeneralDb.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring}");
             if (courtGeneralBe.CourtInstallmentPlan.AmountRestructuring != courtGeneralDb.CourtInstallmentPlan.AmountRestructuring)
-                Result.AppendLine($"Сумма Реструктуризации (рассрочки): было {courtGeneralDb.CourtInstallmentPlan.AmountRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.AmountRestructuring}");
+                Result.AppendLine($"Сумма рассрочки всего: было {courtGeneralDb.CourtInstallmentPlan.AmountRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.AmountRestructuring}");
             if (courtGeneralBe.CourtInstallmentPlan.StartingMonthRestructuring != courtGeneralDb.CourtInstallmentPlan.StartingMonthRestructuring)
                 Result.AppendLine($"Начальный месяц реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.StartingMonthRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.StartingMonthRestructuring}");
             if (courtGeneralBe.CourtInstallmentPlan.FinalMonthRestructuring != courtGeneralDb.CourtInstallmentPlan.FinalMonthRestructuring)
