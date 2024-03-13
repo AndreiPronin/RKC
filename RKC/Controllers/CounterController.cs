@@ -148,7 +148,9 @@ namespace RKC.Controllers
         {
             try
             {
+                _Nlogger.Info(new ConvertJson<ModelAddPU>(modelAddPU).ConverModelToJson());
                 SaveModelIPURules.Validation(modelAddPU);
+                _baseService.CheckDublicateAddPuNumber(modelAddPU.FACTORY_NUMBER_PU);
                 if (_flagsAction.GetAction(nameof(DetailedInformIPU)))
                     return Redirect("home/ResultEmpty?Message=Невозможно добавить ИПУ программа заблокирована");
                 if (string.IsNullOrEmpty(modelAddPU.FULL_LIC) || modelAddPU.FULL_LIC == "undefined")

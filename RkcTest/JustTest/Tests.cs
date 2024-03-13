@@ -17,9 +17,10 @@ namespace RkcTest.JustTest
         [TestMethod]
         public void HashSetTest()
         {
+           
             for (int l=0;l<10; l++)
             {
-                 Task.Run(() =>
+                Task.Run(() =>
                 {
                     Console.WriteLine(lists[l]);
                 });

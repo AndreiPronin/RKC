@@ -21,13 +21,6 @@ namespace BL.Rules
                     _exceptionString.Append($"Не верно указан МПИ. МПИ должен иметь занчение 4 5 6");
                 }
             }
-            if (saveModelIPU.InterVerificationInterval.HasValue && saveModelIPU.DATE_CHECK.HasValue && saveModelIPU.DATE_CHECK_NEXT.HasValue) {
-                var validDATE_CHECK = saveModelIPU.DATE_CHECK.Value.AddYears(saveModelIPU.InterVerificationInterval.Value);
-                if(validDATE_CHECK != saveModelIPU.DATE_CHECK_NEXT.Value)
-                {
-                    _exceptionString.Append($"Не верно указан МПИ {validDATE_CHECK} - {saveModelIPU.DATE_CHECK_NEXT.Value}");
-                }
-            }
             if (_exceptionString.ToString() != "") {
                 _exception = new Exception(_exceptionString.ToString());
                 throw _exception;

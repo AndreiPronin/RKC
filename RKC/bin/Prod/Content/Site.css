@@ -101,7 +101,7 @@ textarea {
     color:red;
 }
 .Required {
-    border:2px solid red;
+    border:3px solid red !important;
 }
 .form-control {
     display: inline;

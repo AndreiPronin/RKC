@@ -21,7 +21,7 @@ namespace BL.Extention
             result.Fias = address.Fias;
             result.DateCheck = ipuSource.DATE_CHECK;
             result.LastReadingDate = ipuSource.LastReadingDate;
-            result.InterVerificationInterval = ipuSource.InterVerificationInterval;
+            result.InterVerificationInterval = DateTimes.GetYear(ipuSource.InterVerificationInterval ?? 0);
             result.DateCheckNext = ipuSource.DATE_CHECK_NEXT;
             result.InstallationDate = ipuSource.INSTALLATIONDATE;
             result.Address = address.CityType + " " + address.City + ", " + address.Street + " "
@@ -134,7 +134,7 @@ namespace BL.Extention
             result.GisId = ipuSource.GIS_ID_PU;
             result.IdGku = flat?.IdGku;
             result.LastReadingDate = ipuSource.LastReadingDate;
-            result.InterVerificationInterval = ipuSource.InterVerificationInterval;
+            result.InterVerificationInterval = DateTimes.GetYear(ipuSource.InterVerificationInterval ?? 0);
             result.UniqueApartmentNumber = flat?.UniqueApartmentNumber;
             result.Fias = address?.Fias;
             result.DateCheck = ipuSource.DATE_CHECK;

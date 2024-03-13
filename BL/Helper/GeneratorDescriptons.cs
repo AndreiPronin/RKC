@@ -193,9 +193,10 @@ namespace BL.Helper
                     }
                 }
                 IPU_COUNTERS IPU_COUNTERS = db.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
+                CheckDublicatePuNumber(saveModelIPU.NumberPU, saveModelIPU.NumberPU == IPU_COUNTERS.FACTORY_NUMBER_PU);
                 if (IPU_COUNTERS.FACTORY_NUMBER_PU != saveModelIPU.NumberPU && !string.IsNullOrEmpty(saveModelIPU.NumberPU)) Result.Append($"Изменили номер ПУ: было {IPU_COUNTERS.FACTORY_NUMBER_PU} стало {saveModelIPU.NumberPU} \r\n");
                 if (IPU_COUNTERS.DATE_CHECK != saveModelIPU.DATE_CHECK && saveModelIPU.DATE_CHECK != null) Result.Append($"Изменили дату поверки ПУ: было {IPU_COUNTERS.DATE_CHECK}  стало {saveModelIPU.DATE_CHECK}  \r\n");
-                if (IPU_COUNTERS.DATE_CHECK_NEXT != saveModelIPU.DATE_CHECK_NEXT && saveModelIPU.DATE_CHECK_NEXT != null) Result.Append($"Изменили дату следующей поверки ПУ: было {IPU_COUNTERS.DATE_CHECK_NEXT} стало {saveModelIPU.DATE_CHECK_NEXT}  \r\n");
+               // if (IPU_COUNTERS.DATE_CHECK_NEXT != saveModelIPU.DATE_CHECK_NEXT && saveModelIPU.DATE_CHECK_NEXT != null) Result.Append($"Изменили дату следующей поверки ПУ: было {IPU_COUNTERS.DATE_CHECK_NEXT} стало {saveModelIPU.DATE_CHECK_NEXT}  \r\n");
                 if (IPU_COUNTERS.MODEL_PU != saveModelIPU.MODEL_PU && !string.IsNullOrEmpty(saveModelIPU.MODEL_PU)) Result.Append($"Изменили модель ПУ: было {IPU_COUNTERS.MODEL_PU} стало {saveModelIPU.MODEL_PU}  \r\n");
                 if (IPU_COUNTERS.BRAND_PU != saveModelIPU.BRAND_PU && !string.IsNullOrEmpty(saveModelIPU.BRAND_PU)) Result.Append($"Изменили модель Бренд ПУ: было {IPU_COUNTERS.BRAND_PU} стало {saveModelIPU.BRAND_PU}  \r\n");
                 if (IPU_COUNTERS.SEALNUMBER != saveModelIPU.SEALNUMBER && !string.IsNullOrEmpty(saveModelIPU.SEALNUMBER)) Result.Append($"Изменили номер пломбы1: было {IPU_COUNTERS.SEALNUMBER} стало {saveModelIPU.SEALNUMBER}  \r\n");
@@ -210,6 +211,7 @@ namespace BL.Helper
                 if (IPU_COUNTERS.DESCRIPTION != saveModelIPU.DESCRIPTION && !string.IsNullOrEmpty(saveModelIPU.DESCRIPTION)) Result.Append($"Изменили примечание: {saveModelIPU.DESCRIPTION}\r\n");
                 if (saveModelIPU.DIMENSION != null && saveModelIPU.DIMENSION.Id != 0 && IPU_COUNTERS.DIMENSION_ID != saveModelIPU.DIMENSION.Id) Result.Append($"Изменили еденицу измерения: {saveModelIPU.DIMENSION.Name}\r\n");
                 if (saveModelIPU.InterVerificationInterval != null && IPU_COUNTERS.InterVerificationInterval != saveModelIPU.InterVerificationInterval) Result.Append($"Изменили МПИ: было {IPU_COUNTERS.InterVerificationInterval} стало {saveModelIPU.InterVerificationInterval}\r\n");
+                
             }
 
             return Result.ToString();

@@ -1,4 +1,18 @@
 ﻿@model IEnumerable<DB.Model.IPU_COUNTERS>
+<style>
+    .RequeredBorder input {
+        border: 1px solid;
+        border-radius: 5px;
+        border-color: red;
+        padding: 2px;
+    }
+    .RequeredBorder select {
+        border: 1px solid;
+        border-radius: 5px;
+        border-color: red;
+        padding: 2px;
+    }
+</style>
 
 <div class="modal fade" id="AddPUModal" tabindex="-1" role="dialog" aria-labelledby="ArchiveModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -6,13 +20,14 @@
             <div class="modal-header">
                 <input id="FULL_LIC_" value="@ViewBag.FULL_LIC" hidden="hidden" />
                 <h5 class="modal-title" id="exampleModalLabel">Добавление ПУ по лицевому счету @ViewBag.FULL_LIC </h5>
+                <h5 style="color:red" >Красным выделены обязательные поля для заполнения!</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div style="margin-top:15px;" class="col-md-12">
                 <div class="col-md-6">
-                    <div class="form-group row">
+                    <div class="form-group row RequeredBorder">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Номер ПУ:</label>
                         <div class="col-sm-8">
                             <input id="FACTORY_NUMBER_PU_" class="form-control" />
@@ -20,7 +35,7 @@
                     </div>
                     <hr />
                     <label style="font-weight: inherit; " class="NullOrEmpty">Внимание этот параметр не должен повторятся на странице!</label>
-                    <div class="form-group row">
+                    <div class="form-group row RequeredBorder">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Тип ПУ:</label>
                         <div class="col-sm-8">
                             <select id="TYPE_PU_Select" class="form-control">
@@ -32,19 +47,23 @@
                             </select>
                         </div>
                     </div>
-                    @*<hr />
-                    <div class="form-group row">
+                    <hr />
+                    <div class="form-group row RequeredBorder">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Бренд ПУ:</label>
                         <div class="col-sm-8">
-                            <input id="BRAND_PU_" class="form-control" />
-
+                            <select id="BRAND_PU_" class="form-control BRAND_PU_">
+                                <option value=""></option>
+                            </select>
                         </div>
-                    </div>*@
+                    </div>
                     <hr />
-                    <div class="form-group row">
+                    <div class="form-group row RequeredBorder">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Модель ПУ:</label>
                         <div class="col-sm-8">
-                            <input id="MODEL_PU_" class="form-control" />
+                            <select id="MODEL_PU_" class="form-control MODEL_PU_">
+                                <option value=""></option>
+                            </select>
+
                         </div>
                     </div>
                     <hr />
@@ -57,7 +76,7 @@
                     <hr />
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group row">
+                    <div class="form-group row RequeredBorder">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Дата акта ввода ПУ:</label>
                         <div class="col-sm-8">
                             <input type="date" id="INSTALLATIONDATE_" max="@DateTime.Now.Date.AddDays(0).ToString("yyyy-MM-dd")" class="form-control" />
@@ -65,25 +84,27 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="form-group row">
+                    <div class="form-group row RequeredBorder">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Дата поверки ПУ:</label>
                         <div class="col-sm-8">
                             <input type="date" id="DATE_CHECK_" max="@DateTime.Now.Date.AddDays(0).ToString("yyyy-MM-dd")" class="form-control" />
                         </div>
                     </div>
                     <hr />
+                    <label style="font-weight: inherit; " class="NullOrEmpty">Дата следующей поверки заполнится автоматически!</label>
                     <div class="form-group row">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Дата следующей поверки ПУ:</label>
                         <div class="col-sm-8">
-                            <input type="date" id="DATE_CHECK_NEXT_" max="@DateTime.Now.Date.AddYears(6).ToString("yyyy-MM-dd")" class="form-control" />
+                            <input type="date" readonly="readonly" disabled="disabled" id="DATE_CHECK_NEXT_" max="@DateTime.Now.Date.AddYears(6).ToString("yyyy-MM-dd")" class="form-control" />
 
                         </div>
                     </div>
                     <hr />
-                    <div class="form-group row">
-                        <label  style="font-weight:inherit;" class="col-sm-4 col-form-label;">Межповерочный интервал:</label>
+                    <div class="form-group row RequeredBorder">
+                        <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Межповерочный интервал:</label>
                         <div class="col-sm-8">
                             <select id="InterVerificationInterval_" class="form-control">
+                                <option value=""></option>
                                 <option value="4">4</option>
                                 <option value="5">5</option>
                                 <option value="6">6</option>
@@ -130,7 +151,7 @@
                     </div>
                     <hr />
 
-                    <div class="form-group row">
+                    <div class="form-group row RequeredBorder">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Начальные показания:</label>
                         <div class="col-sm-8">
                             <input type="text" id="InitialReadings" class="form-control" />
@@ -138,14 +159,14 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="form-group row">
+                    <div class="form-group row RequeredBorder">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Конечные показания:</label>
                         <div class="col-sm-8">
                             <input type="text" id="EndReadings" class="form-control" />
                         </div>
                     </div>
                     <hr />
-                    <div class="form-group row">
+                    <div class="form-group row RequeredBorder">
                         <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Единица измерения:</label>
                         <div class="col-sm-8">
                             <select id="DIMENSION_" class="form-control">
@@ -174,6 +195,57 @@
     }
 
     $(document).ready(function (e) {
+        $('#TYPE_PU_Select').on('focus', function (e) {
+            var brandPu = $('#BRAND_PU_ option:selected');
+            brandPu.empty().append(' ');
+            var modelPu = $('#MODEL_PU_ option:selected');
+            modelPu.empty().append(' ');
+        });
+        $('.BRAND_PU_').on('focus', function (e) {
+            var brandPu = $('#BRAND_PU_ option:selected');
+            brandPu.empty().append(' ');
+            var modelPu = $('#MODEL_PU_ option:selected');
+            modelPu.empty().append(' ');
+
+            $(".loader").addClass("hidden");
+            var TypePu = $("#TYPE_PU_Select option:selected").text()?.replace(/[0-9]/i, '');
+            var brandPu = "";
+            const BrandPU = $(this);
+            $.ajax({
+                url: `/Counter/GetDictionatyOption?Id=null&Text=${brandPu}&Type=BRAND_PU&TypePU=${TypePu}`,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    BrandPU.empty().append(data);
+                },
+                error: function () {
+                    $(".loader").addClass("hidden");
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
+        });
+        $('.MODEL_PU_').on('focus', function (e) {
+            $(".loader").addClass("hidden");
+            var TypePu = $("#TYPE_PU_Select option:selected").text()?.replace(/[0-9]/i, '');
+            console.log($("#TYPE_PU_Select option:selected").text());
+            var brandPu = $('#BRAND_PU_ option:selected').text();
+            console.log(brandPu);
+            const ModelPu = $(this);
+            $.ajax({
+                url: `/Counter/GetDictionatyOption?Id=null&Text=${brandPu}&Type=MODEL_PU&TypePU=${TypePu}`,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    ModelPu.empty().append(data);
+                },
+                error: function () {
+                    $(".loader").addClass("hidden");
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
+        })
         /*setTimeout(Reload, 480000);*/
         $("#Save").click(function (e) {
             if (Requared()) {
@@ -212,10 +284,10 @@
                             InitialReadings: $("#InitialReadings").val()?.replace('.', ','),
                             EndReadings: $("#EndReadings").val()?.replace('.', ','),
                             FULL_LIC: $("#FULL_LIC_").val(),
+                            MODEL_PU: $('#MODEL_PU_ option:selected').text(),
+                            BRAND_PU: $('#BRAND_PU_ option:selected').text(),
                             FACTORY_NUMBER_PU: $('#FACTORY_NUMBER_PU_').val(),
                             TYPE_PU: $("#TYPE_PU_Select").val(),
-                            BRAND_PU: $('#BRAND_PU_').val(),
-                            MODEL_PU: $('#MODEL_PU_').val(),
                             DESCRIPTION: $('#DESCRIPTION_').val(),
                             INSTALLATIONDATE: $('#INSTALLATIONDATE_').val(),
                             DATE_CHECK: $('#DATE_CHECK_').val(),
@@ -232,11 +304,15 @@
                     }),
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
-                        window.location.reload();
+                        if (data === "") {
+                            window.location.reload();
+                        } else { alert(data); }
+                        $("#Save").removeClass("hidden");
                     },
-                    error: function () {
-                        alert("Что то пошло не так. Обратитесь к администратору");
-                        $(".Save").removeClass("hidden");
+                    error: function (data) {
+                        console.log(data);
+                        alert(data);
+                        $("#Save").removeClass("hidden");
                     }
                 });
             }
@@ -254,7 +330,35 @@
             if ($("#TYPE_PU_Select").val() == 0) {
                 $("#TYPE_PU_Select").addClass("Required");
                 Err++;
-            } else { $("#TYPE_PU_Select").removeClass("Required");}
+            } else { $("#TYPE_PU_Select").removeClass("Required"); }
+            if ($("#FACTORY_NUMBER_PU_").val() == "") {
+                $("#FACTORY_NUMBER_PU_").addClass("Required");
+                Err++;
+            } else { $("#FACTORY_NUMBER_PU_").removeClass("Required"); }
+            if ($("#DATE_CHECK_").val() == "") {
+                $("#DATE_CHECK_").addClass("Required");
+                Err++;
+            } else { $("#DATE_CHECK_").removeClass("Required"); }
+            if ($("#InterVerificationInterval_").val() == "") {
+                $("#InterVerificationInterval_").addClass("Required");
+                Err++;
+            } else { $("#InterVerificationInterval_").removeClass("Required"); }
+            if ($("#BRAND_PU_").val() == "") {
+                $("#BRAND_PU_").addClass("Required");
+                Err++;
+            } else { $("#BRAND_PU_").removeClass("Required"); }
+            if ($("#MODEL_PU_").val() == "") {
+                $("#MODEL_PU_").addClass("Required");
+                Err++;
+            } else { $("#MODEL_PU_").removeClass("Required"); }
+            if ($("#INSTALLATIONDATE_").val() == "") {
+                $("#INSTALLATIONDATE_").addClass("Required");
+                Err++;
+            } else { $("#INSTALLATIONDATE_").removeClass("Required"); }
+            if ($("#DIMENSION_").val() == "") {
+                $("#DIMENSION_").addClass("Required");
+                Err++;
+            } else { $("#DIMENSION_").removeClass("Required"); }
             if (Err > 0) { return false; } else { return true; }
         }
         });

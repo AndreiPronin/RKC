@@ -94,6 +94,7 @@
     <Compile Include="Service\CounterServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\IntegrationsServiceTest.cs" />
+    <Compile Include="Service\MkdInformationServiceTest.cs" />
     <Compile Include="Service\SocialHiringSerbiceTest.cs" />
   </ItemGroup>
   <ItemGroup>

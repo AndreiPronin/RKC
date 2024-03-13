@@ -21,7 +21,7 @@ namespace BL.Helper
                 BRAND_PU = model.BRAND_PU,
                 CLOSE_ = model.CLOSE_,
                 DATE_CHECK = model.DATE_CHECK,
-                DATE_CHECK_NEXT = model.DATE_CHECK_NEXT,
+                DATE_CHECK_NEXT = model.DATE_CHECK.Value.AddYears(model.InterVerificationInterval.Value),
                 TYPE_PU = GetDescriptionEnum.GetDescription(model.TYPE_PU),
                 INSTALLATIONDATE = model.INSTALLATIONDATE,
                 FACTORY_NUMBER_PU = model.FACTORY_NUMBER_PU,
@@ -35,6 +35,7 @@ namespace BL.Helper
                 FULL_LIC = model.FULL_LIC,
                 DIMENSION_ID = model.DIMENSION?.Id,
                 LastReadingDate = DateTime.Now,
+                InterVerificationInterval = model.InterVerificationInterval
             };
         }
         public static IPU ModelAddpu_To_IPU(ModelAddPU model)

@@ -40,7 +40,13 @@ namespace BL.Services
         /// Проверяет есть ли в базе ПУ с таким номером прибора учета
         /// </summary>
         /// <param name="Number">Номер прибора учета</param>
-        void CheckDublicatePuNumber(string Number);
+        /// <param name="changeNumberPu">Измеился ли номер пу для корректировки условий проверки</param>
+        void CheckDublicatePuNumber(string Number, bool changeNumberPu = false);
+        /// <summary>
+        /// Проверяет есть ли в базе ПУ с таким номером прибора учета (Работает только при добавлении)
+        /// </summary>
+        /// <param name="Number">Номер прибора учета</param>
+        void CheckDublicateAddPuNumber(string Number);
     }
     public class BaseService : IBaseService
     {
@@ -206,16 +212,37 @@ namespace BL.Services
             }
 
         }
-        public void CheckDublicatePuNumber(string Number)
+        public void CheckDublicatePuNumber(string Number, bool changeNumberPu = false)
         {
             if (string.IsNullOrEmpty(Number))
                 return;
             using(var context = new DbTPlus())
             {
                 var result = context.IPU_COUNTERS.Where(x=>x.FACTORY_NUMBER_PU == Number && x.CLOSE_ != true).ToList();
-                if(result != null && result.Count()>1)
-                    throw new Exception($@"Такой номер уже существует на лицевом счете {result.FirstOrDefault().FULL_LIC}, {result.LastOrDefault().FULL_LIC} 
-тип прибора учета {result.FirstOrDefault().TYPE_PU}, {result.LastOrDefault().TYPE_PU}");
+                if (changeNumberPu)
+                {
+                    if (result != null && result.Count() > 1)
+                        throw new Exception($@"Такой номер уже существует на лицевом счете {result.FirstOrDefault()?.FULL_LIC}, {result.LastOrDefault()?.FULL_LIC} 
+тип прибора учета {result.FirstOrDefault()?.TYPE_PU}, {result.LastOrDefault()?.TYPE_PU}");
+                }
+                else
+                {
+                    if (result != null && result.Count() >= 1)
+                        throw new Exception($@"Такой номер уже существует на лицевом счете {result.FirstOrDefault()?.FULL_LIC}
+тип прибора учета {result.FirstOrDefault()?.TYPE_PU}");
+                }
+            }
+        }
+        public void CheckDublicateAddPuNumber(string Number)
+        {
+            if (string.IsNullOrEmpty(Number))
+                return;
+            using (var context = new DbTPlus())
+            {
+                var result = context.IPU_COUNTERS.Where(x => x.FACTORY_NUMBER_PU == Number && x.CLOSE_ != true).ToList();
+                if (result != null && result.Count() >= 1)
+                    throw new Exception($@"Такой номер уже существует на лицевом счете {result.FirstOrDefault()?.FULL_LIC}
+тип прибора учета {result.FirstOrDefault()?.TYPE_PU}");
             }
         }
     }

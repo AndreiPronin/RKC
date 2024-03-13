@@ -50,7 +50,6 @@ namespace DB.Model
         public string MODEL_PU { get; set; }
        // [Key]
         public string GIS_ID_PU { get; set; }
-        public string SEAL_NUMBER { get; set; }
         public string DESCRIPTION { get; set; }
         public bool? CLOSE_ { get; set; }
         public DateTime? DATE_CHECK { get; set; }

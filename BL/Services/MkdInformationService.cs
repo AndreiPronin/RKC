@@ -18,6 +18,7 @@ namespace BL.Services
         MainInformationModel GetAddressMKD(int Id);
         HistoryOdpuModel GetHistoryOdpu(int Id, DateTime DateFrom, DateTime DateTo);
         List<RecalculationsForMKDByCadrBe> HistoryRecalculation(int AddressId);
+        AddressMKDBe GetAddressMKD(string FullLic);
     }
     public class MkdInformationService : IMkdInformationService
     {
@@ -56,22 +57,30 @@ namespace BL.Services
             using (var db = new DbTPlus())
             {
                 var MainInform = new MainInformationModel();
-                var config = new MapperConfiguration(cfg =>
-                {
-                    cfg.CreateMap<AddressMKD, AddressMKDBe>();
-                    cfg.CreateMap<AddressReadings, AddressReadingsBe>();
-
-                });
-                var mapper = new Mapper(config);
 
                 var resultAdress = db.addresses.FirstOrDefault(x => x.AddressId == Id);
                 var resultAdressReadings = db.addressReadings.OrderByDescending(x=>x.Period).FirstOrDefault(x => x.AddressId == Id);
 
-                MainInform.AddressMKD = mapper.Map<AddressMKDBe>(resultAdress);
-                MainInform.AddressReadings = mapper.Map<AddressReadingsBe>(resultAdressReadings);
+                MainInform.AddressMKD = _mapper.Map<AddressMKDBe>(resultAdress);
+                MainInform.AddressReadings = _mapper.Map<AddressReadingsBe>(resultAdressReadings);
                 if(MainInform.AddressReadings == null)
                     MainInform.AddressReadings = new AddressReadingsBe();
                 return MainInform;
+            }
+        }
+        public AddressMKDBe GetAddressMKD(string FullLic)
+        {
+
+            using (var db = new DbLIC())
+            {
+                using (var dbTplus = new DbTPlus())
+                {
+                    var res = db.ALL_LICS.Where(x => x.F4ENUMELS == FullLic).Select(x => x.CADR).FirstOrDefault()?.ToString();
+                    int.TryParse(res, out int Cadr);
+                    var resultAdress = dbTplus.addresses.FirstOrDefault(x => x.AddressId == Cadr);
+                    var AddressMKD = _mapper.Map<AddressMKDBe>(resultAdress);
+                    return AddressMKD;
+                }
             }
         }
 
@@ -80,18 +89,11 @@ namespace BL.Services
             using (var db = new DbTPlus())
             {
                 var history = new HistoryOdpuModel();
-                var config = new MapperConfiguration(cfg =>
-                {
-                    cfg.AllowNullCollections = true;
-                    cfg.CreateMap<AddressReadings, AddressReadingsBe>().ReverseMap();
-                    cfg.CreateMap<AddressMKD, AddressMKDBe>().ReverseMap();
-                });
-                var mapper = new Mapper(config);
                 var resultAdress = db.addresses.FirstOrDefault(x => x.AddressId == Id);
                 var resultAdressReadings = db.addressReadings.OrderByDescending(x => x.Period).Where(x => x.AddressId == Id 
                 && x.Period >= DateFrom && x.Period <= DateTo ).ToList();
-                history.addressMKD = mapper.Map<AddressMKDBe>(resultAdress);
-                history.addressReadings = mapper.Map<List<AddressReadingsBe>>(resultAdressReadings);
+                history.addressMKD = _mapper.Map<AddressMKDBe>(resultAdress);
+                history.addressReadings = _mapper.Map<List<AddressReadingsBe>>(resultAdressReadings);
               
                 return history;
             }

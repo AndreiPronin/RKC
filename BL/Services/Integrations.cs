@@ -16,6 +16,7 @@ using System.Threading;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DB.Extention;
 using AutoMapper;
+using BL.Services;
 
 namespace BL.Service
 {
@@ -28,14 +29,16 @@ namespace BL.Service
     public class Integrations : IIntegrations
     {
         private readonly IMapper _mapper;
-        public Integrations(IMapper mapper) {
+        private readonly IMkdInformationService _mkdInformationService;
+        public Integrations(IMapper mapper, IMkdInformationService mkdInformationService) {
             _mapper = mapper;
+            _mkdInformationService = mkdInformationService;
         }
         public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period, INotificationMail _notificationMail, ICounter _counter, string Lic = "", DateTime? paymentDate = null)
         {
             object Lock = new object();
             cacheApp.AddProgress(User + "_", "0");
-            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper);
+            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper, IMkdInformationService _mkdInformationService);
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
             var dbs = new DbPayment();
             var DbLIC = new DbLIC();
