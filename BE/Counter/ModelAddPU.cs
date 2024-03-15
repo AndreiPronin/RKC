@@ -14,7 +14,7 @@ namespace BE.Counter
         public int ID_PU { get; set; }
         public string FACTORY_NUMBER_PU { get; set; }
         public string GIS_ID_PU { get; set; }
-        public TypePU TYPE_PU { get; set; }
+        public TypePU? TYPE_PU { get; set; }
         public string BRAND_PU { get; set; }
         public string MODEL_PU { get; set; }
         public string SEAL_NUMBER { get; set; }

@@ -21,7 +21,7 @@ namespace BL.Helper
                 BRAND_PU = model.BRAND_PU,
                 CLOSE_ = model.CLOSE_,
                 DATE_CHECK = model.DATE_CHECK,
-                DATE_CHECK_NEXT = model.DATE_CHECK.Value.AddYears(model.InterVerificationInterval.Value),
+                DATE_CHECK_NEXT = model.DATE_CHECK?.AddYears(model.InterVerificationInterval.Value),
                 TYPE_PU = GetDescriptionEnum.GetDescription(model.TYPE_PU),
                 INSTALLATIONDATE = model.INSTALLATIONDATE,
                 FACTORY_NUMBER_PU = model.FACTORY_NUMBER_PU,

@@ -345,53 +345,58 @@ namespace BL.Counters
         }
         public void AutoAddPU(string Full_LIC)
         {
-            ALL_LICS aLL_LICS = new ALL_LICS();
+            var aLL_LICS = new ALL_LICS();
             using (var DBAll = new DbLIC())
             {
                 aLL_LICS = DBAll.ALL_LICS.Where(x => x.F4ENUMELS == Full_LIC).FirstOrDefault();
             }
-            var DbTPlus = new DbTPlus();
-            List<IPU_COUNTERS> iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == Full_LIC).ToList();
-            //if (iPU_COUNTERs.Count() > 0) { return; }
-            if (/*aLL_LICS.FKUB1XVS>0 || aLL_LICS.FKUB2XVS > 0 ||*/ aLL_LICS.FKUBSXVS != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ГВС1")).Count() ==0)
+            using (var DbTPlus = new DbTPlus())
             {
-                DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС1", FULL_LIC = Full_LIC,DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now});
-                DbTPlus.SaveChanges();
-            }
-            if (/*aLL_LICS.FKUB1XV_2 > 0 || aLL_LICS.FKUB2XV_2 > 0 ||*/ aLL_LICS.FKUBSXV_2 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ГВС2")).Count() == 0)
-            {
-                DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС2", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
-                DbTPlus.SaveChanges();
-            }
-            if (/*aLL_LICS.FKUB1XV_3 > 0 || aLL_LICS.FKUB2XV_3 > 0 ||*/ aLL_LICS.FKUBSXV_3 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ГВС3")).Count() == 0)
-            {
-                DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС3", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
-                DbTPlus.SaveChanges();
-            }
-            if (/*aLL_LICS.FKUB1XV_4 > 0 || aLL_LICS.FKUB2XV_4 > 0 ||*/ aLL_LICS.FKUBSXV_4 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ГВС4")).Count() == 0)
-            {
-                DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС4", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
-                DbTPlus.SaveChanges();
-            }
-            if (/*aLL_LICS.FKUB1OT_1 > 0 || aLL_LICS.FKUB2OT_1 > 0 ||*/ aLL_LICS.FKUBSOT_1 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ОТП1")).Count() == 0)
-            {
-                DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП1", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
-                DbTPlus.SaveChanges();
-            }
-            if (/*aLL_LICS.FKUB1OT_2 > 0 || aLL_LICS.FKUB2OT_2 > 0 ||*/ aLL_LICS.FKUBSOT_2 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ОТП2")).Count() == 0)
-            {
-                DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП2", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
-                DbTPlus.SaveChanges();
-            }
-            if (/*aLL_LICS.FKUB1OT_3 > 0 || aLL_LICS.FKUB2OT_3 > 0 ||*/ aLL_LICS.FKUBSOT_3 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ОТП3")).Count() == 0)
-            {
-                DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП3", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
-                DbTPlus.SaveChanges();
-            }
-            if (/*aLL_LICS.FKUB1OT_4 > 0 || aLL_LICS.FKUB2OT_4 > 0 ||*/ aLL_LICS.FKUBSOT_4 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ОТП4")).Count() == 0)
-            {
-                DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП4", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
-                DbTPlus.SaveChanges();
+                List<IPU_COUNTERS> iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == Full_LIC).ToList();
+                var address = _mkdInformationService.GetAddressMKD(Full_LIC);
+                if (address?.IpuGvs == true)
+                {
+                    if (aLL_LICS.FKUBSXVS != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ГВС1")).Count() == 0)
+                    {
+                        DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС1", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
+                        DbTPlus.SaveChanges();
+                    }
+                    if (aLL_LICS.FKUBSXV_2 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ГВС2")).Count() == 0)
+                    {
+                        DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС2", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
+                        DbTPlus.SaveChanges();
+                    }
+                    if (aLL_LICS.FKUBSXV_3 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ГВС3")).Count() == 0)
+                    {
+                        DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС3", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
+                        DbTPlus.SaveChanges();
+                    }
+                    if (aLL_LICS.FKUBSXV_4 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ГВС4")).Count() == 0)
+                    {
+                        DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ГВС4", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
+                        DbTPlus.SaveChanges();
+                    }
+                }
+                if (aLL_LICS.FKUBSOT_1 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ОТП1")).Count() == 0)
+                {
+                    DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП1", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
+                    DbTPlus.SaveChanges();
+                }
+                if (aLL_LICS.FKUBSOT_2 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ОТП2")).Count() == 0)
+                {
+                    DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП2", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
+                    DbTPlus.SaveChanges();
+                }
+                if (aLL_LICS.FKUBSOT_3 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ОТП3")).Count() == 0)
+                {
+                    DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП3", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
+                    DbTPlus.SaveChanges();
+                }
+                if (aLL_LICS.FKUBSOT_4 != 0 && iPU_COUNTERs.Where(x => x.TYPE_PU.Contains("ОТП4")).Count() == 0)
+                {
+                    DbTPlus.IPU_COUNTERS.Add(new IPU_COUNTERS { TYPE_PU = "ОТП4", FULL_LIC = Full_LIC, DESCRIPTION = "Добавлен Автоматически системой", LastReadingDate = DateTime.Now });
+                    DbTPlus.SaveChanges();
+                }
             }
         }
         public IPU_COUNTERS GetInfoPU(string FULL_LIC, string TYPE_PU,bool Close = false)

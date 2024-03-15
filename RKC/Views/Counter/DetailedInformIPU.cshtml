@@ -766,11 +766,6 @@ else
                     $(".Save").removeClass("hidden");
                     return;
                 }
-                if (DATE_CHECK_NEXT != undefined && new Date(DATE_CHECK_NEXT) < new Date(DATE_CHECK)) {
-                    alert("Дата следующей поверки не должна быть меньше даты поверки");
-                    $(".Save").removeClass("hidden");
-                    return;
-                }
 
                 if ($(this).parent().find('.OVERWRITE').prop("checked")) {
                     check = true;

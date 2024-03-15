@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BE.Counter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,30 @@ namespace BL.Extention
                 return "ОТП4";
 
             return string.Empty;
+        }
+    }
+    public static class GetTypePuOfString
+    {
+        public static TypePU? GetTypePu(this string Value)
+        {
+            if (Value == "ГВС1")
+                return TypePU.GVS1;
+            if (Value == "ГВС2")
+                return TypePU.GVS2;
+            if (Value == "ГВС3")
+                return TypePU.GVS3;
+            if (Value == "ГВС4")
+                return TypePU.GVS4;
+            if (Value == "ОТП1")
+                return TypePU.ITP1;
+            if (Value == "ОТП2")
+                return TypePU.ITP2;
+            if (Value == "ОТП3")
+                return TypePU.ITP3;
+            if (Value == "ОТП4")
+                return TypePU.ITP4;
+
+            return null;
         }
     }
 }

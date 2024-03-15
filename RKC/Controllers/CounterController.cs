@@ -353,6 +353,19 @@ namespace RKC.Controllers
                     }
                 }
             }
+            if (TypeLoad == 9)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    wb.Worksheets.Add(_excel.OpenNewPuWithIndications(workbook, User, _cacheApp));
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }
+            }
             return null;
         }
         public ActionResult GetProgress(string Name)

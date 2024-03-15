@@ -38,7 +38,7 @@ namespace BL.Service
         {
             object Lock = new object();
             cacheApp.AddProgress(User + "_", "0");
-            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper, IMkdInformationService _mkdInformationService);
+            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper, _mkdInformationService);
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
             var dbs = new DbPayment();
             var DbLIC = new DbLIC();

@@ -3,13 +3,16 @@ using AutoMapper;
 using BE.Counter;
 using BE.PersData;
 using BL.Counters;
+using BL.Extention;
 using BL.Helper;
+using BL.Rules;
 using BL.Services;
 using ClosedXML.Excel;
 using DB.DataBase;
 using DB.Model;
 using DB.ViewModel;
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using IDictionary = BL.Services.IDictionary;
 
 namespace BL.Excel
 {
@@ -32,6 +36,7 @@ namespace BL.Excel
         Task<DataTable> CreateExcelLogCounter();
         DataTable LoadExcelPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelNewPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        DataTable OpenNewPuWithIndications(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelNewPersonalData(XLWorkbook Excels, string User, ICacheApp cacheApp);
         DataTable LoadExcelUpdatePersonalDataMain(XLWorkbook Excels, string User, ICacheApp cacheApp);
         Task<DataTable> LoadExcelArrayCloseLicAsync(XLWorkbook Excels, string User, ICacheApp cacheApp);
@@ -55,8 +60,9 @@ namespace BL.Excel
         private readonly IMapper _mapper;
         private readonly ICounter _counter;
         private readonly IPersonalData _personalData;
+        private readonly IMkdInformationService _mkdInformationService;
         public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, IDictionary dictionary,IReport report, 
-            IMapper mapper, ICounter counter, IPersonalData personalData)
+            IMapper mapper, ICounter counter, IPersonalData personalData, IMkdInformationService mkdInformationService)
         {
             _cacheApp = cacheApp;
             _generatorDescriptons = generatorDescriptons;
@@ -66,6 +72,7 @@ namespace BL.Excel
             _mapper = mapper;
             _counter = counter;
             _personalData = personalData;
+            _mkdInformationService = mkdInformationService;
         }
         public DataTable CreateExcelCounters()
         {
@@ -120,7 +127,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper);
+            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper, _mkdInformationService);
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
             var dbApp = new ApplicationDbContext();
             var Count = nonEmptyDataRows.Count();
@@ -215,11 +222,114 @@ namespace BL.Excel
             }
             return dt;
         }
+        public DataTable OpenNewPuWithIndications(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress(User + "_", "0");
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper, _mkdInformationService);
+            List<ModelAddPU> COUNTERsNotAdded = new List<ModelAddPU>();
+            var dbApp = new ApplicationDbContext();
+            var Count = nonEmptyDataRows.Count();
+            int i = 1;
+            var dictionaryBrand = new List<BRAND>();
+            using (var db = new DbTPlus())
+            {
+                dictionaryBrand = db.BRAND.Include(x=>x.MODEL).ToList();
+            }
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    i++;
+                    try
+                    {
+                        var Procent = Math.Round((float)i / Count * 100, 0);
+                        cacheApp.UpdateProgress(User, Procent.ToString());
+                        ModelAddPU modelAddPU = new ModelAddPU();
+                        modelAddPU.DIMENSION = new BE.Counter.DIMENSION();
+                        var integrationReadings = new IntegrationReadings();
+                        modelAddPU.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
+                        var typePu = dataRow.Cell(2).Value == "" ? null : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "").GetTypePu();
+                        if(typePu.HasValue)
+                            modelAddPU.TYPE_PU = typePu.Value;
+
+                        if (dataRow.Cell(3).Value != "")
+                        {
+                            modelAddPU.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value);
+                            if (modelAddPU?.INSTALLATIONDATE > DateTime.Now)
+                            {
+                                throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
+                            }
+                        }
+                        modelAddPU.FACTORY_NUMBER_PU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
+                        modelAddPU.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
+                        modelAddPU.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
+                        var Counter = counter.GetInfoPU(modelAddPU.FULL_LIC, modelAddPU.TYPE_PU.GetDescription());
+                        if (dataRow.Cell(7).Value != "")
+                        {
+                            var DateCheck = Convert.ToDateTime(dataRow.Cell(7).Value);
+                            if (DateCheck > DateTime.Now)
+                            {
+                                throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
+                            }
+                            if (DateCheck < Counter?.DATE_CHECK)
+                                throw new Exception("Дата поверки меньше даты в базе");
+
+                            modelAddPU.DATE_CHECK = Convert.ToDateTime(dataRow.Cell(7).Value);
+                        }
+                        if (dataRow.Cell(8).Value != "")
+                        {
+                            var DateCheckNext = Convert.ToDateTime(dataRow.Cell(8).Value);
+                            if (DateCheckNext > DateTime.Now.AddYears(6))
+                            {
+                                throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
+                            }
+                            if (DateCheckNext < Counter?.DATE_CHECK_NEXT)
+                                throw new Exception("Дата слудющей поверки меньше даты в базе");
+
+                            modelAddPU.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);
+                        }
+                        modelAddPU.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
+                        modelAddPU.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
+                        modelAddPU.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
+                        modelAddPU.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
+                        modelAddPU.DIMENSION.Id = dataRow.Cell(13).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(13).Value);
+
+                        modelAddPU.DIMENSION.Id = dataRow.Cell(16).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(16).Value);
+
+                        if (dataRow.Cell(14).Value != "")
+                        {
+                            modelAddPU.InterVerificationInterval = Convert.ToInt32(Convert.ToString(dataRow.Cell(14).Value));
+                        }
+                        modelAddPU.InitialReadings = dataRow.Cell(15).Value == "" ? 0 : Convert.ToDecimal(dataRow.Cell(15).Value);
+                        modelAddPU.EndReadings = dataRow.Cell(16).Value == "" ? 0 : Convert.ToDecimal(dataRow.Cell(16).Value);
+                        modelAddPU.DESCRIPTION = dataRow.Cell(17).Value == "" ? "" : Convert.ToString(dataRow.Cell(17).Value).Replace(" ", "");
+                        SaveModelIPURules.ValidationExcelAddPu(modelAddPU, dictionaryBrand);
+                        counter.AddPU(modelAddPU, User);
+                        COUNTERsNotAdded.Add(new ModelAddPU { FULL_LIC =modelAddPU.FULL_LIC, TYPE_PU = modelAddPU.TYPE_PU, DESCRIPTION ="Успешно добавлен" });
+                    }
+                    catch (Exception ex)
+                    {
+                        COUNTERsNotAdded.Add(new ModelAddPU { FULL_LIC = $"Ошибка на {i} строке", DESCRIPTION = ex.Message });
+                    }
+                }
+            }
+            DataTable dt = new DataTable("Counter");
+            dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Лицевой счет"),
+                                        new DataColumn("Тип ПУ"),
+                                        new DataColumn("Номер"),
+                                        new DataColumn("Примечание")});
+            foreach (var Items in COUNTERsNotAdded)
+            {
+                dt.Rows.Add(Items.FULL_LIC, Items.TYPE_PU?.GetDescription(), Items.FACTORY_NUMBER_PU, Items.DESCRIPTION);
+            }
+            return dt;
+        }
         public DataTable LoadExcelNewPUProperty(XLWorkbook Excels, string User, ICacheApp cacheApp)
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper);
+            Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper, _mkdInformationService);
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
             var dbApp = new ApplicationDbContext();
             var Count = nonEmptyDataRows.Count();
@@ -569,7 +679,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            Counter _counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper);
+            Counter _counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper, _mkdInformationService);
             List<IPU_COUNTERS> CounterNotClose = new List<IPU_COUNTERS>();
             var DbTPlus = new DbTPlus();
             var Count = nonEmptyDataRows.Count();
