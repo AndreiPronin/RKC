@@ -294,9 +294,6 @@ namespace BL.Excel
                         modelAddPU.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
                         modelAddPU.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
                         modelAddPU.DIMENSION.Id = dataRow.Cell(13).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(13).Value);
-
-                        modelAddPU.DIMENSION.Id = dataRow.Cell(16).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(16).Value);
-
                         if (dataRow.Cell(14).Value != "")
                         {
                             modelAddPU.InterVerificationInterval = Convert.ToInt32(Convert.ToString(dataRow.Cell(14).Value));
@@ -304,7 +301,8 @@ namespace BL.Excel
                         modelAddPU.InitialReadings = dataRow.Cell(15).Value == "" ? 0 : Convert.ToDecimal(dataRow.Cell(15).Value);
                         modelAddPU.EndReadings = dataRow.Cell(16).Value == "" ? 0 : Convert.ToDecimal(dataRow.Cell(16).Value);
                         modelAddPU.DESCRIPTION = dataRow.Cell(17).Value == "" ? "" : Convert.ToString(dataRow.Cell(17).Value).Replace(" ", "");
-                        SaveModelIPURules.ValidationExcelAddPu(modelAddPU, dictionaryBrand);
+                        var typeNotUsePu = _counter.GetTypeNowUsePU(modelAddPU.FULL_LIC);
+                        SaveModelIPURules.ValidationExcelAddPu(modelAddPU, dictionaryBrand, typeNotUsePu);
                         counter.AddPU(modelAddPU, User);
                         COUNTERsNotAdded.Add(new ModelAddPU { FULL_LIC =modelAddPU.FULL_LIC, TYPE_PU = modelAddPU.TYPE_PU, DESCRIPTION ="Успешно добавлен" });
                     }

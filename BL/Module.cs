@@ -12,6 +12,7 @@ using BL.Services;
 using Ninject;
 using WordGenerator;
 using WordGenerator.interfaces;
+using BL.Services.FileServices;
 
 namespace BL
 {
@@ -20,6 +21,7 @@ namespace BL
         public static void RegistrationService(IKernel kernel)
         {
             kernel.Bind<ICounter>().To<Counter>();
+            kernel.Bind<ICounterFileServices>().To<CounterFileServices>();
             kernel.Bind<Ilogger>().To<Logger>();
             kernel.Bind<IGeneratorDescriptons>().To<GeneratorDescriptons>();
             kernel.Bind<ICacheApp>().To<CacheApp>().InSingletonScope();

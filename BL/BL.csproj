@@ -66,7 +66,7 @@
     <Compile Include="Extention\ConvertToModelHelpCalculations.cs" />
     <Compile Include="Extention\CounterExtensions.cs" />
     <Compile Include="Extention\DateTimes.cs" />
-    <Compile Include="Extention\GetTypePuOfDecimal.cs" />
+    <Compile Include="Extention\GetTypePu.cs" />
     <Compile Include="Extention\StringExtenstions.cs" />
     <Compile Include="Extention\StringWriterExtension.cs" />
     <Compile Include="Helper\ConvertJson.cs" />
@@ -95,6 +95,7 @@
     <Compile Include="Services\Court.cs" />
     <Compile Include="Services\Dictionarys.cs" />
     <Compile Include="Services\Dpu.cs" />
+    <Compile Include="Services\FileServices\CounterFileServices.cs" />
     <Compile Include="Services\Integrations.cs" />
     <Compile Include="Security\SecurityProvider.cs" />
     <Compile Include="Services\Counter.cs" />
@@ -149,6 +150,9 @@
     </PackageReference>
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.Mvc">
+      <Version>5.2.7</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Http">
       <Version>3.1.32</Version>

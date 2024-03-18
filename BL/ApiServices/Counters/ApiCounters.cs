@@ -13,6 +13,7 @@ namespace BL.ApiServices.Counters
     {
         Task<ResultResponse<string, List<IpuGisReading>>> GetIpuReadingsForGis(DateTime period, int? take, string lastLic = "");
         Task<ResultResponse<string, List<IpuGisReadingActive>>> GetIpuReadingsForGisActive(int? take, string lastLic = "");
+        Task<List<FullLicByGisId>> GetFullLicBuGuidGis(List<string> gisId);
     }
     public class ApiCounters : Repository, IApiCounters
     {
@@ -56,6 +57,11 @@ namespace BL.ApiServices.Counters
                     result.value.Add(iPU_COUNTER);
             }
             result.lastId = Allic.LastOrDefault()?.F4ENUMELS;
+            return result;
+        }
+        public async Task<List<FullLicByGisId>> GetFullLicBuGuidGis(List<string> gisId)
+        {
+            var result = await getFullLicBuGuidGis(gisId);
             return result;
         }
 

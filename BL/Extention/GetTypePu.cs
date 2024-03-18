@@ -30,6 +30,15 @@ namespace BL.Extention
 
             return string.Empty;
         }
+        public static bool TypePuIsGvs(this TypePU? Value)
+        {
+            if(Value == null) return false;
+
+            if(Value == TypePU.GVS1 || Value == TypePU.GVS2 || Value == TypePU.GVS3 || Value == TypePU.GVS4)
+                return true;
+
+            return false;
+        }
     }
     public static class GetTypePuOfString
     {

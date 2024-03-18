@@ -1,4 +1,5 @@
-﻿using Castle.Core.Internal;
+﻿using BE.Counter;
+using Castle.Core.Internal;
 using DB.DataBase;
 using DB.Model;
 using System;
@@ -58,6 +59,16 @@ namespace BL.ApiServices.Counters
                 && (x.FACTORY_NUMBER_PU != null || x.FACTORY_NUMBER_PU != "")
                 && (x.BRAND_PU != null || x.BRAND_PU != "")
                 && Allic.Contains(x.FULL_LIC)).ToListAsync(); ;
+            }
+        }
+        protected async Task<List<FullLicByGisId>> getFullLicBuGuidGis(List<string> gisId)
+        {
+            using (var contextTPlus = new DbTPlus())
+            {
+                var result =  await contextTPlus.IPU_COUNTERS.Where(x => gisId.Contains(x.GIS_ID_PU))
+                    .Select(x=> new FullLicByGisId { FullLic = x.FULL_LIC, GisId = x.GIS_ID_PU})
+                    .ToListAsync();
+                return result;
             }
         }
     }

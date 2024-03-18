@@ -49,6 +49,7 @@
     <Compile Include="Counter\Dictionary.cs" />
     <Compile Include="Counter\DIMENSION.cs" />
     <Compile Include="Counter\Enum.cs" />
+    <Compile Include="Counter\FullLicAndGuid.cs" />
     <Compile Include="Counter\IpuGisReading.cs" />
     <Compile Include="Counter\IpuNotFoundInLick.cs" />
     <Compile Include="Counter\MassCloseLicReport.cs" />

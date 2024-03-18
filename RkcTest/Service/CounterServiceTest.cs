@@ -11,6 +11,7 @@ using Ninject;
 using Moq;
 using AutoMapper;
 using BL;
+using BL.Services;
 
 namespace RkcTest.Service
 {
@@ -23,7 +24,7 @@ namespace RkcTest.Service
             var kernel = new StandardKernel(); ;
             Module.RegistrationService(kernel);
             new AutoMapperModule().RegisterServices(kernel);
-            Counter = new Counter(kernel.Get<Ilogger>(), kernel.Get<IGeneratorDescriptons>(), kernel.Get<IMapper>());
+            Counter = new Counter(kernel.Get<Ilogger>(), kernel.Get<IGeneratorDescriptons>(), kernel.Get<IMapper>(), kernel.Get<IMkdInformationService>());
         }
         [TestMethod]
         public async Task DetailInfromsAllAsync()

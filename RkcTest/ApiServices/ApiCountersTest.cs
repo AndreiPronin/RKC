@@ -50,5 +50,12 @@ namespace RkcTest.ApiServices
             }
             Assert.IsNotNull(ipuGisReadingActives);
         }
+        [TestMethod]
+        public async Task GetFullLicBuGuidGis()
+        {
+            var fullLicByGisId = new List<string>() { "8Myc02145600037", "2Myc02145600038" };
+            var result = await _apiCounters.GetFullLicBuGuidGis(fullLicByGisId);
+            Assert.IsNotNull(result);
+        }
     }
 }

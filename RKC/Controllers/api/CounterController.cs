@@ -59,6 +59,14 @@ namespace RKC.Controllers.api
             var result = await _apiCounters.GetIpuReadingsForGisActive(take, lastId);
             return result;
         }
+        [JwtAuthentication]
+        [HttpGet]
+        [Route("GetFullLicBuGuidGis")]
+        public async Task<List<FullLicByGisId>> GetFullLicBuGuidGis(List<string> gisId)
+        {
+            var result = await _apiCounters.GetFullLicBuGuidGis(gisId);
+            return result;
+        }
 
     }
 }

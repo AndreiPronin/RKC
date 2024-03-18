@@ -496,7 +496,6 @@ namespace BL.Counters
                 return model;
             }
         }
-
         public IEnumerable<ConnectPuWithGisResponse> UpdateGuidPuWithGis(IEnumerable<ConnectPuWithGis> connectPuWithGis)
         {
             var connectPuWithGisResponses = new List<ConnectPuWithGisResponse>();
@@ -550,7 +549,6 @@ namespace BL.Counters
                 return _mapper.Map<List<BE.Counter.Recalculations>>(result);
             }
         }
-
         public DateTime? CalculateDateCheckNext(DateTime? dateTime, int? mpi)
         {
             if(dateTime.HasValue && mpi.HasValue)

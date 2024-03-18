@@ -1,4 +1,5 @@
 ﻿using BE.Counter;
+using BL.Extention;
 using DB.Model;
 using System;
 using System.Collections.Generic;
@@ -51,14 +52,19 @@ namespace BL.Rules
                 throw _exception;
             }
         }
-        public static void ValidationExcelAddPu(ModelAddPU modelAddPU, List<BRAND> brands)
+        public static void ValidationExcelAddPu(ModelAddPU modelAddPU, List<BRAND> brands, List<IPU_COUNTERS> typeNotUsePu)
         {
+            _exceptionString.Clear();
+            if(typeNotUsePu.Where(x=>x.TYPE_PU == modelAddPU.TYPE_PU.GetDescription()).Count() == 0)
+            {
+                _exceptionString.AppendLine($"Не возможно добовить тип ПУ {modelAddPU.TYPE_PU.GetDescription()}");
+            }
             if (modelAddPU.InterVerificationInterval.HasValue)
             {
                 var error = modelAddPU.InterVerificationInterval == 4 || modelAddPU.InterVerificationInterval == 5 || modelAddPU.InterVerificationInterval == 6;
                 if (!error)
                 {
-                    _exceptionString.Append($"Не верно указан МПИ. МПИ должен иметь занчение 4 5 6");
+                    _exceptionString.AppendLine($"Не верно указан МПИ. МПИ должен иметь занчение 4 5 6");
                 }
             }
             if (modelAddPU.InterVerificationInterval.HasValue && modelAddPU.DATE_CHECK.HasValue && modelAddPU.DATE_CHECK_NEXT.HasValue)
@@ -66,64 +72,72 @@ namespace BL.Rules
                 var validDATE_CHECK = modelAddPU.DATE_CHECK.Value.AddYears(modelAddPU.InterVerificationInterval.Value);
                 if (validDATE_CHECK != modelAddPU.DATE_CHECK_NEXT.Value)
                 {
-                    _exceptionString.Append($"Не верно указан МПИ {validDATE_CHECK} - {modelAddPU.DATE_CHECK_NEXT.Value}");
+                    _exceptionString.AppendLine($"Не верно указан МПИ {validDATE_CHECK} - {modelAddPU.DATE_CHECK_NEXT.Value}");
                 }
             }
            
             if ( string.IsNullOrEmpty(modelAddPU.FACTORY_NUMBER_PU))
             {
-                _exceptionString.Append($"Не указан номер прибора"); 
+                _exceptionString.AppendLine($"Не указан номер прибора"); 
             }
             if (modelAddPU.TYPE_PU == null)
             {
-                _exceptionString.Append($"Не верно указан тип прибора");
+                _exceptionString.AppendLine($"Не верно указан тип прибора");
             }
             if (brands != null)
             {
                 var brand = new BRAND();
                 if (string.IsNullOrEmpty(modelAddPU.BRAND_PU))
                 {
-                    _exceptionString.Append($"Не указан бренд прибора");
+                    _exceptionString.AppendLine($"Не указан бренд прибора");
                 }
                 else
                 {
                     brand =  brands.Where(x=>x.BRAND_NAME == modelAddPU.BRAND_PU).FirstOrDefault();
                     if(brand == null) {
-                        _exceptionString.Append($"Название бренда не найдено в справочнике");
+                        _exceptionString.AppendLine($"Название бренда не найдено в справочнике");
                     }
                 }
                 if (string.IsNullOrEmpty(modelAddPU.MODEL_PU))
                 {
-                    _exceptionString.Append($"Не указана модель прибора");
+                    _exceptionString.AppendLine($"Не указана модель прибора");
                 }
                 else
                 {
                     var model = brand?.MODEL?.Where(x => x.MODEL_NAME == modelAddPU.MODEL_PU).FirstOrDefault();
                     if (model == null)
                     {
-                        _exceptionString.Append($"Название модели не найдено в справочнике");
+                        _exceptionString.AppendLine($"Название модели не найдено в справочнике");
                     }
                 }
             }
             if (modelAddPU.DIMENSION?.Id == 0)
             {
-                _exceptionString.Append($"Не указан номер прибора");
+                _exceptionString.AppendLine($"Не указана размерность прибора");
             }
             if (modelAddPU.DATE_CHECK == null)
             {
-                _exceptionString.Append($"Не указана дата поверки");
+                _exceptionString.AppendLine($"Не указана дата поверки");
             }
             if (modelAddPU.DATE_CHECK_NEXT == null)
             {
-                _exceptionString.Append($"Не указана дата следующей поверки");
+                _exceptionString.AppendLine($"Не указана дата следующей поверки");
             }
             if (modelAddPU.InitialReadings == null)
             {
-                _exceptionString.Append($"Не указаны начальные показания прибора");
+                _exceptionString.AppendLine($"Не указаны начальные показания прибора");
             }
-            if (modelAddPU.EndReadings == 0)
+            if (modelAddPU.EndReadings == null)
             {
-                _exceptionString.Append($"Не указаны конечные показания прибора");
+                _exceptionString.AppendLine($"Не указаны конечные показания прибора");
+            }
+            if (modelAddPU.InitialReadings == 0 && modelAddPU.TYPE_PU.TypePuIsGvs())
+            {
+                _exceptionString.AppendLine($"Ошибка начальные показания для ГВС не доджны быть 0");
+            }
+            if (modelAddPU.EndReadings == 0 && modelAddPU.TYPE_PU.TypePuIsGvs())
+            {
+                _exceptionString.AppendLine($"Ошибка конечные показания для ГВС не доджны быть 0");
             }
             if (_exceptionString.ToString() != "")
             {
