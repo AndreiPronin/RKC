@@ -3,6 +3,7 @@ using BE.Court;
 using BL.Counters;
 using BL.Helper;
 using BL.MapperProfile;
+using BL.Notification;
 using BL.Services;
 using ClosedXML.Excel;
 using DB.DataBase;
@@ -32,11 +33,13 @@ namespace BL.Excel
         private readonly List<ReportCourtLoadExcel> reportCourtLoadExcels;
         private readonly Mapper _mapper = new CourtProfile().GetMapperBe();
         private readonly IDictionary _dictionary;
-        public ExcelCourt(ICourt court, IDictionary dictionary) 
+        private readonly INotificationMail _notificationMail;
+        public ExcelCourt(ICourt court, IDictionary dictionary, INotificationMail notificationMail) 
         {
             _court = court;
             _dictionary = dictionary;
             reportCourtLoadExcels = new List<ReportCourtLoadExcel>();
+            _notificationMail = notificationMail;
         }
         public async Task<DataTable> ExcelsLoadCourt(XLWorkbook Excels, string User)
         {
@@ -106,7 +109,9 @@ namespace BL.Excel
                     }
                 }
             }
-            return CreateResultCourtLoader(reportCourtLoadExcels);
+            var results = CreateResultCourtLoader(reportCourtLoadExcels);
+            _notificationMail.SendEmailResultLoadCourt(results, "Результат загрузки.xlsx");
+            return results;
         }
         public async Task<DataTable> ExcelsEditGpCourt(XLWorkbook Excels, string User)
         {
@@ -164,7 +169,9 @@ namespace BL.Excel
                     }
                 }
             }
-            return CreateResultCourtLoader(reportCourtLoadExcels);
+            var results = CreateResultCourtLoader(reportCourtLoadExcels);
+            _notificationMail.SendEmailResultLoadCourt(results, "Результат обновления ГП.xlsx");
+            return results;
         }
         public async Task<DataTable> ExcelsEditPersDataCourt(XLWorkbook Excels, string User)
         {
@@ -244,7 +251,9 @@ namespace BL.Excel
                     }
                 }
             }
-            return CreateResultCourtLoader(reportCourtLoadExcels);
+            var results = CreateResultCourtLoader(reportCourtLoadExcels);
+            _notificationMail.SendEmailResultLoadCourt(results, "Результат обновления перс данных.xlsx");
+            return results;
         }
         public async Task<DataTable> ExcelsEditSpAndIpCourt(XLWorkbook Excels, string User)
         {
@@ -373,7 +382,9 @@ namespace BL.Excel
                     }
                 }
             }
-            return CreateResultCourtLoaderDataColumn3(reportCourtLoadExcels);
+            var results = CreateResultCourtLoaderDataColumn3(reportCourtLoadExcels);
+            _notificationMail.SendEmailResultLoadCourt(results, "Результат обновления Изменение СП и ИП.xlsx");
+            return results;
         }
 
         public async Task<DataTable> ExcelsEditOwnerCourt(XLWorkbook Excels, string User)
@@ -448,7 +459,9 @@ namespace BL.Excel
                     }
                 }
             }
-            return CreateResultCourtLoader(reportCourtLoadExcels);
+            var results = CreateResultCourtLoader(reportCourtLoadExcels);
+            _notificationMail.SendEmailResultLoadCourt(results, "Результат обновления Изменение Собственника.xlsx");
+            return results;
         }
 
         private DataTable CreateResultCourtLoader(List<ReportCourtLoadExcel> reportCourtLoadExcels)

@@ -21,6 +21,7 @@ namespace AppCache
         bool AddInfinity(string Key, string value);
         bool AddLock30Minute(string name, string Method);
         bool Lock(string name, string Url);
+        bool LockUpload(string userName, string Url, bool infinity = false);
         void Update(string name, string Url);
         void Delete( string name ,string Url);
         void Delete(string Key);
@@ -161,6 +162,29 @@ namespace AppCache
             }
             return true;
         }
+        /// <summary>
+        /// Заблокировать загрузку
+        /// </summary>
+        /// <param name="userName">Пользователь</param>
+        /// <param name="Url">Url страницы или обьекта</param>
+        /// <returns></returns>
+        public bool LockUpload(string userName, string Url, bool infinity = false)
+        {
+            MemoryCache memoryCache = MemoryCache.Default;
+            if (GetValue(Url) == null)
+            {
+                if(infinity)
+                    AddInfinity(userName, Url);
+                else
+                    Add(Url, userName);
+            }
+            var Name = memoryCache.Get(Url) as string;
+            if (Name == userName)
+            {
+                return false;
+            }
+            return true;
+        }
         public bool AddLock30Minute(string name, string Method)
         {
             MemoryCache memoryCache = MemoryCache.Default;
@@ -174,7 +198,7 @@ namespace AppCache
         public bool AddInfinity(string Key, string value)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            return memoryCache.Add(Key, value, DateTime.Now.AddDays(365));
+            return memoryCache.Add(Key, value, DateTime.Now.AddDays(1));
         }
 
         public void Update(string key,string value)

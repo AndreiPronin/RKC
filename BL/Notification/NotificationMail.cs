@@ -27,6 +27,7 @@ namespace BL.Notification
         void SendEmailReceiptNotSend(List<ReceiptSend> ReceiptNotSend);
         void SendEmailReceiptNotSendDpu(List<ReceiptSend> ReceiptNotSend);
         void Error(Exception ex, string message = "");
+        void SendEmailResultLoadCourt(System.Data.DataTable resultLoad, string FileName);
     }
     public class NotificationMail : INotificationMail
     {
@@ -182,6 +183,42 @@ namespace BL.Notification
                 mailMessage.Subject = "Результат работы Job";
                 smtpClient.Send(mailMessage);
             }catch(Exception e) { }
+        }
+        public void SendEmailResultLoadCourt(System.Data.DataTable resultLoad,string FileName)
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(resultLoad);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    var writer = new StreamWriter(stream);
+                    writer.Flush();
+                    stream.Position = 0;
+                    var File = new System.Net.Mail.Attachment(stream, FileName, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                    SendMailCourt(File);
+                }
+            }
+        }
+        private void SendMailCourt(Attachment File)
+        {
+            try
+            {
+                SmtpClient smtpClient = new SmtpClient();
+                smtpClient.Host = ConfigurationManager.AppSettings["mail:host:monitor"];
+                smtpClient.EnableSsl = true;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Port = 587;
+                smtpClient.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mail:login:monitor"], ConfigurationManager.AppSettings["mail:pass:monitor"]);
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:monitor"]);
+                mailMessage.To.Add(new MailAddress(ConfigurationManager.AppSettings["mail:to:monitor"]));
+                mailMessage.Attachments.Add(File);
+                mailMessage.Subject = "Результат работы загрузки судебных дел";
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception e) { }
         }
     }
 }

@@ -3,10 +3,12 @@ using BE.Court;
 using BE.Roles;
 using BL.Excel;
 using BL.Helper;
+using BL.Notification;
 using BL.Security;
 using BL.Services;
 using ClosedXML.Excel;
 using DB.DataBase;
+using DB.Model.Court;
 using Microsoft.AspNet.Identity;
 using RKC.Extensions;
 using System;
@@ -17,7 +19,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static ClosedXML.Excel.XLPredefinedFormat;
+using CourtGeneralInformation = BE.Court.CourtGeneralInformation;
+using CourtWorkRequisites = BE.Court.CourtWorkRequisites;
 using DateTime = System.DateTime;
+using InstallmentPayRequisites = BE.Court.InstallmentPayRequisites;
+using LitigationWorkRequisites = BE.Court.LitigationWorkRequisites;
 
 namespace RKC.Controllers
 {
@@ -32,10 +38,11 @@ namespace RKC.Controllers
         public readonly IFlagsAction _flagsAction;
         public readonly ISecurityProvider _securityProvider;
         private readonly IExcelCourt _excelCourt;
+        private readonly INotificationMail _notificationMail;
         private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
         public CourtController(ICourt court, Ilogger logger, IGeneratorDescriptons generatorDescriptons, IDictionary dictionary,
             ICacheApp cacheApp, IFlagsAction flagsAction,
-            ISecurityProvider securityProvider, IExcelCourt excelCourt)
+            ISecurityProvider securityProvider, IExcelCourt excelCourt, INotificationMail notificationMail)
         {
             _securityProvider = securityProvider;
             _logger = logger;
@@ -45,6 +52,7 @@ namespace RKC.Controllers
             _flagsAction = flagsAction;
             _court = court;
             _excelCourt = excelCourt;
+            _notificationMail = notificationMail;
         }
         [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
         public async Task<ActionResult> Index(int Id = 0)
@@ -76,6 +84,7 @@ namespace RKC.Controllers
         [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> CreateCourt(string FullLic)
         {
+            _Nlogger.Trace($"Создал дело {FullLic}");
             if (string.IsNullOrEmpty(FullLic) || FullLic == "undefined")
                 return Redirect("/Home/ResultEmpty?Message=" + "Нельзя указать пустой лицевой счет!");
             var Result = await _court.CreateCourt(FullLic, DateTime.Now.ToString(), User.Identity.GetFIOFull());
@@ -90,7 +99,7 @@ namespace RKC.Controllers
         [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> SaveCourt(CourtGeneralInformation courtGeneralInformation)
         {
-            _Nlogger.Info(new ConvertJson<CourtGeneralInformation>(courtGeneralInformation).ConverModelToJson());
+            _Nlogger.Trace(new ConvertJson<CourtGeneralInformation>(courtGeneralInformation).ConverModelToJson());
             var Id = await _court.SaveCourt(courtGeneralInformation, User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Id);
         }
@@ -142,6 +151,7 @@ namespace RKC.Controllers
         }
         public async Task<ActionResult> AddCourtWorkRequisites(CourtWorkRequisites courtWorkRequisites)
         {
+            _Nlogger.Trace($"{nameof(AddCourtWorkRequisites)} {new ConvertJson<CourtWorkRequisites>(courtWorkRequisites).ConverModelToJson()}");
             await _court.AddCourtWorkRequisites(courtWorkRequisites);
             return Content("Успешно добавлено");
         }
@@ -152,6 +162,7 @@ namespace RKC.Controllers
         }
         public async Task<ActionResult> AddLitigationWorkRequisites(LitigationWorkRequisites litigationWorkRequisites)
         {
+            _Nlogger.Trace($"{nameof(AddLitigationWorkRequisites)} {new ConvertJson<LitigationWorkRequisites>(litigationWorkRequisites).ConverModelToJson()}");
             await _court.AddLitigationWorkRequisites(litigationWorkRequisites);
             return Content("Успешно добавлено");
         }
@@ -172,6 +183,7 @@ namespace RKC.Controllers
         }
         public async Task<ActionResult> AddInstallmentPayRequisites(InstallmentPayRequisites installmentPayRequisites)
         {
+            _Nlogger.Trace($"{nameof(AddInstallmentPayRequisites)}  {new ConvertJson<InstallmentPayRequisites>(installmentPayRequisites).ConverModelToJson()}");
             await _court.AddInstallmentPayRequisites(installmentPayRequisites);
             return Content("Успешно добавлено");
         }
@@ -235,55 +247,71 @@ namespace RKC.Controllers
         [Auth(Roles = RolesEnums.CourtAdmin)]
         public async Task<ActionResult> UploadFileCourtCase(HttpPostedFileBase file, int TypeLoad)
         {
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                try
+            _Nlogger.Info($"Загружает шаблон {TypeLoad} название файла {file.FileName}");
+            if (string.IsNullOrEmpty(_cacheApp.GetValue(nameof(UploadFileCourtCase)))){
+                _cacheApp.LockUpload(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}",true);
+                using (XLWorkbook wb = new XLWorkbook())
                 {
-                    var workbook = new XLWorkbook(file.InputStream);
-                    switch ((CourtTypeLoadFiles)TypeLoad)
+                    try
                     {
-                        case CourtTypeLoadFiles.OpenNewCourt:
-                            wb.Worksheets.Add(await _excelCourt.ExcelsLoadCourt(workbook,$"{User.Identity.GetFIOFull()} {file.FileName}"));
-                            using (MemoryStream stream = new MemoryStream())
-                            {
-                                wb.SaveAs(stream);
-                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат загрузки.xlsx");
-                            }
-                        case CourtTypeLoadFiles.EditGp:
-                            wb.Worksheets.Add(await _excelCourt.ExcelsEditGpCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
-                            using (MemoryStream stream = new MemoryStream())
-                            {
-                                wb.SaveAs(stream);
-                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления ГП.xlsx");
-                            }
-                        case CourtTypeLoadFiles.EditPersData:
-                            wb.Worksheets.Add(await _excelCourt.ExcelsEditPersDataCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
-                            using (MemoryStream stream = new MemoryStream())
-                            {
-                                wb.SaveAs(stream);
-                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления перс данных.xlsx");
-                            }
-                        case CourtTypeLoadFiles.EditSpAndIp:
-                            wb.Worksheets.Add(await _excelCourt.ExcelsEditSpAndIpCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
-                            using (MemoryStream stream = new MemoryStream())
-                            {
-                                wb.SaveAs(stream);
-                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение СП и ИП.xlsx");
-                            }
-                        case CourtTypeLoadFiles.EditOwner:
-                            wb.Worksheets.Add(await _excelCourt.ExcelsEditOwnerCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
-                            using (MemoryStream stream = new MemoryStream())
-                            {
-                                wb.SaveAs(stream);
-                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение Собственника.xlsx");
-                            }
-                        default: 
-                            throw new Exception("Не указан тип загружаемого файла!");
+                        var workbook = new XLWorkbook(file.InputStream);
+                        switch ((CourtTypeLoadFiles)TypeLoad)
+                        {
+
+                            case CourtTypeLoadFiles.OpenNewCourt:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsLoadCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат загрузки.xlsx");
+                                }
+                            case CourtTypeLoadFiles.EditGp:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsEditGpCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления ГП.xlsx");
+                                }
+                            case CourtTypeLoadFiles.EditPersData:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsEditPersDataCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления перс данных.xlsx");
+                                }
+                            case CourtTypeLoadFiles.EditSpAndIp:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsEditSpAndIpCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение СП и ИП.xlsx");
+                                }
+                            case CourtTypeLoadFiles.EditOwner:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsEditOwnerCourt(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение Собственника.xlsx");
+                                }
+                            default:
+                                throw new Exception("Не указан тип загружаемого файла! (Судебные дела)");
+                        }
+                    } catch (Exception ex)
+                    {
+                        _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                        _notificationMail.Error(ex, "Ошибка во время прогрузки судебных дел  (Судебные дела)");
+                        return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
                     }
-                }catch (Exception ex)
-                {
-                    return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
                 }
+            }
+            else
+            {
+                return Redirect("/Home/ResultEmpty?Message=Загрузка заблокирована дождитесь окончания загрузки (Судебные дела)");
             }
         }
     }
