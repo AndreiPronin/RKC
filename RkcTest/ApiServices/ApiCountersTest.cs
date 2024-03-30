@@ -44,9 +44,8 @@ namespace RkcTest.ApiServices
                 {
                     var zzz = ipuGisReadingActives.Where(x => x.FulLic == "720128131").ToList();
                 }
-               
+                if(string.IsNullOrEmpty(lastLic))
                     break;
-                
             }
             Assert.IsNotNull(ipuGisReadingActives);
         }

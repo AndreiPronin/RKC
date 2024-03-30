@@ -232,7 +232,6 @@ D:\Programing\RKC\RKC\bin\ru\Microsoft.Owin.Security.Twitter.resources.dll
 D:\Programing\RKC\RKC\bin\ru\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 D:\Programing\RKC\RKC\obj\Debug\RKC.csproj.AssemblyReference.cache
 D:\Programing\RKC\RKC\obj\Debug\RKC.csproj.CoreCompileInputs.cache
-D:\Programing\RKC\RKC\obj\Debug\RKC.csproj.CopyComplete
 D:\Programing\RKC\RKC\obj\Debug\RKC.dll
 D:\Programing\RKC\RKC\obj\Debug\RKC.pdb
 D:\Programing\RKC\RKC\bin\System.Net.Http.Json.dll
@@ -299,3 +298,4 @@ D:\Programing\RKC\RKC\bin\Quartz.pdb
 D:\Programing\RKC\RKC\bin\Common.Logging.Core.pdb
 D:\Programing\RKC\RKC\bin\Common.Logging.pdb
 D:\Programing\RKC\RKC\bin\Swashbuckle.Core.dll
+D:\Programing\RKC\RKC\obj\Debug\RKC.csproj.Up2Date

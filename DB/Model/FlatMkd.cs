@@ -13,34 +13,15 @@ namespace DB.Model
     {
         [Key]
         public string FullLic { get; set; }
-
-    
         public string System { get; set; }
-
-
         public string ObjectType { get; set; }
-
         public int AddressId { get; set; }
-
-
         public string UniqueApartmentNumber { get; set; }
-
-
         public string UniqueRoomNumber { get; set; }
-
-
         public string CadastrNumberFlat { get; set; }
-
-
         public decimal? CadastrSquare { get; set; }
-
- 
         public string Els { get; set; }
-
-
         public string IdGku { get; set; }
-
-
         public DateTime? DateEdit { get; set; }
     }
 }

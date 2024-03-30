@@ -35,5 +35,6 @@ namespace BE.Counter
     public class IpuGisReadingActive : IpuGisReading
     {
         public bool HasNewReadings { get; set; }
+        public string Els { get; set; }
     }
 }

@@ -144,8 +144,8 @@ namespace BL.Excel
                         SaveModelIPU saveModel = new SaveModelIPU();
                         saveModel.DIMENSION = new BE.Counter.DIMENSION();
                         var integrationReadings = new IntegrationReadings();
-                        saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
-                        saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
+                        saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Trim();
+                        saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Trim();
                         if (dataRow.Cell(3).Value != "") { 
                             saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value);
                             if (saveModel?.INSTALLATIONDATE > DateTime.Now)
@@ -153,9 +153,9 @@ namespace BL.Excel
                                 throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
                         }
-                        saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
-                        saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
-                        saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
+                        saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Trim();
+                        saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Trim();
+                        saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Trim();
                         var Counter = counter.GetInfoPU(saveModel.FULL_LIC, saveModel.TypePU);
                         if (dataRow.Cell(7).Value != "") {
                             var DateCheck = Convert.ToDateTime(dataRow.Cell(7).Value);
@@ -179,20 +179,20 @@ namespace BL.Excel
 
                             saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);
                         }
-                        saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
-                        saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
-                        saveModel.GIS_ID_PU = dataRow.Cell(13).Value == "" ? "" : Convert.ToString(dataRow.Cell(13).Value).Replace(" ", "");
+                        saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Trim();
+                        saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Trim();
+                        saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Trim();
+                        saveModel.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Trim();
+                        saveModel.GIS_ID_PU = dataRow.Cell(13).Value == "" ? "" : Convert.ToString(dataRow.Cell(13).Value).Trim();
                         //saveModel.DIMENSION.Id = dataRow.Cell(14).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(14).Value);
                         if (dataRow.Cell(14).Value != "")
                         {
-                            var str = dataRow.Cell(14).Value.ToString().Replace(",", ".");
-                            saveModel.CHECKPOINT_DATE = Convert.ToDateTime(Convert.ToString(dataRow.Cell(14).Value).Replace(".", ","));
+                            var str = dataRow.Cell(14).Value.ToString().Trim();
+                            saveModel.CHECKPOINT_DATE = Convert.ToDateTime(Convert.ToString(dataRow.Cell(14).Value).Trim());
                         }
                         if (dataRow.Cell(15).Value != "")
                         {
-                            saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(15).Value).Replace(".", ","));
+                            saveModel.CHECKPOINT_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(15).Value).Trim());
                         }
                         saveModel.DIMENSION.Id = dataRow.Cell(16).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(16).Value);
                         if (dataRow.Cell(17).Value != "")
@@ -248,8 +248,8 @@ namespace BL.Excel
                         ModelAddPU modelAddPU = new ModelAddPU();
                         modelAddPU.DIMENSION = new BE.Counter.DIMENSION();
                         var integrationReadings = new IntegrationReadings();
-                        modelAddPU.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
-                        var typePu = dataRow.Cell(2).Value == "" ? null : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "").GetTypePu();
+                        modelAddPU.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Trim();
+                        var typePu = dataRow.Cell(2).Value == "" ? null : Convert.ToString(dataRow.Cell(2).Value).Trim().GetTypePu();
                         if(typePu.HasValue)
                             modelAddPU.TYPE_PU = typePu.Value;
 
@@ -261,9 +261,9 @@ namespace BL.Excel
                                 throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
                         }
-                        modelAddPU.FACTORY_NUMBER_PU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
-                        modelAddPU.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
-                        modelAddPU.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
+                        modelAddPU.FACTORY_NUMBER_PU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Trim();
+                        modelAddPU.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Trim();
+                        modelAddPU.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Trim();
                         var Counter = counter.GetInfoPU(modelAddPU.FULL_LIC, modelAddPU.TYPE_PU.GetDescription());
                         if (dataRow.Cell(7).Value != "")
                         {
@@ -289,10 +289,10 @@ namespace BL.Excel
 
                             modelAddPU.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);
                         }
-                        modelAddPU.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
-                        modelAddPU.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
-                        modelAddPU.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
-                        modelAddPU.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
+                        modelAddPU.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Trim();
+                        modelAddPU.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Trim();
+                        modelAddPU.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Trim();
+                        modelAddPU.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Trim();
                         modelAddPU.DIMENSION.Id = dataRow.Cell(13).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(13).Value);
                         if (dataRow.Cell(14).Value != "")
                         {
@@ -300,7 +300,7 @@ namespace BL.Excel
                         }
                         modelAddPU.InitialReadings = dataRow.Cell(15).Value == "" ? 0 : Convert.ToDecimal(dataRow.Cell(15).Value);
                         modelAddPU.EndReadings = dataRow.Cell(16).Value == "" ? 0 : Convert.ToDecimal(dataRow.Cell(16).Value);
-                        modelAddPU.DESCRIPTION = dataRow.Cell(17).Value == "" ? "" : Convert.ToString(dataRow.Cell(17).Value).Replace(" ", "");
+                        modelAddPU.DESCRIPTION = dataRow.Cell(17).Value == "" ? "" : Convert.ToString(dataRow.Cell(17).Value).Trim();
                         var typeNotUsePu = _counter.GetTypeNowUsePU(modelAddPU.FULL_LIC);
                         SaveModelIPURules.ValidationExcelAddPu(modelAddPU, dictionaryBrand, typeNotUsePu);
                         counter.AddPU(modelAddPU, User);
@@ -344,8 +344,8 @@ namespace BL.Excel
                         SaveModelIPU saveModel = new SaveModelIPU();
                         saveModel.DIMENSION = new BE.Counter.DIMENSION();
                         var integrationReadings = new IntegrationReadings();
-                        saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Replace(" ", "");
-                        saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Replace(" ", "");
+                        saveModel.FULL_LIC = dataRow.Cell(1).Value == "" ? "" : Convert.ToString(dataRow.Cell(1).Value).Trim();
+                        saveModel.TypePU = dataRow.Cell(2).Value == "" ? "" : Convert.ToString(dataRow.Cell(2).Value).Trim();
                         if (dataRow.Cell(3).Value != "") { 
                             saveModel.INSTALLATIONDATE = Convert.ToDateTime(dataRow.Cell(3).Value); 
                             if(saveModel?.INSTALLATIONDATE > DateTime.Now) {
@@ -353,9 +353,9 @@ namespace BL.Excel
                             }
                         }
                         
-                        saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Replace(" ", "");
-                        saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Replace(" ", "");
-                        saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Replace(" ", "");
+                        saveModel.NumberPU = dataRow.Cell(4).Value == "" ? "" : Convert.ToString(dataRow.Cell(4).Value).Trim();
+                        saveModel.BRAND_PU = dataRow.Cell(5).Value == "" ? "" : Convert.ToString(dataRow.Cell(5).Value).Trim();
+                        saveModel.MODEL_PU = dataRow.Cell(6).Value == "" ? "" : Convert.ToString(dataRow.Cell(6).Value).Trim();
                         if (dataRow.Cell(7).Value != "") { 
                             var DateCheck = Convert.ToDateTime(dataRow.Cell(7).Value); 
                             if (saveModel?.DATE_CHECK > DateTime.Now)
@@ -378,10 +378,10 @@ namespace BL.Excel
 
                             saveModel.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);
                         }
-                        saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Replace(" ", "");
-                        saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Replace(" ", "");
-                        saveModel.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Replace(" ", "");
+                        saveModel.TYPEOFSEAL = dataRow.Cell(9).Value == "" ? "" : Convert.ToString(dataRow.Cell(9).Value).Trim();
+                        saveModel.SEALNUMBER = dataRow.Cell(10).Value == "" ? "" : Convert.ToString(dataRow.Cell(10).Value).Trim();
+                        saveModel.TYPEOFSEAL2 = dataRow.Cell(11).Value == "" ? "" : Convert.ToString(dataRow.Cell(11).Value).Trim();
+                        saveModel.SEALNUMBER2 = dataRow.Cell(12).Value == "" ? "" : Convert.ToString(dataRow.Cell(12).Value).Trim();
                         saveModel.DIMENSION.Id = dataRow.Cell(13).Value == "" ? 0 : Convert.ToInt32(dataRow.Cell(13).Value);
                         if (dataRow.Cell(14).Value != "")
                         {

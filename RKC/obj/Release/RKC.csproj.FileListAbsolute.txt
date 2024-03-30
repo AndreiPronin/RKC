@@ -547,7 +547,6 @@ D:\Programing\RKC\RKC\bin\ru\Microsoft.Owin.Security.Twitter.resources.dll
 D:\Programing\RKC\RKC\bin\ru\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 D:\Programing\RKC\RKC\obj\Release\RKC.csproj.AssemblyReference.cache
 D:\Programing\RKC\RKC\obj\Release\RKC.csproj.CoreCompileInputs.cache
-D:\Programing\RKC\RKC\obj\Release\RKC.csproj.CopyComplete
 D:\Programing\RKC\RKC\obj\Release\RKC.dll
 D:\Programing\RKC\RKC\obj\Release\RKC.pdb
 D:\Programing\RKC\RKC\bin\NLog.dll
@@ -655,3 +654,4 @@ D:\Programing\RKC\RKC\bin\Quartz.pdb
 D:\Programing\RKC\RKC\bin\Common.Logging.Core.pdb
 D:\Programing\RKC\RKC\bin\Common.Logging.pdb
 D:\Programing\RKC\RKC\bin\Swashbuckle.Core.dll
+D:\Programing\RKC\RKC\obj\Release\RKC.csproj.Up2Date

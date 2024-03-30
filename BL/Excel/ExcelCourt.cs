@@ -352,9 +352,9 @@ namespace BL.Excel
                         //    CourtGeneral.CourtExecutionFSSP.GroundsEndingIP2 = dataRow.Cell(16).Value.ToString();
                         if (dataRow.Cell(18).Value != "")
                         {
-                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 6).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(18).Value.ToString());
+                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 4).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(18).Value.ToString()?.Trim());
                             if (dataRow.Cell(18).Value != "" && CourtName?.Name?.Split('|')[1] == CourtGeneral.CourtExecutionFSSP.SatyaEndingIP2)
-                                exceptions.Append("Статья окончания ИП1 не найдена в справочнике" + Environment.NewLine);
+                                exceptions.Append("Статья окончания ИП2 не найдена в справочнике" + Environment.NewLine);
                             else
                             {
                                 if (dataRow.Cell(18).Value != "" && CourtGeneral.CourtExecutionFSSP.SatyaEndingIP2 != dataRow.Cell(18).Value.ToString())

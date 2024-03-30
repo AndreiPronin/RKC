@@ -263,7 +263,7 @@ namespace RKC.Controllers
                                 using (MemoryStream stream = new MemoryStream())
                                 {
                                     wb.SaveAs(stream);
-                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
                                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат загрузки.xlsx");
                                 }
                             case CourtTypeLoadFiles.EditGp:
@@ -271,7 +271,7 @@ namespace RKC.Controllers
                                 using (MemoryStream stream = new MemoryStream())
                                 {
                                     wb.SaveAs(stream);
-                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
                                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления ГП.xlsx");
                                 }
                             case CourtTypeLoadFiles.EditPersData:
@@ -279,7 +279,7 @@ namespace RKC.Controllers
                                 using (MemoryStream stream = new MemoryStream())
                                 {
                                     wb.SaveAs(stream);
-                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
                                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления перс данных.xlsx");
                                 }
                             case CourtTypeLoadFiles.EditSpAndIp:
@@ -287,7 +287,7 @@ namespace RKC.Controllers
                                 using (MemoryStream stream = new MemoryStream())
                                 {
                                     wb.SaveAs(stream);
-                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    _cacheApp.Delete( $"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
                                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение СП и ИП.xlsx");
                                 }
                             case CourtTypeLoadFiles.EditOwner:
@@ -295,7 +295,7 @@ namespace RKC.Controllers
                                 using (MemoryStream stream = new MemoryStream())
                                 {
                                     wb.SaveAs(stream);
-                                    _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
                                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение Собственника.xlsx");
                                 }
                             default:
@@ -303,7 +303,7 @@ namespace RKC.Controllers
                         }
                     } catch (Exception ex)
                     {
-                        _cacheApp.Delete(nameof(UploadFileCourtCase), $"{User.Identity.GetFIOFull()} {file.FileName}");
+                        _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
                         _notificationMail.Error(ex, "Ошибка во время прогрузки судебных дел  (Судебные дела)");
                         return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
                     }

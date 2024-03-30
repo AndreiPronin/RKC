@@ -137,6 +137,7 @@ namespace BL.Extention
             result.InterVerificationInterval = DateTimes.GetYear(ipuSource.InterVerificationInterval ?? 0);
             result.UniqueApartmentNumber = flat?.UniqueApartmentNumber;
             result.Fias = address?.Fias;
+            result.Els = flat.Els;
             result.DateCheck = ipuSource.DATE_CHECK;
             result.DateCheckNext = ipuSource.DATE_CHECK_NEXT;
             result.InstallationDate = ipuSource.INSTALLATIONDATE;

@@ -22,6 +22,6 @@ D:\Programing\RKC\ExcelAddIns\bin\Debug\EntityFramework.xml
 D:\Programing\RKC\ExcelAddIns\bin\Debug\EntityFramework.SqlServer.xml
 D:\Programing\RKC\ExcelAddIns\obj\Debug\Excels.csproj.AssemblyReference.cache
 D:\Programing\RKC\ExcelAddIns\obj\Debug\Excels.csproj.CoreCompileInputs.cache
-D:\Programing\RKC\ExcelAddIns\obj\Debug\Excels.csproj.CopyComplete
 D:\Programing\RKC\ExcelAddIns\obj\Debug\Excels.dll
 D:\Programing\RKC\ExcelAddIns\obj\Debug\Excels.pdb
+D:\Programing\RKC\ExcelAddIns\obj\Debug\Excels.csproj.Up2Date
