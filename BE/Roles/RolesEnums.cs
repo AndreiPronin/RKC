@@ -37,8 +37,8 @@ namespace BE.Roles
         public const string DownLoadReceipt = "DownLoadReceipt";
         [Description("CourtReader")]
         public const string CourtReader = "CourtReader";
-        [Description("CourtWhriter")]
-        public const string CourtWhriter = "CourtWhriter";
+        [Description("CourtWriter")]
+        public const string CourtWriter = "CourtWriter";
         [Description("CourtAdmin")]
         public const string CourtAdmin = "CourtAdmin";
         [Description("MkdReader")]

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BE.Counter;
 using BE.Court;
 using BE.PersData;
 using BL.Extention;
@@ -47,6 +48,8 @@ namespace BL.Services
         Task<string> DeleteFile(int Id, string User);
         Task<List<DB.Model.Court.CourtDocumentScans>> GetDocumentScans(int CourtGeneralInformationId);
         Task<CourtDataDocumentLoad> DownLoadFile(int Id);
+        void SaveNote(string Note, int Id, string Lic);
+        string GetNote(int Id, string Lic);
     }
     public class Court : ICourt
     {
@@ -428,6 +431,46 @@ namespace BL.Services
                 courtDataDocument.FileName = Res.CourtDocumentScansName;
             }
             return courtDataDocument;
+        }
+
+        public void SaveNote(string Note, int Id, string Lic)
+        {
+            if (Note != null)
+            {
+                if (!Directory.Exists($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{Id}"))
+                {
+                    Directory.CreateDirectory($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{Id}");
+                }
+                if (!File.Exists($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt"))
+                {
+                    using (FileStream fs = File.Create($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt"))
+                    {
+
+                    }
+                }
+                File.WriteAllText($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt", Note);
+            }
+            else
+            {
+                throw new Exception("Ошибка сохранения");
+            }
+           
+        }
+        public string GetNote(int Id, string Lic)
+        {
+            if (!Directory.Exists($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{Id}"))
+            {
+                Directory.CreateDirectory($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{Id}");
+            }
+            if (!File.Exists($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt"))
+            {
+                using (FileStream fs = File.Create($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt"))
+                {
+
+                }
+            }
+            var result =  File.ReadAllText($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt");
+            return result; 
         }
     }
 }

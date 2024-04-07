@@ -728,6 +728,7 @@
     <Content Include="Views\Court\PartialCourtOwnerInformation.cshtml" />
     <Content Include="Views\PersonalData\HistoryRecalculationView.cshtml" />
     <Content Include="Views\MKD\HistoryRecalculationView.cshtml" />
+    <Content Include="Views\Court\PartialCourtNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

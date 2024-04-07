@@ -50,6 +50,7 @@ namespace DB.Model
         public decimal? NormOtp { get; set; }
         public decimal? NormGvs { get;set; }
         public decimal? NormHvs { get; set; }
+        public string TPlusGuid { get; set; }
     }
 
 

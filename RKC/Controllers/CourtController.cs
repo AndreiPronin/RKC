@@ -17,17 +17,20 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using static ClosedXML.Excel.XLPredefinedFormat;
 using CourtGeneralInformation = BE.Court.CourtGeneralInformation;
 using CourtWorkRequisites = BE.Court.CourtWorkRequisites;
 using DateTime = System.DateTime;
+using HttpGetAttribute = System.Web.Mvc.HttpGetAttribute;
+using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 using InstallmentPayRequisites = BE.Court.InstallmentPayRequisites;
 using LitigationWorkRequisites = BE.Court.LitigationWorkRequisites;
 
 namespace RKC.Controllers
 {
-    [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
+    [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter)]
     public class CourtController : Controller
     {
         private readonly ICourt _court;
@@ -54,7 +57,7 @@ namespace RKC.Controllers
             _excelCourt = excelCourt;
             _notificationMail = notificationMail;
         }
-        [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
+        [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter)]
         public async Task<ActionResult> Index(int Id = 0)
         {
             if (_cacheApp.Lock(User.Identity.GetFIOFull(), nameof(CourtController) + nameof(Index) + Id))
@@ -103,7 +106,7 @@ namespace RKC.Controllers
             var Id = await _court.SaveCourt(courtGeneralInformation, User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Id);
         }
-        [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWhriter)]
+        [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter)]
         public async Task<ActionResult> ShowAllCourtModal(string FullLic)
         {
             ViewBag.FullLic = FullLic;
@@ -205,7 +208,7 @@ namespace RKC.Controllers
             return PartialView(Res);
         }
         [HttpPost]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> SaveFile(HttpPostedFileBase FileLoad, string NameFile, string Lic, int CourtId)
         {
             return Json(new
@@ -215,15 +218,31 @@ namespace RKC.Controllers
             });
         }
         [HttpGet]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> DownLoadFile(int Id)
         {
             var Result = await _court.DownLoadFile(Id);
 
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
+        [HttpPost]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin)]
+        public ActionResult SaveNote([FromBody]string Note, [FromUri]int Id, [FromUri] string Lic)
+        {
+            _court.SaveNote(Note,Id,Lic);
+
+            return Content("Ok");
+        }
         [HttpGet]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWhriter + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CounterReader)]
+        public string GetNote([FromUri] int Id, [FromUri] string Lic)
+        {
+            var result = _court.GetNote(Id, Lic);
+
+            return result;
+        }
+        [HttpGet]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> DeleteFile(int Id)
         {
             await _court.DeleteFile(Id, User.Identity.GetFIOFull());

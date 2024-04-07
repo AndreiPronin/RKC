@@ -142,6 +142,9 @@
             <li class="nav-item" id="DocumentScansButton">
                 <a class="nav-link" data-toggle="tab" href="#DocumentScans">Сканы документов</a>
             </li>
+            <li class="nav-item" id="CourtNoteButton">
+                <a class="nav-link" data-toggle="tab" href="#CourtNote">Примечание</a>
+            </li>
             <li class="nav-item" id="UserHistoryActionButton">
                 <a class="nav-link" data-toggle="tab" href="#UserHistoryAction">История действий пользователя</a>
             </li>
@@ -206,6 +209,9 @@
             </div>
             <div class="tab-pane fade" id="DocumentScans">
                 @Html.Partial("PartialDocumentScans", Model)
+            </div>
+            <div class="tab-pane fade" id="CourtNote">
+                @Html.Partial("PartialCourtNote", Model)
             </div>
             <div class="tab-pane fade" id="UserHistoryAction">
                 <div id="UserHistoryActionResult"></div>
@@ -303,6 +309,9 @@
             $(activeTab).addClass("active in");
             if (activeTab == '#UserHistoryAction') {
                 $("#UserHistoryActionButton").click();
+            }
+            if (activeTab == '#CourtNote') {
+                $("#CourtNoteButton").click();
             }
             $("#GeneralButton").click();
         } else {
