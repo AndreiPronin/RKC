@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ApiServices\Counters\ApiCounters.cs" />
     <Compile Include="ApiServices\Counters\Repository.cs" />
+    <Compile Include="ApiServices\PersonalData\ApiPersonalData.cs" />
     <Compile Include="ApiT+\EBD.cs" />
     <Compile Include="Excel\ExcelCourt.cs" />
     <Compile Include="Excel\SqlQuery\Report.cs" />

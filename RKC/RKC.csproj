@@ -455,6 +455,7 @@
     <Compile Include="Controllers\api\ApiJobController.cs" />
     <Compile Include="Controllers\api\ApiTplusController.cs" />
     <Compile Include="Controllers\api\CounterController.cs" />
+    <Compile Include="Controllers\api\PersonalDataController.cs" />
     <Compile Include="Controllers\CounterController.cs" />
     <Compile Include="Controllers\CourtController.cs" />
     <Compile Include="Controllers\DPUController.cs" />

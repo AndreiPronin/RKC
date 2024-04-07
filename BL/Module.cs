@@ -13,6 +13,7 @@ using Ninject;
 using WordGenerator;
 using WordGenerator.interfaces;
 using BL.Services.FileServices;
+using BL.ApiServices.PersonalData;
 
 namespace BL
 {
@@ -53,6 +54,7 @@ namespace BL
 
             //API
             kernel.Bind<IApiCounters>().To<ApiCounters>();
+            kernel.Bind<IApiPersonalData>().To<ApiPersonalData>();
 
         }
     }

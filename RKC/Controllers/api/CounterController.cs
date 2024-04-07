@@ -67,6 +67,5 @@ namespace RKC.Controllers.api
             var result = await _apiCounters.GetFullLicBuGuidGis(gisId);
             return result;
         }
-
     }
 }

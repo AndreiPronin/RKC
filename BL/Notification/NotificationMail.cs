@@ -28,6 +28,7 @@ namespace BL.Notification
         void SendEmailReceiptNotSendDpu(List<ReceiptSend> ReceiptNotSend);
         void Error(Exception ex, string message = "");
         void SendEmailResultLoadCourt(System.Data.DataTable resultLoad, string FileName);
+        void SendMailReceipt(List<Attachment> File, string To);
     }
     public class NotificationMail : INotificationMail
     {
@@ -161,6 +162,31 @@ namespace BL.Notification
                 {
                     mailMessage.Body = ex.Message;
                 }
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception e) { }
+        }
+        public void SendMailReceipt(List<Attachment> File, string To)
+        {
+            try
+            {
+                SmtpClient smtpClient = new SmtpClient();
+                smtpClient.Host = ConfigurationManager.AppSettings["mail:host:monitor"];
+                smtpClient.EnableSsl = true;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Port = 587;
+                smtpClient.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["mail:login:monitor"], ConfigurationManager.AppSettings["mail:pass:monitor"]);
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:monitor"]);
+                mailMessage.To.Add(new MailAddress(To));
+                foreach (Attachment attachment in File) 
+                    mailMessage.Attachments.Add(attachment);
+                if(File.Count() == 0)
+                {
+                    mailMessage.Body = "Ничего не найдено за выбранный период";
+                }
+                mailMessage.Subject = "Квитанция";
                 smtpClient.Send(mailMessage);
             }
             catch (Exception e) { }

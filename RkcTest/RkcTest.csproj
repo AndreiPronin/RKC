@@ -82,6 +82,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiServices\ApiPersonalDataTest.cs" />
     <Compile Include="ApiServices\ApiCountersTest.cs" />
     <Compile Include="Extenstion\DateTimesTest.cs" />
     <Compile Include="Helper\JsonConverterTest.cs" />
