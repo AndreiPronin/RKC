@@ -796,7 +796,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "Получаю данные из бд");
             DataTable dt = new DataTable("Counter");
-            dt.Columns.AddRange(new DataColumn[21] { new DataColumn("КОД ДОМА"),
+            dt.Columns.AddRange(new DataColumn[22] { new DataColumn("КОД ДОМА"),
                                         new DataColumn("   УЛИЦА   "),
                                         new DataColumn("  ДОМ  "),
                                         new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
@@ -805,32 +805,30 @@ namespace BL.Excel
             ,new DataColumn("   БРЕНД ПУ   ")
             ,new DataColumn("   МОДЕЛЬ ПУ   ")
             ,new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
-            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   № пломбы 1   "),new DataColumn("   Тип пломбы1   ")
+            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   ") ,new DataColumn("   МПИ   "),new DataColumn("   № пломбы 1   "),new DataColumn("   Тип пломбы1   ")
             ,new DataColumn("   № пломбы 2   "),new DataColumn("   Тип пломбы 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
             ,new DataColumn("   РАЗМЕРНОСТЬ   ")
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
             var DB = new DbTPlus();
             var Counters = DB.Database.SqlQuery<view_TplusIPU_GVS>("SELECT * FROM [dbo].[view_TplusIPU_GVS]").ToList();
             cacheApp.Update(User + "_", "Формирую Excel");
-            Thread.Sleep(10000);
             foreach (var Items in Counters)
             {
                 dt.Rows.Add(Items.CODE_HOUSE, Items.STREET, Items.HOME, Items.FLAT,
                     Items.FULL_LIC, Items.FIO, Items.TYPE_PU, Items.INSTALLATIONDATE, Items.FACTORY_NUMBER_PU,
                     Items.BRAND_PU,
                     Items.MODEL_PU, 
-                    Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
+                    Items.DATE_CHECK, Items.DATE_CHECK_NEXT, Items.InterVerificationInterval,
                     Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.DIMENSION_NAME, Items.END_READINGS, Items.NOW_READINGS);
             }
             cacheApp.Update(User + "_", "Скачиваю Excel");
-            Thread.Sleep(10000);
             return dt;
         }
         public DataTable TIpuOtp(string User, ICacheApp cacheApp)
         {
             cacheApp.AddProgress(User + "_", "Получаю данные из бд");
             DataTable dt = new DataTable("Counter");
-            dt.Columns.AddRange(new DataColumn[21] { new DataColumn("КОД ДОМА"),
+            dt.Columns.AddRange(new DataColumn[22] { new DataColumn("КОД ДОМА"),
                                         new DataColumn("   УЛИЦА   "),
                                         new DataColumn("  ДОМ  "),
                                         new DataColumn("     КВАРТИРА    "),  new DataColumn("   ЛИЦЕВОЙ СЧЕТ   ")
@@ -839,7 +837,7 @@ namespace BL.Excel
             ,new DataColumn("   БРЕНД ПУ   ")
             ,new DataColumn("   МОДЕЛЬ ПУ   ")
             ,new DataColumn("   ДАТА ПОВЕРКИ ИПУ   ")
-            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   № пломбы 1   "),new DataColumn("   Тип пломбы1   ")
+            ,new DataColumn("   ДАТА СЛЕДУЮЩЕЙ ПОВЕРКИ ИПУ   "),new DataColumn("   МПИ   "),new DataColumn("   № пломбы 1   "),new DataColumn("   Тип пломбы1   ")
             ,new DataColumn("   № пломбы 2   "),new DataColumn("   Тип пломбы 2   "),new DataColumn("   ПРИЗНАК ИПУ 1   ")
             ,new DataColumn("   РАЗМЕРНОСТЬ   ")
             ,new DataColumn("   КОНЕЧНЫЕ ПОКАЗАНИЯ ИПУ 1   "),new DataColumn("   ТЕКУЩИЕ ПОКАЗАНИЯ ИПУ 1   ")});
@@ -852,7 +850,7 @@ namespace BL.Excel
                     Items.FULL_LIC, Items.FIO, Items.TYPE_PU, Items.INSTALLATIONDATE, Items.FACTORY_NUMBER_PU,
                     Items.BRAND_PU,
                     Items.MODEL_PU,
-                    Items.DATE_CHECK, Items.DATE_CHECK_NEXT,
+                    Items.DATE_CHECK, Items.DATE_CHECK_NEXT, Items.InterVerificationInterval,
                     Items.SEALNUMBER, Items.TYPEOFSEAL, Items.SEALNUMBER2, Items.TYPEOFSEAL2, Items.SIGN_PU, Items.DIMENSION_NAME, Items.END_READINGS, Items.NOW_READINGS);
             }
             cacheApp.Update(User + "_", "Скачиваю Excel");

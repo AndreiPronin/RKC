@@ -89,6 +89,8 @@ namespace WordGenerator
  false, false, false, false);
                         doc.Content.Find.Execute("{TotalAccrued}", false, true, false, false, false, true, 1, false, $@"{Lic.TotalAccrued}", 2,
  false, false, false, false);
+                        string dpuServiceNote = string.IsNullOrEmpty(Lic.DpuServiceType) ? string.Empty : $"Установлен ОДПУ на услугу: {Lic.DpuServiceType}";
+                        doc.Content.Find.Execute("{DpuServiceNote}", false, true, false, false, false, true, 1, false, dpuServiceNote, 2, false, false, false, false);
                         var SaldoSumm = Lic.SaldoEndPeriodDebt + Lic.SaldoEndPeriodPercentage;
                         SaldoSumm = SaldoSumm.HasValue ? Math.Round(SaldoSumm.Value,2) : SaldoSumm;
                         doc.Content.Find.Execute("{SaldoEndPeriodDebt}+{SaldoEndPeriodPercentage}", false, true, false, false, false, true, 1, false, $@"{SaldoSumm}", 2,

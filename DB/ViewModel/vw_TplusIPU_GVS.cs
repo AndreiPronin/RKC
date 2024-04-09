@@ -53,6 +53,7 @@ namespace DB.ViewModel
         public string DIMENSION_NAME { get; set; }
         public string END_READINGS { get; set; }
         public int? NOW_READINGS { get; set; }
+        public int? InterVerificationInterval { get; set; }
     }
 
 

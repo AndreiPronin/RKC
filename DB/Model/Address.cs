@@ -51,6 +51,7 @@ namespace DB.Model
         public decimal? NormGvs { get;set; }
         public decimal? NormHvs { get; set; }
         public string TPlusGuid { get; set; }
+        public string UniqueHomeNumber { get; set; }
     }
 
 

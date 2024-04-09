@@ -17,7 +17,7 @@ namespace BL.Services.FileServices
     public interface ICounterFileServices
     {
         Task<ActionResult> UploadFile(HttpPostedFileBase file, string User, int TypeLoad);
-        Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime);
+        Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime, string UserName);
     }
     public class CounterFileServices :  Controller , ICounterFileServices
     {
@@ -151,7 +151,7 @@ namespace BL.Services.FileServices
             }
             return null;
         }
-        public async Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime)
+        public async Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime, string UserName)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
@@ -188,7 +188,7 @@ namespace BL.Services.FileServices
                 }
                 if (typeFile.Equals(TypeFile.Lic))
                 {
-                    wb.Worksheets.Add(await _excel.CreateExcelLic(User.Identity.Name, _cacheApp));
+                    wb.Worksheets.Add(await _excel.CreateExcelLic(UserName, _cacheApp));
                 }
                 if (typeFile.Equals(TypeFile.LogPers))
                 {
@@ -200,15 +200,15 @@ namespace BL.Services.FileServices
                 }
                 if (typeFile.Equals(TypeFile.TIpuOtp))
                 {
-                    wb.Worksheets.Add(_excel.TIpuOtp(User.Identity.Name, _cacheApp));
+                    wb.Worksheets.Add(_excel.TIpuOtp(UserName, _cacheApp));
                 }
                 if (typeFile.Equals(TypeFile.TIpuGvs))
                 {
-                    wb.Worksheets.Add(_excel.TIpuGvs(User.Identity.Name, _cacheApp));
+                    wb.Worksheets.Add(_excel.TIpuGvs(UserName, _cacheApp));
                 }
                 if (typeFile.Equals(TypeFile.SummaryReportOTP))
                 {
-                    var result = _excel.SummaryReportOTP(wb, User.Identity.Name, _cacheApp);
+                    var result = _excel.SummaryReportOTP(wb, UserName, _cacheApp);
                     using (MemoryStream stream = new MemoryStream())
                     {
                         result.SaveAs(stream);
@@ -217,7 +217,7 @@ namespace BL.Services.FileServices
                 }
                 if (typeFile.Equals(TypeFile.SummaryReportGVS))
                 {
-                    var result = _excel.SummaryReportGVS(wb, User.Identity.Name, _cacheApp);
+                    var result = _excel.SummaryReportGVS(wb, UserName, _cacheApp);
                     using (MemoryStream stream = new MemoryStream())
                     {
                         result.SaveAs(stream);

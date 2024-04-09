@@ -226,7 +226,7 @@ namespace RKC.Controllers
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
         [HttpPost]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin +"," + RolesEnums.CourtAdmin)]
         public ActionResult SaveNote([FromBody]string Note, [FromUri]int Id, [FromUri] string Lic)
         {
             _court.SaveNote(Note,Id,Lic);
@@ -234,7 +234,7 @@ namespace RKC.Controllers
             return Content("Ok");
         }
         [HttpGet]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CounterReader)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin + "," + RolesEnums.CounterReader)]
         public string GetNote([FromUri] int Id, [FromUri] string Lic)
         {
             var result = _court.GetNote(Id, Lic);
