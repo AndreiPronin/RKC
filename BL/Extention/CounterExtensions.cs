@@ -143,6 +143,8 @@ namespace BL.Extention
             result.Els = flat.Els;
             result.DateCheck = ipuSource.DATE_CHECK;
             result.DateCheckNext = ipuSource.DATE_CHECK_NEXT;
+            result.DateClose = ipuSource.DATE_CLOSE;
+            result.IsClosed = ipuSource.CLOSE_.HasValue ? ipuSource.CLOSE_.Value : false;
             result.InstallationDate = ipuSource.INSTALLATIONDATE;
             result.Address = address?.CityType + " " + address?.City + ", " + address?.Street + " "
                 + address?.StreetType + ", " + address?.HouseType + " " + address?.House + address?.Building;

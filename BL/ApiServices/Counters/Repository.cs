@@ -55,13 +55,28 @@ namespace BL.ApiServices.Counters
         {
             using (var contextTPlus = new DbTPlus())
             {
-                var query = contextTPlus.IPU_COUNTERS.Where(x => 
-                 (x.FACTORY_NUMBER_PU != null || x.FACTORY_NUMBER_PU != "")
-                && (x.BRAND_PU != null || x.BRAND_PU != "")
-                && Allic.Contains(x.FULL_LIC));
-                if (period.HasValue)
-                    query = query.Where(x => x.DATE_CLOSE >= period);
-                return await query.ToListAsync(); 
+                List<IPU_COUNTERS> allPu = await contextTPlus.IPU_COUNTERS.Where(x =>
+                    !string.IsNullOrEmpty(x.FACTORY_NUMBER_PU) && Allic.Contains(x.FULL_LIC))
+                    .OrderBy(x => x.FULL_LIC).ThenBy(x => x.TYPE_PU).ToListAsync();
+
+                Dictionary<string, IPU_COUNTERS> validPu = allPu.Where(x => x.CLOSE_ != true)
+                          .ToDictionary(x => string.Concat(x.FULL_LIC, x.TYPE_PU), y => y);
+                Dictionary<string, List<IPU_COUNTERS>> closedPu = allPu.Where(x => x.CLOSE_ == true)
+                          .GroupBy(x => string.Concat(x.FULL_LIC, x.TYPE_PU))
+                          .ToDictionary(x => x.Key, y => y.OrderByDescending(x => x.DATE_CLOSE).ThenByDescending(x => x.ID_PU).ToList());
+
+                foreach (var pair in closedPu)
+                {
+                    if (validPu.ContainsKey(pair.Key))
+                        continue;
+
+                    if (pair.Value.Count > 0)
+                    {
+                        validPu.Add(pair.Key, pair.Value[0]);
+                    }
+                }
+
+                return validPu.Values.OrderBy(x => x.FULL_LIC).ThenBy(x => x.TYPE_PU).ToList();
             }
         }
         protected async Task<List<FullLicByGisId>> getFullLicBuGuidGis(List<string> gisId)

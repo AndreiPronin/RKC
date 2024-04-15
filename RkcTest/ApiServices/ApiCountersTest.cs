@@ -56,5 +56,11 @@ namespace RkcTest.ApiServices
             var result = await _apiCounters.GetFullLicBuGuidGis(fullLicByGisId);
             Assert.IsNotNull(result);
         }
+        [TestMethod]
+        public async Task GetIpuReadingWithClosePUForGisTest()
+        {
+            var result = await _apiCounters.GetIpuReadingsForGisActive(1000, "704093663");
+            Assert.IsNotNull(result);
+        }
     }
 }
