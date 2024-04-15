@@ -84,7 +84,7 @@ namespace RKC.Controllers
             var Result = await _court.Serach(searchModel);
             return PartialView(Result);
         }
-        [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.CourtWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> CreateCourt(string FullLic)
         {
             _Nlogger.Trace($"Создал дело {FullLic}");
@@ -99,7 +99,7 @@ namespace RKC.Controllers
             await _court.DeleteCourt(Id);
             return Redirect("/Court/Serach");
         }
-        [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.CourtWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> SaveCourt(CourtGeneralInformation courtGeneralInformation)
         {
             _Nlogger.Trace(new ConvertJson<CourtGeneralInformation>(courtGeneralInformation).ConverModelToJson());
@@ -234,7 +234,7 @@ namespace RKC.Controllers
             return Content("Ok");
         }
         [HttpGet]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin + "," + RolesEnums.CounterReader)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin + "," + RolesEnums.CourtReader)]
         public string GetNote([FromUri] int Id, [FromUri] string Lic)
         {
             var result = _court.GetNote(Id, Lic);
