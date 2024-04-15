@@ -23,9 +23,11 @@ namespace RKC.Controllers.api
         }
         [JwtAuthentication]
         [HttpGet]
-        public void SendReseipt(string FullLic, string Email ,DateTime DateStart, DateTime DateEnd)
+        [Route("SendReseipt")]
+        public string SendReseipt(string FullLic, string Email ,DateTime DateStart, DateTime DateEnd)
         {
             _apiPersonalData.SendReceipt(FullLic, Email, DateStart, DateEnd);
+            return "Ok";
         }
     }
 }

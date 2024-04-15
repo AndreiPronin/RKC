@@ -17,6 +17,9 @@ namespace BL.Extention
             result.Model = ipuSource.MODEL_PU;
             result.GisId = ipuSource.GIS_ID_PU;
             result.IdGku = flat.IdGku;
+            result.IsClosed = ipuSource.CLOSE_;
+            result.DateClose = ipuSource.DATE_CLOSE;
+            result.Els = flat.Els;
             result.UniqueApartmentNumber = flat.UniqueApartmentNumber;
             result.Fias = address.Fias;
             result.DateCheck = ipuSource.DATE_CHECK;

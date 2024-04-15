@@ -180,14 +180,16 @@ namespace BL.Notification
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:monitor"]);
                 mailMessage.To.Add(new MailAddress(To));
-                foreach (Attachment attachment in File) 
-                    mailMessage.Attachments.Add(attachment);
-                if(File.Count() == 0)
+                foreach (Attachment attachment in File)
                 {
-                    mailMessage.Body = "Ничего не найдено за выбранный период";
+                    mailMessage.Attachments.Add(attachment);
                 }
-                mailMessage.Subject = "Квитанция";
-                smtpClient.Send(mailMessage);
+                if(File.Count() > 0)
+                {
+                    mailMessage.Subject = "Квитанция";
+                    smtpClient.Send(mailMessage);
+                }
+                
             }
             catch (Exception e) { }
         }

@@ -572,13 +572,16 @@
                     {
                         <input type="button" name="@Items.FULL_LIC-@TypePU" class="btn btn-primary Archive" value="История расчётов ИПУ" data-toggle="modal" data-target="#ArchiveModal" />
                         <input type="button" value="Сохранить" class="btn btn-danger hidden  Save" />
-                        <input type="button" name="@Items.ID_PU" value="Редактировать" class="btn btn-success Edit" />
-                         if (ViewBag.ErrorIntegration.Count > 0)
-                         {
-                            <input type="button" name="@Items.ID_PU" value="Убрать ошибку" class="btn btn-success DeleteError hidden" />
-                         }
-                        <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
-                        <input style="float:right;" name="@Items.TYPE_PU" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
+                        if (User.IsInRole(BE.Roles.RolesEnums.CounterWriter) || User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                        {
+                            <input type="button" name="@Items.ID_PU" value="Редактировать" class="btn btn-success Edit" />
+                                if (ViewBag.ErrorIntegration.Count > 0)
+                                {
+                                <input type="button" name="@Items.ID_PU" value="Убрать ошибку" class="btn btn-success DeleteError hidden" />
+                                }
+                            <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
+                            <input style="float:right;" name="@Items.TYPE_PU" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
+                        }
                         <input type="button" name="@Items.ID_PU" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
                     }
                     else

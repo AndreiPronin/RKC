@@ -27,6 +27,9 @@ namespace BE.Counter
         public DateTime? InstallationDate { get; set; }
         public DateTime? LastReadingDate { get; set; }
         public string InterVerificationInterval { get; set; }
+        public bool? IsClosed {  get; set; }
+        public DateTime? DateClose { get; set; }
+        public string Els { get; set; }
 
         public IpuGisReading()
         {
@@ -35,6 +38,6 @@ namespace BE.Counter
     public class IpuGisReadingActive : IpuGisReading
     {
         public bool HasNewReadings { get; set; }
-        public string Els { get; set; }
+        
     }
 }

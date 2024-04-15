@@ -51,14 +51,17 @@ namespace BL.ApiServices.Counters
                 return await contextTPlus.flats.Where(x => Allic.Contains(x.FullLic)).ToListAsync(); ;
             }
         }
-        protected async Task<List<IPU_COUNTERS>> getIPU_COUNTERS(List<string> Allic)
+        protected async Task<List<IPU_COUNTERS>> getIPU_COUNTERS(List<string> Allic, DateTime? period)
         {
             using (var contextTPlus = new DbTPlus())
             {
-                return await contextTPlus.IPU_COUNTERS.Where(x => x.CLOSE_ != true
-                && (x.FACTORY_NUMBER_PU != null || x.FACTORY_NUMBER_PU != "")
+                var query = contextTPlus.IPU_COUNTERS.Where(x => 
+                 (x.FACTORY_NUMBER_PU != null || x.FACTORY_NUMBER_PU != "")
                 && (x.BRAND_PU != null || x.BRAND_PU != "")
-                && Allic.Contains(x.FULL_LIC)).ToListAsync(); ;
+                && Allic.Contains(x.FULL_LIC));
+                if (period.HasValue)
+                    query = query.Where(x => x.DATE_CLOSE >= period);
+                return await query.ToListAsync(); 
             }
         }
         protected async Task<List<FullLicByGisId>> getFullLicBuGuidGis(List<string> gisId)

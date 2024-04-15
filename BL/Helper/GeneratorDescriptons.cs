@@ -388,6 +388,10 @@ namespace BL.Helper
                 Result.AppendLine($"Сумма оплаты госпошлины: было {courtGeneralDb.CourtWork.SumPayGP} стало {courtGeneralBe.CourtWork.SumPayGP}");
             if (courtGeneralBe.CourtWork.Comment != courtGeneralDb.CourtWork.Comment)
                 Result.AppendLine($"Комментарий судебной работы: было {courtGeneralDb.CourtWork.Comment} стало {courtGeneralBe.CourtWork.Comment}");
+            if (courtGeneralBe.CourtWork.DeterminationDateOverpaidGP != courtGeneralDb.CourtWork.DeterminationDateOverpaidGP)
+                Result.AppendLine($"Дата определения на возврат излишне уплаченной ГП: было {courtGeneralDb.CourtWork.DeterminationDateOverpaidGP} стало {courtGeneralBe.CourtWork.DeterminationDateOverpaidGP}");
+            if (courtGeneralBe.CourtWork.DateAccountingDepartment != courtGeneralDb.CourtWork.DateAccountingDepartment)
+                Result.AppendLine($"Дата передачи реестра СП в бухгалтерию: было {courtGeneralDb.CourtWork.DateAccountingDepartment} стало {courtGeneralBe.CourtWork.DateAccountingDepartment}");
             //.CourtExecutionFSSP
             if (courtGeneralBe.CourtExecutionFSSP.FioSendSpIo != courtGeneralDb.CourtExecutionFSSP.FioSendSpIo)
                 Result.AppendLine($"ФИО сотрудника (направившего СП в ИО): было {courtGeneralDb.CourtExecutionFSSP.FioSendSpIo} стало {courtGeneralBe.CourtExecutionFSSP.FioSendSpIo}");

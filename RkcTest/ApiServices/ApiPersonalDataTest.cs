@@ -28,7 +28,7 @@ namespace RkcTest.ApiServices
         [TestMethod]
         public void SendReceiptTest()
         {
-             _apiPersonalData.SendReceipt("721074364","andrei985623147@yandex.ru", new DateTime(2024, 03, 01), new DateTime(2024, 03, 01));
+             _apiPersonalData.SendReceipt("721077614", "andrei985623147@yandex.ru", new DateTime(2024, 01, 01), new DateTime(2024, 03, 01));
         }
         
     }

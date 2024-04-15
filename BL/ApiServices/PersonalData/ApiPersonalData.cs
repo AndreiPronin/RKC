@@ -28,6 +28,14 @@ namespace BL.ApiServices.PersonalData
         }
         public async Task SendReceipt(string FullLic, string EmailTo ,DateTime DateStart, DateTime DateEnd)
         {
+            var srcDate = DateStart;
+            if (DateStart < DateEnd)
+            {
+                DateStart = DateEnd;
+                DateEnd = srcDate;
+            }
+
+
             List<PersDataDocumentLoad> persData = new List<PersDataDocumentLoad>();
             while (DateStart >= DateEnd)
             {
@@ -45,10 +53,11 @@ namespace BL.ApiServices.PersonalData
             foreach(var item in persData)
             {
                 if (item.FileBytes.Length > 0)
-                    using (Stream stream = new MemoryStream(item.FileBytes))
-                    {
-                        attachments.Add(new Attachment(stream, item.FileName, System.Net.Mime.MediaTypeNames.Application.Pdf));
-                    }
+                {
+                    Stream stream = new MemoryStream(item.FileBytes);
+                    attachments.Add(new Attachment(stream, item.FileName, System.Net.Mime.MediaTypeNames.Application.Pdf));
+                }
+                    
             }
             _notificationMail.SendMailReceipt(attachments, EmailTo);
            

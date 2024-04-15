@@ -22,6 +22,6 @@ D:\Programing\RKC\WordGenerator\bin\Debug\zxing.xml
 D:\Programing\RKC\WordGenerator\bin\Debug\zxing.presentation.xml
 D:\Programing\RKC\WordGenerator\obj\Debug\WordGenerator.csproj.AssemblyReference.cache
 D:\Programing\RKC\WordGenerator\obj\Debug\WordGenerator.csproj.CoreCompileInputs.cache
+D:\Programing\RKC\WordGenerator\obj\Debug\WordGene.B7AAA162.Up2Date
 D:\Programing\RKC\WordGenerator\obj\Debug\WordGenerator.dll
 D:\Programing\RKC\WordGenerator\obj\Debug\WordGenerator.pdb
-D:\Programing\RKC\WordGenerator\obj\Debug\WordGene.B7AAA162.Up2Date

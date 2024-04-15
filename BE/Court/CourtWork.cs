@@ -29,6 +29,14 @@ namespace BE.Court
         public string AddressCourt { get; set; }
         public DateTime? DateReceptionCourt { get; set; }
         public DateTime? DateReturnCourtSP { get; set; }
+        /// <summary>
+        /// Дата определения на возврат излишне уплаченной ГП
+        /// </summary>
+        public DateTime? DeterminationDateOverpaidGP { get; set; }
+        /// <summary>
+        /// Дата передачи реестра СП в бухгалтерию
+        /// </summary>
+        public DateTime? DateAccountingDepartment { get; set; }
         public string ReasonReturningApplication { get; set; }
         public string NumberSP { get; set; }
         public DateTime? DateSP { get; set; }

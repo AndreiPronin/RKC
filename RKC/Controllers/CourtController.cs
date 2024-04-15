@@ -208,7 +208,7 @@ namespace RKC.Controllers
             return PartialView(Res);
         }
         [HttpPost]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin)]
         public async Task<ActionResult> SaveFile(HttpPostedFileBase FileLoad, string NameFile, string Lic, int CourtId)
         {
             return Json(new
@@ -218,7 +218,7 @@ namespace RKC.Controllers
             });
         }
         [HttpGet]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin)]
         public async Task<ActionResult> DownLoadFile(int Id)
         {
             var Result = await _court.DownLoadFile(Id);
