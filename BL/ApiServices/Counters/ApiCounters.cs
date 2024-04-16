@@ -53,7 +53,8 @@ namespace BL.ApiServices.Counters
                 var iPU_COUNTER = item.ConvertToIpuGisReading(lic,
                     AddressMKDsTask.Result.FirstOrDefault(x => x.AddressId == (int)lic.CADR),
                     FlatMkdTask.Result.FirstOrDefault(x => x.FullLic == item.FULL_LIC));
-                if(!string.IsNullOrEmpty(iPU_COUNTER.Fias) && !string.IsNullOrEmpty(iPU_COUNTER.UniqueApartmentNumber))
+                if(!string.IsNullOrEmpty(iPU_COUNTER.Fias) && !string.IsNullOrEmpty(iPU_COUNTER.UniqueApartmentNumber)
+                   && !string.IsNullOrEmpty(iPU_COUNTER.Els) && !string.IsNullOrEmpty(iPU_COUNTER.IdGku))
                     result.value.Add(iPU_COUNTER);
             }
             result.lastId = Allic.LastOrDefault()?.F4ENUMELS;
