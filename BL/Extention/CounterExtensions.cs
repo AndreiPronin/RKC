@@ -29,6 +29,7 @@ namespace BL.Extention
             result.InstallationDate = ipuSource.INSTALLATIONDATE;
             result.Address = address.CityType + " " + address.City + ", " + address.Street + " "
                 + address.StreetType + ", " + address.HouseType + " " + address.House + address.Building;
+            result.TypeOfPU = ipuSource.TypeOfPu;
 
             switch (result.Type)
             {
@@ -148,6 +149,7 @@ namespace BL.Extention
             result.InstallationDate = ipuSource.INSTALLATIONDATE;
             result.Address = address?.CityType + " " + address?.City + ", " + address?.Street + " "
                 + address?.StreetType + ", " + address?.HouseType + " " + address?.House + address?.Building;
+            result.TypeOfPU = ipuSource.TypeOfPu;
 
             switch (result.Type)
             {

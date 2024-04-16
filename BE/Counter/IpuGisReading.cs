@@ -30,7 +30,7 @@ namespace BE.Counter
         public bool? IsClosed {  get; set; }
         public DateTime? DateClose { get; set; }
         public string Els { get; set; }
-
+        public string TypeOfPU { get; set; }
         public IpuGisReading()
         {
         }
