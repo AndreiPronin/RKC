@@ -24,6 +24,7 @@ namespace DB.DataBase
         public DbSet<AddressMKD> addresses { get; set; }
         public DbSet<FlatMkd> flats { get; set; }
         public DbSet<AddressReadings> addressReadings { get; set; }
+        public DbSet<TypeOfPu> typeOfPu { get; set; }
         public DbTPlus() : base("T+")
         {
         }

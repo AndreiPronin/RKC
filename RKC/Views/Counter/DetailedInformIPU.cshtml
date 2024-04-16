@@ -275,7 +275,6 @@
                                 }
 
                             </div>
-                            <hr />
                             <div class="form-group row">
                                 @if (Items.SEALNUMBER != null)
                                 {
@@ -323,7 +322,7 @@
                                 }
 
                             </div>
-                            <hr />
+
                             <div class="form-group row">
                                 @if (Items.SEALNUMBER2 != null)
                                 {
@@ -340,6 +339,20 @@
                                     </div>
                                 }
 
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                <label class="col-sm-4 @(Items.TypeOfPu == null ? "NullOrEmpty" : "") col-form-label">Вид ПУ:</label>
+                                <div class="col-sm-8">
+                                    <select disabled id="TypeOfPu" class="form-control">
+                                        <option>@Items.TypeOfPu</option>
+                                        @foreach (var Item in Items.TypeOfPus)
+                                        {
+                                            <option value="@Item.Name">@Item.Name</option>
+                                        }
+
+                                    </select>
+                                </div>
                             </div>
                             <hr />
                             @{var I = Items.ALL_LICS.FKUBSXVS == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSXVS == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSXVS == 2 ? "расчет по среднему" : Items.ALL_LICS.FKUBSXVS == 3 ? "расчет по нормативу" : "";}
@@ -794,6 +807,7 @@ else
                             TYPEOFSEAL: $(this).parent().find('#TYPEOFSEAL').val().trim(),
                             InterVerificationInterval: $(this).parent().find('#InterVerificationInterval').val().trim(),
                             SEALNUMBER2: $(this).parent().find('#SEALNUMBER2').val(),
+                            TypeOfPu: $(this).parent().find('#TypeOfPu').val(),
                             TYPEOFSEAL2: $(this).parent().find('#TYPEOFSEAL2').val().trim(),
                             DESCRIPTION: $(this).parent().find('.DESCRIPTION').val(),
                             OPERATOR_CLOSE_READINGS: $(this).parent().find('.OPERATOR_CLOSE_READINGS').val()?.replace(',', '.'),

@@ -86,5 +86,7 @@ namespace DB.Model
         public DIMENSION DIMENSION { get; set; }
         public ALL_LICS ALL_LICS = new ALL_LICS();
         public List<BRAND> BrandDictionary = new List<BRAND>();
+        public List<TypeOfPu> TypeOfPus = new List<TypeOfPu>();
+        public string TypeOfPu { get; set; }
     }
 }

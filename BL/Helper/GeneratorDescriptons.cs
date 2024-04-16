@@ -211,7 +211,7 @@ namespace BL.Helper
                 if (IPU_COUNTERS.DESCRIPTION != saveModelIPU.DESCRIPTION && !string.IsNullOrEmpty(saveModelIPU.DESCRIPTION)) Result.Append($"Изменили примечание: {saveModelIPU.DESCRIPTION}\r\n");
                 if (saveModelIPU.DIMENSION != null && saveModelIPU.DIMENSION.Id != 0 && IPU_COUNTERS.DIMENSION_ID != saveModelIPU.DIMENSION.Id) Result.Append($"Изменили еденицу измерения: {saveModelIPU.DIMENSION.Name}\r\n");
                 if (saveModelIPU.InterVerificationInterval != null && IPU_COUNTERS.InterVerificationInterval != saveModelIPU.InterVerificationInterval) Result.Append($"Изменили МПИ: было {IPU_COUNTERS.InterVerificationInterval} стало {saveModelIPU.InterVerificationInterval}\r\n");
-                
+                if (saveModelIPU.TypeOfPu != null && IPU_COUNTERS.TypeOfPu != saveModelIPU.TypeOfPu) Result.Append($"Изменили Вид ПУ: было {IPU_COUNTERS.TypeOfPu} стало {saveModelIPU.TypeOfPu}\r\n");
             }
 
             return Result.ToString();

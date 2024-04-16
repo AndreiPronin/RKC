@@ -275,7 +275,6 @@
                                 }
 
                             </div>
-                            <hr />
                             <div class="form-group row">
                                 @if (Items.SEALNUMBER != null)
                                 {
@@ -323,7 +322,7 @@
                                 }
 
                             </div>
-                            <hr />
+
                             <div class="form-group row">
                                 @if (Items.SEALNUMBER2 != null)
                                 {
@@ -340,6 +339,20 @@
                                     </div>
                                 }
 
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                <label class="col-sm-4 @(Items.TypeOfPu == null ? "NullOrEmpty" : "") col-form-label">Вид ПУ:</label>
+                                <div class="col-sm-8">
+                                    <select disabled id="TypeOfPu" class="form-control">
+                                        <option>@Items.TypeOfPu</option>
+                                        @foreach (var Item in Items.TypeOfPus)
+                                        {
+                                            <option value="@Item.Name">@Item.Name</option>
+                                        }
+
+                                    </select>
+                                </div>
                             </div>
                             <hr />
                             @{var I = Items.ALL_LICS.FKUBSXVS == 0 ? "нет ИПУ" : Items.ALL_LICS.FKUBSXVS == 1 ? "расчет по ИПУ" : Items.ALL_LICS.FKUBSXVS == 2 ? "расчет по среднему" : Items.ALL_LICS.FKUBSXVS == 3 ? "расчет по нормативу" : "";}
@@ -572,13 +585,16 @@
                     {
                         <input type="button" name="@Items.FULL_LIC-@TypePU" class="btn btn-primary Archive" value="История расчётов ИПУ" data-toggle="modal" data-target="#ArchiveModal" />
                         <input type="button" value="Сохранить" class="btn btn-danger hidden  Save" />
-                        <input type="button" name="@Items.ID_PU" value="Редактировать" class="btn btn-success Edit" />
-                         if (ViewBag.ErrorIntegration.Count > 0)
-                         {
-                            <input type="button" name="@Items.ID_PU" value="Убрать ошибку" class="btn btn-success DeleteError hidden" />
-                         }
-                        <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
-                        <input style="float:right;" name="@Items.TYPE_PU" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
+                        if (User.IsInRole(BE.Roles.RolesEnums.CounterWriter) || User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                        {
+                            <input type="button" name="@Items.ID_PU" value="Редактировать" class="btn btn-success Edit" />
+                                if (ViewBag.ErrorIntegration.Count > 0)
+                                {
+                                <input type="button" name="@Items.ID_PU" value="Убрать ошибку" class="btn btn-success DeleteError hidden" />
+                                }
+                            <input type="button" value="Отмена" class="btn btn-danger hidden Cancellation" />
+                            <input style="float:right;" name="@Items.TYPE_PU" type="button" value="Удалить" class="btn btn-danger hidden Delete" />
+                        }
                         <input type="button" name="@Items.ID_PU" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
                     }
                     else
@@ -791,6 +807,7 @@ else
                             TYPEOFSEAL: $(this).parent().find('#TYPEOFSEAL').val().trim(),
                             InterVerificationInterval: $(this).parent().find('#InterVerificationInterval').val().trim(),
                             SEALNUMBER2: $(this).parent().find('#SEALNUMBER2').val(),
+                            TypeOfPu: $(this).parent().find('#TypeOfPu').val(),
                             TYPEOFSEAL2: $(this).parent().find('#TYPEOFSEAL2').val().trim(),
                             DESCRIPTION: $(this).parent().find('.DESCRIPTION').val(),
                             OPERATOR_CLOSE_READINGS: $(this).parent().find('.OPERATOR_CLOSE_READINGS').val()?.replace(',', '.'),
