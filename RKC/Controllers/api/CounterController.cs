@@ -1,4 +1,5 @@
 ﻿using BE.Counter;
+using BE.Court;
 using BE.http;
 using BL.ApiServices;
 using BL.ApiServices.Counters;
@@ -6,6 +7,7 @@ using BL.Counters;
 using BL.Helper;
 using BL.http;
 using BL.Security;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using NLog;
 using RKC.Extensions;
 using System;
@@ -66,6 +68,25 @@ namespace RKC.Controllers.api
         {
             var result = await _apiCounters.GetFullLicBuGuidGis(gisId);
             return result;
+        }
+        [JwtAuthentication]
+        [HttpPost]
+        [Route("UpdatePuWithGis")]
+        public async Task<HttpResponseMessage> UpdatePuWithGis(UpdatePuWithGis updatePuWithGis)
+        {
+            try
+            {
+                await _apiCounters.UpdatePuWithGis(updatePuWithGis);
+                return new HttpResponseMessage() { 
+                    StatusCode = System.Net.HttpStatusCode.OK 
+                };
+            }catch (Exception ex)
+            {
+                return new HttpResponseMessage() { 
+                    StatusCode = System.Net.HttpStatusCode.InternalServerError, 
+                    Content = new StringContent(ex.Message) 
+                };
+            };
         }
     }
 }

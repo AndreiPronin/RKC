@@ -82,6 +82,7 @@ namespace RKC.Controllers
                 ViewBag.ZAK = _baseService.GetStatusCloseOpenLic(FULL_LIC);
                 var Result = _personalData.GetInfoPersData(FULL_LIC);
                 ViewBag.FlatTypeDic = _dictionary.GetFlatType();
+                ViewBag.Benefit = _dictionary.GetAllBenefit();
                 ViewBag.FlatType = _baseService.GetFlatTypeLic(FULL_LIC);
                 if (Result.Count() > 0)
                 {

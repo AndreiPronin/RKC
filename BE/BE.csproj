@@ -77,6 +77,7 @@
     <Compile Include="Court\CourtWriteOff.cs" />
     <Compile Include="Court\InstallmentPayRequisites.cs" />
     <Compile Include="Court\SearchModel.cs" />
+    <Compile Include="Court\UpdatePuWithGis.cs" />
     <Compile Include="DPU\DpuDataDocumentLoad.cs" />
     <Compile Include="DPU\DpuNotAddDb.cs" />
     <Compile Include="DPU\SearchAutocompleteResultDPU.cs" />

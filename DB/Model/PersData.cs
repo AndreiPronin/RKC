@@ -42,6 +42,8 @@ namespace DB.Model
         public string SendingElectronicReceipt { get; set; }
         public DateTime? DateEdit { get; set; }
         public virtual ICollection<PersDataDocument> PersDataDocument { get; set; }
+        public Benefit Benefit { get; set; }
+        public int? BenefitId {  get; set; }
 
     }
     [Table(name: "PersDataDocument", Schema = "dbo")]
@@ -52,6 +54,13 @@ namespace DB.Model
         public string DocumentPath { get; set; }
         public int idPersData { get; set; }
         public PersData PersData { get; set; }
+    }
+    [Table(name: "Benefit", Schema = "dic")]
+    public class Benefit
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 
     [Table(name: "LogsPersData", Schema ="dbo")]

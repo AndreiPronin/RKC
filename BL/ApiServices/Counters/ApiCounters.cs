@@ -1,6 +1,8 @@
 ﻿using BE.Counter;
+using BE.Court;
 using BE.http;
 using BL.Extention;
+using DB.DataBase;
 using DB.Model;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace BL.ApiServices.Counters
         Task<ResultResponse<string, List<IpuGisReading>>> GetIpuReadingsForGis(DateTime period, int? take, string lastLic = "");
         Task<ResultResponse<string, List<IpuGisReadingActive>>> GetIpuReadingsForGisActive(int? take, string lastLic = "");
         Task<List<FullLicByGisId>> GetFullLicBuGuidGis(List<string> gisId);
+        Task UpdatePuWithGis(UpdatePuWithGis updatePuWithGis);
     }
     public class ApiCounters : Repository, IApiCounters
     {
@@ -65,6 +68,9 @@ namespace BL.ApiServices.Counters
             var result = await getFullLicBuGuidGis(gisId);
             return result;
         }
-
+        public async Task UpdatePuWithGis(UpdatePuWithGis updatePuWithGis)
+        {
+           await UpdatePuWithGis(updatePuWithGis);
+        }
     }
 }

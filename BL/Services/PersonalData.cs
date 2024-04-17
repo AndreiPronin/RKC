@@ -49,12 +49,14 @@ namespace BL.Services
     }
     public class PersonalData : BaseService, IPersonalData
     {
-        Ilogger _ilogger;
-        IGeneratorDescriptons _generatorDescriptons;
-        public PersonalData(Ilogger ilogger, IGeneratorDescriptons generatorDescriptons)
+        private readonly Ilogger _ilogger;
+        private readonly IGeneratorDescriptons _generatorDescriptons;
+        private readonly IDictionary _dictionary;
+        public PersonalData(Ilogger ilogger, IGeneratorDescriptons generatorDescriptons, IDictionary dictionary)
         {
             _ilogger = ilogger;
             _generatorDescriptons = generatorDescriptons;
+            _dictionary = dictionary;
         }
         public List<PersonalInformations> GetPersonalInformation(string FullLic)
         {
@@ -133,7 +135,7 @@ namespace BL.Services
             {
                 try
                 {
-                    var Res = db.PersData.Where(x => x.Lic == FullLic && (x.IsDelete == false || x.IsDelete == null)).Include("PersDataDocument").OrderByDescending(x => x.Main).ToList();
+                    var Res = db.PersData.Where(x => x.Lic == FullLic && (x.IsDelete == false || x.IsDelete == null)).Include("PersDataDocument").Include(x=>x.Benefit).OrderByDescending(x => x.Main).ToList();
                     return Res;
                 }
                 catch (Exception ex)
@@ -166,7 +168,7 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
 
-                var Res = db.PersData.Where(x => x.Lic == FullLic && x.IsDelete == true).Include("PersDataDocument").ToList();
+                var Res = db.PersData.Where(x => x.Lic == FullLic && x.IsDelete == true).Include("PersDataDocument").Include(x=>x.Benefit).ToList();
                 return Res;
             }
         }
@@ -176,7 +178,7 @@ namespace BL.Services
             {
                 try
                 {
-                    var Res = db.PersData.Where(x => x.Lic == Full_Lic && x.Main == true).First();
+                    var Res = db.PersData.Where(x => x.Lic == Full_Lic && x.Main == true).Include(x => x.Benefit).First();
                     return Res.RoomType;
                 }
                 catch
@@ -342,6 +344,7 @@ namespace BL.Services
                 PersData.PlaceOfBirth = persDataModel.PlaceOfBirth;
                 PersData.RoomType = persDataModel.RoomType;
                 PersData.SnilsNumber = persDataModel.SnilsNumber;
+                PersData.BenefitId = persDataModel.BenefitId;
                 if (PersData.Main == true)
                 {
                     PersData.Square = persDataModel.Square;

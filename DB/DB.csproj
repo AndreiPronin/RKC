@@ -100,6 +100,14 @@
     <Compile Include="Migrations\202404091827370_CourtAddTwoField.Designer.cs">
       <DependentUpon>202404091827370_CourtAddTwoField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404171330393_AddField_Benefit.cs" />
+    <Compile Include="Migrations\202404171330393_AddField_Benefit.Designer.cs">
+      <DependentUpon>202404171330393_AddField_Benefit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404171426312_AddField_Benefit_KeyPersData_NUll.cs" />
+    <Compile Include="Migrations\202404171426312_AddField_Benefit_KeyPersData_NUll.Designer.cs">
+      <DependentUpon>202404171426312_AddField_Benefit_KeyPersData_NUll.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -193,6 +201,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202404091827370_CourtAddTwoField.resx">
       <DependentUpon>202404091827370_CourtAddTwoField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404171330393_AddField_Benefit.resx">
+      <DependentUpon>202404171330393_AddField_Benefit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404171426312_AddField_Benefit_KeyPersData_NUll.resx">
+      <DependentUpon>202404171426312_AddField_Benefit_KeyPersData_NUll.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

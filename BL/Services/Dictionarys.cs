@@ -21,6 +21,8 @@ namespace BL.Services
         Task<List<CourtValueDictionary>> GetCourtValueDictionaryId(int Id);
         Task<List<CourtNameDictionary>> GetCourtDictionaries();
         List<FlatTypeDto> GetFlatType();
+        List<Benefit> GetAllBenefit();
+        Benefit GetBenefitById(int Id);
     }
     public class Dictionarys : IDictionary
     {
@@ -72,6 +74,22 @@ namespace BL.Services
             using (var db = new DbLIC())
             {
                 var Result = db.FlatTypes.ToList();
+                return Result;
+            }
+        }
+        public List<Benefit> GetAllBenefit()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var Result = db.Benefit.ToList();
+                return Result;
+            }
+        }
+        public Benefit GetBenefitById(int Id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var Result = db.Benefit.FirstOrDefault(x=>x.Id == Id);
                 return Result;
             }
         }

@@ -269,6 +269,8 @@ namespace BL.Helper
                     Result.Append($"Изменили площадь: было {PersData.Square} стало {PersDataModel.Square} \r\n");
                 if (PersData?.SendingElectronicReceipt != PersDataModel.SendingElectronicReceipt && (!string.IsNullOrEmpty(PersDataModel.SendingElectronicReceipt) || IgnorNull))
                     Result.Append($"Изменили отправка эл/квитанции: было {PersData.SendingElectronicReceipt} стало {PersDataModel.SendingElectronicReceipt} \r\n");
+                if (PersData?.Benefit != null && PersData.Benefit.Name != PersDataModel.BenefitName)
+                    Result.Append($"Изменили льгота: было {PersData.Benefit.Name} стало {PersDataModel.BenefitName} \r\n");
             }
             return Result.ToString();
         }

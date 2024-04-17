@@ -53,6 +53,7 @@ namespace DB.DataBase
         public DbSet<LitigationWorkRequisites> LitigationWorkRequisites { get; set; }
         public DbSet<NotSendReceipt> NotSendReceipts { get; set; }
         public DbSet<Settings> Settings { get; set; }
+        public DbSet<Benefit> Benefit { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

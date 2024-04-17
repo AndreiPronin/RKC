@@ -156,17 +156,28 @@
                                 <div class="col-sm-8">
                                     <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Square" class="form-control" value="@Items.Square" />
                                 </div>
+                                <label class="col-sm-4 col-form-label">Льгота:</label>
+                                <div class="col-sm-8">
+                                    <select disabled id="Benefit" class="form-control">
+                                        <option value="@Items.Benefit.Id">@Items.Benefit.Name</option>
+                                        @foreach (var Item in ViewBag.Benefit)
+                                        {
+                                            <option value="@Item.Id">@Item.Name</option>
+                                        }
+                                    </select>
+                                    @*<input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="RoomType" class="form-control" value="@Items.RoomType" />*@
+                                </div>
                                 <label class="col-sm-4 col-form-label">Категория помещения:</label>
                                 <div class="col-sm-8">
-                                    <select  disabled tabIndex="@Index@{Index++;}" id="FlatType" class="form-control">
+                                    <select disabled tabIndex="@Index@{Index++;}" id="FlatType" class="form-control">
                                         <option value="@ViewBag.FlatType.FlatTypeId">@ViewBag.FlatType.FlatType </option>
-                                        @foreach(var Item in @ViewBag.FlatTypeDic)
+                                        @foreach (var Item in @ViewBag.FlatTypeDic)
                                         {
                                             <option value="@Item.FlatTypeId">@Item.FlatType </option>
                                         }
                                     </select>
                                 </div>
-                               
+
                             }
                             else
                             {
@@ -179,6 +190,17 @@
                                 <label class="col-sm-4 col-form-label">Площадь:</label>
                                 <div class="col-sm-8">
                                     <label class="col-sm-4 col-form-label">@Items.Square</label>
+                                </div>
+                                <label class="col-sm-4 col-form-label">Льгота:</label>
+                                <div class="col-sm-8">
+                                    <select disabled id="Benefit" class="form-control">
+                                        <option value="@Items.Benefit.Id">@Items.Benefit.Name</option>
+                                        @foreach (var Item in ViewBag.Benefit)
+                                        {
+                                            <option value="@Item.Id">@Item.Name</option>
+                                        }
+                                    </select>
+                                    @*<input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="RoomType" class="form-control" value="@Items.RoomType" />*@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Категория помещения:</label>
                                 <div class="col-sm-8">
@@ -546,6 +568,8 @@ else
                         StateLic: $(this).parent().find('#StateLic').val(),
                         FlatTypeId: $(this).parent().find('#FlatType option:selected').val(),
                         FlatType: $(this).parent().find('#FlatType option:selected').text(),
+                        BenefitId: $(this).parent().find('#Benefit option:selected').val(),
+                        BenefitName: $(this).parent().find('#Benefit option:selected').text(),
                     }
                 }),
                 contentType: 'application/json; charset=utf-8',

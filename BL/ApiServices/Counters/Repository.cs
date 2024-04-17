@@ -1,4 +1,5 @@
 ﻿using BE.Counter;
+using BE.Court;
 using Castle.Core.Internal;
 using DB.DataBase;
 using DB.Model;
@@ -87,6 +88,14 @@ namespace BL.ApiServices.Counters
                     .Select(x=> new FullLicByGisId { FullLic = x.FULL_LIC, GisId = x.GIS_ID_PU})
                     .ToListAsync();
                 return result;
+            }
+        }
+        protected async Task UpdatePuWithGis(UpdatePuWithGis updatePuWithGis)
+        {
+            using (var context = new DbTPlus())
+            {
+                var ipu = context.IPU_COUNTERS.Find();
+                await context.SaveChangesAsync();
             }
         }
     }
