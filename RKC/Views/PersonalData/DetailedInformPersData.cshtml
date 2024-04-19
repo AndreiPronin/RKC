@@ -159,7 +159,7 @@
                                 <label class="col-sm-4 col-form-label">Льгота:</label>
                                 <div class="col-sm-8">
                                     <select disabled id="Benefit" class="form-control">
-                                        <option value="@Items.Benefit.Id">@Items.Benefit.Name</option>
+                                        <option value="@(Items.Benefit?.Id)">@(Items.Benefit?.Name)</option>
                                         @foreach (var Item in ViewBag.Benefit)
                                         {
                                             <option value="@Item.Id">@Item.Name</option>
@@ -194,7 +194,7 @@
                                 <label class="col-sm-4 col-form-label">Льгота:</label>
                                 <div class="col-sm-8">
                                     <select disabled id="Benefit" class="form-control">
-                                        <option value="@Items.Benefit.Id">@Items.Benefit.Name</option>
+                                        <option value="@(Items.Benefit?.Id)">@(Items.Benefit?.Name)</option>
                                         @foreach (var Item in ViewBag.Benefit)
                                         {
                                             <option value="@Item.Id">@Item.Name</option>

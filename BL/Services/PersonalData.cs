@@ -46,6 +46,7 @@ namespace BL.Services
         void UpdatePersDataSquareExcel(PersDataModel persDataModel, string User);
         void SavePersonalDataFioLic(PersDataModel persDataModel);
         Task CloseLicAsync(string FullLic, string Description, ICounter _counter, string User);
+        DebtInfoForLic GetDebtInfoForLic(string FullLic);
     }
     public class PersonalData : BaseService, IPersonalData
     {
@@ -75,6 +76,19 @@ namespace BL.Services
                     return db.StateCalculation.Where(x => x.F4ENUMELS == FullLic).OrderByDescending(x => x.Period).First();
                 }
                 catch { return new StateCalculation() { Period = DateTime.Now }; }
+            }
+        }
+        public DebtInfoForLic GetDebtInfoForLic(string FullLic)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+#if DEBUG
+                var result = db.Database.SqlQuery<DebtInfoForLic>($" SELECT * from [Web_App_Test].[dbo].[GetDebtInfoForLic]('{FullLic}')").FirstOrDefault();
+#else
+                var result = db.Database.SqlQuery<DebtInfoForLic>($" SELECT * from [Web_App].[dbo].[GetDebtInfoForLic]('{FullLic}')").FirstOrDefault();
+#endif
+                return result;
             }
         }
         public async Task<List<HelpCalculationsModel>> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
@@ -296,7 +310,7 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                var PersData = db.PersData.Find(persDataModel.idPersData);
+                var PersData = db.PersData.Include(x => x.Benefit).FirstOrDefault(x=>x.idPersData == persDataModel.idPersData);
                 _ilogger.ActionUsersPersData(PersData.idPersData, _generatorDescriptons.Generate(persDataModel,true), User);
                 if (PersData.Main == true)
                 {
@@ -323,8 +337,8 @@ namespace BL.Services
                     }
                 }
                 db.SaveChanges();
-                PersData.SendingElectronicReceipt = persDataModel.SendingElectronicReceipt;
-                PersData.DateAdd = persDataModel.DateAdd;
+                PersData.SendingElectronicReceipt = string.IsNullOrEmpty(persDataModel.SendingElectronicReceipt) ? PersData.SendingElectronicReceipt : persDataModel.SendingElectronicReceipt;
+                PersData.DateAdd = persDataModel.DateAdd == null ? PersData.DateAdd : persDataModel.DateAdd;
                 PersData.Comment = persDataModel.Comment;
                 PersData.Comment1 = persDataModel.Comment1;
                 PersData.Comment2 = persDataModel.Comment2;
@@ -362,7 +376,7 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-                var PErsData = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main == true && x.IsDelete != true).ToList();
+                var PErsData = db.PersData.Where(x => x.Lic == persDataModel.Lic && x.Main == true && x.IsDelete != true).Include(x => x.Benefit).ToList();
                 if (PErsData.Count() == 0)
                 {
                     throw new Exception($"На лицевом счете {persDataModel.Lic} нет основного");
@@ -420,6 +434,7 @@ namespace BL.Services
                 PersData.Tel1 = string.IsNullOrEmpty(persDataModel.Tel1) ? PersData.Tel1 : persDataModel.Tel1;
                 PersData.Tel2 = string.IsNullOrEmpty(persDataModel.Tel2) ? PersData.Tel2 : persDataModel.Tel2;
                 PersData.UserName = string.IsNullOrEmpty(persDataModel.UserName) ? PersData.UserName : persDataModel.UserName;
+                PersData.BenefitId = persDataModel.BenefitId == null ? PersData.BenefitId : persDataModel.BenefitId;
                 db.SaveChanges();
             }
         }

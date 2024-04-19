@@ -59,7 +59,7 @@
                         <input type="button" class="btn btn-primary PersData" value="Персональные данные" />
                     </a>
                     <a>
-                        @if (User.IsInRole(BE.Roles.RolesEnums.CounterReader) || User.IsInRole(BE.Roles.RolesEnums.CourtWriter) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                        @if (User.IsInRole(BE.Roles.RolesEnums.CounterReader) || User.IsInRole(BE.Roles.RolesEnums.CourtWriter) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
                         {
                             <input type="button" class="btn btn-primary ShowAllCourt" value="Судебные дела" data-toggle="modal" data-target="#ShowAllCourtModal" />
                         }
@@ -207,6 +207,29 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div style="font-weight:bold;" class="col-md-12 text-center"><p>Информация о задолжности</p></div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="col-sm-6 col-form-label" style="text-wrap:wrap" >Сальдо на начало периода:</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@(ViewBag.DebtInfoForLic?.Debt)" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-sm-6 col-form-label" style="text-wrap:wrap">Оплата в текущем периоде:</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@(ViewBag.DebtInfoForLic?.Payment)" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-sm-6 col-form-label" style="text-wrap:wrap">Долги на текущую дату:</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="Inn" class="form-control Inn" value="@(ViewBag.DebtInfoForLic?.CurrentDebt)" />
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="col-md-1">
                         <div id="mySidenavPersonalData" class="sidenav">
                             <ul class="nav nav-tabs">
@@ -221,9 +244,9 @@
                                 }
                                 @if (User.IsInRole(BE.Roles.RolesEnums.ShowNoteLic))
                                 {
-                                <li class="nav-item">
-                                    <a style="cursor:pointer" class=" HistoryRecalculation">История перерасчетов</a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a style="cursor:pointer" class=" HistoryRecalculation">История перерасчетов</a>
+                                    </li>
                                 }
                                 <li class="nav-item">
                                     <a style="cursor:pointer" class=" PaymentHistory">История оплат</a>

@@ -137,7 +137,7 @@
                             <a href="/Report"><i class="glyphicon glyphicon-list-alt icons" aria-hidden="true"></i> <i class="Padding">Отчеты</i></a>
                         </li>
                     }
-                    @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.CourtReader) || User.IsInRole(RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.CourtAdmin))
+                    @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.CourtReader) || User.IsInRole(RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.CourtAdmin) || User.IsInRole(RolesEnums.CourtSuperAdmin))
                     {
                         <li id="Court">
                             <a href="/Court/Serach"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>

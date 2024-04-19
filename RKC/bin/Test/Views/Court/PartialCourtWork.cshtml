@@ -13,6 +13,10 @@
             <input class="form-control" id="RequisitesSumDebtSendCourt" disabled="disabled" value="@resRequisitesSumDebtSendCourt" />
 
         </div>
+        <label class="col-sm-12 col-form-label">Сумма ОД и пени, предъявленная в суд:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.AmountdebtTransferredToCourtTotal, new { @readonly = "readonly", @disabled = "disabled", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtWork.AmountdebtTransferredToCourtTotal })
+        </div>
         <label class="col-sm-12 col-form-label">Сумма ОД, предъявленная в суд:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.SumOdSendCourt, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtWork.SumOdSendCourt })
@@ -205,6 +209,11 @@
             console.log(e.value.toString().replace(",", "."));
         }
     }
+    onLoadCourtWork();
+    function onLoadCourtWork() {
+        let sumOdAndPenySendCourt = +$("#CourtWork_SumOdSendCourt").val() + +$("#CourtWork_SumPenySendCourt").val(); //Сумма ОД и пени, предъявленная в суд
+        $("#CourtWork_AmountdebtTransferredToCourtTotal").val(sumOdAndPenySendCourt.toFixed(2));
+    }
     $(document).ready(function (e) {
 
         $("#CourtWork_RequisitesSumGP").val($("#sumaRequsitsGp").val());
@@ -225,27 +234,17 @@
                 callError($("#CourtWork_SumGP"))
             }
         })
-        //$("#CourtWork_RequisitesSumGP").keyup(function () {
-        //    let sum = $("#CourtWork_RequisitesSumGP").val() - $("#CourtWork_SumGP").val();
-        //    $("#CourtWork_AmountOverpaidGP").val(sum)
-        //    $("#Save").removeClass("hidden");
-        //    removeError($("#CourtWork_RequisitesSumGP"));
-        //    removeError($("#CourtWork_SumGP"));
-        //    removeErrorText($("#CourtWork_AmountOverpaidGP"));
-        //    if (sum < 0) {
-        //        $("#Save").addClass("hidden");
-        //        callErrorText($("#CourtWork_AmountOverpaidGP"), "Проверьте введенные суммы ГП");
-        //        callError($("#CourtWork_RequisitesSumGP"));
-        //        callError($("#CourtWork_SumGP"));
-        //    }
-        //})
         $("#CourtWork_SumOdSendCourt").keyup(function () {
             let sum = +$("#CourtWork_SumOdSendCourt").val() + +$("#CourtWork_SumPenySendCourt").val() + +$("#CourtWork_SumGP").val();
-            $("#RequisitesSumDebtSendCourt").val(sum.toFixed(2))
+            let sumOdAndPenySendCourt = +$("#CourtWork_SumOdSendCourt").val() + +$("#CourtWork_SumPenySendCourt").val();
+            $("#RequisitesSumDebtSendCourt").val(sum.toFixed(2));
+            $("#CourtWork_AmountdebtTransferredToCourtTotal").val(sumOdAndPenySendCourt.toFixed(2));
         })
         $("#CourtWork_SumPenySendCourt").keyup(function () {
             let sum = +$("#CourtWork_SumOdSendCourt").val() + +$("#CourtWork_SumPenySendCourt").val() + +$("#CourtWork_SumGP").val();
-            $("#RequisitesSumDebtSendCourt").val(sum.toFixed(2))
+            let sumOdAndPenySendCourt = +$("#CourtWork_SumOdSendCourt").val() + +$("#CourtWork_SumPenySendCourt").val();
+            $("#RequisitesSumDebtSendCourt").val(sum.toFixed(2));
+            $("#CourtWork_AmountdebtTransferredToCourtTotal").val(sumOdAndPenySendCourt.toFixed(2));
         })
         $("#CourtWork_SumGP").keyup(function () {
             let sum = +$("#CourtWork_SumOdSendCourt").val() + +$("#CourtWork_SumPenySendCourt").val() + +$("#CourtWork_SumGP").val();

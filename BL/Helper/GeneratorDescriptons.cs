@@ -6,6 +6,7 @@ using DB.DataBase;
 using DB.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -223,7 +224,7 @@ namespace BL.Helper
             if (!string.IsNullOrEmpty(PersDataModel.FlatTypeId) && PersDataModel.FlatTypeId != FlatType.FlatTypeId)
                 Result.Append($"Изменил категорию помещения: было {FlatType.FlatType} стало {PersDataModel.FlatType} \r\n");
             using (var db = new ApplicationDbContext()) {
-                PersData PersData = db.PersData.Where(x => x.idPersData == PersDataModel.idPersData).FirstOrDefault();
+                PersData PersData = db.PersData.Where(x => x.idPersData == PersDataModel.idPersData).Include(x => x.Benefit).FirstOrDefault();
                 if (PersData?.FirstName != PersDataModel.FirstName && (!string.IsNullOrEmpty(PersDataModel.FirstName) || IgnorNull)) 
                     Result.Append($"Изменили Имя: было {PersData.FirstName} стало {PersDataModel.FirstName} \r\n");
                 if (PersData?.LastName != PersDataModel.LastName && (!string.IsNullOrEmpty(PersDataModel.LastName) || IgnorNull)) 
@@ -269,8 +270,8 @@ namespace BL.Helper
                     Result.Append($"Изменили площадь: было {PersData.Square} стало {PersDataModel.Square} \r\n");
                 if (PersData?.SendingElectronicReceipt != PersDataModel.SendingElectronicReceipt && (!string.IsNullOrEmpty(PersDataModel.SendingElectronicReceipt) || IgnorNull))
                     Result.Append($"Изменили отправка эл/квитанции: было {PersData.SendingElectronicReceipt} стало {PersDataModel.SendingElectronicReceipt} \r\n");
-                if (PersData?.Benefit != null && PersData.Benefit.Name != PersDataModel.BenefitName)
-                    Result.Append($"Изменили льгота: было {PersData.Benefit.Name} стало {PersDataModel.BenefitName} \r\n");
+                if ( PersData.Benefit?.Name != PersDataModel.BenefitName)
+                    Result.Append($"Изменили льгота: было {PersData.Benefit?.Name} стало {PersDataModel.BenefitName} \r\n");
             }
             return Result.ToString();
         }
@@ -394,6 +395,8 @@ namespace BL.Helper
                 Result.AppendLine($"Дата определения на возврат излишне уплаченной ГП: было {courtGeneralDb.CourtWork.DeterminationDateOverpaidGP} стало {courtGeneralBe.CourtWork.DeterminationDateOverpaidGP}");
             if (courtGeneralBe.CourtWork.DateAccountingDepartment != courtGeneralDb.CourtWork.DateAccountingDepartment)
                 Result.AppendLine($"Дата передачи реестра СП в бухгалтерию: было {courtGeneralDb.CourtWork.DateAccountingDepartment} стало {courtGeneralBe.CourtWork.DateAccountingDepartment}");
+            if (courtGeneralBe.CourtWork.AmountdebtTransferredToCourtTotal != courtGeneralDb.CourtWork.AmountdebtTransferredToCourtTotal)
+                Result.AppendLine($"Сумма задолженности, переданная в суд - всего и Сумма ОД, предъявленная в суд: было {courtGeneralDb.CourtWork.AmountdebtTransferredToCourtTotal} стало {courtGeneralBe.CourtWork.AmountdebtTransferredToCourtTotal}");
             //.CourtExecutionFSSP
             if (courtGeneralBe.CourtExecutionFSSP.FioSendSpIo != courtGeneralDb.CourtExecutionFSSP.FioSendSpIo)
                 Result.AppendLine($"ФИО сотрудника (направившего СП в ИО): было {courtGeneralDb.CourtExecutionFSSP.FioSendSpIo} стало {courtGeneralBe.CourtExecutionFSSP.FioSendSpIo}");
@@ -687,6 +690,8 @@ namespace BL.Helper
                 Result.AppendLine($"Номер ИЛ: было {courtGeneralDb.CourtLitigationWork.NumberIl} стало {courtGeneralBe.CourtLitigationWork.NumberIl}");
             if (courtGeneralBe.CourtLitigationWork.Comment != courtGeneralDb.CourtLitigationWork.Comment)
                 Result.AppendLine($"Реквизиты ГП - дата платежного поручения: было {courtGeneralBe.CourtLitigationWork.Comment} стало {courtGeneralBe.CourtLitigationWork.Comment}");
+            if (courtGeneralBe.CourtLitigationWork.CaseNumber != courtGeneralDb.CourtLitigationWork.CaseNumber)
+                Result.AppendLine($"Номер дела: было {courtGeneralBe.CourtLitigationWork.CaseNumber} стало {courtGeneralBe.CourtLitigationWork.CaseNumber}");
             //CourtStateDuty
             if (courtGeneralBe.CourtStateDuty.DateSendOnReturnFNS != courtGeneralDb.CourtStateDuty.DateSendOnReturnFNS)
                 Result.AppendLine($"Дата направления на возврат г/п в ФНС: было {courtGeneralDb.CourtStateDuty.DateSendOnReturnFNS} стало {courtGeneralBe.CourtStateDuty.DateSendOnReturnFNS}");

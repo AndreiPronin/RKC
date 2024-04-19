@@ -38,7 +38,7 @@ namespace BE.PersData
         public string SendingElectronicReceipt { get; set; }
         public string FlatTypeId { get; set; }
         public string FlatType { get; set; }
-        public int BenefitId { get; set; }
+        public int? BenefitId { get; set; }
         public string BenefitName { get; set; }
     }
 }

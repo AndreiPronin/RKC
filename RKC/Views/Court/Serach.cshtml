@@ -21,7 +21,7 @@
 <div class="col-md-1">
     <div id="mySidenavPersonalData" class="sidenav">
         <ul class="nav nav-tabs">
-            @if (User.IsInRole(BE.Roles.RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
+            @if (User.IsInRole(BE.Roles.RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
             {
                 <li class="nav-item">
                     <a style="cursor:pointer" class="nav-link Note" href="/Court/AdminPanel">Админ панель</a>

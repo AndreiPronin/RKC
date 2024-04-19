@@ -765,6 +765,7 @@ else
                 var INSTALLATIONDATE = $(this).parent().find('#INSTALLATIONDATE').val();
                 var DATE_CHECK = $(this).parent().find('#DATE_CHECK').val();
                 var DATE_CHECK_NEXT = $(this).parent().find('#DATE_CHECK_NEXT').val();
+                var CHECKPOINT_DATE = $(this).parent().find('#CHECKPOINT_DATE').val();
                 var date = new Date('@DateTime.Now.Date.ToString("yyyy-MM-dd")');
                 var Maxdate = new Date('@DateTime.Now.AddYears(6).Date.ToString("yyyy-MM-dd")');
                 if (INSTALLATIONDATE != undefined && new Date(INSTALLATIONDATE) > date) {
@@ -779,6 +780,11 @@ else
                 }
                 if (DATE_CHECK_NEXT != undefined && new Date(DATE_CHECK_NEXT) > Maxdate) {
                     alert("Дата следующей поверки не должна быть позже @DateTime.Now.AddYears(6).Date.ToString("dd-MM-yyyy") ");
+                    $(".Save").removeClass("hidden");
+                    return;
+                }
+                if (CHECKPOINT_DATE != undefined && new Date(CHECKPOINT_DATE) >date) {
+                    alert("Дата контрольного обхода должна быть меньше текущей даты @DateTime.Now.Date.ToString("dd-MM-yyyy") ");
                     $(".Save").removeClass("hidden");
                     return;
                 }

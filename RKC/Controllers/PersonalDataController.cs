@@ -61,7 +61,8 @@ namespace RKC.Controllers
         public ActionResult PersonalInformation(string FullLic)
         {
             ViewBag.FULL_LIC = FullLic;
-            ViewBag.StateCalc = _personalData.GetStateCalculation(FullLic); 
+            ViewBag.StateCalc = _personalData.GetStateCalculation(FullLic);
+            ViewBag.DebtInfoForLic = _personalData.GetDebtInfoForLic(FullLic);
             return View(_personalData.GetPersonalInformation(FullLic));
         }
         [Auth(Roles = "PersWriter,PersReader,Admin")]

@@ -127,6 +127,10 @@ namespace BE.Court
         /// </summary>
         public string Comment { get; set; }
         /// <summary>
+        ///Номер дела
+        /// </summary>
+        public string CaseNumber { get; set; }
+        /// <summary>
         /// Дата задания
         /// </summary>
         public DateTime? DateTask { get; set; }

@@ -48,15 +48,15 @@
         
     </div>
     <div class="col-md-4">
-        <label class="col-sm-12 col-form-label">Паспорт серия:</label>
+        <label class="col-sm-12 col-form-label">Документ серия:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerPasportSeria, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerPasportSeria })
         </div>
-        <label class="col-sm-12 col-form-label">Паспорт Номер:</label>
+        <label class="col-sm-12 col-form-label">Документ Номер:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerPasportNumber, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerPasportNumber })
         </div>
-        <label class="col-sm-12 col-form-label">Паспорт дата выдачи</label>
+        <label class="col-sm-12 col-form-label">Документ дата выдачи</label>
         <div class="col-sm-8">
 
             @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerPasportDate, new
@@ -67,7 +67,7 @@
            @Value = (DateTime.TryParse(Model.CourtOwnerInformation.OwnerPasportDate, out DateTime PasportDate) ? PasportDate.ToString("yyyy-MM-dd") : string.Empty)
             })
         </div>
-        <label class="col-sm-12 col-form-label">Паспорт кем выдан:</label>
+        <label class="col-sm-12 col-form-label">Документ кем выдан:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtOwnerInformation.OwnerPasportIssue, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtOwnerInformation.OwnerPasportIssue })
         </div>

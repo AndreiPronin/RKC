@@ -108,6 +108,10 @@
     <Compile Include="Migrations\202404171426312_AddField_Benefit_KeyPersData_NUll.Designer.cs">
       <DependentUpon>202404171426312_AddField_Benefit_KeyPersData_NUll.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.cs" />
+    <Compile Include="Migrations\202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.Designer.cs">
+      <DependentUpon>202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -130,6 +134,7 @@
     <Compile Include="Model\Court\CourtWriteOff.cs" />
     <Compile Include="Model\Court\DictiomaryModel\CourtNameDictionary.cs" />
     <Compile Include="Model\Court\InstallmentPayRequisites.cs" />
+    <Compile Include="Model\DebtInfoForLic.cs" />
     <Compile Include="Model\DirectFlat.cs" />
     <Compile Include="Model\DirectMkd.cs" />
     <Compile Include="Model\DpuSendByEmailL.cs" />
@@ -207,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202404171426312_AddField_Benefit_KeyPersData_NUll.resx">
       <DependentUpon>202404171426312_AddField_Benefit_KeyPersData_NUll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.resx">
+      <DependentUpon>202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

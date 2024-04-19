@@ -20,7 +20,7 @@
                     <td>@Item.Suma</td>
                     @{Item.Suma = string.IsNullOrEmpty(Item.Suma) ? "0,0" : Item.Suma.Replace(".", ","); }
                     @{sumaRequsitsGp = double.Parse(Item.Suma) + sumaRequsitsGp; }
-                    @if (User.IsInRole(RolesEnums.CourtAdmin) || User.IsInRole(RolesEnums.SuperAdmin))
+                    @if (User.IsInRole(RolesEnums.CourtAdmin) || User.IsInRole(RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
                     {
                         <td><button type="button" name="@Item.Id" class="btn btn-danger removeLitigationWorkRequisites hidden">Удалить</button></td>
                     }

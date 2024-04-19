@@ -12,6 +12,7 @@ namespace BE.Court
         public double? SumDebtNowDate { get; set; }
         public double? SumDebtSendCourt { get; set; }
         public double? SumOdSendCourt { get; set; }
+        public double? AmountdebtTransferredToCourtTotal { get; set; }
         public double? SumPenySendCourt { get; set; }
         public double? SumGP { get; set; }
         public double? RequisitesSumGP { get; set; }

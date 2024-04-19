@@ -30,7 +30,7 @@ using LitigationWorkRequisites = BE.Court.LitigationWorkRequisites;
 
 namespace RKC.Controllers
 {
-    [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter)]
+    [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter + "," + RolesEnums.CourtSuperAdmin)]
     public class CourtController : Controller
     {
         private readonly ICourt _court;
@@ -42,10 +42,11 @@ namespace RKC.Controllers
         public readonly ISecurityProvider _securityProvider;
         private readonly IExcelCourt _excelCourt;
         private readonly INotificationMail _notificationMail;
+        private readonly IPersonalData _personalData;
         private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
         public CourtController(ICourt court, Ilogger logger, IGeneratorDescriptons generatorDescriptons, IDictionary dictionary,
             ICacheApp cacheApp, IFlagsAction flagsAction,
-            ISecurityProvider securityProvider, IExcelCourt excelCourt, INotificationMail notificationMail)
+            ISecurityProvider securityProvider, IExcelCourt excelCourt, IPersonalData personalData , INotificationMail notificationMail)
         {
             _securityProvider = securityProvider;
             _logger = logger;
@@ -55,9 +56,10 @@ namespace RKC.Controllers
             _flagsAction = flagsAction;
             _court = court;
             _excelCourt = excelCourt;
+            _personalData = personalData;
             _notificationMail = notificationMail;
         }
-        [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter)]
+        [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> Index(int Id = 0)
         {
             if (_cacheApp.Lock(User.Identity.GetFIOFull(), nameof(CourtController) + nameof(Index) + Id))
@@ -67,7 +69,11 @@ namespace RKC.Controllers
             }
             else ViewBag.IsLock = false;
 
+            
+
             var Model = await _court.DetailInfroms(Id);
+            var debtInfoForLic = _personalData.GetDebtInfoForLic(Model.Lic);
+            Model.CourtWork.SumDebtNowDate = debtInfoForLic is null ? Model.CourtWork.SumDebtNowDate : debtInfoForLic.CurrentDebt;
             return View(Model);
         }
         public ActionResult Serach()
@@ -84,7 +90,7 @@ namespace RKC.Controllers
             var Result = await _court.Serach(searchModel);
             return PartialView(Result);
         }
-        [Auth(Roles = RolesEnums.CourtWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.CourtWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> CreateCourt(string FullLic)
         {
             _Nlogger.Trace($"Создал дело {FullLic}");
@@ -93,20 +99,20 @@ namespace RKC.Controllers
             var Result = await _court.CreateCourt(FullLic, DateTime.Now.ToString(), User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Result);
         }
-        [Auth(Roles = RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> DeleteCourt(int Id)
         {
             await _court.DeleteCourt(Id);
             return Redirect("/Court/Serach");
         }
-        [Auth(Roles = RolesEnums.CourtWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin)]
+        [Auth(Roles = RolesEnums.CourtWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> SaveCourt(CourtGeneralInformation courtGeneralInformation)
         {
             _Nlogger.Trace(new ConvertJson<CourtGeneralInformation>(courtGeneralInformation).ConverModelToJson());
             var Id = await _court.SaveCourt(courtGeneralInformation, User.Identity.GetFIOFull());
             return Redirect("/Court/Index?Id=" + Id);
         }
-        [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter)]
+        [Auth(Roles = RolesEnums.CounterWriter + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> ShowAllCourtModal(string FullLic)
         {
             ViewBag.FullLic = FullLic;
@@ -208,7 +214,7 @@ namespace RKC.Controllers
             return PartialView(Res);
         }
         [HttpPost]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> SaveFile(HttpPostedFileBase FileLoad, string NameFile, string Lic, int CourtId)
         {
             return Json(new
@@ -218,7 +224,7 @@ namespace RKC.Controllers
             });
         }
         [HttpGet]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> DownLoadFile(int Id)
         {
             var Result = await _court.DownLoadFile(Id);
@@ -226,7 +232,7 @@ namespace RKC.Controllers
             return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
         }
         [HttpPost]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin +"," + RolesEnums.CourtAdmin)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin + "," + RolesEnums.CourtSuperAdmin)]
         public ActionResult SaveNote([FromBody]string Note, [FromUri]int Id, [FromUri] string Lic)
         {
             _court.SaveNote(Note,Id,Lic);
@@ -234,7 +240,7 @@ namespace RKC.Controllers
             return Content("Ok");
         }
         [HttpGet]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin + "," + RolesEnums.CourtReader)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CourtWriter + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtAdmin + "," + RolesEnums.CourtReader + "," + RolesEnums.CourtSuperAdmin)]
         public string GetNote([FromUri] int Id, [FromUri] string Lic)
         {
             var result = _court.GetNote(Id, Lic);
@@ -263,7 +269,7 @@ namespace RKC.Controllers
             _cacheApp.Delete(User.Identity.GetFIOFull(), Page);
             return null;
         }
-        [Auth(Roles = RolesEnums.CourtAdmin)]
+        [Auth(Roles = RolesEnums.CourtAdmin + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> UploadFileCourtCase(HttpPostedFileBase file, int TypeLoad)
         {
             _Nlogger.Info($"Загружает шаблон {TypeLoad} название файла {file.FileName}");
