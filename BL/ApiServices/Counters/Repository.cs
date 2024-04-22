@@ -90,13 +90,5 @@ namespace BL.ApiServices.Counters
                 return result;
             }
         }
-        protected async Task UpdatePuWithGis(UpdatePuWithGis updatePuWithGis)
-        {
-            using (var context = new DbTPlus())
-            {
-                var ipu = context.IPU_COUNTERS.Find();
-                await context.SaveChangesAsync();
-            }
-        }
     }
 }

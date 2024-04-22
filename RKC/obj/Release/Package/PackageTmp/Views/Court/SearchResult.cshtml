@@ -40,8 +40,8 @@
                     }
                     <td>
                         <a href="/Court/Index?Id=@Items.Id" target="_blank" class="btn btn-primary">Показать подробную информацию</a>
-                        @if (User.IsInRole(RolesEnums.SuperAdmin))
-                    {
+                        @if (User.IsInRole(RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
+                        {
                         <a name="@Items.Id" id="@Items.CourtExecutionFSSP.NumberIP" class="btn btn-danger DeleteCoutr">Удалить</a>
                     }
                 </td>

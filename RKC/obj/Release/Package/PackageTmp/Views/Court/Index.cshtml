@@ -178,7 +178,15 @@
             <input type="button" class="btn btn-danger" id="ClosePage" value="Закрыть страницу" />
             <p>В данный момент страницу редактирует @ViewBag.User</p>
         }
-        <span style="font-size:18px" >Статус карточки:</span>  @Html.TextBoxFor(m => m.StatusCard, new { @readonly = "readonly", @dicId = "23", @class = "form-control DictionaryAutoComplete", @Value = Model.StatusCard })
+        <span style="font-size:18px">Статус карточки:</span> @Html.TextBoxFor(m => m.StatusCard, new { @readonly = "readonly", @dicId = "23", @class = "form-control DictionaryAutoComplete", @Value = Model.StatusCard })
+        if (Model.Lic?.StartsWith("7") == true)
+        {
+            <span style="font-size:18px">Сумма задолженности на текущую дату:</span> @Html.TextBoxFor(m => m.CourtWork.SumDebtNowDate, new { @readonly = "readonly",disabled= "disabled", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtWork.SumDebtNowDate })
+        }
+        else
+        {
+            <span style="font-size:18px">Сумма задолженности на текущую дату:</span> @Html.TextBoxFor(m => m.CourtWork.SumDebtNowDate, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtWork.SumDebtNowDate })
+        }
         <div class="tab-content">
             <div class="tab-pane fade active in" id="GeneralInformation">
                 @Html.Partial("PartialGeneralInformation", Model)
@@ -224,10 +232,10 @@
 <script>
     $(document).ready(function (e) {
         $("#PasportNumber").mask("99999?9");
-        $("#Snils").mask("999-999-999-99");
+        $("#Snils").mask("999-999-999-9?9");
         $("#PasportSeria").mask("9999");
-        $("#Snils").mask("999-999-999-99");
-        $("#Inn").mask("99999999999");
+        $("#Snils").mask("999-999-999-9?9");
+        $("#Inn").mask("99999999999?9");
         $(window).keydown(function (event) {
             if (event.keyCode == 13) {
                 event.preventDefault();

@@ -8,5 +8,7 @@ namespace BE.Court
 {
     public class UpdatePuWithGis
     {
+        public int IdPu { get; set; }
+        public string MeteringDeviceGISGKHNumber { get; set; }
     }
 }

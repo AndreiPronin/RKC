@@ -57,7 +57,7 @@
         <div class="col-md-12">
             @using (Html.BeginForm("UploadFileCourtCase", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin))
+                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
                 {
                     <div style="margin-top:30px;" class="row">
                         <div class="col-md-4">
