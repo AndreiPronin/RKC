@@ -167,6 +167,10 @@
                                     </select>
                                     @*<input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="RoomType" class="form-control" value="@Items.RoomType" />*@
                                 </div>
+                                <label class="col-sm-4 col-form-label">Дата окончания льготы:</label>
+                                <div class="col-sm-8">
+                                    <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="BenefitEndDate" class="form-control " value="@string.Format("{0:yyyy-MM-dd}", Items.BenefitEndDate)" />
+                                </div>
                                 <label class="col-sm-4 col-form-label">Категория помещения:</label>
                                 <div class="col-sm-8">
                                     <select disabled tabIndex="@Index@{Index++;}" id="FlatType" class="form-control">
@@ -201,6 +205,10 @@
                                         }
                                     </select>
                                     @*<input type="text" readonly="readonly" tabIndex="@Index@{Index++;}" id="RoomType" class="form-control" value="@Items.RoomType" />*@
+                                </div>
+                                <label class="col-sm-4 col-form-label">Дата окончания льготы:</label>
+                                <div class="col-sm-8">
+                                    <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="BenefitEndDate" class="form-control " value="@string.Format("{0:yyyy-MM-dd}", Items.BenefitEndDate)" />
                                 </div>
                                 <label class="col-sm-4 col-form-label">Категория помещения:</label>
                                 <div class="col-sm-8">
@@ -570,6 +578,7 @@ else
                         FlatType: $(this).parent().find('#FlatType option:selected').text(),
                         BenefitId: $(this).parent().find('#Benefit option:selected').val(),
                         BenefitName: $(this).parent().find('#Benefit option:selected').text(),
+                        BenefitEndDate: $(this).parent().find('#BenefitEndDate').val(),
                     }
                 }),
                 contentType: 'application/json; charset=utf-8',

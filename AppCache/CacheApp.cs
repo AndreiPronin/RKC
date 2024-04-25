@@ -190,10 +190,10 @@ namespace AppCache
             MemoryCache memoryCache = MemoryCache.Default;
             return memoryCache.Add(name, Method, DateTime.Now.AddMinutes(30));
         }
-        public bool Add(string name, string Url)
+        public bool Add(string value, string key)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            return memoryCache.Add(Url, name, DateTime.Now.AddMinutes(10));
+            return memoryCache.Add(key, value, DateTime.Now.AddMinutes(10));
         }
         public bool AddInfinity(string Key, string value)
         {
@@ -207,13 +207,13 @@ namespace AppCache
             memoryCache.Set(key, value, DateTime.Now.AddMinutes(10));
         }
 
-        public void Delete(string name, string Url)
+        public void Delete(string value, string key)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            var Name = memoryCache.Get(Url) as string;
-            if (memoryCache.Contains(Url) && Name == name)
+            var Name = memoryCache.Get(key) as string;
+            if (memoryCache.Contains(key) && Name == value)
             {
-                memoryCache.Remove(Url);
+                memoryCache.Remove(key);
             }
         }
         public void Delete(string Key)

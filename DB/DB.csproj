@@ -112,6 +112,10 @@
     <Compile Include="Migrations\202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.Designer.cs">
       <DependentUpon>202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404220934511_BenefitEndDate_PersData.cs" />
+    <Compile Include="Migrations\202404220934511_BenefitEndDate_PersData.Designer.cs">
+      <DependentUpon>202404220934511_BenefitEndDate_PersData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -215,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.resx">
       <DependentUpon>202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404220934511_BenefitEndDate_PersData.resx">
+      <DependentUpon>202404220934511_BenefitEndDate_PersData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -136,9 +136,9 @@
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Номер дела:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtLitigationWork.CaseNumber, new { @readonly = "readonly", @dicId = "20", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtLitigationWork.CaseNumber })
+            @Html.TextBoxFor(m => m.CourtLitigationWork.CaseNumber, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtLitigationWork.CaseNumber })
         </div>
-        <label class="col-sm-12 col-form-label">Номер дела:</label>
+        <label class="col-sm-12 col-form-label">Дата решения:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtLitigationWork.DateDecision, new
             {

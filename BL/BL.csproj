@@ -78,6 +78,7 @@
     <Compile Include="http\Resposne.cs" />
     <Compile Include="Helper\ThrowHelper.cs" />
     <Compile Include="http\Reuqest.cs" />
+    <Compile Include="Jobs\CacheUpdate.cs" />
     <Compile Include="Jobs\Scheduler.cs" />
     <Compile Include="Jobs\EmailSender.cs" />
     <Compile Include="Jobs\JobManager.cs" />

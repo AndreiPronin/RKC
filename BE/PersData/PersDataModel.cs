@@ -40,5 +40,6 @@ namespace BE.PersData
         public string FlatType { get; set; }
         public int? BenefitId { get; set; }
         public string BenefitName { get; set; }
+        public DateTime? BenefitEndDate { get; set; }
     }
 }

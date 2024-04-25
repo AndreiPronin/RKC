@@ -359,6 +359,7 @@ namespace BL.Services
                 PersData.RoomType = persDataModel.RoomType;
                 PersData.SnilsNumber = persDataModel.SnilsNumber;
                 PersData.BenefitId = persDataModel.BenefitId;
+                PersData.BenefitEndDate = persDataModel.BenefitEndDate;
                 if (PersData.Main == true)
                 {
                     PersData.Square = persDataModel.Square;
@@ -435,6 +436,7 @@ namespace BL.Services
                 PersData.Tel2 = string.IsNullOrEmpty(persDataModel.Tel2) ? PersData.Tel2 : persDataModel.Tel2;
                 PersData.UserName = string.IsNullOrEmpty(persDataModel.UserName) ? PersData.UserName : persDataModel.UserName;
                 PersData.BenefitId = persDataModel.BenefitId == null ? PersData.BenefitId : persDataModel.BenefitId;
+                PersData.BenefitEndDate = persDataModel.BenefitEndDate == null ? PersData.BenefitEndDate : persDataModel.BenefitEndDate;
                 db.SaveChanges();
             }
         }

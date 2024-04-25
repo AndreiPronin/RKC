@@ -44,6 +44,7 @@ namespace DB.Model
         public virtual ICollection<PersDataDocument> PersDataDocument { get; set; }
         public Benefit Benefit { get; set; }
         public int? BenefitId {  get; set; }
+        public DateTime? BenefitEndDate { get; set; }
 
     }
     [Table(name: "PersDataDocument", Schema = "dbo")]

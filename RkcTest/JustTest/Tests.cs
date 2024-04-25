@@ -15,12 +15,20 @@ namespace RkcTest.JustTest
     [TestClass]
     public class Tests
     {
-        
+        int[] first = new int[4] { 1, 2, 4, 5 };
+        int[] second = new int[3] {3,3,4 };
+        int[] third = new int[5] { 2, 3, 4, 5, 6 };
         LinkedList<int> lists = new LinkedList<int>();
         [TestMethod]
         public void HashSetTest()
         {
-           
+            
+            for(int i = 0; i < 4; i++)
+            {
+
+            }
+
+
             for (int l=0;l<10000000; l++)
             {
                 lists.AddFirst(l);
