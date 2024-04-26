@@ -50,6 +50,10 @@ namespace BE.Court
         /// Дата задания
         /// </summary>
         public DateTime? DateTask { get; set; }
+        /// <summary>
+        /// дата направления заявления на возврат ГП в суд
+        /// </summary>
+        public DateTime? DateSendApplicationOnReverseGpInCourt { get; set; }
         public CourtGeneralInformation CourtGeneralInformation { get; set; }
     }
 }

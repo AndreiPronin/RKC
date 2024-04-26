@@ -23,6 +23,14 @@ namespace DB.Model.Court
         /// </summary>
         public double? AmountRestructuring { get; set; }
         /// <summary>
+        /// Сумма рассрочки ОД
+        /// </summary>
+        public double? AmountRestructuringOd { get; set; }
+        /// <summary>
+        /// Сумма рассрочки Пени
+        /// </summary>
+        public double? AmountRestructuringPeny { get; set; }
+        /// <summary>
         /// Начальный месяц реструктуризации
         /// </summary>
         public DateTime? StartingMonthRestructuring { get; set; }

@@ -401,6 +401,8 @@ namespace BL.Helper
                 Result.AppendLine($"Дата передачи реестра СП в бухгалтерию: было {courtGeneralDb.CourtWork.DateAccountingDepartment} стало {courtGeneralBe.CourtWork.DateAccountingDepartment}");
             if (courtGeneralBe.CourtWork.AmountdebtTransferredToCourtTotal != courtGeneralDb.CourtWork.AmountdebtTransferredToCourtTotal)
                 Result.AppendLine($"Сумма задолженности, переданная в суд - всего и Сумма ОД, предъявленная в суд: было {courtGeneralDb.CourtWork.AmountdebtTransferredToCourtTotal} стало {courtGeneralBe.CourtWork.AmountdebtTransferredToCourtTotal}");
+            if (courtGeneralBe.CourtWork.DateSendApplicationOnReverseGpInCourt != courtGeneralDb.CourtWork.DateSendApplicationOnReverseGpInCourt)
+                Result.AppendLine($"Дата направления заявления на возврат ГП в суд: было {courtGeneralDb.CourtWork.DateSendApplicationOnReverseGpInCourt} стало {courtGeneralBe.CourtWork.DateSendApplicationOnReverseGpInCourt}");
             //.CourtExecutionFSSP
             if (courtGeneralBe.CourtExecutionFSSP.FioSendSpIo != courtGeneralDb.CourtExecutionFSSP.FioSendSpIo)
                 Result.AppendLine($"ФИО сотрудника (направившего СП в ИО): было {courtGeneralDb.CourtExecutionFSSP.FioSendSpIo} стало {courtGeneralBe.CourtExecutionFSSP.FioSendSpIo}");
@@ -598,6 +600,10 @@ namespace BL.Helper
                 Result.AppendLine($"Дата  принятия заявления на  реструктуризацию (рассрочку): было {courtGeneralDb.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.DateAcceptanceApplicationRestructuring}");
             if (courtGeneralBe.CourtInstallmentPlan.AmountRestructuring != courtGeneralDb.CourtInstallmentPlan.AmountRestructuring)
                 Result.AppendLine($"Сумма рассрочки всего: было {courtGeneralDb.CourtInstallmentPlan.AmountRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.AmountRestructuring}");
+            if (courtGeneralBe.CourtInstallmentPlan.AmountRestructuringOd != courtGeneralDb.CourtInstallmentPlan.AmountRestructuringOd)
+                Result.AppendLine($"Сумма рассрочки ОД: было {courtGeneralDb.CourtInstallmentPlan.AmountRestructuringOd} стало {courtGeneralBe.CourtInstallmentPlan.AmountRestructuringOd}");
+            if (courtGeneralBe.CourtInstallmentPlan.AmountRestructuringPeny != courtGeneralDb.CourtInstallmentPlan.AmountRestructuringPeny)
+                Result.AppendLine($"Сумма рассрочки пени: было {courtGeneralDb.CourtInstallmentPlan.AmountRestructuringPeny} стало {courtGeneralBe.CourtInstallmentPlan.AmountRestructuringPeny}");
             if (courtGeneralBe.CourtInstallmentPlan.StartingMonthRestructuring != courtGeneralDb.CourtInstallmentPlan.StartingMonthRestructuring)
                 Result.AppendLine($"Начальный месяц реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.StartingMonthRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.StartingMonthRestructuring}");
             if (courtGeneralBe.CourtInstallmentPlan.FinalMonthRestructuring != courtGeneralDb.CourtInstallmentPlan.FinalMonthRestructuring)
@@ -612,19 +618,29 @@ namespace BL.Helper
                 Result.AppendLine($"Дата окончания платежей: было {courtGeneralDb.CourtInstallmentPlan.DateEndPayment} стало {courtGeneralBe.CourtInstallmentPlan.DateEndPayment}");
             if (courtGeneralBe.CourtInstallmentPlan.AmountPaymentRestructuring != courtGeneralDb.CourtInstallmentPlan.AmountPaymentRestructuring)
                 Result.AppendLine($"Сумма оплаты по реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.AmountPaymentRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.AmountPaymentRestructuring}");
+            if (courtGeneralBe.CourtInstallmentPlan.RemainderAmountPaymentRestructuring != courtGeneralDb.CourtInstallmentPlan.RemainderAmountPaymentRestructuring)
+                Result.AppendLine($"Остаток суммы по реструктуризации: было {courtGeneralDb.CourtInstallmentPlan.RemainderAmountPaymentRestructuring} стало {courtGeneralBe.CourtInstallmentPlan.RemainderAmountPaymentRestructuring}");
             if (courtGeneralBe.CourtInstallmentPlan.Comment != courtGeneralDb.CourtInstallmentPlan.Comment)
                 Result.AppendLine($"Примечание (реструктуризация): было {courtGeneralDb.CourtInstallmentPlan.Comment} стало {courtGeneralBe.CourtInstallmentPlan.Comment}");
             //CourtBankruptcy
             if (courtGeneralBe.CourtBankruptcy.BankruptcyCaseNumber != courtGeneralDb.CourtBankruptcy.BankruptcyCaseNumber)
                 Result.AppendLine($"№ банкротного дела: было {courtGeneralDb.CourtBankruptcy.BankruptcyCaseNumber} стало {courtGeneralBe.CourtBankruptcy.BankruptcyCaseNumber}");
+            if (courtGeneralBe.CourtBankruptcy.DateDecisioDeclareCitizenBankrupt != courtGeneralDb.CourtBankruptcy.DateDecisioDeclareCitizenBankrupt)
+                Result.AppendLine($"Дата  определения о принятии  заявления о банкротстве судом: было {courtGeneralDb.CourtBankruptcy.DateDecisioDeclareCitizenBankrupt} стало {courtGeneralBe.CourtBankruptcy.DateDecisioDeclareCitizenBankrupt}");
             if (courtGeneralBe.CourtBankruptcy.DateDeterminationAcceptance != courtGeneralDb.CourtBankruptcy.DateDeterminationAcceptance)
-                Result.AppendLine($"Дата  определения о принятии  заявления о банкротстве судом: было {courtGeneralDb.CourtBankruptcy.DateDeterminationAcceptance} стало {courtGeneralBe.CourtBankruptcy.DateDeterminationAcceptance}");
+                Result.AppendLine($"Дата решения о признании гражданина банкротом: было {courtGeneralDb.CourtBankruptcy.DateDeterminationAcceptance} стало {courtGeneralBe.CourtBankruptcy.DateDeterminationAcceptance}");
             if (courtGeneralBe.CourtBankruptcy.DateDeterminationCompletion != courtGeneralDb.CourtBankruptcy.DateDeterminationCompletion)
                 Result.AppendLine($"Дата определения о завершении реализации имущества: было {courtGeneralDb.CourtBankruptcy.DateDeterminationCompletion} стало {courtGeneralBe.CourtBankruptcy.DateDeterminationCompletion}");
             if (courtGeneralBe.CourtBankruptcy.DateDeterminationApplication != courtGeneralDb.CourtBankruptcy.DateDeterminationApplication)
                 Result.AppendLine($"Дата принятия заявления нами: было {courtGeneralDb.CourtBankruptcy.DateDeterminationApplication} стало {courtGeneralBe.CourtBankruptcy.DateDeterminationApplication}");
             if (courtGeneralBe.CourtBankruptcy.SumWriteOff != courtGeneralDb.CourtBankruptcy.SumWriteOff)
-                Result.AppendLine($"Сумма списания: было {courtGeneralDb.CourtBankruptcy.SumWriteOff} стало {courtGeneralBe.CourtBankruptcy.SumWriteOff}");
+                Result.AppendLine($"Сумма списания всего (банкротство): было {courtGeneralDb.CourtBankruptcy.SumWriteOff} стало {courtGeneralBe.CourtBankruptcy.SumWriteOff}");
+            if (courtGeneralBe.CourtBankruptcy.SumGp != courtGeneralDb.CourtBankruptcy.SumGp)
+                Result.AppendLine($"Сумма списания ГП (банкротство): было {courtGeneralDb.CourtBankruptcy.SumGp} стало {courtGeneralBe.CourtBankruptcy.SumGp}");
+            if (courtGeneralBe.CourtBankruptcy.SumPeny != courtGeneralDb.CourtBankruptcy.SumPeny)
+                Result.AppendLine($"Сумма списания пени (банкротство): было {courtGeneralDb.CourtBankruptcy.SumPeny} стало {courtGeneralBe.CourtBankruptcy.SumPeny}");
+            if (courtGeneralBe.CourtBankruptcy.SumOd != courtGeneralDb.CourtBankruptcy.SumOd)
+                Result.AppendLine($"Сумма списания ОД (банкротство): было {courtGeneralDb.CourtBankruptcy.SumOd} стало {courtGeneralBe.CourtBankruptcy.SumOd}");
             if (courtGeneralBe.CourtBankruptcy.DateWriteOffBegin != courtGeneralDb.CourtBankruptcy.DateWriteOffBegin)
                 Result.AppendLine($"Начальный период списания: было {courtGeneralDb.CourtBankruptcy.DateWriteOffBegin} стало {courtGeneralBe.CourtBankruptcy.DateWriteOffBegin}");
             if (courtGeneralBe.CourtBankruptcy.DateWriteOffEnd != courtGeneralDb.CourtBankruptcy.DateWriteOffEnd)
@@ -709,7 +725,13 @@ namespace BL.Helper
             if (courtGeneralBe.CourtWriteOff.DocumentsPreparedWriteOff != courtGeneralDb.CourtWriteOff.DocumentsPreparedWriteOff)
                 Result.AppendLine($"Документы подготовлены к списанию (да/нет): было {courtGeneralDb.CourtWriteOff.DocumentsPreparedWriteOff} стало {courtGeneralBe.CourtWriteOff.DocumentsPreparedWriteOff}");
             if (courtGeneralBe.CourtWriteOff.SumWriteOff != courtGeneralDb.CourtWriteOff.SumWriteOff)
-                Result.AppendLine($"Сумма списания: было {courtGeneralDb.CourtWriteOff.SumWriteOff} стало {courtGeneralBe.CourtWriteOff.SumWriteOff}");
+                Result.AppendLine($"Сумма списания всего (списания): было {courtGeneralDb.CourtWriteOff.SumWriteOff} стало {courtGeneralBe.CourtWriteOff.SumWriteOff}");
+            if (courtGeneralBe.CourtWriteOff.SumGp != courtGeneralDb.CourtWriteOff.SumGp)
+                Result.AppendLine($"Сумма списания ГП (списания): было {courtGeneralDb.CourtWriteOff.SumGp} стало {courtGeneralBe.CourtWriteOff.SumGp}");
+            if (courtGeneralBe.CourtWriteOff.SumPeny != courtGeneralDb.CourtWriteOff.SumPeny)
+                Result.AppendLine($"Сумма списания пени (списания): было {courtGeneralDb.CourtWriteOff.SumPeny} стало {courtGeneralBe.CourtWriteOff.SumPeny}");
+            if (courtGeneralBe.CourtWriteOff.SumOd != courtGeneralDb.CourtWriteOff.SumOd)
+                Result.AppendLine($"Сумма списания ОД (списания): было {courtGeneralDb.CourtWriteOff.SumOd} стало {courtGeneralBe.CourtWriteOff.SumOd}");
             if (courtGeneralBe.CourtWriteOff.DateWriteOffBegin != courtGeneralDb.CourtWriteOff.DateWriteOffBegin)
                 Result.AppendLine($"Начальный период списания: было {courtGeneralDb.CourtWriteOff.DateWriteOffBegin} стало {courtGeneralBe.CourtWriteOff.DateWriteOffBegin}");
             if (courtGeneralBe.CourtWriteOff.DateWriteOffEnd != courtGeneralDb.CourtWriteOff.DateWriteOffEnd)

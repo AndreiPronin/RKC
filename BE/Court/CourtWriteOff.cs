@@ -18,6 +18,18 @@ namespace BE.Court
         /// </summary>
         public double? SumWriteOff { get; set; }
         /// <summary>
+        /// Сумма списания ОД
+        /// </summary>
+        public double? SumOd { get; set; }
+        /// <summary>
+        /// Сумма списания пени
+        /// </summary>
+        public double? SumPeny { get; set; }
+        /// <summary>
+        /// Сумма списания ГП
+        /// </summary>
+        public double? SumGp { get; set; }
+        /// <summary>
         /// Начальный период списания
         /// </summary>
         public DateTime? DateWriteOffBegin { get; set; }

@@ -13,5 +13,6 @@ namespace BE.Service
         LastIntegration = 3,
         LastLoadEbd = 4,
         SendingPersonalReceipt = 5,
+        ReestyGPAccountingDepartment = 6,
     }
 }

@@ -22,6 +22,10 @@ namespace DB.Model.Court
         /// </summary>
         public DateTime? DateDeterminationAcceptance { get; set; }
         /// <summary>
+        /// Дата решения о признании гражданина банкротом
+        /// </summary>
+        public DateTime? DateDecisioDeclareCitizenBankrupt { get; set; }
+        /// <summary>
         /// Дата определения о завершении реализации имущества
         /// </summary>
         public DateTime? DateDeterminationCompletion { get; set; }
@@ -33,6 +37,18 @@ namespace DB.Model.Court
         /// Сумма списания
         /// </summary>
         public double? SumWriteOff { get; set; }
+        /// <summary>
+        /// Сумма списания ОД
+        /// </summary>
+        public double? SumOd { get; set; }
+        /// <summary>
+        /// Сумма списания пени
+        /// </summary>
+        public double? SumPeny { get; set; }
+        /// <summary>
+        /// Сумма списания ГП
+        /// </summary>
+        public double? SumGp { get; set; }
         /// <summary>
         /// Начальный период списания
         /// </summary>

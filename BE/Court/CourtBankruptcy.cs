@@ -22,6 +22,10 @@ namespace BE.Court
         /// </summary>
         public DateTime? DateDeterminationCompletion { get; set; }
         /// <summary>
+        /// Дата решения о признании гражданина банкротом
+        /// </summary>
+        public DateTime? DateDecisioDeclareCitizenBankrupt { get; set; }
+        /// <summary>
         /// Дата принятия заявления нами
         /// </summary>
         public DateTime? DateDeterminationApplication { get; set; }
@@ -29,6 +33,22 @@ namespace BE.Court
         /// Сумма списания
         /// </summary>
         public double? SumWriteOff { get; set; }
+        /// <summary>
+        /// Сумма списания ОД
+        /// </summary>
+        public double? SumOd { get; set; }
+        /// <summary>
+        /// Сумма списания пени
+        /// </summary>
+        public double? SumPeny { get; set; }
+        /// <summary>
+        /// Сумма списания ГП
+        /// </summary>
+        public double? SumGp { get; set; }
+        /// <summary>
+        /// Сумма списания всего
+        /// </summary>
+        public double? SumAll { get; set; }
         /// <summary>
         /// Начальный период списания
         /// </summary>

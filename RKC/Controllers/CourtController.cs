@@ -43,10 +43,11 @@ namespace RKC.Controllers
         private readonly IExcelCourt _excelCourt;
         private readonly INotificationMail _notificationMail;
         private readonly IPersonalData _personalData;
+        private readonly IExcelCourtReport _excelCourtReport;
         private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
         public CourtController(ICourt court, Ilogger logger, IGeneratorDescriptons generatorDescriptons, IDictionary dictionary,
             ICacheApp cacheApp, IFlagsAction flagsAction,
-            ISecurityProvider securityProvider, IExcelCourt excelCourt, IPersonalData personalData , INotificationMail notificationMail)
+            ISecurityProvider securityProvider, IExcelCourt excelCourt, IPersonalData personalData , INotificationMail notificationMail, IExcelCourtReport excelCourtReport)
         {
             _securityProvider = securityProvider;
             _logger = logger;
@@ -58,6 +59,7 @@ namespace RKC.Controllers
             _excelCourt = excelCourt;
             _personalData = personalData;
             _notificationMail = notificationMail;
+            _excelCourtReport = excelCourtReport;
         }
         [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> Index(int Id = 0)
@@ -269,7 +271,7 @@ namespace RKC.Controllers
             _cacheApp.Delete(User.Identity.GetFIOFull(), Page);
             return null;
         }
-        [Auth(Roles = RolesEnums.CourtAdmin + "," + RolesEnums.CourtSuperAdmin)]
+        [Auth(Roles = RolesEnums.CourtAdmin + "," + RolesEnums.CourtSuperAdmin + "," + RolesEnums.SuperAdmin)]
         public async Task<ActionResult> UploadFileCourtCase(HttpPostedFileBase file, int TypeLoad)
         {
             _Nlogger.Info($"Загружает шаблон {TypeLoad} название файла {file.FileName}");
@@ -337,6 +339,48 @@ namespace RKC.Controllers
             else
             {
                 return Redirect("/Home/ResultEmpty?Message=Загрузка заблокирована дождитесь окончания загрузки (Судебные дела)");
+            }
+        }
+        [Auth(Roles = RolesEnums.CourtAdmin + "," + RolesEnums.CourtSuperAdmin +"," + RolesEnums.SuperAdmin)]
+        public async Task<ActionResult> Report(CourtTypeReport courtTypeReport, DateTime? date)
+        {
+            _Nlogger.Info($"Выгрузил отчет {courtTypeReport.GetDescription()} Пользователь {User.Identity.Name}");
+            if (string.IsNullOrEmpty(_cacheApp.GetValue(nameof(Report))))
+            {
+                _cacheApp.LockUpload(nameof(Report), $"{User.Identity.GetFIOFull()} {(int)courtTypeReport}", true);
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    try
+                    {
+                        var workbook = new XLWorkbook();
+                        switch (courtTypeReport)
+                        {
+
+                            case CourtTypeReport.ReestyGPAccountingDepartment:
+                                wb.Worksheets.Add(await _excelCourtReport.ReestyGPAccountingDepartment(workbook, $"{User.Identity.GetFIOFull()} {(int)courtTypeReport}", 
+                                    courtTypeReport, date.Value));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {(int)courtTypeReport}", nameof(Report));
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
+                                        $"{courtTypeReport.GetDescription()} - {date.Value.ToString("dd-MM-yyyy")}.xlsx");
+                                }
+                            default:
+                                throw new Exception("Не указан тип загружаемого отчета! (Судебные дела)");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _cacheApp.Delete($"{User.Identity.GetFIOFull()} {(int)courtTypeReport}", nameof(Report));
+                        _notificationMail.Error(ex, "Ошибка во время загрузки отчета судебных дел (Судебные дела)");
+                        return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                return Redirect("/Home/ResultEmpty?Message=Загрузка отчетов заблокирована дождитесь окончания загрузки (Судебные дела)");
             }
         }
     }

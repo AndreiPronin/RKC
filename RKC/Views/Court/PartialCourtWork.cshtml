@@ -151,11 +151,21 @@
         </div>
         <label class="col-sm-12 col-form-label">Сумма уплаченной ГП:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWork.RequisitesSumGP, new {@disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.RequisitesSumGP })
+            @Html.TextBoxFor(m => m.CourtWork.RequisitesSumGP, new { @disabled = "disabled", @readonly = "readonly", @class = "form-control", @Value = Model.CourtWork.RequisitesSumGP })
         </div>
         <label style="padding-top: 25px;" class="col-sm-12 col-form-label"> <button type="button" id="AddCourtWorkRequisites" class="btn btn-primary hidden">Добавить реквизиты ГП</button></label>
         <div id="PartialViewCourtWorkRequisites">
             @Html.Partial("PartialViewCourtWorkRequisites", Model.CourtWorkRequisites)
+        </div>
+        <label class="col-sm-12 col-form-label">Дата направления заявления на возврат ГП в суд:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DateSendApplicationOnReverseGpInCourt, new
+             {
+                 @type = "Date",
+                 @readonly = "readonly",
+                 @class = "form-control",
+            @Value = (Model.CourtWork.DateSendApplicationOnReverseGpInCourt.HasValue ? Model.CourtWork.DateSendApplicationOnReverseGpInCourt.Value.ToString("yyyy-MM-dd") : string.Empty)
+            })
         </div>
         <label class="col-sm-12 col-form-label">Дата определения на возврат излишне уплаченной ГП:</label>
         <div class="col-sm-8">

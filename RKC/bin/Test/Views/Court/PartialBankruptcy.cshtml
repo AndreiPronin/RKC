@@ -6,7 +6,7 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtBankruptcy.BankruptcyCaseNumber, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtBankruptcy.BankruptcyCaseNumber })
         </div>
-        <label class="col-sm-12 col-form-label">Дата  определения о принятии  заявления о банкротстве судом :</label>
+        <label class="col-sm-12 col-form-label">Дата  определения о принятии  заявления о банкротстве судом:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtBankruptcy.DateDeterminationAcceptance, new
             {
@@ -14,6 +14,16 @@
                 @readonly = "readonly",
                 @class = "form-control",
            @Value = (Model.CourtBankruptcy.DateDeterminationAcceptance.HasValue ? Model.CourtBankruptcy.DateDeterminationAcceptance.Value.ToString("yyyy-MM-dd") : string.Empty)
+       })
+        </div>
+        <label class="col-sm-12 col-form-label">Дата решения о признании гражданина банкротом:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtBankruptcy.DateDecisioDeclareCitizenBankrupt, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
+           @Value = (Model.CourtBankruptcy.DateDecisioDeclareCitizenBankrupt.HasValue ? Model.CourtBankruptcy.DateDecisioDeclareCitizenBankrupt.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Дата определения о завершении реализации имущества:</label>
@@ -39,6 +49,18 @@
         <label class="col-sm-12 col-form-label">Сумма списания всего:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtBankruptcy.SumWriteOff, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtBankruptcy.SumWriteOff })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма списания ОД:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtBankruptcy.SumOd, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtBankruptcy.SumOd })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма списания пени:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtBankruptcy.SumPeny, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtBankruptcy.SumPeny })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма списания ГП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtBankruptcy.SumGp, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtBankruptcy.SumGp })
         </div>
     </div>
     <div class="col-md-4">

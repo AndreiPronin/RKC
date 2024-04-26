@@ -17,9 +17,11 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using static ClosedXML.Excel.XLPredefinedFormat;
 using CourtGeneralInformation = DB.Model.Court.CourtGeneralInformation;
 using DateTime = System.DateTime;
@@ -29,6 +31,7 @@ namespace BL.Services
     public interface ICourt
     {
         Task<CourtGeneralInformation> DetailInfroms(int Id);
+        Task<List<CourtGeneralInformation>> GetCourtWithFilter(Expression<Func<CourtGeneralInformation, bool>> filter);
         Task<List<CourtGeneralInformation>> Serach(SearchModel searchModel);
         Task<int> CreateCourt(string FullLic, string DateCreate, string User);
         Task<CourtGeneralInformation> CreateCourtExcel(CourtGeneralInformation courtGeneralInformation, string User);
@@ -63,6 +66,27 @@ namespace BL.Services
             _ilogger = ilogger;
             _generatorDescriptons = generatorDescriptons;
             _logPath = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.CourtLogPath).GetString();
+        }
+        public async Task<List<CourtGeneralInformation>> GetCourtWithFilter(Expression<Func<CourtGeneralInformation, bool>> filter)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var query = context.CourtGeneralInformation
+                    .Include(x => x.CourtInstallmentPlan)
+                    .Include(x => x.CourtExecutionInPF)
+                    .Include(x => x.CourtLitigationWork)
+                    .Include(x => x.CourtWork)
+                    .Include(x => x.CourtWriteOff)
+                    .Include(x => x.CourtStateDuty)
+                    .Include(x => x.CourtExecutionFSSP)
+                    .Include(x => x.CourtWorkRequisites)
+                    .Include(x => x.InstallmentPayRequisites)
+                    .Include(x => x.LitigationWorkRequisites)
+                    .Include(c => c.CourtDocumentScans)
+                    .Include(x => x.CourtOwnerInformation).Where(filter);
+
+                return await query.ToListAsync();
+            }
         }
         public async Task<CourtGeneralInformation> DetailInfroms(int Id)
         {
@@ -102,6 +126,7 @@ namespace BL.Services
                 new Thread(()=>  _ilogger.ActionUserCourt(courtGeneralInformation.Lic, courtGeneralInformation.Id,
                     _generatorDescriptons.Generate(courtGeneralInformation,courtGeneralInformationDb, User))).Start();
                 var mapper = new CourtProfile().GetMapper();
+                courtGeneralInformationDb.EditDate = DateTime.Now;
                 courtGeneralInformationDb = mapper.Map<BE.Court.CourtGeneralInformation, DB.Model.Court.CourtGeneralInformation>(courtGeneralInformation);
                 courtGeneralInformationDb.CourtBankruptcy.CourtGeneralInformationId = courtGeneralInformation.Id;
                 courtGeneralInformationDb.CourtInstallmentPlan.CourtGeneralInformationId = courtGeneralInformation.Id;
@@ -178,6 +203,7 @@ namespace BL.Services
                 db.CourtGeneralInformation.Add(Model);
                 await db.SaveChangesAsync();
                 var Id = Model.Id;
+                Model.EditDate = DateTime.Now;
                 OwnerInformation.CourtGeneralInformationId = Id;
                 db.CourtBankruptcy.Add(new DB.Model.Court.CourtBankruptcy { CourtGeneralInformationId = Id });
                 db.CourtInstallmentPlan.Add(new DB.Model.Court.CourtInstallmentPlan { CourtGeneralInformationId = Id });
@@ -472,5 +498,6 @@ namespace BL.Services
             var result =  File.ReadAllText($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt");
             return result; 
         }
+       
     }
 }

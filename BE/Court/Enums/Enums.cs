@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,5 +14,10 @@ namespace BE.Court
         EditPersData = 3,
         EditSpAndIp = 4,
         EditOwner = 5,
+    }
+    public enum CourtTypeReport
+    {
+        [Description("Реестр ГП в бухгалтерию")]
+        ReestyGPAccountingDepartment = 1,
     }
 }

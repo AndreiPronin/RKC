@@ -141,6 +141,10 @@ namespace DB.Model.Court
         /// Место рождения
         /// </summary>
         public string PlaceBirth { get; set; }
+        /// <summary>
+        /// Дата редактирования
+        /// </summary>
+        public DateTime? EditDate { get; set; }
         public virtual CourtWork CourtWork { get; set; }
         public ICollection<CourtDocumentScans> CourtDocumentScans { get; set; }
         public ICollection<CourtWorkRequisites> CourtWorkRequisites { get; set; }
