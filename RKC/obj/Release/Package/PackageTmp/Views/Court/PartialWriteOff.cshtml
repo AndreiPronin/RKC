@@ -6,19 +6,41 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWriteOff.DocumentsPreparedWriteOff, new { @readonly = "readonly", @dicId = "12", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWriteOff.DocumentsPreparedWriteOff })
         </div>
-        <label class="col-sm-12 col-form-label">Сумма списания:</label>
+        <label class="col-sm-12 col-form-label">Сумма списания всего:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWriteOff.SumWriteOff, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtWriteOff.SumWriteOff })
         </div>
+        <label class="col-sm-12 col-form-label">Сумма списания ГП:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.SumGp, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtWriteOff.SumGp })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма списания пени:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.SumPeny, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtWriteOff.SumPeny })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма списания ОД:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.SumOd, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtWriteOff.SumOd })
+        </div>
+    </div>
+    <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Начальный период списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWriteOff.DateWriteOffBegin, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtWriteOff.DateWriteOffBegin, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtWriteOff.DateWriteOffBegin.HasValue ? Model.CourtWriteOff.DateWriteOffBegin.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
         <label class="col-sm-12 col-form-label">Конечный период списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWriteOff.DateWriteOffEnd, new { @type = "Date", @readonly = "readonly", @class = "form-control",
+            @Html.TextBoxFor(m => m.CourtWriteOff.DateWriteOffEnd, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtWriteOff.DateWriteOffEnd.HasValue ? Model.CourtWriteOff.DateWriteOffEnd.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>
@@ -28,7 +50,11 @@
         </div>
         <label class="col-sm-12 col-form-label">Дата списания:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWriteOff.DateWriteOff, new { @type = "Date", @readonly = "readonly", @class = "form-control", 
+            @Html.TextBoxFor(m => m.CourtWriteOff.DateWriteOff, new
+            {
+                @type = "Date",
+                @readonly = "readonly",
+                @class = "form-control",
            @Value = (Model.CourtWriteOff.DateWriteOff.HasValue ? Model.CourtWriteOff.DateWriteOff.Value.ToString("yyyy-MM-dd") : string.Empty)
        })
         </div>

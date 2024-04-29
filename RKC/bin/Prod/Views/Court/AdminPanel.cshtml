@@ -11,6 +11,9 @@
     <li class="nav-item" id="roleButton">
         <a class="nav-link" data-toggle="tab" href="#DownLoad">Загрузка/Обновление дел</a>
     </li>
+    <li class="nav-item" id="roleButton">
+        <a class="nav-link" data-toggle="tab" href="#Reports">Отчеты</a>
+    </li>
 </ul>
 <div class="tab-content tabAdmins">
     <div class="tab-pane fade active in" id="Dictionarys">
@@ -26,14 +29,14 @@
                 </select>
             </div>
             @*<label class="col-sm-12 col-form-label">Добавление справочника:</label>
-            <div class="col-sm-12">
-                <div class="input-group">
-                    <input class="form-control" id="NewDic" value="" placeholder="Введите значение..." />
-                    <span class="input-group-btn">
-                        <button id="AddNewDic" class="btn btn-success">Добавить</button>
-                    </span>
-                </div>
-            </div>*@
+                <div class="col-sm-12">
+                    <div class="input-group">
+                        <input class="form-control" id="NewDic" value="" placeholder="Введите значение..." />
+                        <span class="input-group-btn">
+                            <button id="AddNewDic" class="btn btn-success">Добавить</button>
+                        </span>
+                    </div>
+                </div>*@
         </div>
         <div class="col-md-6">
             <label class="col-sm-12 col-form-label">Добавление к выбранному справочнику:</label>
@@ -57,7 +60,7 @@
         <div class="col-md-12">
             @using (Html.BeginForm("UploadFileCourtCase", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
+                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
                 {
                     <div style="margin-top:30px;" class="row">
                         <div class="col-md-4">
@@ -74,6 +77,29 @@
                         </div>
                         <div class="col-md-2">
                             <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="tab-pane fade" id="Reports">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Report", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                {
+                    <div style="margin-top:30px;" class="row">
+                        <div class="col-md-4">
+                            <select name="courtTypeReport" id="courtTypeReport" class="form-control">
+                                <option value="@((int)BE.Court.CourtTypeReport.ReestyGPAccountingDepartment)">@BE.Court.CourtTypeReport.ReestyGPAccountingDepartment.GetDescription()</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="date" name="date" id="date" class="form-control" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" id="" class="btn btn-success" value="Скачать" />
                         </div>
                     </div>
                 }

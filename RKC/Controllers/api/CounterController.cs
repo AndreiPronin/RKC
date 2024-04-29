@@ -70,6 +70,14 @@ namespace RKC.Controllers.api
             return result;
         }
         [JwtAuthentication]
+        [HttpGet]
+        [Route("GetReading")]
+        public async Task<decimal?> GetReading(int IdPu)
+        {
+            var result = await _apiCounters.GetReading(IdPu);
+            return result;
+        }
+        [JwtAuthentication]
         [HttpPost]
         [Route("UpdatePuWithGis")]
         public async Task<HttpResponseMessage> UpdatePuWithGis(UpdatePuWithGis updatePuWithGis)

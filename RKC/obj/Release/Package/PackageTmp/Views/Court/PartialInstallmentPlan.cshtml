@@ -17,6 +17,14 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtInstallmentPlan.AmountRestructuring, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtInstallmentPlan.AmountRestructuring })
         </div>
+        <label class="col-sm-12 col-form-label">Сумма рассрочки ОД:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtInstallmentPlan.AmountRestructuringOd, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtInstallmentPlan.AmountRestructuringOd })
+        </div>
+        <label class="col-sm-12 col-form-label">Сумма рассрочки пени:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtInstallmentPlan.AmountRestructuringPeny, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtInstallmentPlan.AmountRestructuringPeny })
+        </div>
         <label class="col-sm-12 col-form-label">Начальный месяц реструктуризации:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtInstallmentPlan.StartingMonthRestructuring, new

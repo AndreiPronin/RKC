@@ -38,6 +38,16 @@ namespace BL.ApiServices.Counters
                 return Allic;
             }
         }
+        protected async Task<ALL_LICS> GetALL_LICS(string FullLic)
+        {
+            using (var contextAllic = new DbLIC())
+            {
+                var Allic = await contextAllic.ALL_LICS
+                    .Where(x => x.F4ENUMELS == FullLic)
+                    .FirstOrDefaultAsync();
+                return Allic;
+            }
+        }
         protected async Task<List<AddressMKD>> getAddressMKD(List<int> cadr)
         {
             using (var contextTPlus = new DbTPlus())
@@ -87,6 +97,15 @@ namespace BL.ApiServices.Counters
                 var result =  await contextTPlus.IPU_COUNTERS.Where(x => gisId.Contains(x.GIS_ID_PU))
                     .Select(x=> new FullLicByGisId { FullLic = x.FULL_LIC, GisId = x.GIS_ID_PU})
                     .ToListAsync();
+                return result;
+            }
+        }
+        protected async Task<IPU_COUNTERS> getIpuCounters(int ID_PU)
+        {
+            using (var contextTPlus = new DbTPlus())
+            {
+                var result = await contextTPlus.IPU_COUNTERS.Where(x => x.ID_PU == ID_PU)
+                    .FirstOrDefaultAsync();
                 return result;
             }
         }

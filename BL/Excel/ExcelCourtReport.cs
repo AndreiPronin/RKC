@@ -32,20 +32,54 @@ namespace BL.Excel
         }
         public async Task<DataTable> ReestyGPAccountingDepartment(XLWorkbook Excels, string User, CourtTypeReport courtTypeReport, DateTime dateTime)
         {
-            var CourtGeneralInformation = await _court.GetCourtWithFilter(x=>x.CourtWork.DateAccountingDepartment == dateTime);
-            
-            var results = CreateResultCourtLoader(reportCourtLoadExcels);
-            _notificationMail.SendEmailResultLoadCourt(results, $"{courtTypeReport.GetDescription()} - {dateTime.ToString("dd-MM-yyyy")}.xlsx");
-            return results;
-        }
-        private DataTable CreateResultCourtLoader(List<ReportCourtLoadExcel> reportCourtLoadExcels)
-        {
+            var CourtGeneralInformation = await _court.GetCourtWithFilter(x=>x.CourtWork.DateSendApplicationOnReverseGpInCourt == dateTime);
             DataTable dt = new DataTable("Report");
-            dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Уникальный переданный номер из загрузочного файла"), new DataColumn("Индификатор судебного дела"),new DataColumn("Строка"),
-                                        new DataColumn("Описание")});
-            foreach (var Item in reportCourtLoadExcels)
-                dt.Rows.Add(Item.IdCourt, Item.Id, Item.Line, Item.Description);
-
+            var dataColumn = new DataColumn[]
+            {
+                new DataColumn("#"),
+                new DataColumn("БЕ/ наименование филиала"),
+                new DataColumn("Наименование контрагента"),
+                new DataColumn("ИНН контрагента"),
+                new DataColumn("Номер решения суда СП"),
+                new DataColumn("Дата вступления в законную силу"),
+                new DataColumn("Номер/ Дата испол листа СП"),
+                new DataColumn("Дата документа"),
+                new DataColumn("№ договора"),
+                new DataColumn("Код FA договора"),
+                new DataColumn("Наименование FA договора"),
+                new DataColumn("Сумма основного долга"),
+                new DataColumn("Сумма процентов, пени, штрафов"),
+                new DataColumn("Сумма гос пошлины"),
+                new DataColumn("Место возникновения прибыли (Город/площадка)"),
+                new DataColumn("ФИО ответственного сотрудника в РЦПО"),
+                new DataColumn("Адрес"),
+            };
+            dt.Columns.AddRange(dataColumn);
+            int Number = 1;
+            foreach(var item in CourtGeneralInformation)
+            {
+                dt.Rows.Add(
+                    Number,///#
+                    "",///БЕ/ наименование филиала
+                    $"{item.LastName} {item.FirstName} {item.Surname}",///Наименование контрагента
+                    "",///ИНН контрагента
+                    "",///Номер решения суда СП
+                    item.CourtWork.DateSP?.AddDays(11),///Дата вступления в законную силу
+                    item.CourtWork.NumberSP,///Номер/ Дата испол листа СП
+                    item.CourtWork.DateSP,///Дата документа
+                    item.Lic,///№ договора
+                    "FA057",///Код FA договора
+                    "",///Наименование FA договора
+                    item.CourtWork.SumOdSendCourt + item.CourtWork.SumPenySendCourt,///Сумма основного долга
+                    "",///Сумма процентов, пени, штрафов
+                    item.CourtWork.SumGP,///Сумма гос пошлины
+                    "Пенза/7W00",///Место возникновения прибыли (Город/площадка)
+                    "Тарасова Е.И",///ФИО ответственного сотрудника в РЦПО
+                    "Street" ///Адрес
+                    );
+                Number++;
+            }
+            _notificationMail.SendEmailResultLoadCourt(dt, $"{courtTypeReport.GetDescription()} - {dateTime.ToString("dd-MM-yyyy")}.xlsx");
             return dt;
         }
     }

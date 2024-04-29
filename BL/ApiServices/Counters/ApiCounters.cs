@@ -15,6 +15,7 @@ namespace BL.ApiServices.Counters
     {
         Task<ResultResponse<string, List<IpuGisReading>>> GetIpuReadingsForGis(DateTime period, int? take, string lastLic = "");
         Task<ResultResponse<string, List<IpuGisReadingActive>>> GetIpuReadingsForGisActive(int? take, string lastLic = "");
+        Task<decimal?> GetReading(int IdPu);
         Task<List<FullLicByGisId>> GetFullLicBuGuidGis(List<string> gisId);
         Task UpdatePuWithGis(UpdatePuWithGis updatePuWithGis);
     }
@@ -76,6 +77,13 @@ namespace BL.ApiServices.Counters
                 ipu.GIS_ID_PU = updatePuWithGis.MeteringDeviceGISGKHNumber;
                 await context.SaveChangesAsync();
             }
+        }
+
+        public async Task<decimal?> GetReading(int IdPu)
+        {
+            var ipueCounter = await getIpuCounters(IdPu);
+            var lic = await GetALL_LICS(ipueCounter.FULL_LIC);
+            return ipueCounter.ConvertToIpuGisReading(lic);
         }
     }
 }

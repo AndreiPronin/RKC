@@ -261,5 +261,40 @@ namespace BL.Extention
 
             return result;
         }
+        public static decimal? ConvertToIpuGisReading(this IPU_COUNTERS ipuSource, ALL_LICS allLics)
+        {
+            decimal? result = null;
+
+            switch (ipuSource.TYPE_PU)
+            {
+                case "ГВС1":
+                    result = allLics.FKUB2XVS;
+                    break;
+                case "ГВС2":
+                    result = allLics.FKUB2XV_2;
+                    break;
+                case "ГВС3":
+                    result = allLics.FKUB2XV_3;
+                    break;
+                case "ГВС4":
+                    result = allLics.FKUB2XV_4;
+                    break;
+                case "ОТП1":
+                    result = allLics.FKUB2OT_1;
+                    break;
+                case "ОТП2":
+                    result = allLics.FKUB2OT_2;
+                    break;
+                case "ОТП3":
+                    result = allLics.FKUB2OT_3;
+                    break;
+                case "ОТП4":
+                    result = allLics.FKUB2OT_4;
+                    break;
+                default:
+                    throw new Exception("не найден тип прибора учета");
+            }
+            return result;
+        }
     }
 }
