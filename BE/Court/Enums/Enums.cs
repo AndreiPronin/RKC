@@ -14,6 +14,7 @@ namespace BE.Court
         EditPersData = 3,
         EditSpAndIp = 4,
         EditOwner = 5,
+        UpdateNote = 6,
     }
     public enum CourtTypeReport
     {

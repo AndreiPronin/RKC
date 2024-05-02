@@ -8,7 +8,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Сумма списания всего:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtWriteOff.SumWriteOff, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtWriteOff.SumWriteOff })
+            @Html.TextBoxFor(m => m.CourtWriteOff.SumWriteOff, new { @disabled = "disabled", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtWriteOff.SumWriteOff })
         </div>
         <label class="col-sm-12 col-form-label">Сумма списания ГП:</label>
         <div class="col-sm-8">
@@ -64,4 +64,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function (e) {
+        $("#CourtWriteOff_SumGp").keyup(function () {
+            let sum = +$("#CourtWriteOff_SumGp").val() + +$("#CourtWriteOff_SumPeny").val() + +$("#CourtWriteOff_SumOd").val();
+            $("#CourtWriteOff_SumWriteOff").val(sum.toFixed(2))
+        })
+        $("#CourtWriteOff_SumPeny").keyup(function () {
+            let sum = +$("#CourtWriteOff_SumGp").val() + +$("#CourtWriteOff_SumPeny").val() + +$("#CourtWriteOff_SumOd").val();
+            $("#CourtWriteOff_SumWriteOff").val(sum.toFixed(2))
+        })
+        $("#CourtWriteOff_SumOd").keyup(function () {
+            let sum = +$("#CourtWriteOff_SumGp").val() + +$("#CourtWriteOff_SumPeny").val() + +$("#CourtWriteOff_SumOd").val();
+            $("#CourtWriteOff_SumWriteOff").val(sum.toFixed(2))
+        })
+    })
+</script>
 

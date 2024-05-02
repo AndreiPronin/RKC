@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using BE.Court;
+using BE.Service;
 using BL.MapperProfile;
 using BL.Notification;
 using BL.Services;
 using ClosedXML.Excel;
+using DB.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -60,7 +62,7 @@ namespace BL.Excel
             {
                 dt.Rows.Add(
                     Number,///#
-                    "",///БЕ/ наименование филиала
+                    "Пензенский",///БЕ/ наименование филиала
                     $"{item.LastName} {item.FirstName} {item.Surname}",///Наименование контрагента
                     "",///ИНН контрагента
                     "",///Номер решения суда СП
@@ -75,11 +77,20 @@ namespace BL.Excel
                     item.CourtWork.SumGP,///Сумма гос пошлины
                     "Пенза/7W00",///Место возникновения прибыли (Город/площадка)
                     "Тарасова Е.И",///ФИО ответственного сотрудника в РЦПО
-                    "Street" ///Адрес
+                    item.Street ///Адрес
                     );
                 Number++;
             }
             _notificationMail.SendEmailResultLoadCourt(dt, $"{courtTypeReport.GetDescription()} - {dateTime.ToString("dd-MM-yyyy")}.xlsx");
+            using(var context = new ApplicationDbContext())
+            {
+                var flag = context.Flags.FirstOrDefault(x=>x.NameAction == nameof(EnumFlags.ReestyGPAccountingDepartment));
+                if (flag != null)
+                {
+                    flag.DateTime = DateTime.Now;
+                }
+                context.SaveChanges();
+            }
             return dt;
         }
     }

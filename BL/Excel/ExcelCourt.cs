@@ -26,6 +26,7 @@ namespace BL.Excel
         Task<DataTable> ExcelsEditPersDataCourt(XLWorkbook Excels, string User);
         Task<DataTable> ExcelsEditSpAndIpCourt(XLWorkbook Excels, string User);
         Task<DataTable> ExcelsEditOwnerCourt(XLWorkbook Excels, string User);
+        Task<DataTable> ExcelsDownloadNote(XLWorkbook Excels, string User);
     }
     public class ExcelCourt : IExcelCourt
     {
@@ -234,6 +235,15 @@ namespace BL.Excel
                         
                         if (dataRow.Cell(14).Value != "" && CourtGeneral.AddressRegister != dataRow.Cell(14).Value.ToString())
                             CourtGeneral.AddressRegister = dataRow.Cell(14).Value.ToString();
+
+                        if (dataRow.Cell(15).Value != "" && CourtGeneral.DateDeath != Convert.ToDateTime(dataRow.Cell(15).Value.ToString()))
+                        {
+                            CourtGeneral.DateDeath = Convert.ToDateTime(dataRow.Cell(15).Value.ToString());
+                            if (Convert.ToDateTime(CourtGeneral.DateDeath) > DateTime.Now)
+                            {
+                                exceptions.Append("Дата смерти не может быть больше текущей даты");
+                            }
+                        }
 
                         var ex = exceptions.ToString();
                         if (ex != "")
@@ -461,6 +471,40 @@ namespace BL.Excel
             }
             var results = CreateResultCourtLoader(reportCourtLoadExcels);
             _notificationMail.SendEmailResultLoadCourt(results, "Результат обновления Изменение Собственника.xlsx");
+            return results;
+        }
+
+        public async Task<DataTable> ExcelsDownloadNote(XLWorkbook Excels, string User)
+        {
+            var dictionaryCourt = await _dictionary.GetCourtDictionaries();
+            var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                if (dataRow.RowNumber() > 1)
+                {
+                    try
+                    {
+                        StringBuilder exceptions = new StringBuilder();
+                        var CourtGeneral = await _court.DetailInfroms(dataRow.Cell(1).Value.TryGetCardNumber());
+
+                        _court.SaveNoteWithTemplate(dataRow.Cell(2).Value.ToString(), CourtGeneral.Id, CourtGeneral.Lic);
+
+                        var ex = exceptions.ToString();
+                        if (ex != "")
+                        {
+                            throw new Exception(ex);
+                        }
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Id = $"П-{CourtGeneral.Id}", Description = "Успешно обновлено дело" });
+
+                    }
+                    catch (Exception ex)
+                    {
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Line = dataRow.RowNumber().ToString(), Description = ex.Message });
+                    }
+                }
+            }
+            var results = CreateResultCourtLoader(reportCourtLoadExcels);
+            _notificationMail.SendEmailResultLoadCourt(results, "Результат обновления примечания.xlsx");
             return results;
         }
 

@@ -15,7 +15,7 @@
         </div>
         <label class="col-sm-12 col-form-label">Сумма рассрочки всего:</label>
         <div class="col-sm-8">
-            @Html.TextBoxFor(m => m.CourtInstallmentPlan.AmountRestructuring, new { @readonly = "readonly", @class = "form-control", @Value = Model.CourtInstallmentPlan.AmountRestructuring })
+            @Html.TextBoxFor(m => m.CourtInstallmentPlan.AmountRestructuring, new { @disabled = "disabled", @class = "form-control", @Value = Model.CourtInstallmentPlan.AmountRestructuring })
         </div>
         <label class="col-sm-12 col-form-label">Сумма рассрочки ОД:</label>
         <div class="col-sm-8">
@@ -91,6 +91,7 @@
         </div>
     </div>
 </div>
+
 <script>
     function func(e) {
         if (e.value.indexOf(".") != '-1') {
@@ -100,7 +101,7 @@
             console.log(e.value.toString().replace(",", "."));
         }
     }
-   
+
     $(document).ready(function (e) {
         let summCourtWork = $("#CourtInstallmentPlan_AmountRestructuring").val() - $("#CourtInstallmentPlan_AmountPaymentRestructuring").val();
         $("#CourtInstallmentPlan_RemainderAmountPaymentRestructuring").val(summCourtWork);
@@ -109,7 +110,17 @@
             let summCourtWork = $("#CourtInstallmentPlan_AmountRestructuring").val() - $("#CourtInstallmentPlan_AmountPaymentRestructuring").val();
             $("#CourtInstallmentPlan_RemainderAmountPaymentRestructuring").val(summCourtWork);
         })
-       
+
+        $("#CourtInstallmentPlan_AmountRestructuringOd").keyup(function () {
+            let sum = +$("#CourtInstallmentPlan_AmountRestructuringOd").val() + +$("#CourtInstallmentPlan_AmountRestructuringPeny").val();
+            $("#CourtInstallmentPlan_AmountRestructuring").val(sum.toFixed(2))
+        })
+        $("#CourtInstallmentPlan_AmountRestructuringPeny").keyup(function () {
+            let sum = +$("#CourtInstallmentPlan_AmountRestructuringOd").val() + +$("#CourtInstallmentPlan_AmountRestructuringPeny").val();
+            $("#CourtInstallmentPlan_AmountRestructuring").val(sum.toFixed(2))
+        })
+
+
         $("#AddInstallmentPayRequisites").click(function (e) {
             var Date = "@DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM")";
             var DateMax = "@DateTime.Now.AddMonths(-1).ToString("yyyy-MM")";

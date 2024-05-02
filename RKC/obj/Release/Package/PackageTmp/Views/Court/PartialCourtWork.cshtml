@@ -160,12 +160,14 @@
         <label class="col-sm-12 col-form-label">Дата направления заявления на возврат ГП в суд:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.DateSendApplicationOnReverseGpInCourt, new
-             {
-                 @type = "Date",
-                 @readonly = "readonly",
-                 @class = "form-control",
-            @Value = (Model.CourtWork.DateSendApplicationOnReverseGpInCourt.HasValue ? Model.CourtWork.DateSendApplicationOnReverseGpInCourt.Value.ToString("yyyy-MM-dd") : string.Empty)
-            })
+           {
+               @type = "Date",
+               @NotMaxDAte = "true",
+               @MaxDAtePlus1Month = "true",
+               @readonly = "readonly",
+               @class = "form-control",
+               @Value = (Model.CourtWork.DateSendApplicationOnReverseGpInCourt.HasValue ? Model.CourtWork.DateSendApplicationOnReverseGpInCourt.Value.ToString("yyyy-MM-dd") : string.Empty)
+           })
         </div>
         <label class="col-sm-12 col-form-label">Дата определения на возврат излишне уплаченной ГП:</label>
         <div class="col-sm-8">

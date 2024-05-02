@@ -52,6 +52,7 @@ namespace BL.Services
         Task<List<DB.Model.Court.CourtDocumentScans>> GetDocumentScans(int CourtGeneralInformationId);
         Task<CourtDataDocumentLoad> DownLoadFile(int Id);
         void SaveNote(string Note, int Id, string Lic);
+        void SaveNoteWithTemplate(string Note, int Id, string Lic);
         string GetNote(int Id, string Lic);
     }
     public class Court : ICourt
@@ -481,6 +482,31 @@ namespace BL.Services
                 throw new Exception("Ошибка сохранения");
             }
            
+        }
+        public void SaveNoteWithTemplate(string Note, int Id, string Lic)
+        {
+            if (Note != null)
+            {
+                if (!Directory.Exists($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{Id}"))
+                {
+                    Directory.CreateDirectory($@"\\10.10.10.17\\{_logPath}\\{Lic}\\{Id}");
+                }
+                if (!File.Exists($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt"))
+                {
+                    using (FileStream fs = File.Create($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt"))
+                    {
+
+                    }
+                }
+                var text = File.ReadAllText($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt");
+                text += Environment.NewLine + Note;
+                File.WriteAllText($@"\\10.10.10.17\{_logPath}\\{Lic}\\{Id}\\Примечание.txt", text);
+            }
+            else
+            {
+                throw new Exception("Ошибка сохранения");
+            }
+
         }
         public string GetNote(int Id, string Lic)
         {

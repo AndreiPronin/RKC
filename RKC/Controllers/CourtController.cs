@@ -85,6 +85,7 @@ namespace RKC.Controllers
         public async Task<ActionResult> AdminPanel()
         {
             ViewBag.Dic = await _dictionary.GetAllCourtNameDictionaries();
+            ViewBag.ReestyGPAccountingDepartment = _flagsAction.GetFlag(BE.Service.EnumFlags.ReestyGPAccountingDepartment);
             return View();
         }
         public async Task<ActionResult> SearchResult(SearchModel searchModel)
@@ -324,6 +325,14 @@ namespace RKC.Controllers
                                     wb.SaveAs(stream);
                                     _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
                                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Изменение Собственника.xlsx");
+                                }
+                            case CourtTypeLoadFiles.UpdateNote:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadNote(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления примечания.xlsx");
                                 }
                             default:
                                 throw new Exception("Не указан тип загружаемого файла! (Судебные дела)");

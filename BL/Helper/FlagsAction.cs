@@ -1,4 +1,5 @@
-﻿using DB.DataBase;
+﻿using BE.Service;
+using DB.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace BL.Helper
     {
         bool GetAction(string Method);
         void Trigger(string Method);
+        Flags GetFlag(EnumFlags enumFlags);
     }
     public class FlagsAction : IFlagsAction
     {
@@ -24,6 +26,13 @@ namespace BL.Helper
                 }
             }
             else return false;
+        }
+        public Flags GetFlag(EnumFlags enumFlags)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.Flags.FirstOrDefault(x => x.NameAction == nameof(EnumFlags.ReestyGPAccountingDepartment));
+            }
         }
         public void Trigger(string Method)
         {

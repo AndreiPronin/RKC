@@ -271,6 +271,7 @@
         })
         $("input").on('click keyup change focus focusout', function (e) {
             let equalDate = @DateTimeOffset.Now.ToUnixTimeSeconds();
+            let equalDatePlus1Motn = @DateTimeOffset.Now.AddMonths(1).ToUnixTimeSeconds();
             console.log($(this).attr('NotMaxDAte'))
             if (($(this).attr('type').toLowerCase() == "date" || $(this).attr('type').toLowerCase() == "month") && $(this).attr('NotMaxDAte') != "true") {
                 if (Date.parse($(this).val())) {
@@ -286,8 +287,23 @@
                     }
                 }
             }
+            if (($(this).attr('type').toLowerCase() == "date" || $(this).attr('type').toLowerCase() == "month") && ($(this).attr('NotMaxDAte') == "true" && $(this).attr('MaxDAtePlus1Month') == "true" )) {
+            if (Date.parse($(this).val())) {
+                $("#Save").removeClass("hidden");
+                removeErrorText($(this));
+                removeError($(this));
+                removeError($(this));
+                if ((Date.parse($(this).val()) * 0.001) > equalDatePlus1Motn) {
+                    $("#Save").addClass("hidden");
+                    callErrorText($(this), "Максимальная дата @DateTime.Now.Date.AddMonths(1).ToString("dd.MM.yyyy")");
+                    callError($(this));
+                    callError($(this))
+                }
+            }
+        }
+
         })
-        
+
         ///Clear
         $(".nav-tabs li").each(function () {
             $(this).removeClass("active");
@@ -304,7 +320,7 @@
                 localStorage.setItem('activeTab', $(e.target).attr('href'));
             }
         });
-        
+
         var activeTab = localStorage.getItem('activeTab');
         if (activeTab) {
             $(".nav-tabs li").each(function () {
@@ -325,7 +341,7 @@
         } else {
             $("#GeneralInformationButton").addClass("active");
             $("#GeneralInformation").addClass("active in");
-           
+
         }
         $("#GeneralButton").addClass("active");
         $("#General").addClass("active in");
