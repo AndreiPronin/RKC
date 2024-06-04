@@ -460,7 +460,7 @@ namespace BL.Service
                         }
                         catch (Exception ex)
                         {
-
+                            _notificationMail.Error(ex);
                         }
                     }
                 }
@@ -480,7 +480,7 @@ namespace BL.Service
             }
             catch(Exception ex)
             {
-
+                _notificationMail.Error(ex);
             }
         }
         public List<IntegrationReadings> GetErrorIntegrationReadings()

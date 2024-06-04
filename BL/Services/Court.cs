@@ -138,6 +138,7 @@ namespace BL.Services
                 courtGeneralInformationDb.CourtStateDuty.CourtGeneralInformationId = courtGeneralInformation.Id;
                 courtGeneralInformationDb.CourtExecutionFSSP.CourtGeneralInformationId = courtGeneralInformation.Id;
                 courtGeneralInformationDb.CourtOwnerInformation.CourtGeneralInformationId = courtGeneralInformation.Id;
+                courtGeneralInformationDb.EditDate = DateTime.Now;
                 dbApp.Entry(courtGeneralInformationDb).State = EntityState.Modified;
                 dbApp.Entry(courtGeneralInformationDb.CourtBankruptcy).State = EntityState.Modified;
                 dbApp.Entry(courtGeneralInformationDb.CourtInstallmentPlan).State = EntityState.Modified;

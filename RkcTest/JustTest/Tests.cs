@@ -15,40 +15,24 @@ namespace RkcTest.JustTest
     [TestClass]
     public class Tests
     {
-        int[] first = new int[4] { 1, 2, 4, 5 };
-        int[] second = new int[3] {3,3,4 };
-        int[] third = new int[5] { 2, 3, 4, 5, 6 };
+        string Json = @"{
+    ""a"":10
+},
+[
+]";
+        
         LinkedList<int> lists = new LinkedList<int>();
         [TestMethod]
         public void HashSetTest()
         {
-            
-            for(int i = 0; i < 4; i++)
+           var valid = new Stack<char>();
+            var String = Json.Split('\n');
+            foreach (var item in String)
             {
-
-            }
-
-
-            for (int l=0;l<10000000; l++)
-            {
-                lists.AddFirst(l);
-            }
-            
-            Console.WriteLine("00000");
-            using (var context = new DbTPlus())
-            {
-                var watcher1 = new Stopwatch();
-                watcher1.Start();
-                var z = lists.FirstOrDefault(x => x == 151236);
-                lists.Remove(z);
-                watcher1.Stop();
-                var watcher2 = new Stopwatch();
-                watcher2.Start();
-                var z2 = lists.Where(x => x == 151237).ToList();
-                lists.Remove(151237);
-                watcher2.Stop();
-                var t1 = watcher1.ElapsedMilliseconds;
-                var t2 = watcher2.ElapsedMilliseconds;
+                if (item.StartsWith("{"))
+                {
+                    valid.Push(item[0]);
+                }
             }
         }
     }

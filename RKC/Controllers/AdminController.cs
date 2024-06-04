@@ -211,6 +211,9 @@ namespace RKC.Controllers
                     case ApiReportEnums.GetInvoices:
                         result = await _apiReportService.GetInvoices(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
                         return File(result, "application/octet-stream", ApiReportEnums.GetInvoices.GetDescription());
+                    case ApiReportEnums.GenerateCheckoutReport:
+                        result = await _apiReportService.GenerateCheckoutReport(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/octet-stream", ApiReportEnums.GenerateCheckoutReport.GetDescription());
                     case ApiReportEnums.GetConsumerData:
                         result = await _apiReportService.GetConsumerData(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
                         return File(result, "application/octet-stream", ApiReportEnums.GetConsumerData.GetDescription());
@@ -220,6 +223,18 @@ namespace RKC.Controllers
                     case ApiReportEnums.GetNssWithRecalculations:
                         result = await _apiReportService.GetNssWithRecalculations(ReportDate.HasValue ? ReportDate.Value : DateTime.Now, file.InputStream, file.FileName);
                         return File(result, "application/zip", ApiReportEnums.GetNssWithRecalculations.GetDescription());
+                    case ApiReportEnums.CheckPreliminariesReports:
+                        result = await _apiReportService.CheckPreliminariesReports(file.InputStream, file.FileName);
+                        return File(result, "application/zip", ApiReportEnums.CheckPreliminariesReports.GetDescription());
+                    case ApiReportEnums.CheckMainReports:
+                        result = await _apiReportService.CheckMainReports(file.InputStream, file.FileName);
+                        return File(result, "application/zip", ApiReportEnums.CheckMainReports.GetDescription());
+                    case ApiReportEnums.GetSummaryInvoices:
+                        result = await _apiReportService.GetSummaryInvoices(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/octet-stream", ApiReportEnums.GetSummaryInvoices.GetDescription());
+                    case ApiReportEnums.GetReadingsQuantity:
+                        result = await _apiReportService.GetReadingsQuantity(ReportDate.HasValue ? ReportDate.Value : DateTime.Now);
+                        return File(result, "application/octet-stream", ApiReportEnums.GetReadingsQuantity.GetDescription());
                     default:
                         return File(new byte[0], "Ошибка отчет не найде.txt");
                 }

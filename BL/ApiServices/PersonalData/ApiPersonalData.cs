@@ -41,7 +41,7 @@ namespace BL.ApiServices.PersonalData
             {
                 try
                 {
-                    persData.Add(_pdfFactory.CreatePdf(PdfType.Personal).Generate(FullLic, DateEnd));
+                    persData.Add(_pdfFactory.CreatePdf(PdfType.PersonalCabinter).Generate(FullLic, DateEnd));
                 }
                 catch (Exception ex)
                 {

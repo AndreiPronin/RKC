@@ -154,7 +154,7 @@ namespace RKC.Controllers
             {
                 _Nlogger.Info(new ConvertJson<ModelAddPU>(modelAddPU).ConverModelToJson());
                 SaveModelIPURules.Validation(modelAddPU);
-                _baseService.CheckDublicateAddPuNumber(modelAddPU.FACTORY_NUMBER_PU);
+                _baseService.CheckDublicateAddPuNumber(modelAddPU.FACTORY_NUMBER_PU, modelAddPU.TYPE_PU.GetDescription());
                 if (_flagsAction.GetAction(nameof(DetailedInformIPU)))
                     return Redirect("home/ResultEmpty?Message=Невозможно добавить ИПУ программа заблокирована");
                 if (string.IsNullOrEmpty(modelAddPU.FULL_LIC) || modelAddPU.FULL_LIC == "undefined")
@@ -231,11 +231,11 @@ namespace RKC.Controllers
             {
                 _logger.ActionUsers(IdPU, "Востановил ПУ", User.Identity.GetFIOFull());
                 _counter.RecoveryIPU(IdPU);
-                return Content("Удаление прошло успешно");
+                return Content("Востановление прошло успешно");
             }
             catch (Exception ex)
             {
-                throw new Exception($"Во время удаления произошла ошибка {ex.Message}");
+                throw new Exception($"Во время востановления произошла ошибка {ex.Message}");
             }
         }
         public ActionResult DeleteError(int IdPU, string Lic)

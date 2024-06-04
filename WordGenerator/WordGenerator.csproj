@@ -76,6 +76,7 @@
     <Compile Include="interfaces\IPdfGenerator.cs" />
     <Compile Include="ReceiptNewDPU.cs" />
     <Compile Include="ReceiptDPU.cs" />
+    <Compile Include="ReceiptPersonalLk.cs" />
     <Compile Include="ReceiptPersonal.cs" />
     <Compile Include="PdfFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

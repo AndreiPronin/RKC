@@ -33,5 +33,15 @@ namespace BE.Admin.Enums
         GetNssErrors = 10,
         [Description("Отчёт НСС РКС Пенза (с перерасчётами).zip")]
         GetNssWithRecalculations = 11,
+        [Description("Выгрузка для проверки отчётов.xlsx")]
+        GenerateCheckoutReport = 12,
+        [Description("Результаты проверки предварительных отчётов.zip")]
+        CheckPreliminariesReports = 13,
+        [Description("Результаты проверки основных отчётов.zip")]
+        CheckMainReports = 14,
+        [Description("Сводный отчёт Субагента об объёме начисления по лицевым счетам клиентов.xlsx")]
+        GetSummaryInvoices = 15,
+        [Description("Количество показаний ПУ.xlsx")]
+        GetReadingsQuantity = 16,
     }
 }

@@ -45,6 +45,7 @@ namespace BL
 
             kernel.Bind<IPdfGenerate>().To<ReceiptPersonal>().Named("Personal");
             kernel.Bind<IPdfGenerate>().To<ReceiptDPU>().Named("Dpu");
+            kernel.Bind<IPdfGenerate>().To<ReceiptPersonalLk>().Named("ReceiptPersonalLk");
             kernel.Bind<IPdfFactory>().To<ReceiptFactory>();
             kernel.Bind<IExcelCourt>().To<ExcelCourt>();
             kernel.Bind<IExcelCourtReport>().To<ExcelCourtReport>();

@@ -26,14 +26,23 @@ namespace BL.Services
         Task<byte[]> GetConsumerData(DateTime period);
         Task<byte[]> GetNssErrors(DateTime period, Stream stream, string fileName);
         Task<byte[]> GetNssWithRecalculations(DateTime period, Stream stream, string fileName);
+        Task<byte[]> GenerateCheckoutReport(DateTime period);
+        Task<byte[]> CheckPreliminariesReports(Stream stream, string fileName);
+        Task<byte[]> CheckMainReports(Stream stream, string fileName);
+        Task<byte[]> GetSummaryInvoices(DateTime period);
+        Task<byte[]> GetReadingsQuantity(DateTime period);
+        Task<byte[]> GetPenyByLicWithSaldo(string fileName);
     }
     public class ApiReportService : IApiReportService
     {
         private readonly ITokenCreator _tokenCreator;
-        private string Url =>  new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.ReportServiceUrl).GetString();
+        private readonly string Url;
+        private readonly string UrlDbfReport;
         public ApiReportService(ITokenCreator tokenCreator) 
         { 
             _tokenCreator = tokenCreator;
+            Url = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.ReportServiceUrl).GetString();
+            UrlDbfReport = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.ReportServiceUrlDbf).GetString();
         }
         public async Task<byte[]> GetSberbankInvoicesOldFormat(DateTime period)
         {
@@ -120,7 +129,7 @@ namespace BL.Services
             var token = _tokenCreator.CreateTokenReportService();
             var Reuqests = new Reuqest<object>();
 
-            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{Url}/api/v1/ExcelReports/GetInvoices?period={period.ToString("yyyy-MM-dd")}", token);
+            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{Url}/api/v1/ExcelReports/GetPenyInvoice?period={period.ToString("yyyy-MM-dd")}", token);
             return reult;
         }
 
@@ -130,7 +139,7 @@ namespace BL.Services
             var token = _tokenCreator.CreateTokenReportService();
             var Reuqests = new Reuqest<object>();
 
-            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{Url}/api/v1/ExcelReports/GetConsumerData?period={period.ToString("yyyy-MM-dd")}", token);
+            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{Url}/api/v1/ExcelReports/GetSummaryConsumedVolume?period={period.ToString("yyyy-MM-dd")}", token);
             return reult;
         }
 
@@ -149,6 +158,58 @@ namespace BL.Services
             var Reuqests = new Reuqest<object>();
             var reult = await Reuqests.UploadFileAndGetFile($"{Url}/api/v1/ExcelReports/GetNssWithRecalculations?period={period.ToString("yyyy-MM-dd")}", token, stream, fileName);
             return reult;
+        }
+        public async Task<byte[]> GenerateCheckoutReport(DateTime period)
+        {
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
+            var token = _tokenCreator.CreateTokenReportService();
+            var Reuqests = new Reuqest<object>();
+
+            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{UrlDbfReport}/api/v1/Misc/GenerateCheckoutReport?period={period.ToString("yyyy-MM-dd")}", token);
+            return reult;
+        }
+
+        public async Task<byte[]> CheckPreliminariesReports(Stream stream, string fileName)
+        {
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
+            var token = _tokenCreator.CreateTokenReportService();
+            var Reuqests = new Reuqest<object>();
+            var reult = await Reuqests.UploadFileAndGetFile($"{Url}/api/v1/ReportsCheck/CheckPreliminariesReports", token, stream, fileName);
+            return reult;
+        }
+
+        public async Task<byte[]> CheckMainReports(Stream stream, string fileName)
+        {
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
+            var token = _tokenCreator.CreateTokenReportService();
+            var Reuqests = new Reuqest<object>();
+            var reult = await Reuqests.UploadFileAndGetFile($"{Url}/api/v1/ReportsCheck/CheckMainReports", token, stream, fileName);
+            return reult;
+        }
+
+        public async Task<byte[]> GetSummaryInvoices(DateTime period)
+        {
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
+            var token = _tokenCreator.CreateTokenReportService();
+            var Reuqests = new Reuqest<object>();
+
+            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{Url}/api/v1/ExcelReports/GetSummaryInvoices?period={period.ToString("yyyy-MM-dd")}", token);
+            return reult;
+        }
+
+        public async Task<byte[]> GetReadingsQuantity(DateTime period)
+        {
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
+            var token = _tokenCreator.CreateTokenReportService();
+            var Reuqests = new Reuqest<object>();
+
+            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{Url}/api/v1/ExcelReports/GetReadingsQuantity?period={period.ToString("yyyy-MM-dd")}", token);
+            return reult;
+        }
+
+        public Task<byte[]> GetPenyByLicWithSaldo(string fileName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

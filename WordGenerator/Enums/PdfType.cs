@@ -15,5 +15,7 @@ namespace WordGenerator.Enums
         Dpu = 1,
         [Description("NewDpu")]
         NewDpu = 2,
+        [Description("PersonalCabinter")]
+        PersonalCabinter = 3
     }
 }

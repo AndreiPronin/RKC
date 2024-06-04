@@ -28,6 +28,7 @@ namespace BL.http
         {
             using (var httpClient = _httpClient ?? new HttpClient())
             {
+                httpClient.Timeout = TimeSpan.FromMinutes(60);
                 var convertJson = new ConvertJson<T>(Model);
                 var Json = convertJson.ConverModelToJson();
                 var content = new StringContent(Json, Encoding.UTF8, "application/json");
@@ -45,6 +46,7 @@ namespace BL.http
         {
             using (var httpClient = _httpClient ?? new HttpClient())
             {
+                httpClient.Timeout = TimeSpan.FromMinutes(60);
                 var convertJson = new ConvertJson<T>(Model);
                 var Json = convertJson.ConverModelToJson();
                 var content = new StringContent(Json, Encoding.UTF8, "application/json");
@@ -64,6 +66,7 @@ namespace BL.http
             using (var httpClient = _httpClient ?? new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                httpClient.Timeout = TimeSpan.FromMinutes(60);
                 await Task.CompletedTask;
                 var resultRequest = await httpClient.GetAsync(Url);
                 if (resultRequest != null && resultRequest.StatusCode == HttpStatusCode.OK)
@@ -78,28 +81,39 @@ namespace BL.http
         }
         public async Task<byte[]> GetFileRequestWithTockenAsync(string Url, string Token)
         {
-            using (var httpClient = _httpClient ?? new HttpClient())
+            try
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-                await Task.CompletedTask;
-                var resultRequest = await httpClient.GetAsync(Url);
-                if (resultRequest != null && resultRequest.StatusCode == HttpStatusCode.OK)
+                using (var httpClient = _httpClient ?? new HttpClient())
                 {
-                    var result = await resultRequest.Content.ReadAsStreamAsync();
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        result.CopyTo(ms);
-                        return ms.ToArray();
-                    }
-                }
-                throw new Exception($"Ошибка загруки код ошибки:{resultRequest.StatusCode}");
+                    System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                    ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                    await Task.CompletedTask;
+                    httpClient.Timeout = TimeSpan.FromMinutes(60);
+                    var resultRequest = await httpClient.GetAsync(Url);
+                    if (resultRequest != null && resultRequest.StatusCode == HttpStatusCode.OK)
+                    {
+                        var result = await resultRequest.Content.ReadAsStreamAsync();
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            result.CopyTo(ms);
+                            return ms.ToArray();
+                        }
+                    }
+                    throw new Exception($"Ошибка загруки код ошибки:{resultRequest.StatusCode}");
+
+                }
+            }catch(Exception ex)
+            {
+                throw;
             }
         }
         public async Task<byte[]> UploadFileAndGetFile(string Url, string Token, Stream Stream, string FileName)
         {
             using (var httpClient = _httpClient ?? new HttpClient())
             {
+                httpClient.Timeout = TimeSpan.FromMinutes(60);
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
                 using (var multipartFormContent = new MultipartFormDataContent())
                 {
@@ -109,7 +123,7 @@ namespace BL.http
 
                     //Add the file
                     multipartFormContent.Add(fileStreamContent, name: "formFile", fileName: FileName);
-
+                   
                     //Send it
                     var response = await httpClient.PostAsync(Url, multipartFormContent);
                     response.EnsureSuccessStatusCode();

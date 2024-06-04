@@ -14,6 +14,7 @@ namespace BL.Helper
         public const string MailHostMonitor = "mail:host:monitor";
         public const string GeneralServiceKey = "General:Service:Key";
         public const string ReportServiceUrl = "Report:Service:Url";
+        public const string ReportServiceUrlDbf = "Report:Service:Url:DBF";
         public const string CourtLogPath = "Court:Log:Path";
     }
     public class GetConfigurationManager

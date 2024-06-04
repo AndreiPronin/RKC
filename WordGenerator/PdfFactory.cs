@@ -23,6 +23,9 @@ namespace WordGenerator
                 case PdfType.Personal:
                     pdf = new ReceiptPersonal();
                     break;
+                case PdfType.PersonalCabinter:
+                    pdf = new ReceiptPersonalLk();
+                    break;
                 case PdfType.Dpu:
                     pdf = new ReceiptDPU();
                     break;

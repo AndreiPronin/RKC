@@ -162,8 +162,6 @@
             @Html.TextBoxFor(m => m.CourtWork.DateSendApplicationOnReverseGpInCourt, new
            {
                @type = "Date",
-               @NotMaxDAte = "true",
-               @MaxDAtePlus1Month = "true",
                @readonly = "readonly",
                @class = "form-control",
                @Value = (Model.CourtWork.DateSendApplicationOnReverseGpInCourt.HasValue ? Model.CourtWork.DateSendApplicationOnReverseGpInCourt.Value.ToString("yyyy-MM-dd") : string.Empty)
@@ -185,6 +183,8 @@
              {
                  @type = "Date",
                  @readonly = "readonly",
+                  @NotMaxDAte = "true",
+                 @MaxDAtePlus1Month = "true",
                  @class = "form-control",
             @Value = (Model.CourtWork.DateAccountingDepartment.HasValue ? Model.CourtWork.DateAccountingDepartment.Value.ToString("yyyy-MM-dd") : string.Empty)
             })

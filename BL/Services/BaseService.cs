@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BL.Services
@@ -41,12 +42,12 @@ namespace BL.Services
         /// </summary>
         /// <param name="Number">Номер прибора учета</param>
         /// <param name="changeNumberPu">Измеился ли номер пу для корректировки условий проверки</param>
-        void CheckDublicatePuNumber(string Number, bool changeNumberPu = false);
+        void CheckDublicatePuNumber(string Number, string TypePu, bool changeNumberPu = false);
         /// <summary>
         /// Проверяет есть ли в базе ПУ с таким номером прибора учета (Работает только при добавлении)
         /// </summary>
         /// <param name="Number">Номер прибора учета</param>
-        void CheckDublicateAddPuNumber(string Number);
+        void CheckDublicateAddPuNumber(string Number, string TypePu);
     }
     public class BaseService : IBaseService
     {
@@ -212,13 +213,14 @@ namespace BL.Services
             }
 
         }
-        public void CheckDublicatePuNumber(string Number, bool changeNumberPu = false)
+        public void CheckDublicatePuNumber(string Number, string typePu, bool changeNumberPu = false)
         {
             if (string.IsNullOrEmpty(Number))
                 return;
             using(var context = new DbTPlus())
             {
-                var result = context.IPU_COUNTERS.Where(x=>x.FACTORY_NUMBER_PU == Number && x.CLOSE_ != true).ToList();
+                typePu = Regex.Replace(typePu, "([0-9]+)", "");
+                var result = context.IPU_COUNTERS.Where(x=>x.FACTORY_NUMBER_PU == Number && x.CLOSE_ != true && x.TYPE_PU.Contains(typePu)).ToList();
                 if (changeNumberPu)
                 {
                     if (result != null && result.Count() > 1)
@@ -233,13 +235,14 @@ namespace BL.Services
                 }
             }
         }
-        public void CheckDublicateAddPuNumber(string Number)
+        public void CheckDublicateAddPuNumber(string Number, string TypePu)
         {
             if (string.IsNullOrEmpty(Number))
                 return;
             using (var context = new DbTPlus())
             {
-                var result = context.IPU_COUNTERS.Where(x => x.FACTORY_NUMBER_PU == Number && x.CLOSE_ != true).ToList();
+                TypePu = Regex.Replace(TypePu, "([0-9]+)", "");
+                var result = context.IPU_COUNTERS.Where(x => x.FACTORY_NUMBER_PU == Number && x.CLOSE_ != true && x.TYPE_PU.Contains(TypePu)).ToList();
                 if (result != null && result.Count() >= 1)
                     throw new Exception($@"Такой номер уже существует на лицевом счете {result.FirstOrDefault()?.FULL_LIC}
 тип прибора учета {result.FirstOrDefault()?.TYPE_PU}");

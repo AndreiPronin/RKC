@@ -139,7 +139,7 @@ namespace BL.Counters
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
-                CheckDublicatePuNumber(saveModelIPU.NumberPU, IPU_COUNTERS.FACTORY_NUMBER_PU == saveModelIPU.NumberPU);
+                CheckDublicatePuNumber(saveModelIPU.NumberPU,saveModelIPU.TypePU, IPU_COUNTERS.FACTORY_NUMBER_PU == saveModelIPU.NumberPU);
                 IPU_COUNTERS.FACTORY_NUMBER_PU = string.IsNullOrEmpty(saveModelIPU.NumberPU) ? IPU_COUNTERS.FACTORY_NUMBER_PU : saveModelIPU.NumberPU;
                 IPU_COUNTERS.DATE_CHECK = saveModelIPU.DATE_CHECK == null ? IPU_COUNTERS.DATE_CHECK : saveModelIPU.DATE_CHECK;
                 IPU_COUNTERS.CHECKPOINT_DATE = saveModelIPU.CHECKPOINT_DATE == null ? IPU_COUNTERS.CHECKPOINT_DATE : saveModelIPU.CHECKPOINT_DATE;
@@ -176,7 +176,7 @@ namespace BL.Counters
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
-                CheckDublicatePuNumber(saveModelIPU.NumberPU, IPU_COUNTERS.FACTORY_NUMBER_PU == saveModelIPU.NumberPU);
+                CheckDublicatePuNumber(saveModelIPU.NumberPU, saveModelIPU.TypePU, IPU_COUNTERS.FACTORY_NUMBER_PU == saveModelIPU.NumberPU);
                 IPU_COUNTERS.FACTORY_NUMBER_PU = string.IsNullOrEmpty(saveModelIPU.NumberPU) ? IPU_COUNTERS.FACTORY_NUMBER_PU : saveModelIPU.NumberPU;
                 IPU_COUNTERS.DATE_CHECK = saveModelIPU.DATE_CHECK == null ? IPU_COUNTERS.DATE_CHECK : saveModelIPU.DATE_CHECK;
                 IPU_COUNTERS.CHECKPOINT_DATE = saveModelIPU.CHECKPOINT_DATE == null ? IPU_COUNTERS.CHECKPOINT_DATE : saveModelIPU.CHECKPOINT_DATE;
@@ -206,69 +206,70 @@ namespace BL.Counters
         {
             using (var DbTPlus = new DbTPlus())
             {
-
                 IPU_COUNTERS iPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == IdPU && x.CLOSE_ != true).ToList()?.Last();
                 iPU_COUNTERS.CLOSE_ = true;
                 iPU_COUNTERS.DATE_CLOSE = DateTime.Now;
                 DbTPlus.SaveChanges();
-                DbLIC dbLIC = new DbLIC();
-                var AllLic = dbLIC.ALL_LICS.Where(x => x.F4ENUMELS == iPU_COUNTERS.FULL_LIC).FirstOrDefault();
-                if (iPU_COUNTERS.TYPE_PU == "ГВС1")
+                using (var dbLIC = new DbLIC())
                 {
-                    AllLic.FKUB2XVS = 0;
-                    AllLic.FKUB1XVS = 0;
-                    AllLic.FKUBSXVS = 0;
-                    dbLIC.SaveChanges();
-                }
-                if (iPU_COUNTERS.TYPE_PU == "ГВС2")
-                {
-                    AllLic.FKUB2XV_2 = 0;
-                    AllLic.FKUB1XV_2 = 0;
-                    AllLic.FKUBSXV_2 = 0;
-                    dbLIC.SaveChanges();
-                }
-                if (iPU_COUNTERS.TYPE_PU == "ГВС3")
-                {
-                    AllLic.FKUB2XV_3 = 0;
-                    AllLic.FKUB1XV_3 = 0;
-                    AllLic.FKUBSXV_3 = 0;
-                    dbLIC.SaveChanges();
-                }
-                if (iPU_COUNTERS.TYPE_PU == "ГВС4")
-                {
-                    AllLic.FKUB2XV_4 = 0;
-                    AllLic.FKUB1XV_4 = 0;
-                    AllLic.FKUBSXV_4 = 0;
-                    dbLIC.SaveChanges();
-                }
-                if (iPU_COUNTERS.TYPE_PU == "ОТП1")
-                {
-                    AllLic.FKUB2OT_1 = 0;
-                    AllLic.FKUB1OT_1 = 0;
-                    AllLic.FKUBSOT_1 = 0;
-                    dbLIC.SaveChanges();
+                    var AllLic = dbLIC.ALL_LICS.Where(x => x.F4ENUMELS == iPU_COUNTERS.FULL_LIC).FirstOrDefault();
+                    if (iPU_COUNTERS.TYPE_PU == "ГВС1")
+                    {
+                        AllLic.FKUB2XVS = 0;
+                        AllLic.FKUB1XVS = 0;
+                        AllLic.FKUBSXVS = 0;
+                        dbLIC.SaveChanges();
+                    }
+                    if (iPU_COUNTERS.TYPE_PU == "ГВС2")
+                    {
+                        AllLic.FKUB2XV_2 = 0;
+                        AllLic.FKUB1XV_2 = 0;
+                        AllLic.FKUBSXV_2 = 0;
+                        dbLIC.SaveChanges();
+                    }
+                    if (iPU_COUNTERS.TYPE_PU == "ГВС3")
+                    {
+                        AllLic.FKUB2XV_3 = 0;
+                        AllLic.FKUB1XV_3 = 0;
+                        AllLic.FKUBSXV_3 = 0;
+                        dbLIC.SaveChanges();
+                    }
+                    if (iPU_COUNTERS.TYPE_PU == "ГВС4")
+                    {
+                        AllLic.FKUB2XV_4 = 0;
+                        AllLic.FKUB1XV_4 = 0;
+                        AllLic.FKUBSXV_4 = 0;
+                        dbLIC.SaveChanges();
+                    }
+                    if (iPU_COUNTERS.TYPE_PU == "ОТП1")
+                    {
+                        AllLic.FKUB2OT_1 = 0;
+                        AllLic.FKUB1OT_1 = 0;
+                        AllLic.FKUBSOT_1 = 0;
+                        dbLIC.SaveChanges();
 
-                }
-                if (iPU_COUNTERS.TYPE_PU == "ОТП2")
-                {
-                    AllLic.FKUB2OT_2 = 0;
-                    AllLic.FKUB1OT_2 = 0;
-                    AllLic.FKUBSOT_2 = 0;
-                    dbLIC.SaveChanges();
-                }
-                if (iPU_COUNTERS.TYPE_PU == "ОТП3")
-                {
-                    AllLic.FKUB2OT_3 = 0;
-                    AllLic.FKUB1OT_3 = 0;
-                    AllLic.FKUBSOT_3 = 0;
-                    dbLIC.SaveChanges();
-                }
-                if (iPU_COUNTERS.TYPE_PU == "ОТП4")
-                {
-                    AllLic.FKUB2OT_4 = 0;
-                    AllLic.FKUB1OT_4 = 0;
-                    AllLic.FKUBSOT_4 = 0;
-                    dbLIC.SaveChanges();
+                    }
+                    if (iPU_COUNTERS.TYPE_PU == "ОТП2")
+                    {
+                        AllLic.FKUB2OT_2 = 0;
+                        AllLic.FKUB1OT_2 = 0;
+                        AllLic.FKUBSOT_2 = 0;
+                        dbLIC.SaveChanges();
+                    }
+                    if (iPU_COUNTERS.TYPE_PU == "ОТП3")
+                    {
+                        AllLic.FKUB2OT_3 = 0;
+                        AllLic.FKUB1OT_3 = 0;
+                        AllLic.FKUBSOT_3 = 0;
+                        dbLIC.SaveChanges();
+                    }
+                    if (iPU_COUNTERS.TYPE_PU == "ОТП4")
+                    {
+                        AllLic.FKUB2OT_4 = 0;
+                        AllLic.FKUB1OT_4 = 0;
+                        AllLic.FKUBSOT_4 = 0;
+                        dbLIC.SaveChanges();
+                    }
                 }
             }
         }
@@ -321,7 +322,7 @@ namespace BL.Counters
         }
         public void AddPU(ModelAddPU modelAddPU, string FIO)
         {
-            CheckDublicateAddPuNumber(modelAddPU.FACTORY_NUMBER_PU);
+            CheckDublicateAddPuNumber(modelAddPU.FACTORY_NUMBER_PU, modelAddPU.TYPE_PU.GetDescription());
             SaveModelIPURules.Validation(modelAddPU);
             using (var DbTPlus = new DbTPlus())
             {

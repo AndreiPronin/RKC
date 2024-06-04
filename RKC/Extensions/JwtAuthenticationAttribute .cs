@@ -35,7 +35,7 @@ namespace RKC.Extensions
 
             if (!_tokenCreator.IsAuthorize(authorization.Parameter))
             {
-                Logger.Error("Ошибка авторизации по JWT");
+                Logger.Error($"Ошибка авторизации по JWT. Адресс удаленной машины: {context.Request.RequestUri}");
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
 
