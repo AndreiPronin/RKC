@@ -139,7 +139,7 @@ namespace BL.Counters
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
-                CheckDublicatePuNumber(saveModelIPU.NumberPU,saveModelIPU.TypePU, IPU_COUNTERS.FACTORY_NUMBER_PU == saveModelIPU.NumberPU);
+                CheckDublicatePuNumber(saveModelIPU.NumberPU,saveModelIPU.TypePU, IPU_COUNTERS.FACTORY_NUMBER_PU != saveModelIPU.NumberPU);
                 IPU_COUNTERS.FACTORY_NUMBER_PU = string.IsNullOrEmpty(saveModelIPU.NumberPU) ? IPU_COUNTERS.FACTORY_NUMBER_PU : saveModelIPU.NumberPU;
                 IPU_COUNTERS.DATE_CHECK = saveModelIPU.DATE_CHECK == null ? IPU_COUNTERS.DATE_CHECK : saveModelIPU.DATE_CHECK;
                 IPU_COUNTERS.CHECKPOINT_DATE = saveModelIPU.CHECKPOINT_DATE == null ? IPU_COUNTERS.CHECKPOINT_DATE : saveModelIPU.CHECKPOINT_DATE;
@@ -176,7 +176,7 @@ namespace BL.Counters
             using (var DbTPlus = new DbTPlus())
             {
                 var IPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
-                CheckDublicatePuNumber(saveModelIPU.NumberPU, saveModelIPU.TypePU, IPU_COUNTERS.FACTORY_NUMBER_PU == saveModelIPU.NumberPU);
+                CheckDublicatePuNumber(saveModelIPU.NumberPU, saveModelIPU.TypePU, IPU_COUNTERS.FACTORY_NUMBER_PU != saveModelIPU.NumberPU);
                 IPU_COUNTERS.FACTORY_NUMBER_PU = string.IsNullOrEmpty(saveModelIPU.NumberPU) ? IPU_COUNTERS.FACTORY_NUMBER_PU : saveModelIPU.NumberPU;
                 IPU_COUNTERS.DATE_CHECK = saveModelIPU.DATE_CHECK == null ? IPU_COUNTERS.DATE_CHECK : saveModelIPU.DATE_CHECK;
                 IPU_COUNTERS.CHECKPOINT_DATE = saveModelIPU.CHECKPOINT_DATE == null ? IPU_COUNTERS.CHECKPOINT_DATE : saveModelIPU.CHECKPOINT_DATE;

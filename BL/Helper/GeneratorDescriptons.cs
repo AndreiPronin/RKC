@@ -194,7 +194,7 @@ namespace BL.Helper
                     }
                 }
                 IPU_COUNTERS IPU_COUNTERS = db.IPU_COUNTERS.Where(x => x.ID_PU == saveModelIPU.IdPU).FirstOrDefault();
-                CheckDublicatePuNumber(saveModelIPU.NumberPU,saveModelIPU.TypePU, saveModelIPU.NumberPU == IPU_COUNTERS.FACTORY_NUMBER_PU);
+                CheckDublicatePuNumber(saveModelIPU.NumberPU,saveModelIPU.TypePU, saveModelIPU.NumberPU != IPU_COUNTERS.FACTORY_NUMBER_PU);
                 if (IPU_COUNTERS.FACTORY_NUMBER_PU != saveModelIPU.NumberPU && !string.IsNullOrEmpty(saveModelIPU.NumberPU)) Result.Append($"Изменили номер ПУ: было {IPU_COUNTERS.FACTORY_NUMBER_PU} стало {saveModelIPU.NumberPU} \r\n");
                 if (IPU_COUNTERS.DATE_CHECK != saveModelIPU.DATE_CHECK && saveModelIPU.DATE_CHECK != null) Result.Append($"Изменили дату поверки ПУ: было {IPU_COUNTERS.DATE_CHECK}  стало {saveModelIPU.DATE_CHECK}  \r\n");
                // if (IPU_COUNTERS.DATE_CHECK_NEXT != saveModelIPU.DATE_CHECK_NEXT && saveModelIPU.DATE_CHECK_NEXT != null) Result.Append($"Изменили дату следующей поверки ПУ: было {IPU_COUNTERS.DATE_CHECK_NEXT} стало {saveModelIPU.DATE_CHECK_NEXT}  \r\n");

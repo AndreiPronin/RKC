@@ -114,7 +114,14 @@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Льгота:</label>
                                 <div class="col-sm-8">
-                                    <label class="col-sm-4 col-form-label">@(Items.Benefit?.Name)</label>
+                                    @if (Items.Benefit?.Name == null)
+                                    {
+                                        <label class="col-sm-4 col-form-label">@Html.Raw("&nbsp;")</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="col-sm-4 col-form-label">@(Items.Benefit?.Name)</label>
+                                    }
                                 </div>
                                 <label class="col-sm-4 col-form-label">Дата окончания льготы:</label>
                                 <div class="col-sm-8">
@@ -137,7 +144,14 @@
                                 </div>
                                 <label class="col-sm-4 col-form-label">Льгота:</label>
                                 <div class="col-sm-8">
-                                    <label class="col-sm-4 col-form-label">@(Items.Benefit?.Name)</label>
+                                    @if (Items.Benefit?.Name == null)
+                                    {
+                                        <label class="col-sm-4 col-form-label">@Html.Raw("&nbsp;")</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="col-sm-4 col-form-label">@(Items.Benefit?.Name)</label>
+                                    }
                                 </div>
                                 <label class="col-sm-4 col-form-label">Дата окончания льготы:</label>
                                 <div class="col-sm-8">

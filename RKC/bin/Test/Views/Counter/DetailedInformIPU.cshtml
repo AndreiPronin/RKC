@@ -106,6 +106,7 @@
                                 }
                             </div>
                             <input hidden="hidden" class="IdPU" value="@Items.ID_PU" />
+                            <input hidden="hidden" id="TYPE_PU" name="@Items.ID_PU" value="@Items.TYPE_PU" />
                             <hr />
                             <div class="form-group row">
                                 @{var BRAND_PU = Items.BRAND_PU != null ? Items.BRAND_PU : "";}
@@ -148,12 +149,12 @@
                             </div>
                             <hr />
                             <div class="form-group row">
- 
-                                    <label class="col-sm-4 @(Items.DATE_CHECK == null ? "NullOrEmpty" : "") col-form-label">Дата поверки:</label>
-                                    <div class="col-sm-8">
-                                        <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" max="@DateTime.Now.Date.AddDays(0).ToString("yyyy-MM-dd")" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
-                                    </div>
-                                
+
+                                <label class="col-sm-4 @(Items.DATE_CHECK == null ? "NullOrEmpty" : "") col-form-label">Дата поверки:</label>
+                                <div class="col-sm-8">
+                                    <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" max="@DateTime.Now.Date.AddDays(0).ToString("yyyy-MM-dd")" id="DATE_CHECK" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.DATE_CHECK)" />
+                                </div>
+
 
                             </div>
                             <hr />
@@ -835,6 +836,7 @@ else
                             FKUB1OT_2: $(this).parent().find('#FKUB1OT_2').val()?.replace('.', ','),
                             FKUB1OT_3: $(this).parent().find('#FKUB1OT_3').val()?.replace('.', ','),
                             FKUB1OT_4: $(this).parent().find('#FKUB1OT_4').val()?.replace('.', ','),
+                            TypePU: $(this).parent().find('#TYPE_PU').val()?.replace('.', ','),
                             DIMENSION: {
                                 ID: $(this).parent().find('#DIMENSION').val(),
                                 Name: $(this).parent().find('#DIMENSION option:selected').text(),
