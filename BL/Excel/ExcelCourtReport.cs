@@ -34,7 +34,7 @@ namespace BL.Excel
         }
         public async Task<DataTable> ReestyGPAccountingDepartment(XLWorkbook Excels, string User, CourtTypeReport courtTypeReport, DateTime dateTime)
         {
-            var CourtGeneralInformation = await _court.GetCourtWithFilter(x=>x.CourtWork.DateSendApplicationOnReverseGpInCourt == dateTime);
+            var CourtGeneralInformation = await _court.GetCourtWithFilter(x=>x.CourtWork.DateAccountingDepartment == dateTime);
             DataTable dt = new DataTable("Report");
             var dataColumn = new DataColumn[]
             {
@@ -55,6 +55,7 @@ namespace BL.Excel
                 new DataColumn("Место возникновения прибыли (Город/площадка)"),
                 new DataColumn("ФИО ответственного сотрудника в РЦПО"),
                 new DataColumn("Адрес"),
+                new DataColumn("ФИО сотрудника, направившего дело в суд")
             };
             dt.Columns.AddRange(dataColumn);
             int Number = 1;
@@ -77,7 +78,8 @@ namespace BL.Excel
                     item.CourtWork.SumGP,///Сумма гос пошлины
                     "Пенза/7W00",///Место возникновения прибыли (Город/площадка)
                     "Тарасова Е.И",///ФИО ответственного сотрудника в РЦПО
-                    item.Street ///Адрес
+                    item.Street, ///Адрес
+                    item.CourtWork.FioSendCourt ///ФИО сотрудника, направившего дело в суд
                     );
                 Number++;
             }
