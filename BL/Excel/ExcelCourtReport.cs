@@ -55,7 +55,8 @@ namespace BL.Excel
                 new DataColumn("Место возникновения прибыли (Город/площадка)"),
                 new DataColumn("ФИО ответственного сотрудника в РЦПО"),
                 new DataColumn("Адрес"),
-                new DataColumn("ФИО сотрудника, направившего дело в суд")
+                new DataColumn("ФИО сотрудника, направившего дело в суд"),
+                new DataColumn("Номер карточки")
             };
             dt.Columns.AddRange(dataColumn);
             int Number = 1;
@@ -80,6 +81,7 @@ namespace BL.Excel
                     "Тарасова Е.И",///ФИО ответственного сотрудника в РЦПО
                     item.Street, ///Адрес
                     item.CourtWork.FioSendCourt ///ФИО сотрудника, направившего дело в суд
+                    ,$"П-{item.Id}"
                     );
                 Number++;
             }
