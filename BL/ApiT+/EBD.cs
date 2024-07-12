@@ -85,7 +85,7 @@ namespace BL.ApiT_
                             obj.object_type = Item.objectType;
                             obj.object_id = $@"RBR{Item.objectId}";
                             obj.object_disable = Item.object_disable.ToLower().Contains("да") ? "true" : "false";
-                            //obj.CadastralNumber = "";
+                            obj.CadastralNumber = Item.CadastralNumber?.ToString().Replace("", "").Trim();
                             obj.fias = string.IsNullOrEmpty(Item.fias) ? "" : Regex.IsMatch(Item.fias, patern) ? Item.fias.Replace("", "").Trim() : "";
                             //obj.guid_enrgblng = "";
                             //obj.buildYear = "";
@@ -172,7 +172,7 @@ namespace BL.ApiT_
                             obj.object_type = Item.objectType;
                             obj.object_id = $@"RBR{Item.objectId}";
                             obj.object_disable = Item.object_disable.ToLower().Contains("да") ? "true" : "false";
-                            //obj.CadastralNumber = "";
+                            obj.CadastralNumber = Item.CadastralNumber?.ToString().Replace("", "").Trim();
                             obj.fias = string.IsNullOrEmpty(Item.fias) ? "" : Regex.IsMatch(Item.fias, patern) ? Item.fias.Replace("", "").Trim() : "";
                             //obj.guid_enrgblng = "";
                             //obj.buildYear = "";
