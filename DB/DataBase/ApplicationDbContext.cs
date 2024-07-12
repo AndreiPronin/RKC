@@ -87,6 +87,7 @@ namespace DB.DataBase
           .HasRequired<CourtNameDictionary>(s => s.CourtNameDictionary)
           .WithMany(g => g.CourtValueDictionaries)
           .HasForeignKey<int>(s => s.CourtNameDictionaryId);
+           // modelBuilder.Ignore<PersonalInformations>();
         }
     }
     [Table(name: "LogsIpu", Schema = "dbo")]

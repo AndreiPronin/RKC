@@ -64,8 +64,6 @@ D:\Programing\RKC\RKC\bin\DotNetZip.dll
 D:\Programing\RKC\RKC\bin\EntityFramework.dll
 D:\Programing\RKC\RKC\bin\EntityFramework.SqlServer.dll
 D:\Programing\RKC\RKC\bin\ExcelNumberFormat.dll
-D:\Programing\RKC\RKC\bin\IdentityModel.dll
-D:\Programing\RKC\RKC\bin\IdentityServer3.AccessTokenValidation.dll
 D:\Programing\RKC\RKC\bin\IdentityServer3.dll
 D:\Programing\RKC\RKC\bin\Microsoft.AspNet.Identity.Core.dll
 D:\Programing\RKC\RKC\bin\Microsoft.AspNet.Identity.EntityFramework.dll
@@ -100,7 +98,6 @@ D:\Programing\RKC\RKC\bin\Microsoft.Extensions.Primitives.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.JsonWebTokens.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Logging.dll
-D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocols.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Tokens.dll
@@ -110,7 +107,6 @@ D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.Cookies.dll
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.dll
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.Facebook.dll
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.Google.dll
-D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.Jwt.dll
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.OAuth.dll
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.OpenIdConnect.dll

@@ -552,17 +552,13 @@ D:\Programing\RKC\RKC\obj\Release\RKC.pdb
 D:\Programing\RKC\RKC\bin\NLog.dll
 D:\Programing\RKC\RKC\bin\NLog.xml
 D:\Programing\RKC\RKC\bin\NaturalSort.dll
-D:\Programing\RKC\RKC\bin\IdentityModel.dll
-D:\Programing\RKC\RKC\bin\IdentityServer3.AccessTokenValidation.dll
 D:\Programing\RKC\RKC\bin\IdentityServer3.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.JsonWebTokens.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Logging.dll
-D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocols.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Tokens.dll
-D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.Jwt.dll
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.OpenIdConnect.dll
 D:\Programing\RKC\RKC\bin\OpenAthens.Owin.Security.OpenIdConnect.dll
 D:\Programing\RKC\RKC\bin\System.IdentityModel.Tokens.Jwt.dll
