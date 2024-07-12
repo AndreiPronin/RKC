@@ -34,6 +34,7 @@ namespace DB.Model
         public string ipuGvs { get; set; }
         public string ipuOtp { get; set; }
         public string object_disable { get; set; }
+        public string CadastralNumber { get; set; }
     }
 
 
