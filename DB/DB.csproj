@@ -60,75 +60,6 @@
     <Compile Include="DataBase\DbLIC.cs" />
     <Compile Include="Extention\FilterExtenstions.cs" />
     <Compile Include="FunctionModel\RecalculationsForMKDByCadr.cs" />
-    <Compile Include="Migrations\202309201727131_init.cs" />
-    <Compile Include="Migrations\202309201727131_init.designer.cs">
-      <DependentUpon>202309201727131_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311161158041_notification.cs" />
-    <Compile Include="Migrations\202311161158041_notification.designer.cs">
-      <DependentUpon>202311161158041_notification.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311161612236_notificationFix1.cs" />
-    <Compile Include="Migrations\202311161612236_notificationFix1.designer.cs">
-      <DependentUpon>202311161612236_notificationFix1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202311281301215_Settings.cs" />
-    <Compile Include="Migrations\202311281301215_Settings.designer.cs">
-      <DependentUpon>202311281301215_Settings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312080908022_courtaddField-08-12-2023.cs" />
-    <Compile Include="Migrations\202312080908022_courtaddField-08-12-2023.designer.cs">
-      <DependentUpon>202312080908022_courtaddField-08-12-2023.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312200923465_editCourt20122023.cs" />
-    <Compile Include="Migrations\202312200923465_editCourt20122023.designer.cs">
-      <DependentUpon>202312200923465_editCourt20122023.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312201430579_editCourt20122023-2.cs" />
-    <Compile Include="Migrations\202312201430579_editCourt20122023-2.designer.cs">
-      <DependentUpon>202312201430579_editCourt20122023-2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202401161615385_AddTableCourtOwnerInformation.cs" />
-    <Compile Include="Migrations\202401161615385_AddTableCourtOwnerInformation.designer.cs">
-      <DependentUpon>202401161615385_AddTableCourtOwnerInformation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202401241557265_addFieldRemainderAmountPaymentRestructuring.cs" />
-    <Compile Include="Migrations\202401241557265_addFieldRemainderAmountPaymentRestructuring.designer.cs">
-      <DependentUpon>202401241557265_addFieldRemainderAmountPaymentRestructuring.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404091827370_CourtAddTwoField.cs" />
-    <Compile Include="Migrations\202404091827370_CourtAddTwoField.Designer.cs">
-      <DependentUpon>202404091827370_CourtAddTwoField.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404171330393_AddField_Benefit.cs" />
-    <Compile Include="Migrations\202404171330393_AddField_Benefit.Designer.cs">
-      <DependentUpon>202404171330393_AddField_Benefit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404171426312_AddField_Benefit_KeyPersData_NUll.cs" />
-    <Compile Include="Migrations\202404171426312_AddField_Benefit_KeyPersData_NUll.Designer.cs">
-      <DependentUpon>202404171426312_AddField_Benefit_KeyPersData_NUll.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.cs" />
-    <Compile Include="Migrations\202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.Designer.cs">
-      <DependentUpon>202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404220934511_BenefitEndDate_PersData.cs" />
-    <Compile Include="Migrations\202404220934511_BenefitEndDate_PersData.Designer.cs">
-      <DependentUpon>202404220934511_BenefitEndDate_PersData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404251716274_Court_Task_53.cs" />
-    <Compile Include="Migrations\202404251716274_Court_Task_53.Designer.cs">
-      <DependentUpon>202404251716274_Court_Task_53.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404251726289_Court_Add_EditDate.cs" />
-    <Compile Include="Migrations\202404251726289_Court_Add_EditDate.Designer.cs">
-      <DependentUpon>202404251726289_Court_Add_EditDate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404251727374_Court_Add_EditDate_Null.cs" />
-    <Compile Include="Migrations\202404251727374_Court_Add_EditDate_Null.Designer.cs">
-      <DependentUpon>202404251727374_Court_Add_EditDate_Null.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
     <Compile Include="Model\ALL_LICS.cs" />
@@ -191,59 +122,8 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202309201727131_init.resx">
-      <DependentUpon>202309201727131_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311161158041_notification.resx">
-      <DependentUpon>202311161158041_notification.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311161612236_notificationFix1.resx">
-      <DependentUpon>202311161612236_notificationFix1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202311281301215_Settings.resx">
-      <DependentUpon>202311281301215_Settings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312080908022_courtaddField-08-12-2023.resx">
-      <DependentUpon>202312080908022_courtaddField-08-12-2023.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312200923465_editCourt20122023.resx">
-      <DependentUpon>202312200923465_editCourt20122023.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312201430579_editCourt20122023-2.resx">
-      <DependentUpon>202312201430579_editCourt20122023-2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202401161615385_AddTableCourtOwnerInformation.resx">
-      <DependentUpon>202401161615385_AddTableCourtOwnerInformation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202401241557265_addFieldRemainderAmountPaymentRestructuring.resx">
-      <DependentUpon>202401241557265_addFieldRemainderAmountPaymentRestructuring.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404091827370_CourtAddTwoField.resx">
-      <DependentUpon>202404091827370_CourtAddTwoField.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404171330393_AddField_Benefit.resx">
-      <DependentUpon>202404171330393_AddField_Benefit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404171426312_AddField_Benefit_KeyPersData_NUll.resx">
-      <DependentUpon>202404171426312_AddField_Benefit_KeyPersData_NUll.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.resx">
-      <DependentUpon>202404181505518_CourtEdit_add_caseNumber_Add_AmountdebtTransferredToCourtTotal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404220934511_BenefitEndDate_PersData.resx">
-      <DependentUpon>202404220934511_BenefitEndDate_PersData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404251716274_Court_Task_53.resx">
-      <DependentUpon>202404251716274_Court_Task_53.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404251726289_Court_Add_EditDate.resx">
-      <DependentUpon>202404251726289_Court_Add_EditDate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404251727374_Court_Add_EditDate_Null.resx">
-      <DependentUpon>202404251727374_Court_Add_EditDate_Null.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

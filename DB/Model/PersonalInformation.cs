@@ -34,6 +34,7 @@ namespace DB.Model
         public decimal? S_GIL { get; set; }
         public decimal? S_NOTP { get; set; }
         public string ZAK { get; set; }
+        public int? Cadr { get; set; }
     }
     /// <summary>
     /// Old 
