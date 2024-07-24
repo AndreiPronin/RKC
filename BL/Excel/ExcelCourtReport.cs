@@ -68,13 +68,13 @@ namespace BL.Excel
                     $"{item.LastName} {item.FirstName} {item.Surname}",///Наименование контрагента
                     "",///ИНН контрагента
                     "",///Номер решения суда СП
-                    item.CourtWork.DateSP?.AddDays(11),///Дата вступления в законную силу
+                    item.CourtWork.DateSP?.AddDays(11).ToString("dd.MM.yyyy"),///Дата вступления в законную силу
                     item.CourtWork.NumberSP,///Номер/ Дата испол листа СП
-                    item.CourtWork.DateSP,///Дата документа
+                    item.CourtWork.DateSP?.ToString("dd.MM.yyyy"),///Дата документа
                     item.Lic,///№ договора
                     "FA057",///Код FA договора
                     "",///Наименование FA договора
-                    item.CourtWork.SumOdSendCourt + item.CourtWork.SumPenySendCourt,///Сумма основного долга
+                    item.CourtWork.SumOdSendCourt,///Сумма основного долга
                     "",///Сумма процентов, пени, штрафов
                     item.CourtWork.SumGP,///Сумма гос пошлины
                     "Пенза/7W00",///Место возникновения прибыли (Город/площадка)

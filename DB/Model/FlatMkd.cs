@@ -23,5 +23,45 @@ namespace DB.Model
         public string Els { get; set; }
         public string IdGku { get; set; }
         public DateTime? DateEdit { get; set; }
+
+        /// <summary>
+        /// Корневой идентификатор договора (не меняется от версии к версии)
+        /// </summary>
+        public string ContractGUID { get; set; }
+
+        /// <summary>
+        /// Корневой идентификатор устава (не меняется от версии к версии)
+        /// </summary>
+        public string CharterGUID { get; set; }
+
+        /// <summary>
+        /// Идентификатор ЛС в ГИС ЖКХ (при обновлении данных ЛС)
+        /// </summary>
+        public string AccountGUID { get; set; }
+
+        /// <summary>
+        /// Идентификатор жилищно-коммунальной услуги
+        /// </summary>
+        public string ServiceID { get; set; }
+
+        /// <summary>
+        /// Количество проживающих
+        /// </summary>
+        public int? LivingPersonsNumber { get; set; }
+
+        /// <summary>
+        /// Общая площадь для ЛС
+        /// </summary>
+        public decimal? PremisesAreaExportType { get; set; }
+
+        /// <summary>
+        /// Жилая площадь
+        /// </summary>
+        public decimal? ResidentialSquare { get; set; }
+
+        /// <summary>
+        /// Отапливаемая площадь
+        /// </summary>
+        public decimal? HeatedArea { get; set; }
     }
 }
