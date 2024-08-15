@@ -11,6 +11,8 @@ using ClosedXML.Excel;
 using DB.DataBase;
 using DB.Model;
 using DB.ViewModel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -24,7 +26,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using IDictionary = BL.Services.IDictionary;
 
 namespace BL.Excel
 {
@@ -48,21 +49,24 @@ namespace BL.Excel
         DataTable LoadExcelUpdatePersonalDataMainFio(XLWorkbook Excels, string User, ICacheApp cacheApp);
         XLWorkbook SummaryReportGVS(XLWorkbook Excels, string User, ICacheApp cacheApp);
         XLWorkbook SummaryReportOTP(XLWorkbook Excels, string User, ICacheApp cacheApp);
-        
+        Task<XLWorkbook> GetPeriodPaymentSD(XLWorkbook Excels, string User, ICacheApp cacheApp);
+
+
     }
     public class Excel:IExcel
     {
         private readonly ICacheApp _cacheApp;
         private readonly IGeneratorDescriptons _generatorDescriptons;
         private readonly Ilogger _logger;
-        private readonly IDictionary _dictionary;
+        private readonly Services.IDictionary _dictionary;
         private readonly IReport _report;
         private readonly IMapper _mapper;
         private readonly ICounter _counter;
         private readonly IPersonalData _personalData;
         private readonly IMkdInformationService _mkdInformationService;
-        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, IDictionary dictionary,IReport report, 
-            IMapper mapper, ICounter counter, IPersonalData personalData, IMkdInformationService mkdInformationService)
+        private readonly ICourt _court;
+        public Excel(ICacheApp cacheApp, IGeneratorDescriptons generatorDescriptons, Ilogger logger, Services.IDictionary dictionary,IReport report, 
+            IMapper mapper, ICounter counter, IPersonalData personalData, IMkdInformationService mkdInformationService, ICourt court)
         {
             _cacheApp = cacheApp;
             _generatorDescriptons = generatorDescriptons;
@@ -73,6 +77,7 @@ namespace BL.Excel
             _counter = counter;
             _personalData = personalData;
             _mkdInformationService = mkdInformationService;
+            _court = court;
         }
         public DataTable CreateExcelCounters()
         {
@@ -1028,6 +1033,57 @@ namespace BL.Excel
             }
 
             worksheet.Columns().AdjustToContents();
+            return Excels;
+        }
+        public async Task<XLWorkbook> GetPeriodPaymentSD(XLWorkbook Excels, string User, ICacheApp cacheApp)
+        {
+            cacheApp.AddProgress("_", "10");
+            var workSheet = Excels.Worksheet(1);
+            workSheet.Column(5).Style.NumberFormat.Format = "0;-0;; @";
+            var nonEmptyDataRows = workSheet.RowsUsed();
+
+            var Count = nonEmptyDataRows.Count();
+            int i = 0;
+            foreach (var dataRow in nonEmptyDataRows)
+            {
+                i++;
+                if (dataRow.RowNumber() > 1)
+                {
+                    try
+                    {
+                        if (i % 2 == 0)
+                        {
+                            var Procent = Math.Round((float)i / Count * 100, 0);
+                            cacheApp.UpdateProgress("_", Procent.ToString());
+                        }
+                    }
+                    catch { }
+                    try
+                    {
+                        var lic = dataRow.Cell(2).Value.TryGetLic();
+                        var numberCourt = dataRow.Cell(7).Value.ToString();
+                        var court = (await _court.GetCourtWithFilter((x) => x.Lic == lic && x.CourtWork.NumberSP == numberCourt))?.FirstOrDefault();
+                        if (court == null)
+                            continue;
+                        if (decimal.TryParse(dataRow.Cell(6).Value.ToString(), out decimal summOperation))
+                        {
+                            if(summOperation > 0 && court.CourtWork.PeriodDebtEnd.HasValue)
+                            {
+                                
+                                var date = court.CourtWork.PeriodDebtEnd.Value.ToString("MMyy");
+                                dataRow.Cell(5).Value = $"'{date}" ;
+                            }
+                        }
+                        
+                    }
+                    catch
+                    {
+                        dataRow.Cell(8).Value = "Ошибка обновления записи";
+                    }
+                   
+                }
+                  
+            }
             return Excels;
         }
     }

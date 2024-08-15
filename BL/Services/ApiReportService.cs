@@ -32,6 +32,7 @@ namespace BL.Services
         Task<byte[]> GetSummaryInvoices(DateTime period);
         Task<byte[]> GetReadingsQuantity(DateTime period);
         Task<byte[]> GetPenyByLicWithSaldo(string fileName);
+        Task<byte[]> UpdateDataWithGIS(Stream stream, string fileName);
     }
     public class ApiReportService : IApiReportService
     {
@@ -206,7 +207,14 @@ namespace BL.Services
             var reult = await Reuqests.GetFileRequestWithTockenAsync($"{Url}/api/v1/ExcelReports/GetReadingsQuantity?period={period.ToString("yyyy-MM-dd")}", token);
             return reult;
         }
-
+        public async Task<byte[]> UpdateDataWithGIS(Stream stream, string fileName)
+        {
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
+            var token = _tokenCreator.CreateTokenReportService();
+            var Reuqests = new Reuqest<object>();
+            var reult = await Reuqests.UploadFileAndGetFile($"{Url}/api/v1/InnerTemplates/UpdateFlatFromExcel", token, stream, fileName, "flatGisTemplate");
+            return reult;
+        }
         public Task<byte[]> GetPenyByLicWithSaldo(string fileName)
         {
             throw new NotImplementedException();

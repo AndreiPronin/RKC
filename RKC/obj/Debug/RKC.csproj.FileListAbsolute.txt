@@ -171,12 +171,8 @@ D:\Programing\RKC\RKC\bin\DocumentFormat.OpenXml.xml
 D:\Programing\RKC\RKC\bin\DotNetZip.pdb
 D:\Programing\RKC\RKC\bin\DotNetZip.xml
 D:\Programing\RKC\RKC\bin\ExcelNumberFormat.xml
-D:\Programing\RKC\RKC\bin\IdentityModel.pdb
 D:\Programing\RKC\RKC\bin\IdentityServer3.pdb
 D:\Programing\RKC\RKC\bin\IdentityServer3.xml
-D:\Programing\RKC\RKC\bin\IdentityServer3.AccessTokenValidation.pdb
-D:\Programing\RKC\RKC\bin\IdentityServer3.AccessTokenValidation.xml
-D:\Programing\RKC\RKC\bin\IdentityServer3.AccessTokenValidation.dll.config
 D:\Programing\RKC\RKC\bin\Microsoft.Bcl.AsyncInterfaces.xml
 D:\Programing\RKC\RKC\bin\Microsoft.Extensions.Configuration.xml
 D:\Programing\RKC\RKC\bin\Microsoft.Extensions.Configuration.Abstractions.xml
@@ -208,8 +204,6 @@ D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.JsonWebTokens.pdb
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.JsonWebTokens.xml
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Logging.pdb
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Logging.xml
-D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocol.Extensions.pdb
-D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocols.pdb
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocols.xml
 D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.pdb
@@ -219,7 +213,6 @@ D:\Programing\RKC\RKC\bin\Microsoft.IdentityModel.Tokens.xml
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.xml
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Host.SystemWeb.xml
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.xml
-D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.Jwt.xml
 D:\Programing\RKC\RKC\bin\Microsoft.Owin.Security.OpenIdConnect.xml
 D:\Programing\RKC\RKC\bin\Ninject.xml
 D:\Programing\RKC\RKC\bin\Ninject.Web.xml

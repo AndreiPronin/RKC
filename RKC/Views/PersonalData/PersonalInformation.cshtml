@@ -25,7 +25,7 @@
             <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
             @if (User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
             {
-                if (Model.FirstOrDefault().ZAK == null)
+                @*if (Model.FirstOrDefault().ZAK == null)
                 {
                     <a>
                         <input type="button" class="btn btn-danger CloseLick" style="float:right" value="Закрыть лицевой счет" />
@@ -34,9 +34,9 @@
                 else
                 {
                     <a>
-                        <input type="button" class="btn btn-success OpenLick" style="float: right" value="Открыть лицевой счет" />
+                        <input type="button" class="btn btn-success OpenLick" style="float: right" value="Перерасчет" />
                     </a>
-                }
+                }*@
             }
         </div>
         <div id="ResultSearchSave"></div>
@@ -266,14 +266,30 @@
                                         <a style="cursor:pointer" class=" DownLoadReceipt">Квитанция</a>
                                     </li>
                                 }
+                               
+                                @if (User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                                {
+                                    if (Model.FirstOrDefault().ZAK == null)
+                                    {
+                                        <li class="nav-item">
+                                            <input type="button" class="btn btn-danger CloseLick" style="" value="Закрыть лицевой счет" />
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="nav-item">
+                                            <input type="button" class="btn btn-success OpenLick" style="" value="Открыть лицевой  счет" />
+                                        </li>
+                                    }
+                                }
                             </ul>
                         </div>
                     </div>
                 </div>
 
             </div>
-                                            break;
-                                        }
+            break;
+        }
     </div>
 }
 else

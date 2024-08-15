@@ -6,7 +6,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Programing\RKC\RKC\bin\Prod</_PublishTargetUrl>
-    <History>True|2024-07-01T09:30:37.8850475Z;True|2024-06-13T17:55:11.4133664+03:00;False|2024-06-13T17:55:00.0410498+03:00;True|2024-05-06T20:46:18.6585630+03:00;True|2024-05-02T21:56:20.7492251+03:00;True|2024-05-01T20:29:54.3551148+03:00;True|2024-04-29T21:13:18.7904063+03:00;True|2024-04-25T19:37:41.7003878+03:00;True|2024-04-21T20:02:15.5631141+03:00;False|2024-04-21T19:58:01.8440033+03:00;True|2024-04-15T19:37:38.5163604+03:00;True|2024-04-12T00:04:14.4267602+03:00;True|2024-04-08T12:25:55.0087652+03:00;False|2024-04-08T11:34:49.7820061+03:00;True|2024-04-07T14:41:47.0006140+03:00;False|2024-03-24T12:44:21.3073647+03:00;True|2024-03-18T09:44:51.9879470+03:00;True|2024-03-16T01:20:02.5934834+03:00;True|2024-03-13T20:50:42.0217311+03:00;True|2024-03-12T19:46:15.4387760+03:00;True|2024-03-11T09:16:08.4958552+03:00;True|2024-03-05T20:29:55.6324929+03:00;True|2024-02-28T19:02:09.2089848+03:00;True|2024-02-27T18:40:39.0953943+03:00;True|2024-02-26T20:06:15.1578042+03:00;True|2024-02-21T20:55:51.4642739+03:00;True|2024-02-15T12:33:20.8445562+03:00;True|2024-02-07T09:45:27.3239016+03:00;True|2024-01-31T19:46:26.1773932+03:00;True|2024-01-28T20:02:06.7823657+03:00;True|2024-01-20T01:12:38.2988965+03:00;True|2024-01-06T12:44:57.1944785+03:00;True|2024-01-06T12:29:26.1936530+03:00;True|2023-12-26T18:29:40.3178749+03:00;True|2023-12-20T21:38:20.8532156+03:00;True|2023-12-18T19:49:59.1895753+03:00;True|2023-12-07T20:05:26.1423472+03:00;True|2023-12-07T17:56:13.8973235+03:00;True|2023-12-06T20:54:55.5404640+03:00;True|2023-12-05T11:43:00.8726128+03:00;True|2023-11-23T21:04:12.7496840+03:00;True|2023-11-18T18:28:15.1260026+03:00;True|2023-11-09T08:59:11.4965298+03:00;True|2023-11-06T17:47:14.2394931+03:00;True|2023-11-03T09:03:13.1255862+03:00;True|2023-10-31T08:14:33.7415801+03:00;True|2023-10-24T19:57:52.1870595+03:00;True|2023-10-23T20:58:52.9215480+03:00;True|2023-10-16T20:50:42.5138478+03:00;True|2023-10-11T09:01:53.9989675+03:00;True|2023-10-10T19:28:40.3731500+03:00;True|2023-09-21T21:09:53.2498999+03:00;True|2023-09-12T10:06:52.0015606+03:00;True|2023-09-05T20:27:45.9399486+03:00;True|2023-09-05T19:37:46.7655855+03:00;True|2023-08-02T19:20:01.9821605+03:00;True|2023-07-17T00:05:08.4090147+03:00;True|2023-07-11T19:43:08.7837490+03:00;True|2023-07-06T21:14:29.2223944+03:00;True|2023-07-06T20:48:48.5578656+03:00;True|2023-05-25T18:42:33.9052005+03:00;True|2023-05-21T13:56:19.7420027+03:00;True|2023-05-16T15:20:35.0011898+03:00;True|2023-05-02T20:39:51.5882565+03:00;True|2023-04-26T12:19:36.2876190+03:00;True|2023-04-12T20:53:13.0528285+03:00;True|2023-04-07T09:07:28.4669649+03:00;True|2023-04-06T18:33:43.3620288+03:00;True|2023-04-05T20:34:51.2803538+03:00;True|2023-04-02T20:49:49.1080306+03:00;True|2023-03-27T20:51:10.2367425+03:00;True|2023-03-27T20:49:17.0713162+03:00;True|2023-03-27T19:23:20.5195874+03:00;True|2023-03-22T19:18:31.8658094+03:00;True|2023-03-21T23:59:15.4112068+03:00;True|2023-03-21T20:02:31.4221713+03:00;True|2023-03-14T17:54:46.2230509+03:00;True|2023-03-10T13:34:42.1018316+03:00;True|2023-03-06T19:34:03.6009052+03:00;True|2023-03-06T18:54:23.1494307+03:00;True|2023-02-19T20:51:31.5854891+03:00;True|2023-02-15T21:29:52.9924169+03:00;True|2023-02-15T20:50:27.2275742+03:00;True|2023-02-15T20:41:51.2151740+03:00;True|2023-02-14T20:43:56.5169335+03:00;True|2023-02-12T17:13:44.3698460+03:00;True|2023-02-12T17:13:27.3397803+03:00;True|2023-02-12T17:12:41.0809727+03:00;True|2023-02-12T17:12:15.0068148+03:00;True|2023-01-31T20:56:53.2341063+03:00;True|2023-01-17T19:57:19.1363302+03:00;True|2023-01-16T20:04:18.2471257+03:00;True|2023-01-15T15:15:45.8586599+03:00;True|2023-01-10T20:10:17.5529716+03:00;True|2023-01-10T20:09:12.0119699+03:00;False|2023-01-10T20:08:48.1458406+03:00;False|2023-01-10T20:08:03.3278048+03:00;True|2022-12-25T18:07:44.6253781+03:00;True|2022-12-25T17:55:43.0526435+03:00;True|2022-12-21T20:44:20.9930855+03:00;</History>
+    <History>True|2024-08-14T17:56:12.4028856Z;True|2024-08-14T18:56:03.4509995+03:00;True|2024-07-01T12:30:37.8850475+03:00;True|2024-06-13T17:55:11.4133664+03:00;False|2024-06-13T17:55:00.0410498+03:00;True|2024-05-06T20:46:18.6585630+03:00;True|2024-05-02T21:56:20.7492251+03:00;True|2024-05-01T20:29:54.3551148+03:00;True|2024-04-29T21:13:18.7904063+03:00;True|2024-04-25T19:37:41.7003878+03:00;True|2024-04-21T20:02:15.5631141+03:00;False|2024-04-21T19:58:01.8440033+03:00;True|2024-04-15T19:37:38.5163604+03:00;True|2024-04-12T00:04:14.4267602+03:00;True|2024-04-08T12:25:55.0087652+03:00;False|2024-04-08T11:34:49.7820061+03:00;True|2024-04-07T14:41:47.0006140+03:00;False|2024-03-24T12:44:21.3073647+03:00;True|2024-03-18T09:44:51.9879470+03:00;True|2024-03-16T01:20:02.5934834+03:00;True|2024-03-13T20:50:42.0217311+03:00;True|2024-03-12T19:46:15.4387760+03:00;True|2024-03-11T09:16:08.4958552+03:00;True|2024-03-05T20:29:55.6324929+03:00;True|2024-02-28T19:02:09.2089848+03:00;True|2024-02-27T18:40:39.0953943+03:00;True|2024-02-26T20:06:15.1578042+03:00;True|2024-02-21T20:55:51.4642739+03:00;True|2024-02-15T12:33:20.8445562+03:00;True|2024-02-07T09:45:27.3239016+03:00;True|2024-01-31T19:46:26.1773932+03:00;True|2024-01-28T20:02:06.7823657+03:00;True|2024-01-20T01:12:38.2988965+03:00;True|2024-01-06T12:44:57.1944785+03:00;True|2024-01-06T12:29:26.1936530+03:00;True|2023-12-26T18:29:40.3178749+03:00;True|2023-12-20T21:38:20.8532156+03:00;True|2023-12-18T19:49:59.1895753+03:00;True|2023-12-07T20:05:26.1423472+03:00;True|2023-12-07T17:56:13.8973235+03:00;True|2023-12-06T20:54:55.5404640+03:00;True|2023-12-05T11:43:00.8726128+03:00;True|2023-11-23T21:04:12.7496840+03:00;True|2023-11-18T18:28:15.1260026+03:00;True|2023-11-09T08:59:11.4965298+03:00;True|2023-11-06T17:47:14.2394931+03:00;True|2023-11-03T09:03:13.1255862+03:00;True|2023-10-31T08:14:33.7415801+03:00;True|2023-10-24T19:57:52.1870595+03:00;True|2023-10-23T20:58:52.9215480+03:00;True|2023-10-16T20:50:42.5138478+03:00;True|2023-10-11T09:01:53.9989675+03:00;True|2023-10-10T19:28:40.3731500+03:00;True|2023-09-21T21:09:53.2498999+03:00;True|2023-09-12T10:06:52.0015606+03:00;True|2023-09-05T20:27:45.9399486+03:00;True|2023-09-05T19:37:46.7655855+03:00;True|2023-08-02T19:20:01.9821605+03:00;True|2023-07-17T00:05:08.4090147+03:00;True|2023-07-11T19:43:08.7837490+03:00;True|2023-07-06T21:14:29.2223944+03:00;True|2023-07-06T20:48:48.5578656+03:00;True|2023-05-25T18:42:33.9052005+03:00;True|2023-05-21T13:56:19.7420027+03:00;True|2023-05-16T15:20:35.0011898+03:00;True|2023-05-02T20:39:51.5882565+03:00;True|2023-04-26T12:19:36.2876190+03:00;True|2023-04-12T20:53:13.0528285+03:00;True|2023-04-07T09:07:28.4669649+03:00;True|2023-04-06T18:33:43.3620288+03:00;True|2023-04-05T20:34:51.2803538+03:00;True|2023-04-02T20:49:49.1080306+03:00;True|2023-03-27T20:51:10.2367425+03:00;True|2023-03-27T20:49:17.0713162+03:00;True|2023-03-27T19:23:20.5195874+03:00;True|2023-03-22T19:18:31.8658094+03:00;True|2023-03-21T23:59:15.4112068+03:00;True|2023-03-21T20:02:31.4221713+03:00;True|2023-03-14T17:54:46.2230509+03:00;True|2023-03-10T13:34:42.1018316+03:00;True|2023-03-06T19:34:03.6009052+03:00;True|2023-03-06T18:54:23.1494307+03:00;True|2023-02-19T20:51:31.5854891+03:00;True|2023-02-15T21:29:52.9924169+03:00;True|2023-02-15T20:50:27.2275742+03:00;True|2023-02-15T20:41:51.2151740+03:00;True|2023-02-14T20:43:56.5169335+03:00;True|2023-02-12T17:13:44.3698460+03:00;True|2023-02-12T17:13:27.3397803+03:00;True|2023-02-12T17:12:41.0809727+03:00;True|2023-02-12T17:12:15.0068148+03:00;True|2023-01-31T20:56:53.2341063+03:00;True|2023-01-17T19:57:19.1363302+03:00;True|2023-01-16T20:04:18.2471257+03:00;True|2023-01-15T15:15:45.8586599+03:00;True|2023-01-10T20:10:17.5529716+03:00;True|2023-01-10T20:09:12.0119699+03:00;False|2023-01-10T20:08:48.1458406+03:00;False|2023-01-10T20:08:03.3278048+03:00;True|2022-12-25T18:07:44.6253781+03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -17,37 +17,37 @@
       <publishTime>09/10/2013 20:29:20</publishTime>
     </File>
     <File Include="bin/AppCache.dll">
-      <publishTime>07/01/2024 12:30:11</publishTime>
+      <publishTime>07/15/2024 20:59:57</publishTime>
     </File>
     <File Include="bin/AppCache.pdb">
-      <publishTime>07/01/2024 12:30:11</publishTime>
+      <publishTime>07/15/2024 20:59:57</publishTime>
     </File>
     <File Include="bin/Aspose.BarCode.dll">
       <publishTime>07/25/2022 23:17:52</publishTime>
     </File>
     <File Include="bin/AutoMapper.dll">
-      <publishTime>07/01/2024 11:48:28</publishTime>
+      <publishTime>07/15/2024 20:47:26</publishTime>
     </File>
     <File Include="bin/BarcodeStandard.dll">
       <publishTime>05/09/2021 20:19:26</publishTime>
     </File>
     <File Include="bin/BE.dll">
-      <publishTime>07/01/2024 12:30:11</publishTime>
+      <publishTime>07/15/2024 20:59:57</publishTime>
     </File>
     <File Include="bin/BE.pdb">
-      <publishTime>07/01/2024 12:30:11</publishTime>
+      <publishTime>07/15/2024 20:59:57</publishTime>
     </File>
     <File Include="bin/BitMiracle.LibTiff.NET.dll">
       <publishTime>08/05/2021 15:42:12</publishTime>
     </File>
     <File Include="bin/BL.dll">
-      <publishTime>07/01/2024 12:30:23</publishTime>
+      <publishTime>08/14/2024 20:56:09</publishTime>
     </File>
     <File Include="bin/BL.dll.config">
       <publishTime>07/01/2024 11:48:27</publishTime>
     </File>
     <File Include="bin/BL.pdb">
-      <publishTime>07/01/2024 12:30:23</publishTime>
+      <publishTime>08/14/2024 20:56:09</publishTime>
     </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>12/08/2020 21:05:32</publishTime>
@@ -71,13 +71,13 @@
       <publishTime>11/14/2015 16:35:30</publishTime>
     </File>
     <File Include="bin/DB.dll">
-      <publishTime>07/01/2024 12:30:11</publishTime>
+      <publishTime>07/31/2024 17:54:44</publishTime>
     </File>
     <File Include="bin/DB.dll.config">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="bin/DB.pdb">
-      <publishTime>07/01/2024 12:30:11</publishTime>
+      <publishTime>07/31/2024 17:54:44</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>06/07/2017 01:59:22</publishTime>
@@ -98,13 +98,13 @@
       <publishTime>03/13/2020 12:36:50</publishTime>
     </File>
     <File Include="bin/IdentityModel.dll">
-      <publishTime>07/01/2024 11:48:28</publishTime>
+      <publishTime>07/15/2024 20:47:27</publishTime>
     </File>
     <File Include="bin/IdentityModel.pdb">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="bin/IdentityServer3.AccessTokenValidation.dll">
-      <publishTime>07/01/2024 11:48:28</publishTime>
+      <publishTime>07/15/2024 20:47:27</publishTime>
     </File>
     <File Include="bin/IdentityServer3.AccessTokenValidation.dll.config">
       <publishTime>07/01/2024 11:48:28</publishTime>
@@ -230,7 +230,7 @@
       <publishTime>10/05/2018 22:26:02</publishTime>
     </File>
     <File Include="bin/Microsoft.IdentityModel.Protocol.Extensions.dll">
-      <publishTime>07/01/2024 11:48:28</publishTime>
+      <publishTime>07/15/2024 20:47:27</publishTime>
     </File>
     <File Include="bin/Microsoft.IdentityModel.Protocol.Extensions.pdb">
       <publishTime>07/01/2024 11:48:28</publishTime>
@@ -272,7 +272,7 @@
       <publishTime>01/18/2019 23:50:50</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Jwt.dll">
-      <publishTime>07/01/2024 11:48:28</publishTime>
+      <publishTime>07/15/2024 20:47:27</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.MicrosoftAccount.dll">
       <publishTime>01/18/2019 23:50:50</publishTime>
@@ -338,10 +338,10 @@
       <publishTime>08/24/2016 08:42:28</publishTime>
     </File>
     <File Include="bin/RKC.dll">
-      <publishTime>07/01/2024 12:30:23</publishTime>
+      <publishTime>08/14/2024 20:56:10</publishTime>
     </File>
     <File Include="bin/RKC.pdb">
-      <publishTime>07/01/2024 12:30:23</publishTime>
+      <publishTime>08/14/2024 20:56:10</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/08/2018 08:38:48</publishTime>
@@ -629,13 +629,13 @@
       <publishTime>01/23/2014 17:57:34</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll">
-      <publishTime>07/01/2024 12:30:11</publishTime>
+      <publishTime>07/31/2024 17:55:15</publishTime>
     </File>
     <File Include="bin/WordGenerator.dll.config">
       <publishTime>07/01/2024 11:48:30</publishTime>
     </File>
     <File Include="bin/WordGenerator.pdb">
-      <publishTime>07/01/2024 12:30:11</publishTime>
+      <publishTime>07/31/2024 17:55:15</publishTime>
     </File>
     <File Include="bin/zxing.dll">
       <publishTime>02/03/2022 23:45:34</publishTime>
@@ -653,34 +653,34 @@
       <publishTime>05/29/2022 02:00:21</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/bootstrap.css.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/Dpu.css">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/img/main/fon.jpg">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/img/main/fon2.jpg">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/img/main/sky.jpg">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/img/main/T_Plus_Group_Logo.png">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/img/main/БРБ_лого.png">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/img/Moroz1.gif">
       <publishTime>07/01/2024 11:48:28</publishTime>
@@ -692,13 +692,13 @@
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/SideBar.css">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/31/2024 18:35:43</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Content/toastr.css">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>07/01/2024 11:48:29</publishTime>
@@ -719,466 +719,466 @@
       <publishTime>07/01/2024 11:48:29</publishTime>
     </File>
     <File Include="Global.asax">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="NLog.config">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.min.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/esm/popper.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/esm/popper.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/esm/popper.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/esm/popper.min.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/index.js.flow">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.min.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.slim.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.slim.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.slim.min.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery.autocomplete.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery.autocomplete.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery.maskedinput.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery.maskedinput.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.8.3.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/multiselect-dropdown.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/popper-utils.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/popper-utils.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/popper-utils.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/popper-utils.min.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/popper.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/popper.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/popper.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/popper.min.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/README.md">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/index.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/methods/defaults.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/methods/destroy.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/methods/disableEventListeners.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/methods/enableEventListeners.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/methods/placements.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/methods/update.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/applyStyle.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/arrow.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/computeStyle.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/flip.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/hide.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/index.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/inner.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/keepTogether.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/offset.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/preventOverflow.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/modifiers/shift.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/clockwise.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/computeAutoPlacement.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/debounce.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/find.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/findCommonOffsetParent.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/findIndex.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getBordersSize.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getBoundaries.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getBoundingClientRect.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getClientRect.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getFixedPositionOffsetParent.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getOffsetParent.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getOffsetRect.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getOffsetRectRelativeToArbitraryNode.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getOppositePlacement.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getOppositeVariation.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getOuterSizes.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getParentNode.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getPopperOffsets.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getReferenceNode.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getReferenceOffsets.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getRoot.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getRoundedOffsets.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getScroll.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getScrollParent.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getStyleComputedProperty.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getSupportedPropertyName.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getViewportOffsetRectRelativeToArtbitraryNode.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getWindow.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/getWindowSizes.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/includeScroll.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/index.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/isBrowser.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/isFixed.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/isFunction.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/isIE.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/isModifierEnabled.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/isModifierRequired.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/isNumeric.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/isOffsetContainer.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/removeEventListeners.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/runModifiers.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/setAttributes.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/setStyles.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/src/utils/setupEventListeners.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/umd/popper-utils.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/umd/popper-utils.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/umd/popper-utils.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/umd/popper-utils.min.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/umd/popper.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/umd/popper.js.flow">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/umd/popper.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/umd/popper.min.js">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Scripts/umd/popper.min.js.map">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Template/HekpCalculation.xlsx">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Template/Образец квитанции DPU.docx">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Template/Образец квитанции DPUNew.docx">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Template/Образец квитанции.docx">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Template/Образец квитанции.html">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Utility_Prod/RunJobDublicatePers.vbs">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Utility_Prod/RunJobDublicatePU.vbs">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/ExternalLoginConfirmation.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/ExternalLoginFailure.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/ForgotPassword.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/ForgotPasswordConfirmation.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/Register.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/ResetPassword.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/ResetPasswordConfirmation.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/SendCode.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/VerifyCode.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Account/_ExternalLoginsListPartial.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Admin/GetNotification.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Admin/GetUserRoleInfo.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Admin/Index.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Admin/ParilaViewBlock.cshtml">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Admin/ParilaViewExamination.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Admin/ParilaViewIntegration.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>08/14/2024 19:47:38</publishTime>
     </File>
     <File Include="Views/Admin/ParilaViewNotifications.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Admin/PartialViewReport.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Admin/PartialViewRole.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/ArchiveAllLics.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPU.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/DetailedInformIPUDelete.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/DictionatyOption.cshtml">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/ErrorIntegration.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/FromAddPU.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/HistoryEdit.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/Index.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/SearchIPU.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Counter/UploadFile.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/AdminPanel.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/DetailedСourtData.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/GetPartialDictionaryId.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/Index.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialBankruptcy.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialCourtNote.cshtml">
       <publishTime>07/01/2024 11:48:28</publishTime>
@@ -1187,34 +1187,34 @@
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialCourtWork.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialDocumentScans.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialExecutionFSSP.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialExecutionInPF.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialGeneralInformation.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialInstallmentPlan.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialLitigationWork.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialStateDuty.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialViewCourtWorkRequisites.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialViewGetAllFilesInCourt.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialViewInstallmentPayRequisites.cshtml">
       <publishTime>07/01/2024 11:48:28</publishTime>
@@ -1223,67 +1223,67 @@
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/PartialWriteOff.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/SearchResult.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/Serach.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Court/ShowAllCourtModal.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/DPU/AdminPanel.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/DPU/DpuDictionarySummaryHouses.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/DPU/DpuInfo.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/DPU/Index.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/DPU/Payments.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/DPU/Search.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/DPU/WatchHelpСalculation.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Home/AccessDenied.cshtml">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Home/ResultEmpty.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/LogResult/ShowLogResult.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Manage/AddPhoneNumber.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Manage/ChangePassword.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Manage/Index.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Manage/ManageLogins.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Manage/SetPassword.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Manage/VerifyPhoneNumber.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/MKD/HistoryOdpu.cshtml">
       <publishTime>07/01/2024 11:48:28</publishTime>
@@ -1301,19 +1301,19 @@
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersData.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/DetailedInformPersDelete.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/FormAddPers.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/GetNoteAllLic.cshtml">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/HistoryEdit.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/HistoryRecalculationView.cshtml">
       <publishTime>07/01/2024 11:48:28</publishTime>
@@ -1322,55 +1322,55 @@
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/PaymentHistoryView.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/PersonalInformation.cshtml">
-      <publishTime>07/01/2024 11:55:37</publishTime>
+      <publishTime>07/31/2024 18:34:02</publishTime>
     </File>
     <File Include="Views/PersonalData/ReadingsHistoryView.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/ShowAllDocument.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/ShwoReceipt.cshtml">
       <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/PersonalData/WatchHelpСalculation.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Report/AdminPanel.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Report/Index.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Report/Search.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Shared/Lockout.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
-      <publishTime>07/01/2024 11:48:29</publishTime>
+      <publishTime>07/01/2024 11:48:28</publishTime>
     </File>
     <File Include="Views/Сourt/DetailedСourtData.cshtml">
       <publishTime>12/05/2022 20:39:48</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/01/2024 12:30:36</publishTime>
+      <publishTime>08/14/2024 18:56:00</publishTime>
     </File>
   </ItemGroup>
 </Project>

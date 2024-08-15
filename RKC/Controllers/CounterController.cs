@@ -26,6 +26,7 @@ using BE.Roles;
 using System.Data.Entity;
 using BL.Rules;
 using BL.Services.FileServices;
+using Microsoft.Ajax.Utilities;
 
 namespace RKC.Controllers
 {
@@ -251,9 +252,9 @@ namespace RKC.Controllers
             }
         }
         [Auth(Roles = RolesEnums.Admin)]
-        public async Task<ActionResult> UploadFile(HttpPostedFileBase file, string User, int TypeLoad)
+        public async Task<ActionResult> UploadFile(HttpPostedFileBase file, string user, int TypeLoad)
         {
-            return await _counterFileServices.UploadFile(file, User, TypeLoad);
+            return await _counterFileServices.UploadFile(file, user.IsNullOrWhiteSpace() ? User.Identity.Name : user, TypeLoad);
         }
         public ActionResult GetProgress(string Name)
         {

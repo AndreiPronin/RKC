@@ -15,25 +15,26 @@ namespace RkcTest.JustTest
     [TestClass]
     public class Tests
     {
-        string Json = @"{
-    ""a"":10
-},
-[
-]";
-        
-        LinkedList<int> lists = new LinkedList<int>();
+ 
         [TestMethod]
         public void HashSetTest()
         {
-           var valid = new Stack<char>();
-            var String = Json.Split('\n');
-            foreach (var item in String)
+           var watcher = new Stopwatch();
+            var watcher2 = new Stopwatch();
+            watcher.Start();
+            using(var context = new DbLIC())
             {
-                if (item.StartsWith("{"))
-                {
-                    valid.Push(item[0]);
-                }
+                var result = context.ALL_LICS.Where(x=>x.UL.Contains("Володар")).ToList();
             }
+            watcher.Stop();
+            watcher2.Start();
+            using (var context = new DbLIC())
+            {
+                var result = context.ALL_LICS.Where(x => x.UL.Contains("Володар")).AsQueryable().ToList();
+                
+            }
+            watcher2.Stop();
+
         }
     }
 }

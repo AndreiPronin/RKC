@@ -1,4 +1,5 @@
 ﻿using AppCache;
+using BE.Admin.Enums;
 using BE.Counter;
 using BL.ApiT_;
 using BL.Excel;
@@ -24,11 +25,13 @@ namespace BL.Services.FileServices
         private readonly IExcel _excel;
         private readonly ICacheApp _cacheApp;
         private readonly IEBD _ebd;
-        public CounterFileServices(IExcel excel, ICacheApp cacheApp, IEBD ebd) 
+        private readonly IApiReportService _apiReportService;
+        public CounterFileServices(IExcel excel, ICacheApp cacheApp, IEBD ebd, IApiReportService apiReportService) 
         {
             _excel = excel;
             _cacheApp = cacheApp;
             _ebd = ebd;
+            _apiReportService = apiReportService;
         }
         public async Task<ActionResult> UploadFile(HttpPostedFileBase file, string User, int TypeLoad)
         {
@@ -146,6 +149,24 @@ namespace BL.Services.FileServices
                     {
                         wb.SaveAs(stream);
                         return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ошибки.xlsx");
+                    }
+                }
+            }
+            if (TypeLoad == 10)
+            {
+                var result = await _apiReportService.UpdateDataWithGIS(file.InputStream, file.FileName);
+                return File(result, "application/octet-stream", "Результат загрузкию.xlsx");
+            }
+            if (TypeLoad == 11)
+            {
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    var workbook = new XLWorkbook(file.InputStream);
+                    var wbs = await _excel.GetPeriodPaymentSD(workbook,User,_cacheApp);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wbs.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", file.FileName);
                     }
                 }
             }

@@ -109,7 +109,7 @@ namespace BL.http
                 throw;
             }
         }
-        public async Task<byte[]> UploadFileAndGetFile(string Url, string Token, Stream Stream, string FileName)
+        public async Task<byte[]> UploadFileAndGetFile(string Url, string Token, Stream Stream, string FileName, string formKey = null)
         {
             using (var httpClient = _httpClient ?? new HttpClient())
             {
@@ -122,7 +122,7 @@ namespace BL.http
                     fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
 
                     //Add the file
-                    multipartFormContent.Add(fileStreamContent, name: "formFile", fileName: FileName);
+                    multipartFormContent.Add(fileStreamContent, name: formKey ?? "formFile", fileName: FileName);
                    
                     //Send it
                     var response = await httpClient.PostAsync(Url, multipartFormContent);
