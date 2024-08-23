@@ -57,6 +57,7 @@ namespace BL
             //API
             kernel.Bind<IApiCounters>().To<ApiCounters>();
             kernel.Bind<IApiPersonalData>().To<ApiPersonalData>();
+            kernel.Bind<IApiRecalculationService>().To<ApiRecalculationService>();
 
         }
     }

@@ -52,6 +52,7 @@ namespace DB.Model
         public decimal? NormHvs { get; set; }
         public string TPlusGuid { get; set; }
         public string UniqueHomeNumber { get; set; }
+        public string SystemMkd { get; set; }
     }
 
 

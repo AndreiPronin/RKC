@@ -26,16 +26,27 @@ namespace BL.ApiServices.Counters
                 return Allic;
             }
         }
-        protected async Task<List<ALL_LICS>> GetALL_LICS( int? take, string lastLic = "")
+        protected async Task<List<ALL_LICS>> GetALL_LICS( int? take, string lastLic = "", string Lic = "")
         {
             using (var contextAllic = new DbLIC())
             {
-                var Allic = await contextAllic.ALL_LICS
-                    .Where(x => x.F4ENUMELS.CompareTo(lastLic ?? "") > 0 && x.ZAK == null && !x.KW.ToUpper().StartsWith("Н"))
-                    .OrderBy(x=>x.F4ENUMELS)
-                    .Take(take ?? 500)
-                    .ToListAsync();
-                return Allic;
+                var queryAllic = contextAllic.ALL_LICS.AsQueryable();
+                if (!lastLic.IsNullOrEmpty())
+                    queryAllic = queryAllic.Where(x => x.F4ENUMELS.CompareTo(lastLic ?? "") > 0 && x.ZAK == null && !x.KW.ToUpper().StartsWith("Н"));
+                if(!Lic.IsNullOrEmpty())
+                    queryAllic = queryAllic.Where(x => x.F4ENUMELS == Lic && x.ZAK == null && !x.KW.ToUpper().StartsWith("Н"));
+
+                queryAllic = queryAllic.OrderBy(x => x.F4ENUMELS)
+                    .Take(take ?? 500);
+                    
+                return await queryAllic.ToListAsync();
+            }
+        }
+        protected async Task<List<ALL_LICS>> GetALL_LICS(List<string> Allic)
+        {
+            using (var contextAllic = new DbLIC())
+            {
+                return await contextAllic.ALL_LICS.Where(x => Allic.Contains(x.F4ENUMELS) && x.ZAK == null && !x.KW.ToUpper().StartsWith("Н")).ToListAsync();
             }
         }
         protected async Task<ALL_LICS> GetALL_LICS(string FullLic)
@@ -60,6 +71,24 @@ namespace BL.ApiServices.Counters
             using (var contextTPlus = new DbTPlus())
             {
                 return await contextTPlus.flats.Where(x => Allic.Contains(x.FullLic)).ToListAsync(); ;
+            }
+        }
+        protected async Task<List<FlatMkd>> getFlatMkd(int? take, string lastLic = "", string els = "")
+        {
+            using (var contextTPlus = new DbTPlus())
+            {
+                //return await contextTPlus.flats.Where(x => Allic.Contains(x.FullLic)).ToListAsync();
+
+                var queryAllic = contextTPlus.flats.AsQueryable();
+                if (!lastLic.IsNullOrEmpty())
+                    queryAllic = queryAllic.Where(x => x.FullLic.CompareTo(lastLic ?? "") > 0);
+                if (!els.IsNullOrEmpty())
+                    queryAllic = queryAllic.Where(x => x.Els == els);
+
+                queryAllic = queryAllic.OrderBy(x => x.FullLic)
+                    .Take(take ?? 500);
+
+                return await queryAllic.ToListAsync();
             }
         }
         protected async Task<List<IPU_COUNTERS>> getIPU_COUNTERS(List<string> Allic, DateTime? period)

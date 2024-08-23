@@ -137,7 +137,15 @@ namespace DB.Model.Court
         /// Дата задания
         /// </summary>
         public DateTime? DateTask { get; set; }
-
+        /// <summary>
+        /// Период задолжности начальный взыскано
+        /// </summary>
+        public DateTime? PeriodDebtInitialCollected { get; set; }
+        /// <summary>
+        /// Период задолжности конечный взыскано
+        /// </summary>
+        public DateTime? PeriodDebtEndCollected { get; set; }
+        
         public CourtGeneralInformation CourtGeneralInformation { get; set; }
     }
 }

@@ -25,6 +25,9 @@ using DB.Extention;
 using BL.http;
 using System.Net.Http;
 using BE.Counter;
+using BL.Extention;
+using BE.Recalculation;
+using System.Web.Http.Results;
 
 namespace RKC.Controllers
 {
@@ -42,9 +45,10 @@ namespace RKC.Controllers
         private readonly IPdfFactory _pdfFactory;
         private readonly ICourt _court;
         private readonly IDictionary _dictionary;
+        private readonly IApiRecalculationService _apiRecalculationService;
         private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
         public PersonalDataController(IPersonalData personalData, Ilogger logger, IGeneratorDescriptons generatorDescriptons,
-            ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory, ICourt court, IDictionary dictionary)
+            ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory, ICourt court, IDictionary dictionary, IApiRecalculationService apiRecalculationService)
         {
             _counter = counter;
             _personalData = personalData;
@@ -56,6 +60,7 @@ namespace RKC.Controllers
             _pdfFactory = pdfFactory;
             _court = court;
             _dictionary = dictionary;
+            _apiRecalculationService = apiRecalculationService;
         }
         [Auth(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult PersonalInformation(string FullLic)
@@ -372,6 +377,38 @@ namespace RKC.Controllers
             ViewBag.LIC = FullLic;
             var result = await _counter.GetRecalculations(FullLic);
             return View(result);
+        }
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Admin)]
+        public async Task<ActionResult> RecalculationPartitialView(string FullLic)
+        {
+            ViewBag.Reason = await _apiRecalculationService.GetRecalculationInfosAsync();
+            ViewBag.FullLic = FullLic;
+            ViewBag.Period = DateTime.Now.GetDateWhitMaxDate();
+            return PartialView();
+        }
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Admin)]
+        [HttpPost]
+        public async Task<ActionResult> CalculationTablePartitialView(Calculate calculate)
+        {
+            try
+            {
+                var result = await _apiRecalculationService.Calculation(calculate);
+                return PartialView(result);
+            }catch (Exception ex)
+            {
+                Response.StatusCode = 400;
+                return Content(ex.Message.ToString());
+            }
+        }
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Admin)]
+        [HttpPost]
+        public async Task<ActionResult> ApplyCalculation(ApplyCalculation applyCalculation)
+        {
+            applyCalculation.RecalculationOwner = User.Identity.GetFIOFull();
+            applyCalculation.Timestamp = DateTime.Now;
+            await _apiRecalculationService.ApplyCalculation(applyCalculation);
+
+            return Content("");
         }
     }
 }

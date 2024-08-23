@@ -178,6 +178,26 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtLitigationWork.AmountWithdrawnGp, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @Value = Model.CourtLitigationWork.AmountWithdrawnGp })
         </div>
+        <label class="col-sm-12 col-form-label">Период задолжности начальный взыскано:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.PeriodDebtInitialCollected, new
+             {
+                 @type = "Date",
+                 @readonly = "readonly",
+                 @class = "form-control",
+            @Value = (Model.CourtLitigationWork.PeriodDebtInitialCollected.HasValue ? Model.CourtLitigationWork.PeriodDebtInitialCollected.Value.ToString("yyyy-MM-dd") : string.Empty)
+            })
+        </div>
+        <label class="col-sm-12 col-form-label">Период задолжности конечный взыскано:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtLitigationWork.PeriodDebtEndCollected, new
+              {
+                  @type = "Date",
+                  @readonly = "readonly",
+                  @class = "form-control",
+             @Value = (Model.CourtLitigationWork.PeriodDebtEndCollected.HasValue ? Model.CourtLitigationWork.PeriodDebtEndCollected.Value.ToString("yyyy-MM-dd") : string.Empty)
+             })
+        </div>
         <label class="col-sm-12 col-form-label">Дата запроса ИЛ:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtLitigationWork.RequestDateIl, new

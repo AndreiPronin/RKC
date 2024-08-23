@@ -60,6 +60,19 @@
     <Compile Include="DataBase\DbLIC.cs" />
     <Compile Include="Extention\FilterExtenstions.cs" />
     <Compile Include="FunctionModel\RecalculationsForMKDByCadr.cs" />
+    <Compile Include="Migrations\202408181602599_court_remove_two_fields_periodDebt.cs" />
+    <Compile Include="Migrations\202408181602599_court_remove_two_fields_periodDebt.Designer.cs">
+      <DependentUpon>202408181602599_court_remove_two_fields_periodDebt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408181603458_court_add_two_fields_periodDebt1.cs" />
+    <Compile Include="Migrations\202408181603458_court_add_two_fields_periodDebt1.Designer.cs">
+      <DependentUpon>202408181603458_court_add_two_fields_periodDebt1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408181604381_court_add_two_fields_periodDebt.cs" />
+    <Compile Include="Migrations\202408181604381_court_add_two_fields_periodDebt.Designer.cs">
+      <DependentUpon>202408181604381_court_add_two_fields_periodDebt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
     <Compile Include="Model\ALL_LICS.cs" />
@@ -123,7 +136,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <EmbeddedResource Include="Migrations\202408181602599_court_remove_two_fields_periodDebt.resx">
+      <DependentUpon>202408181602599_court_remove_two_fields_periodDebt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408181603458_court_add_two_fields_periodDebt1.resx">
+      <DependentUpon>202408181603458_court_add_two_fields_periodDebt1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408181604381_court_add_two_fields_periodDebt.resx">
+      <DependentUpon>202408181604381_court_add_two_fields_periodDebt.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

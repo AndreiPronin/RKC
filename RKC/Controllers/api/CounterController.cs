@@ -53,6 +53,14 @@ namespace RKC.Controllers.api
             var result = await _apiCounters.GetIpuReadingsForGis(period,take, lastId);
             return result;
         }
+        //[JwtAuthentication]
+        [HttpGet]
+        [Route("GetLicInfoForGis")]
+        public async Task<ResultResponse<string, List<LicInfoForGis>>> GetLicInfoForGis(int? take, string lastId = "", string els = "")
+        {
+            var result = await _apiCounters.GetLicInfoForGis(take, lastId,els);
+            return result;
+        }
         [JwtAuthentication]
         [HttpGet]
         [Route("GetIpuReadingsForGisActive")]

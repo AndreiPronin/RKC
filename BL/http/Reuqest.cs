@@ -50,8 +50,29 @@ namespace BL.http
                 var convertJson = new ConvertJson<T>(Model);
                 var Json = convertJson.ConverModelToJson();
                 var content = new StringContent(Json, Encoding.UTF8, "application/json");
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Token");
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
                 var resultPostRequest = await httpClient.PostAsync(Url, content);
+                if (resultPostRequest != null && resultPostRequest.StatusCode == HttpStatusCode.OK)
+                {
+                    var result = await resultPostRequest.Content.ReadAsStringAsync();
+                    return result;
+                }
+                else
+                {
+                    var result = await resultPostRequest.Content.ReadAsStringAsync();
+                    return result;
+                }
+                throw new Exception($"Ошибка загруки код ошибки:{resultPostRequest.StatusCode}");
+
+            }
+        }
+        public async Task<string> GetRequestWithTocken(string Url, string Token)
+        {
+            using (var httpClient = _httpClient ?? new HttpClient())
+            {
+                httpClient.Timeout = TimeSpan.FromMinutes(60);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                var resultPostRequest = await httpClient.GetAsync(Url);
                 if (resultPostRequest != null && resultPostRequest.StatusCode == HttpStatusCode.OK)
                 {
                     var result = await resultPostRequest.Content.ReadAsStringAsync();

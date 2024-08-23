@@ -14,6 +14,10 @@ namespace BL.Helper
         {
             Value = value;
         }
+        public ConvertJson()
+        {
+
+        }
 
         public string ConverModelToJson() 
         {

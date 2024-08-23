@@ -644,3 +644,4 @@ D:\Programing\RKC\RKC\bin\Common.Logging.Core.pdb
 D:\Programing\RKC\RKC\bin\Common.Logging.pdb
 D:\Programing\RKC\RKC\bin\Swashbuckle.Core.dll
 D:\Programing\RKC\RKC\obj\Release\RKC.csproj.Up2Date
+D:\Programing\RKC\RKC\bin\Castle.Core.dll

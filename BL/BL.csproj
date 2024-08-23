@@ -111,6 +111,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MkdInformationService.cs" />
     <Compile Include="Services\PersonalData.cs" />
+    <Compile Include="Services\ApiRecalculationService.cs" />
     <Compile Include="Services\Report.cs" />
     <Compile Include="Services\SocialHiringService.cs" />
   </ItemGroup>

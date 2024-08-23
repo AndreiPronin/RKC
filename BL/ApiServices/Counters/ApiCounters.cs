@@ -15,6 +15,7 @@ namespace BL.ApiServices.Counters
     {
         Task<ResultResponse<string, List<IpuGisReading>>> GetIpuReadingsForGis(DateTime period, int? take, string lastLic = "");
         Task<ResultResponse<string, List<IpuGisReadingActive>>> GetIpuReadingsForGisActive(int? take, string lastLic = "");
+        Task<ResultResponse<string, List<LicInfoForGis>>> GetLicInfoForGis(int? take, string lastLic = "", string els = "");
         Task<decimal?> GetReading(int IdPu);
         Task<List<FullLicByGisId>> GetFullLicBuGuidGis(List<string> gisId);
         Task UpdatePuWithGis(UpdatePuWithGis updatePuWithGis);
@@ -60,6 +61,32 @@ namespace BL.ApiServices.Counters
                 if(!string.IsNullOrEmpty(iPU_COUNTER.Fias) && !string.IsNullOrEmpty(iPU_COUNTER.UniqueApartmentNumber)
                    && !string.IsNullOrEmpty(iPU_COUNTER.Els) && !string.IsNullOrEmpty(iPU_COUNTER.IdGku))
                     result.value.Add(iPU_COUNTER);
+            }
+            result.lastId = Allic.LastOrDefault()?.F4ENUMELS;
+            return result;
+        }
+        public async Task<ResultResponse<string, List<LicInfoForGis>>> GetLicInfoForGis(int? take, string lastLic = "",string els = "")
+        {
+            var result = new ResultResponse<string, List<LicInfoForGis>>();
+           
+            var FlatMkdTask = await getFlatMkd(take, lastLic, els);
+            var Allic = await GetALL_LICS(FlatMkdTask.Select(x => x.FullLic).ToList());
+            var AddressMKDsTask = await getAddressMKD(Allic.Select(x => (int)x.CADR).ToList());
+            
+            foreach (var item in Allic)
+            {
+                var flat = FlatMkdTask.Where(x => x.FullLic == item.F4ENUMELS).FirstOrDefault();
+                result.value.Add(new LicInfoForGis
+                {
+                    IsClosed = item.ZAK,
+                    AccountNumber = flat.FullLic,
+                    TotalSquare = item.KL,
+                    UnifiedAccountNumber = flat.UniqueApartmentNumber,
+                     Firstname = item.FAMIL,
+                      Surname = item.IMYA,
+                       Patronymic = item.OTCH,
+
+                });
             }
             result.lastId = Allic.LastOrDefault()?.F4ENUMELS;
             return result;

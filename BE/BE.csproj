@@ -52,6 +52,7 @@
     <Compile Include="Counter\FullLicAndGuid.cs" />
     <Compile Include="Counter\IpuGisReading.cs" />
     <Compile Include="Counter\IpuNotFoundInLick.cs" />
+    <Compile Include="Counter\LicInfoForGis.cs" />
     <Compile Include="Counter\MassCloseLicReport.cs" />
     <Compile Include="Counter\ModelAddPU.cs" />
     <Compile Include="Counter\modelUpdatePU.cs" />
@@ -93,6 +94,11 @@
     <Compile Include="MkdInformation\MainInformationModel.cs" />
     <Compile Include="MkdInformation\RecalculationsForMKDByCadrBe.cs" />
     <Compile Include="MkdInformation\SearchModel.cs" />
+    <Compile Include="Recalculation\ApplyCalculation.cs" />
+    <Compile Include="Recalculation\Calculate.cs" />
+    <Compile Include="Recalculation\ErrorCalculate.cs" />
+    <Compile Include="Recalculation\RecalculationReason.cs" />
+    <Compile Include="Recalculation\RecalculationsDto.cs" />
     <Compile Include="Report\EnumsReport.cs" />
     <Compile Include="SocialHiringData\HelpCalculationsModel.cs" />
     <Compile Include="SocialHiringData\PersDataDocumentLoad.cs" />

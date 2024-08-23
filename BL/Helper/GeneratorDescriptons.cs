@@ -709,9 +709,13 @@ namespace BL.Helper
             if (courtGeneralBe.CourtLitigationWork.NumberIl != courtGeneralDb.CourtLitigationWork.NumberIl)
                 Result.AppendLine($"Номер ИЛ: было {courtGeneralDb.CourtLitigationWork.NumberIl} стало {courtGeneralBe.CourtLitigationWork.NumberIl}");
             if (courtGeneralBe.CourtLitigationWork.Comment != courtGeneralDb.CourtLitigationWork.Comment)
-                Result.AppendLine($"Реквизиты ГП - дата платежного поручения: было {courtGeneralBe.CourtLitigationWork.Comment} стало {courtGeneralBe.CourtLitigationWork.Comment}");
+                Result.AppendLine($"Реквизиты ГП - дата платежного поручения: было {courtGeneralDb.CourtLitigationWork.Comment} стало {courtGeneralBe.CourtLitigationWork.Comment}");
             if (courtGeneralBe.CourtLitigationWork.CaseNumber != courtGeneralDb.CourtLitigationWork.CaseNumber)
-                Result.AppendLine($"Номер дела: было {courtGeneralBe.CourtLitigationWork.CaseNumber} стало {courtGeneralBe.CourtLitigationWork.CaseNumber}");
+                Result.AppendLine($"Номер дела: было {courtGeneralDb.CourtLitigationWork.CaseNumber} стало {courtGeneralBe.CourtLitigationWork.CaseNumber}");
+            if (courtGeneralBe.CourtLitigationWork.PeriodDebtInitialCollected != courtGeneralDb.CourtLitigationWork.PeriodDebtInitialCollected)
+                Result.AppendLine($"Период задолженности начальный взыскано: было {courtGeneralDb.CourtLitigationWork.PeriodDebtInitialCollected} стало {courtGeneralBe.CourtLitigationWork.PeriodDebtInitialCollected}");
+            if (courtGeneralBe.CourtLitigationWork.PeriodDebtEndCollected != courtGeneralDb.CourtLitigationWork.PeriodDebtEndCollected)
+                Result.AppendLine($"Период задолженности конечный взыскано: было {courtGeneralDb.CourtLitigationWork.PeriodDebtEndCollected} стало {courtGeneralBe.CourtLitigationWork.PeriodDebtEndCollected}");
             //CourtStateDuty
             if (courtGeneralBe.CourtStateDuty.DateSendOnReturnFNS != courtGeneralDb.CourtStateDuty.DateSendOnReturnFNS)
                 Result.AppendLine($"Дата направления на возврат г/п в ФНС: было {courtGeneralDb.CourtStateDuty.DateSendOnReturnFNS} стало {courtGeneralBe.CourtStateDuty.DateSendOnReturnFNS}");

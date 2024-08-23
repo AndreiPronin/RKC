@@ -23,21 +23,8 @@
         }
         <div class="col-md-12">
             <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
-            @if (User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
-            {
-                @*if (Model.FirstOrDefault().ZAK == null)
-                {
-                    <a>
-                        <input type="button" class="btn btn-danger CloseLick" style="float:right" value="Закрыть лицевой счет" />
-                    </a>
-                }
-                else
-                {
-                    <a>
-                        <input type="button" class="btn btn-success OpenLick" style="float: right" value="Перерасчет" />
-                    </a>
-                }*@
-            }
+
+             <button id="CloseLock" style="float:right;" name="@Model.FirstOrDefault().full_lic" class="btn btn-primary RecalculationPartitial" data-toggle="modal" data-target="#RecalculationPartitialModal">Перерасчет</button>
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -315,6 +302,7 @@ else
 
 }
 <div id="ShowAllDocument"></div>
+<div id="RecalculationPartitial"></div>
 <div id="ShowAllCourt"></div>
 <div id="ShowLogs"></div>
 <div id="Note"></div>
@@ -560,6 +548,23 @@ else
                 success: function (data) {
                     $("#ShowAllDocument").empty();
                     $("#ShowAllDocument").append(data);
+                    $(".loader").addClass("hidden");
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
+
+        })
+        $(".RecalculationPartitial").click(function (e) {
+            $.ajax({
+                url: '/PersonalData/RecalculationPartitialView?FullLic=' +@ViewBag.FULL_LIC,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#RecalculationPartitial").empty();
+                    $("#RecalculationPartitial").append(data);
                     $(".loader").addClass("hidden");
                 },
                 error: function () {
