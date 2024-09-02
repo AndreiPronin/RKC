@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -82,7 +83,19 @@ namespace BL.Helper
                 using (var db = new ApplicationDbContext())
                 {
                     db.LogsPersData.Add(new LogsPersData { idPersData = idPersData, Description = Description, UserName = User, DateTime = DateTime.Now });
-                    db.SaveChanges();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        try
+                        {
+                            db.SaveChanges();
+                            break; 
+                        }
+                        catch (Exception e)
+                        {
+                            if(i == 5) throw;
+                            Thread.Sleep(100); 
+                        }
+                    }
                 }
             }
         }

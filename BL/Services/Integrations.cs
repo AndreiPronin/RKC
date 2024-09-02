@@ -44,7 +44,7 @@ namespace BL.Service
             var DbLIC = new DbLIC();
             var DbTPlus = new DbTPlus();
             var dbApp = new ApplicationDbContext();
-            IQueryable<IPU_COUNTERS> Counter = DbTPlus.IPU_COUNTERS;
+
             var Counters = await _counter.DetailInfromsAllAsync();
 
             IQueryable<ALL_LICS> aLL_LICs = DbLIC.ALL_LICS;

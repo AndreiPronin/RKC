@@ -21,16 +21,25 @@
                                         <option isResident="false" value="">Выберите причину перерасчета</option>
                                         @foreach (var item in (List<BE.Recalculation.RecalculationReasons>)ViewBag.Reason)
                                         {
-                                            <option hideRecalculationBeginningPeriod="@(item.HideRecalculationBeginningPeriodField == true ? "true" : "false")"
+                                            <option isRecalculationBeginningPeriodFieldEnabled="@(item.IsRecalculationBeginningPeriodFieldEnabled == true ? "true" : "false")"
+                                                    isRecalculationEndingPeriodFieldEnabled="@(item.IsRecalculationEndingPeriodFieldEnabled == true ? "true" : "false")"
                                                     isSummingTypeField="@(item.IsSummingTypeFieldEnabled == true ? "true" : "false")"
                                                     isResidentsCountField="@(item.IsResidentsCountFieldEnabled == true ? "true" : "false")"
                                                     isVolumeField="@(item.IsVolumeFieldEnabled == true ? "true" : "false")"
+                                                    isRecalculationPeriodField="@(item.IsRecalculationPeriodFieldEnabled == true ? "true" : "false")"
                                                     isCounterField="@(item.IsCounterFieldEnabled == true ? "true" : "false")"
                                                     value="@item.RecalculationReason">
-                                                @item.Name
+                                                @item.Name @(string.IsNullOrEmpty(item.Description) ? "" : $"({item.Description})" )
                                             </option>
                                         }
                                     </select>
+                                </div>
+                                <div id="ShowPeriodPuRecalculation">
+                                    <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Период:</label>
+                                    <div class="col-sm-6">
+                                        <input type="date" tabIndex="" id="RecalculationPeriod" class="form-control" value="" />
+                                    </div>
                                 </div>
                                 <div id="ShowStartDateRecalculation">
                                     <div class="col-sm-12 text-center" style="margin-top:10px"></div>
@@ -39,10 +48,12 @@
                                         <input type="date" tabIndex="" id="StartDateRecalculation" class="form-control" value="" />
                                     </div>
                                 </div>
-                                <div class="col-sm-12 text-center" style="margin-top:10px"></div>
-                                <label style="text-align:end;" class="col-sm-6 col-form-label">Конечная дата перерасчета:</label>
-                                <div class="col-sm-6">
-                                    <input type="date" tabIndex="" id="EndDateRecalculation" class="form-control" value="" />
+                                <div id="ShowEndDateRecalculation">
+                                    <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Конечная дата перерасчета:</label>
+                                    <div class="col-sm-6">
+                                        <input type="date" tabIndex="" id="EndDateRecalculation" class="form-control" value="" />
+                                    </div>
                                 </div>
                                 <div class="col-sm-12 text-center" style="margin-top:10px"></div>
                                 <div id="ShowTypePuRecalculation">
@@ -102,23 +113,33 @@
 <script>
     function hiddenAll() {
         $("#ShowStartDateRecalculation").addClass('hidden');
+        $("#ShowEndDateRecalculation").addClass('hidden');
         $("#ShowTypePuRecalculation").addClass('hidden');
         $("#ShowVolume").addClass('hidden');
         $("#ShowTotalPeople").addClass('hidden');
         $("#ShowShemaRecalculation").addClass('hidden');
+        $("#ShowPeriodPuRecalculation").addClass('hidden');
     }
     $(document).ready(function (e) {
         hiddenAll();
         //$(".loader").addClass("hidden");
         $("#ReasonRecalculation").on('change', function (e) {
             hiddenAll();
-            var hideRecalculationBeginningPeriod = $("#ReasonRecalculation").find(':selected').attr('hideRecalculationBeginningPeriod');
+            var isRecalculationEndingPeriodFieldEnabled = $("#ReasonRecalculation").find(':selected').attr('isRecalculationEndingPeriodFieldEnabled');
+            var isRecalculationBeginningPeriodFieldEnabled = $("#ReasonRecalculation").find(':selected').attr('isRecalculationBeginningPeriodFieldEnabled');
             var isSummingTypeField = $("#ReasonRecalculation").find(':selected').attr('isSummingTypeField');
             var isResidentsCountField = $("#ReasonRecalculation").find(':selected').attr('isResidentsCountField');
             var isVolumeField = $("#ReasonRecalculation").find(':selected').attr('isVolumeField');
             var isCounterField = $("#ReasonRecalculation").find(':selected').attr('isCounterField');
-            console.log(hideRecalculationBeginningPeriod);
-            if (hideRecalculationBeginningPeriod == "true") {
+            var isRecalculationPeriodField = $("#ReasonRecalculation").find(':selected').attr('isRecalculationPeriodField');
+
+            if (isRecalculationBeginningPeriodFieldEnabled == "true") {
+                $("#ShowStartDateRecalculation").removeClass('hidden');
+            }
+            if (isRecalculationEndingPeriodFieldEnabled == "true") {
+                $("#ShowEndDateRecalculation").removeClass('hidden');
+            }
+            if (isRecalculationEndingPeriodFieldEnabled == "true") {
                 $("#ShowStartDateRecalculation").removeClass('hidden');
             }
             if (isSummingTypeField == "true") {
@@ -133,6 +154,9 @@
             if (isCounterField == "true") {
                 $("#ShowTypePuRecalculation").removeClass('hidden');
             }
+            if (isRecalculationPeriodField == "true") {
+                $("#ShowPeriodPuRecalculation").removeClass('hidden');
+            }
 
         })
         $("#Calculate").click(function (e) {
@@ -144,6 +168,7 @@
                     calculate: {//missing brackets
                         fullLic: $('#FullLic').val(),
                         period: $('#Period').val(),
+                        recalculationPeriod: $('#RecalculationPeriod').val(),
                         recalculationBeginningPeriod: $('#StartDateRecalculation').val(),
                         recalculationEndingPeriod: $('#EndDateRecalculation').val(),
                         recalculationReason: $('#ReasonRecalculation').val(),

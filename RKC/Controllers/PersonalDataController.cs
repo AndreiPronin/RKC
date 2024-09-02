@@ -378,7 +378,7 @@ namespace RKC.Controllers
             var result = await _counter.GetRecalculations(FullLic);
             return View(result);
         }
-        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
         public async Task<ActionResult> RecalculationPartitialView(string FullLic)
         {
             ViewBag.Reason = await _apiRecalculationService.GetRecalculationInfosAsync();
@@ -386,7 +386,7 @@ namespace RKC.Controllers
             ViewBag.Period = DateTime.Now.GetDateWhitMaxDate();
             return PartialView();
         }
-        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
         [HttpPost]
         public async Task<ActionResult> CalculationTablePartitialView(Calculate calculate)
         {
@@ -400,7 +400,7 @@ namespace RKC.Controllers
                 return Content(ex.Message.ToString());
             }
         }
-        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Admin)]
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
         [HttpPost]
         public async Task<ActionResult> ApplyCalculation(ApplyCalculation applyCalculation)
         {

@@ -1,14 +1,7 @@
 ﻿using ClosedXML.Excel;
-using DB.Model;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataTable = System.Data.DataTable;
 
 namespace BL.Excel
 {

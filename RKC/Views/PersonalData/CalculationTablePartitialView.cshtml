@@ -63,7 +63,6 @@
             let calculate = {};
             calculate.prices = [];
             const price = {};
-            let add = false;
             let iterator = 1;
             let pricesIterator = 1;
             $($('#TableRecalc td').get().reverse()).each(function () {
@@ -128,7 +127,8 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $("#TableRecalculate").empty();
-                    $("#TableRecalculate").append(data);
+                    $("#TableRecalculate").append("<p style='' class='text-center' >Расчет успешно выполнен</p>");
+             
                 },
                 error: function (data) {
                     $("#TableRecalculate").empty();

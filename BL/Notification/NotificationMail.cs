@@ -70,8 +70,14 @@ namespace BL.Notification
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:T+"]);
             mailMessage.Attachments.Add(new System.Net.Mail.Attachment($@"{AppDomain.CurrentDomain.BaseDirectory}Template\Kvit\{DateTime.Now.AddMonths(-1):MMMM-yyyy}\Квитанция {FullLic} {DateTime.Now.AddMonths(-1).Month}.pdf"));
+            mailMessage.Attachments.Add(new System.Net.Mail.Attachment($@"{AppDomain.CurrentDomain.BaseDirectory}Files\Личный кабине.jpg"));
             mailMessage.To.Add(new MailAddress(Mail));
-            mailMessage.Subject = "Автоматическое отправление эл.квитанций";
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Subject = "Квитанция за отопление и ГВС";
+            mailMessage.Body = @"Напоминаем, что <b>необходимо передавать показания</b> по индивидуальным приборам учёта <b>не позднее 25-го числа</b> каждого месяца.
+Только в этом случае мы можем учесть их при формировании квитанции.
+Вы получили это письмо, поскольку ранее дали согласие на получение квитанции ""Пензенский филиал ПАО Т плюс"" по электронной почте. 
+Отвечать на это письмо не нужно, оно создано автоматически.";
             smtpClient.Send(mailMessage);
         }
         public void SendMailReceiptDpu(string FullLic, string Mail)
@@ -87,8 +93,14 @@ namespace BL.Notification
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["mail:from:T+"]);
             mailMessage.Attachments.Add(new System.Net.Mail.Attachment($@"{AppDomain.CurrentDomain.BaseDirectory}Template\KvitDPU\{DateTime.Now.AddMonths(-1):MMMM-yyyy}\Квитанция ДПУ {FullLic} {DateTime.Now.AddMonths(-1).Month}.pdf"));
+            mailMessage.Attachments.Add(new System.Net.Mail.Attachment($@"{AppDomain.CurrentDomain.BaseDirectory}Files\Личный кабине.jpg"));
             mailMessage.To.Add(new MailAddress(Mail));
-            mailMessage.Subject = "Автоматическое отправление эл.квитанций";
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Subject = "Квитанция за отопление и ГВС";
+            mailMessage.Body = @"Напоминаем, что <b>необходимо передавать показания</b> по индивидуальным приборам учёта <b>не позднее 25-го числа</b> каждого месяца.
+Только в этом случае мы можем учесть их при формировании квитанции.
+Вы получили это письмо, поскольку ранее дали согласие на получение квитанции ""Пензенский филиал ПАО Т плюс"" по электронной почте. 
+Отвечать на это письмо не нужно, оно создано автоматически.";
             smtpClient.Send(mailMessage);
         }
         public void SendEmailAsyncDublicatePers(List<DuplicatePers> DuplicatePers)

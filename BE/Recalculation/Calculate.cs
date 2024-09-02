@@ -11,6 +11,7 @@ namespace BE.Recalculation
         public string FullLic { get; set; }
         public DateTime Period { get; set; }
         public DateTime RecalculationBeginningPeriod { get; set; }
+        public DateTime RecalculationPeriod {  get; set; }
         public DateTime RecalculationEndingPeriod { get; set; }
         public int RecalculationReason { get; set; }
         public int SummingType { get; set; }

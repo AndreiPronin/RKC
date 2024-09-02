@@ -39,6 +39,14 @@ namespace BE.Recalculation
         /// <summary>
         /// скрывать поле для ввода начальной даты перерасчёта (в запросе /calculate – recalculationBeginningPeriod = recalculationEndingPeriod);
         /// </summary>
-        public bool HideRecalculationBeginningPeriodField { get; set; }
+        public bool IsRecalculationBeginningPeriodFieldEnabled { get; set; }
+        /// <summary>
+        /// скрывать поле для ввода конечной даты перерасчёта (в запросе /calculate – RecalculationEndingPeriod = RecalculationEndingPeriod);
+        /// </summary>
+        public bool IsRecalculationEndingPeriodFieldEnabled { get; set; }
+        /// <summary>
+        /// скрывать поле для ввода период перерасчёта (в запросе /calculate – RecalculationPeriod = RecalculationPeriod);
+        /// </summary>
+        public bool IsRecalculationPeriodFieldEnabled { get; set; }
     }
 }

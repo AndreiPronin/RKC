@@ -11,20 +11,13 @@ using ClosedXML.Excel;
 using DB.DataBase;
 using DB.Model;
 using DB.ViewModel;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
 using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace BL.Excel
@@ -665,7 +658,7 @@ namespace BL.Excel
                     }
                     catch (Exception ex)
                     {
-                        PersNotAdded.Add(new PersDataModel { Lic = $"Ошибка на {i} строке", Comment = ex.Message });
+                        PersNotAdded.Add(new PersDataModel { Lic = $"Ошибка на {i} строке", Comment = ex.Message + ex.StackTrace });
                     }
                 }
             }

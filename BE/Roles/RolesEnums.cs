@@ -47,5 +47,7 @@ namespace BE.Roles
         public const string MkdReader = "MkdReader";
         [Description("ShowNoteLic")]
         public const string ShowNoteLic = "ShowNoteLic";
+        [Description("Recalculation")]
+        public const string Recalculation = "Recalculation";
     }
 }

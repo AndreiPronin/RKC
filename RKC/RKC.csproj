@@ -494,6 +494,8 @@
     <Content Include="Content\SideBar.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\Личный кабинет.tif" />
+    <Content Include="Files\Личный кабине.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
