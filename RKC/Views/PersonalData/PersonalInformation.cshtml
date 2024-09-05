@@ -24,10 +24,10 @@
         }
         <div class="col-md-12">
             <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
-            @if (User.IsInRole(RolesEnums.Recalculation) || User.IsInRole(RolesEnums.SuperAdmin))
+            @*@if (User.IsInRole(RolesEnums.Recalculation) || User.IsInRole(RolesEnums.SuperAdmin))
             {
                 <button style="float:right;" name="@Model.FirstOrDefault().full_lic" class="btn btn-primary RecalculationPartitial" data-toggle="modal" data-target="#RecalculationPartitialModal">Перерасчет</button>
-            }
+            }*@
         </div>
         <div id="ResultSearchSave"></div>
     </div>

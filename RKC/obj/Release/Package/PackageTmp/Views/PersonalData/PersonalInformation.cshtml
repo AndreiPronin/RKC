@@ -3,6 +3,7 @@
     ViewBag.Title = "PersonalInformation";
     var Index = 0;
 }
+@using BE.Roles;
 <style>
     .nav > li > a:hover,
     .nav > li > a:focus {
@@ -23,21 +24,10 @@
         }
         <div class="col-md-12">
             <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
-            @if (User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+            @*@if (User.IsInRole(RolesEnums.Recalculation) || User.IsInRole(RolesEnums.SuperAdmin))
             {
-                @*if (Model.FirstOrDefault().ZAK == null)
-                {
-                    <a>
-                        <input type="button" class="btn btn-danger CloseLick" style="float:right" value="Закрыть лицевой счет" />
-                    </a>
-                }
-                else
-                {
-                    <a>
-                        <input type="button" class="btn btn-success OpenLick" style="float: right" value="Перерасчет" />
-                    </a>
-                }*@
-            }
+                <button style="float:right;" name="@Model.FirstOrDefault().full_lic" class="btn btn-primary RecalculationPartitial" data-toggle="modal" data-target="#RecalculationPartitialModal">Перерасчет</button>
+            }*@
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -48,7 +38,7 @@
     </div>
     <div class="row">
         @foreach (var Items in Model)
-        {
+                {
 
             <div style="margin-top:10px;" class="card">
                 <div class="card-header text-center">
@@ -60,7 +50,7 @@
                     </a>
                     <a>
                         @if (User.IsInRole(BE.Roles.RolesEnums.CounterReader) || User.IsInRole(BE.Roles.RolesEnums.CourtWriter) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
-                        {
+                {
                             <input type="button" class="btn btn-primary ShowAllCourt" value="Судебные дела" data-toggle="modal" data-target="#ShowAllCourtModal" />
                         }
                     </a>
@@ -315,6 +305,7 @@ else
 
 }
 <div id="ShowAllDocument"></div>
+<div id="RecalculationPartitial"></div>
 <div id="ShowAllCourt"></div>
 <div id="ShowLogs"></div>
 <div id="Note"></div>
@@ -560,6 +551,23 @@ else
                 success: function (data) {
                     $("#ShowAllDocument").empty();
                     $("#ShowAllDocument").append(data);
+                    $(".loader").addClass("hidden");
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                }
+            });
+
+        })
+        $(".RecalculationPartitial").click(function (e) {
+            $.ajax({
+                url: '/PersonalData/RecalculationPartitialView?FullLic=' +@ViewBag.FULL_LIC,
+                type: 'Get',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#RecalculationPartitial").empty();
+                    $("#RecalculationPartitial").append(data);
                     $(".loader").addClass("hidden");
                 },
                 error: function () {

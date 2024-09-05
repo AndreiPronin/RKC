@@ -272,7 +272,7 @@ namespace BL.Helper
                     Result.Append($"Изменили отправка эл/квитанции: было {PersData.SendingElectronicReceipt} стало {PersDataModel.SendingElectronicReceipt} \r\n");
                 if (PersDataModel.BenefitName == null)
                     PersDataModel.BenefitName = "";
-                if ( PersData.Benefit?.Name != PersDataModel.BenefitName)
+                if (PersData.Benefit?.Name != PersDataModel.BenefitName && !string.IsNullOrEmpty(PersDataModel.BenefitName))
                     Result.Append($"Изменили льгота: было {PersData.Benefit?.Name} стало {PersDataModel.BenefitName} \r\n");
                 if (PersData.BenefitEndDate != PersDataModel.BenefitEndDate)
                     Result.Append($"Изменили дата окончания льготы: было {PersData.BenefitEndDate?.ToString("yyyy-MM-dd")} стало {PersDataModel.BenefitEndDate?.ToString("yyyy-MM-dd")} \r\n");
