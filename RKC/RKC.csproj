@@ -734,6 +734,7 @@
     <Content Include="Views\Court\PartialCourtNote.cshtml" />
     <Content Include="Views\PersonalData\RecalculationPartitialView.cshtml" />
     <Content Include="Views\PersonalData\CalculationTablePartitialView.cshtml" />
+    <Content Include="Views\PersonalData\CurentRecalculation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

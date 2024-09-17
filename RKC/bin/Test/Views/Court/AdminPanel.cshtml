@@ -106,6 +106,25 @@
                     </div>
                 }
             }
+            @using (Html.BeginForm("Report2", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                {
+                    <div style="margin-top:30px;" class="row">
+                        <div class="col-md-4">
+                            <select name="courtTypeReport" id="courtTypeReport" class="form-control">
+                                <option value="@((int)BE.Court.CourtTypeReport2.LoadIP)">@BE.Court.CourtTypeReport2.LoadIP.GetDescription()</option>
+                                <option value="@((int)BE.Court.CourtTypeReport2.ExecutorSP)">@BE.Court.CourtTypeReport2.ExecutorSP.GetDescription()</option>
+                                <option value="@((int)BE.Court.CourtTypeReport2.TaskGPH)">@BE.Court.CourtTypeReport2.TaskGPH.GetDescription()</option>
+                                <option value="@((int)BE.Court.CourtTypeReport2.NowDZ)">@BE.Court.CourtTypeReport2.NowDZ.GetDescription()</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" id="" class="btn btn-success" value="Скачать" />
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 </div>

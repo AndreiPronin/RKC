@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BE.Court;
 using BE.Service;
+using BL.Helper;
 using BL.MapperProfile;
 using BL.Notification;
 using BL.Services;
@@ -25,16 +26,30 @@ namespace BL.Excel
         private readonly List<ReportCourtLoadExcel> reportCourtLoadExcels;
         private readonly IDictionary _dictionary;
         private readonly INotificationMail _notificationMail;
-        public ExcelCourtReport(ICourt court, IDictionary dictionary, INotificationMail notificationMail)
+        private readonly IFlagsAction _flagsAction;
+        public ExcelCourtReport(ICourt court, IDictionary dictionary, INotificationMail notificationMail, IFlagsAction flagsAction)
         {
             _court = court;
             _dictionary = dictionary;
             reportCourtLoadExcels = new List<ReportCourtLoadExcel>();
             _notificationMail = notificationMail;
+            _flagsAction = flagsAction;
         }
         public async Task<DataTable> ReestyGPAccountingDepartment(XLWorkbook Excels, string User, CourtTypeReport courtTypeReport, DateTime dateTime)
         {
-            var CourtGeneralInformation = await _court.GetCourtWithFilter(x=>x.CourtWork.DateAccountingDepartment == dateTime);
+            var date = new DateTime();
+            var courtGeneralInformations = new List<DB.Model.Court.CourtGeneralInformation>();
+            var startDate = _flagsAction.GetFlag(EnumFlags.ReestyGPAccountingDepartment).DateTime.Value;
+            if(dateTime < startDate)
+            {
+                date = startDate;
+                startDate = dateTime;
+                dateTime = date;
+            }
+
+            courtGeneralInformations.AddRange(await _court.GetCourtWithFilter(x => x.CourtWork.DateAccountingDepartment >= startDate 
+            && x.CourtWork.DateAccountingDepartment <= dateTime));
+
             DataTable dt = new DataTable("Report");
             var dataColumn = new DataColumn[]
             {
@@ -60,7 +75,7 @@ namespace BL.Excel
             };
             dt.Columns.AddRange(dataColumn);
             int Number = 1;
-            foreach(var item in CourtGeneralInformation)
+            foreach(var item in courtGeneralInformations)
             {
                 dt.Rows.Add(
                     Number,///#
@@ -90,8 +105,8 @@ namespace BL.Excel
             {
                 var flag = context.Flags.FirstOrDefault(x=>x.NameAction == nameof(EnumFlags.ReestyGPAccountingDepartment));
                 if (flag != null)
-                {
-                    flag.DateTime = DateTime.Now;
+                {   if(flag.DateTime >=date)
+                        flag.DateTime = date;
                 }
                 context.SaveChanges();
             }

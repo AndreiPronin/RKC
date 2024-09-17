@@ -80,11 +80,15 @@ namespace BL.ApiServices.Counters
                 {
                     IsClosed = item.ZAK,
                     AccountNumber = flat.FullLic,
-                    TotalSquare = item.KL,
+                    TotalSquare = item.SOBS,
+                    NumberOfPersons = item.KL,
+                    Els = flat.Els,
+                    AccountGUID = flat.AccountGUID,
+                    Igku = flat.IdGku,
                     UnifiedAccountNumber = flat.UniqueApartmentNumber,
-                     Firstname = item.FAMIL,
-                      Surname = item.IMYA,
-                       Patronymic = item.OTCH,
+                    Firstname = item.FAMIL,
+                    Surname = item.IMYA,
+                    Patronymic = item.OTCH,
 
                 });
             }

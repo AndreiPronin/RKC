@@ -77,8 +77,6 @@ namespace BL.ApiServices.Counters
         {
             using (var contextTPlus = new DbTPlus())
             {
-                //return await contextTPlus.flats.Where(x => Allic.Contains(x.FullLic)).ToListAsync();
-
                 var queryAllic = contextTPlus.flats.AsQueryable();
                 if (!lastLic.IsNullOrEmpty())
                     queryAllic = queryAllic.Where(x => x.FullLic.CompareTo(lastLic ?? "") > 0);

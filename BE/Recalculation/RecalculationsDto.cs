@@ -16,6 +16,8 @@ namespace BE.Recalculation
     {
         public DateTime recalculationBeginningPeriod { get; set; }
         public DateTime recalculationEndingPeriod { get; set; }
+        public decimal Area { get; set; } = 0;
+        public int ResidentsNumber { get; set; } = 0;
         public List<Price> prices { get; set; }
     }
     public class Price
@@ -23,5 +25,8 @@ namespace BE.Recalculation
         public int id { get; set; }
         public string name { get; set; }
         public double price { get; set; }
+        public double OverallAccrued { get; set; }
+        public double Tariff { get; set; }
+        public double Normative { get; set; }
     }
 }

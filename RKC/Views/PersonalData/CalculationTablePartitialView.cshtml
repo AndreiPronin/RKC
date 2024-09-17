@@ -1,27 +1,47 @@
 ﻿@model BE.Recalculation.RecalculationsDto
 
+<style>
+    table.table tbody tr td,
+    table.table thead tr th,
+    table.table thead {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
 
 <table id="TableRecalc" class="table">
     <thead>
         <tr>
+            <th scope="col" rowspan="10">Площадь</th>
+            <th scope="col" rowspan="10">Количество человек</th>
             <th scope="col" rowspan="10">Начальная дата перерасчета</th>
             <th scope="col" rowspan="10">Конечная дата перерасчета</th>
-            <th scope="col" class="text-center" colspan="2">Суммы по услугам</th>
+            <th scope="col" class="text-center" colspan="5">Суммы по услугам</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Recalculations)
         {
             <tr>
+                <td>@item.Area</td>
+                <td>@item.ResidentsNumber</td>
                 <td>@item.recalculationBeginningPeriod.ToString("dd MMMM yyyy")  <input hidden name="date" value="@item.recalculationBeginningPeriod" /></td>
                 <td>@item.recalculationEndingPeriod.ToString("dd MMMM yyyy")  <input hidden name="date" value="@item.recalculationEndingPeriod" /></td>
                 <td>Услуга</td>
-                <td>Сумма</td>
-
+                <td>Начисленно <br />+ перерасчет</td>
+                <td>Тариф</td>
+                <td>Норматив</td>
+                <td>Сумма перерасчета</td>
             </tr>
             foreach (var price in item.prices)
             {
                 <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
                     <td>
                     </td>
                     <td>
@@ -32,13 +52,43 @@
                         <input hidden value="@price.name.Trim()" />
                     </td>
                     <td>
-                        <input type="number" id="" value="@price.price.ToString().Replace(",",".")" />
+                        @price.OverallAccrued
+                    </td>
+                    <td>
+                        @price.Tariff
+                    </td>
+                    <td>
+                        @price.Normative
+                    </td>
+                    <td>
+                        <input type="number" id="" class="changeValue" value="@price.price.ToString().Replace(",",".")" />
                     </td>
                 </tr>
             }
         }
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                Итого:
+            </td>
+            <td>
+                <p id="sum">@Math.Round(Model.Recalculations.Select(x => x.prices.Select(z => z.price)).Sum(x => x.Sum()), 2) </p>
+            </td>
+        </tr>
     </tbody>
-    
 </table>
 <textarea id="comment" placeholder="Укажите коментарий" class="form-control" style="min-width:500px; max-width:100%; min-height:50px; height:100%; width:100%;"></textarea>
 <div id="lengthComment">0/150</div>
@@ -56,6 +106,61 @@
             if (length >= 150) {
                 $("#comment").val(e.target.value.substring(0, 149));
             }
+        })
+        $('.changeValue').on('keyup',function () {
+            let recalculation = [];
+            let calculate = {};
+            calculate.prices = [];
+            const price = {};
+            let iterator = 1;
+            let pricesIterator = 1;
+            $($('#TableRecalc td').get().reverse()).each(function () {
+                var value = $(this).find(':input').val();
+                if ($(this).find(':input').attr('name') == 'date' && iterator == 2 && value != undefined) {
+                    iterator++;
+                    calculate.recalculationBeginningPeriod = value;
+                    recalculation.push({
+                        recalculationBeginningPeriod: calculate.recalculationBeginningPeriod,
+                        recalculationEndingPeriod: calculate.recalculationEndingPeriod,
+                        prices: calculate.prices
+                    });
+                    calculate = {};
+                    calculate.prices = [];
+                    return true;
+                }
+                if ($(this).find(':input').attr('name') == 'date' && iterator == 1 && value != undefined) {
+                    iterator++;
+                    calculate.recalculationEndingPeriod = value;
+                    return true;
+                }
+                if (iterator == 3) {
+                    iterator = 1;
+                }
+                if (iterator == 1 && pricesIterator == 3 && value != undefined) {
+                    price.id = value;
+                }
+                if (iterator == 1 && pricesIterator == 2 && value != undefined) {
+                    price.name = value;
+                    pricesIterator++;
+                    return true;
+                }
+                if (iterator == 1 && pricesIterator == 1 && value != undefined) {
+                    price.price = value;
+                    pricesIterator++;
+                    return true;
+                }
+                if (pricesIterator == 3) {
+                    calculate.prices.push({ id: price.id, name: price.name, price: price.price.replace('.', ',') });
+                    pricesIterator = 1;
+                }
+            });
+            const arr = recalculation.map(z => z.prices.map((x) => {
+                return x.price;
+            }));
+            let sum = 0.00;
+            const res = Array.prototype.concat.apply([], arr);
+            $.each(res, function () { sum += parseFloat(this.replace(',','.')) || 0; });
+            $('#sum').text(sum.toFixed(2))
         })
         $("#ApplyRecalculate").click(function (e) {
             $("#TableLoader").append("<p style='color:red;' class='text-center' >Идет загрузка</p>");
@@ -127,8 +232,9 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $("#TableRecalculate").empty();
-                    $("#TableRecalculate").append("<p style='' class='text-center' >Расчет успешно выполнен</p>");
-             
+                    alert("Расчет успешно выполнен");
+                    window.location.reload();
+                    $("#closeModalRecalculation").click();
                 },
                 error: function (data) {
                     $("#TableRecalculate").empty();

@@ -43,6 +43,7 @@ namespace BL.Excel
         XLWorkbook SummaryReportGVS(XLWorkbook Excels, string User, ICacheApp cacheApp);
         XLWorkbook SummaryReportOTP(XLWorkbook Excels, string User, ICacheApp cacheApp);
         Task<XLWorkbook> GetPeriodPaymentSD(XLWorkbook Excels, string User, ICacheApp cacheApp);
+        XLWorkbook ExcelReportFunction(XLWorkbook Excels, string Report, int column,string LasExcelColimn);
 
 
     }
@@ -1077,6 +1078,57 @@ namespace BL.Excel
                 }
                   
             }
+            return Excels;
+        }
+        public XLWorkbook ExcelReportFunction(XLWorkbook Excels,string Report, int column, string LasExcelColimn)
+        {
+            var worksheet = Excels.Worksheets.Add("Лист1");
+            worksheet.Row(2).Height = 42.5;
+            worksheet.Cell(2, column).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            worksheet.Cell(1, column).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            List<List<object>> lists = new List<List<object>>();
+            var ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(Report,connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    bool trigger = true;
+                    var listObg = new List<object>();
+                    while (reader.Read())
+                    {
+                        if (trigger)
+                        {
+                            for (int i = 0; i <= reader.FieldCount - 1; i++)
+                            {
+                                listObg.Add(reader.GetName(i));
+                            }
+                            lists.Add(listObg);
+                        }
+                        listObg = new List<object>();
+                        for (int i = 0; i <= reader.FieldCount - 1; i++)
+                        {
+                            listObg.Add(reader[i]);
+                        }
+                        lists.Add(listObg);
+                        trigger = false;
+                    }
+                    reader.Close();
+                    var rowUse = ExcelReport.Generate(lists, worksheet);
+                    var rngTable = worksheet.Range($"A1:{LasExcelColimn}" + rowUse);
+                    rngTable.Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                    rngTable.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+
+            worksheet.Columns().AdjustToContents();
             return Excels;
         }
     }

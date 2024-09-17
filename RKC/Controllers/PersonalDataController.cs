@@ -371,6 +371,23 @@ namespace RKC.Controllers
             }
             return Resposne.CreateResponse200();
         }
+        [HttpGet]
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
+        public async Task<ActionResult> CurentRecalculation(string FullLic)
+        {
+            await Task.CompletedTask;
+            var result = (await _personalData.GetManualRecalculationsByFullLic(FullLic)).OrderBy(x=>x.RecalculationRange);
+            ViewBag.FULL_LIC = FullLic;
+            return View(result);
+        }
+        [HttpGet]
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
+        public async Task<ActionResult> RemoveRecalculation(string FullLic, Guid Id, int serviceId)
+        {
+            await _personalData.RemoveRecalculation(Id, serviceId);
+            ViewBag.FULL_LIC = FullLic;
+            return Redirect($"/PersonalData/CurentRecalculation?FullLic={FullLic}");
+        }
         [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.ShowNoteLic)]
         public async Task<ActionResult> HistoryRecalculationView(string FullLic)
         {

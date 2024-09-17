@@ -24,10 +24,12 @@
         }
         <div class="col-md-12">
             <button id="CloseLock" name="@Model.FirstOrDefault().full_lic" class="btn btn-success">Закрыть страницу</button>
-            @*@if (User.IsInRole(RolesEnums.Recalculation) || User.IsInRole(RolesEnums.SuperAdmin))
+            @if (User.IsInRole(RolesEnums.Recalculation) || User.IsInRole(RolesEnums.SuperAdmin))
             {
-                <button style="float:right;" name="@Model.FirstOrDefault().full_lic" class="btn btn-primary RecalculationPartitial" data-toggle="modal" data-target="#RecalculationPartitialModal">Перерасчет</button>
-            }*@
+               <a href="/PersonalData/CurentRecalculation?FullLic=@Model.FirstOrDefault().full_lic">
+                   <button class="btn btn-primary" style="float:right;">Перерасчеты</button>
+               </a>
+            }
         </div>
         <div id="ResultSearchSave"></div>
     </div>
@@ -50,7 +52,7 @@
                     </a>
                     <a>
                         @if (User.IsInRole(BE.Roles.RolesEnums.CounterReader) || User.IsInRole(BE.Roles.RolesEnums.CourtWriter) || User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
-                {
+                        {
                             <input type="button" class="btn btn-primary ShowAllCourt" value="Судебные дела" data-toggle="modal" data-target="#ShowAllCourtModal" />
                         }
                     </a>
@@ -305,7 +307,6 @@ else
 
 }
 <div id="ShowAllDocument"></div>
-<div id="RecalculationPartitial"></div>
 <div id="ShowAllCourt"></div>
 <div id="ShowLogs"></div>
 <div id="Note"></div>
@@ -551,23 +552,6 @@ else
                 success: function (data) {
                     $("#ShowAllDocument").empty();
                     $("#ShowAllDocument").append(data);
-                    $(".loader").addClass("hidden");
-                },
-                error: function () {
-                    alert("Что то пошло не так. Обратитесь к администратору");
-                }
-            });
-
-        })
-        $(".RecalculationPartitial").click(function (e) {
-            $.ajax({
-                url: '/PersonalData/RecalculationPartitialView?FullLic=' +@ViewBag.FULL_LIC,
-                type: 'Get',
-                async: false,
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#RecalculationPartitial").empty();
-                    $("#RecalculationPartitial").append(data);
                     $(".loader").addClass("hidden");
                 },
                 error: function () {

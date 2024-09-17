@@ -10,6 +10,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -47,6 +48,8 @@ namespace BL.Services
         void SavePersonalDataFioLic(PersDataModel persDataModel);
         Task CloseLicAsync(string FullLic, string Description, ICounter _counter, string User);
         DebtInfoForLic GetDebtInfoForLic(string FullLic);
+        Task<List<ManualRecalculationsByFullLic>> GetManualRecalculationsByFullLic(string FullLic);
+        Task RemoveRecalculation(Guid Id, int serviceId);
     }
     public class PersonalData : BaseService, IPersonalData
     {
@@ -70,7 +73,6 @@ namespace BL.Services
         {
             using (var db = new ApplicationDbContext())
             {
-
                 try
                 {
                     return db.StateCalculation.Where(x => x.F4ENUMELS == FullLic).OrderByDescending(x => x.Period).First();
@@ -89,6 +91,30 @@ namespace BL.Services
                 var result = db.Database.SqlQuery<DebtInfoForLic>($" SELECT * from [Web_App].[dbo].[GetDebtInfoForLic]('{FullLic}')").FirstOrDefault();
 #endif
                 return result;
+            }
+        }
+        public async Task<List<ManualRecalculationsByFullLic>> GetManualRecalculationsByFullLic (string FullLic)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+#if DEBUG
+                var result = await db.Database.SqlQuery<ManualRecalculationsByFullLic>($" SELECT * from [Billing].[dbo].[GetManualRecalculationsByFullLic]('{FullLic}')").ToListAsync();
+#else
+                var result = await db.Database.SqlQuery<ManualRecalculationsByFullLic>($" SELECT * from [Billing].[dbo].[GetManualRecalculationsByFullLic]('{FullLic}')").ToListAsync();
+#endif
+                return result;
+            }
+        }
+        public async Task RemoveRecalculation(Guid Id,int serviceId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+#if DEBUG
+                await db.Database.ExecuteSqlCommandAsync($"exec [Billing].[dbo].[DeleteManualRecalculationByGuid] @guid='{Id}', @serviceId={serviceId}");
+#else
+                await db.Database.ExecuteSqlCommandAsync($"exec [Billing].[dbo].[DeleteManualRecalculationByGuid] @guid='{Id}', @serviceId={serviceId}");
+#endif
             }
         }
         public async Task<List<HelpCalculationsModel>> GetInfoHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)

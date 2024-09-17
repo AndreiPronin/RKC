@@ -8,18 +8,14 @@ using BL.Security;
 using BL.Services;
 using ClosedXML.Excel;
 using DB.DataBase;
-using DB.Model.Court;
-using Microsoft.AspNet.Identity;
 using RKC.Extensions;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
-using static ClosedXML.Excel.XLPredefinedFormat;
 using CourtGeneralInformation = BE.Court.CourtGeneralInformation;
 using CourtWorkRequisites = BE.Court.CourtWorkRequisites;
 using DateTime = System.DateTime;
@@ -45,9 +41,11 @@ namespace RKC.Controllers
         private readonly IPersonalData _personalData;
         private readonly IExcelCourtReport _excelCourtReport;
         private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly IExcel _excel;
         public CourtController(ICourt court, Ilogger logger, IGeneratorDescriptons generatorDescriptons, IDictionary dictionary,
             ICacheApp cacheApp, IFlagsAction flagsAction,
-            ISecurityProvider securityProvider, IExcelCourt excelCourt, IPersonalData personalData , INotificationMail notificationMail, IExcelCourtReport excelCourtReport)
+            ISecurityProvider securityProvider, IExcelCourt excelCourt, IPersonalData personalData , INotificationMail notificationMail, IExcelCourtReport excelCourtReport, 
+            IExcel excel)
         {
             _securityProvider = securityProvider;
             _logger = logger;
@@ -60,6 +58,7 @@ namespace RKC.Controllers
             _personalData = personalData;
             _notificationMail = notificationMail;
             _excelCourtReport = excelCourtReport;
+            _excel = excel;
         }
         [Auth(Roles = RolesEnums.CourtReader + "," + RolesEnums.CourtAdmin + "," + RolesEnums.SuperAdmin + "," + RolesEnums.CourtWriter + "," + RolesEnums.CourtSuperAdmin)]
         public async Task<ActionResult> Index(int Id = 0)
@@ -390,6 +389,61 @@ namespace RKC.Controllers
             else
             {
                 return Redirect("/Home/ResultEmpty?Message=Загрузка отчетов заблокирована дождитесь окончания загрузки (Судебные дела)");
+            }
+        }
+        [Auth(Roles = RolesEnums.CourtAdmin + "," + RolesEnums.CourtSuperAdmin + "," + RolesEnums.SuperAdmin)]
+        public async Task<ActionResult> Report2(CourtTypeReport2 courtTypeReport)
+        {
+            try
+            {
+                var workbook = new XLWorkbook();
+                switch (courtTypeReport)
+                {
+
+                    case CourtTypeReport2.LoadIP:
+                        var wb = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.IPUpload, 22,"U");
+                       
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
+                        }
+                    case CourtTypeReport2.ExecutorSP:
+                        var wb1 = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.UploadExecutionSP, 22,"U");
+
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb1.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
+                        }
+                    case CourtTypeReport2.TaskGPH:
+                        var wb2 = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.TaskForGPH, 22, "U");
+
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb2.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
+                        }
+                    case CourtTypeReport2.NowDZ:
+                        var wb3 = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.CurrentDebt, 22, "J");
+
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            wb3.SaveAs(stream);
+                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
+                        }
+                    default:
+                        throw new Exception("Не указан тип загружаемого отчета! (Судебные дела)");
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationMail.Error(ex, "Ошибка во время загрузки отчета судебных дел (Судебные дела)");
+                return Redirect("/Home/ResultEmpty?Message=" + ex.Message);
             }
         }
     }

@@ -21,4 +21,15 @@ namespace BE.Court
         [Description("Реестр ГП в бухгалтерию")]
         ReestyGPAccountingDepartment = 1,
     }
+    public enum CourtTypeReport2
+    {
+        [Description("Выгрузка ИП")]
+        LoadIP = 1,
+        [Description("Выгрузка направления на исполнения СП")]
+        ExecutorSP = 2,
+        [Description("Задание для ГПХ")]
+        TaskGPH = 3,
+        [Description("Текущая ДЗ")]
+        NowDZ = 4,
+    }
 }
