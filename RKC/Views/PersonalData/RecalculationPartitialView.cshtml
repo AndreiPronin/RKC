@@ -71,7 +71,7 @@
                                 <div id="ShowVolume">
                                     <label style="text-align:end;" class="col-sm-6 col-form-label">Выберите обьем:</label>
                                     <div class="col-sm-6">
-                                        <input type="number" tabIndex="" id="Volume" class="form-control" value="" />
+                                        <input type="text" tabIndex="" id="Volume" class="form-control" value="" />
                                     </div>
                                 </div>
                                 <div class="col-sm-12 text-center" style="margin-top:10px"></div>
@@ -174,7 +174,7 @@
                         recalculationReason: $('#ReasonRecalculation').val(),
                         summingType: $('#ShemaRecalculation').val(),
                         residentsCount: $('#TotalPeople').val(),
-                        volume: $('#Volume').val(),
+                        volume: $('#Volume').val()?.replace('.',','),
                         counterType: $('#TypePuRecalculation').val(),
                     }
                 }),

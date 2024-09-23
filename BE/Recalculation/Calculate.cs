@@ -16,7 +16,7 @@ namespace BE.Recalculation
         public int RecalculationReason { get; set; }
         public int SummingType { get; set; }
         public int ResidentsCount { get; set; }
-        public int Volume { get; set; }
+        public double Volume { get; set; }
         public int CounterType { get; set; }
     }
 }
