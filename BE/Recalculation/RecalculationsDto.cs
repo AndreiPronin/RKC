@@ -25,6 +25,8 @@ namespace BE.Recalculation
         public int id { get; set; }
         public string name { get; set; }
         public double price { get; set; }
+        public double Accured {  get; set; }
+        public double Recalculatied { get; set; }
         public double OverallAccrued { get; set; }
         public double Tariff { get; set; }
         public double Normative { get; set; }

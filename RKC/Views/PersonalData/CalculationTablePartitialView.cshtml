@@ -18,7 +18,7 @@
             <th scope="col" rowspan="10">Количество человек</th>
             <th scope="col" rowspan="10">Начальная дата перерасчета</th>
             <th scope="col" rowspan="10">Конечная дата перерасчета</th>
-            <th scope="col" class="text-center" colspan="5">Суммы по услугам</th>
+            <th scope="col" class="text-center" colspan="6">Суммы по услугам</th>
         </tr>
     </thead>
     <tbody>
@@ -30,7 +30,8 @@
                 <td>@item.recalculationBeginningPeriod.ToString("dd MMMM yyyy")  <input hidden name="date" value="@item.recalculationBeginningPeriod" /></td>
                 <td>@item.recalculationEndingPeriod.ToString("dd MMMM yyyy")  <input hidden name="date" value="@item.recalculationEndingPeriod" /></td>
                 <td>Услуга</td>
-                <td>Начисленно <br />+ перерасчет</td>
+                <td>Начисленно</td>
+                <td>Перерасчет</td>
                 <td>Тариф</td>
                 <td>Норматив</td>
                 <td>Сумма перерасчета</td>
@@ -52,7 +53,10 @@
                         <input hidden value="@price.name.Trim()" />
                     </td>
                     <td>
-                        @price.OverallAccrued
+                        @price.Accured
+                    </td>
+                    <td>
+                        @price.Recalculatied
                     </td>
                     <td>
                         @price.Tariff
@@ -67,6 +71,8 @@
             }
         }
         <tr>
+            <td>
+            </td>
             <td>
             </td>
             <td>
