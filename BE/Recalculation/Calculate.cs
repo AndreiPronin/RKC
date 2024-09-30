@@ -18,5 +18,6 @@ namespace BE.Recalculation
         public int ResidentsCount { get; set; }
         public double Volume { get; set; }
         public int CounterType { get; set; }
+        public string ConcreteCounter { get; set; }
     }
 }

@@ -28,6 +28,7 @@
                                                     isVolumeField="@(item.IsVolumeFieldEnabled == true ? "true" : "false")"
                                                     isRecalculationPeriodField="@(item.IsRecalculationPeriodFieldEnabled == true ? "true" : "false")"
                                                     isCounterField="@(item.IsCounterFieldEnabled == true ? "true" : "false")"
+                                                    isConcreteCounter="@(item.IsConcreteCounterFieldEnabled == true ? "true" : "false")"
                                                     value="@item.RecalculationReason">
                                                 @item.Name @(string.IsNullOrEmpty(item.Description) ? "" : $"({item.Description})" )
                                             </option>
@@ -64,6 +65,24 @@
 
                                             <option value="1">ГВС</option>
                                             <option value="0">ОТП</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                <div id="ShowConcreteCounter">
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Выберите прибор учёта:</label>
+                                    <div class="col-sm-6">
+                                        <select id="TypeConcreteCounter" class="form-control">
+                                            <option value="">Выберите ПУ</option>
+
+                                            <option value="ГВС1">ГВС1</option>
+                                            <option value="ГВС2">ГВС2</option>
+                                            <option value="ГВС3">ГВС3</option>
+                                            <option value="ГВС4">ГВС4</option>
+                                            <option value="ОТП1">ОТП1</option>
+                                            <option value="ОТП2">ОТП2</option>
+                                            <option value="ОТП3">ОТП3</option>
+                                            <option value="ОТП4">ОТП4</option>
                                         </select>
                                     </div>
                                 </div>
@@ -119,6 +138,7 @@
         $("#ShowTotalPeople").addClass('hidden');
         $("#ShowShemaRecalculation").addClass('hidden');
         $("#ShowPeriodPuRecalculation").addClass('hidden');
+        $("#ShowConcreteCounter").addClass('hidden');
     }
     $(document).ready(function (e) {
         hiddenAll();
@@ -132,6 +152,7 @@
             var isVolumeField = $("#ReasonRecalculation").find(':selected').attr('isVolumeField');
             var isCounterField = $("#ReasonRecalculation").find(':selected').attr('isCounterField');
             var isRecalculationPeriodField = $("#ReasonRecalculation").find(':selected').attr('isRecalculationPeriodField');
+            var isConcreteCounterField = $("#ReasonRecalculation").find(':selected').attr('isConcreteCounter');
 
             if (isRecalculationBeginningPeriodFieldEnabled == "true") {
                 $("#ShowStartDateRecalculation").removeClass('hidden');
@@ -157,7 +178,9 @@
             if (isRecalculationPeriodField == "true") {
                 $("#ShowPeriodPuRecalculation").removeClass('hidden');
             }
-
+            if (isConcreteCounterField == "true") {
+                $('#ShowConcreteCounter').removeClass('hidden');
+            }
         })
         $("#Calculate").click(function (e) {
             $("#TableRecalculate").append("<p style='color:red;' class='text-center' >Идет загрузка</p>");
@@ -176,6 +199,7 @@
                         residentsCount: $('#TotalPeople').val(),
                         volume: $('#Volume').val()?.replace('.',','),
                         counterType: $('#TypePuRecalculation').val(),
+                        concreteCounter: $('#TypeConcreteCounter').val(),
                     }
                 }),
                 contentType: 'application/json; charset=utf-8',
