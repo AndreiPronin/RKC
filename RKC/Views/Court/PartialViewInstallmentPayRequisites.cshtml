@@ -1,0 +1,55 @@
+﻿@model IEnumerable<DB.Model.Court.InstallmentPayRequisites>
+@using BE.Roles
+@{ var sumaInstallmentPayRequisites = 0.0; }
+@if (Model.Count() > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Дата п/п</th>
+                <th scope="col">Сумма п/п</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Item in Model)
+            {
+                <tr>
+                    <td>@Item.Date.ToString("dd.MM.yyyy")</td>
+                    <td>@Item.Suma</td>
+                    @{Item.Suma = string.IsNullOrEmpty(Item.Suma) ? "0,0" : Item.Suma.Replace(".", ","); }
+                    @{sumaInstallmentPayRequisites = double.Parse(Item.Suma) + sumaInstallmentPayRequisites; }
+                    @if (User.IsInRole(RolesEnums.CourtAdmin) || User.IsInRole(RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
+                    {
+                        <td><button type="button" name="@Item.Id" class="btn btn-danger removeInstallmentPayRequisites hidden">Удалить</button></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input type="hidden" id="sumaInstallmentPayRequisites" value="@Convert.ToString(sumaInstallmentPayRequisites).Replace(",",".")" />
+}
+<script>
+    $(document).ready(function (e) {
+        $("#CourtInstallmentPlan_AmountPaymentRestructuring").val($("#sumaInstallmentPayRequisites").val());
+        if (!$("#Save").hasClass("hidden")) {
+            $('.removeInstallmentPayRequisites').each(function () {
+                $(this).removeClass("hidden");
+            });
+        }
+        $(".removeInstallmentPayRequisites").click(function () {
+            var Id = $(this).attr("name");
+            $.ajax({
+                url: '/Court/RemoveInstallmentPayRequisites?Id=' + Id,
+                type: 'Post',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    UpdateInstallmentPayRequisites();
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                    UpdateInstallmentPayRequisites
+                }
+            });
+        })
+    });
+</script>

@@ -1,0 +1,218 @@
+﻿<div class="modal fade" id="RecalculationPartitialModal" tabindex="-1" role="dialog" aria-labelledby="RecalculationPartitialModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Перерасчет по лицевому счету @ViewBag.FullLic</h5>
+                <input hidden id="FullLic" value="@ViewBag.FullLic" />
+                <input hidden id="Period" value="@ViewBag.Period" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label style="text-align:end;" class="col-sm-6 col-form-label">Причина перерасчета:</label>
+                                <div class="col-sm-6">
+                                    <select id="ReasonRecalculation" class="form-control">
+                                        <option isResident="false" value="">Выберите причину перерасчета</option>
+                                        @foreach (var item in (List<BE.Recalculation.RecalculationReasons>)ViewBag.Reason)
+                                        {
+                                            <option isRecalculationBeginningPeriodFieldEnabled="@(item.IsRecalculationBeginningPeriodFieldEnabled == true ? "true" : "false")"
+                                                    isRecalculationEndingPeriodFieldEnabled="@(item.IsRecalculationEndingPeriodFieldEnabled == true ? "true" : "false")"
+                                                    isSummingTypeField="@(item.IsSummingTypeFieldEnabled == true ? "true" : "false")"
+                                                    isResidentsCountField="@(item.IsResidentsCountFieldEnabled == true ? "true" : "false")"
+                                                    isVolumeField="@(item.IsVolumeFieldEnabled == true ? "true" : "false")"
+                                                    isRecalculationPeriodField="@(item.IsRecalculationPeriodFieldEnabled == true ? "true" : "false")"
+                                                    isCounterField="@(item.IsCounterFieldEnabled == true ? "true" : "false")"
+                                                    isConcreteCounter="@(item.IsConcreteCounterFieldEnabled == true ? "true" : "false")"
+                                                    value="@item.RecalculationReason">
+                                                @item.Name @(string.IsNullOrEmpty(item.Description) ? "" : $"({item.Description})" )
+                                            </option>
+                                        }
+                                    </select>
+                                </div>
+                                <div id="ShowPeriodPuRecalculation">
+                                    <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Период:</label>
+                                    <div class="col-sm-6">
+                                        <input type="date" tabIndex="" id="RecalculationPeriod" class="form-control" value="" />
+                                    </div>
+                                </div>
+                                <div id="ShowStartDateRecalculation">
+                                    <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Начальная дата перерасчета:</label>
+                                    <div class="col-sm-6">
+                                        <input type="date" tabIndex="" id="StartDateRecalculation" class="form-control" value="" />
+                                    </div>
+                                </div>
+                                <div id="ShowEndDateRecalculation">
+                                    <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Конечная дата перерасчета:</label>
+                                    <div class="col-sm-6">
+                                        <input type="date" tabIndex="" id="EndDateRecalculation" class="form-control" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                <div id="ShowTypePuRecalculation">
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Выберите тип ПУ:</label>
+                                    <div class="col-sm-6">
+                                        <select id="TypePuRecalculation" class="form-control">
+                                            <option value="">Выберите тип</option>
+
+                                            <option value="1">ГВС</option>
+                                            <option value="0">ОТП</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                <div id="ShowConcreteCounter">
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Выберите прибор учёта:</label>
+                                    <div class="col-sm-6">
+                                        <select id="TypeConcreteCounter" class="form-control">
+                                            <option value="">Выберите ПУ</option>
+
+                                            <option value="ГВС1">ГВС1</option>
+                                            <option value="ГВС2">ГВС2</option>
+                                            <option value="ГВС3">ГВС3</option>
+                                            <option value="ГВС4">ГВС4</option>
+                                            <option value="ОТП1">ОТП1</option>
+                                            <option value="ОТП2">ОТП2</option>
+                                            <option value="ОТП3">ОТП3</option>
+                                            <option value="ОТП4">ОТП4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                <div id="ShowVolume">
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Выберите обьем:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" tabIndex="" id="Volume" class="form-control" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                <div id="ShowTotalPeople">
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Количество человек:</label>
+                                    <div class="col-sm-6">
+                                        <input type="number" tabIndex="" id="TotalPeople" class="form-control" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                <div id="ShowShemaRecalculation">
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Схема применения перерасчета:</label>
+                                    <div class="col-sm-6">
+                                        <select id="ShemaRecalculation" class="form-control">
+                                            <option value="0">Снятие</option>
+                                            <option value="1">Доначисление</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="TableRecalculate"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <button style="float:left" type="button" id="closeModalRecalculation" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" id="Calculate" class="btn btn-primary">Рассчитать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function hiddenAll() {
+        $("#ShowStartDateRecalculation").addClass('hidden');
+        $("#ShowEndDateRecalculation").addClass('hidden');
+        $("#ShowTypePuRecalculation").addClass('hidden');
+        $("#ShowVolume").addClass('hidden');
+        $("#ShowTotalPeople").addClass('hidden');
+        $("#ShowShemaRecalculation").addClass('hidden');
+        $("#ShowPeriodPuRecalculation").addClass('hidden');
+        $("#ShowConcreteCounter").addClass('hidden');
+    }
+    $(document).ready(function (e) {
+        hiddenAll();
+        //$(".loader").addClass("hidden");
+        $("#ReasonRecalculation").on('change', function (e) {
+            hiddenAll();
+            var isRecalculationEndingPeriodFieldEnabled = $("#ReasonRecalculation").find(':selected').attr('isRecalculationEndingPeriodFieldEnabled');
+            var isRecalculationBeginningPeriodFieldEnabled = $("#ReasonRecalculation").find(':selected').attr('isRecalculationBeginningPeriodFieldEnabled');
+            var isSummingTypeField = $("#ReasonRecalculation").find(':selected').attr('isSummingTypeField');
+            var isResidentsCountField = $("#ReasonRecalculation").find(':selected').attr('isResidentsCountField');
+            var isVolumeField = $("#ReasonRecalculation").find(':selected').attr('isVolumeField');
+            var isCounterField = $("#ReasonRecalculation").find(':selected').attr('isCounterField');
+            var isRecalculationPeriodField = $("#ReasonRecalculation").find(':selected').attr('isRecalculationPeriodField');
+            var isConcreteCounterField = $("#ReasonRecalculation").find(':selected').attr('isConcreteCounter');
+
+            if (isRecalculationBeginningPeriodFieldEnabled == "true") {
+                $("#ShowStartDateRecalculation").removeClass('hidden');
+            }
+            if (isRecalculationEndingPeriodFieldEnabled == "true") {
+                $("#ShowEndDateRecalculation").removeClass('hidden');
+            }
+            if (isRecalculationEndingPeriodFieldEnabled == "true") {
+                $("#ShowStartDateRecalculation").removeClass('hidden');
+            }
+            if (isSummingTypeField == "true") {
+                $("#ShowShemaRecalculation").removeClass('hidden');
+            }
+            if (isResidentsCountField == "true") {
+                $("#ShowTotalPeople").removeClass('hidden');
+            }
+            if (isVolumeField == "true") {
+                $("#ShowVolume").removeClass('hidden');
+            }
+            if (isCounterField == "true") {
+                $("#ShowTypePuRecalculation").removeClass('hidden');
+            }
+            if (isRecalculationPeriodField == "true") {
+                $("#ShowPeriodPuRecalculation").removeClass('hidden');
+            }
+            if (isConcreteCounterField == "true") {
+                $('#ShowConcreteCounter').removeClass('hidden');
+            }
+        })
+        $("#Calculate").click(function (e) {
+            $("#TableRecalculate").append("<p style='color:red;' class='text-center' >Идет загрузка</p>");
+            $.ajax({
+                url: '/PersonalData/CalculationTablePartitialView',
+                type: 'POST',
+                data: JSON.stringify({
+                    calculate: {//missing brackets
+                        fullLic: $('#FullLic').val(),
+                        period: $('#Period').val(),
+                        recalculationPeriod: $('#RecalculationPeriod').val(),
+                        recalculationBeginningPeriod: $('#StartDateRecalculation').val(),
+                        recalculationEndingPeriod: $('#EndDateRecalculation').val(),
+                        recalculationReason: $('#ReasonRecalculation').val(),
+                        summingType: $('#ShemaRecalculation').val(),
+                        residentsCount: $('#TotalPeople').val(),
+                        volume: $('#Volume').val()?.replace('.',','),
+                        counterType: $('#TypePuRecalculation').val(),
+                        concreteCounter: $('#TypeConcreteCounter').val(),
+                    }
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#TableRecalculate").empty();
+                    $("#TableRecalculate").append(data);
+                },
+                error: function (data) {
+                    $("#TableRecalculate").empty();
+                    alert(data.responseText);
+                }
+            });
+        });
+    });
+</script>
+

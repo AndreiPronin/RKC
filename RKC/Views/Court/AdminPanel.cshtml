@@ -1,0 +1,169 @@
+﻿
+@{
+    ViewBag.Title = "AdminPanel";
+}
+<input type="button" class="btn btn-primary" onclick="history.back();" value="Назад" />
+<h1>Панель Администратора</h1>
+<ul class="nav nav-tabs nav-tabs-Admins">
+    <li class="nav-item active" id="reportButton">
+        <a class="nav-link " data-toggle="tab" href="#Dictionarys">Справочники</a>
+    </li>
+    <li class="nav-item" id="roleButton">
+        <a class="nav-link" data-toggle="tab" href="#DownLoad">Загрузка/Обновление дел</a>
+    </li>
+    <li class="nav-item" id="roleButton">
+        <a class="nav-link" data-toggle="tab" href="#Reports">Отчеты</a>
+    </li>
+</ul>
+<div class="tab-content tabAdmins">
+    <div class="tab-pane fade active in" id="Dictionarys">
+        <div class="col-md-6">
+            <label class="col-sm-12 col-form-label">Выберите справочник:</label>
+            <div class="col-sm-12">
+                <select id="Dictionary" class="form-control">
+                    <option value="" selected disabled hidden>Справочник</option>
+                    @foreach (var Item in ViewBag.Dic)
+                    {
+                        <option value="@Item.Id">@Item.Name</option>
+                    }
+                </select>
+            </div>
+            @*<label class="col-sm-12 col-form-label">Добавление справочника:</label>
+                <div class="col-sm-12">
+                    <div class="input-group">
+                        <input class="form-control" id="NewDic" value="" placeholder="Введите значение..." />
+                        <span class="input-group-btn">
+                            <button id="AddNewDic" class="btn btn-success">Добавить</button>
+                        </span>
+                    </div>
+                </div>*@
+        </div>
+        <div class="col-md-6">
+            <label class="col-sm-12 col-form-label">Добавление к выбранному справочнику:</label>
+            <div class="col-sm-12">
+                <div class="input-group">
+                    <input class="form-control" id="DicValue" value="" placeholder="Введите значение..." />
+                    <span class="input-group-btn">
+                        <button id="AddDicValue" class="btn btn-success">Добавить</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label class="col-sm-12 col-form-label">Значения справочника:</label>
+            <div class="col-sm-8">
+                <div id="resultSearchDic"></div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="DownLoad">
+        <div class="col-md-12">
+            @using (Html.BeginForm("UploadFileCourtCase", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                {
+                    <div style="margin-top:30px;" class="row">
+                        <div class="col-md-4">
+                            <select name="TypeLoad" id="TypeLoad" class="form-control">
+                                <option value="1">Открытие судебного дела</option>
+                                <option value="2">Изменение ГП</option>
+                                <option value="3">Изменение перс данных</option>
+                                <option value="4">Изменение СП и ИП</option>
+                                <option value="5">Изменение собственника</option>
+                                <option value="6">Изменение примечания</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" id="UploadFilePU" class="btn btn-success" value="Загрузить" />
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="tab-pane fade" id="Reports">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Report", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                {
+                    <div style="margin-top:30px;" class="row">
+                        <div class="col-md-4">
+                            <select name="courtTypeReport" id="courtTypeReport" class="form-control">
+                                <option value="@((int)BE.Court.CourtTypeReport.ReestyGPAccountingDepartment)">@BE.Court.CourtTypeReport.ReestyGPAccountingDepartment.GetDescription()</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="date" name="date" id="date" class="form-control" />
+                            <div>Последняя выгрузка @ViewBag.ReestyGPAccountingDepartment.DateTime </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" id="" class="btn btn-success" value="Скачать" />
+                        </div>
+                    </div>
+                }
+            }
+            @using (Html.BeginForm("Report2", "Court", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                if (User.IsInRole(BE.Roles.RolesEnums.CourtAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                {
+                    <div style="margin-top:30px;" class="row">
+                        <div class="col-md-4">
+                            <select name="courtTypeReport" id="courtTypeReport" class="form-control">
+                                <option value="@((int)BE.Court.CourtTypeReport2.LoadIP)">@BE.Court.CourtTypeReport2.LoadIP.GetDescription()</option>
+                                <option value="@((int)BE.Court.CourtTypeReport2.ExecutorSP)">@BE.Court.CourtTypeReport2.ExecutorSP.GetDescription()</option>
+                                <option value="@((int)BE.Court.CourtTypeReport2.TaskGPH)">@BE.Court.CourtTypeReport2.TaskGPH.GetDescription()</option>
+                                <option value="@((int)BE.Court.CourtTypeReport2.NowDZ)">@BE.Court.CourtTypeReport2.NowDZ.GetDescription()</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" id="" class="btn btn-success" value="Скачать" />
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#Dictionary").change(function (e) {
+            console.log($("#Dictionary").val());
+            $.ajax({
+                url: "/Court/GetPartialDictionaryId?Id=" + $("#Dictionary").val(),
+                success(data) {
+                    $("#resultSearchDic").empty();
+                    $("#resultSearchDic").append(data);
+                }
+            })
+        })
+        $("#AddDicValue").click(function (e) {
+            $.ajax({
+                url: "/Court/AddDicValue?Id=" + $("#Dictionary").val() + "&Value=" + $("#DicValue").val(),
+                success(data) {
+                    $.ajax({
+                        url: "/Court/GetPartialDictionaryId?Id=" + $("#Dictionary").val(),
+                        success(data) {
+                            $("#resultSearchDic").empty();
+                            $("#resultSearchDic").append(data);
+                        }
+                    })
+                }
+            })
+        })
+        $("#AddNewDic").click(function (e) {
+            $.ajax({
+                url: "/Court/AddNewDic?&Value=" + $("#NewDic").val(),
+                success(data) {
+                    alert("Успешно добавлено! Страница перезагрузится автоматически!");
+                    window.location.reload();
+                }
+            })
+        })
+    })
+</script>

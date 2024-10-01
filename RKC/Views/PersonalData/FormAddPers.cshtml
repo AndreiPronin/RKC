@@ -1,0 +1,217 @@
+﻿@{ var Index = 0; }
+<div class="modal fade" id="AddPersData" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input id="FULL_LIC_" value="@ViewBag.FULL_LIC" hidden="hidden" />
+                <h5 class="modal-title" id="exampleModalLabel">Добавление перс данных по лицевому счету @ViewBag.FULL_LIC </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="col-md-12" style="margin-top:15px" >
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Фамилия:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="LastName_"  tabIndex="@Index@{Index++;}" class="form-control " value="" />
+                        </div>
+                        <label class="col-sm-4 col-form-label">Имя:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="FirstName_"  tabIndex="@Index@{Index++;}" class="form-control " value="" />
+                            @*<input type="date"  id="INSTALLATIONDATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.MiddleName)" />*@
+                        </div>
+                        <label class="col-sm-4 col-form-label">Отчество:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="MiddleName_"  tabIndex="@Index@{Index++;}" class="form-control " value="" />
+                        </div>
+                        <label class="col-sm-4 col-form-label">Дата рождения:</label>
+                        <div class="col-sm-8">
+                            <input type="date" id="DateOfBirth_"  tabIndex="@Index@{Index++;}" class="form-control " value="" />
+                        </div>
+                        <label class="col-sm-4 col-form-label">Место рождения:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="PlaceOfBirth_"  tabIndex="@Index@{Index++;}" class="form-control " value="" />
+                        </div>
+                        <label class="col-sm-4 col-form-label">СНИЛС:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="SnilsNumber_"  tabIndex="@Index@{Index++;}" class="form-control " value="" />
+                        </div>
+                        <label class="col-sm-4 col-form-label">ИНН:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="Inn_"  tabIndex="@Index@{Index++;}" class="form-control " value="" />
+                        </div>
+                        <div class="col-sm-12 text-center">
+                            <p>Паспортные данные</p>
+                        </div>
+                        <label class="col-sm-4 col-form-label">Cерия:</label>
+                        <div class="col-sm-8">
+                            <input id="PassportSerial_"  tabIndex="@Index@{Index++;}" class="form-control PassportSerial" value="" />
+                        </div>
+                        <label class="col-sm-4 col-form-label">Номер:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="PassportNumber_"  tabIndex="@Index@{Index++;}" class="form-control PassportNumber" value="" />
+                        </div>
+                        <label class="col-sm-4 col-form-label">Дата выдачи:</label>
+                        <div class="col-sm-8">
+                            <input type="date" id="PassportDate_"  tabIndex="@Index@{Index++;}" class="form-control " value="" />
+                        </div>
+                        <label class="col-sm-4 col-form-label">Кем выдан:</label>
+                        <div class="col-sm-8">
+                            <textarea id="PassportIssued_"  tabIndex="@Index@{Index++;}" class="form-control PassportIssued"></textarea>
+                        </div>
+
+                    </div>
+                    <hr />
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Телефон1:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="Tel1_" tabIndex="@Index@{Index++;}" class="form-control" value="" />
+                            <textarea id="Comment1_" class="form-control"></textarea>
+                        </div>
+                        <label class="col-sm-4 col-form-label">Телефон2:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="Tel2_" tabIndex="@Index@{Index++;}" class="form-control" value="" />
+                            @*<textarea id="Comment2_" class="form-control"></textarea>*@
+                        </div>
+                        <label class="col-sm-4 col-form-label">Email:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="Email_" tabIndex="@Index@{Index++;}" class="form-control" value="" />
+                            @*<textarea id="Comment2_" class="form-control"></textarea>*@
+                        </div>
+                        <label class="col-sm-4 col-form-label">Отправка эл/квит.:</label>
+                        <div class="col-sm-8">
+                            <select id="SendingElectronicReceipt_" class="form-control">
+                                <option value="Нет">Нет</option>
+                                <option value="Да">Да</option>
+                            </select>
+                            @*<textarea id="Comment2_" class="form-control"></textarea>*@
+                        </div>
+                        <label class="col-sm-4 col-form-label">Вид собственности:</label>
+                        <div class="col-sm-8">
+                            <select id="RoomType_" class="form-control">
+                                <option disabled>Выберите вид</option>
+                                @if (ViewBag.RoomType != null)
+                                {
+                                    if (ViewBag.RoomType == "Собствен.")
+                                    {
+                                        <option value="Собствен">Собствен.</option>
+                                        <option value="Зарег.">Зарег.</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Наниматель">Наниматель</option>
+                                        <option value="Зарег.">Зарег.</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="Собствен">Собствен.</option>
+                                    <option value="Зарег.">Зарег.</option>
+                                    <option value="Наниматель">Наниматель</option>
+                                }
+                            </select>
+                            @*<textarea id="Comment2_" class="form-control"></textarea>*@
+                        </div>
+
+                    </div>
+                        @*<label class="col-sm-4 col-form-label">Площадь:</label>
+            <div class="col-sm-8">
+                <input type="text" id="Square_" class="form-control" value="" />
+            </div>
+            <label class="col-sm-4 col-form-label">Количество человек:</label>
+            <div class="col-sm-8">
+                <input type="text" id="NumberOfPersons_" class="form-control" value="" />
+            </div>*@
+                    </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" id="Save_" class="btn btn-success">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function (e) {
+        $(document).on('keypress', 'input,select', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                var $next = $('[tabIndex=' + (+this.tabIndex + 1) + ']');
+                console.log($next.length);
+                if (!$next.length) {
+                    $next = $('[tabIndex=1]');
+                }
+                $next.focus().click();
+            }
+        });
+        $("#Tel1_").mask("+79999999999");
+        $("#Tel2_").mask("+79999999999");
+        $("#SnilsNumber_").mask("999-999-999-99");
+        $("#PassportSerial_").mask("9999");
+        $("#PassportNumber_").mask("999999");
+        $("#Save_").click(function (e) {
+            if ($('#LastName_').val().length >= 25) {
+                alert("Превышение количества символов. Длина фамилии не должна превышать 25 символов.");
+                return false;
+            }
+            if ($('#MiddleName_').val().length >= 31) {
+                alert("Превышение количества символов. Длина Отчества не должна превышать 30 символов.");
+                return false;
+            }
+            if ($('#FirstName_').val().length >= 31) {
+                alert("Превышение количества символов. Длина Имени не должна превышать 30 символов.");
+                return false;
+            }
+            $("#Save_").addClass("hidden");
+            $.ajax({
+                url: '/PersonalData/AddPersData',
+                type: 'POST',
+                data: JSON.stringify({
+                    persDataModel: {//missing brackets
+                        Lic: $('#FULL_LIC_').val(),
+                        LastName: $('#LastName_').val(),
+                        FirstName: $('#FirstName_').val(),
+                        MiddleName: $('#MiddleName_').val(),
+                        DateOfBirth: $('#DateOfBirth_').val(),
+                        PlaceOfBirth: $('#PlaceOfBirth_').val(),
+                        PassportSerial: $('#PassportSerial_').val(),
+                        PassportNumber: $('#PassportNumber_').val(),
+                        PassportIssued: $('#PassportIssued_').val(),
+                        PassportDate: $('#PassportDate_').val(),
+                        Tel1: $('#Tel1_').val(),
+                        Comment1: $('#Comment1_').val(),
+                        Tel2: $('#Tel2_').val(),
+                        Comment2: $('#Comment2_').val(),
+                        SendingElectronicReceipt: $('#SendingElectronicReceipt_').val(),
+                        Email: $('#Email_').val(),
+                        Comment: $('#Comment_').val(),
+                        UserName: $('#UserName_').val(),
+                        DateAdd: $('#DateAdd_').val(),
+                        RoomType: $('#RoomType_').val(),
+                        IsDelete: $('#IsDelete_').val(),
+                        SnilsNumber: $('#SnilsNumber_').val(),
+                        Inn: $('#Inn_').val(),
+                        NumberOfPersons: $('#NumberOfPersons_').val(),
+                        Square: $('#Square_').val(),
+                        StateLic: $('#StateLic_').val(),
+                    }
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    // alert(data + " Страница сейчас перезагрузится!");
+                        window.location.reload();
+                },
+                error: function () {
+                    alert("Что то пошло не так. Обратитесь к администратору");
+                    $("#Save_").removeClass("hidden");
+                }
+            });
+
+        })
+        });
+</script>
+
+

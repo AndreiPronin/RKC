@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DB.Model.AddressMKD>
+@{int i = 1;
+    string Building = "";
+    }
+<p>@ViewBag.Count</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Код дома</th>
+            <th scope="col">Улица</th>
+            <th scope="col">Дом</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Items in Model)
+        {
+        <tr>
+            <th scope="row">@i</th>
+            <td>@Items.AddressId</td>
+            <td>
+                @if (Items.Street?.Length > 0)
+                { 
+                    <span>@Items.StreetType @Items.Street</span>;
+                } 
+            </td>
+            <td>
+                @if (Items.House?.Length > 0)
+                { 
+                    Building = string.IsNullOrEmpty(Items.Building) ? "" : $"{Items.Building}";
+                    <span>дом @Items.House @Building </span>;
+                } 
+            </td>
+            <td>
+                @if (Items.Closed == false)
+                {
+                    <a href="/MKD/MainInformation?Id=@Items.AddressId" target="_blank" class="btn btn-primary">Показать подробную информацию</a>
+                }
+                else
+                {
+                    <a href="/MKD/MainInformation?Id=@Items.AddressId" target="_blank" class="btn btn-danger" data-tooltip-danger="Дом закрыт">Показать подробную информацию</a>
+                }
+            </td>
+        </tr>
+        i++;
+        }
+    </tbody>
+</table>
+
+
+

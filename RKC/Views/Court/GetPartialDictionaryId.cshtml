@@ -1,0 +1,20 @@
+﻿@model IEnumerable<DB.Model.Court.DictiomaryModel.CourtValueDictionary>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Название справочника</th>
+            <th scope="col">Значение</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Item in Model)
+        {
+           <tr>
+               <td>@Item.CourtNameDictionary.Name</td>
+               <td>@Item.Name</td>
+           </tr>
+        }
+        
+    </tbody>
+</table>
+

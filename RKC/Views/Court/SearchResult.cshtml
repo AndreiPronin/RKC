@@ -1,0 +1,79 @@
+﻿@model IEnumerable<DB.Model.Court.CourtGeneralInformation>
+@using BE.Roles;
+@{int i = 1;}
+<p>@ViewBag.Count</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Карточка</th>
+            <th scope="col">Номер лицевого счета</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">ФИО</th>
+            <th scope="col">Номер СП</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Items in Model)
+        {
+            <tr>
+                <th scope="row">@Items.Id</th>
+                <td>@Items.Lic</td>
+                <td>
+                    @{if (Items.Street?.Length > 0)
+                        { <span>улица @Items.Street</span>;
+                        } }
+                    @{if (Items.Home?.Length > 0)
+                        { <span>дом @Items.Home</span>;
+                        } }
+                    @{if (Items.Flat?.Length > 0)
+                        { <span>кв. @Items.Flat</span>;
+                        } }
+                </td>
+                <td>@Items.LastName @Items.FirstName @Items.Surname</td>
+                    @if (Items.CourtWork!= null)
+                    {
+                        <td>@Items.CourtWork.NumberSP</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        <a href="/Court/Index?Id=@Items.Id" target="_blank" class="btn btn-primary">Показать подробную информацию</a>
+                        @if (User.IsInRole(RolesEnums.SuperAdmin) || User.IsInRole(BE.Roles.RolesEnums.CourtSuperAdmin))
+                        {
+                        <a name="@Items.Id" id="@Items.CourtExecutionFSSP.NumberIP" class="btn btn-danger DeleteCoutr">Удалить</a>
+                    }
+                </td>
+            </tr>
+            i++;
+            
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function (e) {
+        $(".DeleteCoutr").click(function (e) {
+            let numberCourt = $(this).attr('id') == undefined ? '' : $(this).attr('id');
+            var Id = $(this).attr('name');
+            $.confirm({
+                title: 'Удаление судебного дела',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="form-group">' +
+                    '<label>Вы точно хотите удалить судебное дело' + numberCourt + '?</label>' +
+                    '</form>',
+                buttons: {
+                    "Удалить": function () {
+                       
+                        window.location.href = `/Court/DeleteCourt?Id=${Id}`;
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+
+        });
+    });
+</script>

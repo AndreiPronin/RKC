@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1D874BBC-255B-4241-B3A1-B653BF8F5FEB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BL</RootNamespace>
+    <AssemblyName>BL</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiServices\Counters\ApiCounters.cs" />
+    <Compile Include="ApiServices\Counters\Repository.cs" />
+    <Compile Include="ApiServices\PersonalData\ApiPersonalData.cs" />
+    <Compile Include="ApiT+\EBD.cs" />
+    <Compile Include="Excel\ExcelCourt.cs" />
+    <Compile Include="Excel\ExcelCourtReport.cs" />
+    <Compile Include="Excel\SqlQuery\Report.cs" />
+    <Compile Include="Extention\ArrayExtention.cs" />
+    <Compile Include="Extention\BaseExcelExtenstion.cs" />
+    <Compile Include="Excel\ExaminationToExcel.cs" />
+    <Compile Include="Excel\ExcelDpu.cs" />
+    <Compile Include="Excel\ExcelHelpСalculation.cs" />
+    <Compile Include="Excel\ExcelReport.cs" />
+    <Compile Include="Excel\ExcelTemplate.cs" />
+    <Compile Include="Excel\NotificationExcel.cs" />
+    <Compile Include="Extention\BooleanExtenstion.cs" />
+    <Compile Include="Extention\ConvertToModelHelpCalculations.cs" />
+    <Compile Include="Extention\CounterExtensions.cs" />
+    <Compile Include="Extention\DateTimes.cs" />
+    <Compile Include="Extention\GetTypePu.cs" />
+    <Compile Include="Extention\StringExtenstions.cs" />
+    <Compile Include="Extention\StringWriterExtension.cs" />
+    <Compile Include="Helper\ConvertJson.cs" />
+    <Compile Include="Helper\Excels.cs" />
+    <Compile Include="Helper\GetConfigurationManager.cs" />
+    <Compile Include="Helper\ObjectCopier.cs" />
+    <Compile Include="Helper\QueueSynchronizationContext .cs" />
+    <Compile Include="http\Resposne.cs" />
+    <Compile Include="Helper\ThrowHelper.cs" />
+    <Compile Include="http\Reuqest.cs" />
+    <Compile Include="Jobs\CacheUpdate.cs" />
+    <Compile Include="Jobs\Scheduler.cs" />
+    <Compile Include="Jobs\EmailSender.cs" />
+    <Compile Include="Jobs\JobManager.cs" />
+    <Compile Include="Jobs\JobSendReceipt.cs" />
+    <Compile Include="Jobs\ClearIntegration.cs" />
+    <Compile Include="Loggers\ShedulerLogger.cs" />
+    <Compile Include="MapperProfile\CourtProfile.cs" />
+    <Compile Include="MapperProfile\MkdProfile.cs" />
+    <Compile Include="MapperProfile\RecalculationsProfile.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="Notification\NotificationMail.cs" />
+    <Compile Include="Rules\SaveModelIPURules.cs" />
+    <Compile Include="Security\TokenCreator.cs" />
+    <Compile Include="Services\ApiReportService.cs" />
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\Court.cs" />
+    <Compile Include="Services\Dictionarys.cs" />
+    <Compile Include="Services\Dpu.cs" />
+    <Compile Include="Services\FileServices\CounterFileServices.cs" />
+    <Compile Include="Services\Integrations.cs" />
+    <Compile Include="Security\SecurityProvider.cs" />
+    <Compile Include="Services\Counter.cs" />
+    <Compile Include="Excel\Excel.cs" />
+    <Compile Include="Helper\ConvertToModel.cs" />
+    <Compile Include="Helper\FlagsAction.cs" />
+    <Compile Include="Helper\GeneratorDescriptons.cs" />
+    <Compile Include="Extention\GetDescriptionEnum.cs" />
+    <Compile Include="Helper\Logger.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MkdInformationService.cs" />
+    <Compile Include="Services\PersonalData.cs" />
+    <Compile Include="Services\ApiRecalculationService.cs" />
+    <Compile Include="Services\Report.cs" />
+    <Compile Include="Services\SocialHiringService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppCache\AppCache.csproj">
+      <Project>{6b5112cb-22e1-4e3f-9a2f-13c92900c31e}</Project>
+      <Name>AppCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BE\BE.csproj">
+      <Project>{0DFE155F-F779-4968-A622-52ACE6ED349F}</Project>
+      <Name>BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB\DB.csproj">
+      <Project>{cbb7243a-294b-4aac-ab39-32b3a27a7390}</Project>
+      <Name>DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordGenerator\WordGenerator.csproj">
+      <Project>{53AED92A-CB55-492C-B155-1A8F15EEB01A}</Project>
+      <Name>WordGenerator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tamplate\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper">
+      <Version>10.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="ClosedXML">
+      <Version>0.95.4</Version>
+    </PackageReference>
+    <PackageReference Include="EntityFramework">
+      <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.Mvc">
+      <Version>5.2.7</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http">
+      <Version>3.1.32</Version>
+    </PackageReference>
+    <PackageReference Include="NaturalSort">
+      <Version>0.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Ninject">
+      <Version>3.3.4</Version>
+    </PackageReference>
+    <PackageReference Include="Ninject.Extensions.Factory">
+      <Version>3.3.3</Version>
+    </PackageReference>
+    <PackageReference Include="Quartz">
+      <Version>2.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Diagnostics.DiagnosticSource">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt">
+      <Version>5.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Net.Http">
+      <Version>4.3.4</Version>
+    </PackageReference>
+    <PackageReference Include="System.Net.Http.Json">
+      <Version>6.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>6.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

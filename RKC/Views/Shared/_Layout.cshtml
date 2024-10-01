@@ -1,0 +1,325 @@
+﻿<!DOCTYPE html>
+@using BE.Roles;
+@{ 
+    var Style = "";
+}
+<style>
+    #gir {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background-image: url('http://lh5.googleusercontent.com/-obNunPiVVd4/VJOuk2f29_I/AAAAAAAAE3Y/SOoFIrFTTkk/s800/gerljanda1.png');
+        height: 36px;
+        width: 100%;
+        overflow: hidden;
+        z-index: 99
+    }
+
+    #nums_1 {
+        padding: 100px
+    }
+
+    .gir_1 {
+        background-position: 0 0
+    }
+
+    .gir_2 {
+        background-position: 0 -36px
+    }
+
+    .gir_3 {
+        background-position: 0 -72px
+    } 
+</style>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title -РБР</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <scrip type="text/JavaScript" src="https://MomentJS.com/downloads/moment.js" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+    @if (!Request.Url.AbsoluteUri.Contains(":80")) {
+        Style = "red!important";
+    }
+</head>
+
+<body>
+    @if (User.Identity.IsAuthenticated && !Request.Url.AbsoluteUri.Contains("Court/Index"))
+    {
+        if ((DateTime.Now.Month == 12 && DateTime.Now.Day > 21) || (DateTime.Now.Month == 1 && DateTime.Now.Day < 14))
+        {
+            <div id="gir" class="gir_3">
+                <div id="nums_1">1</div>
+            </div>
+        }
+        
+    }
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: @Style">
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <div class="TimeAndDate" style="background-color: @Style">
+                    <div id="Date"></div>
+                    <div style="display: inline-flex;">
+                        <div id="hours">:</div>
+                        <div id="point">:</div>
+                        <div id="min">:</div>
+                        <div id="point">:</div>
+                        <div id="sec">:</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img style="float: left; width: auto; height: 20px; margin-top: 15px;" src="~/Content/img/main/БРБ_лого.png" />
+                @Html.ActionLink("ООО Расчетно-биллинговые решения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+                    @*<li>@Html.ActionLink("Поиск", "Index", "Counter")</li>*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+
+
+
+
+        <div id="wrapper2" class="toggled-2">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper2">
+                <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+                    @if (User.IsInRole(RolesEnums.MkdReader) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <li id="Mkd" class="active">
+                            <a href="/MKD"><i class="glyphicon glyphicon-home icons" aria-hidden="true"></i> <i class="Padding">Информация по МКД</i></a>
+                        </li>
+                    }
+                    @if (User.IsInRole(@RolesEnums.CounterReader) || User.IsInRole(@RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <li id="Billing" class="active">
+                            <a href="/Counter"><i class="glyphicon glyphicon-search icons" aria-hidden="true"></i> <i class="Padding">Биллинг Т+</i></a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole(@RolesEnums.DPUReader) || User.IsInRole(@RolesEnums.DPUEdit) || User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <li id="DPU">
+                            <a href="/DPU"><i class="glyphicon glyphicon-ruble icons" aria-hidden="true"></i> <i class="Padding">ДПУ</i></a>
+                        </li>
+                    }
+                    @*<ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                            <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример1</a></li>
+                            <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Пример2</a></li>
+                        </ul>*@
+
+                    @if (User.IsInRole(RolesEnums.Admin))
+                    {
+                        <li id="Report">
+                            <a href="/Report"><i class="glyphicon glyphicon-list-alt icons" aria-hidden="true"></i> <i class="Padding">Отчеты</i></a>
+                        </li>
+                    }
+                    @if (User.IsInRole(RolesEnums.Admin) || User.IsInRole(RolesEnums.CourtReader) || User.IsInRole(RolesEnums.CounterWriter) || User.IsInRole(RolesEnums.CourtAdmin) || User.IsInRole(RolesEnums.CourtSuperAdmin))
+                    {
+                        <li id="Court">
+                            <a href="/Court/Serach"><i class="glyphicon glyphicon-queen icons" aria-hidden="true"></i> <i class="Padding">Судебные дела</i></a>
+                        </li>
+                    }
+                    @if (User.IsInRole(RolesEnums.SuperAdmin))
+                    {
+                        <li id="Error" class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="glyphicon glyphicon-wrench icons" aria-hidden="true"></i> <i class="Padding">Ошибки</i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" style="color: #043e6e;" href="/Counter/ErrorIntegration">Интеграция</a>
+                                <a class="dropdown-item" style="color: #043e6e;" href="/PersonalData/NotSendReceipt">Отправка почты</a>
+                            </div>
+                        </li>
+                    }
+                    <hr />
+                    <li style="bottom: 0px; position: absolute; bottom: 0px; ">
+                        <p style="color:white; margin-left:35px;">Ссылки на другие системы</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+            <!-- Page Content -->
+            @*<div id="page-content-wrapper">
+                    <div class="container-fluid xyz">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1>Simple Admin Sidebar With Bootstrap by <a href="http://http://codepen.io/hughbalboa/">hughbalboa</a></h1>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident laudantium nobis cum dignissimos ex inventore, velit blanditiis. Quod laborum soluta quidem culpa officia eligendi, quam, recusandae iste aliquid amet odit! </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    }
+    <!-- /#page-content-wrapper -->
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Notifications")))
+    {
+        <div id="NotificationResultTimer"></div>
+    }
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+</body>
+<script>
+    ///Новый год
+    function gir() {
+        try {
+            nums = document.getElementById('nums_1').innerHTML
+            if (nums == 1) { document.getElementById('gir').className = 'gir_1'; document.getElementById('nums_1').innerHTML = '2' }
+            if (nums == 2) { document.getElementById('gir').className = 'gir_2'; document.getElementById('nums_1').innerHTML = '3' }
+            if (nums == 3) { document.getElementById('gir').className = 'gir_3'; document.getElementById('nums_1').innerHTML = '1' }
+        } catch { }
+    }
+    setInterval(function () { gir() }, 500)
+    ///Новый год
+    function initMenu() {
+        $('#menu ul').hide();
+        $('#menu ul').children('.current').parent().show();
+        $('#menu li a').click(
+            function () {
+                var checkElement = $(this).next();
+                if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                    return false;
+                }
+                if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                    $('#menu ul:visible').slideUp('normal');
+                    checkElement.slideDown('normal');
+                    return false;
+                }
+            }
+        );
+    }
+    $(document).ready(function () {
+        let HREF = window.location.href;
+        $("#menu li.active").removeClass("active");
+        if (HREF.includes("DPU")) {
+            $("#DPU").addClass("active");
+        } else if (HREF.includes("Counter") || HREF.includes("PersonalData") ) {
+            $("#Billing").addClass("active");
+        } else if (HREF.includes("Report")) {
+            $("#Report").addClass("active");
+        } else if (HREF.includes("Court")) {
+            $("#Court").addClass("active");
+        }
+        else if (HREF.includes("MKD")) {
+            $("#Mkd").addClass("active");
+        }
+        console.log(HREF);
+        initMenu();
+    });
+    let notifi = @User.IsInRole(RolesEnums.Notifications).ToString().ToLower();
+    if (notifi) {
+        setInterval(function () {
+            $.ajax({
+                url: '/Admin/GetNotification',
+                success: function (data) {
+                    $("#NotificationResultTimer").empty();
+                    $("#NotificationResultTimer").append(data);
+                },
+                error: function () {
+                    i = "Что то пошло не так. Обратитесь к администратору!";
+                }
+            });
+        }, 30000);
+    }
+    if (notifi) {
+        $.ajax({
+            url: '/Admin/GetNotification',
+            success: function (data) {
+                $("#NotificationResultTimer").empty();
+                $("#NotificationResultTimer").append(data);
+            },
+            error: function () {
+                i = "Что то пошло не так. Обратитесь к администратору!";
+            }
+        });
+    }
+    function MenuBottomonOn() {
+        $("#MenuBottom").removeClass('hidden');
+        $("#ButtonMenuBottom").addClass('hidden');
+    }
+    function MenuBottomonOff() {
+        $("#MenuBottom").addClass('hidden');
+        $("#ButtonMenuBottom").removeClass('hidden');
+    }
+    $(document).ready(function (e) {
+
+        // Создаем две переменные с названиями месяцев и названиями дней.
+        var monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+        var dayNames = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+
+        // Создаем объект newDate()
+        var newDate = new Date();
+        // "Достаем" текущую дату из объекта Date
+        newDate.setDate(newDate.getDate());
+        // Получаем день недели, день, месяц и год
+        $('#Date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
+
+        setInterval(function () {
+            // Создаем объект newDate() и показывает секунды
+            var seconds = new Date().getSeconds();
+            // Добавляем ноль в начало цифры, которые до 10
+            $("#sec").html((seconds < 10 ? "0" : "") + seconds);
+        }, 1000);
+
+        setInterval(function () {
+            // Создаем объект newDate() и показывает минуты
+            var minutes = new Date().getMinutes();
+            // Добавляем ноль в начало цифры, которые до 10
+            $("#min").html((minutes < 10 ? "0" : "") + minutes);
+        }, 1000);
+
+        setInterval(function () {
+            // Создаем объект newDate() и показывает часы
+            var hours = new Date().getHours();
+            // Добавляем ноль в начало цифры, которые до 10
+            $("#hours").html((hours < 10 ? "0" : "") + hours);
+        }, 1000);
+        @{var UserName = User?.Identity?.Name;}
+        setInterval(function () {
+            $.ajax({
+                url: '/Home/CheckNewRole?UserName=@UserName',
+                success: function (data) {
+                    console.log(data)
+                    if (data == 'True') {
+                        $.ajax({
+                            type:'POST',
+                            url: '/Account/LogOff',
+                            success: function (datas) {
+                            }
+                          });
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }, 5000);
+    });
+</script>
+</html>

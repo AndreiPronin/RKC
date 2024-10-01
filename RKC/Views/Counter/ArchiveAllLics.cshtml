@@ -1,0 +1,151 @@
+﻿@model IEnumerable<DB.Model.ALL_LICS_ARCHIVE>
+@{ int i = 0; }
+<div class="modal fade" id="ArchiveModal" tabindex="-1" role="dialog" aria-labelledby="ArchiveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="text-center">
+                    <h5 class="modal-title" id="exampleModalLabel">История расчётов ИПУ @ViewBag.FULL_LIC</h5>
+                </div>
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Адрес</th>
+                            <th scope="col">Начальные</th>
+                            <th scope="col">Конечные</th>
+                            <th scope="col">Объем</th>
+                            <th scope="col">Тип расчета</th>
+                            <th scope="col">Период</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Items in Model)
+                        {
+                        <tr>
+                            @{i++;}
+                            <th scope="row">@i</th>
+                            <td>улица @Items.UL дом @Items.DOM кв. @Items.KW </td>
+                            @if (ViewBag.TypePU == "FKUB1XVS")
+                            {
+                                <td>@Items.FKUB1XVS</td>
+                                <td>@Items.FKUB2XVS</td>
+                                {
+                                    var Obem = Items.FKUB2XVS - Items.FKUB1XVS;
+                                    <td>@Obem</td>
+                                }
+                                var I = Items.FKUBSXVS == 0 ? "нет ИПУ" : Items.FKUBSXVS == 1 ? "расчет по ИПУ" : Items.FKUBSXVS == 2 ? "расчет по среднему" : Items.FKUBSXVS == 3 ? "расчет по нормативу" : "";
+                                <td>@I</td>
+
+                            }
+                            @if (ViewBag.TypePU == "FKUB1XV_2")
+                            {
+                                <td>@Items.FKUB1XV_2</td>
+                                <td>@Items.FKUB2XV_2</td>
+                                {
+                                    var Obem = Items.FKUB2XV_2 - Items.FKUB1XV_2;
+                                    <td>@Obem</td>
+                                }
+                                var I = Items.FKUBSXV_2 == 0 ? "нет ИПУ" : Items.FKUBSXV_2 == 1 ? "расчет по ИПУ" : "";
+                                <td>@I</td>
+                            }
+                            @if (ViewBag.TypePU == "FKUB1XV_3")
+                            {
+                                <td>@Items.FKUB1XV_3</td>
+                                <td>@Items.FKUB2XV_3</td>
+                                {
+                                    var Obem = Items.FKUB2XV_3 - Items.FKUB1XV_3;
+                                    <td>@Obem</td>
+                                }
+                                {
+                                    var I = Items.FKUBSXV_3 == 0 ? "нет ИПУ" : Items.FKUBSXV_3 == 1 ? "расчет по ИПУ" : Items.FKUBSXV_3 == 2 ? "расчет по среднему" : Items.FKUBSXV_3 == 3 ? "расчет по нормативу" : "";
+                                    <td>@I</td>
+                                }
+
+                            }
+                            @if (ViewBag.TypePU == "FKUB1XV_4")
+                            {
+                                <td>@Items.FKUB1XV_4</td>
+                                <td>@Items.FKUB2XV_4</td>
+                                {
+                                    var Obem = Items.FKUB2XV_4 - Items.FKUB1XV_4;
+                                    <td>@Obem</td>
+                                }
+                                {
+                                    var I = Items.FKUBSXV_4 == 0 ? "нет ИПУ" : Items.FKUBSXV_4 == 1 ? "расчет по ИПУ" : "";
+                                    <td>@I</td>
+                                }
+                            }
+                            @if (ViewBag.TypePU == "FKUB1OT_1")
+                            {
+                                <td>@Items.FKUB1OT_1</td>
+                                <td>@Items.FKUB2OT_1</td>
+                                {
+                                    var Obem = Items.FKUB2OT_1 - Items.FKUB1OT_1;
+                                    <td>@Obem</td>
+                                }
+                                {
+                                    var I = Items.FKUBSOT_1 == 0 ? "нет ИПУ" : Items.FKUBSOT_1 == 1 ? "расчет по ИПУ" : Items.FKUBSOT_1 == 2 ? "расчет по среднему" : Items.FKUBSOT_1 == 3 ? "расчет по нормативу" : "";
+                                    <td>@I</td>
+                                }
+
+                            }
+                            @if (ViewBag.TypePU == "FKUB1OT_2")
+                            {
+                                <td>@Items.FKUB1OT_2</td>
+                                <td>@Items.FKUB2OT_2</td>
+                                {
+                                    var Obem = Items.FKUB2OT_2 - Items.FKUB1OT_2;
+                                    <td>@Obem</td>
+                                }
+                                {
+                                    var I = Items.FKUBSOT_2 == 0 ? "нет ИПУ" : Items.FKUBSOT_2 == 1 ? "расчет по ИПУ" : "";
+                                    <td>@I</td>
+                                }
+                            }
+                            @if (ViewBag.TypePU == "FKUB1OT_3")
+                            {
+                                <td>@Items.FKUB1OT_3</td>
+                                <td>@Items.FKUB2OT_3</td>
+                                {
+                                    var Obem = Items.FKUB2OT_3 - Items.FKUB1OT_3;
+                                    <td>@Obem</td>
+                                }
+                                {
+                                    var I = Items.FKUBSOT_3 == 0 ? "нет ИПУ" : Items.FKUBSOT_3 == 1 ? "расчет по ИПУ" : "";
+                                    <td>@I</td>
+                                }
+                            }
+                            @if (ViewBag.TypePU == "FKUB1OT_4")
+                            {
+                                <td>@Items.FKUB1OT_4</td>
+                                <td>@Items.FKUB2OT_4</td>
+                                {
+                                    var Obem = Items.FKUB2OT_4 - Items.FKUB1OT_4;
+                                    <td>@Obem</td>
+                                }
+                                {
+                                    var I = Items.FKUBSOT_4 == 0 ? "нет ИПУ" : Items.FKUBSOT_4 == 1 ? "расчет по ИПУ" : "";
+                                    <td>@I</td>
+                                }
+                            }
+                            @{ var Date = Convert.ToDateTime(Items.period).ToString("MMMM,yyyy");}
+                            <td>@Date</td>
+
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
