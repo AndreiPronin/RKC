@@ -735,6 +735,7 @@
     <Content Include="Views\PersonalData\RecalculationPartitialView.cshtml" />
     <Content Include="Views\PersonalData\CalculationTablePartitialView.cshtml" />
     <Content Include="Views\PersonalData\CurentRecalculation.cshtml" />
+    <Content Include="Views\PersonalData\WatchPenyСalculation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

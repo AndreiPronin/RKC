@@ -38,7 +38,7 @@ namespace BL.http
                     var result = await resultPostRequest.Content.ReadAsStringAsync();
                     return result;
                 }
-                throw new Exception($"Ошибка загруки код ошибки:{resultPostRequest.StatusCode}");
+                throw new WebException($"Ошибка загруки код ошибки:{resultPostRequest.StatusCode}");
 
             }
         }
@@ -62,7 +62,7 @@ namespace BL.http
                     var result = await resultPostRequest.Content.ReadAsStringAsync();
                     return result;
                 }
-                throw new Exception($"Ошибка загруки код ошибки:{resultPostRequest.StatusCode}");
+                throw new WebException($"Ошибка загруки код ошибки:{resultPostRequest.StatusCode}");
 
             }
         }
@@ -72,13 +72,13 @@ namespace BL.http
             {
                 httpClient.Timeout = TimeSpan.FromMinutes(60);
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-                var resultPostRequest = await httpClient.GetAsync(Url);
-                if (resultPostRequest != null && resultPostRequest.StatusCode == HttpStatusCode.OK)
+                var resultGetRequest = await httpClient.GetAsync(Url);
+                if (resultGetRequest != null && resultGetRequest.StatusCode == HttpStatusCode.OK)
                 {
-                    var result = await resultPostRequest.Content.ReadAsStringAsync();
+                    var result = await resultGetRequest.Content.ReadAsStringAsync();
                     return result;
                 }
-                throw new Exception($"Ошибка загруки код ошибки:{resultPostRequest.StatusCode}");
+                throw new WebException($"Ошибка загруки код ошибки:{resultGetRequest.StatusCode}");
 
             }
         }
@@ -96,7 +96,7 @@ namespace BL.http
                     byte[] buffer = Encoding.UTF8.GetBytes(result);
                     return buffer;
                 }
-                throw new Exception($"Ошибка загруки код ошибки:{resultRequest.StatusCode}");
+                throw new WebException($"Ошибка загруки код ошибки:{resultRequest.StatusCode}");
 
             }
         }
@@ -122,7 +122,7 @@ namespace BL.http
                             return ms.ToArray();
                         }
                     }
-                    throw new Exception($"Ошибка загруки код ошибки:{resultRequest.StatusCode}");
+                    throw new WebException($"Ошибка загруки код ошибки:{resultRequest.StatusCode}");
 
                 }
             }catch(Exception ex)

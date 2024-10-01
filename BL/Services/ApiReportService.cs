@@ -1,4 +1,6 @@
 ﻿using BE.Counter;
+using BE.PersData;
+using BE.Recalculation;
 using BL.Helper;
 using BL.http;
 using BL.Security;
@@ -7,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,6 +35,8 @@ namespace BL.Services
         Task<byte[]> GetSummaryInvoices(DateTime period);
         Task<byte[]> GetReadingsQuantity(DateTime period);
         Task<byte[]> GetPenyByLicWithSaldo(string fileName);
+        Task<byte[]> GetPenyByLicFile(string FullLic);
+        Task<List<PenyModel>> GetPenyByLicModel(string FullLic);
         Task<byte[]> UpdateDataWithGIS(Stream stream, string fileName);
     }
     public class ApiReportService : IApiReportService
@@ -39,11 +44,13 @@ namespace BL.Services
         private readonly ITokenCreator _tokenCreator;
         private readonly string Url;
         private readonly string UrlDbfReport;
+        private readonly string RecalculationUrl;
         public ApiReportService(ITokenCreator tokenCreator) 
         { 
             _tokenCreator = tokenCreator;
             Url = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.ReportServiceUrl).GetString();
             UrlDbfReport = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.ReportServiceUrlDbf).GetString();
+            RecalculationUrl = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.RecalculationServiceUrl).GetString();
         }
         public async Task<byte[]> GetSberbankInvoicesOldFormat(DateTime period)
         {
@@ -218,6 +225,35 @@ namespace BL.Services
         public Task<byte[]> GetPenyByLicWithSaldo(string fileName)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<byte[]> GetPenyByLicFile(string FullLic)
+        {
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
+            var token = _tokenCreator.CreateTokenReportService();
+            var Reuqests = new Reuqest<object>();
+
+            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{RecalculationUrl}/api/v1/ExcelReports/GetPenyByLic?lic={FullLic}", token);
+            return reult;
+        }
+        public async Task<List<PenyModel>> GetPenyByLicModel(string FullLic)
+        {
+            try
+            {
+                var convert = new ConvertJson<List<PenyModel>>();
+                _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
+                var token = _tokenCreator.CreateTokenReportService();
+                var Reuqests = new Reuqest<object>();
+
+                var reult = await Reuqests.GetRequestWithTocken($"{RecalculationUrl}/api/v1/Peny/all?fullLic={FullLic}", token);
+                return convert.ConverJsonToModel(reult);
+            }catch (WebException ex)
+            {
+                return new List<PenyModel>();
+            }catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

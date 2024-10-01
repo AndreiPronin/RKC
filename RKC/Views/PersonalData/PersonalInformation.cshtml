@@ -231,6 +231,9 @@
                                 <li class="nav-item">
                                     <a style="cursor:pointer" class="DownLoadHelpСalculation">Справка расчет</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a style="cursor:pointer" class="DownLoadPenyCalculation">Справка-расчет пеней</a>
+                                </li>
                                 @if (User.IsInRole(BE.Roles.RolesEnums.ShowNoteLic))
                                 {
                                     <li class="nav-item">
@@ -258,7 +261,7 @@
                                         <a style="cursor:pointer" class=" DownLoadReceipt">Квитанция</a>
                                     </li>
                                 }
-                               
+
                                 @if (User.IsInRole(BE.Roles.RolesEnums.Admin) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
                                 {
                                     if (Model.FirstOrDefault().ZAK == null)
@@ -350,6 +353,40 @@ else
                         $.ajax({
                             success: function (data) {
                                 window.open('/PersonalData/WatchHelpСalculation?FullLic=' + @ViewBag.FULL_LIC + '&DateFrom=' + datefrom + '&DateTo=' + dateto);
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+        });
+        $(".DownLoadPenyCalculation").click(function (e) {
+            var Date = "@DateTime.Now.Date.ToString("yyyy-MM")";
+            console.log(Date);
+            $.confirm({
+                title: 'Справка-расчет пеней',
+                content: '',
+                buttons: {
+                    "Скачать": function () {
+                        $.ajax({
+                            success: function (data) {
+                                //window.location = '/PersonalData/DownLoadHelpСalculation?FullLic=' + @ViewBag.FULL_LIC + '&DateFrom=' + $("#DateFrom").val() + '&DateTo=' + $("#DateTo").val();
+                                window.open('/PersonalData/DownLoadPenyCalculation?FullLic=' + @ViewBag.FULL_LIC,"_self");
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Просмотр": function () {
+                        $.ajax({
+                            success: function (data) {
+                                window.open('/PersonalData/WatchPenyСalculation?FullLic=' + @ViewBag.FULL_LIC);
                             },
                             error: function () {
                                 alert("Что то пошло не так. Обратитесь к администратору");

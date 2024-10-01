@@ -46,9 +46,13 @@ namespace RKC.Controllers
         private readonly ICourt _court;
         private readonly IDictionary _dictionary;
         private readonly IApiRecalculationService _apiRecalculationService;
+        private readonly IApiReportService _apiReportService;
         private readonly NLog.Logger _Nlogger = NLog.LogManager.GetCurrentClassLogger();
         public PersonalDataController(IPersonalData personalData, Ilogger logger, IGeneratorDescriptons generatorDescriptons,
-            ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory, ICourt court, IDictionary dictionary, IApiRecalculationService apiRecalculationService)
+            ICacheApp cacheApp, IFlagsAction flagsAction, ICounter counter, IBaseService baseService, IPdfFactory pdfFactory, ICourt court, 
+            IDictionary dictionary, 
+            IApiRecalculationService apiRecalculationService, 
+            IApiReportService apiReportService)
         {
             _counter = counter;
             _personalData = personalData;
@@ -61,6 +65,7 @@ namespace RKC.Controllers
             _court = court;
             _dictionary = dictionary;
             _apiRecalculationService = apiRecalculationService;
+            _apiReportService = apiReportService;
         }
         [Auth(Roles = "PersWriter,PersReader,Admin")]
         public ActionResult PersonalInformation(string FullLic)
@@ -146,6 +151,18 @@ namespace RKC.Controllers
             return View( await _personalData.GetInfoHelpСalculation(FullLic, DateFrom, DateTo));
         }
         [HttpGet]
+        public async Task<ActionResult> WatchPenyСalculation(string FullLic)
+        {
+            var peronData = _personalData.GetPersonalInformation(FullLic).FirstOrDefault();
+            var Result = await _apiReportService.GetPenyByLicModel(FullLic);
+            ViewBag.FullLic = FullLic;
+            ViewBag.Fio = $"{peronData.LastName} {peronData.FirstName} {peronData.MiddleName}";
+            ViewBag.Address = $"ул. {peronData.Street} дом {peronData.House} кв. {peronData.Flat}";
+            ViewBag.NumberPerson = $"{peronData.NumberPerson}";
+            ViewBag.Square = $"{peronData.Square}";
+            return View(Result);
+        }
+        [HttpGet]
         public async Task<ActionResult> DownLoadHelpСalculation(string FullLic, DateTime DateFrom, DateTime DateTo)
         {
             try
@@ -154,6 +171,21 @@ namespace RKC.Controllers
                 _cacheApp.Delete(FullLic);
                 return File(Result.FileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Result.FileName);
             }catch(Exception ex)
+            {
+                _cacheApp.Update(FullLic, ex.InnerException.Message);
+                return null;
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult> DownLoadPenyCalculation(string FullLic)
+        {
+            try
+            {
+                var Result = await _apiReportService.GetPenyByLicFile(FullLic);
+                _cacheApp.Delete(FullLic);
+                return File(Result, System.Net.Mime.MediaTypeNames.Application.Octet, $"Расчет пени по лицевому счету {FullLic}.xlsx");
+            }
+            catch (Exception ex)
             {
                 _cacheApp.Update(FullLic, ex.InnerException.Message);
                 return null;
