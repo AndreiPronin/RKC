@@ -98,6 +98,8 @@ namespace RKC.Controllers
                 var Result = _counter.DetailInfroms(FULL_LIC);
                 ViewBag.ZAK = _baseService.GetStatusCloseOpenLic(FULL_LIC);
                 ViewBag.DIMENSION = await _dictionary.GetDIMENSION();
+                ViewBag.Archive = await _dictionary.GetIpuArchiveReason();
+                ViewBag.Recover = await _dictionary.GetIpuRecoverReason();
                 ViewBag.LockAddPu = ViewBag.IsLock;
                 if (ViewBag.IsLock == true && ViewBag.User == null) 
                     ViewBag.IsLock = _securityProvider.GetRoleUserNoLock(User.Identity.GetUserId());
@@ -128,6 +130,8 @@ namespace RKC.Controllers
             {
                 var Result = _counter.DetailInfroms(FULL_LIC,true);
                 ViewBag.DIMENSION = await _dictionary.GetDIMENSION();
+                ViewBag.Archive = await _dictionary.GetIpuArchiveReason();
+                ViewBag.Recover = await _dictionary.GetIpuRecoverReason();
                 if (Result.Count() > 0)
                 {
                     ViewBag.FULL_LIC = FULL_LIC;
@@ -226,12 +230,14 @@ namespace RKC.Controllers
         }
         [HttpPost]
         [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
-        public ActionResult RecoveryPU(int IdPU)
+        public async Task<ActionResult> RecoveryPU(int IdPU, int RecoveryReasonId)
         {
             try
             {
-                _logger.ActionUsers(IdPU, "Востановил ПУ", User.Identity.GetFIOFull());
-                _counter.RecoveryIPU(IdPU);
+                var reason = (await _dictionary.GetIpuRecoverReason()).FirstOrDefault(x => x.Id == RecoveryReasonId);
+                _logger.ActionUsers(IdPU, $@"Востановил ПУ.
+Изменили причину востановления: {reason.Name}", User.Identity.GetFIOFull());
+                _counter.RecoveryIPU(IdPU, RecoveryReasonId);
                 return Content("Востановление прошло успешно");
             }
             catch (Exception ex)

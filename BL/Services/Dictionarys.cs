@@ -14,6 +14,8 @@ namespace BL.Services
 {
     public interface IDictionary
     {
+        Task<List<IpuArchiveReason>> GetIpuArchiveReason();
+        Task<List<IpuRecoverReason>> GetIpuRecoverReason();
         Task<List<DIMENSION>> GetDIMENSION();
         Task<List<Dictionary>> GetDictionary(int? Id,string Text, string Type, string TypePU);
         Task<List<string>> GetCourtNameDictionaries(string Text, int Id);
@@ -34,6 +36,16 @@ namespace BL.Services
         {
             using (var db = new DbTPlus())
                 return await db.DIMENSIONs.ToListAsync();
+        }
+        public async Task<List<IpuArchiveReason>> GetIpuArchiveReason()
+        {
+            using (var db = new DbTPlus())
+                return await db.IpuArchiveReasons.ToListAsync();
+        }
+        public async Task<List<IpuRecoverReason>> GetIpuRecoverReason()
+        {
+            using (var db = new DbTPlus())
+                return await db.IpuRecoverReason.ToListAsync();
         }
         public async Task<List<string>> GetCourtNameDictionaries(string Text, int Id)
         {

@@ -31,7 +31,7 @@ namespace BL.Counters
         void DeleteIPU(int IdPU);
         void AddPU(ModelAddPU modelAddPU, string FIO);
         void DeleteError(int IdPU, string Lic, string User);
-        void RecoveryIPU(int IdPU);
+        void RecoveryIPU(int IdPU, int RecoveryReasonId);
         Task UpdatePUIntegrations(SaveModelIPU saveModelIPU, string User, int ID_PU);
         List<IPU_COUNTERS> GetTypeNowUsePU(string FullLIC);
         IEnumerable<ConnectPuWithGisResponse> UpdateGuidPuWithGis(IEnumerable<ConnectPuWithGis> connectPuWithGis);
@@ -90,9 +90,9 @@ namespace BL.Counters
                 var DictionatyBrand = DbTPlus.BRAND.Include(x=>x.MODEL).ToList();
                 var DictionaryTypeOf = DbTPlus.typeOfPu.ToList();
                 if (Close == false)
-                    iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == IPU_LIC && x.CLOSE_ != true).ToList();
+                    iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Include("IpuRecoverReason").Include("IpuArchiveReason").Where(x => x.FULL_LIC == IPU_LIC && x.CLOSE_ != true).ToList();
                 else
-                    iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Where(x => x.FULL_LIC == IPU_LIC && x.CLOSE_ == true).ToList();
+                    iPU_COUNTERs = DbTPlus.IPU_COUNTERS.Include("IpuRecoverReason").Include("IpuArchiveReason").Where(x => x.FULL_LIC == IPU_LIC && x.CLOSE_ == true).ToList();
                 foreach (var Items in iPU_COUNTERs)
                 {
                     Items.ALL_LICS = aLL_LICS;
@@ -152,6 +152,7 @@ namespace BL.Counters
                 IPU_COUNTERS.MODEL_PU = string.IsNullOrEmpty(saveModelIPU.MODEL_PU) ? IPU_COUNTERS.MODEL_PU : saveModelIPU.MODEL_PU;
                 IPU_COUNTERS.TYPEOFSEAL = string.IsNullOrEmpty(saveModelIPU.TYPEOFSEAL) ? IPU_COUNTERS.TYPEOFSEAL : saveModelIPU.TYPEOFSEAL;
                 IPU_COUNTERS.INSTALLATIONDATE = saveModelIPU.INSTALLATIONDATE == null ? IPU_COUNTERS.INSTALLATIONDATE : saveModelIPU.INSTALLATIONDATE;
+                IPU_COUNTERS.RecoverDate = saveModelIPU.RecoverDate == null ? IPU_COUNTERS.RecoverDate : saveModelIPU.RecoverDate;
                 IPU_COUNTERS.SEALNUMBER = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER) ? IPU_COUNTERS.SEALNUMBER : saveModelIPU.SEALNUMBER;
                 IPU_COUNTERS.DESCRIPTION = string.IsNullOrEmpty(saveModelIPU.DESCRIPTION) ? IPU_COUNTERS.DESCRIPTION : saveModelIPU.DESCRIPTION;
                 IPU_COUNTERS.SEALNUMBER2 = string.IsNullOrEmpty(saveModelIPU.SEALNUMBER2) ? IPU_COUNTERS.SEALNUMBER2 : saveModelIPU.SEALNUMBER2;
@@ -161,6 +162,8 @@ namespace BL.Counters
                 IPU_COUNTERS.TypeOfPu = string.IsNullOrEmpty(saveModelIPU.TypeOfPu) ? IPU_COUNTERS.TypeOfPu : saveModelIPU.TypeOfPu;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                 IPU_COUNTERS.DIMENSION_ID = saveModelIPU.DIMENSION != null && saveModelIPU.DIMENSION.Id != 0 ? saveModelIPU.DIMENSION.Id : IPU_COUNTERS.DIMENSION_ID;
+                IPU_COUNTERS.IpuArchiveReasonId = saveModelIPU.ARCHIVEREASON != null && saveModelIPU.ARCHIVEREASON.Id != 0 ? saveModelIPU.ARCHIVEREASON.Id : IPU_COUNTERS.IpuArchiveReasonId;
+                IPU_COUNTERS.IpuRecoverReasonId = saveModelIPU.RECOVERREASON != null && saveModelIPU.RECOVERREASON.Id != 0 ? saveModelIPU.RECOVERREASON.Id : IPU_COUNTERS.IpuRecoverReasonId;
                 IPU_COUNTERS.InterVerificationInterval = saveModelIPU.InterVerificationInterval != null && saveModelIPU.InterVerificationInterval != 0 ? saveModelIPU.InterVerificationInterval : IPU_COUNTERS.InterVerificationInterval;
                 if (saveModelIPU.OVERWRITE_SEAL) {
                     IPU_COUNTERS.LastReadingDate = DateTime.Now;
@@ -273,12 +276,14 @@ namespace BL.Counters
                 }
             }
         }
-        public void RecoveryIPU(int IdPU)
+        public void RecoveryIPU(int IdPU,int RecoveryReasonId)
         {
             using (var DbTPlus = new DbTPlus())
             {
 
                 IPU_COUNTERS iPU_COUNTERS = DbTPlus.IPU_COUNTERS.FirstOrDefault(x => x.ID_PU == IdPU && x.CLOSE_ == true);
+                iPU_COUNTERS.IpuRecoverReasonId = RecoveryReasonId;
+                iPU_COUNTERS.RecoverDate = DateTime.Now;
                 iPU_COUNTERS.CLOSE_ = null;
                 iPU_COUNTERS.DATE_CLOSE = null;
                 iPU_COUNTERS.OPERATOR_CLOSE_DATE = null;

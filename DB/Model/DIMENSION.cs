@@ -13,6 +13,5 @@ namespace DB.Model
         public string DIMENSION_NAME { get; set; }
         public int? MinValue { get; set; }
         public int? MaxValue { get; set; }
-        public List<IPU_COUNTERS> IPU_COUNTERS { get; set; }
     }
 }

@@ -213,16 +213,55 @@
                             </div>
                             <hr />
                             <div class="form-group row">
+                                @if (Items.IpuArchiveReason == null)
+                                {
+                                    <label style="font-weight:inherit;" class="col-sm-4 NullOrEmpty col-form-label;">Причина архивации:</label>
+                                }
+                                else
+                                {
+                                    <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Причина архивации:</label>
+                                }
+                                <div class="col-sm-8">
+                                    <select disabled id="IpuArchiveReason" class="form-control">
+
+                                        <option value="@Items.IpuArchiveReasonId">@(Items.IpuArchiveReason?.Name)</option>
+                                        @foreach (var Item in ViewBag.Archive)
+                                        {
+                                            <option value="@Item.Id">@Item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                @if (Items.OPERATOR_CLOSE_READINGS != null)
+                                {
+                                    <label class="col-sm-4 col-form-label">К.П. при архивации:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="OPERATOR_CLOSE_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control OPERATOR_CLOSE_READINGS" value="@Items.OPERATOR_CLOSE_READINGS" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="col-sm-4 NullOrEmpty col-form-label">К.П. при архивации:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="OPERATOR_CLOSE_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control OPERATOR_CLOSE_READINGS" value="@Items.OPERATOR_CLOSE_READINGS" />
+                                    </div>
+                                }
+
+                            </div>
+                            <hr />
+                            <div class="form-group row">
                                 @if (Items.OPERATOR_CLOSE_DATE != null)
                                 {
-                                    <label class="col-sm-4 col-form-label">Дата закрытия:</label>
+                                    <label class="col-sm-4 col-form-label">Дата архивации:</label>
                                     <div class="col-sm-8">
                                         <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="OPERATOR_CLOSE_DATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.OPERATOR_CLOSE_DATE)" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <label class="col-sm-4 NullOrEmpty col-form-label">Дата закрытия:</label>
+                                    <label class="col-sm-4 NullOrEmpty col-form-label">Дата архивации:</label>
                                     <div class="col-sm-8">
                                         <input type="date" readonly="readonly" tabIndex="@Index@{Index++;}" id="OPERATOR_CLOSE_DATE" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.OPERATOR_CLOSE_DATE)" />
                                     </div>
@@ -230,21 +269,41 @@
                             </div>
                             <hr />
                             <div class="form-group row">
-                                @if (Items.OPERATOR_CLOSE_READINGS != null)
+                                @if (Items.IpuRecoverReason == null)
                                 {
-                                    <label class="col-sm-4 col-form-label">К.П. при закрытии:</label>
+                                    <label style="font-weight:inherit;" class="col-sm-4 NullOrEmpty col-form-label;">Причина востановления:</label>
+                                }
+                                else
+                                {
+                                    <label style="font-weight:inherit;" class="col-sm-4 col-form-label;">Причина востановления:</label>
+                                }
+                                <div class="col-sm-8">
+                                    <select disabled id="IpuRecoverReasonId" class="form-control">
+
+                                        <option value="@Items.IpuRecoverReasonId">@(Items.IpuRecoverReason?.Name)</option>
+                                        @foreach (var Item in ViewBag.Recover)
+                                        {
+                                            <option value="@Item.Id">@Item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                @if (Items.RecoverDate != null)
+                                {
+                                    <label class="col-sm-4 col-form-label">Дата востановления:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="OPERATOR_CLOSE_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control OPERATOR_CLOSE_READINGS" value="@Items.OPERATOR_CLOSE_READINGS" />
+                                        <input type="date" readonly="readonly" disabled="disabled" tabIndex="@Index@{Index++;}" id="RecoverDate" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.RecoverDate)" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <label class="col-sm-4 NullOrEmpty col-form-label">К.П. при закрытии:</label>
+                                    <label class="col-sm-4 NullOrEmpty col-form-label">Дата востановления:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="OPERATOR_CLOSE_READINGS" tabIndex="@Index@{Index++;}" readonly="readonly" class="form-control OPERATOR_CLOSE_READINGS" value="@Items.OPERATOR_CLOSE_READINGS" />
+                                        <input type="date" readonly="readonly" disabled="disabled" tabIndex="@Index@{Index++;}" id="RecoverDate" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Items.RecoverDate)" />
                                     </div>
                                 }
-
                             </div>
                             <hr />
                         </div>
@@ -840,7 +899,16 @@ else
                             DIMENSION: {
                                 ID: $(this).parent().find('#DIMENSION').val(),
                                 Name: $(this).parent().find('#DIMENSION option:selected').text(),
-                            }
+                            },
+                            RECOVERREASON: {
+                                ID: $(this).parent().find('#IpuRecoverReasonId').val(),
+                                Name: $(this).parent().find('#IpuRecoverReasonId option:selected').text(),
+                            },
+                            ARCHIVEREASON: {
+                                ID: $(this).parent().find('#IpuArchiveReason').val(),
+                                Name: $(this).parent().find('#IpuArchiveReason option:selected').text(),
+                            },
+                            RecoverDate: $(this).parent().find('#RecoverDate').val(),
                         }
                     }),
                     contentType: 'application/json; charset=utf-8',

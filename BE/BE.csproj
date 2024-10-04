@@ -45,10 +45,12 @@
     <Compile Include="Admin\Enums\ApiReportEnums.cs" />
     <Compile Include="Admin\UserRoleInfo.cs" />
     <Compile Include="ApiT+\XmlForT+Flat.cs" />
+    <Compile Include="Counter\ARCHIVEREASON.cs" />
     <Compile Include="Counter\ConnectPuWithGis.cs" />
     <Compile Include="Counter\Dictionary.cs" />
     <Compile Include="Counter\DIMENSION.cs" />
     <Compile Include="Counter\Enum.cs" />
+    <Compile Include="Counter\RECOVERREASON.cs" />
     <Compile Include="Counter\FullLicAndGuid.cs" />
     <Compile Include="Counter\IpuGisReading.cs" />
     <Compile Include="Counter\IpuNotFoundInLick.cs" />

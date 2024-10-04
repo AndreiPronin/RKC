@@ -25,14 +25,25 @@ namespace DB.DataBase
         public DbSet<FlatMkd> flats { get; set; }
         public DbSet<AddressReadings> addressReadings { get; set; }
         public DbSet<TypeOfPu> typeOfPu { get; set; }
+        public DbSet<IpuArchiveReason> IpuArchiveReasons { get; set; }
+        public DbSet<IpuRecoverReason> IpuRecoverReason { get; set; }
         public DbTPlus() : base("T+")
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("IPU");
-            //modelBuilder.Entity<FLAT>().ToTable("FLAT","dbo");
-            //modelBuilder.Entity<MKD>().ToTable("MKD", "dbo");
+
+            modelBuilder.Entity<IPU_COUNTERS>()
+     .HasOptional(ipu => ipu.IpuArchiveReason)
+     .WithMany()
+     .HasForeignKey(ipu => ipu.IpuArchiveReasonId);
+            modelBuilder.Entity<IPU_COUNTERS>()
+    .HasOptional(ipu => ipu.IpuRecoverReason)
+    .WithMany()
+    .HasForeignKey(ipu => ipu.IpuRecoverReasonId);
+
+
         }
     }
 }

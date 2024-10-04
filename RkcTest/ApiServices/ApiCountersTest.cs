@@ -65,8 +65,15 @@ namespace RkcTest.ApiServices
         [TestMethod]
         public async Task GetIpuReadingWithClosePUForGisTest()
         {
-            var result = await _apiCounters.GetIpuReadingsForGisActive(1000, "704093663");
-            Assert.IsNotNull(result);
+            try
+            {
+                var result = await _apiCounters.GetIpuReadingsForGisActive(1000, "704093663");
+                Assert.IsNotNull(result);
+            }
+            catch(Exception ex)
+            {
+                Assert.IsTrue(false);
+            }
         }
     }
 }

@@ -88,5 +88,10 @@ namespace DB.Model
         public List<BRAND> BrandDictionary = new List<BRAND>();
         public List<TypeOfPu> TypeOfPus = new List<TypeOfPu>();
         public string TypeOfPu { get; set; }
+        public int? IpuArchiveReasonId { get; set; }
+        public virtual IpuArchiveReason IpuArchiveReason { get; set; } = null;
+        public int? IpuRecoverReasonId { get; set; }
+        public virtual IpuRecoverReason IpuRecoverReason { get; set; } = null;
+        public DateTime? RecoverDate { get; set; }
     }
 }

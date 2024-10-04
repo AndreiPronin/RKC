@@ -46,7 +46,10 @@ namespace BE.Counter
         public decimal? FKUB1OT_3 { get; set; }
         public decimal? FKUB1OT_4 { get; set; }
         public DateTime? DateTimeIntegraton { get; set; }
+        public DateTime? RecoverDate {  get; set; }
         public int? InterVerificationInterval { get; set; }
         public DIMENSION DIMENSION { get; set; }
+        public RECOVERREASON RECOVERREASON { get; set; }
+        public ARCHIVEREASON ARCHIVEREASON { get; set; }
     }
 }
