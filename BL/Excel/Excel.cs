@@ -678,6 +678,7 @@ namespace BL.Excel
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
             Counter _counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper, _mkdInformationService);
             List<IPU_COUNTERS> CounterNotClose = new List<IPU_COUNTERS>();
+            var reasonClode = await _dictionary.GetIpuArchiveReason();
             var DbTPlus = new DbTPlus();
             var Count = nonEmptyDataRows.Count();
             int i = 1;
@@ -703,6 +704,27 @@ namespace BL.Excel
                         if (dataRow.Cell(5).Value != "")
                         {
                             saveModel.OPERATOR_CLOSE_READINGS = Convert.ToDouble(Convert.ToString(dataRow.Cell(5).Value).Replace(".",","));
+                        }
+                        if (dataRow.Cell(6).Value == "")
+                        {
+                            throw new Exception("Укажите причину закрытия");
+                        }
+                        if (dataRow.Cell(6).Value != "")
+                        {
+                            var reasonText = dataRow.Cell(6).Value.ToString();
+                            var reason = reasonClode.FirstOrDefault(x => x.Name == reasonText);
+                            if (reason != null)
+                            {
+                                saveModel.ARCHIVEREASON = new ARCHIVEREASON
+                                {
+                                    Id = reason.Id,
+                                    Name = reason.Name,
+                                };
+                            }
+                            else
+                            {
+                                throw new Exception("Не найдена причина закрытия в справочнике");
+                            }
                         }
                         var T1 = _logger.ActionUsersAsync(result.ID_PU, _generatorDescriptons.Generate(saveModel), User);
                         var T2 = _counter.UpdateReadings(saveModel);
