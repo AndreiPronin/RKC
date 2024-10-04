@@ -233,7 +233,7 @@ namespace BL.Services
             var token = _tokenCreator.CreateTokenReportService();
             var Reuqests = new Reuqest<object>();
 
-            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{RecalculationUrl}/api/v1/ExcelReports/GetPenyByLic?lic={FullLic}", token);
+            var reult = await Reuqests.GetFileRequestWithTockenAsync($"{Url}/api/v1/ExcelReports/GetPenyByLic?lic={FullLic}", token);
             return reult;
         }
         public async Task<List<PenyModel>> GetPenyByLicModel(string FullLic)
@@ -245,7 +245,7 @@ namespace BL.Services
                 var token = _tokenCreator.CreateTokenReportService();
                 var Reuqests = new Reuqest<object>();
 
-                var reult = await Reuqests.GetRequestWithTocken($"{RecalculationUrl}/api/v1/Peny/all?fullLic={FullLic}", token);
+                var reult = await Reuqests.GetRequestWithTocken($"{Url}/api/v1/Peny/all?fullLic={FullLic}", token);
                 return convert.ConverJsonToModel(reult);
             }catch (WebException ex)
             {
