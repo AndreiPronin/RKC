@@ -40,12 +40,16 @@ namespace BL.Services
         public async Task<List<IpuArchiveReason>> GetIpuArchiveReason()
         {
             using (var db = new DbTPlus())
-                return await db.IpuArchiveReasons.ToListAsync();
+                return await db.IpuArchiveReasons
+                    .Where(x=>x.IsActual == true)
+                    .ToListAsync();
         }
         public async Task<List<IpuRecoverReason>> GetIpuRecoverReason()
         {
             using (var db = new DbTPlus())
-                return await db.IpuRecoverReason.ToListAsync();
+                return await db.IpuRecoverReason
+                    .Where(x => x.IsActual == true)
+                    .ToListAsync();
         }
         public async Task<List<string>> GetCourtNameDictionaries(string Text, int Id)
         {
