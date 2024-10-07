@@ -374,6 +374,8 @@ namespace BL.Helper
                 Result.AppendLine($"ФИО отправленное в суд: было {courtGeneralDb.CourtWork.FioSendCourt} стало {courtGeneralBe.CourtWork.FioSendCourt}");
             if (courtGeneralBe.CourtWork.SubmitApplicationCourt != courtGeneralDb.CourtWork.SubmitApplicationCourt)
                 Result.AppendLine($"Подача заявления в суд: было {courtGeneralDb.CourtWork.SubmitApplicationCourt} стало {courtGeneralBe.CourtWork.SubmitApplicationCourt}");
+            if (courtGeneralBe.CourtWork.DateSendingApplicationDebtor != courtGeneralDb.CourtWork.DateSendingApplicationDebtor)
+                Result.AppendLine($"Дата направления заявления должнику: было {courtGeneralDb.CourtWork.DateSendingApplicationDebtor} стало {courtGeneralBe.CourtWork.DateSendingApplicationDebtor}");
             if (courtGeneralBe.CourtWork.NameCourt != courtGeneralDb.CourtWork.NameCourt)
                 Result.AppendLine($"Название суда: было {courtGeneralDb.CourtWork.NameCourt} стало {courtGeneralBe.CourtWork.NameCourt}");
             if (courtGeneralBe.CourtWork.AddressCourt != courtGeneralDb.CourtWork.AddressCourt)

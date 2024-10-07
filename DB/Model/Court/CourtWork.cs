@@ -26,6 +26,10 @@ namespace DB.Model.Court
         public DateTime? PeriodDebtBegin { get; set; }
         public DateTime? PeriodDebtEnd { get; set; }
         public string FioSendCourt { get; set; }
+        /// <summary>
+        /// Дата направления заявления должнику
+        /// </summary>
+        public DateTime? DateSendingApplicationDebtor { get; set; }
         public string SubmitApplicationCourt { get; set; }
         public string NameCourt { get; set; }
         /// <summary>

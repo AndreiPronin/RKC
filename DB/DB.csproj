@@ -72,6 +72,10 @@
     <Compile Include="Migrations\202408181604381_court_add_two_fields_periodDebt.Designer.cs">
       <DependentUpon>202408181604381_court_add_two_fields_periodDebt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410071718249_add-court-field-DateSendingApplicationDebtor.cs" />
+    <Compile Include="Migrations\202410071718249_add-court-field-DateSendingApplicationDebtor.Designer.cs">
+      <DependentUpon>202410071718249_add-court-field-DateSendingApplicationDebtor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -147,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202408181604381_court_add_two_fields_periodDebt.resx">
       <DependentUpon>202408181604381_court_add_two_fields_periodDebt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410071718249_add-court-field-DateSendingApplicationDebtor.resx">
+      <DependentUpon>202410071718249_add-court-field-DateSendingApplicationDebtor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

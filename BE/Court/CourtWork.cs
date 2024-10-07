@@ -22,6 +22,10 @@ namespace BE.Court
         public DateTime? PeriodDebtBegin { get; set; }
         public DateTime? PeriodDebtEnd { get; set; }
         public string FioSendCourt { get; set; }
+        /// <summary>
+        ///период задолженности начальный
+        /// </summary>
+        public DateTime? DateSendingApplicationDebtor { get; set; }
         public string SubmitApplicationCourt { get; set; }
         public string NameCourt { get; set; }
         /// <summary>

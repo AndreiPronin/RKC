@@ -48,6 +48,16 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.FioSendCourt, new { @readonly = "readonly", @dicId = "20", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWork.FioSendCourt })
         </div>
+        <label class="col-sm-12 col-form-label">Дата направления заявления должнику:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWork.DateSendingApplicationDebtor, "{0:MM-yyyy}", new
+            {
+                @type = "date",
+                @readonly = "readonly",
+                @class = "form-control",
+           @Value = (Model.CourtWork.DateSendingApplicationDebtor.HasValue ? Model.CourtWork.DateSendingApplicationDebtor.Value.ToString("yyyy-MM-dd") : string.Empty)
+            })
+        </div>
         <label class="col-sm-12 col-form-label">Дата задания:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWork.DateTask, new

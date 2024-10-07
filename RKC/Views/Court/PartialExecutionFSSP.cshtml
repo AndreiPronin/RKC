@@ -17,12 +17,13 @@
         <label class="col-sm-12 col-form-label">Дата задания:</label>
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtExecutionFSSP.DateTask, new
-            {
-                @type = "month",
+       {
+           @type = "month",
+           @NotMaxDAte = "true",
                 @readonly = "readonly",
-                @class = "form-control",
+           @class = "form-control",
            @Value = (Model.CourtExecutionFSSP.DateTask.HasValue ? Model.CourtExecutionFSSP.DateTask.Value.ToString("yyyy-MM") : string.Empty)
-            })
+       })
         </div>
         <label class="col-sm-12 col-form-label">Исполнительный орган (ФССП):</label>
         <div class="col-sm-8">
