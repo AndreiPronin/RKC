@@ -32,7 +32,7 @@ namespace BL.Services
         public async Task<List<RecalculationReasons>> GetRecalculationInfosAsync()
         {
             var convert = new ConvertJson<List<RecalculationReasons>>();
-            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.RecalculationServiceUrl).GetString();
+            _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
             var token = _tokenCreator.CreateTokenReportService();
             var Reuqests = new Reuqest<RecalculationReasons>();
 
