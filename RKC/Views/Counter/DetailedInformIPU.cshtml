@@ -931,23 +931,26 @@ else
             var CloseReadingError = $(this).parent().find('.OPERATOR_CLOSE_READINGS').val() == '' ?
                 "Не заполнено поле дата закрытия" : '';
             var CloseDateError = $(this).parent().find('#OPERATOR_CLOSE_DATE').val() == '' ?
-                "К.П. при закрытии" : '';
+                "К.П. при архивации" : '';
+            var CloseDateErrorReason = $(this).parent().find('#IpuArchiveReason').val() == '' ?
+                "Причина архивации" : '';
             console.log(CloseReadingError);
             console.log(CloseDateError)
-            if (CloseReadingError != '' || CloseDateError != '') {
+            if (CloseReadingError != '' || CloseDateError != '' || CloseDateErrorReason != '') {
                 $.confirm({
                     title: 'Исправьте ошибки прежде чем удалить ПУ !!!',
                     content: '' +
                         '<form action="" class="formName">' +
                         '<div class="form-group">' +
                         '<label>' + CloseReadingError + '</label>' +
-                        '<label>' + CloseDateError + '</label>' +
+                        '<label>' + CloseDateError + '</label> <br/>' +
+                        '<label>' + CloseDateErrorReason + '</label>' +
                         '</div>' +
                         '</form>',
                     buttons: {
                         "Хорошо!": function () {
-                            $.alert('Отменено!');
-                            window.location.reload();
+                            
+                            //window.location.reload();
                         }
                     }
                 });

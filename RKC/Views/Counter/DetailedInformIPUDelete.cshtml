@@ -808,6 +808,7 @@ else
                     <label style="font-weight:inherit;" class="col-sm-12 NullOrEmpty col-form-label;">Укажите причину востановления</label>
                     <div class="col-sm-8">
                         <select id="IpuRecoverReasonId" class="form-control">
+                            <option value=""></option>
                             @foreach (var Item in ViewBag.Recover)
                             {
                                 <option value="@Item.Id">@Item.Name</option>
@@ -819,6 +820,7 @@ else
                 buttons: {
                     "Востановить": function () {
                         if (this.$content.find('#IpuRecoverReasonId').val() <= 0) {
+                            $.alert('Не указана причина востановления!');
                             return;
                         }
                         $.ajax({

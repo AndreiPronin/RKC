@@ -86,8 +86,8 @@ namespace BL.ApiServices.Counters
                     AccountGUID = flat.AccountGUID,
                     Igku = flat.IdGku,
                     UnifiedAccountNumber = flat.UniqueApartmentNumber,
-                    Firstname = item.FAMIL,
-                    Surname = item.IMYA,
+                    Firstname = item.IMYA,
+                    Surname = item.FAMIL,
                     Patronymic = item.OTCH,
 
                 });
