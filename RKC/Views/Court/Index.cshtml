@@ -183,34 +183,35 @@
         <h4 class="">Адрес: ул.@Model.Street, д.@Model.Home кв.@Model.Flat</h4>
     </div>
 
-    <div id="ResultSearchCourt"></div>
     @using (Html.BeginForm("SaveCourt", "Court", FormMethod.Post,
-    new { onsubmit = "this.querySelectorAll('input').forEach(i => i.disabled = false);this.querySelectorAll('textarea').forEach(i => i.disabled = false)" }))
-    {
-        if (!ViewBag.IsLock)
+        new { onsubmit = "this.querySelectorAll('input').forEach(i => i.disabled = false);this.querySelectorAll('textarea').forEach(i => i.disabled = false)" }))
         {
+        <div class="col-md-11">
+            @if (!ViewBag.IsLock)
+            {
             <input type="submit" class="btn hidden btn-success" id="Save" value="Coхранить" />
             <input type="button" class="btn btn-success" id="EditData" value="Редактировать" />
             <input type="button" class="btn hidden btn-danger" id="Cancel" value="Отмена" />
             <input type="button" class="btn btn-danger" id="ClosePage" value="Закрыть страницу" />
-        }
-        else
-        {
+            }
+            else
+            {
             <input type="button" class="btn btn-danger" id="ClosePage" value="Закрыть страницу" />
             <p>В данный момент страницу редактирует @ViewBag.User</p>
-        }
-        <span style="font-size:18px">Статус карточки:</span> @Html.TextBoxFor(m => m.StatusCard, new { @readonly = "readonly", @dicId = "23", @class = "form-control DictionaryAutoComplete", @style = "width: 110px !important;", @Value = Model.StatusCard })
-        if (Model.Lic?.StartsWith("7") == true)
-        {
+            }
+            <span style="font-size:18px">Статус карточки:</span> @Html.TextBoxFor(m => m.StatusCard, new { @readonly = "readonly", @dicId = "23", @class = "form-control DictionaryAutoComplete", @style = "width: 110px !important;", @Value = Model.StatusCard })
+            @if (Model.Lic?.StartsWith("7") == true)
+            {
             <span style="font-size:18px">Текущая ДЗ:</span> @Html.TextBoxFor(m => m.CourtWork.SumDebtNowDate, new { @readonly = "readonly", disabled = "disabled", @type = "number", @step = "0.01", @class = "form-control", @style = "width: 140px !important;", @Value = Model.CourtWork.SumDebtNowDate })
-        }
-        else
-        {
+            }
+            else
+            {
             <span style="font-size:18px">Текущая ДЗ:</span> @Html.TextBoxFor(m => m.CourtWork.SumDebtNowDate, new { @readonly = "readonly", @type = "number", @step = "0.01", @class = "form-control", @style = "width: 140px !important;", @Value = Model.CourtWork.SumDebtNowDate })
-        }
-        <span style="font-size:18px">ЛС:</span> @Html.TextBoxFor(m => m.Lic, new { @readonly = "readonly", @disabled = "disabled", @type = "number", @step = "0.01", @class = "form-control", @style = "width: 140px !important;", @Value = Model.Lic })
+            }
+            <span style="font-size:18px">ЛС:</span> @Html.TextBoxFor(m => m.Lic, new { @readonly = "readonly", @disabled = "disabled", @type = "number", @step = "0.01", @class = "form-control", @style = "width: 140px !important;", @Value = Model.Lic })
+        </div>
         <div class="row">
-            
+
             <div class="col-md-12 text-center">
                 <div class="containerHr">
                     <hr class="hrHr" />
@@ -235,14 +236,14 @@
                         <input readonly="readonly" class="form-control" disabled="disabled" value="@(Model.CourtBankruptcy.BankruptcyCaseNumber)" />
                     </div>
                     <div class="col-md-2">
-                        <span style="font-size:18px">Банкрот:</span>
+                        <span style="font-size:18px">Списание:</span>
                         <input readonly="readonly" class="form-control" disabled="disabled" value="@(Model.CourtWriteOff.WriteOffStatus)" />
                     </div>
                 </div>
             </div>
         </div>
-        
-        
+
+
         <div class="tab-content">
             <div class="tab-pane fade active in" id="GeneralInformation">
                 @Html.Partial("PartialGeneralInformation", Model)
