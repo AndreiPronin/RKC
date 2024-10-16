@@ -49,5 +49,7 @@ namespace BE.Roles
         public const string ShowNoteLic = "ShowNoteLic";
         [Description("Recalculation")]
         public const string Recalculation = "Recalculation";
+        [Description("RecoveryIpu")]
+        public const string RecoveryIpu = "RecoveryIpu";
     }
 }

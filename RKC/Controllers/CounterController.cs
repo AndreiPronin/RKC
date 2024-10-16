@@ -229,7 +229,7 @@ namespace RKC.Controllers
             }
         }
         [HttpPost]
-        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.CounterWriter)]
+        [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.RecoveryIpu)]
         public async Task<ActionResult> RecoveryPU(int IdPU, int RecoveryReasonId)
         {
             try

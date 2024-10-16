@@ -644,7 +644,7 @@
                         </div>
                     </div>
                     <input type="button" name="@Items.ID_PU" class="btn btn-primary HistoryEdit" value="История изменения" data-toggle="modal" data-target="#HistoryEditModal" />
-                     @if (User.IsInRole("Admin"))
+                     @if (User.IsInRole("Admin") || User.IsInRole("RecoveryIpu"))
                      {
                         <input type="button" name="@Items.TYPE_PU" class="btn btn-primary RecoveryPu" value="Востановить ПУ"/>
                      }
