@@ -6,6 +6,7 @@ using BL.Extention;
 using BL.Services;
 using DB.DataBase;
 using DB.Model;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,13 +22,13 @@ namespace BL.ApiT_
 {
     public interface IEBD
     {
-        byte[] CreateEBDAll(DateTime dateTime);
-        byte[] CreateEbdMkd(DateTime dateTime);
+        byte[] CreateEBDAll(DateTime dateTimeFrom, DateTime dateTimeTill);
+        byte[] CreateEbdMkd(DateTime dateTime, DateTime dateTimeTill);
         byte[] CreateDirectFlat();
         byte[] CreateDirectMkd();
-        byte[] CreateEbdFlatliving(DateTime dateTime);
-        byte[] CreateEbdFlatNotliving(DateTime dateTime);
-        void UpdateLastLoadEbd(DateTime dateTime);
+        byte[] CreateEbdFlatliving(DateTime dateTime, DateTime dateTimeTill);
+        byte[] CreateEbdFlatNotliving(DateTime dateTime, DateTime dateTimeTill);
+        void UpdateLastLoadEbd(DateTime dateTime, DateTime dateTimeTill);
     }
     public class EBD:IEBD
     {
@@ -42,7 +43,7 @@ namespace BL.ApiT_
             _personalData = personalData;
             _counter = counter;
         }
-        public byte[] CreateEBDAll(DateTime dateTime)
+        public byte[] CreateEBDAll(DateTime dateTime, DateTime dateTimeTill)
         {
             if (!_cacheApp.isLock(KeyCasheLock))
             {
@@ -53,14 +54,14 @@ namespace BL.ApiT_
                 Mkd.Objects = new List<Object>();
                 _cacheApp.AddProgress(KeyCasheload, "0");
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEBDAll));
-                byte[] buffer = CreateEbdMkd(dateTime);
-                buffer = buffer.Concat(CreateEbdFlatliving(dateTime)).ToArray();
-                buffer = buffer.Concat(CreateEbdFlatNotliving(dateTime)).ToArray();   
+                byte[] buffer = CreateEbdMkd(dateTime, dateTimeTill);
+                buffer = buffer.Concat(CreateEbdFlatliving(dateTime, dateTimeTill)).ToArray();
+                buffer = buffer.Concat(CreateEbdFlatNotliving(dateTime, dateTimeTill)).ToArray();   
                 return buffer;
             }
             return new byte[0];
         }
-        public byte[] CreateEbdMkd(DateTime dateTime)
+        public byte[] CreateEbdMkd(DateTime dateTime, DateTime dateTimeTill)
         {
             var patern = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
             if (!_cacheApp.isLock(KeyCasheLock))
@@ -317,7 +318,7 @@ namespace BL.ApiT_
             }
             return new byte[0];
         }
-        public byte[] CreateEbdFlatliving(DateTime dateTime)
+        public byte[] CreateEbdFlatliving(DateTime dateTime, DateTime dateTimeTill)
         {
             if (!_cacheApp.isLock(KeyCasheLock))
             {
@@ -401,7 +402,7 @@ namespace BL.ApiT_
             return new byte[0];
         }
         #region Comment
-        public byte[] CreateEbdFlatNotliving(DateTime dateTime)
+        public byte[] CreateEbdFlatNotliving(DateTime dateTime, DateTime dateTimeTill)
         {
             if (!_cacheApp.isLock(KeyCasheLock))
             {
@@ -503,14 +504,14 @@ namespace BL.ApiT_
             }
         }
 
-        public void UpdateLastLoadEbd(DateTime dateTime)
+        public void UpdateLastLoadEbd(DateTime dateTime, DateTime dateTimeTill)
         {
             using(var db = new ApplicationDbContext())
             {
                 var res = db.Flags.Find(((int)EnumFlags.LastLoadEbd));
                 if (dateTime >= res.DateTime || res.DateTime == null)
                 {
-                    res.DateTime = dateTime;
+                    res.DateTime = dateTimeTill;
                     db.SaveChanges();
                 }
             }

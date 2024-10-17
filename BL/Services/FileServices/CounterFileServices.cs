@@ -172,28 +172,28 @@ namespace BL.Services.FileServices
             }
             return null;
         }
-        public async Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime, string UserName)
+        public async Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTimeFrom, DateTime? dateTimeTill, string UserName)
         {
             using (XLWorkbook wb = new XLWorkbook())
             {
-                if (dateTime.HasValue && (typeFile.Equals(TypeFile.EbdAll) || typeFile.Equals(TypeFile.EbdMkd)
+                if (dateTimeFrom.HasValue && dateTimeTill.HasValue && (typeFile.Equals(TypeFile.EbdAll) || typeFile.Equals(TypeFile.EbdMkd)
                     || typeFile.Equals(TypeFile.EbdFlatliving) || typeFile.Equals(TypeFile.EbdFlatNotliving)))
-                    _ebd.UpdateLastLoadEbd(dateTime.Value);
+                    _ebd.UpdateLastLoadEbd(dateTimeFrom.Value, dateTimeTill.Value);
                 if (typeFile.Equals(TypeFile.EbdAll))
                 {
-                    return File(_ebd.CreateEBDAll(dateTime.Value), "application/octet-stream", $"{TypeFile.EbdAll.GetDescription()}.xml");
+                    return File(_ebd.CreateEBDAll(dateTimeFrom.Value, dateTimeTill.Value), "application/octet-stream", $"{TypeFile.EbdAll.GetDescription()}.xml");
                 }
                 if (typeFile.Equals(TypeFile.EbdMkd))
                 {
-                    return File(_ebd.CreateEbdMkd(dateTime.Value), "application/octet-stream", $"{TypeFile.EbdMkd.GetDescription()}.xml");
+                    return File(_ebd.CreateEbdMkd(dateTimeFrom.Value, dateTimeTill.Value), "application/octet-stream", $"{TypeFile.EbdMkd.GetDescription()}.xml");
                 }
                 if (typeFile.Equals(TypeFile.EbdFlatliving))
                 {
-                    return File(_ebd.CreateEbdFlatliving(dateTime.Value), "application/octet-stream", $"{TypeFile.EbdFlatliving.GetDescription()}.xml");
+                    return File(_ebd.CreateEbdFlatliving(dateTimeFrom.Value, dateTimeTill.Value), "application/octet-stream", $"{TypeFile.EbdFlatliving.GetDescription()}.xml");
                 }
                 if (typeFile.Equals(TypeFile.EbdFlatNotliving))
                 {
-                    return File(_ebd.CreateEbdFlatNotliving(dateTime.Value), "application/octet-stream", $"{TypeFile.EbdFlatNotliving.GetDescription()}.xml");
+                    return File(_ebd.CreateEbdFlatNotliving(dateTimeFrom.Value, dateTimeTill.Value), "application/octet-stream", $"{TypeFile.EbdFlatNotliving.GetDescription()}.xml");
                 }
                 if (typeFile.Equals(TypeFile.DirectFlat))
                 {
