@@ -333,6 +333,30 @@ namespace RKC.Controllers
                                     _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
                                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления примечания.xlsx");
                                 }
+                            case CourtTypeLoadFiles.InstallmentPlan:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadInstallmentPlan(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Рассрочки.xlsx");
+                                }
+                            case CourtTypeLoadFiles.Bankruptcy:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadBankruptcy(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Банкротсво.xlsx");
+                                }
+                            case CourtTypeLoadFiles.WriteOff:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadBankruptcy(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Списание.xlsx");
+                                }
                             default:
                                 throw new Exception("Не указан тип загружаемого файла! (Судебные дела)");
                         }

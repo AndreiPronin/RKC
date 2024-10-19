@@ -34,6 +34,14 @@ namespace DB.Model.Court
         /// </summary>
         public double? SumGp { get; set; }
         /// <summary>
+        /// Основание списания
+        /// </summary>
+        public string ReasonWriteOff { get; set; }
+        /// <summary>
+        /// Субьект списания
+        /// </summary>
+        public string SubjectWriteOff { get; set; }
+        /// <summary>
         /// Начальный период списания
         /// </summary>
         public DateTime? DateWriteOffBegin { get; set; }

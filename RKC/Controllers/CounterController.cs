@@ -268,9 +268,9 @@ namespace RKC.Controllers
         }
         [HttpGet]
         [Auth(Roles = RolesEnums.Admin)]
-        public async Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime)
+        public async Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTimeFrom, DateTime? dateTimeTill)
         {
-            return await _counterFileServices.Export(typeFile, dateTime, User.Identity.Name);
+            return await _counterFileServices.Export(typeFile, dateTimeFrom, dateTimeTill, User.Identity.Name);
         }
         [HttpGet]
         [Auth(Roles = RolesEnums.Admin)]

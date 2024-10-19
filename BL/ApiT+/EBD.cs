@@ -74,7 +74,7 @@ namespace BL.ApiT_
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEbdMkd));
                 using (var db = new DbTPlus())
                 {
-                    List<MKD> Mkd_ = db.Database.SqlQuery<MKD>($"SELECT * FROM [dbo].[EBD_MKD]('{dateTime.ToString("yyyy-MM-dd")}')").ToList();
+                    List<MKD> Mkd_ = db.Database.SqlQuery<MKD>($"SELECT * FROM [dbo].[EBD_MKD]('{dateTime.ToString("yyyy-MM-dd")}','{dateTimeTill.ToString("yyyy-MM-dd")}')").ToList();
                     var Data = Mkd_.ToList();
                     #region
                     Parallel.ForEach(Data, Item =>
@@ -328,7 +328,7 @@ namespace BL.ApiT_
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEBDAll));
                 using (var db = new DbTPlus())
                 {
-                    List<FLAT> flat_ = db.Database.SqlQuery<FLAT>($"SELECT * FROM [dbo].[EBD_FLAT]('{dateTime.ToString("yyyy-MM-dd")}','1')").ToList();
+                    List<FLAT> flat_ = db.Database.SqlQuery<FLAT>($"SELECT * FROM [dbo].[EBD_FLAT]('{dateTime.ToString("yyyy-MM-dd")}','{dateTimeTill.ToString("yyyy-MM-dd")}','1')").ToList();
                     var Data = flat_.ToList();
                     var ListError = new List<string>();
                     var patern = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
@@ -412,7 +412,7 @@ namespace BL.ApiT_
                 _cacheApp.Add(KeyCasheLock, nameof(CreateEBDAll));
                 using (var db = new DbTPlus())
                 {
-                    List<FLAT> flat_ = db.Database.SqlQuery<FLAT>($"SELECT * FROM [dbo].[EBD_FLAT]('{dateTime.ToString("yyyy-MM-dd")}','0')").ToList();
+                    List<FLAT> flat_ = db.Database.SqlQuery<FLAT>($"SELECT * FROM [dbo].[EBD_FLAT]('{dateTime.ToString("yyyy-MM-dd")}','{dateTimeTill.ToString("yyyy-MM-dd")}','0')").ToList();
                     var Data = flat_.ToList();
                     var ListError = new List<string>();
                     var patern = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";

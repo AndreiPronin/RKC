@@ -76,6 +76,10 @@
     <Compile Include="Migrations\202410071718249_add-court-field-DateSendingApplicationDebtor.Designer.cs">
       <DependentUpon>202410071718249_add-court-field-DateSendingApplicationDebtor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410191018304_add-court-dictionary.cs" />
+    <Compile Include="Migrations\202410191018304_add-court-dictionary.Designer.cs">
+      <DependentUpon>202410191018304_add-court-dictionary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressReadings.cs" />
@@ -154,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410071718249_add-court-field-DateSendingApplicationDebtor.resx">
       <DependentUpon>202410071718249_add-court-field-DateSendingApplicationDebtor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410191018304_add-court-dictionary.resx">
+      <DependentUpon>202410191018304_add-court-dictionary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

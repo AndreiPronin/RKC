@@ -22,6 +22,14 @@
         <div class="col-sm-8">
             @Html.TextBoxFor(m => m.CourtWriteOff.SumOd, new { @readonly = "readonly", @class = "form-control", @type = "number", @step = "0.01", @Value = Model.CourtWriteOff.SumOd })
         </div>
+        <label class="col-sm-12 col-form-label">Основания списания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.ReasonWriteOff, new { @readonly = "readonly", @dicId = "24", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWriteOff.ReasonWriteOff })
+        </div>
+        <label class="col-sm-12 col-form-label">Субьект списания:</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(m => m.CourtWriteOff.SubjectWriteOff, new { @readonly = "readonly", @dicId = "25", @class = "form-control DictionaryAutoComplete", @Value = Model.CourtWriteOff.SubjectWriteOff })
+        </div>
     </div>
     <div class="col-md-4">
         <label class="col-sm-12 col-form-label">Начальный период списания:</label>

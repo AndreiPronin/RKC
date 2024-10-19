@@ -15,6 +15,11 @@ namespace BE.Court
         EditSpAndIp = 4,
         EditOwner = 5,
         UpdateNote = 6,
+        InstallmentPlan = 7,
+        Bankruptcy = 8,
+        WriteOff = 9,
+        LitigationWork = 10,
+        OpenLitigationWork = 11,
     }
     public enum CourtTypeReport
     {

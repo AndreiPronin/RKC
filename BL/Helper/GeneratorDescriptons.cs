@@ -737,6 +737,10 @@ namespace BL.Helper
                 Result.AppendLine($"Сумма списания всего (списания): было {courtGeneralDb.CourtWriteOff.SumWriteOff} стало {courtGeneralBe.CourtWriteOff.SumWriteOff}");
             if (courtGeneralBe.CourtWriteOff.SumGp != courtGeneralDb.CourtWriteOff.SumGp)
                 Result.AppendLine($"Сумма списания ГП (списания): было {courtGeneralDb.CourtWriteOff.SumGp} стало {courtGeneralBe.CourtWriteOff.SumGp}");
+            if (courtGeneralBe.CourtWriteOff.SubjectWriteOff != courtGeneralDb.CourtWriteOff.SubjectWriteOff)
+                Result.AppendLine($"Субьект списания: было {courtGeneralDb.CourtWriteOff.SubjectWriteOff} стало {courtGeneralBe.CourtWriteOff.SubjectWriteOff}");
+            if (courtGeneralBe.CourtWriteOff.ReasonWriteOff != courtGeneralDb.CourtWriteOff.ReasonWriteOff)
+                Result.AppendLine($"Основание списания: было {courtGeneralDb.CourtWriteOff.ReasonWriteOff} стало {courtGeneralBe.CourtWriteOff.ReasonWriteOff}");
             if (courtGeneralBe.CourtWriteOff.SumPeny != courtGeneralDb.CourtWriteOff.SumPeny)
                 Result.AppendLine($"Сумма списания пени (списания): было {courtGeneralDb.CourtWriteOff.SumPeny} стало {courtGeneralBe.CourtWriteOff.SumPeny}");
             if (courtGeneralBe.CourtWriteOff.SumOd != courtGeneralDb.CourtWriteOff.SumOd)

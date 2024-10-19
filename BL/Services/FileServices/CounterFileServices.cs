@@ -18,7 +18,7 @@ namespace BL.Services.FileServices
     public interface ICounterFileServices
     {
         Task<ActionResult> UploadFile(HttpPostedFileBase file, string User, int TypeLoad);
-        Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTime, string UserName);
+        Task<ActionResult> Export(TypeFile typeFile, DateTime? dateTimeFrom, DateTime? dateTimeTill, string UserName);
     }
     public class CounterFileServices :  Controller , ICounterFileServices
     {
