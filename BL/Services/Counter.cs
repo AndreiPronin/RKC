@@ -162,7 +162,14 @@ namespace BL.Counters
                 IPU_COUNTERS.TypeOfPu = string.IsNullOrEmpty(saveModelIPU.TypeOfPu) ? IPU_COUNTERS.TypeOfPu : saveModelIPU.TypeOfPu;
                 IPU_COUNTERS.FULL_LIC = saveModelIPU.FULL_LIC == null ? IPU_COUNTERS.FULL_LIC : saveModelIPU.FULL_LIC;
                 IPU_COUNTERS.DIMENSION_ID = saveModelIPU.DIMENSION != null && saveModelIPU.DIMENSION.Id != 0 ? saveModelIPU.DIMENSION.Id : IPU_COUNTERS.DIMENSION_ID;
-                IPU_COUNTERS.IpuArchiveReasonId = saveModelIPU.ARCHIVEREASON != null && saveModelIPU.ARCHIVEREASON.Id != 0 ? saveModelIPU.ARCHIVEREASON.Id : IPU_COUNTERS.IpuArchiveReasonId;
+                if (saveModelIPU.ARCHIVEREASON != null && saveModelIPU.ARCHIVEREASON.Id == 14)
+                {
+                    IPU_COUNTERS.IpuArchiveReasonId = null;
+                }
+                else
+                {
+                    IPU_COUNTERS.IpuArchiveReasonId = saveModelIPU.ARCHIVEREASON != null && saveModelIPU.ARCHIVEREASON.Id != 0 ? saveModelIPU.ARCHIVEREASON.Id : IPU_COUNTERS.IpuArchiveReasonId;
+                }
                 IPU_COUNTERS.IpuRecoverReasonId = saveModelIPU.RECOVERREASON != null && saveModelIPU.RECOVERREASON.Id != 0 ? saveModelIPU.RECOVERREASON.Id : IPU_COUNTERS.IpuRecoverReasonId;
                 IPU_COUNTERS.InterVerificationInterval = saveModelIPU.InterVerificationInterval != null && saveModelIPU.InterVerificationInterval != 0 ? saveModelIPU.InterVerificationInterval : IPU_COUNTERS.InterVerificationInterval;
                 if (saveModelIPU.OVERWRITE_SEAL) {

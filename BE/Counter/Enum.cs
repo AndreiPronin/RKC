@@ -94,5 +94,7 @@ namespace BE.Counter
         LicClose = 8,
         [Description("Закончился срок поверки")]
         DateCheckNext = 9,
+        [Description("Нет показаний больше 3 месяцев")]
+        NoIndications = 10,
     }
 }
