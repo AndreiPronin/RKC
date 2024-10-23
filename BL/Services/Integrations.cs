@@ -157,6 +157,11 @@ namespace BL.Service
                                         Error = true;
                                         integrationReadings.Description += $@"{ErrorIntegration.ManyPU.GetDescription()} ";
                                     }
+                                    if(IPU_COUNTERS.FirstOrDefault() == null && IPU_COUNTERS.FirstOrDefault().IpuArchiveReasonId == 13)
+                                    {
+                                        Error = true;
+                                        integrationReadings.Description += $@"{ErrorIntegration.NoIndications.GetDescription()} ";
+                                    }
 
                                     saveModel.TypePU = Item.name;
                                     saveModel.FULL_LIC = data.lic;

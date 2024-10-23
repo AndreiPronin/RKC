@@ -46,6 +46,10 @@ namespace BL.Excel
                 startDate = dateTime;
                 dateTime = date;
             }
+            else
+            {
+                date = startDate;
+            }
 
             courtGeneralInformations.AddRange(await _court.GetCourtWithFilter(x => x.CourtWork.DateAccountingDepartment >= startDate 
             && x.CourtWork.DateAccountingDepartment <= dateTime));
