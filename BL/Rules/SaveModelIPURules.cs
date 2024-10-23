@@ -57,7 +57,7 @@ namespace BL.Rules
             _exceptionString.Clear();
             if(typeNotUsePu.Where(x=>x.TYPE_PU == modelAddPU.TYPE_PU.GetDescription()).Count() == 0)
             {
-                _exceptionString.AppendLine($"Не возможно добовить тип ПУ {modelAddPU.TYPE_PU.GetDescription()}");
+                _exceptionString.AppendLine($"Не возможно добавить тип ПУ {modelAddPU.TYPE_PU.GetDescription()}");
             }
             if (modelAddPU.InterVerificationInterval.HasValue)
             {
@@ -93,7 +93,7 @@ namespace BL.Rules
                 }
                 else
                 {
-                    brand =  brands.Where(x=>x.BRAND_NAME == modelAddPU.BRAND_PU).FirstOrDefault();
+                    brand =  brands.Where(x=>x.BRAND_NAME == modelAddPU.BRAND_PU && x.TYPE_PU == modelAddPU.TYPE_PU.GetDescription().Substring(0,3)).FirstOrDefault();
                     if(brand == null) {
                         _exceptionString.AppendLine($"Название бренда не найдено в справочнике");
                     }
