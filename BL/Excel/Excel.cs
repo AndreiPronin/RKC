@@ -284,7 +284,7 @@ namespace BL.Excel
                                 throw new Exception("Дата акта ввода в эксплуатацию должна быть строго меньше текущей даты");
                             }
                             if (DateCheckNext < Counter?.DATE_CHECK_NEXT)
-                                throw new Exception("Дата слудющей поверки меньше даты в базе");
+                                throw new Exception("Дата следующей поверки меньше даты в базе");
 
                             modelAddPU.DATE_CHECK_NEXT = Convert.ToDateTime(dataRow.Cell(8).Value);
                         }
@@ -720,6 +720,14 @@ namespace BL.Excel
                                     Id = reason.Id,
                                     Name = reason.Name,
                                 };
+
+                                if (saveModel.ARCHIVEREASON.Id == 13)
+                                {
+                                    if (!_counter.CheckNoReadings(result.ID_PU))
+                                    {
+                                        throw new InvalidOperationException("По прибору есть показания. Конечные не равны начальным");
+                                    }
+                                }
                             }
                             else
                             {
@@ -729,7 +737,10 @@ namespace BL.Excel
                         var T1 = _logger.ActionUsersAsync(result.ID_PU, _generatorDescriptons.Generate(saveModel), User);
                         var T2 = _counter.UpdateReadings(saveModel);
                         await Task.WhenAll(T1, T2);
-                        _counter.DeleteIPU(result.ID_PU);
+                        if (saveModel.ARCHIVEREASON.Id != 13)
+                        {
+                            _counter.DeleteIPU(result.ID_PU);
+                        }
                     }
                     catch (Exception ex)
                     {

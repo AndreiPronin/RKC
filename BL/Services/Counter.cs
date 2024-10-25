@@ -577,5 +577,52 @@ namespace BL.Counters
 
             return null;
         }
+
+        /// <summary>
+        /// Проверяет отсутствие показаний: true - если показаний нет, иначе - false
+        /// </summary>
+        public bool CheckNoReadings(int IdPU)
+        {
+            using (var DbTPlus = new DbTPlus())
+            {
+                IPU_COUNTERS iPU_COUNTERS = DbTPlus.IPU_COUNTERS.Where(x => x.ID_PU == IdPU && x.CLOSE_ != true).ToList()?.Last();
+
+                if (iPU_COUNTERS.LastReadingDate != null)
+                {
+                    DateTime minDate = DateTime.Now.AddMonths(-2);
+
+                    if (iPU_COUNTERS.LastReadingDate > minDate)
+                    {
+                        return false;
+                    }
+                }
+
+                using (var dbLIC = new DbLIC())
+                {
+                    var AllLic = dbLIC.ALL_LICS.Where(x => x.F4ENUMELS == iPU_COUNTERS.FULL_LIC).FirstOrDefault();
+                    switch (iPU_COUNTERS.TYPE_PU)
+                    {
+                        case "ГВС1":
+                            return AllLic.FKUB2XVS == AllLic.FKUB1XVS;
+                        case "ГВС2":
+                            return AllLic.FKUB2XV_2 == AllLic.FKUB1XV_2;
+                        case "ГВС3":
+                            return AllLic.FKUB2XV_3 == AllLic.FKUB1XV_3;
+                        case "ГВС4":
+                            return AllLic.FKUB2XV_4 == AllLic.FKUB1XV_4;
+                        case "ОТП1":
+                            return AllLic.FKUB2OT_1 == AllLic.FKUB1OT_1;
+                        case "ОТП2":
+                            return AllLic.FKUB2OT_2 == AllLic.FKUB1OT_2;
+                        case "ОТП3":
+                            return AllLic.FKUB2OT_3 == AllLic.FKUB1OT_3;
+                        case "ОТП4":
+                            return AllLic.FKUB2OT_4 == AllLic.FKUB1OT_4;
+                        default:
+                            throw new ArgumentNullException("Нет такого Типа ПУ");
+                    }
+                }
+            }
+        }
     }
 }
