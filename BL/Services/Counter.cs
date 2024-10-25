@@ -38,6 +38,7 @@ namespace BL.Counters
         IPU_COUNTERS GetInfoPU(string FULL_LIC, string TYPE_PU, bool Close = false);
         Task<List<BE.Counter.Recalculations>> GetRecalculations(string FullLic);
         DateTime? CalculateDateCheckNext(DateTime? dateTime, int? mpi);
+        bool CheckNoReadings(int IdPU);
     }
     public class Counter :BaseService, ICounter
     {

@@ -51,7 +51,7 @@ namespace BL.Excel
                 date = dateTime;
             }
 
-            courtGeneralInformations.AddRange(await _court.GetCourtWithFilter(x => x.CourtWork.DateAccountingDepartment >= startDate 
+            courtGeneralInformations.AddRange(await _court.GetCourtWithFilter(x => x.CourtWork.DateAccountingDepartment.HasValue && x.CourtWork.DateAccountingDepartment >= startDate 
             && x.CourtWork.DateAccountingDepartment <= dateTime));
 
             DataTable dt = new DataTable("Report");
