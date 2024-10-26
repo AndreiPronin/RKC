@@ -721,13 +721,13 @@ namespace BL.Excel
                                     Name = reason.Name,
                                 };
 
-                                if (saveModel.ARCHIVEREASON.Id == 13)
-                                {
-                                    if (!_counter.CheckNoReadings(result.ID_PU))
-                                    {
-                                        throw new InvalidOperationException("По прибору есть показания. Конечные не равны начальным");
-                                    }
-                                }
+                                //if (saveModel.ARCHIVEREASON.Id == 13)
+                                //{
+                                //    if (!_counter.CheckNoReadings(result.ID_PU))
+                                //    {
+                                //        throw new InvalidOperationException("По прибору есть показания. Конечные не равны начальным или дублированы оператором");
+                                //    }
+                                //}
                             }
                             else
                             {

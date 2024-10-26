@@ -590,7 +590,7 @@ namespace BL.Counters
 
                 if (iPU_COUNTERS.LastReadingDate != null)
                 {
-                    DateTime minDate = DateTime.Now.AddMonths(-2);
+                    DateTime minDate = DateTime.Now.AddMonths(-3);
 
                     if (iPU_COUNTERS.LastReadingDate > minDate)
                     {
