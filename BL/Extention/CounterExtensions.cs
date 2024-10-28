@@ -18,7 +18,6 @@ namespace BL.Extention
             result.GisId = ipuSource.GIS_ID_PU;
             result.IdGku = flat.IdGku;
             result.IsClosed = ipuSource.CLOSE_;
-            result.DateClose = ipuSource.DATE_CLOSE;
             result.Els = flat.Els;
             result.UniqueApartmentNumber = flat.UniqueApartmentNumber;
             result.Fias = address.Fias;
@@ -30,6 +29,17 @@ namespace BL.Extention
             result.Address = address.CityType + " " + address.City + ", " + address.Street + " "
                 + address.StreetType + ", " + address.HouseType + " " + address.House + address.Building;
             result.TypeOfPU = ipuSource.TypeOfPu;
+
+            if (result.IsClosed == true)
+            {
+                result.IpuArchiveReasonGisId = ipuSource.IpuArchiveReason?.GisId;
+                result.DateClose = ipuSource.DATE_CLOSE;
+            }
+            else
+            {
+                result.IpuRecoverReasonGisId = ipuSource.IpuRecoverReason?.GisId;
+                result.RecoverDate = ipuSource?.RecoverDate;
+            }
 
             switch (result.Type)
             {
@@ -115,6 +125,24 @@ namespace BL.Extention
             {
                 result.Dimension = ipuSource.DIMENSION.DIMENSION_NAME;
             }
+            else if (ipuSource.DIMENSION_ID != null)
+            {
+                switch (ipuSource.DIMENSION_ID)
+                {
+                    case 1:
+                        result.Dimension = "Кубический метр";
+                        break;
+                    case 2:
+                        result.Dimension = "Гигакалория";
+                        break;
+                    case 3:
+                        result.Dimension = "Киловатт-час";
+                        break;
+                    default :
+                        result.Dimension = result.Type.StartsWith("ГВС") ? "Кубический метр" : "Гигакалория";
+                        break;
+                }
+            }
             else if (result.Type.StartsWith("ГВС"))
             {
                 result.Dimension = "Кубический метр";
@@ -122,6 +150,11 @@ namespace BL.Extention
             else if (result.Type.StartsWith("ОТП"))
             {
                 result.Dimension = "Гигакалория";
+            }
+
+            if (ipuSource.IpuArchiveReasonId == 13)
+            {
+                result.FinalReadings = null;
             }
 
             return result;
@@ -144,12 +177,22 @@ namespace BL.Extention
             result.Els = flat.Els;
             result.DateCheck = ipuSource.DATE_CHECK;
             result.DateCheckNext = ipuSource.DATE_CHECK_NEXT;
-            result.DateClose = ipuSource.DATE_CLOSE;
             result.IsClosed = ipuSource.CLOSE_.HasValue ? ipuSource.CLOSE_.Value : false;
             result.InstallationDate = ipuSource.INSTALLATIONDATE;
             result.Address = address?.CityType + " " + address?.City + ", " + address?.Street + " "
                 + address?.StreetType + ", " + address?.HouseType + " " + address?.House + address?.Building;
             result.TypeOfPU = ipuSource.TypeOfPu;
+
+            if (result.IsClosed == true)
+            {
+                result.IpuArchiveReasonGisId = ipuSource.IpuArchiveReason?.GisId;
+                result.DateClose = ipuSource.DATE_CLOSE;
+            }
+            else
+            {
+                result.IpuRecoverReasonGisId = ipuSource.IpuRecoverReason?.GisId;
+                result.RecoverDate = ipuSource.RecoverDate;
+            }
 
             switch (result.Type)
             {
@@ -250,6 +293,24 @@ namespace BL.Extention
             {
                 result.Dimension = ipuSource.DIMENSION.DIMENSION_NAME;
             }
+            else if (ipuSource.DIMENSION_ID != null)
+            {
+                switch (ipuSource.DIMENSION_ID)
+                {
+                    case 1:
+                        result.Dimension = "Кубический метр";
+                        break;
+                    case 2:
+                        result.Dimension = "Гигакалория";
+                        break;
+                    case 3:
+                        result.Dimension = "Киловатт-час";
+                        break;
+                    default:
+                        result.Dimension = result.Type.StartsWith("ГВС") ? "Кубический метр" : "Гигакалория";
+                        break;
+                }
+            }
             else if (result.Type.StartsWith("ГВС"))
             {
                 result.Dimension = "Кубический метр";
@@ -257,6 +318,12 @@ namespace BL.Extention
             else if (result.Type.StartsWith("ОТП"))
             {
                 result.Dimension = "Гигакалория";
+            }
+
+            if (ipuSource.IpuArchiveReasonId == 13)
+            {
+                result.HasNewReadings = false;
+                result.FinalReadings = null;
             }
 
             return result;

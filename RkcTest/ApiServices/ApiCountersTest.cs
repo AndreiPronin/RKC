@@ -46,9 +46,9 @@ namespace RkcTest.ApiServices
                 var result = await _apiCounters.GetIpuReadingsForGisActive(1000, lastLic);
                 ipuGisReadingActives.AddRange(result.value);
                 lastLic = result.lastId;
-                if (ipuGisReadingActives.Where(x => x.FulLic == "720128131").Count() > 1)
+                if (ipuGisReadingActives.Where(x => x.FulLic == "701021323").Count() > 0)
                 {
-                    var zzz = ipuGisReadingActives.Where(x => x.FulLic == "720128131").ToList();
+                    var zzz = ipuGisReadingActives.Where(x => x.FulLic == "701021323").ToList();
                 }
                 if(string.IsNullOrEmpty(lastLic))
                     break;
