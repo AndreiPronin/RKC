@@ -93,8 +93,9 @@ namespace BL.ApiServices.Counters
         {
             using (var contextTPlus = new DbTPlus())
             {
-                List<IPU_COUNTERS> allPu = await contextTPlus.IPU_COUNTERS.Where(x =>
-                    !string.IsNullOrEmpty(x.FACTORY_NUMBER_PU) && Allic.Contains(x.FULL_LIC))
+                List<IPU_COUNTERS> allPu = await contextTPlus.IPU_COUNTERS.Include(x => x.IpuArchiveReason)
+                    .Include(x => x.IpuRecoverReason).Where(x => !string.IsNullOrEmpty(x.FACTORY_NUMBER_PU)
+                    && Allic.Contains(x.FULL_LIC))
                     .OrderBy(x => x.FULL_LIC).ThenBy(x => x.TYPE_PU).ToListAsync();
 
                 Dictionary<string, IPU_COUNTERS> validPu = allPu.Where(x => x.CLOSE_ != true)

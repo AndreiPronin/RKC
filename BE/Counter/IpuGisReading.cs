@@ -31,6 +31,9 @@ namespace BE.Counter
         public DateTime? DateClose { get; set; }
         public string Els { get; set; }
         public string TypeOfPU { get; set; }
+        public string IpuArchiveReasonGisId { get; set; }
+        public string IpuRecoverReasonGisId { get; set; }
+        public DateTime? RecoverDate { get; set; }
         public IpuGisReading()
         {
         }
