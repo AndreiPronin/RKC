@@ -350,7 +350,39 @@ namespace RKC.Controllers
                                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Банкротсво.xlsx");
                                 }
                             case CourtTypeLoadFiles.WriteOff:
-                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadBankruptcy(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadWriteOff(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Списание.xlsx");
+                                }
+                            case CourtTypeLoadFiles.OpenLitigationWork:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadOpenLitigationWork(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Списание.xlsx");
+                                }
+                            case CourtTypeLoadFiles.LitigationWork:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadLitigationWork(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Списание.xlsx");
+                                }
+                            case CourtTypeLoadFiles.EnteringDecision:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadEnteringDecision(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
+                                using (MemoryStream stream = new MemoryStream())
+                                {
+                                    wb.SaveAs(stream);
+                                    _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Списание.xlsx");
+                                }
+                            case CourtTypeLoadFiles.PdFromIp:
+                                wb.Worksheets.Add(await _excelCourt.ExcelsDownloadPdFromIp(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));
                                 using (MemoryStream stream = new MemoryStream())
                                 {
                                     wb.SaveAs(stream);

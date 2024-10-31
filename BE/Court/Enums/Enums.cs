@@ -18,8 +18,10 @@ namespace BE.Court
         InstallmentPlan = 7,
         Bankruptcy = 8,
         WriteOff = 9,
-        LitigationWork = 10,
-        OpenLitigationWork = 11,
+        OpenLitigationWork = 10,
+        LitigationWork = 11,
+        EnteringDecision = 12,
+        PdFromIp = 13,
     }
     public enum CourtTypeReport
     {
