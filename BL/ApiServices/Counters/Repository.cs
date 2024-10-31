@@ -98,24 +98,12 @@ namespace BL.ApiServices.Counters
                     && Allic.Contains(x.FULL_LIC))
                     .OrderBy(x => x.FULL_LIC).ThenBy(x => x.TYPE_PU).ToListAsync();
 
-                Dictionary<string, IPU_COUNTERS> validPu = allPu.Where(x => x.CLOSE_ != true)
-                          .ToDictionary(x => string.Concat(x.FULL_LIC, x.TYPE_PU), y => y);
-                Dictionary<string, List<IPU_COUNTERS>> closedPu = allPu.Where(x => x.CLOSE_ == true)
-                          .GroupBy(x => string.Concat(x.FULL_LIC, x.TYPE_PU))
-                          .ToDictionary(x => x.Key, y => y.OrderByDescending(x => x.DATE_CLOSE).ThenByDescending(x => x.ID_PU).ToList());
+                List<IPU_COUNTERS> result = allPu.Where(x => x.CLOSE_ != true
+                                          || ((x.CLOSE_ == null || x.CLOSE_ == true)
+                                          && x.GIS_ID_PU != null))
+                                          .ToList();
 
-                foreach (var pair in closedPu)
-                {
-                    if (validPu.ContainsKey(pair.Key))
-                        continue;
-
-                    if (pair.Value.Count > 0)
-                    {
-                        validPu.Add(pair.Key, pair.Value[0]);
-                    }
-                }
-
-                return validPu.Values.OrderBy(x => x.FULL_LIC).ThenBy(x => x.TYPE_PU).ToList();
+                return result.OrderBy(x => x.FULL_LIC).ThenBy(x => x.TYPE_PU).ToList();
             }
         }
         protected async Task<List<FullLicByGisId>> getFullLicBuGuidGis(List<string> gisId)
