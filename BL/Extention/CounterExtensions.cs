@@ -39,86 +39,86 @@ namespace BL.Extention
             {
                 result.IpuRecoverReasonGisId = ipuSource.IpuRecoverReason?.GisId;
                 result.RecoverDate = ipuSource?.RecoverDate;
-            }
 
-            switch (result.Type)
-            {
-                case "ГВС1":
-                    result.ServiceType = "Горячая вода";
-                    if (allLics.FKUBSXVS == 1)
-                    {
-                        result.FinalReadings = allLics.FKUB2XVS ?? 0M;
+                switch (result.Type)
+                {
+                    case "ГВС1":
+                        result.ServiceType = "Горячая вода";
+                        if (allLics.FKUBSXVS == 1)
+                        {
+                            result.FinalReadings = allLics.FKUB2XVS ?? 0M;
+                            break;
+                        }
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.FinalReadings = null;
-                    break;
-                case "ГВС2":
-                    result.ServiceType = "Горячая вода";
-                    if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_2 == 1)
-                    {
-                        result.FinalReadings = allLics.FKUB2XV_2 ?? 0M;
+                    case "ГВС2":
+                        result.ServiceType = "Горячая вода";
+                        if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_2 == 1)
+                        {
+                            result.FinalReadings = allLics.FKUB2XV_2 ?? 0M;
+                            break;
+                        }
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.FinalReadings = null;
-                    break;
-                case "ГВС3":
-                    result.ServiceType = "Горячая вода";
-                    if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_3 == 1)
-                    {
-                        result.FinalReadings = allLics.FKUB2XV_3 ?? 0M;
+                    case "ГВС3":
+                        result.ServiceType = "Горячая вода";
+                        if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_3 == 1)
+                        {
+                            result.FinalReadings = allLics.FKUB2XV_3 ?? 0M;
+                            break;
+                        }
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.FinalReadings = null;
-                    break;
-                case "ГВС4":
-                    result.ServiceType = "Горячая вода";
-                    if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_4 == 1)
-                    {
-                        result.FinalReadings = allLics.FKUB2XV_4 ?? 0M;
+                    case "ГВС4":
+                        result.ServiceType = "Горячая вода";
+                        if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_4 == 1)
+                        {
+                            result.FinalReadings = allLics.FKUB2XV_4 ?? 0M;
+                            break;
+                        }
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.FinalReadings = null;
-                    break;
-                case "ОТП1":
-                    result.ServiceType = "Тепловая энергия";
-                    if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_1 == 1)
-                    {
-                        result.FinalReadings = allLics.FKUB2OT_1 ?? 0M;
+                    case "ОТП1":
+                        result.ServiceType = "Тепловая энергия";
+                        if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_1 == 1)
+                        {
+                            result.FinalReadings = allLics.FKUB2OT_1 ?? 0M;
+                            break;
+                        }
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.FinalReadings = null;
-                    break;
-                case "ОТП2":
-                    result.ServiceType = "Тепловая энергия";
-                    if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_2 == 1)
-                    {
-                        result.FinalReadings = allLics.FKUB2OT_2 ?? 0M;
+                    case "ОТП2":
+                        result.ServiceType = "Тепловая энергия";
+                        if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_2 == 1)
+                        {
+                            result.FinalReadings = allLics.FKUB2OT_2 ?? 0M;
+                            break;
+                        }
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.FinalReadings = null;
-                    break;
-                case "ОТП3":
-                    result.ServiceType = "Тепловая энергия";
-                    if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_3 == 1)
-                    {
-                        result.FinalReadings = allLics.FKUB2OT_3 ?? 0M;
+                    case "ОТП3":
+                        result.ServiceType = "Тепловая энергия";
+                        if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_3 == 1)
+                        {
+                            result.FinalReadings = allLics.FKUB2OT_3 ?? 0M;
+                            break;
+                        }
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.FinalReadings = null;
-                    break;
-                case "ОТП4":
-                    result.ServiceType = "Тепловая энергия";
-                    if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_4 == 1)
-                    {
-                        result.FinalReadings = allLics.FKUB2OT_4 ?? 0M;
+                    case "ОТП4":
+                        result.ServiceType = "Тепловая энергия";
+                        if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_4 == 1)
+                        {
+                            result.FinalReadings = allLics.FKUB2OT_4 ?? 0M;
+                            break;
+                        }
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.FinalReadings = null;
-                    break;
-                default:
-                    result.ServiceType = "";
-                    result.FinalReadings = null;
-                    break;
+                    default:
+                        result.ServiceType = "";
+                        result.FinalReadings = null;
+                        break;
+                }
             }
 
             if (ipuSource.DIMENSION != null)
@@ -192,101 +192,101 @@ namespace BL.Extention
             {
                 result.IpuRecoverReasonGisId = ipuSource.IpuRecoverReason?.GisId;
                 result.RecoverDate = ipuSource.RecoverDate;
-            }
 
-            switch (result.Type)
-            {
-                case "ГВС1":
-                    result.ServiceType = "Горячая вода";
-                    if (allLics.FKUBSXVS == 1)
-                    {
-                        result.HasNewReadings = true;
-                        result.FinalReadings = allLics.FKUB2XVS ?? 0M;
+                switch (result.Type)
+                {
+                    case "ГВС1":
+                        result.ServiceType = "Горячая вода";
+                        if (allLics.FKUBSXVS == 1)
+                        {
+                            result.HasNewReadings = true;
+                            result.FinalReadings = allLics.FKUB2XVS ?? 0M;
+                            break;
+                        }
+                        result.HasNewReadings = false;
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.HasNewReadings = false;
-                    result.FinalReadings = null;
-                    break;
-                case "ГВС2":
-                    result.ServiceType = "Горячая вода";
-                    if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_2 == 1)
-                    {
-                        result.HasNewReadings = true;
-                        result.FinalReadings = allLics.FKUB2XV_2 ?? 0M;
+                    case "ГВС2":
+                        result.ServiceType = "Горячая вода";
+                        if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_2 == 1)
+                        {
+                            result.HasNewReadings = true;
+                            result.FinalReadings = allLics.FKUB2XV_2 ?? 0M;
+                            break;
+                        }
+                        result.HasNewReadings = false;
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.HasNewReadings = false;
-                    result.FinalReadings = null;
-                    break;
-                case "ГВС3":
-                    result.ServiceType = "Горячая вода";
-                    if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_3 == 1)
-                    {
-                        result.HasNewReadings = true;
-                        result.FinalReadings = allLics.FKUB2XV_3 ?? 0M;
+                    case "ГВС3":
+                        result.ServiceType = "Горячая вода";
+                        if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_3 == 1)
+                        {
+                            result.HasNewReadings = true;
+                            result.FinalReadings = allLics.FKUB2XV_3 ?? 0M;
+                            break;
+                        }
+                        result.HasNewReadings = false;
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.HasNewReadings = false;
-                    result.FinalReadings = null;
-                    break;
-                case "ГВС4":
-                    result.ServiceType = "Горячая вода";
-                    if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_4 == 1)
-                    {
-                        result.HasNewReadings = true;
-                        result.FinalReadings = allLics.FKUB2XV_4 ?? 0M;
+                    case "ГВС4":
+                        result.ServiceType = "Горячая вода";
+                        if (allLics.FKUBSXVS == 1 && allLics.FKUBSXV_4 == 1)
+                        {
+                            result.HasNewReadings = true;
+                            result.FinalReadings = allLics.FKUB2XV_4 ?? 0M;
+                            break;
+                        }
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.FinalReadings = null;
-                    break;
-                case "ОТП1":
-                    result.ServiceType = "Тепловая энергия";
-                    if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_1 == 1)
-                    {
-                        result.HasNewReadings = true;
-                        result.FinalReadings = allLics.FKUB2OT_1 ?? 0M;
+                    case "ОТП1":
+                        result.ServiceType = "Тепловая энергия";
+                        if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_1 == 1)
+                        {
+                            result.HasNewReadings = true;
+                            result.FinalReadings = allLics.FKUB2OT_1 ?? 0M;
+                            break;
+                        }
+                        result.HasNewReadings = false;
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.HasNewReadings = false;
-                    result.FinalReadings = null;
-                    break;
-                case "ОТП2":
-                    result.ServiceType = "Тепловая энергия";
-                    if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_2 == 1)
-                    {
-                        result.HasNewReadings = true;
-                        result.FinalReadings = allLics.FKUB2OT_2 ?? 0M;
+                    case "ОТП2":
+                        result.ServiceType = "Тепловая энергия";
+                        if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_2 == 1)
+                        {
+                            result.HasNewReadings = true;
+                            result.FinalReadings = allLics.FKUB2OT_2 ?? 0M;
+                            break;
+                        }
+                        result.HasNewReadings = false;
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.HasNewReadings = false;
-                    result.FinalReadings = null;
-                    break;
-                case "ОТП3":
-                    result.ServiceType = "Тепловая энергия";
-                    if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_3 == 1)
-                    {
-                        result.HasNewReadings = true;
-                        result.FinalReadings = allLics.FKUB2OT_3 ?? 0M;
+                    case "ОТП3":
+                        result.ServiceType = "Тепловая энергия";
+                        if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_3 == 1)
+                        {
+                            result.HasNewReadings = true;
+                            result.FinalReadings = allLics.FKUB2OT_3 ?? 0M;
+                            break;
+                        }
+                        result.HasNewReadings = false;
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.HasNewReadings = false;
-                    result.FinalReadings = null;
-                    break;
-                case "ОТП4":
-                    result.ServiceType = "Тепловая энергия";
-                    if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_4 == 1)
-                    {
-                        result.HasNewReadings = true;
-                        result.FinalReadings = allLics.FKUB2OT_4 ?? 0M;
+                    case "ОТП4":
+                        result.ServiceType = "Тепловая энергия";
+                        if (allLics.FKUBSOT_1 == 1 && allLics.FKUBSOT_4 == 1)
+                        {
+                            result.HasNewReadings = true;
+                            result.FinalReadings = allLics.FKUB2OT_4 ?? 0M;
+                            break;
+                        }
+                        result.HasNewReadings = false;
+                        result.FinalReadings = null;
                         break;
-                    }
-                    result.HasNewReadings = false;
-                    result.FinalReadings = null;
-                    break;
-                default:
-                    result.ServiceType = "";
-                    result.FinalReadings = null;
-                    break;
+                    default:
+                        result.ServiceType = "";
+                        result.FinalReadings = null;
+                        break;
+                }
             }
 
             if (ipuSource.DIMENSION != null)
