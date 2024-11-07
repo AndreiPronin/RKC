@@ -14,7 +14,7 @@ using ZXing;
 
 namespace WordGenerator
 {
-
+    //название документа ReceiptPersonalLk
     public class ReceiptPersonal : IPdfGenerate
     {
         public PersDataDocumentLoad Generate(string LIC, DateTime date)
@@ -304,6 +304,28 @@ namespace WordGenerator
         false, false, false, false);
                         doc.Content.Find.Execute("{s_notp}", false, true, false, false, false, true, 1, false, Lic.s_notp?.Trim(), 2,
         false, false, false, false);
+                        doc.Content.Find.Execute("{pr_ras_gv1}", false, true, false, false, false, true, 1, false,
+                        !string.IsNullOrEmpty(Lic.ipuxv1_1?.Replace(" ", "")) ? Lic.pr_ras_gv1?.Trim() : "", 2,
+        false, false, false, false);
+                        doc.Content.Find.Execute("{pr_ras_gv2}", false, true, false, false, false, true, 1, false,
+                        !string.IsNullOrEmpty(Lic.ipuxv2_1?.Replace(" ", "")) ? Lic.pr_ras_gv2?.Trim() : "", 2,
+        false, false, false, false);
+                        doc.Content.Find.Execute("{pr_ras_gv3}", false, true, false, false, false, true, 1, false,
+                        !string.IsNullOrEmpty(Lic.ipuxv3_1?.Replace(" ", "")) ? Lic.pr_ras_gv3?.Trim() : "", 2,
+        false, false, false, false);
+                        doc.Content.Find.Execute("{pr_ras_gv4}", false, true, false, false, false, true, 1, false,
+                        !string.IsNullOrEmpty(Lic.ipuxv4_1?.Replace(" ", "")) ? Lic.pr_ras_gv4?.Trim() : "", 2,
+        false, false, false, false);
+                        doc.Content.Find.Execute("{pr_ras_ot1}", false, true, false, false, false, true, 1, false,
+                        !string.IsNullOrEmpty(Lic.ipuot1_1?.Replace(" ", "")) ? Lic.pr_ras_ot1?.Trim() : "", 2,
+        false, false, false, false);
+                        doc.Content.Find.Execute("{pr_ras_ot2}", false, true, false, false, false, true, 1, false,
+                        !string.IsNullOrEmpty(Lic.ipuot2_1?.Replace(" ", "")) ? Lic.pr_ras_ot2?.Trim() : "", 2,
+        false, false, false, false);
+                        doc.Content.Find.Execute("{pr_ras_ot3}", false, true, false, false, false, true, 1, false,
+                        !string.IsNullOrEmpty(Lic.ipuot3_1?.Replace(" ", "")) ? Lic.pr_ras_ot3?.Trim() : "", 2,
+        false, false, false, false);
+
                         cacheApp.Update(LIC, $"Сформировал квитацнию за {date}");
                         BarcodeWriter generator = new BarcodeWriter() { Format = BarcodeFormat.QR_CODE };
                         ZXing.QrCode.QrCodeEncodingOptions opt = new ZXing.QrCode.QrCodeEncodingOptions
@@ -519,6 +541,13 @@ Category=7|PersAcc={LIC}|LastName={FIO.TryGetValue(0)}|FitstName={FIO.TryGetValu
                     Content = Content.Replace("{s_nez}", Lic.dpukanach?.Trim());
                     Content = Content.Replace("{s_oi}", Lic.s_oi?.Trim());
                     Content = Content.Replace("{s_notp}", Lic.s_notp?.Trim());
+                    Content = Content.Replace("{pr_ras_gv1}", !string.IsNullOrEmpty(Lic.ipuxv1_1?.Replace(" ", "")) ? Lic.pr_ras_gv1?.Trim() : "");
+                    Content = Content.Replace("{pr_ras_gv2}", !string.IsNullOrEmpty(Lic.ipuxv2_1?.Replace(" ", "")) ? Lic.pr_ras_gv2?.Trim() : "");
+                    Content = Content.Replace("{pr_ras_gv3}", !string.IsNullOrEmpty(Lic.ipuxv3_1?.Replace(" ", "")) ? Lic.pr_ras_gv3?.Trim() : "");
+                    Content = Content.Replace("{pr_ras_gv4}", !string.IsNullOrEmpty(Lic.ipuxv4_1?.Replace(" ", "")) ? Lic.pr_ras_gv4?.Trim() : "");
+                    Content = Content.Replace("{pr_ras_ot1}", !string.IsNullOrEmpty(Lic.ipuot1_1?.Replace(" ", "")) ? Lic.pr_ras_ot1?.Trim() : "");
+                    Content = Content.Replace("{pr_ras_ot2}", !string.IsNullOrEmpty(Lic.ipuot2_1?.Replace(" ", "")) ? Lic.pr_ras_ot2?.Trim() : "");
+                    Content = Content.Replace("{pr_ras_ot3}", !string.IsNullOrEmpty(Lic.ipuot3_1?.Replace(" ", "")) ? Lic.pr_ras_ot3?.Trim() : "");
                 }
                 else
                 {

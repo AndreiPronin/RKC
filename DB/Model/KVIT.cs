@@ -98,10 +98,18 @@ namespace DB.Model
         public string dotp1 { get; set; }
         public string dotp2 { get; set; }
         public string dotp3 { get; set; }
+
         [Key]
-        public DateTime? period { get; set; }
         public int id { get; set; }
+        public DateTime? period { get; set; }
+
+        public string pr_ras_gv1 { get; set; }
+        public string pr_ras_gv2 { get; set; }
+        public string pr_ras_gv3 { get; set; }
+        public string pr_ras_gv4 { get; set; }
+        public string pr_ras_ot1 { get; set; }
+        public string pr_ras_ot2 { get; set; }
+        public string pr_ras_ot3 { get; set; }
+        public string pr_ras_ot4 { get; set; }
     }
-
-
 }
