@@ -9,6 +9,7 @@ namespace BE.Recalculation
     public class Calculate
     {
         public string FullLic { get; set; }
+        public string AdditionalFullLic { get; set; }
         public DateTime Period { get; set; }
         public DateTime RecalculationBeginningPeriod { get; set; }
         public DateTime RecalculationPeriod {  get; set; }

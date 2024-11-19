@@ -99,7 +99,7 @@ namespace BL.Services
             {
 
 #if DEBUG
-                var result = await db.Database.SqlQuery<ManualRecalculationsByFullLic>($" SELECT * from [Billing].[dbo].[GetManualRecalculationsByFullLic]('{FullLic}')").ToListAsync();
+                var result = await db.Database.SqlQuery<ManualRecalculationsByFullLic>($" SELECT * from [Billing_Test].[dbo].[GetManualRecalculationsByFullLic]('{FullLic}')").ToListAsync();
 #else
                 var result = await db.Database.SqlQuery<ManualRecalculationsByFullLic>($" SELECT * from [Billing].[dbo].[GetManualRecalculationsByFullLic]('{FullLic}')").ToListAsync();
 #endif
@@ -111,7 +111,7 @@ namespace BL.Services
             using (var db = new ApplicationDbContext())
             {
 #if DEBUG
-                await db.Database.ExecuteSqlCommandAsync($"exec [Billing].[dbo].[DeleteManualRecalculationByGuid] @guid='{Id}', @serviceId={serviceId}");
+                await db.Database.ExecuteSqlCommandAsync($"exec [Billing_Test].[dbo].[DeleteManualRecalculationByGuid] @guid='{Id}', @serviceId={serviceId}");
 #else
                 await db.Database.ExecuteSqlCommandAsync($"exec [Billing].[dbo].[DeleteManualRecalculationByGuid] @guid='{Id}', @serviceId={serviceId}");
 #endif

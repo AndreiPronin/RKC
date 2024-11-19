@@ -19,7 +19,7 @@
                                 <div class="col-sm-6">
                                     <select id="ReasonRecalculation" class="form-control">
                                         <option isResident="false" value="">Выберите причину перерасчета</option>
-                                        @foreach (var item in (List<BE.Recalculation.RecalculationReasons>)ViewBag.Reason)
+                                        @foreach (var item in ((List<BE.Recalculation.RecalculationReasons>)ViewBag.Reason).OrderBy(x => x.Name))
                                         {
                                             <option isRecalculationBeginningPeriodFieldEnabled="@(item.IsRecalculationBeginningPeriodFieldEnabled == true ? "true" : "false")"
                                                     isRecalculationEndingPeriodFieldEnabled="@(item.IsRecalculationEndingPeriodFieldEnabled == true ? "true" : "false")"
@@ -29,6 +29,7 @@
                                                     isRecalculationPeriodField="@(item.IsRecalculationPeriodFieldEnabled == true ? "true" : "false")"
                                                     isCounterField="@(item.IsCounterFieldEnabled == true ? "true" : "false")"
                                                     isConcreteCounter="@(item.IsConcreteCounterFieldEnabled == true ? "true" : "false")"
+                                                    isLicFieldEnabled="@(item.IsLicFieldEnabled == true ? "true" : "false")"
                                                     value="@item.RecalculationReason">
                                                 @item.Name @(string.IsNullOrEmpty(item.Description) ? "" : $"({item.Description})" )
                                             </option>
@@ -87,6 +88,13 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12 text-center" style="margin-top:10px"></div>
+                                <div id="ShowLic">
+                                    <label style="text-align:end;" class="col-sm-6 col-form-label">Введите лицевой счёт:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" tabIndex="" id="AccountNumber" class="form-control" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center" style="margin-top:10px"></div>
                                 <div id="ShowVolume">
                                     <label style="text-align:end;" class="col-sm-6 col-form-label">Выберите обьем:</label>
                                     <div class="col-sm-6">
@@ -139,6 +147,7 @@
         $("#ShowShemaRecalculation").addClass('hidden');
         $("#ShowPeriodPuRecalculation").addClass('hidden');
         $("#ShowConcreteCounter").addClass('hidden');
+        $("#ShowLic").addClass('hidden');
     }
     $(document).ready(function (e) {
         hiddenAll();
@@ -153,6 +162,7 @@
             var isCounterField = $("#ReasonRecalculation").find(':selected').attr('isCounterField');
             var isRecalculationPeriodField = $("#ReasonRecalculation").find(':selected').attr('isRecalculationPeriodField');
             var isConcreteCounterField = $("#ReasonRecalculation").find(':selected').attr('isConcreteCounter');
+            var isLicField = $("#ReasonRecalculation").find(':selected').attr('isLicFieldEnabled');
 
             if (isRecalculationBeginningPeriodFieldEnabled == "true") {
                 $("#ShowStartDateRecalculation").removeClass('hidden');
@@ -181,6 +191,9 @@
             if (isConcreteCounterField == "true") {
                 $('#ShowConcreteCounter').removeClass('hidden');
             }
+            if (isLicField == "true") {
+                $('#ShowLic').removeClass('hidden');
+            }
         })
         $("#Calculate").click(function (e) {
             $("#TableRecalculate").append("<p style='color:red;' class='text-center' >Идет загрузка</p>");
@@ -200,6 +213,7 @@
                         volume: $('#Volume').val()?.replace('.',','),
                         counterType: $('#TypePuRecalculation').val(),
                         concreteCounter: $('#TypeConcreteCounter').val(),
+                        additionalFullLic: $('#AccountNumber').val(),
                     }
                 }),
                 contentType: 'application/json; charset=utf-8',

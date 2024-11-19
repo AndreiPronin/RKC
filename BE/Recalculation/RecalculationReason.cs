@@ -52,5 +52,9 @@ namespace BE.Recalculation
         /// скрывать поле для ввода прибор учёта
         /// </summary>
         public bool IsConcreteCounterFieldEnabled { get; set; }
+        /// <summary>
+        /// отображать поле для ввода лицевого счёта
+        /// </summary>
+        public bool IsLicFieldEnabled { get; set; }
     }
 }
