@@ -109,7 +109,7 @@ namespace BL.Excel
             {
                 var flag = context.Flags.FirstOrDefault(x=>x.NameAction == nameof(EnumFlags.ReestyGPAccountingDepartment));
                 if (flag != null)
-                {   if(flag.DateTime >=date)
+                {   if(flag.DateTime < date)
                         flag.DateTime = date;
                 }
                 context.SaveChanges();
