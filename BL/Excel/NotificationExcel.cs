@@ -41,14 +41,15 @@ namespace BL.Excel
         }
         public static DataTable CreateExcelReceiptNotSend(List<ReceiptSend> ReceiptNotSend)
         {
-
             DataTable dt = new DataTable("Receipt");
-            dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Лицевой счет"), new DataColumn("Коментарий"), new DataColumn("Электронная почта") });
+            dt.Columns.AddRange(new DataColumn[6] { new DataColumn("Лицевой счет"), new DataColumn("Электронная почта"), new DataColumn("Месяц")
+            , new DataColumn("Дата отправки"), new DataColumn("Комментарий"), new DataColumn("Примечание")});
 
 
             foreach (var Items in ReceiptNotSend)
             {
-                dt.Rows.Add(Items.FullLic,Items.Comment,Items.Email);
+                var Dates = new DateTime(DateTime.Now.AddMonths(-1).Year, Items.DateTime.Month, 1);
+                dt.Rows.Add(Items.FullLic, Items.Email, Dates.ToString("MMMM yyyy"), Items.DateTime, Items.Comment, "");
             }
             return dt;
         }
