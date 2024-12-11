@@ -13,7 +13,9 @@ using RKC.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -182,24 +184,28 @@ namespace RKC.Controllers
                 }
                 DateEnd = DateEnd.AddMonths(1);
             }
-            var outputStream = new MemoryStream();
-            using (ZipFile zip = new ZipFile())
+
+            MemoryStream outputStream = new MemoryStream();
+            using (ZipArchive zip = new ZipArchive(outputStream, ZipArchiveMode.Create, true))
             {
                 foreach (var Items in persData)
                 {
+                    var entry = zip.CreateEntry(Items.FileName);
+
                     try
                     {
-                        zip.AddEntry(Items.FileName, Items.FileBytes);
+                        using (Stream stream = entry.Open())
+                        {
+                            stream.Write(Items.FileBytes, 0, Items.FileBytes.Length);
+                        }
                     }
                     catch
                     {
-                        zip.AddEntry(Items.FileName+ DateTime.Now.Date, Items.FileBytes);
                     }
                 }
-                zip.Save(outputStream);
             }
             outputStream.Position = 0;
-            return File(outputStream, "application/zip", "Квитанция.zip");
+            return File(outputStream, MediaTypeNames.Application.Octet, "Квитанция.zip");
         }
     }
    

@@ -28,6 +28,9 @@ using BE.Counter;
 using BL.Extention;
 using BE.Recalculation;
 using System.Web.Http.Results;
+using System.IO.Compression;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System.Net.Mime;
 
 namespace RKC.Controllers
 {
@@ -221,24 +224,28 @@ namespace RKC.Controllers
                 }
                 DateEnd = DateEnd.AddMonths(1);
             }
-            var outputStream = new MemoryStream();
-            using (ZipFile zip = new ZipFile())
+
+            MemoryStream outputStream = new MemoryStream();
+            using (ZipArchive zip = new ZipArchive(outputStream, ZipArchiveMode.Create, true))
             {
                 foreach (var Items in persData)
                 {
+                    var entry = zip.CreateEntry(Items.FileName);
+
                     try
                     {
-                        zip.AddEntry(Items.FileName, Items.FileBytes);
+                        using (Stream stream = entry.Open())
+                        {
+                            stream.Write(Items.FileBytes, 0, Items.FileBytes.Length);
+                        }
                     }
                     catch
                     {
-
                     }
                 }
-                zip.Save(outputStream);
             }
             outputStream.Position = 0;
-            return File(outputStream, "application/zip", "Квитанция.zip");
+            return File(outputStream, MediaTypeNames.Application.Octet, "Квитанция.zip");
         }
         [Auth(Roles = RolesEnums.Admin + "," + RolesEnums.DownLoadReceipt)]
         [HttpGet]
