@@ -47,27 +47,7 @@ namespace BL.Service
 
             var Counters = await _counter.DetailInfromsAllAsync();
 
-            IQueryable<ALL_LICS> aLL_LICs = DbLIC.ALL_LICS;
-            var Reading = await aLL_LICs.Select(x => new {
-                F4ENUMELS = x.F4ENUMELS,
-                FKUB2XVS = x.FKUB2XVS,
-                FKUB1XVS = x.FKUB1XVS,
-                FKUB2XV_2 = x.FKUB2XV_2,
-                FKUB1XV_2 = x.FKUB1XV_2,
-                FKUB2XV_3 = x.FKUB2XV_3,
-                FKUB1XV_3 = x.FKUB1XV_3,
-                FKUB2XV_4 = x.FKUB2XV_4,
-                FKUB1XV_4 = x.FKUB1XV_4,
-                FKUB2OT_1 = x.FKUB2OT_1,
-                FKUB1OT_1 = x.FKUB1OT_1,
-                FKUB2OT_2 = x.FKUB2OT_2,
-                FKUB1OT_2 = x.FKUB1OT_2,
-                FKUB2OT_3 = x.FKUB2OT_3,
-                FKUB1OT_3 = x.FKUB1OT_3,
-                FKUB2OT_4 = x.FKUB2OT_4,
-                FKUB1OT_4 = x.FKUB1OT_4,
-                ZAK = x.ZAK,
-            }).ToListAsync();
+            IQueryable<ALL_LICS> aLL_LICs = DbLIC.ALL_LICS; 
             try
             {
                 var periods = period.AddDays(-1);
@@ -83,7 +63,7 @@ namespace BL.Service
                     payment = await dbs.Payment.AsNoTracking()
                     .Include(x => x.Counter)
                     .Include(x => x.Organization)
-                    .Where(x => x.payment_date.Value == paymentDate.Value)
+                    //.Where(x => x.payment_date.Value == paymentDate.Value)
                     .ToListAsync();
                     payment = payment.Where(x=>x.lic == Lic).ToList();
                 }
@@ -92,7 +72,27 @@ namespace BL.Service
                 foreach (var data in payment)
                 {
                     var Procent = Math.Round((float)i / Count * 100, 0);
-                    var Readings = Reading.Where(x => x.F4ENUMELS == data.lic).FirstOrDefault();
+                    var Readings = await aLL_LICs.Select(x => new {
+                        F4ENUMELS = x.F4ENUMELS,
+                        FKUB2XVS = x.FKUB2XVS,
+                        FKUB1XVS = x.FKUB1XVS,
+                        FKUB2XV_2 = x.FKUB2XV_2,
+                        FKUB1XV_2 = x.FKUB1XV_2,
+                        FKUB2XV_3 = x.FKUB2XV_3,
+                        FKUB1XV_3 = x.FKUB1XV_3,
+                        FKUB2XV_4 = x.FKUB2XV_4,
+                        FKUB1XV_4 = x.FKUB1XV_4,
+                        FKUB2OT_1 = x.FKUB2OT_1,
+                        FKUB1OT_1 = x.FKUB1OT_1,
+                        FKUB2OT_2 = x.FKUB2OT_2,
+                        FKUB1OT_2 = x.FKUB1OT_2,
+                        FKUB2OT_3 = x.FKUB2OT_3,
+                        FKUB1OT_3 = x.FKUB1OT_3,
+                        FKUB2OT_4 = x.FKUB2OT_4,
+                        FKUB1OT_4 = x.FKUB1OT_4,
+                        ZAK = x.ZAK,
+                    }).Where(x => x.F4ENUMELS == data.lic).FirstOrDefaultAsync();
+
                     cacheApp.UpdateProgress(User, Procent.ToString());
                     i++;
                     if (Readings != null)

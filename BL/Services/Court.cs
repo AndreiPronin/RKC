@@ -259,11 +259,11 @@ namespace BL.Services
                         var lastName = FIO.TryGetValue(0);
                         var surName = FIO.TryGetValue(2);
                         if (!string.IsNullOrEmpty(firstName))
-                            query = query.Where(x => x.FirstName ==firstName);
+                            query = query.Where(x => x.FirstName.Contains(firstName));
                         if (!string.IsNullOrEmpty(lastName))
-                            query = query.Where(x => x.LastName == lastName);
+                            query = query.Where(x => x.LastName.Contains(lastName));
                         if (!string.IsNullOrEmpty(surName))
-                            query = query.Where(x => x.Surname == surName);
+                            query = query.Where(x => x.Surname.Contains(surName));
                     }
 
                     return await query.Take(30).ToListAsync();

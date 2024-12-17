@@ -38,7 +38,7 @@ namespace RkcTest.Service
         public async Task LoadReadingsTestAsync()
         {
             var integrationsTest = new Integrations(_mapper, _mkdInformationService);
-            await integrationsTest.LoadReadings("NunitTest", _cacheApp, new DateTime(2024, 1, 15), _notificationMail, _counter, "", new DateTime(2024, 1, 15));
+            await integrationsTest.LoadReadings("NunitTest", _cacheApp, new DateTime(2024, 1, 15), _notificationMail, _counter, "", new DateTime(2023, 1, 15));
         }
     }
 }
