@@ -31,6 +31,8 @@ using System.Web.Http.Results;
 using System.IO.Compression;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Net.Mime;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using System.Text;
 
 namespace RKC.Controllers
 {
@@ -465,6 +467,21 @@ namespace RKC.Controllers
             await _apiRecalculationService.ApplyCalculation(applyCalculation);
 
             return Content("");
+        }
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
+        [HttpPost]
+        public async Task<ActionResult> MassiveRecalculation(MassRecalculationEnum recalculationReason, DateTime period)
+        {
+            try
+            {
+                var result = await _apiRecalculationService.MassiveRecalculation(recalculationReason, period);
+                return File(Encoding.ASCII.GetBytes(result), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Отчет по перерасчету {recalculationReason.GetDescription()}.xlsx");
+            }
+            catch(Exception e)
+            {
+                return Content(e.Message);
+            }
+            
         }
     }
 }

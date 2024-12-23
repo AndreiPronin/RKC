@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "ParilaViewIntegration";
+}
+@using BE.Recalculation;
+<br />
+@using (Html.BeginForm("MassiveRecalculation", "PersonalData", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    if (User.IsInRole("Admin"))
+    {
+        <div style="margin-top:30px;" class="row">
+
+            <div class="col-md-6">
+                <select name="recalculationReason" id="recalculationReason" class="form-control">
+                    <option value="@MassRecalculationEnum.AccountOwnerChangeOrDivision">@MassRecalculationEnum.AccountOwnerChangeOrDivision.GetDescription()</option>
+                </select>
+                @*<input name="Type" id="Type" class="form-control" />*@
+            </div>
+            <div class="col-md-4">
+                <input name="period" id="period" type="date" class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <input type="submit" id="UploadFilePU" class="btn btn-success" value="Запустить перерасчет" />
+            </div>
+        </div>
+    }
+}
+
+<script>
+    set_onbeforeunload = function () {
+        return true;
+    };
+    $(document).ready(function (e) {
+        $(".loader").addClass("hidden");
+        $("#UploadFilePU").click(function (e) {
+            window.onbeforeunload = set_onbeforeunload;
+        })
+    });
+</script>
+

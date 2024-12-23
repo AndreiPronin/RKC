@@ -1,7 +1,7 @@
 ﻿<h1>Панель Администратора</h1>
 <ul class="nav nav-tabs nav-tabs-Admins">
-    <li class="nav-item active" id="reportButton" >
-        <a class="nav-link " data-toggle="tab"  href="#report">Отчеты</a>
+    <li class="nav-item active" id="reportButton">
+        <a class="nav-link " data-toggle="tab" href="#report">Отчеты</a>
     </li>
     <li class="nav-item" id="roleButton">
         <a class="nav-link" data-toggle="tab" href="#role">Права</a>
@@ -19,6 +19,9 @@
         </li>
         <li class="nav-item" id="BlockButton">
             <a class="nav-link" data-toggle="tab" href="#Block">Блокировка</a>
+        </li>
+        <li class="nav-item" id="CalculationButton">
+            <a class="nav-link" data-toggle="tab" href="#Calculation">Перерасчет</a>
         </li>
     }
 </ul>
@@ -42,6 +45,9 @@
         </div>
         <div class="tab-pane fade" id="Block">
             @Html.Partial("ParilaViewBlock")
+        </div>
+        <div class="tab-pane fade" id="Calculation">
+            @Html.Partial("ParilaViewCalculation")
         </div>
     }
 </div>

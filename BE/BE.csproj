@@ -100,6 +100,7 @@
     <Compile Include="Recalculation\ApplyCalculation.cs" />
     <Compile Include="Recalculation\Calculate.cs" />
     <Compile Include="Recalculation\ErrorCalculate.cs" />
+    <Compile Include="Recalculation\MassRecalculationEnum.cs" />
     <Compile Include="Recalculation\RecalculationReason.cs" />
     <Compile Include="Recalculation\RecalculationsDto.cs" />
     <Compile Include="Report\EnumsReport.cs" />
