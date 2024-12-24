@@ -1,4 +1,5 @@
 ﻿using BE.Recalculation;
+using BL.Extention;
 using BL.Helper;
 using BL.http;
 using BL.Security;
@@ -105,10 +106,11 @@ namespace BL.Services
             try
             {
                 result = (await Reuqests.UploadFileAndGetFile(
-                    $"{_url}/v1/MassiveRecalculation/process-template?RecalculationReason={(int)recalculationReason}&Period={period}", 
+                    $"{_url}/v1/MassiveRecalculation/process-template?RecalculationReason={Enum.GetName(typeof(MassRecalculationEnum), recalculationReason)}&Period={DateTime.Now.GetDateWhitMaxDate().ToString("yyyy-MM-dd")}", 
                     token,
                     stream,
-                    fileName)
+                    fileName,
+                    "Template")
                     ).ToString();
                 return result;
             }
