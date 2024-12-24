@@ -10,14 +10,14 @@
     {
         <div style="margin-top:30px;" class="row">
 
-            <div class="col-md-6">
+           <div class="col-md-4">
+               @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+           </div>
+            <div class="col-md-4">
                 <select name="recalculationReason" id="recalculationReason" class="form-control">
                     <option value="@MassRecalculationEnum.AccountOwnerChangeOrDivision">@MassRecalculationEnum.AccountOwnerChangeOrDivision.GetDescription()</option>
                 </select>
                 @*<input name="Type" id="Type" class="form-control" />*@
-            </div>
-            <div class="col-md-4">
-                <input name="period" id="period" type="date" class="form-control" />
             </div>
             <div class="col-md-2">
                 <input type="submit" id="UploadFilePU" class="btn btn-success" value="Запустить перерасчет" />

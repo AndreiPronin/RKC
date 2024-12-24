@@ -470,11 +470,11 @@ namespace RKC.Controllers
         }
         [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
         [HttpPost]
-        public async Task<ActionResult> MassiveRecalculation(MassRecalculationEnum recalculationReason, DateTime period)
+        public async Task<ActionResult> MassiveRecalculation(HttpPostedFileBase file,MassRecalculationEnum recalculationReason)
         {
             try
             {
-                var result = await _apiRecalculationService.MassiveRecalculation(recalculationReason, period);
+                var result = await _apiRecalculationService.MassiveRecalculation(file.InputStream,file.FileName,recalculationReason, DateTime.Now.GetDateWhitMaxDate());
                 return File(Encoding.ASCII.GetBytes(result), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Отчет по перерасчету {recalculationReason.GetDescription()}.xlsx");
             }
             catch(Exception e)

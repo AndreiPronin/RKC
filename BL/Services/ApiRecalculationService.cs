@@ -19,7 +19,7 @@ namespace BL.Services
         Task<Dictionary<string, string>> GetService();
         Task<RecalculationsDto> Calculation(Calculate calculate);
         Task ApplyCalculation(ApplyCalculation applyCalculation);
-        Task<string> MassiveRecalculation(MassRecalculationEnum recalculationReason, DateTime period);
+        Task<string> MassiveRecalculation(Stream stream, string fileName, MassRecalculationEnum recalculationReason, DateTime period);
     }
 
     public class ApiRecalculationService : IApiRecalculationService
@@ -96,7 +96,7 @@ namespace BL.Services
                 throw new Exception(error.Message);
             }
         }
-        public async Task<string> MassiveRecalculation(MassRecalculationEnum recalculationReason, DateTime period)
+        public async Task<string> MassiveRecalculation(Stream stream,string fileName,MassRecalculationEnum recalculationReason, DateTime period)
         {
             _tokenCreator.Key = new GetConfigurationManager().GetAppSettings(KeyConfigurationManager.GeneralServiceKey).GetString();
             var token = _tokenCreator.CreateTokenReportService();
@@ -104,9 +104,11 @@ namespace BL.Services
             string result = string.Empty;
             try
             {
-                result = (await Reuqests.GetFileRequestWithTockenAsync(
+                result = (await Reuqests.UploadFileAndGetFile(
                     $"{_url}/v1/MassiveRecalculation/process-template?RecalculationReason={(int)recalculationReason}&Period={period}", 
-                    token)
+                    token,
+                    stream,
+                    fileName)
                     ).ToString();
                 return result;
             }
