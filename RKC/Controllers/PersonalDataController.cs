@@ -33,6 +33,8 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using System.Net.Mime;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace RKC.Controllers
 {
@@ -460,13 +462,25 @@ namespace RKC.Controllers
         }
         [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
         [HttpPost]
-        public async Task<ActionResult> ApplyCalculation(ApplyCalculation applyCalculation)
+        public async Task<ActionResult> ApplyCalculation()
         {
-            applyCalculation.RecalculationOwner = User.Identity.GetFIOFull();
-            applyCalculation.Timestamp = DateTime.Now;
-            await _apiRecalculationService.ApplyCalculation(applyCalculation);
+            try
+            {
+                Stream req = Request.InputStream;
+                req.Seek(0, System.IO.SeekOrigin.Begin);
+                string json = new StreamReader(req).ReadToEnd();
 
-            return Content("");
+                var applyCalculation = JsonConvert.DeserializeObject<ApplyCalculation>(json);
+
+                applyCalculation.RecalculationOwner = User.Identity.GetFIOFull();
+                applyCalculation.Timestamp = DateTime.Now;
+                await _apiRecalculationService.ApplyCalculation(applyCalculation);
+
+                return Content("");
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
         }
         [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
         [HttpPost]

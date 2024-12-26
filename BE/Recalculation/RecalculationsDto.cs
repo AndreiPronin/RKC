@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BE.Extenstons;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,7 +16,9 @@ namespace BE.Recalculation
 
     public class Recalculation
     {
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         public DateTime recalculationBeginningPeriod { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         public DateTime recalculationEndingPeriod { get; set; }
         public decimal Area { get; set; } = 0;
         public int ResidentsNumber { get; set; } = 0;
