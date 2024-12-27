@@ -63,7 +63,7 @@ namespace BL.Service
                     payment = await dbs.Payment.AsNoTracking()
                     .Include(x => x.Counter)
                     .Include(x => x.Organization)
-                    //.Where(x => x.payment_date.Value == paymentDate.Value)
+                    .Where(x => x.payment_date.Value == paymentDate.Value)
                     .ToListAsync();
                     payment = payment.Where(x=>x.lic == Lic).ToList();
                 }
