@@ -27,6 +27,7 @@ using System.Data.Entity;
 using BL.Rules;
 using BL.Services.FileServices;
 using Microsoft.Ajax.Utilities;
+using System.Threading;
 
 namespace RKC.Controllers
 {
@@ -298,11 +299,11 @@ namespace RKC.Controllers
         }
         [HttpGet]
         [Auth(Roles = RolesEnums.Admin)]
-        public async Task<ActionResult> RunIntegration(DateTime date)
+        public async Task<ActionResult> RunIntegration(DateTime date, CancellationToken cancellationToken)
         {
             try
             {
-                await _integration.LoadReadings("Integration", _cacheApp, date, _notificationMail, _counter);
+                await _integration.LoadReadings("Integration", _cacheApp, date, _notificationMail, _counter, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {

@@ -50,6 +50,7 @@ namespace BL.Services
         DebtInfoForLic GetDebtInfoForLic(string FullLic);
         Task<List<ManualRecalculationsByFullLic>> GetManualRecalculationsByFullLic(string FullLic);
         Task RemoveRecalculation(Guid Id, int serviceId);
+        Task<List<ALL_LICS_ARCHIVE>> GetHistoryAccrualsByItems(string fullLic);
     }
     public class PersonalData : BaseService, IPersonalData
     {
@@ -657,6 +658,50 @@ namespace BL.Services
                 var lic = dbLic.ALL_LICS.FirstOrDefault(x => x.F4ENUMELS == FullLic);
                 lic.ZAK = null;
                 dbLic.SaveChanges();
+            }
+        }
+
+        public async Task<List<ALL_LICS_ARCHIVE>> GetHistoryAccrualsByItems(string fullLic)
+        {
+            using (var dbLic = new DbLIC())
+            {
+                var lics = await dbLic.ALL_LICS_ARCHIVE.Where(x => x.F4ENUMELS == fullLic)
+                    //.Select(x=> new ALL_LICS_ARCHIVE
+                    //{
+                    //    period = x.period,
+                    //    SN2 = x.SN2,
+                    //    SR2 = x.SR2,
+                    //    SN3 = x.SN3,
+                    //    SR3 = x.SR3,
+                    //    SN4 = x.SN4,
+                    //    SR4 = x.SR4,
+                    //    SN5 = x.SN5,
+                    //    SR5 = x.SR5,
+                    //    SN6 = x.SN6,
+                    //    SR6 = x.SR6,
+                    //    SN7 = x.SN7,
+                    //    SR7 = x.SR7,
+                    //    SN8 = x.SN8,
+                    //    SR8 = x.SR8,
+                    //    SN9 = x.SN9,
+                    //    SR9 = x.SR9,
+                    //    SN10 = x.SN10,
+                    //    SR10 = x.SR10,
+                    //    SN11 = x.SN11,
+                    //    SR11 = x.SR11,
+                    //    SN12 = x.SN12,
+                    //    SR12 = x.SR12,
+                    //    SN13 = x.SN13,
+                    //    SR13 = x.SR13,
+                    //    SN14 = x.SN14,
+                    //    SR14 = x.SR14,
+                    //    SN15 = x.SN15,
+                    //    SR15 = x.SR15,
+                    //    PENY_SN = x.PENY_SN,
+                    //    PENY_SR = x.PENY_SR,
+                    //})
+                    .ToListAsync();
+                return lics;
             }
         }
     }

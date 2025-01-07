@@ -22,7 +22,7 @@ namespace BL.Service
 {
     public interface IIntegrations
     {
-        Task LoadReadings(string User, ICacheApp cacheApp, DateTime period, INotificationMail _notificationMail, ICounter _counter, string Lic = "", DateTime? paymentDate = null);
+        Task LoadReadings(string User, ICacheApp cacheApp, DateTime period, INotificationMail _notificationMail, ICounter _counter, string Lic = "", DateTime? paymentDate = null, CancellationToken cancellationToken = default);
         List<IntegrationReadings> GetErrorIntegrationReadings();
         List<IntegrationReadings> GetErrorIntegrationReadings(string FullLic);
     }
@@ -34,7 +34,7 @@ namespace BL.Service
             _mapper = mapper;
             _mkdInformationService = mkdInformationService;
         }
-        public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period, INotificationMail _notificationMail, ICounter _counter, string Lic = "", DateTime? paymentDate = null)
+        public async Task LoadReadings(string User, ICacheApp cacheApp,DateTime period, INotificationMail _notificationMail, ICounter _counter, string Lic = "", DateTime? paymentDate = null, CancellationToken cancellationToken = default)
         {
             object Lock = new object();
             cacheApp.AddProgress(User + "_", "0");
@@ -71,6 +71,9 @@ namespace BL.Service
                 int i = 0;
                 foreach (var data in payment)
                 {
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     var Procent = Math.Round((float)i / Count * 100, 0);
                     var Readings = await aLL_LICs.Select(x => new {
                         F4ENUMELS = x.F4ENUMELS,

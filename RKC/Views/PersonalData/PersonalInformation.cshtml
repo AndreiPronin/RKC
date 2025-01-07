@@ -228,6 +228,12 @@
                     <div class="col-md-1">
                         <div id="mySidenavPersonalData" class="sidenav">
                             <ul class="nav nav-tabs">
+                                @if (User.IsInRole(BE.Roles.RolesEnums.ShowNoteLic) || User.IsInRole(BE.Roles.RolesEnums.SuperAdmin))
+                                {
+                                    <li class="nav-item">
+                                        <a style="cursor:pointer" class="HistoryAccrualsByItems">История начислений по статьям</a>
+                                    </li>
+                                }
                                 <li class="nav-item">
                                     <a style="cursor:pointer" class="DownLoadHelpСalculation">Справка расчет</a>
                                 </li>
@@ -319,6 +325,9 @@ else
         $(".loader").addClass("hidden");
     }
     $(document).ready(function (e) {
+        $(".HistoryAccrualsByItems").click(function (e) {
+            window.open('/PersonalData/HistoryAccrualsByItems?FullLic=' + @ViewBag.FULL_LIC,"_self");
+        })
         $(".DownLoadHelpСalculation").click(function (e) {
             var Date = "@DateTime.Now.Date.ToString("yyyy-MM")";
             console.log(Date);

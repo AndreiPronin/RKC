@@ -736,6 +736,7 @@
     <Content Include="Views\PersonalData\CurentRecalculation.cshtml" />
     <Content Include="Views\PersonalData\WatchPenyСalculation.cshtml" />
     <Content Include="Views\Admin\ParilaViewCalculation.cshtml" />
+    <Content Include="Views\PersonalData\HistoryAccrualsByItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

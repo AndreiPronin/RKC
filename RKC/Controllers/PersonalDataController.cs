@@ -460,6 +460,13 @@ namespace RKC.Controllers
                 return Content(ex.Message.ToString());
             }
         }
+        [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.ShowNoteLic)]
+        [HttpGet]
+        public async Task<ActionResult> HistoryAccrualsByItems(string FullLic)
+        {
+            var result = await _personalData.GetHistoryAccrualsByItems(FullLic);
+            return View(result);
+        }
         [Auth(Roles = RolesEnums.SuperAdmin + "," + RolesEnums.Recalculation)]
         [HttpPost]
         public async Task<ActionResult> ApplyCalculation()
