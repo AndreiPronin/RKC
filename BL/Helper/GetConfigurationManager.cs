@@ -17,6 +17,7 @@ namespace BL.Helper
         public const string RecalculationServiceUrl = "Recalculation:Service:Url";
         public const string ReportServiceUrlDbf = "Report:Service:Url:DBF";
         public const string CourtLogPath = "Court:Log:Path";
+        public const string Mode = "Mode";
     }
     public class GetConfigurationManager
     {

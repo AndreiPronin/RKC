@@ -16,8 +16,8 @@ namespace BL.Jobs
         public void Execute(IJobExecutionContext context)
         {
             IJobManager _jobmanager = new JobManager(new NotificationMail(), new ReceiptFactory());
-            //_jobmanager.CheckDublicatePu();
-            //_jobmanager.CheckDublicatePers();
+            _jobmanager.CheckDublicatePu();
+            _jobmanager.CheckDublicatePers();
             //await Task.CompletedTask;
         }
     }
