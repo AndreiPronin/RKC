@@ -48,7 +48,6 @@ namespace BL.Jobs
                     .Build();                               // создаем триггер
                 ITrigger triggerCheckSendReceipt = TriggerBuilder.Create()  // создаем триггер
                    .WithIdentity("jobSendReceipt", "jobSendReceiptGroup")     // идентифицируем триггер с именем и группой
-                    .StartNow()
                    .WithCronSchedule(cronCheck)
                    .Build();                               // создаем триггер
 
