@@ -90,6 +90,7 @@
     <Compile Include="DPU\SearchAutocompleteResultDPU.cs" />
     <Compile Include="DPU\SerachAutoCompleteModel.cs" />
     <Compile Include="Extenstons\CustomDateTimeConverter.cs" />
+    <Compile Include="Extenstons\CustomDoubleConverter.cs" />
     <Compile Include="http\ResultResponse.cs" />
     <Compile Include="JobManager\EnumJob.cs" />
     <Compile Include="JobManager\MailSend.cs" />

@@ -741,6 +741,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Utils\" />
     <Folder Include="Views\SocialHiring\" />
     <Folder Include="Views\СourtСases\" />
   </ItemGroup>
