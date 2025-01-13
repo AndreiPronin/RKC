@@ -18,12 +18,12 @@
 </script>
 <style>
     .table-cont {
-        max-height: 1500px;
+        max-height: 700px;
         overflow-x: auto;
     }
 
     body {
-        font-size: 11px;
+        font-size: 13px;
     }
 
     .container {
@@ -37,90 +37,141 @@
         border-top: 1px solid #ddd;
     }
 </style>
+
 <div style="margin-left:180px;">
     <button id="ClosePage" class="btn btn-success">Закрыть страницу</button>
 </div>
 <h2>История начислений по статьям</h2>
 
+<div class='table-cont' id='table-cont'>
+    <table class="table table-bordered">
+        <tbody style="background-color:white">
+            <tr>
+                <th>Период</th>
+                <th>Статус Л/С</th>
+                <th>2.ОТП</th>
+                <th>2.ОТП перерасчёт</th>
+                <th>
+                    12.ОТП "ОДН"
+                </th>
+                <th>
+                    12.ОТП "ОДН" перерасчёт
+                </th>
+                <th>
+                    8.ОТП неустойка
+                </th>
+                <th>
+                    8.ОТП неустойка перерасчёт
+                </th>
+                <th>
+                    3.ГВС
+                </th>
+                <th>
+                    3.ГВС перерасчёт
+                </th>
+                <th>
+                    4.ОДН ГВС
+                </th>
+                <th>
+                    4.ОДН ГВС перерасчёт
+                </th>
+                <th>
+                    7.ГВС ПК
+                </th>
+                <th>
+                    7.ГВС ПК перерасчёт
+                </th>
+                <th>
+                    14.ГВС неустойка
+                </th>
+                <th>
+                    14.ГВС неустойка перерасчёт
+                </th>
+                <th>
+                    5.ХВС
+                </th>
+                <th>
+                    5.ХВС перерасчёт
+                </th>
+                <th>
+                    6.ХВС ОДН
+                </th>
+                <th>
+                    6.ХВС ОДН перерасчёт
+                </th>
+                <th>
+                    10.ХВС ПК
+                </th>
+                <th>
+                    10.ХВС ПК перерасчёт
+                </th>
+                <th>
+                    11.ХВС неустойка
+                </th>
+                <th>
+                    11.ХВС неустойка перерасчёт
+                </th>
+                <th>
+                    15.Перенос сальдо
+                </th>
+                <th>
+                    15.Перенос сальдо перерасчёт
+                </th>
+                <th>
+                    Начисления пени
+                </th>
+                <th>
+                    Перерасчёт пени
+                </th>
+            </tr>
+        </tbody>
+        <tbody>
+            @foreach (var item in Model.OrderByDescending(x=>x.period).ToList())
+            {
+                <tr>
+                    <td>@(item.period?.ToString("MMMM yyyy"))</td>
+                    <td>@(string.IsNullOrEmpty(item.ZAK) ? "активен" : "закрыт")</td>
+                    <td>@item.SN2</td>
+                    <td>@item.SR2</td>
+                    <td>@item.SN12</td>
+                    <td>@item.SR12</td>
+                    <td>@item.SN8</td>
+                    <td>@item.SR8</td>
+                    <td>@item.SN3</td>
+                    <td>@item.SR3</td>
+                    <td>@item.SN4</td>
+                    <td>@item.SR4</td>
+                    <td>@item.SN7</td>
+                    <td>@item.SR7</td>
+                    <td>@item.SN14</td>
+                    <td>@item.SR14</td>
+                    <td>@item.SN5</td>
+                    <td>@item.SR5</td>
+                    <td>@item.SN6</td>
+                    <td>@item.SR6</td>
+                    <td>@item.SN10</td>
+                    <td>@item.SR10</td>
+                    <td>@item.SN11</td>
+                    <td>@item.SR11</td>
+                    <td>@item.SN15</td>
+                    <td>@item.SR15</td>
+                    <td>@item.PENY_SN</td>
+                    <td>@item.PENY_SR</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    <script>
 
-<table class="table table-bordered">
-    <tr>
-        <th>Период</th>
-        <th>Статус Л/С</th>
-        <th>2.ОТП</th>
-        <th>2.ОТП перерасчёт</th>
-        <th>3.ГВС</th>
-        <th>3.ГВС перерасчёт</th>
-        <th>4.ОДН ГВС</th>
-        <th>4.ОДН ГВС перерасчёт</th>
-        <th>5.ХВС</th>
-        <th>5.ХВС перерасчёт</th>
-        <th>6.ХВС ОДН</th>
-        <th>6.ХВС ОДН перерасчёт</th>
-        <th>7.ГВС ПК</th>
-        <th>7.ГВС ПК перерасчёт</th>
-        <th>8.ОТП неустойка</th>
-        <th>8.ОТП неустойка перерасчёт</th>
-        <th>10.ХВС ПК</th>
-        <th>10.ХВС ПК перерасчёт</th>
-        <th>11.ХВС неустойка</th>
-        <th>11.ХВС неустойка перерасчёт</th>
-        <th>12.ОТП "ОДН"</th>
-        <th>12.ОТП "ОДН" перерасчёт</th>
-        <th>14.ГВС неустойка</th>
-        <th>14.ГВС неустойка перерасчёт</th>
-        <th>15.Перенос сальдо</th>
-        <th>15.Перенос сальдо перерасчёт</th>
-        <th>Начисления пени</th>
-        <th>Перерасчёт пени</th>
-    </tr>
+        function Loader() {
+            $(".loader").addClass("hidden");
+        }
+        $(document).ready(function (e) {
+            setTimeout(Loader, 1000);
+            $("#ClosePage").click(function () {
+                window.close();
+            })
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@(item.period?.ToString("MMMM yyyy"))</td>
-            <td>@(string.IsNullOrEmpty(item.ZAK) ? "активен" : "закрыт")</td>
-            <td>@item.SN2</td>
-            <td>@item.SR2</td>
-            <td>@item.SN3</td>
-            <td>@item.SR3</td>
-            <td>@item.SN4</td>
-            <td>@item.SR4</td>
-            <td>@item.SN5</td>
-            <td>@item.SR6</td>
-            <td>@item.SN6</td>
-            <td>@item.SR6</td>
-            <td>@item.SN7</td>
-            <td>@item.SR7</td>
-            <td>@item.SN8</td>
-            <td>@item.SR8</td>
-            <td>@item.SN10</td>
-            <td>@item.SR10</td>
-            <td>@item.SN11</td>
-            <td>@item.SR11</td>
-            <td>@item.SN12</td>
-            <td>@item.SR12</td>
-            <td>@item.SN14</td>
-            <td>@item.SR14</td>
-            <td>@item.SN15</td>
-            <td>@item.SR15</td>
-            <td>@item.PENY_SN</td>
-            <td>@item.PENY_SR</td>
-        </tr>
-    }
-
-</table>
-
-<script>
-
-    function Loader() {
-        $(".loader").addClass("hidden");
-    }
-    $(document).ready(function (e) {
-        setTimeout(Loader, 1000);
-        $("#ClosePage").click(function () {
-            window.close();
-        })
-       
-    });
-</script>
+        });
+    </script>
