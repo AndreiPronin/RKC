@@ -28,6 +28,7 @@ namespace BE.Recalculation
     {
         public int id { get; set; }
         public string name { get; set; }
+        [JsonConverter(typeof(CustomDoubleConverter))]
         public double price { get; set; }
         public double Accured {  get; set; }
         public double Recalculatied { get; set; }
