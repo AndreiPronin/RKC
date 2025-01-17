@@ -314,68 +314,98 @@ namespace BL.Excel
                             CourtGeneral.CourtExecutionFSSP.FioSendSpIo = dataRow.Cell(7).Value.ToString();
                         if (dataRow.Cell(7).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 20).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtExecutionFSSP.FioSendSpIo) == null)
                             exceptions.Append("ФИО сотрудника не найдена в справочнике" + Environment.NewLine);
-                        if (dataRow.Cell(8).Value != "" && CourtGeneral.CourtExecutionFSSP.DateTask != Convert.ToDateTime(dataRow.Cell(8).Value))
-                            CourtGeneral.CourtExecutionFSSP.DateTask = Convert.ToDateTime(dataRow.Cell(8).Value);
-                        if (dataRow.Cell(9).Value != "" && CourtGeneral.CourtExecutionFSSP.DateSendingApplicationFSSP != Convert.ToDateTime(dataRow.Cell(9).Value))
-                            CourtGeneral.CourtExecutionFSSP.DateSendingApplicationFSSP = Convert.ToDateTime(dataRow.Cell(9).Value);
+                        if (dataRow.Cell(8).Value != "" && CourtGeneral.CourtWork.DateSendingApplicationDebtor != Convert.ToDateTime(dataRow.Cell(8).Value))
+                            CourtGeneral.CourtWork.DateSendingApplicationDebtor = Convert.ToDateTime(dataRow.Cell(8).Value);
+                        if (dataRow.Cell(9).Value != "" && CourtGeneral.CourtWork.SubmitApplicationCourt != dataRow.Cell(9).Value.ToString())
+                            CourtGeneral.CourtWork.SubmitApplicationCourt = dataRow.Cell(9).Value.ToString();
+                        if (dataRow.Cell(9).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 17).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtWork.SubmitApplicationCourt) == null)
+                            exceptions.Append("Способ отправки заявления в суд" + Environment.NewLine);
+
+
+                        if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtExecutionFSSP.DateTask != Convert.ToDateTime(dataRow.Cell(10).Value))
+                            CourtGeneral.CourtExecutionFSSP.DateTask = Convert.ToDateTime(dataRow.Cell(10).Value);
+                        if (dataRow.Cell(11).Value != "" && CourtGeneral.CourtExecutionFSSP.DateSendingApplicationFSSP != Convert.ToDateTime(dataRow.Cell(11).Value))
+                            CourtGeneral.CourtExecutionFSSP.DateSendingApplicationFSSP = Convert.ToDateTime(dataRow.Cell(11).Value);
                         //if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtExecutionFSSP.ExecutiveBody != dataRow.Cell(10).Value.ToString())
                         //    CourtGeneral.CourtExecutionFSSP.ExecutiveBody = dataRow.Cell(10).Value.ToString();
-                        if (dataRow.Cell(10).Value != "")
+                        if (dataRow.Cell(12).Value != "")
                         {
-                            var xxx = dataRow.Cell(10).Value.ToString();
-                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 3).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[0]?.Trim() == dataRow.Cell(10).Value.ToString());
-                            if (dataRow.Cell(10).Value != "" && CourtName is null)
+                            var xxx = dataRow.Cell(12).Value.ToString();
+                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 3).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[0]?.Trim() == dataRow.Cell(12).Value.ToString());
+                            if (dataRow.Cell(12).Value != "" && CourtName is null)
                                 exceptions.Append("Исполнительный орган (ФССП) не найдена в справочнике" + Environment.NewLine);
                             else
                             {
-                                if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtExecutionFSSP.ExecutiveBody != CourtName.Name.Split('|')[0])
+                                if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtExecutionFSSP.ExecutiveBody != CourtName.Name.Split('|')[0])
                                 {
                                     CourtGeneral.CourtExecutionFSSP.ExecutiveBody = CourtName.Name.Split('|')[0];
                                     CourtGeneral.CourtExecutionFSSP.AddressIO = CourtName.Name.Split('|')[1];
                                 }
                             }
                         }
-                        if (dataRow.Cell(11).Value != "" && CourtGeneral.CourtExecutionFSSP.NumberIP != dataRow.Cell(11).Value.ToString())
-                            CourtGeneral.CourtExecutionFSSP.NumberIP = dataRow.Cell(11).Value.ToString();
-                        if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtExecutionFSSP.IPInitiationDate != Convert.ToDateTime(dataRow.Cell(12).Value))
-                            CourtGeneral.CourtExecutionFSSP.IPInitiationDate = Convert.ToDateTime(dataRow.Cell(12).Value);
-                        if (dataRow.Cell(13).Value != "" && CourtGeneral.CourtExecutionFSSP.IPEndDate != Convert.ToDateTime(dataRow.Cell(13).Value))
-                            CourtGeneral.CourtExecutionFSSP.IPEndDate = Convert.ToDateTime(dataRow.Cell(13).Value);
+                        CourtGeneral.CourtExecutionFSSP.SumApplicationOd = 0;
+                        CourtGeneral.CourtExecutionFSSP.SumApplicationPeny = 0;
+                        CourtGeneral.CourtExecutionFSSP.SumApplicationGp = 0;
+                        if (dataRow.Cell(13).Value != "" && CourtGeneral.CourtExecutionFSSP.SumApplicationOd != Convert.ToDouble(dataRow.Cell(13).Value.ToString().Replace(".",",")))
+                        {
+
+                            CourtGeneral.CourtExecutionFSSP.SumApplicationOd = Convert.ToDouble(dataRow.Cell(13).Value.ToString().Replace(".", ","));
+                            CourtGeneral.CourtExecutionFSSP.SumApplicationAll = CourtGeneral.CourtExecutionFSSP.SumApplicationOd + CourtGeneral.CourtExecutionFSSP.SumApplicationPeny + CourtGeneral.CourtExecutionFSSP.SumApplicationGp;
+                        }
+                        if (dataRow.Cell(14).Value != "" && CourtGeneral.CourtExecutionFSSP.SumApplicationPeny != Convert.ToDouble(dataRow.Cell(14).Value.ToString().Replace(".", ",")))
+                        {
+                            CourtGeneral.CourtExecutionFSSP.SumApplicationPeny = Convert.ToDouble(dataRow.Cell(14).Value.ToString().Replace(".", ","));
+                            CourtGeneral.CourtExecutionFSSP.SumApplicationAll = CourtGeneral.CourtExecutionFSSP.SumApplicationOd + CourtGeneral.CourtExecutionFSSP.SumApplicationPeny + CourtGeneral.CourtExecutionFSSP.SumApplicationGp;
+                        }
+                        if (dataRow.Cell(15).Value != "" && CourtGeneral.CourtExecutionFSSP.SumApplicationGp != Convert.ToDouble(dataRow.Cell(15).Value.ToString().Replace(".", ",")))
+                        {
+                            CourtGeneral.CourtExecutionFSSP.SumApplicationGp = Convert.ToDouble(dataRow.Cell(15).Value.ToString().Replace(".", ","));
+                            CourtGeneral.CourtExecutionFSSP.SumApplicationAll = CourtGeneral.CourtExecutionFSSP.SumApplicationOd + CourtGeneral.CourtExecutionFSSP.SumApplicationPeny + CourtGeneral.CourtExecutionFSSP.SumApplicationGp;
+                        }
+                        
+
+
+                        if (dataRow.Cell(16).Value != "" && CourtGeneral.CourtExecutionFSSP.NumberIP != dataRow.Cell(16).Value.ToString())
+                            CourtGeneral.CourtExecutionFSSP.NumberIP = dataRow.Cell(16).Value.ToString();
+                        if (dataRow.Cell(17).Value != "" && CourtGeneral.CourtExecutionFSSP.IPInitiationDate != Convert.ToDateTime(dataRow.Cell(17).Value))
+                            CourtGeneral.CourtExecutionFSSP.IPInitiationDate = Convert.ToDateTime(dataRow.Cell(17).Value);
+                        if (dataRow.Cell(18).Value != "" && CourtGeneral.CourtExecutionFSSP.IPEndDate != Convert.ToDateTime(dataRow.Cell(18).Value))
+                            CourtGeneral.CourtExecutionFSSP.IPEndDate = Convert.ToDateTime(dataRow.Cell(18).Value);
 
                         //if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtExecutionFSSP.GroundsEndingIP != dataRow.Cell(12).Value.ToString())
                         //    CourtGeneral.CourtExecutionFSSP.GroundsEndingIP = dataRow.Cell(12).Value.ToString();
-                        if (dataRow.Cell(14).Value != "")
+                        if (dataRow.Cell(19).Value != "")
                         {
-                            var xxx = dataRow.Cell(14).Value.ToString();
-                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 4).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(14).Value.ToString());
-                            if (dataRow.Cell(14).Value != "" && CourtName is null)
+                            var xxx = dataRow.Cell(19).Value.ToString();
+                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 4).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(19).Value.ToString());
+                            if (dataRow.Cell(19).Value != "" && CourtName is null)
                                 exceptions.Append("Статья окончания ИП1 не найдена в справочнике" + Environment.NewLine);
                             else
                             {
-                                if (dataRow.Cell(14).Value != "" && CourtGeneral.CourtExecutionFSSP.SatyaEndingIP != CourtName.Name.Split('|')[1])
+                                if (dataRow.Cell(19).Value != "" && CourtGeneral.CourtExecutionFSSP.SatyaEndingIP != CourtName.Name.Split('|')[1])
                                 {
                                     CourtGeneral.CourtExecutionFSSP.GroundsEndingIP = CourtName.Name.Split('|')[0];
                                     CourtGeneral.CourtExecutionFSSP.SatyaEndingIP = CourtName.Name.Split('|')[1];
                                 }
                             }
                         }
-                        if (dataRow.Cell(15).Value != "" && CourtGeneral.CourtExecutionFSSP.NumberIP2 != dataRow.Cell(15).Value.ToString())
-                            CourtGeneral.CourtExecutionFSSP.NumberIP2 = dataRow.Cell(15).Value.ToString();
-                        if (dataRow.Cell(16).Value != "" && CourtGeneral.CourtExecutionFSSP.IPInitiationDate2 != Convert.ToDateTime(dataRow.Cell(16).Value))
-                            CourtGeneral.CourtExecutionFSSP.IPInitiationDate2 = Convert.ToDateTime(dataRow.Cell(16).Value);
-                        if (dataRow.Cell(17).Value != "" && CourtGeneral.CourtExecutionFSSP.IPEndDate2 != Convert.ToDateTime(dataRow.Cell(17).Value))
-                            CourtGeneral.CourtExecutionFSSP.IPEndDate2 = Convert.ToDateTime(dataRow.Cell(17).Value);
+                        if (dataRow.Cell(20).Value != "" && CourtGeneral.CourtExecutionFSSP.NumberIP2 != dataRow.Cell(20).Value.ToString())
+                            CourtGeneral.CourtExecutionFSSP.NumberIP2 = dataRow.Cell(20).Value.ToString();
+                        if (dataRow.Cell(21).Value != "" && CourtGeneral.CourtExecutionFSSP.IPInitiationDate2 != Convert.ToDateTime(dataRow.Cell(21).Value))
+                            CourtGeneral.CourtExecutionFSSP.IPInitiationDate2 = Convert.ToDateTime(dataRow.Cell(21).Value);
+                        if (dataRow.Cell(22).Value != "" && CourtGeneral.CourtExecutionFSSP.IPEndDate2 != Convert.ToDateTime(dataRow.Cell(22).Value))
+                            CourtGeneral.CourtExecutionFSSP.IPEndDate2 = Convert.ToDateTime(dataRow.Cell(22).Value);
 
                         //if (dataRow.Cell(16).Value != "" && CourtGeneral.CourtExecutionFSSP.GroundsEndingIP2 != dataRow.Cell(16).Value.ToString())
                         //    CourtGeneral.CourtExecutionFSSP.GroundsEndingIP2 = dataRow.Cell(16).Value.ToString();
-                        if (dataRow.Cell(18).Value != "")
+                        if (dataRow.Cell(23).Value != "")
                         {
-                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 4).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(18).Value.ToString()?.Trim());
-                            if (dataRow.Cell(18).Value != "" && CourtName?.Name?.Split('|')[1] == CourtGeneral.CourtExecutionFSSP.SatyaEndingIP2)
+                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 4).CourtValueDictionaries.FirstOrDefault(x => x.Name.Split('|')[1]?.Trim() == dataRow.Cell(23).Value.ToString()?.Trim());
+                            if (dataRow.Cell(23).Value != "" && CourtName?.Name?.Split('|')[1] == CourtGeneral.CourtExecutionFSSP.SatyaEndingIP2)
                                 exceptions.Append("Статья окончания ИП2 не найдена в справочнике" + Environment.NewLine);
                             else
                             {
-                                if (dataRow.Cell(18).Value != "" && CourtGeneral.CourtExecutionFSSP.SatyaEndingIP2 != dataRow.Cell(18).Value.ToString())
+                                if (dataRow.Cell(23).Value != "" && CourtGeneral.CourtExecutionFSSP.SatyaEndingIP2 != dataRow.Cell(23).Value.ToString())
                                 {
                                     CourtGeneral.CourtExecutionFSSP.GroundsEndingIP2 = CourtName.Name.Split('|')[0];
                                     CourtGeneral.CourtExecutionFSSP.SatyaEndingIP2 = CourtName.Name.Split('|')[1];

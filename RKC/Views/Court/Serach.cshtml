@@ -150,7 +150,7 @@
     function Call() {
         console.log($('.FullLic').val()[0]);
         if ($('.FullLic').val()[0] == '7') {
-            alert('Лицевой счет не может начинаться с 7');
+            alert('Создать карточку судебного дела лицевого счета № 7… можно из Биллинга-> Лицевой счет-> Судебные дела-> Создать');
             $('.FullLic').val('');
         }
     }
@@ -167,6 +167,20 @@
                     '</form>',
                 buttons: {
                     '<input type="button" class="btn btn-primary" value="Создать" data-toggle="modal" data-target="#ShowLogResultModal" />': function () {
+                        let lic = !$('.FullLic').val().startsWith('8');
+                        console.log(lic);
+                        if (!$('.FullLic').val().startsWith('5') && !$('.FullLic').val().startsWith('8') && !$('.FullLic').val().startsWith('158')) {
+                            alert('Номер лицевого счета должен начинаться с цифры 8 или 158');
+                            $('.FullLic').val('');
+                            $("#AddCourt").click();
+                            return;
+                        }
+                        if ($('.FullLic').val().length != 9) {
+                            alert('Номер лицевого счета должен содержать 9 символов');
+                            $('.FullLic').val('');
+                            $("#AddCourt").click();
+                            return;
+                        }
                         window.open('/Court/CreateCourt?FullLic=' + $("#FullLic").val(), "_blank");
                     },
                     "Отмена": function () {
