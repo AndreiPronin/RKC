@@ -360,7 +360,7 @@ namespace RKC.Controllers
         public ActionResult ReadingsHistoryView(string FullLic)
         {
             ViewBag.LIC = FullLic;
-            return View(_personalData.GetReadingsHistory(FullLic).OrderByDescending(x => x.payment_date_day));
+            return View(_personalData.GetReadingsHistory(FullLic).OrderByDescending(x => x.PaymentDateDay));
         }
         [Auth(Roles = RolesEnums.SuperAdmin)]
         public ActionResult ExaminationPersIsLic()

@@ -44,8 +44,6 @@
             <tbody>
                 @foreach (var Items in Model)
                 {
-                    foreach (var Item in Items.Counter)
-                    {
                         <tr class="text-center">
                             @*@if (Item.dt == null)
         {
@@ -57,10 +55,10 @@
         }*@
                             <td style=" white-space: pre;">@Items.PaymentDateDay.Value.ToString("dd-MM-yyyy")</td>
                             <td style=" white-space: pre;">@Items.OrganizationName</td>
-                            <td style=" white-space: pre;">@Item.Name</td>
-                            <td style=" white-space: pre;">@Item.Value</td>
+                            <td style=" white-space: pre;">@Items.Name</td>
+                            <td style=" white-space: pre;">@Items.Value</td>
                         </tr>
-                    }
+                    
                 }
             </tbody>
         </table>
