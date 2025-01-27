@@ -60,6 +60,27 @@
     <Compile Include="DataBase\DbPayment.cs" />
     <Compile Include="DataBase\DbTPlus.cs" />
     <Compile Include="DataBase\DbLIC.cs" />
+    <Compile Include="DataBase\PaymentV2Archive\Counter.cs">
+      <DependentUpon>DbPaymentV2Archive.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\PaymentV2Archive\DbPaymentV2Archive.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbPaymentV2Archive.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\PaymentV2Archive\DbPaymentV2Archive.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbPaymentV2Archive.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\PaymentV2Archive\DbPaymentV2Archive.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbPaymentV2Archive.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\PaymentV2Archive\Payment.cs">
+      <DependentUpon>DbPaymentV2Archive.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\PaymentV2\AspNetRoleClaims.cs">
       <DependentUpon>DbPaymentV2.tt</DependentUpon>
     </Compile>
@@ -116,21 +137,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DbPaymentV2.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataBase\PaymentV2\DbPaymentV2Archive.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbPaymentV2Archive.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataBase\PaymentV2\DbPaymentV2Archive.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbPaymentV2Archive.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataBase\PaymentV2\DbPaymentV2Archive.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbPaymentV2Archive.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataBase\PaymentV2\F1Packets.cs">
       <DependentUpon>DbPaymentV2.tt</DependentUpon>
@@ -273,15 +279,15 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbPaymentV2.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DataBase\PaymentV2\DbPaymentV2.edmx.diagram">
-      <DependentUpon>DbPaymentV2.edmx</DependentUpon>
-    </None>
-    <EntityDeploy Include="DataBase\PaymentV2\DbPaymentV2Archive.edmx">
+    <EntityDeploy Include="DataBase\PaymentV2Archive\DbPaymentV2Archive.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbPaymentV2Archive.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DataBase\PaymentV2\DbPaymentV2Archive.edmx.diagram">
+    <None Include="DataBase\PaymentV2Archive\DbPaymentV2Archive.edmx.diagram">
       <DependentUpon>DbPaymentV2Archive.edmx</DependentUpon>
+    </None>
+    <None Include="DataBase\PaymentV2\DbPaymentV2.edmx.diagram">
+      <DependentUpon>DbPaymentV2.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -306,6 +312,17 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DataBase\PaymentV2Archive\DbPaymentV2Archive.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbPaymentV2Archive.edmx</DependentUpon>
+      <LastGenOutput>DbPaymentV2Archive.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataBase\PaymentV2Archive\DbPaymentV2Archive.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbPaymentV2Archive.edmx</DependentUpon>
+      <LastGenOutput>DbPaymentV2Archive.cs</LastGenOutput>
+      <CustomToolNamespace>DB.DataBase.PaymentV2Archive</CustomToolNamespace>
+    </Content>
     <Content Include="DataBase\PaymentV2\DbPaymentV2.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DbPaymentV2.edmx</DependentUpon>
@@ -315,16 +332,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DbPaymentV2.edmx</DependentUpon>
       <LastGenOutput>DbPaymentV2.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataBase\PaymentV2\DbPaymentV2Archive.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbPaymentV2Archive.edmx</DependentUpon>
-      <LastGenOutput>DbPaymentV2Archive.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataBase\PaymentV2\DbPaymentV2Archive.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbPaymentV2Archive.edmx</DependentUpon>
-      <LastGenOutput>DbPaymentV2Archive.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

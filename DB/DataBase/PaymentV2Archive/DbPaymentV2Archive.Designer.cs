@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "D:\Programing\RKC\DB\DataBase\PaymentV2\DbPaymentV2Archive.edmx" включено. 
+﻿// Создание кода T4 для модели "D:\Programing\RKC\DB\DataBase\PaymentV2Archive\DbPaymentV2Archive.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

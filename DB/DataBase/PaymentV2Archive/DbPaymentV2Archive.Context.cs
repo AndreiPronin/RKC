@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DB.DataBase.PaymentV2
+namespace DB.DataBase.PaymentV2Archive
 {
     using System;
     using System.Data.Entity;
@@ -25,8 +25,7 @@ namespace DB.DataBase.PaymentV2
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
-        public virtual DbSet<Counters> Counters { get; set; }
-        public virtual DbSet<Payments> Payments { get; set; }
+        public virtual DbSet<Counter> Counters { get; set; }
+        public virtual DbSet<Payment> Payments { get; set; }
     }
 }

@@ -355,7 +355,7 @@ namespace RKC.Controllers
         public ActionResult PaymentHistoryView(string FullLic)
         {
             ViewBag.LIC = FullLic;
-            return View(_personalData.GetPaymentHistory(FullLic).Where(x => x.transaction_amount != 0).OrderByDescending(x=>x.payment_date_day));
+            return View(_personalData.GetPaymentHistory(FullLic).Where(x => x.TransactionAmount != 0).OrderByDescending(x=>x.PaymentDateDay));
         }
         public ActionResult ReadingsHistoryView(string FullLic)
         {

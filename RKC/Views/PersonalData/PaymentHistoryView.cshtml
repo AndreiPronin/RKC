@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DB.Model.Payment>
+﻿@model IEnumerable<BE.PersData.PaymentHistoryResponse>
 @{
     ViewBag.Title = "PaymentHistoryView";
 }
@@ -45,10 +45,10 @@
                     @foreach (var Items in Model)
                     {
                         <tr class="text-center" >
-                            <td style=" white-space: pre;">@Items.payment_date_day.Value.ToString("MM-yyyy")</td>
-                            <td style=" white-space: pre;">@Items.payment_date</td>
-                            <td style=" white-space: pre;">@Items.transaction_amount</td>
-                            <td style=" white-space: pre;">@Items.Organization.name</td>
+                            <td style=" white-space: pre;">@Items.PaymentDateDay.Value.ToString("MM-yyyy")</td>
+                            <td style=" white-space: pre;">@Items.PaymentDate</td>
+                            <td style=" white-space: pre;">@Items.TransactionAmount</td>
+                            <td style=" white-space: pre;">@Items.OrganizationName</td>
                         </tr>
                     }
 

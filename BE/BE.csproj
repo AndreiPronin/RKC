@@ -102,6 +102,7 @@
     <Compile Include="MkdInformation\MainInformationModel.cs" />
     <Compile Include="MkdInformation\RecalculationsForMKDByCadrBe.cs" />
     <Compile Include="MkdInformation\SearchModel.cs" />
+    <Compile Include="PersData\PaymentHistoryResponse.cs" />
     <Compile Include="PersData\PenyModel.cs" />
     <Compile Include="Recalculation\ApplyCalculation.cs" />
     <Compile Include="Recalculation\Calculate.cs" />

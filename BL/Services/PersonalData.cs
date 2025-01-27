@@ -1,10 +1,13 @@
-﻿using BE.Counter;
+﻿using AutoMapper;
+using BE.Counter;
 using BE.PersData;
 using BL.Counters;
 using BL.Excel;
 using BL.Extention;
 using BL.Helper;
 using DB.DataBase;
+using DB.DataBase.PaymentV2;
+using DB.DataBase.PaymentV2Archive;
 using DB.Model;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
@@ -38,8 +41,8 @@ namespace BL.Services
         void AddPersData(PersDataModel persDataModel, string User);
         void DeletePers(int IdPersData, string User);
         string GetRoomTypeMain(string Full_Lic);
-        List<Payment> GetPaymentHistory(string Full_Lic);
-        List<Payment> GetReadingsHistory(string Full_Lic);
+        List<PaymentHistoryResponse> GetPaymentHistory(string Full_Lic);
+        List<DB.Model.Payment> GetReadingsHistory(string Full_Lic);
         void CloseLic(string FullLic, ICounter _counter, string User);
         void OpenLic(string FullLic);
         List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr,string Full_Lic);
@@ -57,11 +60,13 @@ namespace BL.Services
         private readonly Ilogger _ilogger;
         private readonly IGeneratorDescriptons _generatorDescriptons;
         private readonly IDictionary _dictionary;
-        public PersonalData(Ilogger ilogger, IGeneratorDescriptons generatorDescriptons, IDictionary dictionary)
+        private readonly IMapper _mapper;
+        public PersonalData(Ilogger ilogger, IGeneratorDescriptons generatorDescriptons, IDictionary dictionary, IMapper mapper)
         {
             _ilogger = ilogger;
             _generatorDescriptons = generatorDescriptons;
             _dictionary = dictionary;
+            _mapper = mapper;
         }
         public List<PersonalInformations> GetPersonalInformation(string FullLic)
         {
@@ -552,14 +557,30 @@ namespace BL.Services
                 db.SaveChanges();
             }
         }
-        public List<Payment> GetPaymentHistory(string Full_Lic)
+        public List<PaymentHistoryResponse> GetPaymentHistory(string Full_Lic)
         {
-            using (var db = new DbPayment())
+            using (var db = new DbPaymentV2())
             {
-                return db.Payment.Include(x => x.Counter).Include(x => x.Organization).Where(x => x.lic == Full_Lic).ToList();
+                using (var dbArchive = new DbPaymentV2Archive())
+                {
+                    try
+                    {
+                        var payments = db.Payments.Include(x => x.Counters).Include(x => x.Orgs).Where(x => x.Lic == Full_Lic).ToList();
+                        var paymentsArchive = dbArchive.Payments.Where(x=>x.Lic == Full_Lic).ToList();
+
+                        var payment = _mapper.Map<List<PaymentHistoryResponse>>(payments);
+                        payment.AddRange(_mapper.Map<List<PaymentHistoryResponse>>(paymentsArchive));
+                        return payment;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+                }
             }
+            
         }
-        public List<Payment> GetReadingsHistory(string Full_Lic)
+        public List<DB.Model.Payment> GetReadingsHistory(string Full_Lic)
         {
             using (var db = new DbPayment())
             {

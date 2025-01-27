@@ -413,7 +413,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons(), _dictionary);
+            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons(), _dictionary, _mapper);
             List<PersDataModel> PersNotAdded = new List<PersDataModel>();
             var flatTypes = _dictionary.GetFlatType();
             var dbApp = new ApplicationDbContext();
@@ -510,7 +510,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons(), _dictionary);
+            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons(), _dictionary, _mapper);
             List<PersDataModel> PersNotAdded = new List<PersDataModel>();
             var Count = nonEmptyDataRows.Count();
             int i = 1;
@@ -594,7 +594,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons(), _dictionary);
+            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons(), _dictionary, _mapper);
             List<PersDataModel> PersNotAdded = new List<PersDataModel>();
             var dbApp = new ApplicationDbContext();
             var Count = nonEmptyDataRows.Count();
@@ -761,7 +761,7 @@ namespace BL.Excel
         {
             cacheApp.AddProgress(User + "_", "0");
             var nonEmptyDataRows = Excels.Worksheet(1).RowsUsed();
-            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons(), _dictionary);
+            PersonalData personalData = new PersonalData(new Logger(), new GeneratorDescriptons(), _dictionary, _mapper);
             List<PersDataModel> PersDataModelNotAdded = new List<PersDataModel>();
             var dbApp = new ApplicationDbContext();
             var Count = nonEmptyDataRows.Count();
