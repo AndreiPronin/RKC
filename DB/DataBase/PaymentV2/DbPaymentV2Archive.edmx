@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DbPaymentV2ArchiveModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Counters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Value" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Lic" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PaymentDate" Type="datetime2" Precision="7" />
+          <Property Name="PaymentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DtCreate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="PaymentDate" Type="datetime2" Precision="7" />
+          <Property Name="PaymentInstrument" Type="nvarchar(max)" />
+          <Property Name="BankDocumentNumber" Type="nvarchar(max)" />
+          <Property Name="TransactionNumberUnique" Type="nvarchar(max)" />
+          <Property Name="Lic" Type="nvarchar(max)" />
+          <Property Name="ELic" Type="nvarchar(max)" />
+          <Property Name="Igku" Type="nvarchar(max)" />
+          <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="PaymentPeriod" Type="datetime2" Precision="7" />
+          <Property Name="TransactionAmount" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="TransferAmount" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="BankCommissionAmount" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="PaymentDateDay" Type="date" />
+          <Property Name="RegisterBankName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OrgName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OrgOgrn" Type="nvarchar(max)" />
+          <Property Name="OrgKpp" Type="nvarchar(max)" />
+          <Property Name="OrgInn" Type="nvarchar(max)" />
+          <Property Name="OrgCorrespondentAccount" Type="nvarchar(max)" />
+          <Property Name="RequisiteName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RequisiteCheckingAccount" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="RequisiteBik" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="PeriodYear" Type="int" Nullable="false" />
+          <Property Name="PeriodMonth" Type="int" Nullable="false" />
+          <Property Name="PaymentType" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OrgOrigamiGuid" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Counters_Payments_PaymentId">
+          <End Role="Payments" Type="Self.Payments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Counters" Type="Self.Counters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Counters">
+              <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DbPaymentV2ArchiveModelContainer">
+          <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Counters" EntityType="Self.Counters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Counters_Payments_PaymentId" Association="Self.FK_Counters_Payments_PaymentId">
+            <End Role="Payments" EntitySet="Payments" />
+            <End Role="Counters" EntitySet="Counters" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbPaymentV2ArchiveModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Counters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Lic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="7" />
+          <Property Name="PaymentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Counters_Payments_PaymentId" FromRole="Counters" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DtCreate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="7" />
+          <Property Name="PaymentInstrument" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BankDocumentNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TransactionNumberUnique" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Lic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ELic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Igku" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentPeriod" Type="DateTime" Precision="7" />
+          <Property Name="TransactionAmount" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="TransferAmount" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="BankCommissionAmount" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="PaymentDateDay" Type="DateTime" Precision="0" />
+          <Property Name="RegisterBankName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrgName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrgOgrn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrgKpp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrgInn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrgCorrespondentAccount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RequisiteName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RequisiteCheckingAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RequisiteBik" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PeriodYear" Type="Int32" Nullable="false" />
+          <Property Name="PeriodMonth" Type="Int32" Nullable="false" />
+          <Property Name="PaymentType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrgOrigamiGuid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Counters" Relationship="Self.FK_Counters_Payments_PaymentId" FromRole="Payments" ToRole="Counters" />
+        </EntityType>
+        <Association Name="FK_Counters_Payments_PaymentId">
+          <End Role="Payments" Type="Self.Payments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Counters" Type="Self.Counters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Counters">
+              <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbPaymentV2Archive" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
+          <EntitySet Name="Counters" EntityType="Self.Counters" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" />
+          <AssociationSet Name="FK_Counters_Payments_PaymentId" Association="Self.FK_Counters_Payments_PaymentId">
+            <End Role="Payments" EntitySet="Payments" />
+            <End Role="Counters" EntitySet="Counters" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DbPaymentV2ArchiveModelContainer" CdmEntityContainer="DbPaymentV2Archive">
+          <EntitySetMapping Name="C__EFMigrationsHistory">
+            <EntityTypeMapping TypeName="DbPaymentV2ArchiveModel.C__EFMigrationsHistory">
+              <MappingFragment StoreEntitySet="__EFMigrationsHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Counters">
+            <EntityTypeMapping TypeName="DbPaymentV2ArchiveModel.Counters">
+              <MappingFragment StoreEntitySet="Counters">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Lic" ColumnName="Lic" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="DbPaymentV2ArchiveModel.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DtCreate" ColumnName="DtCreate" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="PaymentInstrument" ColumnName="PaymentInstrument" />
+                <ScalarProperty Name="BankDocumentNumber" ColumnName="BankDocumentNumber" />
+                <ScalarProperty Name="TransactionNumberUnique" ColumnName="TransactionNumberUnique" />
+                <ScalarProperty Name="Lic" ColumnName="Lic" />
+                <ScalarProperty Name="ELic" ColumnName="ELic" />
+                <ScalarProperty Name="Igku" ColumnName="Igku" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PaymentPeriod" ColumnName="PaymentPeriod" />
+                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+                <ScalarProperty Name="TransferAmount" ColumnName="TransferAmount" />
+                <ScalarProperty Name="BankCommissionAmount" ColumnName="BankCommissionAmount" />
+                <ScalarProperty Name="PaymentDateDay" ColumnName="PaymentDateDay" />
+                <ScalarProperty Name="RegisterBankName" ColumnName="RegisterBankName" />
+                <ScalarProperty Name="OrgName" ColumnName="OrgName" />
+                <ScalarProperty Name="OrgOgrn" ColumnName="OrgOgrn" />
+                <ScalarProperty Name="OrgKpp" ColumnName="OrgKpp" />
+                <ScalarProperty Name="OrgInn" ColumnName="OrgInn" />
+                <ScalarProperty Name="OrgCorrespondentAccount" ColumnName="OrgCorrespondentAccount" />
+                <ScalarProperty Name="RequisiteName" ColumnName="RequisiteName" />
+                <ScalarProperty Name="RequisiteCheckingAccount" ColumnName="RequisiteCheckingAccount" />
+                <ScalarProperty Name="RequisiteBik" ColumnName="RequisiteBik" />
+                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+                <ScalarProperty Name="PeriodMonth" ColumnName="PeriodMonth" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="OrgOrigamiGuid" ColumnName="OrgOrigamiGuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

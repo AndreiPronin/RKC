@@ -6,6 +6,7 @@ using BL.Helper;
 using BL.http;
 using BL.Security;
 using DB.DataBase;
+using DB.DataBase.PaymentV2;
 using NLog;
 using RKC.Extensions;
 using System;
