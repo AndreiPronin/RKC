@@ -72,8 +72,6 @@ namespace BL.Service
                 foreach (var data in payment)
                 {
 
-                    cancellationToken.ThrowIfCancellationRequested();
-
                     var Procent = Math.Round((float)i / Count * 100, 0);
                     var Readings = await aLL_LICs.Select(x => new {
                         F4ENUMELS = x.F4ENUMELS,
