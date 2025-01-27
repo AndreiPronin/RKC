@@ -42,7 +42,7 @@ namespace BL.Services
         void DeletePers(int IdPersData, string User);
         string GetRoomTypeMain(string Full_Lic);
         List<PaymentHistoryResponse> GetPaymentHistory(string Full_Lic);
-        List<DB.Model.Payment> GetReadingsHistory(string Full_Lic);
+        List<ReadingsHistoryResponse> GetReadingsHistory(string Full_Lic);
         void CloseLic(string FullLic, ICounter _counter, string User);
         void OpenLic(string FullLic);
         List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr,string Full_Lic);
@@ -580,12 +580,45 @@ namespace BL.Services
             }
             
         }
-        public List<DB.Model.Payment> GetReadingsHistory(string Full_Lic)
+        public List<ReadingsHistoryResponse> GetReadingsHistory(string Full_Lic)
         {
-            using (var db = new DbPayment())
+            using (var db = new DbPaymentV2())
             {
-                return db.Payment.Include(x => x.Counter).Include(x => x.Organization).Where(x => x.lic == Full_Lic).ToList();
+                using (var dbArchive = new DbPaymentV2Archive())
+                {
+                    try
+                    {
+                        var readingsHistory = new List<ReadingsHistoryResponse>();
+                        var payments = db.Payments.Include(x => x.Counters).Include(x => x.Orgs).Where(x => x.Lic == Full_Lic).ToList();
+                        var paymentsArchive = dbArchive.Payments.Include(x=>x.Counters).Where(x => x.Lic == Full_Lic).ToList();
+                        foreach (var item in payments)
+                            foreach (var counter in item.Counters)
+                                readingsHistory.Add(new ReadingsHistoryResponse
+                                {
+                                    Name = counter.Name,
+                                    OrganizationName = item.Orgs.Name,
+                                    PaymentDateDay = item.PaymentDateDay,
+                                    Value = counter.Value,
+                                });
+                        foreach (var item in paymentsArchive)
+                            foreach (var counter in item.Counters)
+                                readingsHistory.Add(new ReadingsHistoryResponse
+                                {
+                                    Name = counter.Name,
+                                    OrganizationName = item.RequisiteName,
+                                    PaymentDateDay = item.PaymentDateDay,
+                                    Value = counter.Value,
+                                });
+                        return readingsHistory;
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+                }
             }
+           
         }
         public List<DB.Model.Counters> GetReadingsHistorySearch(string Parametr, string Full_Lic)
         {

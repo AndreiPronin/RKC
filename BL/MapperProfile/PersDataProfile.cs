@@ -5,9 +5,9 @@ using PaymentsArchive = DB.DataBase.PaymentV2Archive.Payment;
 
 namespace BL.MapperProfile
 {
-    public class PaymentProfile : Profile
+    public class PersDataProfile : Profile
     {
-        public PaymentProfile()
+        public PersDataProfile()
         {
             CreateMap<Payments, PaymentHistoryResponse>()
                 .ForMember(x => x.PaymentDateDay, d => d.MapFrom(x => x.PaymentDateDay))
