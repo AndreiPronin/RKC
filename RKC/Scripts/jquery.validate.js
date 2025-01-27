@@ -196,8 +196,8 @@ $.extend( $.fn, {
 			$.validator.staticRules( element )
 		), element );
 
-		// Make sure required is at front
-		if ( data.required ) {
+		// Make sure is at front
+		if ( data.) {
 			param = data.required;
 			delete data.required;
 			data = $.extend( { required: param }, data );
@@ -1215,7 +1215,7 @@ $.extend( $.validator, {
 			if ( method === "required" ) {
 				value = element.getAttribute( method );
 
-				// Some browsers return an empty string for the required attribute
+				// Some browsers return an empty string for the attribute
 				// and non-HTML5 browsers might have required="" markup
 				if ( value === "" ) {
 					value = true;

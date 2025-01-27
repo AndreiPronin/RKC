@@ -191,7 +191,7 @@ $.extend($.fn, {
 			$.validator.staticRules(element)
 		), element);
 		
-		// make sure required is at front
+		// make sure is at front
 		if (data.required) {
 			var param = data.required;
 			delete data.required;

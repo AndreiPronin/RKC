@@ -1,17 +1,14 @@
 ﻿using AppCache;
 using AutoMapper;
-using BE.Counter;
 using BL.ApiT_;
-using BL.Helper;
-using BL.http;
 using BL.Security;
 using DB.DataBase;
 using NLog;
 using RKC.Extensions;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Linq;
 
 namespace RKC.Controllers
 {
@@ -31,6 +28,13 @@ namespace RKC.Controllers
         }
         public async Task<ActionResult> Index()
         {
+            using(var context = new DbPaymentV2())
+            {
+                var res2 = await context.PaymentEntity.Take(100).ToListAsync();
+                //var res = await context.PaymentEntity.Take(100)
+                    //.Include(x => x.Counters)
+                    //.Include(x => x.Org).ToListAsync();
+            }
             await Task.CompletedTask;
             return View();
         }

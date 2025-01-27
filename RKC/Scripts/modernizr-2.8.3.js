@@ -868,7 +868,7 @@ window.Modernizr = (function( window, document, undefined ) {
               attrs.list = !!(document.createElement('datalist') && window.HTMLDataListElement);
             }
             return attrs;
-        })('autocomplete autofocus list placeholder max min multiple pattern required step'.split(' '));
+        })('autocomplete autofocus list placeholder max min multiple pattern step'.split(' '));
         /*>>input*/
 
         /*>>inputtypes*/

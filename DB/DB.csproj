@@ -44,6 +44,11 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,8 +58,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBase\ApplicationDbContext.cs" />
+    <Compile Include="DataBase\Configuration\PaymentV2ArhivePaymentEntityConfiguration.cs" />
+    <Compile Include="DataBase\Configuration\PaymentV2PaymentEntityConfiguration.cs" />
+    <Compile Include="DataBase\Configuration\PaymentV2ArhiveCounterEntityConfiguration.cs" />
+    <Compile Include="DataBase\Configuration\PaymentV2CounterEntityConfiguration.cs" />
     <Compile Include="DataBase\Configuration\DbLicConfiguration.cs" />
     <Compile Include="DataBase\Configuration\MkdConfiguration.cs" />
+    <Compile Include="DataBase\DbPaymentV2archive.cs" />
+    <Compile Include="DataBase\DbPaymentV2.cs" />
     <Compile Include="DataBase\DbPayment.cs" />
     <Compile Include="DataBase\DbTPlus.cs" />
     <Compile Include="DataBase\DbLIC.cs" />
@@ -125,6 +136,14 @@
     <Compile Include="Model\MKD.cs" />
     <Compile Include="Model\Notifications.cs" />
     <Compile Include="Model\Payment.cs" />
+    <Compile Include="Model\PaymentModelArchive\CounterEntity.cs" />
+    <Compile Include="Model\PaymentModelArchive\PaymentEntity.cs" />
+    <Compile Include="Model\PaymentModel\AppBaseEntity.cs" />
+    <Compile Include="Model\PaymentModel\BankEntity.cs" />
+    <Compile Include="Model\PaymentModel\CounterEntity.cs" />
+    <Compile Include="Model\PaymentModel\OrgEntity.cs" />
+    <Compile Include="Model\PaymentModel\PaymentEntity.cs" />
+    <Compile Include="Model\PaymentModel\PeriodEntity.cs" />
     <Compile Include="Model\PersData.cs" />
     <Compile Include="Model\PersonalInformation.cs" />
     <Compile Include="Model\Recalculations.cs" />

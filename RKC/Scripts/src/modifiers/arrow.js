@@ -1,6 +1,6 @@
 import getClientRect from '../utils/getClientRect';
 import getOuterSizes from '../utils/getOuterSizes';
-import isModifierRequired from '../utils/isModifierRequired';
+import isModifierfrom '../utils/isModifierRequired';
 import getStyleComputedProperty from '../utils/getStyleComputedProperty';
 
 /**

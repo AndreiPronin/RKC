@@ -1,4 +1,4 @@
-import isModifierRequired from '../utils/isModifierRequired';
+import isModifierfrom '../utils/isModifierRequired';
 import find from '../utils/find';
 
 /**

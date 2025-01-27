@@ -20,7 +20,7 @@ import getWindowSizes from './getWindowSizes';
 import isFixed from './isFixed';
 import isFunction from './isFunction';
 import isModifierEnabled from './isModifierEnabled';
-import isModifierRequired from './isModifierRequired';
+import isModifierfrom './isModifierRequired';
 import isNumeric from './isNumeric';
 import removeEventListeners from './removeEventListeners';
 import runModifiers from './runModifiers';

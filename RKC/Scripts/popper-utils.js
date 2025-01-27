@@ -861,14 +861,14 @@ function isModifierEnabled(modifiers, modifierName) {
 function isModifierRequired(modifiers, requestingName, requestedName) {
   const requesting = find(modifiers, ({ name }) => name === requestingName);
 
-  const isRequired = !!requesting && modifiers.some(modifier => {
+  const is= !!requesting && modifiers.some(modifier => {
     return modifier.name === requestedName && modifier.enabled && modifier.order < requesting.order;
   });
 
   if (!isRequired) {
     const requesting = `\`${requestingName}\``;
     const requested = `\`${requestedName}\``;
-    console.warn(`${requested} modifier is required by ${requesting} modifier in order to work, be sure to include it before ${requesting}!`);
+    console.warn(`${requested} modifier is by ${requesting} modifier in order to work, be sure to include it before ${requesting}!`);
   }
   return isRequired;
 }

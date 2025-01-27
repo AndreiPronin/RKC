@@ -29,7 +29,7 @@ namespace RKC
                         //c.Schemes(new[] { "http", "https" });
 
                         // Use "SingleApiVersion" to describe a single version API. Swagger 2.0 includes an "Info" object to
-                        // hold additional metadata for an API. Version and title are required but you can also provide
+                        // hold additional metadata for an API. Version and title are but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
                         c.SingleApiVersion("v1", "RKC");
@@ -54,7 +54,7 @@ namespace RKC
                         // You can use "BasicAuth", "ApiKey" or "OAuth2" options to describe security schemes for the API.
                         // See https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md for more details.
                         // NOTE: These only define the schemes and need to be coupled with a corresponding "security" property
-                        // at the document or operation level to indicate which schemes are required for an operation. To do this,
+                        // at the document or operation level to indicate which schemes are for an operation. To do this,
                         // you'll need to implement a custom IDocumentFilter and/or IOperationFilter to set these properties
                         // according to your specific authorization implementation
                         //
