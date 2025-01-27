@@ -315,7 +315,13 @@ namespace BL.Excel
                         if (dataRow.Cell(7).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 20).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtExecutionFSSP.FioSendSpIo) == null)
                             exceptions.Append("ФИО сотрудника не найдена в справочнике" + Environment.NewLine);
                         if (dataRow.Cell(8).Value != "" && CourtGeneral.CourtWork.DateSendingApplicationDebtor != Convert.ToDateTime(dataRow.Cell(8).Value))
+                        {
                             CourtGeneral.CourtWork.DateSendingApplicationDebtor = Convert.ToDateTime(dataRow.Cell(8).Value);
+                            if (CourtGeneral.CourtWork.DateSendingApplicationDebtor > DateTime.Today)
+                            {
+                                exceptions.Append($"Максимальная дата (Дата направления заявления должнику) должна быть {DateTime.Today}" + Environment.NewLine);
+                            }
+                        }
                         if (dataRow.Cell(9).Value != "" && CourtGeneral.CourtWork.SubmitApplicationCourt != dataRow.Cell(9).Value.ToString())
                             CourtGeneral.CourtWork.SubmitApplicationCourt = dataRow.Cell(9).Value.ToString();
                         if (dataRow.Cell(9).Value != "" && dictionaryCourt.FirstOrDefault(x => x.Id == 17).CourtValueDictionaries.FirstOrDefault(x => x.Name == CourtGeneral.CourtWork.SubmitApplicationCourt) == null)
