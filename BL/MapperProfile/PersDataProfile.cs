@@ -13,7 +13,7 @@ namespace BL.MapperProfile
                 .ForMember(x => x.PaymentDateDay, d => d.MapFrom(x => x.PaymentDateDay))
                 .ForMember(x => x.PaymentDate, d => d.MapFrom(x => x.PaymentDate))
                 .ForMember(x => x.TransactionAmount, d => d.MapFrom(x => x.TransactionAmount))
-                .ForMember(x => x.OrganizationName, d => d.MapFrom(x => x.Orgs.Name));
+                .ForMember(x => x.OrganizationName, d => d.MapFrom(x => x.Banks.Name));
             CreateMap<PaymentsArchive, PaymentHistoryResponse>()
                .ForMember(x => x.PaymentDateDay, d => d.MapFrom(x => x.PaymentDateDay))
                .ForMember(x => x.PaymentDate, d => d.MapFrom(x => x.PaymentDate))

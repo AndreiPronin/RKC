@@ -565,7 +565,7 @@ namespace BL.Services
                 {
                     try
                     {
-                        var payments = db.Payments.Include(x => x.Counters).Include(x => x.Orgs).Where(x => x.Lic == Full_Lic).ToList();
+                        var payments = db.Payments.Include(x => x.Counters).Include(x => x.Banks).Where(x => x.Lic == Full_Lic).ToList();
                         var paymentsArchive = dbArchive.Payments.Where(x=>x.Lic == Full_Lic).ToList();
 
                         var payment = _mapper.Map<List<PaymentHistoryResponse>>(payments);
@@ -589,14 +589,14 @@ namespace BL.Services
                     try
                     {
                         var readingsHistory = new List<ReadingsHistoryResponse>();
-                        var payments = db.Payments.Include(x => x.Counters).Include(x => x.Orgs).Where(x => x.Lic == Full_Lic).ToList();
+                        var payments = db.Payments.Include(x => x.Counters).Include(x => x.Banks).Where(x => x.Lic == Full_Lic).ToList();
                         var paymentsArchive = dbArchive.Payments.Include(x=>x.Counters).Where(x => x.Lic == Full_Lic).ToList();
                         foreach (var item in payments)
                             foreach (var counter in item.Counters)
                                 readingsHistory.Add(new ReadingsHistoryResponse
                                 {
                                     Name = counter.Name,
-                                    OrganizationName = item.Orgs.Name,
+                                    OrganizationName = item.Banks.Name,
                                     PaymentDateDay = item.PaymentDateDay,
                                     Value = counter.Value,
                                 });

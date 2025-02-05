@@ -56,14 +56,14 @@ namespace BL.Service
                 var IntegrsList = await Integrs.ToListAsync();//--------------------------
                 var payment = await dbs.Payments.AsNoTracking()
                     .Include(x => x.Counters)
-                    .Include(x => x.Orgs)
+                    .Include(x => x.Banks)
                     .Where(x => x.PaymentDateDay.Value == period)
                     .ToListAsync();
                 if (!string.IsNullOrEmpty(Lic))
                 {
                     payment = await dbs.Payments.AsNoTracking()
                     .Include(x => x.Counters)
-                    .Include(x => x.Orgs)
+                    .Include(x => x.Banks)
                     .Where(x => x.PaymentDate.Value == paymentDate.Value)
                     .ToListAsync();
                     payment = payment.Where(x=>x.Lic == Lic).ToList();
