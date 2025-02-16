@@ -17,9 +17,14 @@
         {
             <p class="text-center NullOrEmpty"> Дом закрыт. @(Model.AddressMKD.CloseDate.HasValue ? $"Период закрытия: {Model.AddressMKD.CloseDate.Value.ToString("MMMM yyyy")}" : "") </p>
         }
-        <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
             <button id="CloseLock" name="@Model.AddressMKD.AddressId" class="btn btn-success">Закрыть страницу</button>
         </div>
+        <div class="col-md-6">
+            <button id="ListFlats" name="@Model.AddressMKD.AddressId" class="btn btn-primary">Список помещений</button>
+        </div>
+    </div>
     </div>
     <div class="row">
         <div style="margin-top:10px;" class="card">
@@ -259,6 +264,9 @@ else
                     }
                 }
             })
+        });
+        $("#ListFlats").click(function (e) {
+            window.open(`/MKD/ListFlats?Id=@Model.AddressMKD.AddressId&Address=@FullAddress`,"_blanck");
         });
         $(".HistoryRecalculation").click(function (e) {
                 $.confirm({

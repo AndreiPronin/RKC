@@ -19,6 +19,7 @@ namespace BL.Services
         HistoryOdpuModel GetHistoryOdpu(int Id, DateTime DateFrom, DateTime DateTo);
         List<RecalculationsForMKDByCadrBe> HistoryRecalculation(int AddressId);
         AddressMKDBe GetAddressMKD(string FullLic);
+        List<ListFlatsModel> GetListFlats(int Id);
     }
     public class MkdInformationService : IMkdInformationService
     {
@@ -96,6 +97,15 @@ namespace BL.Services
                 history.addressReadings = _mapper.Map<List<AddressReadingsBe>>(resultAdressReadings);
               
                 return history;
+            }
+        }
+        public List<ListFlatsModel> GetListFlats(int Id)
+        {
+            using (var db = new DbTPlus())
+            {
+                var result = db.Database.SqlQuery<ListFlatsModel>($"SELECT * from GetMkdFlats({Id})").ToList();
+
+                return result.ToList();
             }
         }
 
