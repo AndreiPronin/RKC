@@ -34,11 +34,25 @@
             <td>
                 @if (Items.Closed == false)
                 {
-                    <a href="/MKD/MainInformation?Id=@Items.AddressId" target="_blank" class="btn btn-primary">Показать подробную информацию</a>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="/MKD/MainInformation?Id=@Items.AddressId" target="_blank" class="btn btn-primary">Показать подробную информацию</a>
+                        </div>
+                        <div class="col-md-12" style="margin-top:15px">
+                            <a href="/MKD/ListFlats?Id=@Items.AddressId&Address=@Items.StreetType дом @Items.House @Building" target="_blank" class="btn btn-primary">Список помещений</a>
+                        </div>
+                    </div>
                 }
                 else
                 {
-                    <a href="/MKD/MainInformation?Id=@Items.AddressId" target="_blank" class="btn btn-danger" data-tooltip-danger="Дом закрыт">Показать подробную информацию</a>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="/MKD/MainInformation?Id=@Items.AddressId" target="_blank" class="btn btn-danger" data-tooltip-danger="Дом закрыт">Показать подробную информацию</a>
+                        </div>
+                        <div class="col-md-12" style="margin-top:15px">
+                            <a href="/MKD/ListFlats?Id=@Items.AddressId&Address=@Items.StreetType дом @Items.House @Building" target="_blank" class="btn btn-primary" data-tooltip-danger="Дом закрыт">Список помещений</a>
+                        </div>
+                    </div>
                 }
             </td>
         </tr>
