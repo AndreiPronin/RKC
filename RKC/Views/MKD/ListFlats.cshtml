@@ -17,7 +17,7 @@
 </script>
 <style>
     .container {
-        width: 95% !important;
+        width: 80% !important;
     }
 
     .table-cont {
@@ -41,8 +41,10 @@
                     <td class="text-center font-weight-bold" scope="col">Тип помещения</td>
                     <td class="text-center font-weight-bold" scope="col">Лицевой счет</td>
                     <td class="text-center font-weight-bold" scope="col">Площадь</td>
+                    <td class="text-center font-weight-bold" scope="col">Количество проживающих</td>
                     <td class="text-center font-weight-bold" scope="col">ФИО</td>
                     <td class="text-center font-weight-bold" scope="col">ELS</td>
+
                 </tr>
             </tbody>
             <tbody>
@@ -50,19 +52,20 @@
                 {
 
                     <tr class="text-center">
-                        <td  style=" white-space: pre;">@Items.FlatNumber</td>
+                        <td style=" white-space: pre;">@Items.FlatNumber</td>
                         <td style=" white-space: pre;">@Items.FlatType</td>
                         <td style=" white-space: pre;"><a href="/PersonalData/PersonalInformation?FullLic=@Items.FullLic" target="_blank">@Items.FullLic</a></td>
                         <td style=" white-space: pre;">@Items.TotalSquare</td>
+                        <td style=" white-space: pre;">@Items.NumberOfPersons</td>
                         <td style=" white-space: pre;">@Items.FIO</td>
                         <td style=" white-space: pre;">@Items.Els</td>
                     </tr>
-                   
+
                 }
             </tbody>
         </table>
     </div>
-
+    <button id="DownloadExcel" class="btn btn-primary text-center">Скачать excel</button>
 
     <br />
 }
@@ -88,6 +91,9 @@ else
         setTimeout(Loader, 1000);
         $("#ClosePage").click(function () {
             window.close();
+        })
+        $("#DownloadExcel").click(function () {
+            window.open('/MKD/ListFlatsExcel?AddressId=' + @ViewBag.AddressId + '&Address=@ViewBag.Address','_blank');
         })
     });
 </script>

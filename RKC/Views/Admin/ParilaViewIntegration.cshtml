@@ -66,8 +66,9 @@
                     window.onbeforeunload = null;
                     window.location.reload();
                 },
-                error: function () {
+                error: function (data) {
                     alert('Ошибка интеграции');
+                    alert(data);
                 }
             });
         })

@@ -738,6 +738,7 @@
     <Content Include="Views\Admin\ParilaViewCalculation.cshtml" />
     <Content Include="Views\PersonalData\HistoryAccrualsByItems.cshtml" />
     <Content Include="Views\MKD\ListFlats.cshtml" />
+    <Content Include="Views\MKD\HistoryValueOdpu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

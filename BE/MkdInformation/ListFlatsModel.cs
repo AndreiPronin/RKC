@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace BE.MkdInformation
 {
-    public class ListFlatsModel
+    public class HistoryValueOdpuModel
     {
-        public string FlatNumber { get; set; }
-        public string FlatType { get; set; }
-        public string FullLic { get; set; }
-        public decimal TotalSquare { get; set; }
-        public string FIO { get; set; }
-        public string Els { get; set; }
+        public DateTime Period { get; set; }
+        public string HeatingPlantServiceType { get; set; }
+        public string Type { get; set; }
+        public string FactoryNumber { get; set; }
+        public string CombinedOpu { get; set; }
+        public decimal? VolumeGCal { get; set; }
+        public decimal? VolumeCubeMeter { get; set; }
+        public string CalculationMethod { get; set; }
+        public string HeatingPlantId { get; set; }
     }
 }

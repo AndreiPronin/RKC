@@ -1,0 +1,105 @@
+﻿@model  IEnumerable<BE.MkdInformation.HistoryValueOdpuModel>
+@{
+    ViewBag.Title = "HistoryValueOdpu";
+}
+<script>
+    'use strict'
+    window.onload = function () {
+        var tableCont = document.querySelector('#table-cont')
+
+        function scrollHandle(e) {
+            var scrollTop = this.scrollTop;
+            this.querySelector('tbody').style.transform = 'translateY(' + scrollTop + 'px)';
+        }
+
+        tableCont.addEventListener('scroll', scrollHandle)
+    }
+</script>
+<style>
+    .table-cont {
+        max-height: 500px;
+        overflow-x: auto;
+    }
+
+    .container {
+        width: 75% !important;
+    }
+</style>
+
+<div style="padding-top:50px" class="row">
+    <div class="col-md-4">
+        <button id="ClosePage" class="btn btn-success">Закрыть страницу</button>
+    </div>
+    <div class="col-md-8">
+        <p style="font-size: 14px; font-weight: bolder; margin-top:20px;">
+            История показаний ОДПУ по адресу @ViewBag.Address
+        </p>
+    </div>
+</div>
+
+<div id="print">
+    <div class='table-cont' style="" id='table-cont'>
+        <table class="table table-bordered">
+            <tbody style="background-color:white">
+                <tr>
+                    <td scope="col" class="font-weight-bold text-center">Период</td>
+                    <td scope="col" class="font-weight-bold text-center">Услуга</td>
+                    <td scope="col" class="font-weight-bold text-center">Тип ОДПУ</td>
+                    <td scope="col" class="font-weight-bold text-center">Заводской номер</td>
+                    <td scope="col" class="font-weight-bold text-center">Объединенный</td>
+                    <td scope="col" class="font-weight-bold text-center">Объем, Гкал</td>
+                    <td scope="col" class="font-weight-bold text-center">Объем, куб.м.</td>
+                    <td scope="col" class="font-weight-bold text-center">Метод расчёта</td>
+                    <td scope="col" class="font-weight-bold text-center">Код теплоустановки</td>
+                </tr>
+            </tbody>
+            <tbody>
+                @foreach (var Item in Model)
+                {
+                    <tr>
+                        <td scope="col">@Item.Period.ToString("MMMM yyyy")</td>
+                        <td scope="col">@Item.HeatingPlantServiceType</td>
+                        <td scope="col">@Item.Type</td>
+                        <td scope="col">@Item.FactoryNumber</td>
+                        <td scope="col">@Item.CombinedOpu</td>
+                        <td scope="col">@Item.VolumeGCal</td>
+                        <td scope="col">@Item.VolumeCubeMeter</td>
+                        <td scope="col">@Item.CalculationMethod</td>
+                        <td scope="col">@Item.HeatingPlantId</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<input type="button" class="btn btn-primary printDiv" id="" value="Печать справки" />
+<script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+        $(document).ready(function (e) {
+            $("#ClosePage").click(function () {
+                window.close();
+            })
+            $(".printDiv").click(function () {
+                $('#table-cont').removeClass('table-cont');
+                $('#table-cont').children().find('tbody').removeAttr('style');
+                var printContents = document.getElementById('print').innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = printContents;
+
+                window.print();
+                window.location.reload();
+                document.body.innerHTML = originalContents;
+            })
+        });
+</script>

@@ -21,7 +21,7 @@
         <div class="col-md-6">
             <button id="CloseLock" name="@Model.AddressMKD.AddressId" class="btn btn-success">Закрыть страницу</button>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 text-right">
             <button id="ListFlats" name="@Model.AddressMKD.AddressId" class="btn btn-primary">Список помещений</button>
         </div>
     </div>
@@ -199,11 +199,14 @@
                         <tbody>
                         </tbody>
                     </table>
-                    <div class="col-md-6 text-center">
-                        <div class="btn btn-primary" id="HistoryOdpu">История ОДПУ</div>
+                    <div class="col-md-4 text-center">
+                        <div class="btn btn-primary" id="HistoryOdpu">История расчетов ОДПУ</div>
                     </div>
-                    <div class="col-md-6 text-center">
-                        <div class="btn btn-primary HistoryRecalculation" id="HistoryOdpu">История перерасчетов МКД</div>
+                    <div class="col-md-4 text-center">
+                        <div class="btn btn-primary" id="HistoryValueOdpu">История показаний по ОДПУ</div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="btn btn-primary HistoryRecalculation" id="">История перерасчетов МКД</div>
                     </div>
                 </div>
 
@@ -253,6 +256,33 @@ else
                         $.ajax({
                             success: function (data) {
                                 window.open(`/MKD/HistoryOdpu?Id=@Model.AddressMKD.AddressId&DateFrom=${datefrom}&DateTo=${dateto}`,"_blanck");
+                            },
+                            error: function () {
+                                alert("Что то пошло не так. Обратитесь к администратору");
+                            }
+                        });
+                    },
+                    "Отмена": function () {
+
+                    }
+                }
+            })
+        });
+        $("#HistoryValueOdpu").click(function (e) {
+            var Date = "@DateTime.Now.Date.ToString("yyyy-MM")";
+            console.log(Date);
+            $.confirm({
+                title: 'История показаний по ОДПУ',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '</form>',
+                buttons: {
+                    "Просмотр": function () {
+                        var datefrom = $("#DateFrom").val();
+                        var dateto = $("#DateTo").val();
+                        $.ajax({
+                            success: function (data) {
+                                window.open('/MKD/HistoryValueOdpu?AddressId=' + @Model.AddressMKD.AddressId + '&Address=@FullAddress', '_blank');
                             },
                             error: function () {
                                 alert("Что то пошло не так. Обратитесь к администратору");
