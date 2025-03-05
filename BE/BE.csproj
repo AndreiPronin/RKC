@@ -99,6 +99,8 @@
     <Compile Include="MkdInformation\AddressMKD.cs" />
     <Compile Include="MkdInformation\AddressReadings.cs" />
     <Compile Include="MkdInformation\HistoryOdpuModel.cs" />
+    <Compile Include="MkdInformation\HistoryValueOdpuModel.cs" />
+    <Compile Include="MkdInformation\ListFlatsModel.cs" />
     <Compile Include="MkdInformation\MainInformationModel.cs" />
     <Compile Include="MkdInformation\RecalculationsForMKDByCadrBe.cs" />
     <Compile Include="MkdInformation\SearchModel.cs" />

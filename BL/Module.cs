@@ -49,6 +49,7 @@ namespace BL
             kernel.Bind<IPdfFactory>().To<ReceiptFactory>();
             kernel.Bind<IExcelCourt>().To<ExcelCourt>();
             kernel.Bind<IExcelCourtReport>().To<ExcelCourtReport>();
+            kernel.Bind<IExcelMkd>().To<ExcelMkd>();
             //kernel.Bind<IHttpClientFactory>().ToConstant(hostBuilder.Build().Services.GetService<IHttpClientFactory>());
 
             kernel.Bind<ITokenCreator>().To<TokenCreator>();

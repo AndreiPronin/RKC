@@ -1,6 +1,7 @@
 ﻿using BE.Court;
 using BE.MkdInformation;
 using BE.Roles;
+using BL.Excel;
 using BL.Services;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,11 @@ namespace RKC.Controllers
     public class MKDController : Controller
     {
         private readonly IMkdInformationService _mkdInformationService;
-        public MKDController(IMkdInformationService mkdInformationService) {
+        private readonly IExcelMkd _excelMkd;
+        public MKDController(IMkdInformationService mkdInformationService, IExcelMkd excelMkd) 
+        {
             _mkdInformationService = mkdInformationService;
+            _excelMkd = excelMkd;
         }
         public ActionResult Index()
         {
@@ -35,6 +39,25 @@ namespace RKC.Controllers
         {
             var result = _mkdInformationService.GetHistoryOdpu(Id,DateFrom,DateTo);
             return View(result);
+        }
+        public ActionResult HistoryValueOdpu(int AddressId, string Address)
+        {
+            var result = _mkdInformationService.GetHistoryValueOdpu(AddressId);
+            ViewBag.Address = Address;
+            ViewBag.AddressId = AddressId;
+            return View(result);
+        }
+        public ActionResult ListFlats(int Id, string Address)
+        {
+            var result = _mkdInformationService.GetListFlats(Id);
+            ViewBag.Address = Address;
+            ViewBag.AddressId = Id;
+            return View(result);
+        }
+        public ActionResult ListFlatsExcel(int AddressId, string Address)
+        {
+            var result = _excelMkd.GetListFlats(AddressId);
+            return File(result, System.Net.Mime.MediaTypeNames.Application.Octet, $"Список помещений {Address}.xlsx");
         }
         public ActionResult HistoryRecalculationView(int AddressId, string Address)
         {
