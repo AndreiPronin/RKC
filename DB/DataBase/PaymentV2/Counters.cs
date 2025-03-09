@@ -17,8 +17,6 @@ namespace DB.DataBase.PaymentV2
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Value { get; set; }
-        public string Lic { get; set; }
-        public Nullable<System.DateTime> PaymentDate { get; set; }
         public int PaymentId { get; set; }
         public System.DateTime DtCreate { get; set; }
         public System.DateTime DtUpdate { get; set; }

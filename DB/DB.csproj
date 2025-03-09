@@ -99,13 +99,7 @@
     <Compile Include="DataBase\PaymentV2\AspNetUserTokens.cs">
       <DependentUpon>DbPaymentV2.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\PaymentV2\BankEntities.cs">
-      <DependentUpon>DbPaymentV2.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataBase\PaymentV2\Banks.cs">
-      <DependentUpon>DbPaymentV2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataBase\PaymentV2\CounterEntities.cs">
       <DependentUpon>DbPaymentV2.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\PaymentV2\Counters.cs">
@@ -153,9 +147,6 @@
     <Compile Include="DataBase\PaymentV2\LinkOrgRoles.cs">
       <DependentUpon>DbPaymentV2.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\PaymentV2\OrgEntities.cs">
-      <DependentUpon>DbPaymentV2.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataBase\PaymentV2\OrgRequisites.cs">
       <DependentUpon>DbPaymentV2.tt</DependentUpon>
     </Compile>
@@ -171,13 +162,7 @@
     <Compile Include="DataBase\PaymentV2\PaymentAddresses.cs">
       <DependentUpon>DbPaymentV2.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\PaymentV2\PaymentEntities.cs">
-      <DependentUpon>DbPaymentV2.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataBase\PaymentV2\Payments.cs">
-      <DependentUpon>DbPaymentV2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataBase\PaymentV2\PeriodEntities.cs">
       <DependentUpon>DbPaymentV2.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\PaymentV2\Periods.cs">

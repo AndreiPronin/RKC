@@ -44,6 +44,7 @@ namespace DB.DataBase.PaymentV2
         public int UserUpdateId { get; set; }
         public int Checking { get; set; }
         public bool IsSupportOdpu { get; set; }
+        public Nullable<bool> IsSupportCounter { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual AspNetUsers AspNetUsers1 { get; set; }

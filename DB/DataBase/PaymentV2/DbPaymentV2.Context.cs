@@ -33,9 +33,7 @@ namespace DB.DataBase.PaymentV2
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual DbSet<BankEntities> BankEntities { get; set; }
         public virtual DbSet<Banks> Banks { get; set; }
-        public virtual DbSet<CounterEntities> CounterEntities { get; set; }
         public virtual DbSet<Counters> Counters { get; set; }
         public virtual DbSet<DBFPacketFields> DBFPacketFields { get; set; }
         public virtual DbSet<DBFPackets> DBFPackets { get; set; }
@@ -44,15 +42,12 @@ namespace DB.DataBase.PaymentV2
         public virtual DbSet<LinkOrgBanks> LinkOrgBanks { get; set; }
         public virtual DbSet<LinkOrgFuncs> LinkOrgFuncs { get; set; }
         public virtual DbSet<LinkOrgRoles> LinkOrgRoles { get; set; }
-        public virtual DbSet<OrgEntities> OrgEntities { get; set; }
         public virtual DbSet<OrgRequisites> OrgRequisites { get; set; }
         public virtual DbSet<Orgs> Orgs { get; set; }
         public virtual DbSet<Parsers> Parsers { get; set; }
         public virtual DbSet<ParserTypes> ParserTypes { get; set; }
         public virtual DbSet<PaymentAddresses> PaymentAddresses { get; set; }
-        public virtual DbSet<PaymentEntities> PaymentEntities { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
-        public virtual DbSet<PeriodEntities> PeriodEntities { get; set; }
         public virtual DbSet<Periods> Periods { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UploadFiles> UploadFiles { get; set; }

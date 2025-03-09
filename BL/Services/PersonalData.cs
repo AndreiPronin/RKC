@@ -605,7 +605,7 @@ namespace BL.Services
                                 readingsHistory.Add(new ReadingsHistoryResponse
                                 {
                                     Name = counter.Name,
-                                    OrganizationName = item.RequisiteName,
+                                    OrganizationName = item.RegisterBankName,
                                     PaymentDateDay = item.PaymentDateDay,
                                     Value = counter.Value,
                                 });

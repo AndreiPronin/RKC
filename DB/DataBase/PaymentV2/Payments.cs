@@ -48,6 +48,7 @@ namespace DB.DataBase.PaymentV2
         public int UserCreateId { get; set; }
         public int UserUpdateId { get; set; }
         public bool IsUploadingToOnlineSales { get; set; }
+        public Nullable<System.DateTime> LoadOrigamiDate { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual AspNetUsers AspNetUsers1 { get; set; }
