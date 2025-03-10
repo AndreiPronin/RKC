@@ -11,10 +11,9 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Value" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="Lic" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="PaymentDate" Type="datetime2" Precision="7" />
+          <Property Name="Value" Type="decimal" Precision="15" Scale="5" Nullable="false" />
           <Property Name="PaymentId" Type="int" Nullable="false" />
+          <Property Name="GUID" Type="nvarchar" MaxLength="36" Nullable="false" />
         </EntityType>
         <EntityType Name="Payments">
           <Key>
@@ -48,7 +47,19 @@
           <Property Name="PeriodYear" Type="int" Nullable="false" />
           <Property Name="PeriodMonth" Type="int" Nullable="false" />
           <Property Name="PaymentType" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="OrgOrigamiGuid" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OrgOrigamiGuid" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressBankName" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressBik" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressCheckingAccount" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressCorpus" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressCorrespondentAccount" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressFlatNumber" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressHouseNumber" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressInfoBuilder" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressInn" Type="nvarchar(max)" />
+          <Property Name="PaymentAddressStreet" Type="nvarchar(max)" />
+          <Property Name="GUID" Type="nvarchar" MaxLength="36" Nullable="false" />
         </EntityType>
         <Association Name="FK_Counters_Payments_PaymentId">
           <End Role="Payments" Type="Self.Payments" Multiplicity="1">
@@ -76,27 +87,26 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DbPaymentV2ArchiveModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Counter">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Value" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="Lic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PaymentDate" Type="DateTime" Precision="7" />
-          <Property Name="PaymentId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Payments" Relationship="DbPaymentV2ArchiveModel.FK_Counters_Payments_PaymentId" FromRole="Counters" ToRole="Payments" />
-        </EntityType>
         <EntityContainer Name="DbPaymentV2Archive" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Counters" EntityType="DbPaymentV2ArchiveModel.Counter" />
-          <EntitySet Name="Payments" EntityType="DbPaymentV2ArchiveModel.Payment" />
+          <EntitySet Name="Counters" EntityType="DbPaymentV2ArchiveModel.Counters" />
+          <EntitySet Name="Payments" EntityType="DbPaymentV2ArchiveModel.Payments" />
           <AssociationSet Name="FK_Counters_Payments_PaymentId" Association="DbPaymentV2ArchiveModel.FK_Counters_Payments_PaymentId">
             <End Role="Payments" EntitySet="Payments" />
             <End Role="Counters" EntitySet="Counters" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Payment">
+        <EntityType Name="Counters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="PaymentId" Type="Int32" Nullable="false" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payments" Relationship="DbPaymentV2ArchiveModel.FK_Counters_Payments_PaymentId" FromRole="Counters" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="Payments">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -128,14 +138,26 @@
           <Property Name="PeriodYear" Type="Int32" Nullable="false" />
           <Property Name="PeriodMonth" Type="Int32" Nullable="false" />
           <Property Name="PaymentType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrgOrigamiGuid" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrgOrigamiGuid" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressBankName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressBik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressCheckingAccount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressCorpus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressCorrespondentAccount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressFlatNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressHouseNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressInfoBuilder" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressInn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAddressStreet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Counters" Relationship="DbPaymentV2ArchiveModel.FK_Counters_Payments_PaymentId" FromRole="Payments" ToRole="Counters" />
         </EntityType>
         <Association Name="FK_Counters_Payments_PaymentId">
-          <End Type="DbPaymentV2ArchiveModel.Payment" Role="Payments" Multiplicity="1">
+          <End Type="DbPaymentV2ArchiveModel.Payments" Role="Payments" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DbPaymentV2ArchiveModel.Counter" Role="Counters" Multiplicity="*" />
+          <End Type="DbPaymentV2ArchiveModel.Counters" Role="Counters" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Payments">
               <PropertyRef Name="Id" />
@@ -152,20 +174,31 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище DbPaymentV2ArchiveModelContainer" CdmEntityContainer="DbPaymentV2Archive">
           <EntitySetMapping Name="Counters">
-            <EntityTypeMapping TypeName="DbPaymentV2ArchiveModel.Counter">
+            <EntityTypeMapping TypeName="DbPaymentV2ArchiveModel.Counters">
               <MappingFragment StoreEntitySet="Counters">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="Lic" ColumnName="Lic" />
-                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
                 <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Payments">
-            <EntityTypeMapping TypeName="DbPaymentV2ArchiveModel.Payment">
+            <EntityTypeMapping TypeName="DbPaymentV2ArchiveModel.Payments">
               <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="PaymentAddressStreet" ColumnName="PaymentAddressStreet" />
+                <ScalarProperty Name="PaymentAddressInn" ColumnName="PaymentAddressInn" />
+                <ScalarProperty Name="PaymentAddressInfoBuilder" ColumnName="PaymentAddressInfoBuilder" />
+                <ScalarProperty Name="PaymentAddressHouseNumber" ColumnName="PaymentAddressHouseNumber" />
+                <ScalarProperty Name="PaymentAddressFlatNumber" ColumnName="PaymentAddressFlatNumber" />
+                <ScalarProperty Name="PaymentAddressCorrespondentAccount" ColumnName="PaymentAddressCorrespondentAccount" />
+                <ScalarProperty Name="PaymentAddressCorpus" ColumnName="PaymentAddressCorpus" />
+                <ScalarProperty Name="PaymentAddressCheckingAccount" ColumnName="PaymentAddressCheckingAccount" />
+                <ScalarProperty Name="PaymentAddressBik" ColumnName="PaymentAddressBik" />
+                <ScalarProperty Name="PaymentAddressBankName" ColumnName="PaymentAddressBankName" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="OrgOrigamiGuid" ColumnName="OrgOrigamiGuid" />
                 <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="PeriodMonth" ColumnName="PeriodMonth" />

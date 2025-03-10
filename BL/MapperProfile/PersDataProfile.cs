@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BE.PersData;
 using DB.DataBase.PaymentV2;
-using PaymentsArchive = DB.DataBase.PaymentV2Archive.Payment;
+using PaymentsArchive = DB.DataBase.PaymentV2Archive.Payments;
 
 namespace BL.MapperProfile
 {

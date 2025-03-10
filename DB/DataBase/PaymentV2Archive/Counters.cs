@@ -12,15 +12,14 @@ namespace DB.DataBase.PaymentV2Archive
     using System;
     using System.Collections.Generic;
     
-    public partial class Counter
+    public partial class Counters
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Value { get; set; }
-        public string Lic { get; set; }
-        public Nullable<System.DateTime> PaymentDate { get; set; }
         public int PaymentId { get; set; }
+        public string GUID { get; set; }
     
-        public virtual Payment Payments { get; set; }
+        public virtual Payments Payments { get; set; }
     }
 }

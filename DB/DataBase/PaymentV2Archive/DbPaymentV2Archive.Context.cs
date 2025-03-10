@@ -25,7 +25,7 @@ namespace DB.DataBase.PaymentV2Archive
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Counter> Counters { get; set; }
-        public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<Counters> Counters { get; set; }
+        public virtual DbSet<Payments> Payments { get; set; }
     }
 }

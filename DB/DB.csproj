@@ -60,7 +60,7 @@
     <Compile Include="DataBase\DbPayment.cs" />
     <Compile Include="DataBase\DbTPlus.cs" />
     <Compile Include="DataBase\DbLIC.cs" />
-    <Compile Include="DataBase\PaymentV2Archive\Counter.cs">
+    <Compile Include="DataBase\PaymentV2Archive\Counters.cs">
       <DependentUpon>DbPaymentV2Archive.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\PaymentV2Archive\DbPaymentV2Archive.Context.cs">
@@ -78,7 +78,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbPaymentV2Archive.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\PaymentV2Archive\Payment.cs">
+    <Compile Include="DataBase\PaymentV2Archive\Payments.cs">
       <DependentUpon>DbPaymentV2Archive.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\PaymentV2\AspNetRoleClaims.cs">

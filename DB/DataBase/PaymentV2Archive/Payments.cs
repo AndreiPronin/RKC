@@ -12,12 +12,12 @@ namespace DB.DataBase.PaymentV2Archive
     using System;
     using System.Collections.Generic;
     
-    public partial class Payment
+    public partial class Payments
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Payment()
+        public Payments()
         {
-            this.Counters = new HashSet<Counter>();
+            this.Counters = new HashSet<Counters>();
         }
     
         public int Id { get; set; }
@@ -49,8 +49,20 @@ namespace DB.DataBase.PaymentV2Archive
         public int PeriodMonth { get; set; }
         public string PaymentType { get; set; }
         public string OrgOrigamiGuid { get; set; }
+        public string Comment { get; set; }
+        public string PaymentAddressBankName { get; set; }
+        public string PaymentAddressBik { get; set; }
+        public string PaymentAddressCheckingAccount { get; set; }
+        public string PaymentAddressCorpus { get; set; }
+        public string PaymentAddressCorrespondentAccount { get; set; }
+        public string PaymentAddressFlatNumber { get; set; }
+        public string PaymentAddressHouseNumber { get; set; }
+        public string PaymentAddressInfoBuilder { get; set; }
+        public string PaymentAddressInn { get; set; }
+        public string PaymentAddressStreet { get; set; }
+        public string GUID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Counter> Counters { get; set; }
+        public virtual ICollection<Counters> Counters { get; set; }
     }
 }
