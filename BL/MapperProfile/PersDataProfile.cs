@@ -18,7 +18,7 @@ namespace BL.MapperProfile
                .ForMember(x => x.PaymentDateDay, d => d.MapFrom(x => x.PaymentDateDay))
                .ForMember(x => x.PaymentDate, d => d.MapFrom(x => x.PaymentDate))
                .ForMember(x => x.TransactionAmount, d => d.MapFrom(x => x.TransactionAmount))
-               .ForMember(x => x.OrganizationName, d => d.MapFrom(x => x.OrgName));
+               .ForMember(x => x.OrganizationName, d => d.MapFrom(x => x.RegisterBankName));
         }
     }
 }
