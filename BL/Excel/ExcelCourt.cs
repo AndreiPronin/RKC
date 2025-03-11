@@ -766,8 +766,8 @@ namespace BL.Excel
                         if (dataRow.Cell(4).Value != "" && CourtGeneral.CourtWriteOff.SumPeny != Convert.ToDouble(dataRow.Cell(4).Value.ToString()))
                             CourtGeneral.CourtWriteOff.SumPeny = Convert.ToDouble(dataRow.Cell(4).Value.ToString());
 
-                        if (dataRow.Cell(5).Value != "" && CourtGeneral.CourtWriteOff.SumGp != Convert.ToDouble(dataRow.Cell(5).Value.ToString()))
-                            CourtGeneral.CourtWriteOff.SumGp = Convert.ToDouble(dataRow.Cell(5).Value.ToString());
+                        if (dataRow.Cell(5).Value != "" && CourtGeneral.CourtWriteOff.SumOd != Convert.ToDouble(dataRow.Cell(5).Value.ToString()))
+                            CourtGeneral.CourtWriteOff.SumOd = Convert.ToDouble(dataRow.Cell(5).Value.ToString());
 
                         if (dataRow.Cell(6).Value != "" && CourtGeneral.CourtWriteOff.DateWriteOffBegin != Convert.ToDateTime(dataRow.Cell(6).Value.ToString()))
                             CourtGeneral.CourtWriteOff.DateWriteOffBegin = Convert.ToDateTime(dataRow.Cell(6).Value.ToString());
@@ -792,8 +792,36 @@ namespace BL.Excel
                         if (dataRow.Cell(9).Value != "" && CourtGeneral.CourtWriteOff.DateWriteOff != Convert.ToDateTime(dataRow.Cell(9).Value.ToString()))
                             CourtGeneral.CourtWriteOff.DateWriteOff = Convert.ToDateTime(dataRow.Cell(9).Value.ToString());
 
-                        if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtWriteOff.Comment != dataRow.Cell(10).Value.ToString())
-                            CourtGeneral.CourtWriteOff.Comment = dataRow.Cell(10).Value.ToString();
+                        if (dataRow.Cell(10).Value != "")
+                        {
+                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 24).CourtValueDictionaries.FirstOrDefault(x => x.Name?.Trim() == dataRow.Cell(10).Value.ToString());
+                            if (dataRow.Cell(10).Value != "" && CourtName is null)
+                                exceptions.Append("Статус списания не найдена в справочнике" + Environment.NewLine);
+                            else
+                            {
+                                if (dataRow.Cell(10).Value != "" && CourtGeneral.CourtWriteOff.ReasonWriteOff != CourtName.Name)
+                                {
+                                    CourtGeneral.CourtWriteOff.ReasonWriteOff = CourtName.Name;
+                                }
+                            }
+                        }
+
+                        if (dataRow.Cell(11).Value != "")
+                        {
+                            var CourtName = dictionaryCourt.FirstOrDefault(x => x.Id == 25).CourtValueDictionaries.FirstOrDefault(x => x.Name?.Trim() == dataRow.Cell(11).Value.ToString());
+                            if (dataRow.Cell(11).Value != "" && CourtName is null)
+                                exceptions.Append("Статус списания не найдена в справочнике" + Environment.NewLine);
+                            else
+                            {
+                                if (dataRow.Cell(11).Value != "" && CourtGeneral.CourtWriteOff.SubjectWriteOff != CourtName.Name)
+                                {
+                                    CourtGeneral.CourtWriteOff.SubjectWriteOff = CourtName.Name;
+                                }
+                            }
+                        }
+
+                        if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtWriteOff.Comment != dataRow.Cell(12).Value.ToString())
+                            CourtGeneral.CourtWriteOff.Comment = dataRow.Cell(12).Value.ToString();
 
                         var ex = exceptions.ToString();
                         if (ex != "")
