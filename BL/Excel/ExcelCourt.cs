@@ -753,9 +753,9 @@ namespace BL.Excel
                                 exceptions.Append("Документы подготовлены к списанию не найдена в справочнике" + Environment.NewLine);
                             else
                             {
-                                if (dataRow.Cell(12).Value != "" && CourtGeneral.CourtWriteOff.WriteOffStatus != CourtName.Name)
+                                if (dataRow.Cell(2).Value != "" && CourtGeneral.CourtWriteOff.DocumentsPreparedWriteOff != CourtName.Name)
                                 {
-                                    CourtGeneral.CourtWriteOff.WriteOffStatus = CourtName.Name;
+                                    CourtGeneral.CourtWriteOff.DocumentsPreparedWriteOff = CourtName.Name;
                                 }
                             }
                         }
@@ -768,6 +768,10 @@ namespace BL.Excel
 
                         if (dataRow.Cell(5).Value != "" && CourtGeneral.CourtWriteOff.SumOd != Convert.ToDouble(dataRow.Cell(5).Value.ToString()))
                             CourtGeneral.CourtWriteOff.SumOd = Convert.ToDouble(dataRow.Cell(5).Value.ToString());
+                        CourtGeneral.CourtWriteOff.SumWriteOff = CourtGeneral.CourtWriteOff.SumWriteOff.HasValue ? CourtGeneral.CourtWriteOff.SumWriteOff.Value : 0;
+                        CourtGeneral.CourtWriteOff.SumWriteOff += CourtGeneral.CourtWriteOff.SumGp.HasValue ? CourtGeneral.CourtWriteOff.SumGp.Value : 0;
+                        CourtGeneral.CourtWriteOff.SumWriteOff += CourtGeneral.CourtWriteOff.SumPeny.HasValue ? CourtGeneral.CourtWriteOff.SumPeny.Value : 0;
+                        CourtGeneral.CourtWriteOff.SumWriteOff += CourtGeneral.CourtWriteOff.SumOd.HasValue ? CourtGeneral.CourtWriteOff.SumOd.Value : 0;
 
                         if (dataRow.Cell(6).Value != "" && CourtGeneral.CourtWriteOff.DateWriteOffBegin != Convert.ToDateTime(dataRow.Cell(6).Value.ToString()))
                             CourtGeneral.CourtWriteOff.DateWriteOffBegin = Convert.ToDateTime(dataRow.Cell(6).Value.ToString());
