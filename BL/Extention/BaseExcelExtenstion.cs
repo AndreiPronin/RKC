@@ -13,6 +13,10 @@ namespace BL.Excel
         {
             xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
         }
+        public static void SetValue(this IXLCell xlCell, string value)
+        {
+            xlCell.Value = value;
+        }
         public static void SetValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, object value)
         {
             xLWorksheet.Cell(rowFirst, columnFirst).SetDataType(XLDataType.Text);
@@ -41,6 +45,12 @@ namespace BL.Excel
             var res = Convert.ToString(value);
             xLWorksheet.Cell(rowFirst, columnFirst).Value = res;
 
+        }
+        public static IXLCell SetDataType(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, XLDataType dataType )
+        {
+            xLWorksheet.Cell(rowFirst, columnFirst).SetDataType(dataType);
+            xLWorksheet.Cell(rowFirst, columnFirst).DataType = dataType;
+            return xLWorksheet.Cell(rowFirst, columnFirst);
         }
         public static void SetValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, decimal? value)
         {

@@ -188,61 +188,66 @@ namespace BL.Excel
                 worksheet.SetValue(1, 38, "Дата СП");
                 worksheet.SetValue(1, 39, "ПРИМЕЧАНИЕ");
                 #endregion
-                var debts = new List<DebtInfoForLic>();
-                var tasks = new List<Task>();
-                var index = 0;
-                foreach(var item in courts)
-                {
-                    debts.Add(_personalData.GetDebtInfoForLic(item.Lic));
-                    index++;
-                }
 
+                var debts = _personalData.GetDebtInfosForLics(courts.Select(x => x.Lic).ToList());
+
+                var notes = new ConcurrentBag<CourtNotesInfo>();
+
+                Parallel.ForEach(courts, (item) =>
+                {
+                    notes.Add( new CourtNotesInfo
+                    {
+                        CourtId = item.Id,
+                        Lic = item.Lic,
+                        Note = _court.GetNote(item.Id, item.Lic)
+                    });
+                });
 
 
                 foreach (var item in courts.Select((value, i) => new { i, value }))
                 {
                     var pers = persDatas.FirstOrDefault(x => x.full_lic == item.value.Lic);
-                    worksheet.SetValue(item.i, 1, item.value.Lic);
-                    worksheet.SetValue(item.i, 2, item.value.StatusCard);
-                    worksheet.SetValue(item.i, 3, pers?.LastName);
-                    worksheet.SetValue(item.i, 4, pers?.FirstName);
-                    worksheet.SetValue(item.i, 5, pers?.MiddleName);
-                    worksheet.SetValue(item.i, 6, pers?.Street);
-                    worksheet.SetValue(item.i, 7, pers?.House);
-                    worksheet.SetValue(item.i, 8, pers?.Flat);
+                    worksheet.SetValue(item.i + 2, 1, item.value.Lic);
+                    worksheet.SetValue(item.i + 2, 2, item.value.StatusCard);
+                    worksheet.SetValue(item.i + 2, 3, pers?.LastName);
+                    worksheet.SetValue(item.i + 2, 4, pers?.FirstName);
+                    worksheet.SetValue(item.i + 2, 5, pers?.MiddleName);
+                    worksheet.SetValue(item.i + 2, 6, pers?.Street);
+                    worksheet.SetValue(item.i + 2, 7, pers?.House);
+                    worksheet.SetDataType(item.i + 2, 8, XLDataType.Text).SetValue(pers?.Flat);
                     var debt = debts.FirstOrDefault(x => x.Lic == item.value.Lic);
-                    worksheet.SetValue(item.i, 9, debt?.CurrentDebt);
-                    worksheet.SetValue(item.i, 10, item.value.Id);
-                    worksheet.SetValue(item.i, 11, item.value.LastName);
-                    worksheet.SetValue(item.i, 12, item.value.FirstName);
-                    worksheet.SetValue(item.i, 13, item.value.Surname);
-                    worksheet.SetValue(item.i, 14, item.value.DateBirthday);
-                    worksheet.SetValue(item.i, 15, item.value.DateDeath);
-                    worksheet.SetValue(item.i, 16, item.value.CourtWriteOff.DocumentsPreparedWriteOff);
-                    worksheet.SetValue(item.i, 17, item.value.CourtWriteOff.SumWriteOff);
-                    worksheet.SetValue(item.i, 18, item.value.CourtWriteOff.SumGp);
-                    worksheet.SetValue(item.i, 19, item.value.CourtWriteOff.SumPeny);
-                    worksheet.SetValue(item.i, 20, item.value.CourtWriteOff.SumOd);
-                    worksheet.SetValue(item.i, 21, item.value.CourtWriteOff.DateWriteOffBegin);
-                    worksheet.SetValue(item.i, 22, item.value.CourtWriteOff.DateWriteOffEnd);
-                    worksheet.SetValue(item.i, 23, item.value.CourtWriteOff.WriteOffStatus);
-                    worksheet.SetValue(item.i, 24, item.value.CourtWriteOff.DateWriteOff);
-                    worksheet.SetValue(item.i, 25, item.value.CourtWriteOff.ReasonWriteOff);
-                    worksheet.SetValue(item.i, 26, item.value.CourtWriteOff.SubjectWriteOff);
-                    worksheet.SetValue(item.i, 27, item.value.CourtWriteOff.Comment);
-                    worksheet.SetValue(item.i, 28, item.value.CourtWork.FioSendCourt);
-                    worksheet.SetValue(item.i, 29, item.value.CourtWork.DateTask);
-                    worksheet.SetValue(item.i, 30, item.value.CourtWork.AmountdebtTransferredToCourtTotal);
-                    worksheet.SetValue(item.i, 31, item.value.CourtWork.SumOdSendCourt);
-                    worksheet.SetValue(item.i, 32, item.value.CourtWork.SumPenySendCourt);
-                    worksheet.SetValue(item.i, 33, item.value.CourtWork.PeriodDebtBegin);
-                    worksheet.SetValue(item.i, 34, item.value.CourtWork.PeriodDebtEnd);
-                    worksheet.SetValue(item.i, 35, item.value.CourtWork.SumGP);
-                    worksheet.SetValue(item.i, 36, item.value.CourtWork.DateReceptionCourt);
-                    worksheet.SetValue(item.i, 37, item.value.CourtWork.NumberSP);
-                    worksheet.SetValue(item.i, 38, item.value.CourtWork.DateSP);
-                    var note = _court.GetNote(item.value.Id, item.value.Lic);
-                    worksheet.SetValue(item.i, 39, note);
+                    worksheet.SetValue(item.i + 2, 9, debt?.CurrentDebt);
+                    worksheet.SetValue(item.i + 2, 10, item.value.Id);
+                    worksheet.SetValue(item.i + 2, 11, item.value.LastName);
+                    worksheet.SetValue(item.i + 2, 12, item.value.FirstName);
+                    worksheet.SetValue(item.i + 2, 13, item.value.Surname);
+                    worksheet.SetValue(item.i + 2, 14, item.value.DateBirthday);
+                    worksheet.SetValue(item.i + 2, 15, item.value.DateDeath);
+                    worksheet.SetValue(item.i + 2, 16, item.value.CourtWriteOff.DocumentsPreparedWriteOff);
+                    worksheet.SetValue(item.i + 2, 17, item.value.CourtWriteOff.SumWriteOff);
+                    worksheet.SetValue(item.i + 2, 18, item.value.CourtWriteOff.SumGp);
+                    worksheet.SetValue(item.i + 2, 19, item.value.CourtWriteOff.SumPeny);
+                    worksheet.SetValue(item.i + 2, 20, item.value.CourtWriteOff.SumOd);
+                    worksheet.SetValue(item.i + 2, 21, item.value.CourtWriteOff.DateWriteOffBegin);
+                    worksheet.SetValue(item.i + 2, 22, item.value.CourtWriteOff.DateWriteOffEnd);
+                    worksheet.SetValue(item.i + 2, 23, item.value.CourtWriteOff.WriteOffStatus);
+                    worksheet.SetValue(item.i + 2, 24, item.value.CourtWriteOff.DateWriteOff);
+                    worksheet.SetValue(item.i + 2, 25, item.value.CourtWriteOff.ReasonWriteOff);
+                    worksheet.SetValue(item.i + 2, 26, item.value.CourtWriteOff.SubjectWriteOff);
+                    worksheet.SetValue(item.i + 2, 27, item.value.CourtWriteOff.Comment);
+                    worksheet.SetValue(item.i + 2, 28, item.value.CourtWork.FioSendCourt);
+                    worksheet.SetValue(item.i + 2, 29, item.value.CourtWork.DateTask);
+                    worksheet.SetValue(item.i + 2, 30, item.value.CourtWork.AmountdebtTransferredToCourtTotal);
+                    worksheet.SetValue(item.i + 2, 31, item.value.CourtWork.SumOdSendCourt);
+                    worksheet.SetValue(item.i + 2, 32, item.value.CourtWork.SumPenySendCourt);
+                    worksheet.SetValue(item.i + 2, 33, item.value.CourtWork.PeriodDebtBegin);
+                    worksheet.SetValue(item.i + 2, 34, item.value.CourtWork.PeriodDebtEnd);
+                    worksheet.SetValue(item.i + 2, 35, item.value.CourtWork.SumGP);
+                    worksheet.SetValue(item.i + 2, 36, item.value.CourtWork.DateReceptionCourt);
+                    worksheet.SetValue(item.i + 2, 37, item.value.CourtWork.NumberSP);
+                    worksheet.SetValue(item.i + 2, 38, item.value.CourtWork.DateSP);
+                    var note = notes.FirstOrDefault(x=>x.Lic == item.value.Lic && x.CourtId == item.value.Id);
+                    worksheet.SetValue(item.i + 2, 39, note.Note);
                 }
                 worksheet.Columns().AdjustToContents();
                 return Excels;

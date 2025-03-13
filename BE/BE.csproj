@@ -74,6 +74,7 @@
     <Compile Include="Court\CourtGeneralInformation.cs" />
     <Compile Include="Court\CourtInstallmentPlan.cs" />
     <Compile Include="Court\CourtLitigationWork.cs" />
+    <Compile Include="Court\CourtNotesInfo.cs" />
     <Compile Include="Court\CourtOwnerInformation.cs" />
     <Compile Include="Court\CourtStateDuty.cs" />
     <Compile Include="Court\CourtWork.cs" />

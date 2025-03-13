@@ -52,6 +52,7 @@ namespace BL.Services
         Task CloseLicAsync(string FullLic, string Description, ICounter _counter, string User);
         DebtInfoForLic GetDebtInfoForLic(string FullLic);
         Task<DebtInfoForLic> GetDebtInfoForLicAsync(string FullLic);
+        List<DebtInfoForLic> GetDebtInfosForLics(List<string> lics);
         Task<List<ManualRecalculationsByFullLic>> GetManualRecalculationsByFullLic(string FullLic);
         Task RemoveRecalculation(Guid Id, int serviceId);
         Task<List<ALL_LICS_ARCHIVE>> GetHistoryAccrualsByItems(string fullLic);
