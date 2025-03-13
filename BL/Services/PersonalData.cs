@@ -89,16 +89,66 @@ namespace BL.Services
         }
         public DebtInfoForLic GetDebtInfoForLic(string FullLic)
         {
-            using (var db = new ApplicationDbContext())
+            using (var db = new DbLIC())
             {
+                var result = db.ALL_LICS.Where(x => x.F4ENUMELS == FullLic).Select(x =>
+                new DebtInfoForLic()
+                {
+                    Lic = x.F4ENUMELS,
+                    Debt = Math.Round((double)(x.TDK + x.PENY_TDK), 2),
+                    Payment = 0,
+                    CurrentDebt = Math.Round((double)(x.TDK + x.PENY_TDK), 2)
+                }).FirstOrDefault();
 
-#if DEBUG
-                var result = db.Database.SqlQuery<DebtInfoForLic>($" SELECT * from [Web_App_Test].[dbo].[GetDebtInfoForLic]('{FullLic}')").FirstOrDefault();
-#else
-                var result = db.Database.SqlQuery<DebtInfoForLic>($" SELECT * from [Web_App].[dbo].[GetDebtInfoForLic]('{FullLic}')").FirstOrDefault();
-#endif
-                if(result != null)
-                    result.Lic = FullLic;
+                if (result != null)
+                {
+                    using (var paymentDb = new DbPaymentV2())
+                    {
+                        var paymentAmount = paymentDb.Payments.Where(x => x.Lic == FullLic && x.TransactionAmount != 0)?.Sum(x => x.TransactionAmount);
+
+                        if (paymentAmount != null)
+                        {
+                            var paymentAmountDouble = Math.Round((double)paymentAmount.Value, 2);
+                            result.Payment += paymentAmountDouble;
+                            result.CurrentDebt -= paymentAmountDouble;
+                        }
+                    }
+                }
+
+                return result;
+            }
+        }
+        public List<DebtInfoForLic> GetDebtInfosForLics(List<string> lics)
+        {
+            using (var db = new DbLIC())
+            {
+                var result = db.ALL_LICS.Where(x => lics.Contains(x.F4ENUMELS)).Select(x =>
+                new DebtInfoForLic()
+                {
+                    Lic = x.F4ENUMELS,
+                    Debt = Math.Round((double)(x.TDK + x.PENY_TDK), 2),
+                    Payment = 0,
+                    CurrentDebt = Math.Round((double)(x.TDK + x.PENY_TDK), 2)
+                }).ToList();
+
+                if (result.Count > 0)
+                {
+                    using (var paymentDb = new DbPaymentV2())
+                    {
+                        var paymentsByLic = paymentDb.Payments.Where(x => lics.Contains(x.Lic))
+                            .GroupBy(x => x.Lic).ToDictionary(x => x.Key, y => y.Sum(x => x.TransactionAmount));
+
+                        foreach (var debt in result)
+                        {
+                            if (!paymentsByLic.ContainsKey(debt.Lic))
+                                continue;
+
+                            var paymentAmountDouble = Math.Round((double)paymentsByLic[debt.Lic], 2);
+                            debt.Payment += paymentAmountDouble;
+                            debt.CurrentDebt -= paymentAmountDouble;
+                        }
+                    }
+                }
 
                 return result;
             }
