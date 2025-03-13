@@ -44,8 +44,6 @@ namespace BL.Excel
         XLWorkbook SummaryReportOTP(XLWorkbook Excels, string User, ICacheApp cacheApp);
         Task<XLWorkbook> GetPeriodPaymentSD(XLWorkbook Excels, string User, ICacheApp cacheApp);
         XLWorkbook ExcelReportFunction(XLWorkbook Excels, string Report, int column,string LasExcelColimn);
-
-
     }
     public class Excel:IExcel
     {
@@ -1164,5 +1162,6 @@ namespace BL.Excel
             worksheet.Columns().AdjustToContents();
             return Excels;
         }
+
     }
 }

@@ -452,48 +452,59 @@ namespace RKC.Controllers
         {
             try
             {
-                var workbook = new XLWorkbook();
-                switch (courtTypeReport)
+                using (var workbook = new XLWorkbook())
                 {
+                    switch (courtTypeReport)
+                    {
 
-                    case CourtTypeReport2.LoadIP:
-                        var wb = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.IPUpload, 22,"U");
-                       
-                        using (MemoryStream stream = new MemoryStream())
-                        {
-                            wb.SaveAs(stream);
-                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
-                        }
-                    case CourtTypeReport2.ExecutorSP:
-                        var wb1 = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.UploadExecutionSP, 22,"U");
+                        case CourtTypeReport2.LoadIP:
+                            var wb = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.IPUpload, 22, "U");
 
-                        using (MemoryStream stream = new MemoryStream())
-                        {
-                            wb1.SaveAs(stream);
-                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
-                        }
-                    case CourtTypeReport2.TaskGPH:
-                        var wb2 = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.TaskForGPH, 22, "U");
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                wb.SaveAs(stream);
+                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
+                            }
+                        case CourtTypeReport2.ExecutorSP:
+                            var wb1 = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.UploadExecutionSP, 22, "U");
 
-                        using (MemoryStream stream = new MemoryStream())
-                        {
-                            wb2.SaveAs(stream);
-                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
-                        }
-                    case CourtTypeReport2.NowDZ:
-                        var wb3 = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.CurrentDebt, 22, "J");
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                wb1.SaveAs(stream);
+                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
+                            }
+                        case CourtTypeReport2.TaskGPH:
+                            var wb2 = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.TaskForGPH, 22, "U");
 
-                        using (MemoryStream stream = new MemoryStream())
-                        {
-                            wb3.SaveAs(stream);
-                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
-                        }
-                    default:
-                        throw new Exception("Не указан тип загружаемого отчета! (Судебные дела)");
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                wb2.SaveAs(stream);
+                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
+                            }
+                        case CourtTypeReport2.NowDZ:
+                            var wb3 = _excel.ExcelReportFunction(workbook, BL.Excel.SqlQuery.Report.CurrentDebt, 22, "J");
+
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                wb3.SaveAs(stream);
+                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
+                            }
+                        case CourtTypeReport2.WriteOff:
+                            var wb4 = await _excelCourtReport.WriteOff(workbook, User.Identity.GetFIOFull(), courtTypeReport, DateTime.Now);
+
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                wb4.SaveAs(stream);
+                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    $"{courtTypeReport.GetDescription()} - {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx");
+                            }
+                        default:
+                            throw new Exception("Не указан тип загружаемого отчета! (Судебные дела)");
+                    }
                 }
             }
             catch (Exception ex)

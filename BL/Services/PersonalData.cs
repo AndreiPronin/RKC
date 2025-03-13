@@ -51,6 +51,7 @@ namespace BL.Services
         void SavePersonalDataFioLic(PersDataModel persDataModel);
         Task CloseLicAsync(string FullLic, string Description, ICounter _counter, string User);
         DebtInfoForLic GetDebtInfoForLic(string FullLic);
+        Task<DebtInfoForLic> GetDebtInfoForLicAsync(string FullLic);
         Task<List<ManualRecalculationsByFullLic>> GetManualRecalculationsByFullLic(string FullLic);
         Task RemoveRecalculation(Guid Id, int serviceId);
         Task<List<ALL_LICS_ARCHIVE>> GetHistoryAccrualsByItems(string fullLic);
@@ -96,6 +97,25 @@ namespace BL.Services
 #else
                 var result = db.Database.SqlQuery<DebtInfoForLic>($" SELECT * from [Web_App].[dbo].[GetDebtInfoForLic]('{FullLic}')").FirstOrDefault();
 #endif
+                if(result != null)
+                    result.Lic = FullLic;
+
+                return result;
+            }
+        }
+        public async Task<DebtInfoForLic> GetDebtInfoForLicAsync(string FullLic)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+#if DEBUG
+                var result = await db.Database.SqlQuery<DebtInfoForLic>($" SELECT * from [Web_App_Test].[dbo].[GetDebtInfoForLic]('{FullLic}')").FirstOrDefaultAsync();
+#else
+                var result = await db.Database.SqlQuery<DebtInfoForLic>($" SELECT * from [Web_App].[dbo].[GetDebtInfoForLic]('{FullLic}')").FirstOrDefaultAsync();
+#endif
+                if (result != null)
+                    result.Lic = FullLic;
+
                 return result;
             }
         }

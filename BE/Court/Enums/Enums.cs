@@ -38,5 +38,7 @@ namespace BE.Court
         TaskGPH = 3,
         [Description("Текущая ДЗ")]
         NowDZ = 4,
+        [Description("Отчет по списанию")]
+        WriteOff = 5,
     }
 }

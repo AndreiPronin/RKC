@@ -46,6 +46,10 @@ namespace BL.Excel
         {
             xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
         }
+        public static void SetValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, int? value)
+        {
+            xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
+        }
         public static void SetValue(this IXLWorksheet xLWorksheet, int rowFirst, int columnFirst, double? value)
         {
             xLWorksheet.Cell(rowFirst, columnFirst).Value = value;
