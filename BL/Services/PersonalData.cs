@@ -105,11 +105,12 @@ namespace BL.Services
                 {
                     using (var paymentDb = new DbPaymentV2())
                     {
-                        var paymentAmount = paymentDb.Payments.Where(x => x.Lic == FullLic && x.TransactionAmount != 0)?.Sum(x => x.TransactionAmount);
+                        var query = paymentDb.Payments.Where(x => x.Lic == FullLic && x.TransactionAmount != 0);
 
-                        if (paymentAmount != null)
+                        if (query.Count() > 0)
                         {
-                            var paymentAmountDouble = Math.Round((double)paymentAmount.Value, 2);
+                            var paymentAmount = query.Sum(x => x.TransactionAmount);
+                            var paymentAmountDouble = Math.Round((double)paymentAmount, 2);
                             result.Payment += paymentAmountDouble;
                             result.CurrentDebt -= paymentAmountDouble;
                         }
