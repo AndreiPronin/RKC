@@ -8,6 +8,7 @@ using BL.Services;
 using ClosedXML.Excel;
 using DB.DataBase;
 using DB.Model;
+using DB.Model.Court;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CourtGeneralInformation = DB.Model.Court.CourtGeneralInformation;
 
 namespace BL.Excel
 {
@@ -188,8 +190,10 @@ namespace BL.Excel
                 worksheet.SetValue(1, 38, "Дата СП");
                 worksheet.SetValue(1, 39, "ПРИМЕЧАНИЕ");
                 #endregion
-
-                var debts = _personalData.GetDebtInfosForLics(courts.Select(x => x.Lic).ToList());
+                var coutrssss = new List<CourtGeneralInformation>();
+                coutrssss.AddRange(courts.ToList());
+                coutrssss.AddRange(courts);
+                var debts = _personalData.GetDebtInfosForLics(coutrssss.Select(x => x.Lic).ToList());
 
                 var notes = new ConcurrentBag<CourtNotesInfo>();
 
@@ -217,7 +221,7 @@ namespace BL.Excel
                     worksheet.SetDataType(item.i + 2, 8, XLDataType.Text).SetValue(pers?.Flat);
                     var debt = debts.FirstOrDefault(x => x.Lic == item.value.Lic);
                     worksheet.SetValue(item.i + 2, 9, debt?.CurrentDebt);
-                    worksheet.SetValue(item.i + 2, 10, item.value.Id);
+                    worksheet.SetValue(item.i + 2, 10, $"П-{item.value.Id}");
                     worksheet.SetValue(item.i + 2, 11, item.value.LastName);
                     worksheet.SetValue(item.i + 2, 12, item.value.FirstName);
                     worksheet.SetValue(item.i + 2, 13, item.value.Surname);
