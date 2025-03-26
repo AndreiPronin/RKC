@@ -63,6 +63,6 @@ namespace DB.DataBase.PaymentV2Archive
         public string GUID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual IEnumerable<Counters> Counters { get; set; }
+        public virtual ICollection<Counters> Counters { get; set; }
     }
 }

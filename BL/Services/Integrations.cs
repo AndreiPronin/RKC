@@ -85,7 +85,7 @@ namespace BL.Service
                             Name = c.Name,
                             PaymentId = c.PaymentId,
                             Value = c.Value,
-                        }),
+                        }).ToList(),
                         PaymentDateDay = x.PaymentDateDay,
                         PaymentDate = x.PaymentDate,
 
