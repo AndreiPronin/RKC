@@ -103,9 +103,14 @@ namespace BL.Services
 
                 if (result != null)
                 {
+                    var licPeriod = db.ALL_LICS.Select(x => new { x.update_datetime }).First();
+
                     using (var paymentDb = new DbPaymentV2())
                     {
-                        var query = paymentDb.Payments.Where(x => x.Lic == FullLic && x.TransactionAmount != 0);
+                        DateTime firstDay = licPeriod.update_datetime.Value.GetFirstDayInMonth();
+                        DateTime lastDay = licPeriod.update_datetime.Value.GetLastDayInMonth();
+                        var query = paymentDb.Payments.Where(x => x.Lic == FullLic && x.TransactionAmount != 0 
+                                    && x.PaymentDateDay >= firstDay && x.PaymentDateDay <= lastDay);
 
                         if (query.Count() > 0)
                         {
@@ -135,9 +140,13 @@ namespace BL.Services
 
                 if (result.Count > 0)
                 {
+                    var licPeriod = db.ALL_LICS.Select(x => new { x.update_datetime }).First();
+
                     using (var paymentDb = new DbPaymentV2())
                     {
-                        var paymentsByLic = paymentDb.Payments.Where(x => lics.Contains(x.Lic))
+                        DateTime firstDay = licPeriod.update_datetime.Value.GetFirstDayInMonth();
+                        DateTime lastDay = licPeriod.update_datetime.Value.GetLastDayInMonth();
+                        var paymentsByLic = paymentDb.Payments.Where(x => lics.Contains(x.Lic) && x.PaymentDateDay >= firstDay && x.PaymentDateDay <= lastDay)
                             .GroupBy(x => x.Lic).ToDictionary(x => x.Key, y => y.Sum(x => x.TransactionAmount));
 
                         foreach (var debt in result)

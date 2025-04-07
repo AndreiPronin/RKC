@@ -258,11 +258,11 @@ namespace BL.Jobs
                         if (string.IsNullOrEmpty(Items.Email))
                             throw new Exception("Пустой Email");
                         _notificationMail.SendMailReceiptDpu(Items.NewFullLic, Items.Email);
-                        receiptSend.Add(new ReceiptSend { FullLic = Items.NewFullLic, Comment = "Отправлена квитанция", Email = Items.Email });
+                        receiptSend.Add(new ReceiptSend { FullLic = Items.NewFullLic, Comment = "Отправлена квитанция", Email = Items.Email, DateTime = DateTime.Now });
                     }
                     catch (Exception ex)
                     {
-                        receiptSend.Add(new ReceiptSend { FullLic = Items.NewFullLic, Comment = ex.Message, Email = Items.Email });
+                        receiptSend.Add(new ReceiptSend { FullLic = Items.NewFullLic, Comment = ex.Message, Email = Items.Email, DateTime = DateTime.Now });
                     }
                 }
                 if (receiptSend.Count() > 0)

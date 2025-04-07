@@ -26,5 +26,15 @@ namespace BL.Extention
 
             return $"{value} {str}";
         }
+
+        public static DateTime GetLastDayInMonth(this DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, DateTime.DaysInMonth(dateTime.Year, dateTime.Month), 23, 59, 59);
+        }
+
+        public static DateTime GetFirstDayInMonth(this DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, 1);
+        }
     }
 }
