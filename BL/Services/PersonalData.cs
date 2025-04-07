@@ -113,6 +113,8 @@ namespace BL.Services
                             var paymentAmountDouble = Math.Round((double)paymentAmount, 2);
                             result.Payment += paymentAmountDouble;
                             result.CurrentDebt -= paymentAmountDouble;
+                            result.Payment = Math.Round(result.Payment, 2);
+                            result.CurrentDebt = Math.Round(result.CurrentDebt, 2);
                         }
                     }
                 }
