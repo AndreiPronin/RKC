@@ -309,7 +309,7 @@ namespace RKC.Controllers
             {
                 return Redirect("home/ResultEmpty?Message=" + ex.Message);
             }
-            return null;
+            return Content("");
         }
         [HttpGet]
         [Auth(Roles = RolesEnums.SuperAdmin)]

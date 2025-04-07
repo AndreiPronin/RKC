@@ -18,6 +18,7 @@ using DB.Extention;
 using AutoMapper;
 using BL.Services;
 using DB.DataBase.PaymentV2;
+using DB.DataBase.PaymentV2Archive;
 
 namespace BL.Service
 {
@@ -41,6 +42,7 @@ namespace BL.Service
             cacheApp.AddProgress(User + "_", "0");
             Counter counter = new Counter(new Logger(), new GeneratorDescriptons(), _mapper, _mkdInformationService);
             List<SaveModelIPU> COUNTERsNotAdded = new List<SaveModelIPU>();
+            var dbsArch = new DbPaymentV2Archive();
             var dbs = new DbPaymentV2();
             var DbLIC = new DbLIC();
             var DbTPlus = new DbTPlus();
@@ -54,16 +56,48 @@ namespace BL.Service
                 var periods = period.AddDays(-1);
                 IQueryable<IntegrationReadings> Integrs = dbApp.IntegrationReadings.Where(x => x.DateTime >= periods);
                 var IntegrsList = await Integrs.ToListAsync();//--------------------------
-                var payment = await dbs.Payments.AsNoTracking()
+                var payment = await dbsArch.Payments.AsNoTracking()
+                    .Include(x => x.Counters)
+                    .Where(x => x.PaymentDateDay.Value == period && x.OrgOrigamiGuid == "126A2A30-99DB-46D7-8F4D-4290505FA9FC")
+                    .ToListAsync();
+
+                var paymentNow = await dbs.Payments.AsNoTracking()
                     .Include(x => x.Counters)
                     .Include(x => x.Banks)
-                    .Where(x => x.PaymentDateDay.Value == period)
+                    .Include(x => x.Orgs)
+                    .Where(x => x.PaymentDateDay.Value == period && x.Orgs.OrigamiGuid == "126A2A30-99DB-46D7-8F4D-4290505FA9FC")
+                    .Select(x => new DB.DataBase.PaymentV2Archive.Payments
+                    {
+                        Address = x.Address,
+                        Comment = x.Comment,
+                        BankCommissionAmount = x.BankCommissionAmount,
+                        BankDocumentNumber = x.BankDocumentNumber,
+                        DtCreate = x.DtCreate,
+                        ELic = x.ELic,
+                        FullName = x.FullName,
+                        Id = x.Id,
+                        Igku = x.Igku,
+                        Lic = x.Lic,
+                        RegisterBankName = x.Banks.Name,
+                        Counters = x.Counters.Select(c => new DB.DataBase.PaymentV2Archive.Counters
+                        {
+                            Id = c.Id,
+                            Name = c.Name,
+                            PaymentId = c.PaymentId,
+                            Value = c.Value,
+                        }).ToList(),
+                        PaymentDateDay = x.PaymentDateDay,
+                        PaymentDate = x.PaymentDate,
+
+                    })
                     .ToListAsync();
+
+                 payment.AddRange(paymentNow);
+
                 if (!string.IsNullOrEmpty(Lic))
                 {
-                    payment = await dbs.Payments.AsNoTracking()
+                    payment = await dbsArch.Payments.AsNoTracking()
                     .Include(x => x.Counters)
-                    .Include(x => x.Banks)
                     .Where(x => x.PaymentDate.Value == paymentDate.Value)
                     .ToListAsync();
                     payment = payment.Where(x=>x.Lic == Lic).ToList();
@@ -148,10 +182,10 @@ namespace BL.Service
                                     var DateCheckNext = Counters.Where(x => x.FULL_LIC == data.Lic &&
                                    x.TYPE_PU.Contains(Item.Name) && (x.CLOSE_ == null || x.CLOSE_ == false))
                                         .Select(x => x.DATE_CHECK_NEXT).FirstOrDefault();
-                                    if (DateCheckNext.HasValue && Item.Payments.PaymentDateDay >= DateCheckNext.Value.GetDateWhitMaxDate())
+                                    if (DateCheckNext.HasValue && data.PaymentDateDay >= DateCheckNext.Value.GetDateWhitMaxDate())
                                     {
                                         integrationReadings.Description += $@"{ErrorIntegration.DateCheckNext.GetDescription()} {Item.Name}, 
-дата поверки {DateCheckNext.Value.ToString("dd-MM-yyyy")}, дата платежа {Item.Payments.PaymentDateDay.Value.ToString("dd-MM-yyyy")}";
+дата поверки {DateCheckNext.Value.ToString("dd-MM-yyyy")}, дата платежа {data.PaymentDateDay.Value.ToString("dd-MM-yyyy")}";
                                         Error = true;
                                     }
                                     if (IPU_COUNTERS.Count() > 1)
@@ -367,7 +401,7 @@ namespace BL.Service
                                     }
                                     saveModel.DateTimeIntegraton = data.PaymentDate.Value;
                                     if (Error == false) await counter.UpdatePUIntegrations(saveModel,
-                                    "Показания от " + data.Orgs.Name + " дата платежа " + data.PaymentDateDay.Value.ToString(),
+                                    "Показания от " + data.RegisterBankName + " дата платежа " + data.PaymentDateDay.Value.ToString(),
                                     IPU_COUNTERS.FirstOrDefault().ID_PU);
                                     else integrationReadings.IsError = Error;
 
