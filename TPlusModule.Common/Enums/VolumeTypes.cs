@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TPlusModule.Common.Enums
 {
-    public enum IpuTypes
+    public enum VolumeTypes
     {
-        /// <summary>
-        /// ГВС1
-        /// </summary>
-        Gvs1 = 1,
+        NormativeNoMeterDevice = 0,
+        ByMeterDevice = 1,
+        ByAverage = 2,
+        NormativeHasMeterDevice = 3
     }
 }
