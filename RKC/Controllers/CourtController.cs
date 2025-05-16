@@ -363,7 +363,7 @@ namespace RKC.Controllers
                                 {
                                     wb.SaveAs(stream);
                                     _cacheApp.Delete($"{User.Identity.GetFIOFull()} {file.FileName}", nameof(UploadFileCourtCase));
-                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат обновления Списание.xlsx");
+                                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Результат открытия искавой работы.xlsx");
                                 }
                             case CourtTypeLoadFiles.LitigationWork:
                                 wb.Worksheets.Add(await _excelCourt.ExcelsDownloadLitigationWork(workbook, $"{User.Identity.GetFIOFull()} {file.FileName}"));

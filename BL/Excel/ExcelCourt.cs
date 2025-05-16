@@ -860,18 +860,21 @@ namespace BL.Excel
                     try
                     {
                         StringBuilder exceptions = new StringBuilder();
-                        var CourtGeneral = await _court.DetailInfroms(dataRow.Cell(1).Value.TryGetCardNumber());
+                        var CourtGeneral = new DB.Model.Court.CourtGeneralInformation();
+                        CourtGeneral.CourtExecutionFSSP = new DB.Model.Court.CourtExecutionFSSP();
+                        CourtGeneral.CourtExecutionInPF = new DB.Model.Court.CourtExecutionInPF();
+                        CourtGeneral.CourtInstallmentPlan = new DB.Model.Court.CourtInstallmentPlan();
+                        CourtGeneral.CourtBankruptcy = new DB.Model.Court.CourtBankruptcy();
+                        CourtGeneral.CourtLitigationWork = new DB.Model.Court.CourtLitigationWork();
+                        CourtGeneral.CourtStateDuty = new DB.Model.Court.CourtStateDuty();
+                        CourtGeneral.CourtWriteOff = new DB.Model.Court.CourtWriteOff();
+                        CourtGeneral.CourtWork = new DB.Model.Court.CourtWork();
+                        CourtGeneral.CourtOwnerInformation = new DB.Model.Court.CourtOwnerInformation();
+                        //var CourtGeneral = await _court.DetailInfroms(dataRow.Cell(1).Value.TryGetCardNumber());
 
                         if (dataRow.Cell(2).Value != "" && CourtGeneral.Lic != dataRow.Cell(2).Value.ToString())
                         {
-                            if (!dataRow.Cell(2).Value.ToString().StartsWith("7"))
-                            {
-                                CourtGeneral.Lic = dataRow.Cell(2).Value.ToString();
-                            }
-                            else
-                            {
-                                exceptions.Append("Нельзя изменить поле лицевой счет так как оно начинается с 7");
-                            }
+                            CourtGeneral.Lic = dataRow.Cell(2).Value.ToString();
                         }
 
 
@@ -918,7 +921,7 @@ namespace BL.Excel
 
                         if (dataRow.Cell(13).Value != "" && CourtGeneral.CourtLitigationWork.SumOdSendCourt != Convert.ToDouble(dataRow.Cell(13).Value.ToString()))
                             CourtGeneral.CourtLitigationWork.SumOdSendCourt = Convert.ToDouble(dataRow.Cell(13).Value.ToString());
-
+                        var xxx = dataRow.Cell(14).Value;
                         if (dataRow.Cell(14).Value != "" && CourtGeneral.CourtLitigationWork.SumPenySendCourt != Convert.ToDouble(dataRow.Cell(14).Value.ToString()))
                             CourtGeneral.CourtLitigationWork.SumPenySendCourt = Convert.ToDouble(dataRow.Cell(14).Value.ToString());
 
@@ -930,8 +933,8 @@ namespace BL.Excel
                             throw new Exception(ex);
                         }
 
-                        var result = await _court.SaveCourt(mapper.Map<DB.Model.Court.CourtGeneralInformation, BE.Court.CourtGeneralInformation>(CourtGeneral), User);
-                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Id = $"П-{result}", Description = "Успешно обновлено дело" });
+                        var result = await _court.CreateCourtExcel(CourtGeneral, User);
+                        reportCourtLoadExcels.Add(new ReportCourtLoadExcel { IdCourt = dataRow.Cell(1).Value.ToString(), Id = $"П-{result.Id}", Description = "Успешно создано дело" });
 
                     }
                     catch (Exception ex)
