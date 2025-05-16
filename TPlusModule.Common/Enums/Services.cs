@@ -1,5 +1,8 @@
 ﻿namespace TPlusModule.Common.Enums
 {
+    /// <summary>
+    /// Содержит идентификаторы услуг в словаре
+    /// </summary>
     public enum Services
     {
         /// <summary>

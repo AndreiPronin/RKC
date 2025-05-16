@@ -1,5 +1,8 @@
 ﻿namespace TPlusModule.Common.Enums
 {
+    /// <summary>
+    /// Содержит идентификаторы типов прибора учёта в словаре
+    /// </summary>
     public enum MeterDeviceTypes
     {
         /// <summary>

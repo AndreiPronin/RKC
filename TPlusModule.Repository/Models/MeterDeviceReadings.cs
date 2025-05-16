@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TPlusModule.Repository.Models
 {
@@ -8,6 +9,12 @@ namespace TPlusModule.Repository.Models
     [Table(name: nameof(MeterDeviceReadings), Schema = "dbo")]
     public class MeterDeviceReadings
     {
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        [Key]
+        public int Id { get; set; }
+
         /// <summary>
         /// Номер лицевого счёта
         /// </summary>
@@ -22,11 +29,14 @@ namespace TPlusModule.Repository.Models
 
         /// <summary>
         /// Идентификатор типа прибора учёта
+        /// <br/><see cref="Common.Enums.MeterDeviceTypes"/> содержит коды справочника
         /// </summary>
-        public int TypeId { get; set; }
+        public int MeterDeviceTypeId { get; set; }
 
         /// <summary>
-        /// Идентификатор размерности (1 - куб.м, 2 - ГКал, 3 - кВт/ч)
+        /// Идентификатор размерности
+        /// <br/>1 - куб.м, 2 - ГКал, 3 - кВт/ч
+        /// <br/><see cref="Common.Enums.Measures"/> содержит коды справочника
         /// </summary>
         public int MeasureId { get; set; }
 
@@ -43,7 +53,7 @@ namespace TPlusModule.Repository.Models
         public decimal CurrentValue { get; set; }
 
         /// <summary>
-        /// Дата показания. Если null - то в этом периоде показаний не передали
+        /// Дата показания.<br/>Если null, то в этом периоде показаний не передали
         /// </summary>
         [Column(TypeName = "date")]
         public DateTime? ReadingsDate { get; set; }
@@ -51,6 +61,18 @@ namespace TPlusModule.Repository.Models
         /// <summary>
         /// Номер прибора учёта, по которому пришло показание
         /// </summary>
-        public string? FactroyNumber { get; set; }
+        public string? FactoryNumber { get; set; }
+
+        /// <summary>
+        /// Тип прибора учёта
+        /// </summary>
+        [ForeignKey(nameof(MeterDeviceType))]
+        public MeterDeviceType MeterDeviceType { get; set; }
+
+        /// <summary>
+        /// Размерность прибора учёта
+        /// </summary>
+        [ForeignKey(nameof(MeasureId))]
+        public Measure Measure { get; set; }
     }
 }

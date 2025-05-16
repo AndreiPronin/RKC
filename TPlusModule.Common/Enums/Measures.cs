@@ -1,5 +1,8 @@
 ﻿namespace TPlusModule.Common.Enums
 {
+    /// <summary>
+    /// Содержит идентификаторы размерностей в словаре
+    /// </summary>
     public enum Measures
     {
         /// <summary>
